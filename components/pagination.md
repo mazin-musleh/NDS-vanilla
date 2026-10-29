@@ -398,64 +398,112 @@ After a page change, the script scrolls the content back into view when its top 
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-pagination</code> starts by itself. The script sets the current page and turns off Previous or Next at the ends.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-more-horizontal"></i>
-            <span class="nds-label">Ellipsis Collapse</span>
-          </span>
-          <p class="nds-item-desc">More than 5 pages fold into a menu: pages 1 to 3 and the last page stay in view. Add or remove a page button and the nav folds or unfolds again. Your attributes and links stay on the buttons.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-refresh"></i>
-            <span class="nds-label">Live Content Updates</span>
-          </span>
-          <p class="nds-item-desc">Add or remove <code class="nds-inline-code lang-html">.nds-page-item</code> elements, and the script counts the pages again and keeps the current page. It works at any depth, table rows too.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-filter"></i>
-            <span class="nds-label">Filter Support</span>
-          </span>
-          <p class="nds-item-desc">Items that <a href="../components/filter">Filter</a> hides are left out of the pages and the count. A new filter goes back to page 1.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">Loading Placeholder</span>
-          </span>
-          <p class="nds-item-desc">Until the script starts, a data-driven or content nav holds its height with a placeholder row, and the content shows only its first page. The content below does not move when the pages appear.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
-            <span class="nds-label">Responsive Adaptation</span>
-          </span>
-          <p class="nds-item-desc">A <code class="nds-inline-code lang-css">--per-page</code> that changes in a media query splits the pages again on resize. On screens under 361px, the buttons drop to 32px so the nav fits.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-shield-user"></i>
-            <span class="nds-label">Accessibility</span>
-          </span>
-          <p class="nds-item-desc">The script sets <code class="nds-inline-code lang-html">aria-current="page"</code> on the current page. Buttons it builds get labels in Arabic or English, from the page language. When a page or a filter changes the records counter, a screen reader hears the counter line. A page opened from <code class="nds-inline-code lang-html">?page=</code> is not announced.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-api"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc">Go to a page, change the page count, update the counter, or count the pages again from a script, through <code class="nds-inline-code lang-js">NDS.Pagination</code>.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">.nds-pagination</code> starts by itself. The script sets the current page and turns off Previous or Next at the ends.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-more-horizontal" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Ellipsis Collapse</span>
+              <p class="nds-card-description">More than 5 pages fold into a menu: pages 1 to 3 and the last page stay in view. Add or remove a page button and the nav folds or unfolds again. Your attributes and links stay on the buttons.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-refresh" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Live Content Updates</span>
+              <p class="nds-card-description">Add or remove <code class="nds-inline-code lang-html">.nds-page-item</code> elements, and the script counts the pages again and keeps the current page. It works at any depth, table rows too.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-filter" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Filter Support</span>
+              <p class="nds-card-description">Items that <a href="../components/filter">Filter</a> hides are left out of the pages and the count. A new filter goes back to page 1.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Loading Placeholder</span>
+              <p class="nds-card-description">Until the script starts, a data-driven or content nav holds its height with a placeholder row, and the content shows only its first page. The content below does not move when the pages appear.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-mobile-programming-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Responsive Adaptation</span>
+              <p class="nds-card-description">A <code class="nds-inline-code lang-css">--per-page</code> that changes in a media query splits the pages again on resize. On screens under 361px, the buttons drop to 32px so the nav fits.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-shield-user" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Accessibility</span>
+              <p class="nds-card-description">The script sets <code class="nds-inline-code lang-html">aria-current="page"</code> on the current page. Buttons it builds get labels in Arabic or English, from the page language. When a page or a filter changes the records counter, a screen reader hears the counter line. A page opened from <code class="nds-inline-code lang-html">?page=</code> is not announced.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-api" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description">Go to a page, change the page count, update the counter, or count the pages again from a script, through <code class="nds-inline-code lang-js">NDS.Pagination</code>.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

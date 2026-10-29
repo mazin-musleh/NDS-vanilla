@@ -192,64 +192,112 @@ When a long item above closes, the page moves up. If the heading of the item tha
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every accordion on the page starts by itself. Opening, closing and the keyboard need no call.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-motion-01"></i>
-            <span class="nds-label">Animations</span>
-          </span>
-          <p class="nds-item-desc">Panels slide open and closed. The motion stops when the user prefers reduced motion, and an item that is open at load does not animate.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard Navigation</span>
-          </span>
-          <p class="nds-item-desc">The up and down arrows move between the headings and wrap at the ends. Home and End jump to the first and the last heading. Enter or Space opens or closes the focused item.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-loading-03"></i>
-            <span class="nds-label">Loading Skeleton</span>
-          </span>
-          <p class="nds-item-desc">Gray bars stand in for the titles and the open panel until the script starts. In a list that a filter controls, they stay until the filter has applied the choices in the URL.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">Nested Accordions</span>
-          </span>
-          <p class="nds-item-desc">A panel can hold another accordion. Each accordion runs its own items and ignores the items of the one inside it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-printer"></i>
-            <span class="nds-label">Print</span>
-          </span>
-          <p class="nds-item-desc">Every panel prints open, so no content is lost on paper.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-access"></i>
-            <span class="nds-label">Screen Readers and High Contrast</span>
-          </span>
-          <p class="nds-item-desc">The script keeps <code class="nds-inline-code lang-html">aria-expanded</code> on each button in step with its panel. In high-contrast mode, the lines between items get stronger and the focus ring gets wider.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-notification-square"></i>
-            <span class="nds-label">Open and Close Events</span>
-          </span>
-          <p class="nds-item-desc">An event fires when a panel has finished opening or closing, for analytics or for content that loads on open.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every accordion on the page starts by itself. Opening, closing and the keyboard need no call.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-motion-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Animations</span>
+              <p class="nds-card-description">Panels slide open and closed. The motion stops when the user prefers reduced motion, and an item that is open at load does not animate.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Keyboard Navigation</span>
+              <p class="nds-card-description">The up and down arrows move between the headings and wrap at the ends. Home and End jump to the first and the last heading. Enter or Space opens or closes the focused item.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-loading-03" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Loading Skeleton</span>
+              <p class="nds-card-description">Gray bars stand in for the titles and the open panel until the script starts. In a list that a filter controls, they stay until the filter has applied the choices in the URL.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Nested Accordions</span>
+              <p class="nds-card-description">A panel can hold another accordion. Each accordion runs its own items and ignores the items of the one inside it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-printer" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Print</span>
+              <p class="nds-card-description">Every panel prints open, so no content is lost on paper.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-access" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Screen Readers and High Contrast</span>
+              <p class="nds-card-description">The script keeps <code class="nds-inline-code lang-html">aria-expanded</code> on each button in step with its panel. In high-contrast mode, the lines between items get stronger and the focus ring gets wider.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-notification-square" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Open and Close Events</span>
+              <p class="nds-card-description">An event fires when a panel has finished opening or closing, for analytics or for content that loads on open.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

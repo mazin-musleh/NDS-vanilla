@@ -198,57 +198,99 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-01"></i>
-            <span class="nds-label">Wrapping Columns</span>
-          </span>
-          <p class="nds-item-desc">The columns share the row and wrap as space runs out: two to a row below 960px, one to a row on a phone.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-share-08"></i>
-            <span class="nds-label">Icons Column</span>
-          </span>
-          <p class="nds-item-desc">The social and app groups sit side by side in one column, and take a full row below 960px.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-font"></i>
-            <span class="nds-label">Any Text</span>
-          </span>
-          <p class="nds-item-desc">Text anywhere in the footer takes the footer's size and color, with no extra class: an address in a list, a paragraph in a column. A long word or address wraps inside its column.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-paint-board"></i>
-            <span class="nds-label">Brand Surface</span>
-          </span>
-          <p class="nds-item-desc">On the brand footer, the text, the headings, the dividers, the links and the <code class="nds-inline-code lang-html">nds-secondary-outline</code> buttons switch to their on-color versions. No extra class is needed on them.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-image-01"></i>
-            <span class="nds-label">On-color Logos</span>
-          </span>
-          <p class="nds-item-desc">A logo with <code class="nds-inline-code lang-html">nds-oncolor</code> turns white on the brand footer and in dark mode.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
-            <span class="nds-label">Phone Layout</span>
-          </span>
-          <p class="nds-item-desc">On a phone, the bottom bar stacks and centers its links, legal notices and logos.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-puzzle"></i>
-            <span class="nds-label">CSS Only</span>
-          </span>
-          <p class="nds-item-desc">The footer needs no script. The icon buttons' tooltips come from <a href="../components/tooltip">Tooltip</a>.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Wrapping Columns</span>
+              <p class="nds-card-description">The columns share the row and wrap as space runs out: two to a row below 960px, one to a row on a phone.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-share-08" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Icons Column</span>
+              <p class="nds-card-description">The social and app groups sit side by side in one column, and take a full row below 960px.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-font" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Any Text</span>
+              <p class="nds-card-description">Text anywhere in the footer takes the footer's size and color, with no extra class: an address in a list, a paragraph in a column. A long word or address wraps inside its column.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paint-board" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Brand Surface</span>
+              <p class="nds-card-description">On the brand footer, the text, the headings, the dividers, the links and the <code class="nds-inline-code lang-html">nds-secondary-outline</code> buttons switch to their on-color versions. No extra class is needed on them.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-image-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">On-color Logos</span>
+              <p class="nds-card-description">A logo with <code class="nds-inline-code lang-html">nds-oncolor</code> turns white on the brand footer and in dark mode.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-smart-phone-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Phone Layout</span>
+              <p class="nds-card-description">On a phone, the bottom bar stacks and centers its links, legal notices and logos.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-puzzle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">CSS Only</span>
+              <p class="nds-card-description">The footer needs no script. The icon buttons' tooltips come from <a href="../components/tooltip">Tooltip</a>.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

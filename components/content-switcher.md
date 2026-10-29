@@ -101,57 +101,99 @@ The first button is open in the markup: its `aria-selected` is `true`, and every
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every content switcher on the page starts by itself. Switching and the keyboard need no call.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard Navigation</span>
-          </span>
-          <p class="nds-item-desc">The arrow keys move between buttons, and left and right follow the reading direction. Home and End jump to the first and the last button. Enter or Space opens the focused button.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-square-arrow-expand-01"></i>
-            <span class="nds-label">Three Sizes</span>
-          </span>
-          <p class="nds-item-desc">32, 40 and 48px buttons. The label size, the padding and the corners follow the size.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-loading-03"></i>
-            <span class="nds-label">Loading Skeleton</span>
-          </span>
-          <p class="nds-item-desc">Gray bars stand in for the labels and the open panel until the script starts, so the row is never bare.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-access"></i>
-            <span class="nds-label">High Contrast and Reduced Motion</span>
-          </span>
-          <p class="nds-item-desc">The open button gets a border in high-contrast mode, and the transitions stop when the user prefers reduced motion.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-notification-square"></i>
-            <span class="nds-label">Change Events</span>
-          </span>
-          <p class="nds-item-desc">Every switch fires <code class="nds-inline-code lang-js">nds:tabs:change</code> with the new and the previous button and panel.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-api"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc">Open a view, read the open panel or remove the behavior through <code class="nds-inline-code lang-js">NDS.Tabs</code> or the element's <code class="nds-inline-code lang-js">ndsTabs</code> property.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every content switcher on the page starts by itself. Switching and the keyboard need no call.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Keyboard Navigation</span>
+              <p class="nds-card-description">The arrow keys move between buttons, and left and right follow the reading direction. Home and End jump to the first and the last button. Enter or Space opens the focused button.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-square-arrow-expand-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Three Sizes</span>
+              <p class="nds-card-description">32, 40 and 48px buttons. The label size, the padding and the corners follow the size.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-loading-03" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Loading Skeleton</span>
+              <p class="nds-card-description">Gray bars stand in for the labels and the open panel until the script starts, so the row is never bare.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-access" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">High Contrast and Reduced Motion</span>
+              <p class="nds-card-description">The open button gets a border in high-contrast mode, and the transitions stop when the user prefers reduced motion.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-notification-square" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Change Events</span>
+              <p class="nds-card-description">Every switch fires <code class="nds-inline-code lang-js">nds:tabs:change</code> with the new and the previous button and panel.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-api" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description">Open a view, read the open panel or remove the behavior through <code class="nds-inline-code lang-js">NDS.Tabs</code> or the element's <code class="nds-inline-code lang-js">ndsTabs</code> property.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

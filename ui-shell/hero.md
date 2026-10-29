@@ -333,36 +333,60 @@ The main hero shows one slide at a time, and the Swiper script moves between the
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-flash"></i>
-            <span class="nds-label">First Paint</span>
-          </span>
-          <p class="nds-item-desc">The title, the description and the breadcrumb paint with the critical CSS, before the rest of the page. The buttons keep their height while they load, so nothing moves.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-ruler"></i>
-            <span class="nds-label">Height</span>
-          </span>
-          <p class="nds-item-desc">The main hero is 550px high on every screen, and each image covers it. <code class="nds-inline-code lang-css">--hero-height</code> changes it. The sub hero is as high as its content, at least 220px.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-font"></i>
-            <span class="nds-label">Title Sizes</span>
-          </span>
-          <p class="nds-item-desc">The main hero's title is a large display size, and the sub hero's is one size smaller. Both scale with the screen width.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-paint-board"></i>
-            <span class="nds-label">Brand Tint</span>
-          </span>
-          <p class="nds-item-desc">The tint over a slide image and the sub hero background come from theme tokens, so they follow a brand change.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-flash" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">First Paint</span>
+              <p class="nds-card-description">The title, the description and the breadcrumb paint with the critical CSS, before the rest of the page. The buttons keep their height while they load, so nothing moves.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-ruler" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Height</span>
+              <p class="nds-card-description">The main hero is 550px high on every screen, and each image covers it. <code class="nds-inline-code lang-css">--hero-height</code> changes it. The sub hero is as high as its content, at least 220px.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-font" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Title Sizes</span>
+              <p class="nds-card-description">The main hero's title is a large display size, and the sub hero's is one size smaller. Both scale with the screen width.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paint-board" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Brand Tint</span>
+              <p class="nds-card-description">The tint over a slide image and the sub hero background come from theme tokens, so they follow a brand change.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

@@ -347,64 +347,112 @@ NDS.FormattedInput.addFormat('card', {
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every field starts when the page loads, and a field added later starts on its own. The first field on a page that had none needs <code class="nds-inline-code lang-js">NDS.init.mount()</code> on the new content.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Shape While Typing</span>
-          </span>
-          <p class="nds-item-desc">Each key and each paste takes the field's shape at once, and the cursor stays where the user typed. A separator the user types after the last character shows too. A delete next to a separator removes the character past it as well.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-translate"></i>
-            <span class="nds-label">Arabic Digits</span>
-          </span>
-          <p class="nds-item-desc">Arabic-Indic digits go in as Latin ones, typed or pasted, in every field.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-align-left"></i>
-            <span class="nds-label">Left-to-Right Values</span>
-          </span>
-          <p class="nds-item-desc">Every formatted field reads left to right on every page, so its groups keep their order on an Arabic page. The value stays on the page side, as in the other fields.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-clipboard"></i>
-            <span class="nds-label">Paste Cleanup</span>
-          </span>
-          <p class="nds-item-desc">A paste loses the spaces, dashes and other characters the field does not take.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-security-check"></i>
-            <span class="nds-label">Checksum Validation</span>
-          </span>
-          <p class="nds-item-desc">An IBAN, or a national ID whose country has a rule, fails the field through the browser's own check when its check digits are wrong. A field with a shape fails when a slot is left empty. The message shows at blur and at submit, in Arabic or English to match the page. An empty field passes unless it is required.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-sent"></i>
-            <span class="nds-label">Clean Submit</span>
-          </span>
-          <p class="nds-item-desc">A submit and <code class="nds-inline-code lang-js">new FormData(form)</code> send the value without its separators. <code class="nds-inline-code lang-js">input.value</code> keeps them.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-arrow-reload-horizontal"></i>
-            <span class="nds-label">Form Reset</span>
-          </span>
-          <p class="nds-item-desc">A form reset puts each field back to the value the page shipped with, in its shape.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every field starts when the page loads, and a field added later starts on its own. The first field on a page that had none needs <code class="nds-inline-code lang-js">NDS.init.mount()</code> on the new content.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Shape While Typing</span>
+              <p class="nds-card-description">Each key and each paste takes the field's shape at once, and the cursor stays where the user typed. A separator the user types after the last character shows too. A delete next to a separator removes the character past it as well.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-translate" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Arabic Digits</span>
+              <p class="nds-card-description">Arabic-Indic digits go in as Latin ones, typed or pasted, in every field.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-align-left" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Left-to-Right Values</span>
+              <p class="nds-card-description">Every formatted field reads left to right on every page, so its groups keep their order on an Arabic page. The value stays on the page side, as in the other fields.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-clipboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Paste Cleanup</span>
+              <p class="nds-card-description">A paste loses the spaces, dashes and other characters the field does not take.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-security-check" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Checksum Validation</span>
+              <p class="nds-card-description">An IBAN, or a national ID whose country has a rule, fails the field through the browser's own check when its check digits are wrong. A field with a shape fails when a slot is left empty. The message shows at blur and at submit, in Arabic or English to match the page. An empty field passes unless it is required.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-sent" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Clean Submit</span>
+              <p class="nds-card-description">A submit and <code class="nds-inline-code lang-js">new FormData(form)</code> send the value without its separators. <code class="nds-inline-code lang-js">input.value</code> keeps them.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-reload-horizontal" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Form Reset</span>
+              <p class="nds-card-description">A form reset puts each field back to the value the page shipped with, in its shape.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

@@ -166,43 +166,73 @@ The script reads the date from `datetime`, never from the text, and writes the t
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-calendar-03"></i>
-            <span class="nds-label">Umm al-Qura Hijri</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-js">calendar: 'hijri'</code> is Umm al-Qura, the official calendar of Saudi Arabia, for the years 1300 to 1600 AH. Outside them, the browser uses the civil Hijri calendar, which can differ by a day.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-exchange-01"></i>
-            <span class="nds-label">Exact Conversion</span>
-          </span>
-          <p class="nds-item-desc">A Hijri date converts through the browser's own calendar data, not a table in NDS. A test checks every day from 2018 to 2037, both ways, against the browser's calendar.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-alert-circle"></i>
-            <span class="nds-label">Invalid Days</span>
-          </span>
-          <p class="nds-item-desc">A day that does not exist returns <code class="nds-inline-code lang-js">null</code>, such as 31 April, or day 30 of a 29-day Hijri month. It never rolls over into the next month.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-language-skill"></i>
-            <span class="nds-label">Arabic Digits</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-js">parse</code> reads Arabic digits, such as <code class="nds-inline-code lang-js">٠٣/٠٤/٢٠٢٦</code>. It also removes the direction marks that the browser writes into Arabic dates. <code class="nds-inline-code lang-js">format</code> writes Arabic digits with <code class="nds-inline-code lang-js">numerals: 'arab'</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-time-zone"></i>
-            <span class="nds-label">Site Timezone</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-js">getToday()</code> returns today in the timezone that <code class="nds-inline-code lang-html">data-timezone</code> names. An invalid name logs one warning, and the visitor's timezone applies.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-calendar-03" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Umm al-Qura Hijri</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-js">calendar: 'hijri'</code> is Umm al-Qura, the official calendar of Saudi Arabia, for the years 1300 to 1600 AH. Outside them, the browser uses the civil Hijri calendar, which can differ by a day.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-exchange-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Exact Conversion</span>
+              <p class="nds-card-description">A Hijri date converts through the browser's own calendar data, not a table in NDS. A test checks every day from 2018 to 2037, both ways, against the browser's calendar.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-alert-circle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Invalid Days</span>
+              <p class="nds-card-description">A day that does not exist returns <code class="nds-inline-code lang-js">null</code>, such as 31 April, or day 30 of a 29-day Hijri month. It never rolls over into the next month.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-language-skill" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Arabic Digits</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-js">parse</code> reads Arabic digits, such as <code class="nds-inline-code lang-js">٠٣/٠٤/٢٠٢٦</code>. It also removes the direction marks that the browser writes into Arabic dates. <code class="nds-inline-code lang-js">format</code> writes Arabic digits with <code class="nds-inline-code lang-js">numerals: 'arab'</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-time-zone" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Site Timezone</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-js">getToday()</code> returns today in the timezone that <code class="nds-inline-code lang-html">data-timezone</code> names. An invalid name logs one warning, and the visitor's timezone applies.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

@@ -126,50 +126,86 @@ Label Swap and Announcement go on the copy button. Label Swap needs a `.nds-labe
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Automatic Start</span>
-          </span>
-          <p class="nds-item-desc">One click listener on the page serves every <code class="nds-inline-code lang-html">.nds-copy</code>, including the buttons you add later. You write no script.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-target-02"></i>
-            <span class="nds-label">Text Order</span>
-          </span>
-          <p class="nds-item-desc">The script copies the first text it finds: <code class="nds-inline-code lang-html">data-copy</code>, then <code class="nds-inline-code lang-html">data-copy-target</code>, then the code of a surrounding <code class="nds-inline-code lang-html">.nds-code</code> block. In a code block with tabs, it copies the code of the open tab.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-tick-01"></i>
-            <span class="nds-label">Success Feedback</span>
-          </span>
-          <p class="nds-item-desc">The icon changes to a checkmark for 2 seconds. During that time, the button takes no clicks.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-voice"></i>
-            <span class="nds-label">Screen Reader Announcement</span>
-          </span>
-          <p class="nds-item-desc">The shared live region announces each copy, so a screen reader user gets the same confirmation.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-shield-01"></i>
-            <span class="nds-label">HTTP Fallback</span>
-          </span>
-          <p class="nds-item-desc">When the browser blocks the Clipboard API, such as on a test server without HTTPS, the script copies through a hidden text box.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-api"></i>
-            <span class="nds-label">Script Control</span>
-          </span>
-          <p class="nds-item-desc">Your own script can copy a text, or show the checkmark on a button, with <code class="nds-inline-code lang-js">NDS.Copy</code>.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Automatic Start</span>
+              <p class="nds-card-description">One click listener on the page serves every <code class="nds-inline-code lang-html">.nds-copy</code>, including the buttons you add later. You write no script.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-target-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Text Order</span>
+              <p class="nds-card-description">The script copies the first text it finds: <code class="nds-inline-code lang-html">data-copy</code>, then <code class="nds-inline-code lang-html">data-copy-target</code>, then the code of a surrounding <code class="nds-inline-code lang-html">.nds-code</code> block. In a code block with tabs, it copies the code of the open tab.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-tick-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Success Feedback</span>
+              <p class="nds-card-description">The icon changes to a checkmark for 2 seconds. During that time, the button takes no clicks.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-voice" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Screen Reader Announcement</span>
+              <p class="nds-card-description">The shared live region announces each copy, so a screen reader user gets the same confirmation.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-shield-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">HTTP Fallback</span>
+              <p class="nds-card-description">When the browser blocks the Clipboard API, such as on a test server without HTTPS, the script copies through a hidden text box.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-api" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Script Control</span>
+              <p class="nds-card-description">Your own script can copy a text, or show the checkmark on a button, with <code class="nds-inline-code lang-js">NDS.Copy</code>.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

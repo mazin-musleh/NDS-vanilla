@@ -172,57 +172,99 @@ Each example is a whole grid. Change its values to fit your content: the knobs a
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-grid"></i>
-            <span class="nds-label">Auto-fit Columns</span>
-          </span>
-          <p class="nds-item-desc">With no settings, the children share the row in equal columns.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-resize-01"></i>
-            <span class="nds-label">Minimum Width Wrapping</span>
-          </span>
-          <p class="nds-item-desc">Set <code class="nds-inline-code lang-css">--min-width</code>, and the items wrap once they cannot fit at that width. No media queries needed.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
-            <span class="nds-label">Responsive Column Tokens</span>
-          </span>
-          <p class="nds-item-desc">Set a column count for each screen size with <code class="nds-inline-code lang-css">--max-col</code>, <code class="nds-inline-code lang-css">--mid-col</code> and <code class="nds-inline-code lang-css">--min-col</code>. A value you leave out falls back to the next larger one.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-three-column"></i>
-            <span class="nds-label">Custom Track Layouts</span>
-          </span>
-          <p class="nds-item-desc">Set columns of different widths for each screen size with <code class="nds-inline-code lang-css">--max-track</code>, <code class="nds-inline-code lang-css">--mid-track</code> and <code class="nds-inline-code lang-css">--min-track</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-arrow-shrink"></i>
-            <span class="nds-label">Adaptive Gap Scaling</span>
-          </span>
-          <p class="nds-item-desc">The default gap shrinks from 20px to 16px below 960px. A gap you set stays the same, and never goes under 8px there.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-align-box-middle-center"></i>
-            <span class="nds-label">Alignment Tokens</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-css">--justify</code> and <code class="nds-inline-code lang-css">--align</code> set how the children sit in their cells. <code class="nds-inline-code lang-html">nds-center</code> centers them.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-artboard"></i>
-            <span class="nds-label">Container-Aware (opt-in)</span>
-          </span>
-          <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-cq</code> to any element around a grid, and the grid follows that element's width, such as a sidebar. It is opt-in, because it traps <code class="nds-inline-code lang-css">position: fixed</code> children, such as a modal, inside that element.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-grid" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-fit Columns</span>
+              <p class="nds-card-description">With no settings, the children share the row in equal columns.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-resize-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Minimum Width Wrapping</span>
+              <p class="nds-card-description">Set <code class="nds-inline-code lang-css">--min-width</code>, and the items wrap once they cannot fit at that width. No media queries needed.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-mobile-programming-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Responsive Column Tokens</span>
+              <p class="nds-card-description">Set a column count for each screen size with <code class="nds-inline-code lang-css">--max-col</code>, <code class="nds-inline-code lang-css">--mid-col</code> and <code class="nds-inline-code lang-css">--min-col</code>. A value you leave out falls back to the next larger one.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-three-column" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Custom Track Layouts</span>
+              <p class="nds-card-description">Set columns of different widths for each screen size with <code class="nds-inline-code lang-css">--max-track</code>, <code class="nds-inline-code lang-css">--mid-track</code> and <code class="nds-inline-code lang-css">--min-track</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-shrink" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Adaptive Gap Scaling</span>
+              <p class="nds-card-description">The default gap shrinks from 20px to 16px below 960px. A gap you set stays the same, and never goes under 8px there.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-align-box-middle-center" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Alignment Tokens</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-css">--justify</code> and <code class="nds-inline-code lang-css">--align</code> set how the children sit in their cells. <code class="nds-inline-code lang-html">nds-center</code> centers them.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-artboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Container-Aware (opt-in)</span>
+              <p class="nds-card-description">Add <code class="nds-inline-code lang-html">nds-cq</code> to any element around a grid, and the grid follows that element's width, such as a sidebar. It is opt-in, because it traps <code class="nds-inline-code lang-css">position: fixed</code> children, such as a modal, inside that element.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

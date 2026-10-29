@@ -222,50 +222,86 @@ The close button stores no choice. The panel then does not open by itself for 30
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-download-04"></i>
-            <span class="nds-label">Loaded on Demand</span>
-          </span>
-          <p class="nds-item-desc">The panel script loads only for a visitor with no stored choice, or on the first trigger press. A returning visitor downloads none of it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-translate"></i>
-            <span class="nds-label">Localized Text</span>
-          </span>
-          <p class="nds-item-desc">The built panel takes its text from the <code class="nds-inline-code lang-js">cookies</code> section of the page language's pack, such as <code class="nds-inline-code lang-js">assets/i18n/ar.json</code>. The text loads before the panel shows, so an Arabic page never shows English first.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-api"></i>
-            <span class="nds-label">Consent Signals</span>
-          </span>
-          <p class="nds-item-desc">Each choice sends <code class="nds-inline-code lang-js">gtag('consent', 'update', …)</code> for every mapped category, so Google tags react without a page reload.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-shield-01"></i>
-            <span class="nds-label">Denied Until Chosen</span>
-          </span>
-          <p class="nds-item-desc">On every page load, NDS denies each category the visitor did not allow. A visitor who has not chosen yet counts as declined.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-eraser"></i>
-            <span class="nds-label">Tracker Cleanup</span>
-          </span>
-          <p class="nds-item-desc">When a category is denied, NDS clears its common trackers on this host and every parent domain. Performance also disables each registered Google Analytics ID.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-floppy-disk"></i>
-            <span class="nds-label">Consent Persistence</span>
-          </span>
-          <p class="nds-item-desc">The choice is saved for 365 days with <code class="nds-inline-code lang-js">SameSite=Lax</code>. On a <code class="nds-inline-code lang-js">file://</code> URL, it is saved in localStorage.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-download-04" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Loaded on Demand</span>
+              <p class="nds-card-description">The panel script loads only for a visitor with no stored choice, or on the first trigger press. A returning visitor downloads none of it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-translate" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Localized Text</span>
+              <p class="nds-card-description">The built panel takes its text from the <code class="nds-inline-code lang-js">cookies</code> section of the page language's pack, such as <code class="nds-inline-code lang-js">assets/i18n/ar.json</code>. The text loads before the panel shows, so an Arabic page never shows English first.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-api" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Consent Signals</span>
+              <p class="nds-card-description">Each choice sends <code class="nds-inline-code lang-js">gtag('consent', 'update', …)</code> for every mapped category, so Google tags react without a page reload.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-shield-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Denied Until Chosen</span>
+              <p class="nds-card-description">On every page load, NDS denies each category the visitor did not allow. A visitor who has not chosen yet counts as declined.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-eraser" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Tracker Cleanup</span>
+              <p class="nds-card-description">When a category is denied, NDS clears its common trackers on this host and every parent domain. Performance also disables each registered Google Analytics ID.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-floppy-disk" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Consent Persistence</span>
+              <p class="nds-card-description">The choice is saved for 365 days with <code class="nds-inline-code lang-js">SameSite=Lax</code>. On a <code class="nds-inline-code lang-js">file://</code> URL, it is saved in localStorage.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

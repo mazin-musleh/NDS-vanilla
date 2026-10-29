@@ -109,36 +109,60 @@ A row on `.nds-chip` changes every chip. Selected goes on one chip: the builder 
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-tag-01"></i>
-            <span class="nds-label">Pure CSS</span>
-          </span>
-          <p class="nds-item-desc">No JavaScript needed for the look. Every color, size and state comes from classes and attributes.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cursor-01"></i>
-            <span class="nds-label">Interactive States</span>
-          </span>
-          <p class="nds-item-desc">Hover, pressed, selected, disabled, and a focus ring for keyboard users. On color chips keep a visible ring on a dark background.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-more-horizontal"></i>
-            <span class="nds-label">Label Truncation</span>
-          </span>
-          <p class="nds-item-desc">A label longer than 160px ends with an ellipsis. A label that holds a formatted number, such as a price range, is never cut. <code class="nds-inline-code lang-css">--truncate</code> sets how many lines it shows first.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-puzzle"></i>
-            <span class="nds-label">Composable</span>
-          </span>
-          <p class="nds-item-desc">Combines with icons, the rounded shape, the on color version and chip groups. Tag Input, Multiselect and Filter build their removable chips with <code class="nds-inline-code lang-js">NDS.buildChip()</code>.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-tag-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Pure CSS</span>
+              <p class="nds-card-description">No JavaScript needed for the look. Every color, size and state comes from classes and attributes.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-cursor-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Interactive States</span>
+              <p class="nds-card-description">Hover, pressed, selected, disabled, and a focus ring for keyboard users. On color chips keep a visible ring on a dark background.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-more-horizontal" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Label Truncation</span>
+              <p class="nds-card-description">A label longer than 160px ends with an ellipsis. A label that holds a formatted number, such as a price range, is never cut. <code class="nds-inline-code lang-css">--truncate</code> sets how many lines it shows first.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-puzzle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Composable</span>
+              <p class="nds-card-description">Combines with icons, the rounded shape, the on color version and chip groups. Tag Input, Multiselect and Filter build their removable chips with <code class="nds-inline-code lang-js">NDS.buildChip()</code>.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

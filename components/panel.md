@@ -214,43 +214,73 @@ A lazy panel keeps its markup in a `<template class="nds-panel-template">`, so i
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-panel</code> on the page starts by itself. The toggle and close buttons work from their attributes, with no script of your own.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Focus Management</span>
-          </span>
-          <p class="nds-item-desc">Focus moves to the first close button when the panel opens, or to the panel when it has none, and back to the toggle when it closes. Escape and a click outside close the top panel.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-transition-left"></i>
-            <span class="nds-label">Panel Stacking</span>
-          </span>
-          <p class="nds-item-desc">A plain panel replaces the open one after it slides out. A modal panel covers the others and the main navigation, and a static panel comes back when the screen is clear. A panel you open from a modal opens over it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-anchor-point"></i>
-            <span class="nds-label">Header-Aware Position</span>
-          </span>
-          <p class="nds-item-desc">The panel starts below the sticky header, and moves with it as the top bar scrolls in and out. A tall sheet stops at the header. A modal panel covers the header and starts at the top of the screen.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-api"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc">Open, close and toggle a panel from a script, check whether it is open, and listen to its events.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">.nds-panel</code> on the page starts by itself. The toggle and close buttons work from their attributes, with no script of your own.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Focus Management</span>
+              <p class="nds-card-description">Focus moves to the first close button when the panel opens, or to the panel when it has none, and back to the toggle when it closes. Escape and a click outside close the top panel.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-transition-left" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Panel Stacking</span>
+              <p class="nds-card-description">A plain panel replaces the open one after it slides out. A modal panel covers the others and the main navigation, and a static panel comes back when the screen is clear. A panel you open from a modal opens over it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-anchor-point" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Header-Aware Position</span>
+              <p class="nds-card-description">The panel starts below the sticky header, and moves with it as the top bar scrolls in and out. A tall sheet stops at the header. A modal panel covers the header and starts at the top of the screen.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-api" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description">Open, close and toggle a panel from a script, check whether it is open, and listen to its events.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

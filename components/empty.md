@@ -149,43 +149,73 @@ In a table, the placeholder is one row with one cell across every column. The sc
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Automatic Setup</span>
-          </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">nds-empty</code> container with no items gets a placeholder, also a container added to the page later. You call nothing.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">Markup That Fits the Container</span>
-          </span>
-          <p class="nds-item-desc">The placeholder is an <code class="nds-inline-code lang-html">&lt;li&gt;</code> in a list, a row in a table and a <code class="nds-inline-code lang-html">&lt;div&gt;</code> elsewhere. In an <code class="nds-inline-code lang-html">nds-grid</code> container, it spans every column.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-translation"></i>
-            <span class="nds-label">Arabic and English Text</span>
-          </span>
-          <p class="nds-item-desc">The default message follows the page <code class="nds-inline-code lang-html">lang</code>: «لا يوجد محتوى» in Arabic, and "No content to show" in any other language.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-refresh"></i>
-            <span class="nds-label">Live Updates</span>
-          </span>
-          <p class="nds-item-desc">The placeholder goes away when an item is added, and comes back when the last item is removed. A new <code class="nds-inline-code lang-html">data-empty-message</code> or <code class="nds-inline-code lang-html">data-empty-icon</code> value shows at once.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-view-off"></i>
-            <span class="nds-label">No Flash at Load</span>
-          </span>
-          <p class="nds-item-desc">The container stays hidden until the placeholder is in. The page never shows it empty first.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Automatic Setup</span>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">nds-empty</code> container with no items gets a placeholder, also a container added to the page later. You call nothing.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Markup That Fits the Container</span>
+              <p class="nds-card-description">The placeholder is an <code class="nds-inline-code lang-html">&lt;li&gt;</code> in a list, a row in a table and a <code class="nds-inline-code lang-html">&lt;div&gt;</code> elsewhere. In an <code class="nds-inline-code lang-html">nds-grid</code> container, it spans every column.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-translation" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Arabic and English Text</span>
+              <p class="nds-card-description">The default message follows the page <code class="nds-inline-code lang-html">lang</code>: «لا يوجد محتوى» in Arabic, and "No content to show" in any other language.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-refresh" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Live Updates</span>
+              <p class="nds-card-description">The placeholder goes away when an item is added, and comes back when the last item is removed. A new <code class="nds-inline-code lang-html">data-empty-message</code> or <code class="nds-inline-code lang-html">data-empty-icon</code> value shows at once.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-view-off" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">No Flash at Load</span>
+              <p class="nds-card-description">The container stays hidden until the placeholder is in. The page never shows it empty first.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

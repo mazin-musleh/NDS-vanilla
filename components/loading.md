@@ -124,36 +124,60 @@ A component that has a skeleton, such as a card, a table or tabs, replaces its t
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-code"></i>
-            <span class="nds-label">CSS Only</span>
-          </span>
-          <p class="nds-item-desc">The spinner is the <code class="nds-inline-code lang-css">::after</code> of the container. No script and no extra element are needed.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-mouse-01"></i>
-            <span class="nds-label">Interaction Blocked</span>
-          </span>
-          <p class="nds-item-desc">The container gets <code class="nds-inline-code lang-css">pointer-events: none</code> and <code class="nds-inline-code lang-css">user-select: none</code>, so the user cannot click or select the content while it loads.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-accessibility"></i>
-            <span class="nds-label">Reduce Motion</span>
-          </span>
-          <p class="nds-item-desc">The spinner keeps turning when the user turns on reduce motion in the accessibility panel. It shows that work is in progress, so it is not decoration.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-loading-03"></i>
-            <span class="nds-label">Buttons and Fields</span>
-          </span>
-          <p class="nds-item-desc">On a button, the spinner takes the button's colors and hides the label, so the button keeps its size. Form fields skip this spinner and show their own.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-code" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">CSS Only</span>
+              <p class="nds-card-description">The spinner is the <code class="nds-inline-code lang-css">::after</code> of the container. No script and no extra element are needed.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-mouse-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Interaction Blocked</span>
+              <p class="nds-card-description">The container gets <code class="nds-inline-code lang-css">pointer-events: none</code> and <code class="nds-inline-code lang-css">user-select: none</code>, so the user cannot click or select the content while it loads.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-accessibility" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Reduce Motion</span>
+              <p class="nds-card-description">The spinner keeps turning when the user turns on reduce motion in the accessibility panel. It shows that work is in progress, so it is not decoration.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-loading-03" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Buttons and Fields</span>
+              <p class="nds-card-description">On a button, the spinner takes the button's colors and hides the label, so the button keeps its size. Form fields skip this spinner and show their own.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

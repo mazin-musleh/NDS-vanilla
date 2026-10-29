@@ -128,36 +128,60 @@ A permanent message is a hint that stays in place, such as "Use 8 characters or 
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-checkmark-circle-02"></i>
-            <span class="nds-label">Auto Icon by Status</span>
-          </span>
-          <p class="nds-item-desc">The status picks the icon: a check for success, an exclamation mark for warning and critical, a cross for error, "i" for info and neutral, and a question mark for help. The icon element stays empty in the markup.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-hierarchy"></i>
-            <span class="nds-label">Parent Status Inheritance</span>
-          </span>
-          <p class="nds-item-desc">A feedback icon inside any element with a <code class="nds-inline-code lang-html">data-status</code> takes that status, with no attribute of its own. This is how an alert, a form field and a progress bar color their icons.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-volume-high"></i>
-            <span class="nds-label">Screen Reader Announcement</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-js">create()</code> marks the message so that a screen reader reads it when it appears. An error is read at once, and any other status after the screen reader finishes what it is reading.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-arrow-reload-horizontal"></i>
-            <span class="nds-label">One Message per Place</span>
-          </span>
-          <p class="nds-item-desc">A new message replaces the one already in the same place, so messages never pile up. A group's message leaves the messages of the fields inside the group. A target with <code class="nds-inline-code lang-html">hidden</code> shows while a message is in it, and hides again when the last one is dismissed.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-checkmark-circle-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto Icon by Status</span>
+              <p class="nds-card-description">The status picks the icon: a check for success, an exclamation mark for warning and critical, a cross for error, "i" for info and neutral, and a question mark for help. The icon element stays empty in the markup.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-hierarchy" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Parent Status Inheritance</span>
+              <p class="nds-card-description">A feedback icon inside any element with a <code class="nds-inline-code lang-html">data-status</code> takes that status, with no attribute of its own. This is how an alert, a form field and a progress bar color their icons.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-volume-high" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Screen Reader Announcement</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-js">create()</code> marks the message so that a screen reader reads it when it appears. An error is read at once, and any other status after the screen reader finishes what it is reading.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-reload-horizontal" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">One Message per Place</span>
+              <p class="nds-card-description">A new message replaces the one already in the same place, so messages never pile up. A group's message leaves the messages of the fields inside the group. A target with <code class="nds-inline-code lang-html">hidden</code> shows while a message is in it, and hides again when the last one is dismissed.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

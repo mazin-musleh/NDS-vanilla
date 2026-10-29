@@ -92,36 +92,60 @@ Pick another component when:
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-distribute-vertical-center"></i>
-            <span class="nds-label">Consistent Vertical Rhythm</span>
-          </span>
-          <p class="nds-item-desc">Each block puts a 32px gap below it. The last block in its parent has none, so the parent ends flush. A divider after a block replaces the gap with its own space.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-image-01"></i>
-            <span class="nds-label">Media Sizing</span>
-          </span>
-          <p class="nds-item-desc">An <code class="nds-inline-code lang-html">&lt;img&gt;</code> that is a direct child is 80% wide and centered, and full width below 960px. A direct <code class="nds-inline-code lang-html">&lt;video&gt;</code> is centered, at most 60% of the screen height.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-menu-square"></i>
-            <span class="nds-label">Optional Titled Heading</span>
-          </span>
-          <p class="nds-item-desc">Add <code class="nds-inline-code lang-html">nds-block-title</code> when the block needs a heading. CSS custom properties set its size, weight, color and gap.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-grid"></i>
-            <span class="nds-label">Works Anywhere</span>
-          </span>
-          <p class="nds-item-desc">A block needs no parent: it keeps the same gap in a section body, a card or a grid column.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-distribute-vertical-center" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Consistent Vertical Rhythm</span>
+              <p class="nds-card-description">Each block puts a 32px gap below it. The last block in its parent has none, so the parent ends flush. A divider after a block replaces the gap with its own space.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-image-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Media Sizing</span>
+              <p class="nds-card-description">An <code class="nds-inline-code lang-html">&lt;img&gt;</code> that is a direct child is 80% wide and centered, and full width below 960px. A direct <code class="nds-inline-code lang-html">&lt;video&gt;</code> is centered, at most 60% of the screen height.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-menu-square" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Optional Titled Heading</span>
+              <p class="nds-card-description">Add <code class="nds-inline-code lang-html">nds-block-title</code> when the block needs a heading. CSS custom properties set its size, weight, color and gap.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-grid" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Works Anywhere</span>
+              <p class="nds-card-description">A block needs no parent: it keeps the same gap in a section body, a card or a grid column.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

@@ -173,57 +173,99 @@ A large bar (`nds-lg`) shows the percentage inside the fill, at its end. Small a
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">The script starts every circle and bar that has <code class="nds-inline-code lang-html">data-value</code> or <code class="nds-inline-code lang-html">data-num</code>. No init call is needed.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-percent-circle"></i>
-            <span class="nds-label">Data-Driven Values</span>
-          </span>
-          <p class="nds-item-desc">Change <code class="nds-inline-code lang-html">data-value</code>, <code class="nds-inline-code lang-html">data-num</code> or <code class="nds-inline-code lang-html">data-max</code> and the indicator redraws. A value above 100 shows as 100.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-scroll"></i>
-            <span class="nds-label">Scroll-triggered Fill</span>
-          </span>
-          <p class="nds-item-desc">The fill starts when half of the indicator is on the screen, so the user sees it move. With reduced motion, the value shows at once.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-motion-02"></i>
-            <span class="nds-label">Smooth Transitions</span>
-          </span>
-          <p class="nds-item-desc">The fill moves to each new value in 0.3 seconds, on the circle and the bar.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-resize-01"></i>
-            <span class="nds-label">Scalable Text</span>
-          </span>
-          <p class="nds-item-desc">The number, the text and the status icon grow with the circle, at every size class and at a custom <code class="nds-inline-code lang-css">--progress-size</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-accessibility"></i>
-            <span class="nds-label">Screen Reader Value</span>
-          </span>
-          <p class="nds-item-desc">The script adds <code class="nds-inline-code lang-html">role="progressbar"</code> if it is missing. It keeps <code class="nds-inline-code lang-html">aria-valuenow</code>, <code class="nds-inline-code lang-html">aria-valuemin</code> and <code class="nds-inline-code lang-html">aria-valuemax</code> in step with the value. A screen reader reads the value before the fill starts.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-api"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-js">NDS.Progress.setValue()</code> and <code class="nds-inline-code lang-js">NDS.Progress.setOutOf()</code> change the value from code.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">The script starts every circle and bar that has <code class="nds-inline-code lang-html">data-value</code> or <code class="nds-inline-code lang-html">data-num</code>. No init call is needed.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-percent-circle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Data-Driven Values</span>
+              <p class="nds-card-description">Change <code class="nds-inline-code lang-html">data-value</code>, <code class="nds-inline-code lang-html">data-num</code> or <code class="nds-inline-code lang-html">data-max</code> and the indicator redraws. A value above 100 shows as 100.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-scroll" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Scroll-triggered Fill</span>
+              <p class="nds-card-description">The fill starts when half of the indicator is on the screen, so the user sees it move. With reduced motion, the value shows at once.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-motion-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Smooth Transitions</span>
+              <p class="nds-card-description">The fill moves to each new value in 0.3 seconds, on the circle and the bar.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-resize-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Scalable Text</span>
+              <p class="nds-card-description">The number, the text and the status icon grow with the circle, at every size class and at a custom <code class="nds-inline-code lang-css">--progress-size</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-accessibility" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Screen Reader Value</span>
+              <p class="nds-card-description">The script adds <code class="nds-inline-code lang-html">role="progressbar"</code> if it is missing. It keeps <code class="nds-inline-code lang-html">aria-valuenow</code>, <code class="nds-inline-code lang-html">aria-valuemin</code> and <code class="nds-inline-code lang-html">aria-valuemax</code> in step with the value. A screen reader reads the value before the fill starts.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-api" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-js">NDS.Progress.setValue()</code> and <code class="nds-inline-code lang-js">NDS.Progress.setOutOf()</code> change the value from code.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

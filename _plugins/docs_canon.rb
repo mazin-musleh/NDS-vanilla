@@ -11,6 +11,7 @@ module DocsCanon
   CANON_RE = %r{<script type="text/html"([^>]*)>(.*?)</script>}m
   # Knobs only, scoped to the skeleton section classes (nds-doc-{name}). `.nds-doc-icons`: the icon catalog's copy tiles. `.nds-doc-swatch`, `-bar`, `-sample`, `-ramps`: the token catalog's previews.
   DOC_STYLE = '.nds-doc-features .nds-definition-list{--max-col:2;--mid-col:1;--min-col:1;--dl-icon-size:24px;--row-gap:24px;--col-gap:32px}' \
+              '.nds-doc-features .nds-feature-list{--max-col:2;--mid-col:1;--min-col:1}' \
               '.nds-doc-variants .nds-table{--min-width:900px}' \
               '.nds-grid.nds-doc-icons{--max-col:4;--min-col:2;--row-gap:var(--spacing-lg);--col-gap:var(--spacing-lg)}' \
               '.nds-grid.nds-doc-icons .nds-btn{--btn-width:100%;--btn-height:auto;--btn-gap:var(--spacing-md);--btn-FS:var(--typo-text-xs-FS);flex-direction:column;white-space:normal;padding-block:var(--spacing-2xl);word-break:break-word}' \

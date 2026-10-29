@@ -300,50 +300,86 @@ When something can refuse the move, such as validation or a request, call `NDS.S
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-loading-03"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">The script starts every <code class="nds-inline-code lang-html">nds-stepper</code> on the page. There is nothing to call.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-workflow-circle-06"></i>
-            <span class="nds-label">Automatic State Management</span>
-          </span>
-          <p class="nds-item-desc">Write <code class="nds-inline-code lang-html">data-current</code> and the script marks every step completed, current or upcoming. Write a new number later and the steps change with it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-sorting-one-9"></i>
-            <span class="nds-label">Automatic Numbers</span>
-          </span>
-          <p class="nds-item-desc">CSS numbers the circles in order, and a completed step shows a check mark. <code class="nds-inline-code lang-html">data-step-text</code> on a circle shows other text in place of the number.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-dashed-line-circle"></i>
-            <span class="nds-label">Placeholders Before Start</span>
-          </span>
-          <p class="nds-item-desc">Until the script starts, each step shows as a skeleton in its final layout. A radial stepper shows its first step, so it never shows empty.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-notification-03"></i>
-            <span class="nds-label">Step Change Events</span>
-          </span>
-          <p class="nds-item-desc">The stepper fires <code class="nds-inline-code lang-js">nds:stepper:change</code> after every move, with the current step, the step count and the percent done.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-target-01"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc">A script moves a stepper with <code class="nds-inline-code lang-js">NDS.Stepper.next(id)</code>, <code class="nds-inline-code lang-js">NDS.Stepper.prev(id)</code> and <code class="nds-inline-code lang-js">NDS.Stepper.goTo(id, step)</code>.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-loading-03" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">The script starts every <code class="nds-inline-code lang-html">nds-stepper</code> on the page. There is nothing to call.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-workflow-circle-06" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Automatic State Management</span>
+              <p class="nds-card-description">Write <code class="nds-inline-code lang-html">data-current</code> and the script marks every step completed, current or upcoming. Write a new number later and the steps change with it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-sorting-one-9" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Automatic Numbers</span>
+              <p class="nds-card-description">CSS numbers the circles in order, and a completed step shows a check mark. <code class="nds-inline-code lang-html">data-step-text</code> on a circle shows other text in place of the number.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-dashed-line-circle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Placeholders Before Start</span>
+              <p class="nds-card-description">Until the script starts, each step shows as a skeleton in its final layout. A radial stepper shows its first step, so it never shows empty.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-notification-03" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Step Change Events</span>
+              <p class="nds-card-description">The stepper fires <code class="nds-inline-code lang-js">nds:stepper:change</code> after every move, with the current step, the step count and the percent done.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-target-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description">A script moves a stepper with <code class="nds-inline-code lang-js">NDS.Stepper.next(id)</code>, <code class="nds-inline-code lang-js">NDS.Stepper.prev(id)</code> and <code class="nds-inline-code lang-js">NDS.Stepper.goTo(id, step)</code>.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

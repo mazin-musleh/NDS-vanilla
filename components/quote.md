@@ -87,43 +87,73 @@ Pick another component when:
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-code"></i>
-            <span class="nds-label">Semantic Markup</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-html">&lt;figure&gt;</code>, <code class="nds-inline-code lang-html">&lt;blockquote&gt;</code>, <code class="nds-inline-code lang-html">&lt;figcaption&gt;</code> and <code class="nds-inline-code lang-html">&lt;cite&gt;</code> mark up the quote the way the HTML standard describes a quote with its source.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-quote-up"></i>
-            <span class="nds-label">Quote Marks</span>
-          </span>
-          <p class="nds-item-desc">CSS draws the opening and closing marks, so screen readers skip them and they never block text selection. In English, the marks move to the other corners and mirror.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-profile"></i>
-            <span class="nds-label">Persona Author</span>
-          </span>
-          <p class="nds-item-desc">The author is a small <a class="nds-color" href="../components/persona">Persona</a>, so it shows the same avatar, name and role as everywhere else on the site.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
-            <span class="nds-label">Phone Layout</span>
-          </span>
-          <p class="nds-item-desc">On phones, the marks move above and below the text, so the text takes the full width. A quote with no size class also steps down one size, to MD. A size you wrote stays as written.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-variable"></i>
-            <span class="nds-label">CSS Knobs</span>
-          </span>
-          <p class="nds-item-desc">Twelve custom properties set the background, the border, the radius, the padding, the marks, and the title and text type.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-code" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Semantic Markup</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-html">&lt;figure&gt;</code>, <code class="nds-inline-code lang-html">&lt;blockquote&gt;</code>, <code class="nds-inline-code lang-html">&lt;figcaption&gt;</code> and <code class="nds-inline-code lang-html">&lt;cite&gt;</code> mark up the quote the way the HTML standard describes a quote with its source.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-quote-up" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Quote Marks</span>
+              <p class="nds-card-description">CSS draws the opening and closing marks, so screen readers skip them and they never block text selection. In English, the marks move to the other corners and mirror.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-profile" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Persona Author</span>
+              <p class="nds-card-description">The author is a small <a class="nds-color" href="../components/persona">Persona</a>, so it shows the same avatar, name and role as everywhere else on the site.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-smart-phone-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Phone Layout</span>
+              <p class="nds-card-description">On phones, the marks move above and below the text, so the text takes the full width. A quote with no size class also steps down one size, to MD. A size you wrote stays as written.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-variable" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">CSS Knobs</span>
+              <p class="nds-card-description">Twelve custom properties set the background, the border, the radius, the padding, the marks, and the title and text type.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

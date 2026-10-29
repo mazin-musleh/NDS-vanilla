@@ -287,64 +287,112 @@ A Per view choice has one row for each knob it changes: write them all in the sw
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">The script starts every <code class="nds-inline-code lang-html">nds-swiper</code> on the page. There is nothing to call.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-scroll-horizontal"></i>
-            <span class="nds-label">Native Scroll Snap</span>
-          </span>
-          <p class="nds-item-desc">The row scrolls and snaps with CSS, so a swipe, a drag and a trackpad feel native. The row still scrolls when the script has not loaded.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-01"></i>
-            <span class="nds-label">Stable First Paint</span>
-          </span>
-          <p class="nds-item-desc">The slides have their final width before the script runs, and the navigation row keeps its space. Nothing on the page moves when the swiper starts.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-dashboard-square-01"></i>
-            <span class="nds-label">Page-Count Navigation</span>
-          </span>
-          <p class="nds-item-desc">The script makes one bullet for each page, and makes them again when a new screen width changes the page count. When all the slides fit on one page, it hides the arrows and the bullets.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-image-02"></i>
-            <span class="nds-label">Lazy Images</span>
-          </span>
-          <p class="nds-item-desc">An image with <code class="nds-inline-code lang-html">data-src</code> or <code class="nds-inline-code lang-html">data-srcset</code> loads when its slide comes within 200px of the screen. When the images on screen finish loading, the slides one page before and after them load ahead at low priority, so the next slide is ready before it moves in. Until then, its box shows a skeleton.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard Navigation</span>
-          </span>
-          <p class="nds-item-desc">The swiper takes focus. The arrow keys move one page, in the reading direction. Home goes to the first page and End to the last.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">Nested Swipers</span>
-          </span>
-          <p class="nds-item-desc">A slide can hold another swiper. Each swiper uses only its own arrows and bullets, and the keys move the one that has focus.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-api"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc">A script can move a swiper to any slide, and the swiper fires <code class="nds-inline-code lang-js">nds:swiper:change</code> after every move.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">The script starts every <code class="nds-inline-code lang-html">nds-swiper</code> on the page. There is nothing to call.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-scroll-horizontal" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Native Scroll Snap</span>
+              <p class="nds-card-description">The row scrolls and snaps with CSS, so a swipe, a drag and a trackpad feel native. The row still scrolls when the script has not loaded.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Stable First Paint</span>
+              <p class="nds-card-description">The slides have their final width before the script runs, and the navigation row keeps its space. Nothing on the page moves when the swiper starts.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-dashboard-square-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Page-Count Navigation</span>
+              <p class="nds-card-description">The script makes one bullet for each page, and makes them again when a new screen width changes the page count. When all the slides fit on one page, it hides the arrows and the bullets.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-image-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Lazy Images</span>
+              <p class="nds-card-description">An image with <code class="nds-inline-code lang-html">data-src</code> or <code class="nds-inline-code lang-html">data-srcset</code> loads when its slide comes within 200px of the screen. When the images on screen finish loading, the slides one page before and after them load ahead at low priority, so the next slide is ready before it moves in. Until then, its box shows a skeleton.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Keyboard Navigation</span>
+              <p class="nds-card-description">The swiper takes focus. The arrow keys move one page, in the reading direction. Home goes to the first page and End to the last.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Nested Swipers</span>
+              <p class="nds-card-description">A slide can hold another swiper. Each swiper uses only its own arrows and bullets, and the keys move the one that has focus.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-api" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description">A script can move a swiper to any slide, and the swiper fires <code class="nds-inline-code lang-js">nds:swiper:change</code> after every move.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

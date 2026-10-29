@@ -201,43 +201,73 @@ The toolbar of the [Editor](../components/editor).
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-distribute-horizontal-center"></i>
-            <span class="nds-label">Leading and Trailing Clusters</span>
-          </span>
-          <p class="nds-item-desc">The end cluster stays at the trailing edge, also when it wraps onto a line of its own.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-search-01"></i>
-            <span class="nds-label">Search Field Growth</span>
-          </span>
-          <p class="nds-item-desc">A search box placed straight in the bar or in a row fills the free space on its line. Outside a bar, it is a full-width panel.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-view-off"></i>
-            <span class="nds-label">Empty-Slot Collapse</span>
-          </span>
-          <p class="nds-item-desc">A cluster or a row whose items are all <code class="nds-inline-code lang-html">hidden</code> takes no space. An applied-filters row leaves no gap until a filter is applied.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-align-left"></i>
-            <span class="nds-label">Bar Text</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-html">nds-toolbar-text</code> is block text in the paragraph color. A <code class="nds-inline-code lang-html">&lt;b&gt;</code> in it shows in medium weight. It also works outside a bar.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-bottom"></i>
-            <span class="nds-label">Sub-Row Spacing</span>
-          </span>
-          <p class="nds-item-desc">In a table sub-row, the bar leaves less space below it: <code class="nds-inline-code lang-css">var(--spacing-xl)</code> in place of <code class="nds-inline-code lang-css">var(--spacing-4xl)</code>.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-distribute-horizontal-center" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Leading and Trailing Clusters</span>
+              <p class="nds-card-description">The end cluster stays at the trailing edge, also when it wraps onto a line of its own.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-search-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Search Field Growth</span>
+              <p class="nds-card-description">A search box placed straight in the bar or in a row fills the free space on its line. Outside a bar, it is a full-width panel.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-view-off" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Empty-Slot Collapse</span>
+              <p class="nds-card-description">A cluster or a row whose items are all <code class="nds-inline-code lang-html">hidden</code> takes no space. An applied-filters row leaves no gap until a filter is applied.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-align-left" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Bar Text</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-html">nds-toolbar-text</code> is block text in the paragraph color. A <code class="nds-inline-code lang-html">&lt;b&gt;</code> in it shows in medium weight. It also works outside a bar.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-bottom" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Sub-Row Spacing</span>
+              <p class="nds-card-description">In a table sub-row, the bar leaves less space below it: <code class="nds-inline-code lang-css">var(--spacing-xl)</code> in place of <code class="nds-inline-code lang-css">var(--spacing-4xl)</code>.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

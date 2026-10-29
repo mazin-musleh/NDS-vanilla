@@ -161,50 +161,86 @@ A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-ch
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-tag-01"></i>
-            <span class="nds-label">Pure CSS</span>
-          </span>
-          <p class="nds-item-desc">No JavaScript needed. Every variant, size and state comes from classes and attributes.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-colors"></i>
-            <span class="nds-label">Six Variants</span>
-          </span>
-          <p class="nds-item-desc">Primary, neutral, secondary, secondary outline, subtle and transparent, each with its hover, pressed, selected, focused and disabled look.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-resize-01"></i>
-            <span class="nds-label">Three Sizes</span>
-          </span>
-          <p class="nds-item-desc">24px, 32px and 40px high. The label, the icon and the indicator scale with the size.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cursor-01"></i>
-            <span class="nds-label">Layout Options</span>
-          </span>
-          <p class="nds-item-desc">An icon before or after the label, icon only, label only, stacked, circle and full width, and a loading state.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
-            <span class="nds-label">Accessibility</span>
-          </span>
-          <p class="nds-item-desc">A focus ring for keyboard users, thicker borders in high contrast mode, no motion when the user asks for reduced motion, and plain print styles.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-puzzle"></i>
-            <span class="nds-label">Composable</span>
-          </span>
-          <p class="nds-item-desc">Combines with destructive, on color, loading, progress, status, badge, indicator and groups.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-tag-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Pure CSS</span>
+              <p class="nds-card-description">No JavaScript needed. Every variant, size and state comes from classes and attributes.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-colors" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Six Variants</span>
+              <p class="nds-card-description">Primary, neutral, secondary, secondary outline, subtle and transparent, each with its hover, pressed, selected, focused and disabled look.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-resize-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Three Sizes</span>
+              <p class="nds-card-description">24px, 32px and 40px high. The label, the icon and the indicator scale with the size.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-cursor-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Layout Options</span>
+              <p class="nds-card-description">An icon before or after the label, icon only, label only, stacked, circle and full width, and a loading state.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="nds-icon nds-hgi-eye" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Accessibility</span>
+              <p class="nds-card-description">A focus ring for keyboard users, thicker borders in high contrast mode, no motion when the user asks for reduced motion, and plain print styles.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-puzzle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Composable</span>
+              <p class="nds-card-description">Combines with destructive, on color, loading, progress, status, badge, indicator and groups.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

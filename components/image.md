@@ -105,36 +105,60 @@ Ratio, Focal point, Overlay and Radius set a custom property in the `style` attr
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-puzzle"></i>
-            <span class="nds-label">CSS Only</span>
-          </span>
-          <p class="nds-item-desc">An image needs no script and no init call. Every option is a custom property.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-image-crop"></i>
-            <span class="nds-label">Crop to Fill</span>
-          </span>
-          <p class="nds-item-desc">The photo covers the whole box at any size, and the box keeps its ratio. A row of photos of different sizes lines up.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-focus-point"></i>
-            <span class="nds-label">Focal Point</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-css">--image-pos-x</code> and <code class="nds-inline-code lang-css">--image-pos-y</code> pick the part of the photo that stays in view when the ratio cuts it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-aspect-ratio"></i>
-            <span class="nds-label">Custom Ratio</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-css">--image-ratio</code> takes any width / height, such as <code class="nds-inline-code lang-css">5 / 2</code>, not only the ratios in the builder. <code class="nds-inline-code lang-css">auto</code> keeps the photo's own shape.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-puzzle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">CSS Only</span>
+              <p class="nds-card-description">An image needs no script and no init call. Every option is a custom property.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-image-crop" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Crop to Fill</span>
+              <p class="nds-card-description">The photo covers the whole box at any size, and the box keeps its ratio. A row of photos of different sizes lines up.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-focus-point" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Focal Point</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-css">--image-pos-x</code> and <code class="nds-inline-code lang-css">--image-pos-y</code> pick the part of the photo that stays in view when the ratio cuts it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-aspect-ratio" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Custom Ratio</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-css">--image-ratio</code> takes any width / height, such as <code class="nds-inline-code lang-css">5 / 2</code>, not only the ratios in the builder. <code class="nds-inline-code lang-css">auto</code> keeps the photo's own shape.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

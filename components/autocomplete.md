@@ -130,57 +130,99 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">A field starts on its first focus, before the user types. A field added to the page later needs no init call.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-search-list-01"></i>
-            <span class="nds-label">Result Highlighting</span>
-          </span>
-          <p class="nds-item-desc">The typed text is marked in each result with <code class="nds-inline-code lang-html">&lt;mark&gt;</code>. The menu shows the first 20 results.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard Navigation</span>
-          </span>
-          <p class="nds-item-desc">The arrow keys move through the results and wrap at the ends. Home and End go to the first and the last result, and the result the keys reach scrolls into view. Enter picks it. Escape and Tab close the menu with no pick.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-loading-03"></i>
-            <span class="nds-label">Debounced Fetching</span>
-          </span>
-          <p class="nds-item-desc">A search starts 300 ms after the last keystroke. A new search cancels the request before it. A spinner replaces the clear button while a request runs. A request that fails is announced, and the next focus on the field tries it again. Results that arrive after the user left the field do not open the menu.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-access"></i>
-            <span class="nds-label">Screen Reader Support</span>
-          </span>
-          <p class="nds-item-desc">The input is a combobox, and the menu is a listbox of options. A screen reader reads the result the arrow keys reach while focus stays in the input.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cancel-circle"></i>
-            <span class="nds-label">Clear Button</span>
-          </span>
-          <p class="nds-item-desc">The clear button empties the field, drops the last pick and closes the menu. It fires <code class="nds-inline-code lang-js">nds:autocomplete:clear</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">Menu Placement</span>
-          </span>
-          <p class="nds-item-desc">The menu is as wide as the field. In a drawer, a modal or another scroll area that would cut it off, the menu moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code> while it is open.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">A field starts on its first focus, before the user types. A field added to the page later needs no init call.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-search-list-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Result Highlighting</span>
+              <p class="nds-card-description">The typed text is marked in each result with <code class="nds-inline-code lang-html">&lt;mark&gt;</code>. The menu shows the first 20 results.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Keyboard Navigation</span>
+              <p class="nds-card-description">The arrow keys move through the results and wrap at the ends. Home and End go to the first and the last result, and the result the keys reach scrolls into view. Enter picks it. Escape and Tab close the menu with no pick.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-loading-03" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Debounced Fetching</span>
+              <p class="nds-card-description">A search starts 300 ms after the last keystroke. A new search cancels the request before it. A spinner replaces the clear button while a request runs. A request that fails is announced, and the next focus on the field tries it again. Results that arrive after the user left the field do not open the menu.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-access" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Screen Reader Support</span>
+              <p class="nds-card-description">The input is a combobox, and the menu is a listbox of options. A screen reader reads the result the arrow keys reach while focus stays in the input.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-cancel-circle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Clear Button</span>
+              <p class="nds-card-description">The clear button empties the field, drops the last pick and closes the menu. It fires <code class="nds-inline-code lang-js">nds:autocomplete:clear</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Menu Placement</span>
+              <p class="nds-card-description">The menu is as wide as the field. In a drawer, a modal or another scroll area that would cut it off, the menu moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code> while it is open.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

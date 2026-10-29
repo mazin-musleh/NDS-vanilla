@@ -153,57 +153,99 @@ NDS.Chart.create('#chart-days-root', {
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">At page load the script draws every <code class="nds-inline-code lang-html">.nds-chart</code> that has a series in its attributes. Call <code class="nds-inline-code lang-js">NDS.Chart.init()</code> after you add charts to the page. It draws the new ones and redraws any chart that was emptied.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-resize-01"></i>
-            <span class="nds-label">Responsive Sizing</span>
-          </span>
-          <p class="nds-item-desc">The chart fills its container and redraws when the container width changes. It also redraws when <code class="nds-inline-code lang-html">dir</code> or <code class="nds-inline-code lang-html">lang</code> changes on <code class="nds-inline-code lang-html">&lt;html&gt;</code>, so the axes follow the text direction.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-touch-interaction-01"></i>
-            <span class="nds-label">Line Crosshair</span>
-          </span>
-          <p class="nds-item-desc">On a line chart, a vertical line snaps to the nearest point, enlarges its dots, and one tooltip lists every series there. On a touch screen, a tap pins it and a second tap on the same point clears it. A vertical swipe still scrolls the page.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-analytics-up"></i>
-            <span class="nds-label">Smart Scaling</span>
-          </span>
-          <p class="nds-item-desc">The y axis steps are round numbers that cover the data. Values of 1,000 and more are shortened in the language of the browser, such as 1.2K. The legend wraps onto more lines when it runs out of width.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-customize"></i>
-            <span class="nds-label">CSS Theming</span>
-          </span>
-          <p class="nds-item-desc">Colors come from <code class="nds-inline-code lang-css">--chart-color-1</code> to <code class="nds-inline-code lang-css">--chart-color-6</code>, and the grid, text and tooltip have their own properties. Set them on the chart or on any parent.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-printer"></i>
-            <span class="nds-label">Print and Accessibility</span>
-          </span>
-          <p class="nds-item-desc">The SVG has <code class="nds-inline-code lang-html">role="img"</code> and an <code class="nds-inline-code lang-html">aria-label</code>: the chart element's own <code class="nds-inline-code lang-html">aria-label</code>, else the chart type. The tooltip is hidden in print, and the hover transitions are off when the user asks for reduced motion.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-chart-line-data-01"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc">Create, update and destroy a chart from your code. <code class="nds-inline-code lang-js">setOptions()</code> merges the new options into the current ones and redraws.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">At page load the script draws every <code class="nds-inline-code lang-html">.nds-chart</code> that has a series in its attributes. Call <code class="nds-inline-code lang-js">NDS.Chart.init()</code> after you add charts to the page. It draws the new ones and redraws any chart that was emptied.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-resize-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Responsive Sizing</span>
+              <p class="nds-card-description">The chart fills its container and redraws when the container width changes. It also redraws when <code class="nds-inline-code lang-html">dir</code> or <code class="nds-inline-code lang-html">lang</code> changes on <code class="nds-inline-code lang-html">&lt;html&gt;</code>, so the axes follow the text direction.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-touch-interaction-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Line Crosshair</span>
+              <p class="nds-card-description">On a line chart, a vertical line snaps to the nearest point, enlarges its dots, and one tooltip lists every series there. On a touch screen, a tap pins it and a second tap on the same point clears it. A vertical swipe still scrolls the page.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-analytics-up" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Smart Scaling</span>
+              <p class="nds-card-description">The y axis steps are round numbers that cover the data. Values of 1,000 and more are shortened in the language of the browser, such as 1.2K. The legend wraps onto more lines when it runs out of width.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-customize" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">CSS Theming</span>
+              <p class="nds-card-description">Colors come from <code class="nds-inline-code lang-css">--chart-color-1</code> to <code class="nds-inline-code lang-css">--chart-color-6</code>, and the grid, text and tooltip have their own properties. Set them on the chart or on any parent.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-printer" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Print and Accessibility</span>
+              <p class="nds-card-description">The SVG has <code class="nds-inline-code lang-html">role="img"</code> and an <code class="nds-inline-code lang-html">aria-label</code>: the chart element's own <code class="nds-inline-code lang-html">aria-label</code>, else the chart type. The tooltip is hidden in print, and the hover transitions are off when the user asks for reduced motion.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-chart-line-data-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description">Create, update and destroy a chart from your code. <code class="nds-inline-code lang-js">setOptions()</code> merges the new options into the current ones and redraws.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

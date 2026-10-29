@@ -75,43 +75,73 @@ The canon is a Share button, and every option goes on its label. The label start
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-view-off-slash"></i>
-            <span class="nds-label">The hidden Attribute Wins</span>
-          </span>
-          <p class="nds-item-desc">An element with <code class="nds-inline-code lang-html">hidden</code> stays hidden even when a component or a utility gives it a flex or grid display. The rule uses <code class="nds-inline-code lang-css">display: none !important</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
-            <span class="nds-label">Exact Width Ranges</span>
-          </span>
-          <p class="nds-item-desc">Each <code class="nds-inline-code lang-html">data-hidden</code> token hides the element only inside its own range. Hiding at MD does not also hide at SM.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-puzzle"></i>
-            <span class="nds-label">Combined Ranges</span>
-          </span>
-          <p class="nds-item-desc">Tokens separated by spaces add up. <code class="nds-inline-code lang-html">data-hidden="sm md"</code> hides the element below 960px, and <code class="nds-inline-code lang-html">data-hidden="md lg"</code> shows it on phones only.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-ear"></i>
-            <span class="nds-label">Screen Reader Text</span>
-          </span>
-          <p class="nds-item-desc">The <code class="nds-inline-code lang-html">sr</code> token and <code class="nds-inline-code lang-html">nds-sr-only</code> remove the element from the screen, but screen readers still read it. A button that shows only its icon keeps its name.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-flash"></i>
-            <span class="nds-label">CSS Only</span>
-          </span>
-          <p class="nds-item-desc">The <code class="nds-inline-code lang-html">hidden</code> rule loads with the page's first styles, so a hidden element never shows before the main CSS arrives. There is nothing to initialize.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-view-off-slash" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">The hidden Attribute Wins</span>
+              <p class="nds-card-description">An element with <code class="nds-inline-code lang-html">hidden</code> stays hidden even when a component or a utility gives it a flex or grid display. The rule uses <code class="nds-inline-code lang-css">display: none !important</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-smart-phone-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Exact Width Ranges</span>
+              <p class="nds-card-description">Each <code class="nds-inline-code lang-html">data-hidden</code> token hides the element only inside its own range. Hiding at MD does not also hide at SM.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-puzzle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Combined Ranges</span>
+              <p class="nds-card-description">Tokens separated by spaces add up. <code class="nds-inline-code lang-html">data-hidden="sm md"</code> hides the element below 960px, and <code class="nds-inline-code lang-html">data-hidden="md lg"</code> shows it on phones only.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-ear" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Screen Reader Text</span>
+              <p class="nds-card-description">The <code class="nds-inline-code lang-html">sr</code> token and <code class="nds-inline-code lang-html">nds-sr-only</code> remove the element from the screen, but screen readers still read it. A button that shows only its icon keeps its name.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-flash" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">CSS Only</span>
+              <p class="nds-card-description">The <code class="nds-inline-code lang-html">hidden</code> rule loads with the page's first styles, so a hidden element never shows before the main CSS arrives. There is nothing to initialize.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

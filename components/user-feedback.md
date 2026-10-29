@@ -330,50 +330,86 @@ To send the data another way, listen for `nds:user-feedback:submit` and call `pr
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">The loader starts every <code class="nds-inline-code lang-html">.nds-user-feedback</code> on the page. No init call is needed.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cookie"></i>
-            <span class="nds-label">Submission Memory</span>
-          </span>
-          <p class="nds-item-desc">After a success, a cookie for the page path is saved for 365 days. On the next visit, the widget shows the success message instead of the question. The cookie is necessary, so it needs no consent.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-translate"></i>
-            <span class="nds-label">Bilingual Feedback Messages</span>
-          </span>
-          <p class="nds-item-desc">The success and error messages follow the page language, Arabic or English.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-task-done-01"></i>
-            <span class="nds-label">Form Validation</span>
-          </span>
-          <p class="nds-item-desc">Submit checks every field rule, such as <code class="nds-inline-code lang-html">data-required</code> and <code class="nds-inline-code lang-html">data-min-checked</code>, before it sends. Focus moves to the first field that fails.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-sent"></i>
-            <span class="nds-label">Scroll After Submit</span>
-          </span>
-          <p class="nds-item-desc">When the message shows and the widget is hidden under the sticky navigation, the page scrolls the widget back into view.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
-            <span class="nds-label">Mobile Layout</span>
-          </span>
-          <p class="nds-item-desc">On phones, each row stacks, and Close moves to the top of the widget.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">The loader starts every <code class="nds-inline-code lang-html">.nds-user-feedback</code> on the page. No init call is needed.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-cookie" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Submission Memory</span>
+              <p class="nds-card-description">After a success, a cookie for the page path is saved for 365 days. On the next visit, the widget shows the success message instead of the question. The cookie is necessary, so it needs no consent.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-translate" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Bilingual Feedback Messages</span>
+              <p class="nds-card-description">The success and error messages follow the page language, Arabic or English.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-task-done-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Form Validation</span>
+              <p class="nds-card-description">Submit checks every field rule, such as <code class="nds-inline-code lang-html">data-required</code> and <code class="nds-inline-code lang-html">data-min-checked</code>, before it sends. Focus moves to the first field that fails.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-sent" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Scroll After Submit</span>
+              <p class="nds-card-description">When the message shows and the widget is hidden under the sticky navigation, the page scrolls the widget back into view.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-smart-phone-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Mobile Layout</span>
+              <p class="nds-card-description">On phones, each row stacks, and Close moves to the top of the widget.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

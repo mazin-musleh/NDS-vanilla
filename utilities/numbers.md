@@ -107,43 +107,73 @@ The counter reads `data-counter` when the count starts, not when the page loads.
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Automatic Start</span>
-          </span>
-          <p class="nds-item-desc">The loader starts Numbers on any page that has <code class="nds-inline-code lang-html">nds-number-format</code> or <code class="nds-inline-code lang-html">data-counter</code>. You write no script.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-calculator-01"></i>
-            <span class="nds-label">Locale Separators</span>
-          </span>
-          <p class="nds-item-desc">Separators follow the <code class="nds-inline-code lang-html">lang</code> of the page, and digits are always Latin (0 to 9), whatever the language of the browser. Text before and after the number, the sign and the decimals stay.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">Child Elements Kept</span>
-          </span>
-          <p class="nds-item-desc">Only the first text in the element that holds a digit changes. Icons and other child elements stay in place.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-repeat"></i>
-            <span class="nds-label">Safe to Run Again</span>
-          </span>
-          <p class="nds-item-desc">The script remembers the text it wrote and reads the original number again. A number formatted twice reads the same as one formatted once, in every language.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-code"></i>
-            <span class="nds-label">Code Blocks Skipped</span>
-          </span>
-          <p class="nds-item-desc">A number inside <code class="nds-inline-code lang-html">&lt;code&gt;</code> stays as written.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Automatic Start</span>
+              <p class="nds-card-description">The loader starts Numbers on any page that has <code class="nds-inline-code lang-html">nds-number-format</code> or <code class="nds-inline-code lang-html">data-counter</code>. You write no script.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-calculator-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Locale Separators</span>
+              <p class="nds-card-description">Separators follow the <code class="nds-inline-code lang-html">lang</code> of the page, and digits are always Latin (0 to 9), whatever the language of the browser. Text before and after the number, the sign and the decimals stay.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Child Elements Kept</span>
+              <p class="nds-card-description">Only the first text in the element that holds a digit changes. Icons and other child elements stay in place.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-repeat" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Safe to Run Again</span>
+              <p class="nds-card-description">The script remembers the text it wrote and reads the original number again. A number formatted twice reads the same as one formatted once, in every language.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-code" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Code Blocks Skipped</span>
+              <p class="nds-card-description">A number inside <code class="nds-inline-code lang-html">&lt;code&gt;</code> stays as written.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

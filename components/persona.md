@@ -135,36 +135,60 @@ The Actions and Details parts go at the end of `.nds-persona`, after the info bl
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-arrow-expand"></i>
-            <span class="nds-label">One Size Class for Every Part</span>
-          </span>
-          <p class="nds-item-desc">A size class sets the size of the avatar and of all three lines together. You change one class, not four sizes.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-user-circle"></i>
-            <span class="nds-label">Avatar Size From the Persona</span>
-          </span>
-          <p class="nds-item-desc">The avatar inside takes its size from the Persona, so it needs no size class. A size class on the avatar still wins.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-hierarchy"></i>
-            <span class="nds-label">Full Row After the Divider</span>
-          </span>
-          <p class="nds-item-desc">Every element after the <code class="nds-inline-code lang-html">nds-divider</code> takes its own full row, below the avatar and the text: an action row, a definition list, or your own content.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-variable"></i>
-            <span class="nds-label">Knobs for Each Line</span>
-          </span>
-          <p class="nds-item-desc">The name, the role and the description each have a font size, a line height and a color knob, such as <code class="nds-inline-code lang-css">--persona-name-color</code>. Restyle one line and keep the others.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-expand" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">One Size Class for Every Part</span>
+              <p class="nds-card-description">A size class sets the size of the avatar and of all three lines together. You change one class, not four sizes.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-user-circle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Avatar Size From the Persona</span>
+              <p class="nds-card-description">The avatar inside takes its size from the Persona, so it needs no size class. A size class on the avatar still wins.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-hierarchy" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Full Row After the Divider</span>
+              <p class="nds-card-description">Every element after the <code class="nds-inline-code lang-html">nds-divider</code> takes its own full row, below the avatar and the text: an action row, a definition list, or your own content.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-variable" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Knobs for Each Line</span>
+              <p class="nds-card-description">The name, the role and the description each have a font size, a line height and a color knob, such as <code class="nds-inline-code lang-css">--persona-name-color</code>. Restyle one line and keep the others.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

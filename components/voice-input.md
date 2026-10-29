@@ -157,57 +157,99 @@ A button inside `.nds-form-control` dictates into that field's input or text are
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto Start</span>
-          </span>
-          <p class="nds-item-desc">The loader starts voice input when the page has a <code class="nds-inline-code lang-html">nds-voice-input</code> button. One click listener on the document serves every button, including buttons added later.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-language-circle"></i>
-            <span class="nds-label">Page Language</span>
-          </span>
-          <p class="nds-item-desc">Each time the mic opens, the script reads <code class="nds-inline-code lang-html">lang</code> on <code class="nds-inline-code lang-html">&lt;html&gt;</code>. Recognition uses Arabic (<code class="nds-inline-code lang-html">ar-SA</code>) when it is <code class="nds-inline-code lang-html">ar</code>, and English (<code class="nds-inline-code lang-html">en-US</code>) for any other value. The field needs no <code class="nds-inline-code lang-html">lang</code> of its own.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-voice"></i>
-            <span class="nds-label">Live Transcript</span>
-          </span>
-          <p class="nds-item-desc">Words show in the field while the user speaks. They go in at the caret, or over the selected text, and the rest of the text stays. A field the user was not in takes them at the end. The final text fires <code class="nds-inline-code lang-js">input</code> and <code class="nds-inline-code lang-js">change</code>, so a form treats it like typed text.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-accessibility"></i>
-            <span class="nds-label">Mic State</span>
-          </span>
-          <p class="nds-item-desc">While the mic is open, the button has <code class="nds-inline-code lang-html">aria-pressed="true"</code> and the label "Stop voice input". A mic icon inside the field cycles color. The field gets the focus.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-volume-high"></i>
-            <span class="nds-label">Audio Tones</span>
-          </span>
-          <p class="nds-item-desc">A high tone plays when the mic opens, a low tone when it closes, and a lower tone on an error.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-timer-02"></i>
-            <span class="nds-label">Time Limit</span>
-          </span>
-          <p class="nds-item-desc">The mic closes 30 seconds after it opens, and the field shows a timeout message. It also closes when focus leaves the field, when the form is sent, or when the button is removed from the page.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-checkmark-circle-01"></i>
-            <span class="nds-label">Error Messages</span>
-          </span>
-          <p class="nds-item-desc">An error shows under the field for 4 seconds, in the page language, and screen readers announce it. On a browser without speech recognition, a click shows a "not supported" message and the field still takes typed text.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto Start</span>
+              <p class="nds-card-description">The loader starts voice input when the page has a <code class="nds-inline-code lang-html">nds-voice-input</code> button. One click listener on the document serves every button, including buttons added later.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-language-circle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Page Language</span>
+              <p class="nds-card-description">Each time the mic opens, the script reads <code class="nds-inline-code lang-html">lang</code> on <code class="nds-inline-code lang-html">&lt;html&gt;</code>. Recognition uses Arabic (<code class="nds-inline-code lang-html">ar-SA</code>) when it is <code class="nds-inline-code lang-html">ar</code>, and English (<code class="nds-inline-code lang-html">en-US</code>) for any other value. The field needs no <code class="nds-inline-code lang-html">lang</code> of its own.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-voice" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Live Transcript</span>
+              <p class="nds-card-description">Words show in the field while the user speaks. They go in at the caret, or over the selected text, and the rest of the text stays. A field the user was not in takes them at the end. The final text fires <code class="nds-inline-code lang-js">input</code> and <code class="nds-inline-code lang-js">change</code>, so a form treats it like typed text.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-accessibility" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Mic State</span>
+              <p class="nds-card-description">While the mic is open, the button has <code class="nds-inline-code lang-html">aria-pressed="true"</code> and the label "Stop voice input". A mic icon inside the field cycles color. The field gets the focus.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-volume-high" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Audio Tones</span>
+              <p class="nds-card-description">A high tone plays when the mic opens, a low tone when it closes, and a lower tone on an error.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-timer-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Time Limit</span>
+              <p class="nds-card-description">The mic closes 30 seconds after it opens, and the field shows a timeout message. It also closes when focus leaves the field, when the form is sent, or when the button is removed from the page.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Error Messages</span>
+              <p class="nds-card-description">An error shows under the field for 4 seconds, in the page language, and screen readers announce it. On a browser without speech recognition, a click shows a "not supported" message and the field still takes typed text.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

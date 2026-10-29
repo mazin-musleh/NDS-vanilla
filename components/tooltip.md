@@ -142,50 +142,86 @@ With no `data-tooltip-message`, the root's `title` is the message. Until the scr
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-tooltip</code> on the page starts by itself, after the page first shows. Call <code class="nds-inline-code lang-js">NDS.Tooltip.reinit()</code> after you add new ones.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-location-star-01"></i>
-            <span class="nds-label">Balloon Position</span>
-          </span>
-          <p class="nds-item-desc">While open, the balloon moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code>, so no container cuts it off. It opens below the trigger, and above it when there is more room there. It never runs past the side of the screen, and the arrow points at the trigger.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Dismissal</span>
-          </span>
-          <p class="nds-item-desc">A click outside or Escape closes the balloon, wherever focus is, so a balloon opened by hover closes too. While the page scrolls, the balloon stays on its trigger and closes when the trigger leaves view. A browser without CSS anchor positioning closes it on a page scroll instead. Escape on the trigger also returns focus to it. Only one tooltip is open at a time.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-shield-user"></i>
-            <span class="nds-label">Accessibility</span>
-          </span>
-          <p class="nds-item-desc">The balloon gets <code class="nds-inline-code lang-html">role="tooltip"</code> and an id. The trigger's <code class="nds-inline-code lang-html">aria-describedby</code> points to it, so a screen reader reads the message when the trigger gets focus.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-02"></i>
-            <span class="nds-label">No Layout Shift</span>
-          </span>
-          <p class="nds-item-desc">An empty auto root keeps the space of its help icon until the script adds it, so the text after it does not move.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-code-circle"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc">Open, close and remove a tooltip from a script, and listen to its open and close events.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">.nds-tooltip</code> on the page starts by itself, after the page first shows. Call <code class="nds-inline-code lang-js">NDS.Tooltip.reinit()</code> after you add new ones.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-location-star-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Balloon Position</span>
+              <p class="nds-card-description">While open, the balloon moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code>, so no container cuts it off. It opens below the trigger, and above it when there is more room there. It never runs past the side of the screen, and the arrow points at the trigger.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Dismissal</span>
+              <p class="nds-card-description">A click outside or Escape closes the balloon, wherever focus is, so a balloon opened by hover closes too. While the page scrolls, the balloon stays on its trigger and closes when the trigger leaves view. A browser without CSS anchor positioning closes it on a page scroll instead. Escape on the trigger also returns focus to it. Only one tooltip is open at a time.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-shield-user" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Accessibility</span>
+              <p class="nds-card-description">The balloon gets <code class="nds-inline-code lang-html">role="tooltip"</code> and an id. The trigger's <code class="nds-inline-code lang-html">aria-describedby</code> points to it, so a screen reader reads the message when the trigger gets focus.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">No Layout Shift</span>
+              <p class="nds-card-description">An empty auto root keeps the space of its help icon until the script adds it, so the text after it does not move.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-code-circle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description">Open, close and remove a tooltip from a script, and listen to its open and close events.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

@@ -174,43 +174,73 @@ To show a saved value, write it in the `value` of `.nds-select-value`, and leave
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-magic-wand-01"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-select-input</code> works with no setup. The script builds a field's list the first time the user focuses it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-database-01"></i>
-            <span class="nds-label">Form Value</span>
-          </span>
-          <p class="nds-item-desc">The hidden <code class="nds-inline-code lang-html">.nds-select-value</code> holds the picked option's <code class="nds-inline-code lang-html">data-value</code> and posts with the form. The text box shows the label and does not post.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard Support</span>
-          </span>
-          <p class="nds-item-desc">Enter, Space and the arrow keys open the list on the picked option. The arrow keys move through the options, and Escape closes the list and returns focus to the field.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-shield-01"></i>
-            <span class="nds-label">Required Check</span>
-          </span>
-          <p class="nds-item-desc">With <code class="nds-inline-code lang-html">data-required</code>, the form checks the hidden value at submit. An empty field shows "Please select an option" in the page language and blocks the submit.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-arrow-shrink-02"></i>
-            <span class="nds-label">List Position</span>
-          </span>
-          <p class="nds-item-desc">The list opens under the field, as wide as the field. In a modal or a scrolling box, it moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code>, so nothing clips it.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-magic-wand-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">.nds-select-input</code> works with no setup. The script builds a field's list the first time the user focuses it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-database-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Form Value</span>
+              <p class="nds-card-description">The hidden <code class="nds-inline-code lang-html">.nds-select-value</code> holds the picked option's <code class="nds-inline-code lang-html">data-value</code> and posts with the form. The text box shows the label and does not post.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Keyboard Support</span>
+              <p class="nds-card-description">Enter, Space and the arrow keys open the list on the picked option. The arrow keys move through the options, and Escape closes the list and returns focus to the field.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-shield-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Required Check</span>
+              <p class="nds-card-description">With <code class="nds-inline-code lang-html">data-required</code>, the form checks the hidden value at submit. An empty field shows "Please select an option" in the page language and blocks the submit.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-shrink-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">List Position</span>
+              <p class="nds-card-description">The list opens under the field, as wide as the field. In a modal or a scrolling box, it moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code>, so nothing clips it.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

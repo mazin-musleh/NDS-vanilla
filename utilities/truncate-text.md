@@ -75,36 +75,60 @@ The card title stays at one line. A Lines option sets `--truncate` in the `style
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-code"></i>
-            <span class="nds-label">CSS Only</span>
-          </span>
-          <p class="nds-item-desc">One class and no JavaScript. There is nothing to start, and nothing to clean up.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-font"></i>
-            <span class="nds-label">Any Text Element</span>
-          </span>
-          <p class="nds-item-desc">Works on a heading, a paragraph, a <code class="nds-inline-code lang-html">&lt;span&gt;</code> or a <code class="nds-inline-code lang-html">&lt;div&gt;</code>. A <code class="nds-inline-code lang-html">&lt;span&gt;</code> becomes a block, so it takes its own line.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-horizontal-resize"></i>
-            <span class="nds-label">Container Width</span>
-          </span>
-          <p class="nds-item-desc">When the container gets wider or narrower, the text clips at the new width.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-accessibility"></i>
-            <span class="nds-label">Full Text for Screen Readers</span>
-          </span>
-          <p class="nds-item-desc">The class clips only what shows. The full text stays in the page, so a screen reader reads all of it.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-code" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">CSS Only</span>
+              <p class="nds-card-description">One class and no JavaScript. There is nothing to start, and nothing to clean up.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-font" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Any Text Element</span>
+              <p class="nds-card-description">Works on a heading, a paragraph, a <code class="nds-inline-code lang-html">&lt;span&gt;</code> or a <code class="nds-inline-code lang-html">&lt;div&gt;</code>. A <code class="nds-inline-code lang-html">&lt;span&gt;</code> becomes a block, so it takes its own line.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-horizontal-resize" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Container Width</span>
+              <p class="nds-card-description">When the container gets wider or narrower, the text clips at the new width.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-accessibility" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Full Text for Screen Readers</span>
+              <p class="nds-card-description">The class clips only what shows. The full text stays in the page, so a screen reader reads all of it.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

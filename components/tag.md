@@ -119,36 +119,60 @@ A row on `.nds-tag:not([data-status])` applies to a standard tag only, and a row
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-tag-01"></i>
-            <span class="nds-label">Pure CSS</span>
-          </span>
-          <p class="nds-item-desc">Tags need no JavaScript. Every color, style and size comes from classes and attributes.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-wrap"></i>
-            <span class="nds-label">Label Truncation</span>
-          </span>
-          <p class="nds-item-desc">A long label stays on one line and ends with an ellipsis at 160px. A tag never grows wider than its container: it shrinks first, and the label is cut sooner.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-colors"></i>
-            <span class="nds-label">Color by Class or Status</span>
-          </span>
-          <p class="nds-item-desc">A class such as <code class="nds-inline-code lang-html">nds-green</code> colors a standard tag. <code class="nds-inline-code lang-html">data-status</code> colors a status tag, which ignores the color classes.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-universal-access"></i>
-            <span class="nds-label">Accessible Icon Only</span>
-          </span>
-          <p class="nds-item-desc">An icon-only tag hides its label from view but not from screen readers, so the tag keeps its name.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-tag-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Pure CSS</span>
+              <p class="nds-card-description">Tags need no JavaScript. Every color, style and size comes from classes and attributes.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-wrap" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Label Truncation</span>
+              <p class="nds-card-description">A long label stays on one line and ends with an ellipsis at 160px. A tag never grows wider than its container: it shrinks first, and the label is cut sooner.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-colors" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Color by Class or Status</span>
+              <p class="nds-card-description">A class such as <code class="nds-inline-code lang-html">nds-green</code> colors a standard tag. <code class="nds-inline-code lang-html">data-status</code> colors a status tag, which ignores the color classes.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-universal-access" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Accessible Icon Only</span>
+              <p class="nds-card-description">An icon-only tag hides its label from view but not from screen readers, so the tag keeps its name.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

@@ -182,43 +182,73 @@ The Drawer row, Card header and Timeline structures show the tile beside the tex
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-code"></i>
-            <span class="nds-label">Inline Markup</span>
-          </span>
-          <p class="nds-item-desc">The tile is a <code class="nds-inline-code lang-html">&lt;time&gt;</code> of <code class="nds-inline-code lang-html">&lt;span&gt;</code> parts, so it is valid inside a link or a button.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-calendar-check-in-01"></i>
-            <span class="nds-label">Machine-Readable Date</span>
-          </span>
-          <p class="nds-item-desc">The <code class="nds-inline-code lang-html">datetime</code> attribute holds the full date, so scripts and search engines read the date that the short text shows.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-translate"></i>
-            <span class="nds-label">Text from the Date</span>
-          </span>
-          <p class="nds-item-desc">An empty tile gets its text from <code class="nds-inline-code lang-html">datetime</code>, before the page shows: in the page's language, and in Hijri inside a <code class="nds-inline-code lang-html">data-calendar="hijri"</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-left-to-right-list-bullet"></i>
-            <span class="nds-label">Aligned Lists</span>
-          </span>
-          <p class="nds-item-desc">Every tile of one size has the same fixed width, so the titles in a list of rows line up. A weekday or a month too long for the width ends in an ellipsis.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-paint-board"></i>
-            <span class="nds-label">Status from a Parent</span>
-          </span>
-          <p class="nds-item-desc">A <code class="nds-inline-code lang-html">data-status</code> on the tile or on a parent, such as a drawer row, colors the tile, the same way it colors a featured icon. In a timeline, the step state colors it: a solid fill for the current event, gray for the events to come.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-code" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Inline Markup</span>
+              <p class="nds-card-description">The tile is a <code class="nds-inline-code lang-html">&lt;time&gt;</code> of <code class="nds-inline-code lang-html">&lt;span&gt;</code> parts, so it is valid inside a link or a button.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-calendar-check-in-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Machine-Readable Date</span>
+              <p class="nds-card-description">The <code class="nds-inline-code lang-html">datetime</code> attribute holds the full date, so scripts and search engines read the date that the short text shows.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-translate" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Text from the Date</span>
+              <p class="nds-card-description">An empty tile gets its text from <code class="nds-inline-code lang-html">datetime</code>, before the page shows: in the page's language, and in Hijri inside a <code class="nds-inline-code lang-html">data-calendar="hijri"</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-left-to-right-list-bullet" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Aligned Lists</span>
+              <p class="nds-card-description">Every tile of one size has the same fixed width, so the titles in a list of rows line up. A weekday or a month too long for the width ends in an ellipsis.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paint-board" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Status from a Parent</span>
+              <p class="nds-card-description">A <code class="nds-inline-code lang-html">data-status</code> on the tile or on a parent, such as a drawer row, colors the tile, the same way it colors a featured icon. In a timeline, the step state colors it: a solid fill for the current event, gray for the events to come.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

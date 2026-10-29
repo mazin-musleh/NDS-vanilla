@@ -147,43 +147,73 @@ Checked goes on one switch: the builder uses `#switch-1` or `#switch1`, but on a
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Form Integration</span>
-          </span>
-          <p class="nds-item-desc">Every switch starts on its own. No init call is needed.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Toggle Input</span>
-          </span>
-          <p class="nds-item-desc">A click on the track, on a label inside the control or on the label in the field header toggles the switch. Space and Enter toggle it from the keyboard. Every change of the input, including <code class="nds-inline-code lang-js">NDS.setValue()</code>, checks the field again and fires <code class="nds-inline-code lang-js">nds:switch:change</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-square-lock-02"></i>
-            <span class="nds-label">Disabled Sync</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-html">disabled</code> on the input and <code class="nds-inline-code lang-html">data-state="disabled"</code> on the container stay in sync, in both directions.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cursor-02"></i>
-            <span class="nds-label">Visual Feedback</span>
-          </span>
-          <p class="nds-item-desc">A ripple grows around the track on hover. The thumb widens while the track is pressed, and slides to the other end when the switch toggles.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
-            <span class="nds-label">Mobile Spacing</span>
-          </span>
-          <p class="nds-item-desc">On phones, the gap between a switch and its label is smaller, and so is the gap between rows in a group.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Form Integration</span>
+              <p class="nds-card-description">Every switch starts on its own. No init call is needed.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Toggle Input</span>
+              <p class="nds-card-description">A click on the track, on a label inside the control or on the label in the field header toggles the switch. Space and Enter toggle it from the keyboard. Every change of the input, including <code class="nds-inline-code lang-js">NDS.setValue()</code>, checks the field again and fires <code class="nds-inline-code lang-js">nds:switch:change</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-square-lock-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Disabled Sync</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-html">disabled</code> on the input and <code class="nds-inline-code lang-html">data-state="disabled"</code> on the container stay in sync, in both directions.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-cursor-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Visual Feedback</span>
+              <p class="nds-card-description">A ripple grows around the track on hover. The thumb widens while the track is pressed, and slides to the other end when the switch toggles.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-smart-phone-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Mobile Spacing</span>
+              <p class="nds-card-description">On phones, the gap between a switch and its label is smaller, and so is the gap between rows in a group.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

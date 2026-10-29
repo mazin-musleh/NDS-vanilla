@@ -157,50 +157,86 @@ Pick another component when:
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-colors"></i>
-            <span class="nds-label">Trend Status Theming</span>
-          </span>
-          <p class="nds-item-desc">One <code class="nds-inline-code lang-html">data-status</code> on the card colors the trend, the chart line and the header featured icon together.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-chart-line-data-01"></i>
-            <span class="nds-label">Inline Sparkline</span>
-          </span>
-          <p class="nds-item-desc">The metric removes the chart's 200px minimum height, so a short chart fits in the card.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-align-left"></i>
-            <span class="nds-label">Always-LTR Sparklines</span>
-          </span>
-          <p class="nds-item-desc">The chart reads from oldest to newest, left to right, on an RTL page too.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-top"></i>
-            <span class="nds-label">Dashboard Header</span>
-          </span>
-          <p class="nds-item-desc">In a metric card, the title is smaller and a divider sits above the actions. A menu button goes in the header's <code class="nds-inline-code lang-css">.nds-card-corner</code>, as in any card.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">Card Composition</span>
-          </span>
-          <p class="nds-item-desc">A metric card is a normal card. Its classes, such as <code class="nds-inline-code lang-html">nds-stroke</code>, <code class="nds-inline-code lang-html">nds-shadow</code> and <code class="nds-inline-code lang-html">nds-color</code>, still set the border, shadow and color.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-paint-bucket"></i>
-            <span class="nds-label">Custom Colors</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-css">--metric-trend-color</code> and <code class="nds-inline-code lang-css">--metric-chart-color</code> replace the status colors on one metric.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-colors" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Trend Status Theming</span>
+              <p class="nds-card-description">One <code class="nds-inline-code lang-html">data-status</code> on the card colors the trend, the chart line and the header featured icon together.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-chart-line-data-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Inline Sparkline</span>
+              <p class="nds-card-description">The metric removes the chart's 200px minimum height, so a short chart fits in the card.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-align-left" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Always-LTR Sparklines</span>
+              <p class="nds-card-description">The chart reads from oldest to newest, left to right, on an RTL page too.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-top" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Dashboard Header</span>
+              <p class="nds-card-description">In a metric card, the title is smaller and a divider sits above the actions. A menu button goes in the header's <code class="nds-inline-code lang-css">.nds-card-corner</code>, as in any card.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Card Composition</span>
+              <p class="nds-card-description">A metric card is a normal card. Its classes, such as <code class="nds-inline-code lang-html">nds-stroke</code>, <code class="nds-inline-code lang-html">nds-shadow</code> and <code class="nds-inline-code lang-html">nds-color</code>, still set the border, shadow and color.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paint-bucket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Custom Colors</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-css">--metric-trend-color</code> and <code class="nds-inline-code lang-css">--metric-chart-color</code> replace the status colors on one metric.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

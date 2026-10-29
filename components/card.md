@@ -368,50 +368,86 @@ Pick another component when:
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-puzzle"></i>
-            <span class="nds-label">CSS Only</span>
-          </span>
-          <p class="nds-item-desc">A card needs no script and no init call. Every look comes from classes.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cursor-02"></i>
-            <span class="nds-label">Interactive States</span>
-          </span>
-          <p class="nds-item-desc">An <code class="nds-inline-code lang-html">&lt;a&gt;</code> or <code class="nds-inline-code lang-html">&lt;button&gt;</code> card changes its background on hover. A stroke card also changes its border, and a shadow card deepens its shadow.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-image-02"></i>
-            <span class="nds-label">Image Control</span>
-          </span>
-          <p class="nds-item-desc">The image keeps a 2:1 ratio by default. The ratio, the focal point and a dark overlay are set with custom properties on the image.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-loading-03"></i>
-            <span class="nds-label">Loading Skeleton</span>
-          </span>
-          <p class="nds-item-desc">A card shows skeleton placeholders until the page reveals. Add <code class="nds-inline-code lang-html">nds-loading</code> to show them while your own data loads.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-filter"></i>
-            <span class="nds-label">Filter Ready</span>
-          </span>
-          <p class="nds-item-desc">Filter treats each <code class="nds-inline-code lang-html">.nds-card</code> as one item by default, and searches the text in <code class="nds-inline-code lang-html">.nds-card-content</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-customize"></i>
-            <span class="nds-label">Nested Cards</span>
-          </span>
-          <p class="nds-item-desc">A card resets its color, spacing and width properties, so a value set on an outer card does not reach a card inside it.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-puzzle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">CSS Only</span>
+              <p class="nds-card-description">A card needs no script and no init call. Every look comes from classes.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-cursor-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Interactive States</span>
+              <p class="nds-card-description">An <code class="nds-inline-code lang-html">&lt;a&gt;</code> or <code class="nds-inline-code lang-html">&lt;button&gt;</code> card changes its background on hover. A stroke card also changes its border, and a shadow card deepens its shadow.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-image-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Image Control</span>
+              <p class="nds-card-description">The image keeps a 2:1 ratio by default. The ratio, the focal point and a dark overlay are set with custom properties on the image.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-loading-03" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Loading Skeleton</span>
+              <p class="nds-card-description">A card shows skeleton placeholders until the page reveals. Add <code class="nds-inline-code lang-html">nds-loading</code> to show them while your own data loads.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-filter" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Filter Ready</span>
+              <p class="nds-card-description">Filter treats each <code class="nds-inline-code lang-html">.nds-card</code> as one item by default, and searches the text in <code class="nds-inline-code lang-html">.nds-card-content</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-customize" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Nested Cards</span>
+              <p class="nds-card-description">A card resets its color, spacing and width properties, so a value set on an outer card does not reach a card inside it.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

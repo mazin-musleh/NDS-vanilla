@@ -94,50 +94,86 @@ Each Justify, Align and Gap option sets one custom property in the `style` of `.
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-code"></i>
-            <span class="nds-label">CSS-Only</span>
-          </span>
-          <p class="nds-item-desc">One class makes the layout. There is no script to load or start.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-align-box-middle-center"></i>
-            <span class="nds-label">Default Layout</span>
-          </span>
-          <p class="nds-item-desc">The children sit at the start edge, 16px apart. They stretch to the tallest child in a row, and to the full width in a column, unless a child has its own size, as a button does.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-distribute-horizontal-center"></i>
-            <span class="nds-label">Custom Property API</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-css">--justify</code>, <code class="nds-inline-code lang-css">--align</code> and <code class="nds-inline-code lang-css">--gap</code> change the layout from the <code class="nds-inline-code lang-html">style</code> attribute, with no new class.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-exchange-01"></i>
-            <span class="nds-label">Direction on Any Flex Element</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-html">nds-row</code> and <code class="nds-inline-code lang-html">nds-col</code> work without <code class="nds-inline-code lang-html">nds-flex</code>, on a component that is already a flex container, such as card actions.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-arrow-left-right"></i>
-            <span class="nds-label">Scoped Reverse</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-html">nds-reverse</code> reverses only a flex container. A component that has its own <code class="nds-inline-code lang-html">nds-reverse</code>, such as a card, the stepper or the side info column, keeps its own meaning.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-wrap"></i>
-            <span class="nds-label">Wrap Control</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-html">nds-wrap</code> lets the children flow onto new lines. A <code class="nds-inline-code lang-css">min-width</code> on each child makes them stack when the container gets narrow, whatever the screen width.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-code" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">CSS-Only</span>
+              <p class="nds-card-description">One class makes the layout. There is no script to load or start.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-align-box-middle-center" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Default Layout</span>
+              <p class="nds-card-description">The children sit at the start edge, 16px apart. They stretch to the tallest child in a row, and to the full width in a column, unless a child has its own size, as a button does.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-distribute-horizontal-center" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Custom Property API</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-css">--justify</code>, <code class="nds-inline-code lang-css">--align</code> and <code class="nds-inline-code lang-css">--gap</code> change the layout from the <code class="nds-inline-code lang-html">style</code> attribute, with no new class.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-exchange-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Direction on Any Flex Element</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-html">nds-row</code> and <code class="nds-inline-code lang-html">nds-col</code> work without <code class="nds-inline-code lang-html">nds-flex</code>, on a component that is already a flex container, such as card actions.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-left-right" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Scoped Reverse</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-html">nds-reverse</code> reverses only a flex container. A component that has its own <code class="nds-inline-code lang-html">nds-reverse</code>, such as a card, the stepper or the side info column, keeps its own meaning.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-wrap" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Wrap Control</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-html">nds-wrap</code> lets the children flow onto new lines. A <code class="nds-inline-code lang-css">min-width</code> on each child makes them stack when the container gets narrow, whatever the screen width.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

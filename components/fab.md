@@ -184,71 +184,125 @@ A button group with `nds-fab` docks as one item, with one shadow around the whol
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">The script moves every <code class="nds-inline-code lang-html">nds-fab</code> to its dock after the page shows. There is no dock to write and nothing to call.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-maximize-screen"></i>
-            <span class="nds-label">Fixed Edge Docks</span>
-          </span>
-          <p class="nds-item-desc">There are three docks: left, right and the middle of the bottom. A <code class="nds-inline-code lang-html">start</code> or <code class="nds-inline-code lang-html">end</code> FAB lands in the left or the right dock, so two FABs on one edge always share a dock.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-arrow-all-direction"></i>
-            <span class="nds-label">Direction-Aware Routing</span>
-          </span>
-          <p class="nds-item-desc">When the page direction changes, a <code class="nds-inline-code lang-html">start</code> or <code class="nds-inline-code lang-html">end</code> FAB moves to the other side, and so does a FAB that follows its panel. A <code class="nds-inline-code lang-html">left</code> or <code class="nds-inline-code lang-html">right</code> FAB stays.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-target-02"></i>
-            <span class="nds-label">Panel Following</span>
-          </span>
-          <p class="nds-item-desc">A FAB with no <code class="nds-inline-code lang-html">data-fab-pos</code> docks on the edge of the panel it opens. Change the panel's side and the FAB follows.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">Automatic Stacking</span>
-          </span>
-          <p class="nds-item-desc">FABs on one edge stack, ordered by <code class="nds-inline-code lang-html">data-fab-order</code>. On a side edge, the lowest number is at the bottom. On the bottom edge, they sit in a row from left to right.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-transition-left"></i>
-            <span class="nds-label">Page-End Tuck</span>
-          </span>
-          <p class="nds-item-desc">Near the end of a page that scrolls, the docks slide out past their edge, so a FAB never covers the footer. They also slide out while a hero fills the bottom of the screen.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-drag-drop"></i>
-            <span class="nds-label">Mixed Shapes and Sizes</span>
-          </span>
-          <p class="nds-item-desc">Circles, thumbs and groups of any size share a dock. The dock lines them up on its edge and keeps each one's size and shape.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-stars"></i>
-            <span class="nds-label">Floating Look</span>
-          </span>
-          <p class="nds-item-desc">A docked FAB is 16px larger than the same button in the page (8px on a phone), and it casts a shadow. Secondary, secondary outline and subtle get a solid fill, so the page does not show through.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-api"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc">A FAB made by a script docks with one call. <code class="nds-inline-code lang-js">NDS.Fab.destroy()</code> puts a FAB back in its view before an app removes that view.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">The script moves every <code class="nds-inline-code lang-html">nds-fab</code> to its dock after the page shows. There is no dock to write and nothing to call.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-maximize-screen" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Fixed Edge Docks</span>
+              <p class="nds-card-description">There are three docks: left, right and the middle of the bottom. A <code class="nds-inline-code lang-html">start</code> or <code class="nds-inline-code lang-html">end</code> FAB lands in the left or the right dock, so two FABs on one edge always share a dock.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-all-direction" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Direction-Aware Routing</span>
+              <p class="nds-card-description">When the page direction changes, a <code class="nds-inline-code lang-html">start</code> or <code class="nds-inline-code lang-html">end</code> FAB moves to the other side, and so does a FAB that follows its panel. A <code class="nds-inline-code lang-html">left</code> or <code class="nds-inline-code lang-html">right</code> FAB stays.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-target-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Panel Following</span>
+              <p class="nds-card-description">A FAB with no <code class="nds-inline-code lang-html">data-fab-pos</code> docks on the edge of the panel it opens. Change the panel's side and the FAB follows.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Automatic Stacking</span>
+              <p class="nds-card-description">FABs on one edge stack, ordered by <code class="nds-inline-code lang-html">data-fab-order</code>. On a side edge, the lowest number is at the bottom. On the bottom edge, they sit in a row from left to right.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-transition-left" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Page-End Tuck</span>
+              <p class="nds-card-description">Near the end of a page that scrolls, the docks slide out past their edge, so a FAB never covers the footer. They also slide out while a hero fills the bottom of the screen.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-drag-drop" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Mixed Shapes and Sizes</span>
+              <p class="nds-card-description">Circles, thumbs and groups of any size share a dock. The dock lines them up on its edge and keeps each one's size and shape.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-stars" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Floating Look</span>
+              <p class="nds-card-description">A docked FAB is 16px larger than the same button in the page (8px on a phone), and it casts a shadow. Secondary, secondary outline and subtle get a solid fill, so the page does not show through.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-api" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description">A FAB made by a script docks with one call. <code class="nds-inline-code lang-js">NDS.Fab.destroy()</code> puts a FAB back in its view before an app removes that view.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

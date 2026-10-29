@@ -170,85 +170,151 @@ The language of every structure comes from the `lang-*` class on its `<code>`. T
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-source-code"></i>
-            <span class="nds-label">Syntax Highlighting</span>
-          </span>
-          <p class="nds-item-desc">HTML, CSS, JavaScript, Markdown and AI agent prompts get syntax colors. In an HTML block, the body of a <code class="nds-inline-code lang-html">&lt;style&gt;</code> or <code class="nds-inline-code lang-html">&lt;script&gt;</code> gets CSS or JavaScript colors.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-colors"></i>
-            <span class="nds-label">Color Swatches</span>
-          </span>
-          <p class="nds-item-desc">A CSS value that paints a color shows a small swatch before it: a hex, an <code class="nds-inline-code lang-css">rgb()</code>, or a <code class="nds-inline-code lang-css">var()</code> that resolves to a color. The swatch follows dark mode, and copy and text selection skip it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">Line Numbers</span>
-          </span>
-          <p class="nds-item-desc">Every code block gets line numbers, with no class, except a Markdown or prompt block. The CSS reserves their column before the script loads, so the code does not move when the numbers appear.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-view"></i>
-            <span class="nds-label">Highlight on Approach</span>
-          </span>
-          <p class="nds-item-desc">The script colors each block as it comes near the screen, not all blocks at page load. A block in a hidden tab is colored when its tab opens.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-tag-01"></i>
-            <span class="nds-label">Language Tag</span>
-          </span>
-          <p class="nds-item-desc">The script adds a tag with the language name to each block, from its <code class="nds-inline-code lang-html">lang-*</code> class. It also names languages that get no colors, such as <code class="nds-inline-code lang-html">lang-bash</code> or <code class="nds-inline-code lang-html">lang-json</code>. In tabs, each panel gets its own tag.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-search-01"></i>
-            <span class="nds-label">Language Detection</span>
-          </span>
-          <p class="nds-item-desc">A block with no <code class="nds-inline-code lang-html">lang-*</code> class gets its language from its content: a leading <code class="nds-inline-code lang-html">&lt;</code> means HTML, a JavaScript keyword means JavaScript, and a CSS rule means CSS. A class always wins over the guess.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-copy-01"></i>
-            <span class="nds-label">Copy Button</span>
-          </span>
-          <p class="nds-item-desc">A <code class="nds-inline-code lang-html">nds-copy</code> button in the action bar copies the source text of its block, or of its own tab panel. The button shows a short confirmation after a copy. The script adds <code class="nds-inline-code lang-html">nds-icon-only nds-md</code> to the button, unless it has a visible label, so the markup needs neither class.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard Scroll</span>
-          </span>
-          <p class="nds-item-desc">A block that scrolls gets <code class="nds-inline-code lang-html">tabindex="0"</code>, so a keyboard user can tab to it and scroll it with the arrow keys.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-wrap"></i>
-            <span class="nds-label">Wrapped Prose</span>
-          </span>
-          <p class="nds-item-desc">Markdown and prompt lines wrap at the width of body text, so they need no side scroll. A Markdown table row does not wrap. The copied text keeps the original lines.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-code"></i>
-            <span class="nds-label">Inline Code</span>
-          </span>
-          <p class="nds-item-desc">The CSS colors inline code from its <code class="nds-inline-code lang-html">lang-*</code> class, with no script. In a table, inline code does not break at its hyphens.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-colors"></i>
-            <span class="nds-label">Syntax Colors</span>
-          </span>
-          <p class="nds-item-desc">Six <code class="nds-inline-code lang-css">--syntax-*</code> properties set the syntax colors for a page or one block. The default colors are designed to meet WCAG AA contrast in light and dark mode.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-source-code" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Syntax Highlighting</span>
+              <p class="nds-card-description">HTML, CSS, JavaScript, Markdown and AI agent prompts get syntax colors. In an HTML block, the body of a <code class="nds-inline-code lang-html">&lt;style&gt;</code> or <code class="nds-inline-code lang-html">&lt;script&gt;</code> gets CSS or JavaScript colors.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-colors" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Color Swatches</span>
+              <p class="nds-card-description">A CSS value that paints a color shows a small swatch before it: a hex, an <code class="nds-inline-code lang-css">rgb()</code>, or a <code class="nds-inline-code lang-css">var()</code> that resolves to a color. The swatch follows dark mode, and copy and text selection skip it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Line Numbers</span>
+              <p class="nds-card-description">Every code block gets line numbers, with no class, except a Markdown or prompt block. The CSS reserves their column before the script loads, so the code does not move when the numbers appear.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-view" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Highlight on Approach</span>
+              <p class="nds-card-description">The script colors each block as it comes near the screen, not all blocks at page load. A block in a hidden tab is colored when its tab opens.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-tag-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Language Tag</span>
+              <p class="nds-card-description">The script adds a tag with the language name to each block, from its <code class="nds-inline-code lang-html">lang-*</code> class. It also names languages that get no colors, such as <code class="nds-inline-code lang-html">lang-bash</code> or <code class="nds-inline-code lang-html">lang-json</code>. In tabs, each panel gets its own tag.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-search-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Language Detection</span>
+              <p class="nds-card-description">A block with no <code class="nds-inline-code lang-html">lang-*</code> class gets its language from its content: a leading <code class="nds-inline-code lang-html">&lt;</code> means HTML, a JavaScript keyword means JavaScript, and a CSS rule means CSS. A class always wins over the guess.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-copy-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Copy Button</span>
+              <p class="nds-card-description">A <code class="nds-inline-code lang-html">nds-copy</code> button in the action bar copies the source text of its block, or of its own tab panel. The button shows a short confirmation after a copy. The script adds <code class="nds-inline-code lang-html">nds-icon-only nds-md</code> to the button, unless it has a visible label, so the markup needs neither class.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Keyboard Scroll</span>
+              <p class="nds-card-description">A block that scrolls gets <code class="nds-inline-code lang-html">tabindex="0"</code>, so a keyboard user can tab to it and scroll it with the arrow keys.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-wrap" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Wrapped Prose</span>
+              <p class="nds-card-description">Markdown and prompt lines wrap at the width of body text, so they need no side scroll. A Markdown table row does not wrap. The copied text keeps the original lines.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-code" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Inline Code</span>
+              <p class="nds-card-description">The CSS colors inline code from its <code class="nds-inline-code lang-html">lang-*</code> class, with no script. In a table, inline code does not break at its hyphens.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-colors" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Syntax Colors</span>
+              <p class="nds-card-description">Six <code class="nds-inline-code lang-css">--syntax-*</code> properties set the syntax colors for a page or one block. The default colors are designed to meet WCAG AA contrast in light and dark mode.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

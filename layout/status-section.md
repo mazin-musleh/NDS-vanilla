@@ -116,29 +116,47 @@ Pick another component when:
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-align-center"></i>
-            <span class="nds-label">Centered Parts</span>
-          </span>
-          <p class="nds-item-desc">The section centers its parts with the same rules as a section with <code class="nds-inline-code lang-html">nds-center</code>. It needs no extra class.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-arrow-expand"></i>
-            <span class="nds-label">Height Fill</span>
-          </span>
-          <p class="nds-item-desc">In the page layout, the section grows to fill the height the other sections leave, and it centers its content in that height. A short message on its own page sits in the middle of the screen.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-align-box-middle-center"></i>
-            <span class="nds-label">Chip Size</span>
-          </span>
-          <p class="nds-item-desc">A feedback chip in the section is 56px wide, with no size class.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-align-center" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Centered Parts</span>
+              <p class="nds-card-description">The section centers its parts with the same rules as a section with <code class="nds-inline-code lang-html">nds-center</code>. It needs no extra class.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-expand" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Height Fill</span>
+              <p class="nds-card-description">In the page layout, the section grows to fill the height the other sections leave, and it centers its content in that height. A short message on its own page sits in the middle of the screen.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-align-box-middle-center" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Chip Size</span>
+              <p class="nds-card-description">A feedback chip in the section is 56px wide, with no size class.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

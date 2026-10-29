@@ -184,50 +184,86 @@ Any other character stays as written. `ss` adds a Second list, and `A` or `a` ad
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-magic-wand-01"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-time-input</code> and <code class="nds-inline-code lang-html">.nds-time-fields</code> starts on load. The script builds the panel the first time the user opens it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Type or Pick</span>
-          </span>
-          <p class="nds-item-desc">The user can type the time, in Latin or Arabic digits. The digits fill the format as they are typed: the separator appears on its own, <code class="nds-inline-code lang-html">9</code> becomes <code class="nds-inline-code lang-html">09:</code>, and <code class="nds-inline-code lang-html">2:</code> becomes <code class="nds-inline-code lang-html">02:</code>. A digit that makes the hour impossible is ignored: after <code class="nds-inline-code lang-html">2</code>, a <code class="nds-inline-code lang-html">5</code> is not added. <code class="nds-inline-code lang-html">a</code> or <code class="nds-inline-code lang-html">p</code>, <code class="nds-inline-code lang-html">ص</code> or <code class="nds-inline-code lang-html">م</code>, adds AM or PM. A pasted time is read at once in any common form: <code class="nds-inline-code lang-html">2:30 PM</code> shows as <code class="nds-inline-code lang-html">14:30</code> in a 24-hour field, and a paste that is not a time goes in as if the user typed it. Typing in the middle of a full time replaces the digit after the cursor. After the user deletes part of a time, a key goes in at the cursor, and the time takes its format again when its digits are complete: <code class="nds-inline-code lang-html">10:3</code> and a <code class="nds-inline-code lang-html">0</code> before the <code class="nds-inline-code lang-html">3</code> make <code class="nds-inline-code lang-html">10:03</code>. The field never takes more digits or separators than the format holds, or a unit past the clock. An edit in the middle is read when the user leaves the field.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-clock-01"></i>
-            <span class="nds-label">24-Hour Value</span>
-          </span>
-          <p class="nds-item-desc">The hidden <code class="nds-inline-code lang-html">.nds-time-value</code> holds the time as <code class="nds-inline-code lang-html">HH:mm</code>, or <code class="nds-inline-code lang-html">HH:mm:ss</code> when the format has seconds. It is the same in every format and page language.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-shield-01"></i>
-            <span class="nds-label">Native Validation</span>
-          </span>
-          <p class="nds-item-desc">The picker checks the field at each <code class="nds-inline-code lang-js">change</code>. A time that does not match the format, or falls outside the bounds, shows an error under the field and blocks the submit. In Boxes, the error shows when the user leaves the group, and a time with only one box filled blocks the submit.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-translate"></i>
-            <span class="nds-label">Bilingual Labels</span>
-          </span>
-          <p class="nds-item-desc">List names, box notes, AM and PM, and error messages show in Arabic or English from the page language. They change when the page language changes.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-arrow-shrink-02"></i>
-            <span class="nds-label">Panel Position</span>
-          </span>
-          <p class="nds-item-desc">The panel opens below the field, lined up with its start edge, or above it when the space below is too small. In a modal or a scrolling box, it moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code>, so nothing clips it.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-magic-wand-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">.nds-time-input</code> and <code class="nds-inline-code lang-html">.nds-time-fields</code> starts on load. The script builds the panel the first time the user opens it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Type or Pick</span>
+              <p class="nds-card-description">The user can type the time, in Latin or Arabic digits. The digits fill the format as they are typed: the separator appears on its own, <code class="nds-inline-code lang-html">9</code> becomes <code class="nds-inline-code lang-html">09:</code>, and <code class="nds-inline-code lang-html">2:</code> becomes <code class="nds-inline-code lang-html">02:</code>. A digit that makes the hour impossible is ignored: after <code class="nds-inline-code lang-html">2</code>, a <code class="nds-inline-code lang-html">5</code> is not added. <code class="nds-inline-code lang-html">a</code> or <code class="nds-inline-code lang-html">p</code>, <code class="nds-inline-code lang-html">ص</code> or <code class="nds-inline-code lang-html">م</code>, adds AM or PM. A pasted time is read at once in any common form: <code class="nds-inline-code lang-html">2:30 PM</code> shows as <code class="nds-inline-code lang-html">14:30</code> in a 24-hour field, and a paste that is not a time goes in as if the user typed it. Typing in the middle of a full time replaces the digit after the cursor. After the user deletes part of a time, a key goes in at the cursor, and the time takes its format again when its digits are complete: <code class="nds-inline-code lang-html">10:3</code> and a <code class="nds-inline-code lang-html">0</code> before the <code class="nds-inline-code lang-html">3</code> make <code class="nds-inline-code lang-html">10:03</code>. The field never takes more digits or separators than the format holds, or a unit past the clock. An edit in the middle is read when the user leaves the field.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">24-Hour Value</span>
+              <p class="nds-card-description">The hidden <code class="nds-inline-code lang-html">.nds-time-value</code> holds the time as <code class="nds-inline-code lang-html">HH:mm</code>, or <code class="nds-inline-code lang-html">HH:mm:ss</code> when the format has seconds. It is the same in every format and page language.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-shield-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Native Validation</span>
+              <p class="nds-card-description">The picker checks the field at each <code class="nds-inline-code lang-js">change</code>. A time that does not match the format, or falls outside the bounds, shows an error under the field and blocks the submit. In Boxes, the error shows when the user leaves the group, and a time with only one box filled blocks the submit.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-translate" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Bilingual Labels</span>
+              <p class="nds-card-description">List names, box notes, AM and PM, and error messages show in Arabic or English from the page language. They change when the page language changes.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-shrink-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Panel Position</span>
+              <p class="nds-card-description">The panel opens below the field, lined up with its start edge, or above it when the space below is too small. In a modal or a scrolling box, it moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code>, so nothing clips it.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

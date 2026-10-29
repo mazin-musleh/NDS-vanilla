@@ -132,29 +132,47 @@ A row on `.nds-radio-input` (every `<input>`) or `.nds-radio` changes every opti
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Form Integration</span>
-          </span>
-          <p class="nds-item-desc">The forms script starts every radio. A container follows the disabled state of its input, in both directions. Required belongs to the group, not to one input.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cursor-02"></i>
-            <span class="nds-label">Visual Feedback</span>
-          </span>
-          <p class="nds-item-desc">A ripple grows around the tile on hover. Three sizes (SM, MD and LG) scale the tile and its checked ring together.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-01"></i>
-            <span class="nds-label">Responsive Layout</span>
-          </span>
-          <p class="nds-item-desc">On a phone, the gaps between a radio, its label and the next option are smaller.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Form Integration</span>
+              <p class="nds-card-description">The forms script starts every radio. A container follows the disabled state of its input, in both directions. Required belongs to the group, not to one input.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-cursor-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Visual Feedback</span>
+              <p class="nds-card-description">A ripple grows around the tile on hover. Three sizes (SM, MD and LG) scale the tile and its checked ring together.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Responsive Layout</span>
+              <p class="nds-card-description">On a phone, the gaps between a radio, its label and the next option are smaller.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

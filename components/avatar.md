@@ -168,50 +168,86 @@ The Link, Menu trigger and Button structures take any of the three contents: a p
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-tag-01"></i>
-            <span class="nds-label">Pure CSS</span>
-          </span>
-          <p class="nds-item-desc">Avatars need no JavaScript. They show at the first paint, from the markup alone.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-resize-01"></i>
-            <span class="nds-label">Seven Sizes</span>
-          </span>
-          <p class="nds-item-desc">From 24px (XS) to 120px (3XL). The initials are a third of the size and the icon is half, so both scale with it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-puzzle"></i>
-            <span class="nds-label">Any Element</span>
-          </span>
-          <p class="nds-item-desc">The same class works on a <code class="nds-inline-code lang-html">&lt;div&gt;</code>, a link or a button. A link avatar keeps the avatar colors, not the link color.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-user-group"></i>
-            <span class="nds-label">Group Layout</span>
-          </span>
-          <p class="nds-item-desc">A size class on the group sets the size of every avatar in it, and the gap grows with the size.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-contrast"></i>
-            <span class="nds-label">High Contrast Ring</span>
-          </span>
-          <p class="nds-item-desc">In high contrast mode, every avatar gets a solid ring inside its edge, so a photo stays apart from the page.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-image-not-found-01"></i>
-            <span class="nds-label">Broken Photo</span>
-          </span>
-          <p class="nds-item-desc">When a photo does not load, the avatar shows the person icon in place of the broken-image mark and the <code class="nds-inline-code lang-html">alt</code> text. Screen readers still read the <code class="nds-inline-code lang-html">alt</code> text. Safari shows its own small broken-image mark and no text.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-tag-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Pure CSS</span>
+              <p class="nds-card-description">Avatars need no JavaScript. They show at the first paint, from the markup alone.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-resize-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Seven Sizes</span>
+              <p class="nds-card-description">From 24px (XS) to 120px (3XL). The initials are a third of the size and the icon is half, so both scale with it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-puzzle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Any Element</span>
+              <p class="nds-card-description">The same class works on a <code class="nds-inline-code lang-html">&lt;div&gt;</code>, a link or a button. A link avatar keeps the avatar colors, not the link color.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Group Layout</span>
+              <p class="nds-card-description">A size class on the group sets the size of every avatar in it, and the gap grows with the size.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-contrast" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">High Contrast Ring</span>
+              <p class="nds-card-description">In high contrast mode, every avatar gets a solid ring inside its edge, so a photo stays apart from the page.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-image-not-found-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Broken Photo</span>
+              <p class="nds-card-description">When a photo does not load, the avatar shows the person icon in place of the broken-image mark and the <code class="nds-inline-code lang-html">alt</code> text. Screen readers still read the <code class="nds-inline-code lang-html">alt</code> text. Safari shows its own small broken-image mark and no text.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

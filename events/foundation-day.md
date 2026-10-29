@@ -209,56 +209,92 @@ hero_float_actions:
 </section>
 
 <!-- Built-in Features -->
-<section id="fday-features" class="nds-content-section nds-demo-section">
+<section id="fday-features" class="nds-content-section nds-demo-section nds-doc-features">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-divided nds-grid nds-doc-features">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                        <span class="nds-label">One-Tag Activation</span>
-                    </span>
-                    <p class="nds-item-desc">One script tag applies the palette, root marker, and hero slide. It carries its own CSS, so nothing else is linked. No build, no markup edits.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-paint-bucket"></i>
-                        <span class="nds-label">Zero-Flash First Paint</span>
-                    </span>
-                    <p class="nds-item-desc">The script writes its CSS while the page parses, with no second request, so the default colours never flash.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-image-01"></i>
-                        <span class="nds-label">Configurable Hero Slide</span>
-                    </span>
-                    <p class="nds-item-desc">Set the slide title, description, photo, and CTA with <code class="nds-inline-code lang-html">data-*</code> attributes; defaults when omitted.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-translate"></i>
-                        <span class="nds-label">Bilingual Content</span>
-                    </span>
-                    <p class="nds-item-desc">Each string has Arabic and English values; the pack picks one from the page <code class="nds-inline-code lang-html">lang</code>.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-delete-02"></i>
-                        <span class="nds-label">Clean Removal</span>
-                    </span>
-                    <p class="nds-item-desc">Delete the tag and the palette, token, and slide are gone on the next load.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-exchange-01"></i>
-                        <span class="nds-label">Theme Switcher Integration</span>
-                    </span>
-                    <p class="nds-item-desc">The same pack plugs into the <a class="nds-color" href="{{ 'foundations/themes' | relative_url }}">theme switcher</a>: loads on demand, applies on selection, tears down on switch-away.</p>
-                </div>
-            </div>
+            <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
+                <li class="nds-card nds-horizontal">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-title">One-Tag Activation</span>
+                            <p class="nds-card-description">One script tag applies the palette, root marker, and hero slide. It carries its own CSS, so nothing else is linked. No build, no markup edits.</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="nds-card nds-horizontal">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paint-bucket" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-title">Zero-Flash First Paint</span>
+                            <p class="nds-card-description">The script writes its CSS while the page parses, with no second request, so the default colours never flash.</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="nds-card nds-horizontal">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-image-01" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-title">Configurable Hero Slide</span>
+                            <p class="nds-card-description">Set the slide title, description, photo, and CTA with <code class="nds-inline-code lang-html">data-*</code> attributes; defaults when omitted.</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="nds-card nds-horizontal">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-translate" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-title">Bilingual Content</span>
+                            <p class="nds-card-description">Each string has Arabic and English values; the pack picks one from the page <code class="nds-inline-code lang-html">lang</code>.</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="nds-card nds-horizontal">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-delete-02" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-title">Clean Removal</span>
+                            <p class="nds-card-description">Delete the tag and the palette, token, and slide are gone on the next load.</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="nds-card nds-horizontal">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-exchange-01" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-title">Theme Switcher Integration</span>
+                            <p class="nds-card-description">The same pack plugs into the <a class="nds-color" href="{{ 'foundations/themes' | relative_url }}">theme switcher</a>: loads on demand, applies on selection, tears down on switch-away.</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 </section>

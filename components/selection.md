@@ -261,57 +261,99 @@ Use it on a paged list, so one line serves both browsing and selecting. The coun
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">The script starts when the page has a <code class="nds-inline-code lang-html">data-selection-target</code> element. Tables add one to their header checkbox, so a table with a select-all needs no attribute.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-check-list"></i>
-            <span class="nds-label">Content-Agnostic Selection</span>
-          </span>
-          <p class="nds-item-desc">An item is selected when it holds a checked <code class="nds-inline-code lang-html">input.nds-checkbox-input</code>, or carries <code class="nds-inline-code lang-html">data-state="selected"</code>. Table rows, cards and plain checkbox lists work the same way.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-checkmark-square-02"></i>
-            <span class="nds-label">Selected State</span>
-          </span>
-          <p class="nds-item-desc">The script sets <code class="nds-inline-code lang-html">data-state="selected"</code> on each item whose checkbox is checked, and removes it when the box is cleared. Use it to style selected items.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">Full-Selection Count</span>
-          </span>
-          <p class="nds-item-desc">The count includes selected items on other pages and items a filter hides. It matches what <a href="../components/export">Export</a> sends when its scope is the selection.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-refresh"></i>
-            <span class="nds-label">Live Updates</span>
-          </span>
-          <p class="nds-item-desc">When items with a checkbox are added or removed, the count, the total and the select-all update on their own.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-number-sign"></i>
-            <span class="nds-label">Number Formatting</span>
-          </span>
-          <p class="nds-item-desc">Numbers get the thousand separators of the page's language, in Latin digits, the same rule as the Pagination records line.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-api"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc">Select or clear a list, read its selected items and listen for each change through <code class="nds-inline-code lang-js">NDS.Selection</code>.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">The script starts when the page has a <code class="nds-inline-code lang-html">data-selection-target</code> element. Tables add one to their header checkbox, so a table with a select-all needs no attribute.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-check-list" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Content-Agnostic Selection</span>
+              <p class="nds-card-description">An item is selected when it holds a checked <code class="nds-inline-code lang-html">input.nds-checkbox-input</code>, or carries <code class="nds-inline-code lang-html">data-state="selected"</code>. Table rows, cards and plain checkbox lists work the same way.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-checkmark-square-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Selected State</span>
+              <p class="nds-card-description">The script sets <code class="nds-inline-code lang-html">data-state="selected"</code> on each item whose checkbox is checked, and removes it when the box is cleared. Use it to style selected items.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Full-Selection Count</span>
+              <p class="nds-card-description">The count includes selected items on other pages and items a filter hides. It matches what <a href="../components/export">Export</a> sends when its scope is the selection.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-refresh" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Live Updates</span>
+              <p class="nds-card-description">When items with a checkbox are added or removed, the count, the total and the select-all update on their own.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-number-sign" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Number Formatting</span>
+              <p class="nds-card-description">Numbers get the thousand separators of the page's language, in Latin digits, the same rule as the Pagination records line.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-api" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description">Select or clear a list, read its selected items and listen for each change through <code class="nds-inline-code lang-js">NDS.Selection</code>.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

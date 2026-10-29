@@ -129,50 +129,86 @@ The audit reads the page, not the scripts. An old method name or an event listen
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-package"></i>
-            <span class="nds-label">No Bytes in Production</span>
-          </span>
-          <p class="nds-item-desc">The audit is a bundle of its own that the first call loads. A page that never calls it downloads none of it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-database"></i>
-            <span class="nds-label">Findings as Data</span>
-          </span>
-          <p class="nds-item-desc">The call returns an array of findings. Each one has `rule`, `group`, `severity`, `message`, `fix`, `docs`, `el` (the element) and `count`. A test or an AI coding agent reads it with no console parsing.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-git-compare"></i>
-            <span class="nds-label">Every Release's Changes</span>
-          </span>
-          <p class="nds-item-desc">The migration checks know every name that changed since 1.0.0, with today's name and the release that changed it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-paint-brush-01"></i>
-            <span class="nds-label">Your CSS Too</span>
-          </span>
-          <p class="nds-item-desc">Old class names and custom properties in your own style sheets show, with the sheet and the rule that holds them. So do rules on bare elements and token overrides with no dark value.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-alert-02"></i>
-            <span class="nds-label">Silent Failures</span>
-          </span>
-          <p class="nds-item-desc">Each structure rule covers a mistake that shows no error, such as a target id that names nothing or a list held in its loading skeleton.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-01"></i>
-            <span class="nds-label">Your Own Rules</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-js">NDS.audit.addRule()</code> adds a check for your own markup, and it reports like the built-in ones.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-package" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">No Bytes in Production</span>
+              <p class="nds-card-description">The audit is a bundle of its own that the first call loads. A page that never calls it downloads none of it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-database" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Findings as Data</span>
+              <p class="nds-card-description">The call returns an array of findings. Each one has `rule`, `group`, `severity`, `message`, `fix`, `docs`, `el` (the element) and `count`. A test or an AI coding agent reads it with no console parsing.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-git-compare" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Every Release's Changes</span>
+              <p class="nds-card-description">The migration checks know every name that changed since 1.0.0, with today's name and the release that changed it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paint-brush-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Your CSS Too</span>
+              <p class="nds-card-description">Old class names and custom properties in your own style sheets show, with the sheet and the rule that holds them. So do rules on bare elements and token overrides with no dark value.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-alert-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Silent Failures</span>
+              <p class="nds-card-description">Each structure rule covers a mistake that shows no error, such as a target id that names nothing or a list held in its loading skeleton.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Your Own Rules</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-js">NDS.audit.addRule()</code> adds a check for your own markup, and it reports like the built-in ones.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

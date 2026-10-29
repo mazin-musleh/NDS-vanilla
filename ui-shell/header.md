@@ -78,22 +78,34 @@ The code shows the outer element of each part. Copy each part whole from its own
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-pin"></i>
-            <span class="nds-label">Sticky Navigation</span>
-          </span>
-          <p class="nds-item-desc">The main navigation sticks to the top of the screen while the page scrolls, and the top bar scrolls away. The navigation sticks inside <code class="nds-inline-code lang-html">body</code>, not inside the header, because the header has no box.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cancel-circle"></i>
-            <span class="nds-label">One Panel at a Time</span>
-          </span>
-          <p class="nds-item-desc">The stamp panel and the main navigation's menu close each other. When one opens, the other closes.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-pin" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Sticky Navigation</span>
+              <p class="nds-card-description">The main navigation sticks to the top of the screen while the page scrolls, and the top bar scrolls away. The navigation sticks inside <code class="nds-inline-code lang-html">body</code>, not inside the header, because the header has no box.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-cancel-circle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">One Panel at a Time</span>
+              <p class="nds-card-description">The stamp panel and the main navigation's menu close each other. When one opens, the other closes.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

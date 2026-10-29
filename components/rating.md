@@ -173,64 +173,112 @@ The Menu structure puts a display rating and a vote count in a [Dropmenu](../com
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">The script starts every <code class="nds-inline-code lang-html">.nds-rating</code> on the page, and every one added or removed later.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-accessibility"></i>
-            <span class="nds-label">Screen Reader Score</span>
-          </span>
-          <p class="nds-item-desc">A screen reader reads a display rating as one image with its score, such as "3.5 of 5", in the page's language. Each star of an interactive rating has its own name, such as "2 stars".</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-tap-01"></i>
-            <span class="nds-label">Mode Detection</span>
-          </span>
-          <p class="nds-item-desc">The tag of the stars sets the mode. <code class="nds-inline-code lang-html">&lt;button&gt;</code> stars are interactive, <code class="nds-inline-code lang-html">&lt;span&gt;</code> stars are display only.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-favourite"></i>
-            <span class="nds-label">Half Stars</span>
-          </span>
-          <p class="nds-item-desc">A decimal of .3 or more fills half of the next star. A decimal below .3 rounds down.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard Navigation</span>
-          </span>
-          <p class="nds-item-desc">The left and right arrow keys follow the text direction. Up and down move to the next and previous star. Home and End jump to the first and last star. Enter and Space pick a score. Escape leaves the star.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
-            <span class="nds-label">Phone Size</span>
-          </span>
-          <p class="nds-item-desc">The large stars shrink from 48px to 40px on phones.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-loading-03"></i>
-            <span class="nds-label">Loading Placeholder</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-html">.nds-loading</code> turns the stars into pulsing placeholders.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-api"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc">Read, set, disable and enable a rating from code. Each change that picks a new score fires <code class="nds-inline-code lang-js">nds:rating:change</code>.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">The script starts every <code class="nds-inline-code lang-html">.nds-rating</code> on the page, and every one added or removed later.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-accessibility" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Screen Reader Score</span>
+              <p class="nds-card-description">A screen reader reads a display rating as one image with its score, such as "3.5 of 5", in the page's language. Each star of an interactive rating has its own name, such as "2 stars".</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-tap-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Mode Detection</span>
+              <p class="nds-card-description">The tag of the stars sets the mode. <code class="nds-inline-code lang-html">&lt;button&gt;</code> stars are interactive, <code class="nds-inline-code lang-html">&lt;span&gt;</code> stars are display only.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-favourite" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Half Stars</span>
+              <p class="nds-card-description">A decimal of .3 or more fills half of the next star. A decimal below .3 rounds down.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Keyboard Navigation</span>
+              <p class="nds-card-description">The left and right arrow keys follow the text direction. Up and down move to the next and previous star. Home and End jump to the first and last star. Enter and Space pick a score. Escape leaves the star.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-smart-phone-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Phone Size</span>
+              <p class="nds-card-description">The large stars shrink from 48px to 40px on phones.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-loading-03" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Loading Placeholder</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-html">.nds-loading</code> turns the stars into pulsing placeholders.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-api" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description">Read, set, disable and enable a rating from code. Each change that picks a new score fires <code class="nds-inline-code lang-js">nds:rating:change</code>.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

@@ -618,50 +618,86 @@ Keep Selection only when the page has a bulk action that acts on the selected ro
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto Start</span>
-          </span>
-          <p class="nds-item-desc">The script starts every <code class="nds-inline-code lang-html">.nds-table</code> on the page. Sorting and selection start when the header holds their buttons or checkbox.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-scroll-horizontal"></i>
-            <span class="nds-label">Sideways Scroll</span>
-          </span>
-          <p class="nds-item-desc">The script puts each table in a <code class="nds-inline-code lang-html">.nds-table-wrapper</code> that scrolls sideways when the columns do not fit. It checks again when the size changes or a hidden tab opens. A phone gets the same scroll: there is no stacked layout. While it scrolls, the keyboard can reach the scroll box, and a table with a <code class="nds-inline-code lang-html">&lt;caption&gt;</code> or a label names it for a screen reader.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-table-01"></i>
-            <span class="nds-label">Plain Table Styling</span>
-          </span>
-          <p class="nds-item-desc">A <code class="nds-inline-code lang-html">&lt;table&gt;</code> with no class gets the table look, such as a table from a content editor. It gets no script.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-grid-table"></i>
-            <span class="nds-label">Striped Rows</span>
-          </span>
-          <p class="nds-item-desc">Every second row is tinted. The stripes count only the rows on view, so they stay even after a filter, a page change or an open sub-row.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-loading-01"></i>
-            <span class="nds-label">Start-Up Skeleton</span>
-          </span>
-          <p class="nds-item-desc">The cells show skeleton bars until the script starts the table. A paged or filtered body keeps them until its own script starts.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-font"></i>
-            <span class="nds-label">Clean Cell Text</span>
-          </span>
-          <p class="nds-item-desc">Sort and export read the cell's own text, not the text of the icons or buttons in it. <code class="nds-inline-code lang-js">NDS.getCellText()</code> gives the same value to your code.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto Start</span>
+              <p class="nds-card-description">The script starts every <code class="nds-inline-code lang-html">.nds-table</code> on the page. Sorting and selection start when the header holds their buttons or checkbox.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-scroll-horizontal" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Sideways Scroll</span>
+              <p class="nds-card-description">The script puts each table in a <code class="nds-inline-code lang-html">.nds-table-wrapper</code> that scrolls sideways when the columns do not fit. It checks again when the size changes or a hidden tab opens. A phone gets the same scroll: there is no stacked layout. While it scrolls, the keyboard can reach the scroll box, and a table with a <code class="nds-inline-code lang-html">&lt;caption&gt;</code> or a label names it for a screen reader.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-table-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Plain Table Styling</span>
+              <p class="nds-card-description">A <code class="nds-inline-code lang-html">&lt;table&gt;</code> with no class gets the table look, such as a table from a content editor. It gets no script.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-grid-table" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Striped Rows</span>
+              <p class="nds-card-description">Every second row is tinted. The stripes count only the rows on view, so they stay even after a filter, a page change or an open sub-row.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-loading-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Start-Up Skeleton</span>
+              <p class="nds-card-description">The cells show skeleton bars until the script starts the table. A paged or filtered body keeps them until its own script starts.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-font" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Clean Cell Text</span>
+              <p class="nds-card-description">Sort and export read the cell's own text, not the text of the icons or buttons in it. <code class="nds-inline-code lang-js">NDS.getCellText()</code> gives the same value to your code.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

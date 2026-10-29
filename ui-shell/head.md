@@ -175,50 +175,86 @@ The inline script runs once, at page load. The stylesheet links it adds and the 
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-view-off"></i>
-            <span class="nds-label">No Unstyled Content</span>
-          </span>
-          <p class="nds-item-desc">The gate hides the content until the main CSS applies. A visitor never sees raw HTML or half-styled components.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-ruler"></i>
-            <span class="nds-label">Reserved Layout</span>
-          </span>
-          <p class="nds-item-desc">The gate gives the top bar, the main navigation and the hero their final heights at first paint. Nothing moves when the styles land.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-moon-02"></i>
-            <span class="nds-label">Saved Theme Before Paint</span>
-          </span>
-          <p class="nds-item-desc">The inline script reads the theme the visitor saved and writes it on <code class="nds-inline-code lang-html">&lt;html&gt;</code> before the first paint. A dark page never flashes light.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-dashboard-speed-01"></i>
-            <span class="nds-label">Non-Blocking Styles</span>
-          </span>
-          <p class="nds-item-desc">Each stylesheet downloads as a preload and applies when it arrives, so no CSS file blocks the first paint. The hero preload starts the largest image before the body is parsed.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-package"></i>
-            <span class="nds-label">One Script Tag</span>
-          </span>
-          <p class="nds-item-desc">The main script loads every other bundle and the icon sheets itself, after the page shows. A page needs no tag for them.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-security-check"></i>
-            <span class="nds-label">Strict CSP</span>
-          </span>
-          <p class="nds-item-desc">A nonce or a hash can cover a script element, but never an inline event handler. So the head applies its stylesheets with a script, not an <code class="nds-inline-code lang-html">onload</code> attribute.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-view-off" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">No Unstyled Content</span>
+              <p class="nds-card-description">The gate hides the content until the main CSS applies. A visitor never sees raw HTML or half-styled components.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-ruler" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Reserved Layout</span>
+              <p class="nds-card-description">The gate gives the top bar, the main navigation and the hero their final heights at first paint. Nothing moves when the styles land.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Saved Theme Before Paint</span>
+              <p class="nds-card-description">The inline script reads the theme the visitor saved and writes it on <code class="nds-inline-code lang-html">&lt;html&gt;</code> before the first paint. A dark page never flashes light.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-dashboard-speed-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Non-Blocking Styles</span>
+              <p class="nds-card-description">Each stylesheet downloads as a preload and applies when it arrives, so no CSS file blocks the first paint. The hero preload starts the largest image before the body is parsed.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-package" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">One Script Tag</span>
+              <p class="nds-card-description">The main script loads every other bundle and the icon sheets itself, after the page shows. A page needs no tag for them.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-security-check" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Strict CSP</span>
+              <p class="nds-card-description">A nonce or a hash can cover a script element, but never an inline event handler. So the head applies its stylesheets with a script, not an <code class="nds-inline-code lang-html">onload</code> attribute.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

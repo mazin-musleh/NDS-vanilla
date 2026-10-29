@@ -284,64 +284,112 @@ The first tab is open in the markup: its `aria-selected` is `true`, and every ot
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-tabs</code> on the page starts by itself. Tab changes, the keys and the scroll need no call.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Full Keyboard Navigation</span>
-          </span>
-          <p class="nds-item-desc">The arrow keys move between tabs, and left and right follow the reading direction. Home and End jump to the first and the last tab. Enter or Space opens the focused tab.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-mouse-scroll-01"></i>
-            <span class="nds-label">Overflow Scrolling</span>
-          </span>
-          <p class="nds-item-desc">A tab row that does not fit scrolls, with a fade at its edges. It takes a drag, the mouse wheel and a show-more button.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-left"></i>
-            <span class="nds-label">Vertical Layout</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-html">nds-vertical</code> stacks the tabs beside the panels, and the list stays in view while the page scrolls.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-loading-03"></i>
-            <span class="nds-label">Loading Skeleton</span>
-          </span>
-          <p class="nds-item-desc">Gray bars stand in for the labels and the open panel until the script starts, so the tab row is never bare. The panels marked <code class="nds-inline-code lang-html">hidden</code> stay hidden.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-access"></i>
-            <span class="nds-label">High Contrast and Reduced Motion</span>
-          </span>
-          <p class="nds-item-desc">The open tab gets a border in high-contrast mode, and the transitions stop when the user prefers reduced motion.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-notification-square"></i>
-            <span class="nds-label">Tab Change Events</span>
-          </span>
-          <p class="nds-item-desc">Every switch fires <code class="nds-inline-code lang-js">nds:tabs:change</code> with the new and the previous tab and panel.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-api"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc">Open a tab, read the open panel or remove the behavior through <code class="nds-inline-code lang-js">NDS.Tabs</code> or the element's <code class="nds-inline-code lang-js">ndsTabs</code> property.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">.nds-tabs</code> on the page starts by itself. Tab changes, the keys and the scroll need no call.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Full Keyboard Navigation</span>
+              <p class="nds-card-description">The arrow keys move between tabs, and left and right follow the reading direction. Home and End jump to the first and the last tab. Enter or Space opens the focused tab.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-mouse-scroll-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Overflow Scrolling</span>
+              <p class="nds-card-description">A tab row that does not fit scrolls, with a fade at its edges. It takes a drag, the mouse wheel and a show-more button.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-left" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Vertical Layout</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-html">nds-vertical</code> stacks the tabs beside the panels, and the list stays in view while the page scrolls.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-loading-03" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Loading Skeleton</span>
+              <p class="nds-card-description">Gray bars stand in for the labels and the open panel until the script starts, so the tab row is never bare. The panels marked <code class="nds-inline-code lang-html">hidden</code> stay hidden.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-access" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">High Contrast and Reduced Motion</span>
+              <p class="nds-card-description">The open tab gets a border in high-contrast mode, and the transitions stop when the user prefers reduced motion.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-notification-square" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Tab Change Events</span>
+              <p class="nds-card-description">Every switch fires <code class="nds-inline-code lang-js">nds:tabs:change</code> with the new and the previous tab and panel.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-api" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description">Open a tab, read the open panel or remove the behavior through <code class="nds-inline-code lang-js">NDS.Tabs</code> or the element's <code class="nds-inline-code lang-js">ndsTabs</code> property.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

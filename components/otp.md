@@ -136,71 +136,125 @@ For another code length, copy a box and give it a unique `id`. The script number
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">nds-otp-group</code> on the page starts on its own, and so does a group added later. The first group on a page that had none needs <code class="nds-inline-code lang-js">NDS.init.mount()</code> on the new content.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-arrow-right-double"></i>
-            <span class="nds-label">Auto-advance</span>
-          </span>
-          <p class="nds-item-desc">A typed digit moves the focus to the next box. A box takes digits only, and a new digit replaces the one in the box. A click on an empty group moves the focus to the first box.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard Navigation</span>
-          </span>
-          <p class="nds-item-desc">The arrow keys move between the boxes, in the reading direction of the page. Backspace empties the box and moves back. Delete empties it and moves forward.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-clipboard"></i>
-            <span class="nds-label">Paste Support</span>
-          </span>
-          <p class="nds-item-desc">A pasted or autofilled code fills the boxes from the box that has focus. Characters that are not digits are removed.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-link-square-02"></i>
-            <span class="nds-label">One Value for the Form</span>
-          </span>
-          <p class="nds-item-desc">The hidden <code class="nds-inline-code lang-html">nds-otp-value</code> input holds the whole code after each change, so the form sends it as one field.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-checkmark-badge-01"></i>
-            <span class="nds-label">Submit Check</span>
-          </span>
-          <p class="nds-item-desc">In a form, a group with <code class="nds-inline-code lang-html">data-required</code> blocks the submit until every box holds a digit. The boxes turn red, and a message under them names the number of boxes: "Please enter all 4 digits".</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-eraser"></i>
-            <span class="nds-label">Error Clears on Input</span>
-          </span>
-          <p class="nds-item-desc">A key press in any box removes the group's error and its message.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cursor-pointer-01"></i>
-            <span class="nds-label">Autofocus</span>
-          </span>
-          <p class="nds-item-desc">A box with <code class="nds-inline-code lang-html">autofocus</code> gets the focus when the script starts, even when the browser lost it while the page loaded.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-contrast"></i>
-            <span class="nds-label">Accessibility</span>
-          </span>
-          <p class="nds-item-desc">In high contrast mode, the box borders are 2px wide. With reduced motion, the boxes change color with no transition.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">nds-otp-group</code> on the page starts on its own, and so does a group added later. The first group on a page that had none needs <code class="nds-inline-code lang-js">NDS.init.mount()</code> on the new content.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-right-double" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-advance</span>
+              <p class="nds-card-description">A typed digit moves the focus to the next box. A box takes digits only, and a new digit replaces the one in the box. A click on an empty group moves the focus to the first box.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Keyboard Navigation</span>
+              <p class="nds-card-description">The arrow keys move between the boxes, in the reading direction of the page. Backspace empties the box and moves back. Delete empties it and moves forward.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-clipboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Paste Support</span>
+              <p class="nds-card-description">A pasted or autofilled code fills the boxes from the box that has focus. Characters that are not digits are removed.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-link-square-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">One Value for the Form</span>
+              <p class="nds-card-description">The hidden <code class="nds-inline-code lang-html">nds-otp-value</code> input holds the whole code after each change, so the form sends it as one field.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-checkmark-badge-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Submit Check</span>
+              <p class="nds-card-description">In a form, a group with <code class="nds-inline-code lang-html">data-required</code> blocks the submit until every box holds a digit. The boxes turn red, and a message under them names the number of boxes: "Please enter all 4 digits".</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-eraser" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Error Clears on Input</span>
+              <p class="nds-card-description">A key press in any box removes the group's error and its message.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-cursor-pointer-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Autofocus</span>
+              <p class="nds-card-description">A box with <code class="nds-inline-code lang-html">autofocus</code> gets the focus when the script starts, even when the browser lost it while the page loaded.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-contrast" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Accessibility</span>
+              <p class="nds-card-description">In high contrast mode, the box borders are 2px wide. With reduced motion, the boxes change color with no transition.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

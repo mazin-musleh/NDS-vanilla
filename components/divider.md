@@ -116,36 +116,60 @@ A Spacing class sets the space above and below a line, or before and after a ver
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-align-center"></i>
-            <span class="nds-label">Text Annotation</span>
-          </span>
-          <p class="nds-item-desc">Any content inside the divider turns it into a label between two lines. No extra class is needed.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-html-5"></i>
-            <span class="nds-label">Works on Any Element</span>
-          </span>
-          <p class="nds-item-desc">The class works on <code class="nds-inline-code lang-html">&lt;hr&gt;</code>, <code class="nds-inline-code lang-html">&lt;div&gt;</code> and <code class="nds-inline-code lang-html">&lt;span&gt;</code>. The browser's own <code class="nds-inline-code lang-html">&lt;hr&gt;</code> look is reset. A plain <code class="nds-inline-code lang-html">&lt;hr&gt;</code> with no class gets the divider look too, so CMS content matches.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">Context Spacing</span>
-          </span>
-          <p class="nds-item-desc">Inside a dropmenu, the space around a divider matches the menu padding. Inside <code class="nds-inline-code lang-html">nds-prose</code>, an <code class="nds-inline-code lang-html">&lt;hr&gt;</code> gets 3XL space. A Spacing class still wins in both.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-arrow-data-transfer-horizontal"></i>
-            <span class="nds-label">Writing-mode Aware</span>
-          </span>
-          <p class="nds-item-desc">Margins and lines use logical properties. In a parent with a vertical writing mode, the divider draws a vertical line with no extra class.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-align-center" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Text Annotation</span>
+              <p class="nds-card-description">Any content inside the divider turns it into a label between two lines. No extra class is needed.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-html-5" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Works on Any Element</span>
+              <p class="nds-card-description">The class works on <code class="nds-inline-code lang-html">&lt;hr&gt;</code>, <code class="nds-inline-code lang-html">&lt;div&gt;</code> and <code class="nds-inline-code lang-html">&lt;span&gt;</code>. The browser's own <code class="nds-inline-code lang-html">&lt;hr&gt;</code> look is reset. A plain <code class="nds-inline-code lang-html">&lt;hr&gt;</code> with no class gets the divider look too, so CMS content matches.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Context Spacing</span>
+              <p class="nds-card-description">Inside a dropmenu, the space around a divider matches the menu padding. Inside <code class="nds-inline-code lang-html">nds-prose</code>, an <code class="nds-inline-code lang-html">&lt;hr&gt;</code> gets 3XL space. A Spacing class still wins in both.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-data-transfer-horizontal" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Writing-mode Aware</span>
+              <p class="nds-card-description">Margins and lines use logical properties. In a parent with a vertical writing mode, the divider draws a vertical line with no extra class.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

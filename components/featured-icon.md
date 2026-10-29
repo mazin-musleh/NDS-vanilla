@@ -83,43 +83,73 @@ Every row goes on the `.nds-featured-icon` element. Pick one option from each gr
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-colors"></i>
-            <span class="nds-label">Six Color Variants</span>
-          </span>
-          <p class="nds-item-desc">Brand, success, info, warning, error and neutral. Each one sets the fill and the icon color through design tokens.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-hierarchy"></i>
-            <span class="nds-label">Status from a Parent</span>
-          </span>
-          <p class="nds-item-desc">A <code class="nds-inline-code lang-html">data-status</code> on a parent, such as a card or a drawer item, colors the featured icon inside it. An icon with its own color keeps it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-resize-01"></i>
-            <span class="nds-label">Four Sizes</span>
-          </span>
-          <p class="nds-item-desc">From 32px to 56px. The icon, the padding and the corner radius scale with <code class="nds-inline-code lang-css">--featuredicon-size</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-square-circle"></i>
-            <span class="nds-label">Shape and Style Modifiers</span>
-          </span>
-          <p class="nds-item-desc">A rounded square or a circle, with a light, outline, dark or subtle style. The circle does not apply to the subtle style.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-paint-board"></i>
-            <span class="nds-label">Custom Color Override</span>
-          </span>
-          <p class="nds-item-desc">Set <code class="nds-inline-code lang-css">--featuredicon-bg</code> and <code class="nds-inline-code lang-css">--featuredicon-color</code> on an icon with no color class to get a color pair beyond the six variants.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-colors" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Six Color Variants</span>
+              <p class="nds-card-description">Brand, success, info, warning, error and neutral. Each one sets the fill and the icon color through design tokens.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-hierarchy" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Status from a Parent</span>
+              <p class="nds-card-description">A <code class="nds-inline-code lang-html">data-status</code> on a parent, such as a card or a drawer item, colors the featured icon inside it. An icon with its own color keeps it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-resize-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Four Sizes</span>
+              <p class="nds-card-description">From 32px to 56px. The icon, the padding and the corner radius scale with <code class="nds-inline-code lang-css">--featuredicon-size</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-square-circle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Shape and Style Modifiers</span>
+              <p class="nds-card-description">A rounded square or a circle, with a light, outline, dark or subtle style. The circle does not apply to the subtle style.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paint-board" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Custom Color Override</span>
+              <p class="nds-card-description">Set <code class="nds-inline-code lang-css">--featuredicon-bg</code> and <code class="nds-inline-code lang-css">--featuredicon-color</code> on an icon with no color class to get a color pair beyond the six variants.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

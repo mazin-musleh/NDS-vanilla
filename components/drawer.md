@@ -346,50 +346,86 @@ A [Scroll More](../components/scroll-more) wrapper around the list holds the dra
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every drawer on the page starts by itself. The script finds each item with a submenu and gives its toggle an arrow.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">Accordion Submenus</span>
-          </span>
-          <p class="nds-item-desc">Submenus slide open and closed. They nest to any depth, and each level works the same way.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cursor-move-02"></i>
-            <span class="nds-label">Active Path</span>
-          </span>
-          <p class="nds-item-desc">The item marked <code class="nds-inline-code lang-html">data-state="active"</code> shows the line beside it, and every submenu above it opens. This happens before the page shows, so people land with the current page in view.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-inbox"></i>
-            <span class="nds-label">Empty State</span>
-          </span>
-          <p class="nds-item-desc">A list that can run out of items takes <code class="nds-inline-code lang-html">nds-empty</code>. The <a href="../components/empty">Empty</a> component shows a placeholder while the list holds no items, and removes it when one arrives.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-access"></i>
-            <span class="nds-label">Screen Readers</span>
-          </span>
-          <p class="nds-item-desc">The script keeps <code class="nds-inline-code lang-html">aria-expanded</code> on each toggle in step with its submenu.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-api"></i>
-            <span class="nds-label">JavaScript API</span>
-          </span>
-          <p class="nds-item-desc">Open or close a submenu from code, start and stop a drawer, and listen for an event when a submenu has opened or closed.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every drawer on the page starts by itself. The script finds each item with a submenu and gives its toggle an arrow.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Accordion Submenus</span>
+              <p class="nds-card-description">Submenus slide open and closed. They nest to any depth, and each level works the same way.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-cursor-move-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Active Path</span>
+              <p class="nds-card-description">The item marked <code class="nds-inline-code lang-html">data-state="active"</code> shows the line beside it, and every submenu above it opens. This happens before the page shows, so people land with the current page in view.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-inbox" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Empty State</span>
+              <p class="nds-card-description">A list that can run out of items takes <code class="nds-inline-code lang-html">nds-empty</code>. The <a href="../components/empty">Empty</a> component shows a placeholder while the list holds no items, and removes it when one arrives.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-access" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Screen Readers</span>
+              <p class="nds-card-description">The script keeps <code class="nds-inline-code lang-html">aria-expanded</code> on each toggle in step with its submenu.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-api" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">JavaScript API</span>
+              <p class="nds-card-description">Open or close a submenu from code, start and stop a drawer, and listen for an event when a submenu has opened or closed.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

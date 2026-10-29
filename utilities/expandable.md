@@ -135,50 +135,86 @@ Put `nds-expand-all` on the parent of several expandable boxes. Show More on one
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Automatic Start</span>
-          </span>
-          <p class="nds-item-desc">The loader starts the script on every <code class="nds-inline-code lang-html">.nds-expandable</code>. You write no script.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-ruler"></i>
-            <span class="nds-label">No Layout Shift</span>
-          </span>
-          <p class="nds-item-desc">CSS limits the content to the max height before the script runs. The page does not jump when the script starts.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-resize-01"></i>
-            <span class="nds-label">Height Check</span>
-          </span>
-          <p class="nds-item-desc">The script measures the content again when its size changes. When the content fits, the script removes the limit and hides the button.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-transition-bottom"></i>
-            <span class="nds-label">Fade</span>
-          </span>
-          <p class="nds-item-desc">Limited content fades out above the button. No text shows behind the button.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-translate"></i>
-            <span class="nds-label">Bilingual Labels</span>
-          </span>
-          <p class="nds-item-desc">The button reads "Show More" and "Show Less" in English, and «عرض المزيد» and «عرض أقل» in Arabic, from the <code class="nds-inline-code lang-html">lang</code> of the page.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-view"></i>
-            <span class="nds-label">Hidden Panels</span>
-          </span>
-          <p class="nds-item-desc">A box in a hidden panel stays limited until the panel shows. Tabs measures it again when its panel opens.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Automatic Start</span>
+              <p class="nds-card-description">The loader starts the script on every <code class="nds-inline-code lang-html">.nds-expandable</code>. You write no script.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-ruler" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">No Layout Shift</span>
+              <p class="nds-card-description">CSS limits the content to the max height before the script runs. The page does not jump when the script starts.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-resize-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Height Check</span>
+              <p class="nds-card-description">The script measures the content again when its size changes. When the content fits, the script removes the limit and hides the button.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-transition-bottom" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Fade</span>
+              <p class="nds-card-description">Limited content fades out above the button. No text shows behind the button.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-translate" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Bilingual Labels</span>
+              <p class="nds-card-description">The button reads "Show More" and "Show Less" in English, and «عرض المزيد» and «عرض أقل» in Arabic, from the <code class="nds-inline-code lang-html">lang</code> of the page.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-view" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Hidden Panels</span>
+              <p class="nds-card-description">A box in a hidden panel stays limited until the panel shows. Tabs measures it again when its panel opens.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

@@ -73,57 +73,99 @@ Every row goes on the link. Inside a content section, a link is also underlined.
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">The script runs on every page when it loads. It needs no selector and no call.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-colors"></i>
-            <span class="nds-label">Color Variants</span>
-          </span>
-          <p class="nds-item-desc">Primary, neutral and on color, each with its own hover, pressed, focus and visited colors from design tokens.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-globe-02"></i>
-            <span class="nds-label">External Link Detection</span>
-          </span>
-          <p class="nds-item-desc">The script compares each link's hostname with the page's hostname. A link to another hostname, a subdomain included, gets the external icon.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-security-check"></i>
-            <span class="nds-label">Safe Navigation</span>
-          </span>
-          <p class="nds-item-desc">An external link opens in a new tab. Browsers already add <code class="nds-inline-code lang-html">noopener</code> to <code class="nds-inline-code lang-html">target="_blank"</code>, so the script adds no <code class="nds-inline-code lang-html">rel</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-paragraph"></i>
-            <span class="nds-label">Block Content</span>
-          </span>
-          <p class="nds-item-desc">A link that wraps a block, such as <code class="nds-inline-code lang-html">&lt;a&gt;&lt;p&gt;…&lt;/p&gt;&lt;/a&gt;</code> from an editor, gets the external icon inside its last block, so the icon stays on the text line.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-toggle-off"></i>
-            <span class="nds-label">Opt-out Control</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-html">data-no-external</code> on a link or on a container stops the external icon and the new tab for every link inside it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-underline"></i>
-            <span class="nds-label">Underline Modifier</span>
-          </span>
-          <p class="nds-item-desc">A link is underlined on hover and when pressed. <code class="nds-inline-code lang-html">nds-underline</code> keeps the underline on, and links inside a content section always have it.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">The script runs on every page when it loads. It needs no selector and no call.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-colors" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Color Variants</span>
+              <p class="nds-card-description">Primary, neutral and on color, each with its own hover, pressed, focus and visited colors from design tokens.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-globe-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">External Link Detection</span>
+              <p class="nds-card-description">The script compares each link's hostname with the page's hostname. A link to another hostname, a subdomain included, gets the external icon.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-security-check" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Safe Navigation</span>
+              <p class="nds-card-description">An external link opens in a new tab. Browsers already add <code class="nds-inline-code lang-html">noopener</code> to <code class="nds-inline-code lang-html">target="_blank"</code>, so the script adds no <code class="nds-inline-code lang-html">rel</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paragraph" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Block Content</span>
+              <p class="nds-card-description">A link that wraps a block, such as <code class="nds-inline-code lang-html">&lt;a&gt;&lt;p&gt;…&lt;/p&gt;&lt;/a&gt;</code> from an editor, gets the external icon inside its last block, so the icon stays on the text line.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-toggle-off" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Opt-out Control</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-html">data-no-external</code> on a link or on a container stops the external icon and the new tab for every link inside it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-underline" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Underline Modifier</span>
+              <p class="nds-card-description">A link is underlined on hover and when pressed. <code class="nds-inline-code lang-html">nds-underline</code> keeps the underline on, and links inside a content section always have it.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

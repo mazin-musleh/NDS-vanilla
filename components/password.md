@@ -247,64 +247,112 @@ The chip is optional. Without it, leave out `.nds-password-rules` and the input'
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">nds-password</code> field on the page starts on its own. A value already in the field, such as one from the server, shows its rule status at once.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-checkmark-badge-01"></i>
-            <span class="nds-label">Five Built-in Rules</span>
-          </span>
-          <p class="nds-item-desc">Length, capital letter, small letter, number and symbol. A symbol is any character other than A-Z, a-z and 0-9. Add a chip for each rule you want.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-shield-01"></i>
-            <span class="nds-label">Submit Gating</span>
-          </span>
-          <p class="nds-item-desc">A failing rule or a mismatch blocks the submit through native constraint validation. The field outline turns red, and the red chips name the cause, so no message is added. The chips stay neutral while the field is empty.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-eye"></i>
-            <span class="nds-label">Show Password</span>
-          </span>
-          <p class="nds-item-desc">The eye button switches the field between hidden and plain text. Its label changes between "Show password" and "Hide password". The script hides the password again when the form is sent or reset.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-language-circle"></i>
-            <span class="nds-label">Arabic Letters Blocked</span>
-          </span>
-          <p class="nds-item-desc">A password field does not accept Arabic letters. The forms script removes a typed Arabic letter at once and shows an error under the field.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-access"></i>
-            <span class="nds-label">Screen Reader Progress</span>
-          </span>
-          <p class="nds-item-desc">A hidden live region reads "3 of 5 password rules met", or the mismatch message, half a second after the user stops typing. The chips are not read again on each keystroke.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-dashboard-speed-01"></i>
-            <span class="nds-label">Strength Value in CSS</span>
-          </span>
-          <p class="nds-item-desc">The container carries the number of passing chips in <code class="nds-inline-code lang-html">data-password-strength</code>, so a stylesheet can draw a strength bar. NDS ships no bar.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-api"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc">Register rules, check the value again, and read the current result through the JS API.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">nds-password</code> field on the page starts on its own. A value already in the field, such as one from the server, shows its rule status at once.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-checkmark-badge-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Five Built-in Rules</span>
+              <p class="nds-card-description">Length, capital letter, small letter, number and symbol. A symbol is any character other than A-Z, a-z and 0-9. Add a chip for each rule you want.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-shield-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Submit Gating</span>
+              <p class="nds-card-description">A failing rule or a mismatch blocks the submit through native constraint validation. The field outline turns red, and the red chips name the cause, so no message is added. The chips stay neutral while the field is empty.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-eye" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Show Password</span>
+              <p class="nds-card-description">The eye button switches the field between hidden and plain text. Its label changes between "Show password" and "Hide password". The script hides the password again when the form is sent or reset.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-language-circle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Arabic Letters Blocked</span>
+              <p class="nds-card-description">A password field does not accept Arabic letters. The forms script removes a typed Arabic letter at once and shows an error under the field.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-access" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Screen Reader Progress</span>
+              <p class="nds-card-description">A hidden live region reads "3 of 5 password rules met", or the mismatch message, half a second after the user stops typing. The chips are not read again on each keystroke.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-dashboard-speed-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Strength Value in CSS</span>
+              <p class="nds-card-description">The container carries the number of passing chips in <code class="nds-inline-code lang-html">data-password-strength</code>, so a stylesheet can draw a strength bar. NDS ships no bar.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-api" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description">Register rules, check the value again, and read the current result through the JS API.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

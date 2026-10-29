@@ -140,49 +140,86 @@ An `nds-icon` draws the glyph set in `--nds-icon`, and each UI icon has a token,
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-hard-drive"></i>
-            <span class="nds-label">Self-Hosted</span>
-          </span>
-          <p class="nds-item-desc">The font and the icon CSS ship with NDS and load from your own domain. No request goes to a third party.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-rocket-01"></i>
-            <span class="nds-label">Off the Critical Path</span>
-          </span>
-          <p class="nds-item-desc">The page never waits on an icon to show. The UI icon CSS loads right after the main CSS, so a close button or a menu arrow shows with the page. The font loads after the page shows.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-file-download"></i>
-            <span class="nds-label">On-Demand Font Files</span>
-          </span>
-          <p class="nds-item-desc">The font comes in small files of 25 icons each. A page downloads only the files that hold its icons, not the full library.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-pin"></i>
-            <span class="nds-label">Stable UI Set</span>
-          </span>
-          <p class="nds-item-desc">A UI icon is an SVG copy inside the NDS CSS. A font update does not change it, and NDS can adjust a drawing, such as an arrow that flips with the reading direction.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-eye"></i>
-            <span class="nds-label">Flash-Free Rendering</span>
-          </span>
-          <p class="nds-item-desc">Icons stay hidden until they can paint, so a fallback box never shows. While the font loads, a font icon holds an empty box at its final size, so the layout does not move.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-paint-board"></i>
-            <span class="nds-label">Color and Size Inheritance</span>
-          </span>
-          <p class="nds-item-desc">An icon is a square one em wide, in the current text color. It matches the text around it with no extra class.</p>
-        </div>      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-hard-drive" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Self-Hosted</span>
+              <p class="nds-card-description">The font and the icon CSS ship with NDS and load from your own domain. No request goes to a third party.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-rocket-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Off the Critical Path</span>
+              <p class="nds-card-description">The page never waits on an icon to show. The UI icon CSS loads right after the main CSS, so a close button or a menu arrow shows with the page. The font loads after the page shows.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-file-download" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">On-Demand Font Files</span>
+              <p class="nds-card-description">The font comes in small files of 25 icons each. A page downloads only the files that hold its icons, not the full library.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-pin" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Stable UI Set</span>
+              <p class="nds-card-description">A UI icon is an SVG copy inside the NDS CSS. A font update does not change it, and NDS can adjust a drawing, such as an arrow that flips with the reading direction.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-eye" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Flash-Free Rendering</span>
+              <p class="nds-card-description">Icons stay hidden until they can paint, so a fallback box never shows. While the font loads, a font icon holds an empty box at its final size, so the layout does not move.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paint-board" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Color and Size Inheritance</span>
+              <p class="nds-card-description">An icon is a square one em wide, in the current text color. It matches the text around it with no extra class.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

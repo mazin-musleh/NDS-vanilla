@@ -75,50 +75,86 @@ The variants and sizes are the [Button](../components/button) ones. The cooldown
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-cooldown</code> on the page is wired at load, and any added later. No init call is needed.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-clock-01"></i>
-            <span class="nds-label">Live Countdown Label</span>
-          </span>
-          <p class="nds-item-desc">The label shows the <code class="nds-inline-code lang-html">data-cooldown-label</code> text and updates every second, with each <code class="nds-inline-code lang-html">{s}</code> replaced by the seconds left.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-resize-01"></i>
-            <span class="nds-label">Stable Width</span>
-          </span>
-          <p class="nds-item-desc">The label reserves its widest text from page load: the first label, the countdown at its longest, or the resend label. The button never resizes during the cooldown.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-loading-03"></i>
-            <span class="nds-label">Your Loading State</span>
-          </span>
-          <p class="nds-item-desc">The component has no loading phase: a timer cannot know how long a response takes. Add <code class="nds-inline-code lang-html">data-state="loading"</code> from <code class="nds-inline-code lang-js">nds:cooldown:start</code>, and remove it when the response arrives. The state hides the label, so the countdown runs under the spinner.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-notification-square"></i>
-            <span class="nds-label">Your Confirmation</span>
-          </span>
-          <p class="nds-item-desc">The component shows no alert of its own. Show one with <a class="nds-color" href="../components/alert">Alert</a> when the response arrives, in the same <code class="nds-inline-code lang-js">nds:cooldown:start</code> listener. A failed send then never reports success.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-api"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc">Start a cooldown from JavaScript, resume one after a page reload with the seconds left, or end one early.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">.nds-cooldown</code> on the page is wired at load, and any added later. No init call is needed.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Live Countdown Label</span>
+              <p class="nds-card-description">The label shows the <code class="nds-inline-code lang-html">data-cooldown-label</code> text and updates every second, with each <code class="nds-inline-code lang-html">{s}</code> replaced by the seconds left.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-resize-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Stable Width</span>
+              <p class="nds-card-description">The label reserves its widest text from page load: the first label, the countdown at its longest, or the resend label. The button never resizes during the cooldown.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-loading-03" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Your Loading State</span>
+              <p class="nds-card-description">The component has no loading phase: a timer cannot know how long a response takes. Add <code class="nds-inline-code lang-html">data-state="loading"</code> from <code class="nds-inline-code lang-js">nds:cooldown:start</code>, and remove it when the response arrives. The state hides the label, so the countdown runs under the spinner.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-notification-square" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Your Confirmation</span>
+              <p class="nds-card-description">The component shows no alert of its own. Show one with <a class="nds-color" href="../components/alert">Alert</a> when the response arrives, in the same <code class="nds-inline-code lang-js">nds:cooldown:start</code> listener. A failed send then never reports success.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-api" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description">Start a cooldown from JavaScript, resume one after a page reload with the seconds left, or end one early.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

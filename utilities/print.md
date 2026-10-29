@@ -135,43 +135,73 @@ The target prints at its width on screen, in the middle of the sheet. A target w
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-view-off"></i>
-            <span class="nds-label">Site Chrome Off the Paper</span>
-          </span>
-          <p class="nds-item-desc">The top bar, the main navigation links and buttons, the breadcrumb, the side menu, the footer, the floating buttons, the cookie notice and the page feedback do not print. The site logo prints at the top.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-paint-board"></i>
-            <span class="nds-label">Colors as on Screen</span>
-          </span>
-          <p class="nds-item-desc">Colors, icons, checkmarks and colored bands print as they look on screen. By default a browser does not print background colors, and NDS paints its icons and checkmarks with one, so NDS tells the browser to print them.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-file-01"></i>
-            <span class="nds-label">White Paper</span>
-          </span>
-          <p class="nds-item-desc">The page background does not print, so the sheet stays white around the content.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-moon-02"></i>
-            <span class="nds-label">Light Print in Dark Mode</span>
-          </span>
-          <p class="nds-item-desc">A page in dark mode, and every dark area on a page, prints in light colors, then returns to dark. A print target that has its own <code class="nds-inline-code lang-html">data-theme="dark"</code> keeps its dark look.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-printer"></i>
-            <span class="nds-label">No Script to Write</span>
-          </span>
-          <p class="nds-item-desc">One click listener serves every <code class="nds-inline-code lang-html">data-print-target</code> button. It starts only on a page that has one.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-view-off" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Site Chrome Off the Paper</span>
+              <p class="nds-card-description">The top bar, the main navigation links and buttons, the breadcrumb, the side menu, the footer, the floating buttons, the cookie notice and the page feedback do not print. The site logo prints at the top.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paint-board" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Colors as on Screen</span>
+              <p class="nds-card-description">Colors, icons, checkmarks and colored bands print as they look on screen. By default a browser does not print background colors, and NDS paints its icons and checkmarks with one, so NDS tells the browser to print them.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">White Paper</span>
+              <p class="nds-card-description">The page background does not print, so the sheet stays white around the content.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Light Print in Dark Mode</span>
+              <p class="nds-card-description">A page in dark mode, and every dark area on a page, prints in light colors, then returns to dark. A print target that has its own <code class="nds-inline-code lang-html">data-theme="dark"</code> keeps its dark look.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-printer" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">No Script to Write</span>
+              <p class="nds-card-description">One click listener serves every <code class="nds-inline-code lang-html">data-print-target</code> button. It starts only on a page that has one.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

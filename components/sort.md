@@ -287,57 +287,99 @@ In `create()`, set `urlSync: { keyParam, orderParam }` and the sort key and orde
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Used by Filter and Tables</span>
-          </span>
-          <p class="nds-item-desc"><a class="nds-color" href="../components/filter">Filter</a> starts Sort for its <code class="nds-inline-code lang-html">[data-sort]</code> buttons. <a class="nds-color" href="../components/table">Tables</a> starts it for its sortable column headers. Neither needs a <code class="nds-inline-code lang-html">data-sort-target</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-arrow-data-transfer-vertical"></i>
-            <span class="nds-label">Type Detection</span>
-          </span>
-          <p class="nds-item-desc">Sort reads the values at sort time and picks number, date or text. A value such as <code class="nds-inline-code lang-html">9,375 SAR</code> sorts as a number. A date in the list's date format sorts as a date: the nearest <code class="nds-inline-code lang-html">data-date-format</code> around the list, such as on <code class="nds-inline-code lang-html">&lt;html&gt;</code>, or <code class="nds-inline-code lang-html">DD/MM/YYYY</code>, in Latin or Arabic digits. It reads in the nearest <code class="nds-inline-code lang-html">data-calendar</code>, so a Hijri column sorts by its Hijri dates. So do <code class="nds-inline-code lang-html">YYYY-MM-DD</code> and ISO dates with a time. Other text with <code class="nds-inline-code lang-html">/</code> or <code class="nds-inline-code lang-html">:</code> between digits sorts as text, never as a number. Text sorts in the language of the browser, and numbers inside text stay in order: item 2 comes before item 10.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-sort-by-down-02"></i>
-            <span class="nds-label">Sort Icon</span>
-          </span>
-          <p class="nds-item-desc">An icon with <code class="nds-inline-code lang-html">nds-sort-icon</code> in a trigger turns up or down with the sort, and back when the sort is cleared. No script of yours swaps it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard and ARIA</span>
-          </span>
-          <p class="nds-item-desc">Triggers respond to Enter and Space. The active trigger carries <code class="nds-inline-code lang-html">aria-pressed="true"</code>. In <code class="nds-inline-code lang-js">create()</code>, the <code class="nds-inline-code lang-js">a11y</code> option writes <code class="nds-inline-code lang-html">aria-sort</code> on a column header instead.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-menu-square"></i>
-            <span class="nds-label">Dropmenu Icon Sync</span>
-          </span>
-          <p class="nds-item-desc">When the triggers sit in a <a class="nds-color" href="../components/dropmenu">dropmenu</a>, the icon on the closed trigger button copies the icon of the chosen item.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-reload"></i>
-            <span class="nds-label">Original Order</span>
-          </span>
-          <p class="nds-item-desc">Sort keeps the authored order and restores it on reset. It moves the existing elements, so their listeners and state stay.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-api"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc">Call <code class="nds-inline-code lang-js">setSort()</code>, <code class="nds-inline-code lang-js">reset()</code> and <code class="nds-inline-code lang-js">refresh()</code> from your own code. Listen for <code class="nds-inline-code lang-js">nds:sort:change</code> to react to every sort.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Used by Filter and Tables</span>
+              <p class="nds-card-description"><a class="nds-color" href="../components/filter">Filter</a> starts Sort for its <code class="nds-inline-code lang-html">[data-sort]</code> buttons. <a class="nds-color" href="../components/table">Tables</a> starts it for its sortable column headers. Neither needs a <code class="nds-inline-code lang-html">data-sort-target</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-data-transfer-vertical" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Type Detection</span>
+              <p class="nds-card-description">Sort reads the values at sort time and picks number, date or text. A value such as <code class="nds-inline-code lang-html">9,375 SAR</code> sorts as a number. A date in the list's date format sorts as a date: the nearest <code class="nds-inline-code lang-html">data-date-format</code> around the list, such as on <code class="nds-inline-code lang-html">&lt;html&gt;</code>, or <code class="nds-inline-code lang-html">DD/MM/YYYY</code>, in Latin or Arabic digits. It reads in the nearest <code class="nds-inline-code lang-html">data-calendar</code>, so a Hijri column sorts by its Hijri dates. So do <code class="nds-inline-code lang-html">YYYY-MM-DD</code> and ISO dates with a time. Other text with <code class="nds-inline-code lang-html">/</code> or <code class="nds-inline-code lang-html">:</code> between digits sorts as text, never as a number. Text sorts in the language of the browser, and numbers inside text stay in order: item 2 comes before item 10.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-sort-by-down-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Sort Icon</span>
+              <p class="nds-card-description">An icon with <code class="nds-inline-code lang-html">nds-sort-icon</code> in a trigger turns up or down with the sort, and back when the sort is cleared. No script of yours swaps it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Keyboard and ARIA</span>
+              <p class="nds-card-description">Triggers respond to Enter and Space. The active trigger carries <code class="nds-inline-code lang-html">aria-pressed="true"</code>. In <code class="nds-inline-code lang-js">create()</code>, the <code class="nds-inline-code lang-js">a11y</code> option writes <code class="nds-inline-code lang-html">aria-sort</code> on a column header instead.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-menu-square" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Dropmenu Icon Sync</span>
+              <p class="nds-card-description">When the triggers sit in a <a class="nds-color" href="../components/dropmenu">dropmenu</a>, the icon on the closed trigger button copies the icon of the chosen item.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-reload" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Original Order</span>
+              <p class="nds-card-description">Sort keeps the authored order and restores it on reset. It moves the existing elements, so their listeners and state stay.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-api" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description">Call <code class="nds-inline-code lang-js">setSort()</code>, <code class="nds-inline-code lang-js">reset()</code> and <code class="nds-inline-code lang-js">refresh()</code> from your own code. Listen for <code class="nds-inline-code lang-js">nds:sort:change</code> to react to every sort.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

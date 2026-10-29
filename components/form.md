@@ -379,64 +379,112 @@ The eye button switches the field between hidden and plain text, and its label b
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every field on the page starts when the page loads, and a field added later starts on its own. The first field on a page that had none needs <code class="nds-inline-code lang-js">NDS.init.mount()</code> on the new content. Call <code class="nds-inline-code lang-js">NDS.Form.create()</code> only to start a part of the page at once.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
-            <span class="nds-label">Inline Messages</span>
-          </span>
-          <p class="nds-item-desc">Validation uses the browser's checks but shows no browser popup. The message appears under the field.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-align-left"></i>
-            <span class="nds-label">Left-to-Right Values</span>
-          </span>
-          <p class="nds-item-desc">An e-mail, phone or URL field, and a <a href="../components/formatted-input"><code class="nds-inline-code lang-html">nds-formatted</code></a> field, reads left to right on every page, so a phone number keeps its digit groups in order on an Arabic page. The value stays on the page side, as in the other fields.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-puzzle"></i>
-            <span class="nds-label">Custom Checks</span>
-          </span>
-          <p class="nds-item-desc">Call <code class="nds-inline-code lang-js">input.setCustomValidity('message')</code> to fail a field with your own message, and pass an empty string when it passes. Submit validation blocks the form and shows the message. A message of one space outlines the field with no text.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cursor-02"></i>
-            <span class="nds-label">Interaction States</span>
-          </span>
-          <p class="nds-item-desc">The script writes <code class="nds-inline-code lang-html">focus</code>, <code class="nds-inline-code lang-html">active</code> and <code class="nds-inline-code lang-html">typing</code> to the container's <code class="nds-inline-code lang-html">data-state</code>. A line grows under the field on focus.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cancel-circle"></i>
-            <span class="nds-label">Clear Button</span>
-          </span>
-          <p class="nds-item-desc">The <code class="nds-inline-code lang-html">nds-clear</code> button shows only while the field has a value. It empties the field, shows no "required" error, and puts focus back in the field.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-access"></i>
-            <span class="nds-label">Screen Reader Errors</span>
-          </span>
-          <p class="nds-item-desc">The script sets <code class="nds-inline-code lang-html">aria-invalid</code> on a field with an error, and points its <code class="nds-inline-code lang-html">aria-describedby</code> at the message. A required field gets <code class="nds-inline-code lang-html">aria-required="true"</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-view-off-slash"></i>
-            <span class="nds-label">Hidden Fields Skipped</span>
-          </span>
-          <p class="nds-item-desc">Submit validation skips a field that is hidden or inside a hidden parent, and a disabled field. A step of a multi-step form that is out of view does not block the submit.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every field on the page starts when the page loads, and a field added later starts on its own. The first field on a page that had none needs <code class="nds-inline-code lang-js">NDS.init.mount()</code> on the new content. Call <code class="nds-inline-code lang-js">NDS.Form.create()</code> only to start a part of the page at once.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Inline Messages</span>
+              <p class="nds-card-description">Validation uses the browser's checks but shows no browser popup. The message appears under the field.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-align-left" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Left-to-Right Values</span>
+              <p class="nds-card-description">An e-mail, phone or URL field, and a <a href="../components/formatted-input"><code class="nds-inline-code lang-html">nds-formatted</code></a> field, reads left to right on every page, so a phone number keeps its digit groups in order on an Arabic page. The value stays on the page side, as in the other fields.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-puzzle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Custom Checks</span>
+              <p class="nds-card-description">Call <code class="nds-inline-code lang-js">input.setCustomValidity('message')</code> to fail a field with your own message, and pass an empty string when it passes. Submit validation blocks the form and shows the message. A message of one space outlines the field with no text.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-cursor-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Interaction States</span>
+              <p class="nds-card-description">The script writes <code class="nds-inline-code lang-html">focus</code>, <code class="nds-inline-code lang-html">active</code> and <code class="nds-inline-code lang-html">typing</code> to the container's <code class="nds-inline-code lang-html">data-state</code>. A line grows under the field on focus.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-cancel-circle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Clear Button</span>
+              <p class="nds-card-description">The <code class="nds-inline-code lang-html">nds-clear</code> button shows only while the field has a value. It empties the field, shows no "required" error, and puts focus back in the field.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-access" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Screen Reader Errors</span>
+              <p class="nds-card-description">The script sets <code class="nds-inline-code lang-html">aria-invalid</code> on a field with an error, and points its <code class="nds-inline-code lang-html">aria-describedby</code> at the message. A required field gets <code class="nds-inline-code lang-html">aria-required="true"</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-view-off-slash" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Hidden Fields Skipped</span>
+              <p class="nds-card-description">Submit validation skips a field that is hidden or inside a hidden parent, and a disabled field. A step of a multi-step form that is out of view does not block the submit.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

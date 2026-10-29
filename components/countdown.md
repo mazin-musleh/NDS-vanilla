@@ -233,57 +233,99 @@ At zero, the root gets `data-state="ended"`. A `.nds-countdown-ended` element an
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-countdown</code> on the page starts at load, and any added later. No init call is needed.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-timer-02"></i>
-            <span class="nds-label">No Drift</span>
-          </span>
-          <p class="nds-item-desc">One timer serves every countdown on the page, aligned to the second. Each tick computes the time left from the target, so a slow or hidden tab shows the right time when the visitor returns.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-translate"></i>
-            <span class="nds-label">Unit Words</span>
-          </span>
-          <p class="nds-item-desc">An empty <code class="nds-inline-code lang-html">.nds-countdown-label</code> gets the unit word in the language of the nearest <code class="nds-inline-code lang-html">lang</code> attribute, with the right plural for the number. The day word of the default inline countdown comes from the same place. A label with text stays as you wrote it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-server-stack-01"></i>
-            <span class="nds-label">Server Time</span>
-          </span>
-          <p class="nds-item-desc">Put the server's current time in <code class="nds-inline-code lang-html">data-countdown-now</code>, on the root or on <code class="nds-inline-code lang-html">&lt;html&gt;</code> for the whole page. A wrong clock on the visitor's device then cannot move a deadline.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-number-sign"></i>
-            <span class="nds-label">Stable Width</span>
-          </span>
-          <p class="nds-item-desc">Every digit takes the same width. A unit word keeps the width of its longest form, such as "seconds" when it shows "second". The largest number keeps the width it starts with, such as 10 days at 9. The text and the cards do not move as the time changes.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-arrow-left-right"></i>
-            <span class="nds-label">Time Direction</span>
-          </span>
-          <p class="nds-item-desc">A countdown of digits alone, such as <code class="nds-inline-code lang-html">05:12</code>, reads left to right on every page, Arabic included. Arabic unit words make the countdown read right to left.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-grid"></i>
-            <span class="nds-label">Phone Row</span>
-          </span>
-          <p class="nds-item-desc">On a phone, the cards in a row get a 12px padding and 12px unit words, so four cards fit a 320px screen. A <code class="nds-inline-code lang-css">--card-padding</code> on a card beats the padding.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">.nds-countdown</code> on the page starts at load, and any added later. No init call is needed.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-timer-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">No Drift</span>
+              <p class="nds-card-description">One timer serves every countdown on the page, aligned to the second. Each tick computes the time left from the target, so a slow or hidden tab shows the right time when the visitor returns.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-translate" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Unit Words</span>
+              <p class="nds-card-description">An empty <code class="nds-inline-code lang-html">.nds-countdown-label</code> gets the unit word in the language of the nearest <code class="nds-inline-code lang-html">lang</code> attribute, with the right plural for the number. The day word of the default inline countdown comes from the same place. A label with text stays as you wrote it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-server-stack-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Server Time</span>
+              <p class="nds-card-description">Put the server's current time in <code class="nds-inline-code lang-html">data-countdown-now</code>, on the root or on <code class="nds-inline-code lang-html">&lt;html&gt;</code> for the whole page. A wrong clock on the visitor's device then cannot move a deadline.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-number-sign" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Stable Width</span>
+              <p class="nds-card-description">Every digit takes the same width. A unit word keeps the width of its longest form, such as "seconds" when it shows "second". The largest number keeps the width it starts with, such as 10 days at 9. The text and the cards do not move as the time changes.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-left-right" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Time Direction</span>
+              <p class="nds-card-description">A countdown of digits alone, such as <code class="nds-inline-code lang-html">05:12</code>, reads left to right on every page, Arabic included. Arabic unit words make the countdown read right to left.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-grid" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Phone Row</span>
+              <p class="nds-card-description">On a phone, the cards in a row get a 12px padding and 12px unit words, so four cards fit a 320px screen. A <code class="nds-inline-code lang-css">--card-padding</code> on a card beats the padding.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

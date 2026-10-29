@@ -93,50 +93,86 @@ The canon is a request confirmation on an Arabic page. Each Class chip adds its 
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-align-center"></i>
-            <span class="nds-label">One Centering Class</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-html">nds-center</code> works on your markup and on components. A card centers its content, a flex or a grid centers its items, and a section centers its head.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-eraser"></i>
-            <span class="nds-label">Priority Over Component Styles</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-html">nds-center</code>, <code class="nds-inline-code lang-html">nds-flush</code>, <code class="nds-inline-code lang-html">nds-flush-inline</code>, <code class="nds-inline-code lang-html">nds-flush-block</code> and <code class="nds-inline-code lang-html">nds-ltr</code> use <code class="nds-inline-code lang-css">!important</code>, so they apply on any element, even one a component styles, with no extra selector.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-language-skill"></i>
-            <span class="nds-label">LTR Inside a Sentence</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-html">nds-ltr</code> works on a <code class="nds-inline-code lang-html">span</code> in running text. It isolates the value, so its signs stay in place and the Arabic text around it keeps its order.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-colors"></i>
-            <span class="nds-label">Palette Colors</span>
-          </span>
-          <p class="nds-item-desc">Brand text and the four note statuses read the text color tokens, so a custom palette changes them with the rest of the page.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-note-01"></i>
-            <span class="nds-label">Note in Any Place</span>
-          </span>
-          <p class="nds-item-desc">A note sets only its color and text size, with no margin. It fits in a label or a legend as a hint, or stands alone as a paragraph.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-flash"></i>
-            <span class="nds-label">CSS Only</span>
-          </span>
-          <p class="nds-item-desc">Every helper class is CSS only. There is nothing to initialize.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-align-center" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">One Centering Class</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-html">nds-center</code> works on your markup and on components. A card centers its content, a flex or a grid centers its items, and a section centers its head.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-eraser" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Priority Over Component Styles</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-html">nds-center</code>, <code class="nds-inline-code lang-html">nds-flush</code>, <code class="nds-inline-code lang-html">nds-flush-inline</code>, <code class="nds-inline-code lang-html">nds-flush-block</code> and <code class="nds-inline-code lang-html">nds-ltr</code> use <code class="nds-inline-code lang-css">!important</code>, so they apply on any element, even one a component styles, with no extra selector.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-language-skill" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">LTR Inside a Sentence</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-html">nds-ltr</code> works on a <code class="nds-inline-code lang-html">span</code> in running text. It isolates the value, so its signs stay in place and the Arabic text around it keeps its order.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-colors" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Palette Colors</span>
+              <p class="nds-card-description">Brand text and the four note statuses read the text color tokens, so a custom palette changes them with the rest of the page.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-note-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Note in Any Place</span>
+              <p class="nds-card-description">A note sets only its color and text size, with no margin. It fits in a label or a legend as a hint, or stands alone as a paragraph.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-flash" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">CSS Only</span>
+              <p class="nds-card-description">Every helper class is CSS only. There is nothing to initialize.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

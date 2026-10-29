@@ -237,43 +237,73 @@ Custom Link is two rows of one choice: write both attributes on `.nds-share`. Ic
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Automatic Start</span>
-          </span>
-          <p class="nds-item-desc">One click listener on the page serves every share button, including the buttons you add later. You write no script.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-share-04"></i>
-            <span class="nds-label">Social Targets</span>
-          </span>
-          <p class="nds-item-desc">X, LinkedIn and WhatsApp open their share page in a 600×400 window. X and WhatsApp send the title with the link. LinkedIn sends the link only.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-link-04"></i>
-            <span class="nds-label">Copy Link Feedback</span>
-          </span>
-          <p class="nds-item-desc">Copy Link uses the <a href="../utilities/copy">Copy</a> script: a checkmark for 2 seconds, the label swap and a screen reader announcement.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-copy-01"></i>
-            <span class="nds-label">Multiple Instances</span>
-          </span>
-          <p class="nds-item-desc">A page can hold any number of <code class="nds-inline-code lang-html">.nds-share</code> wrappers. Each reads its own <code class="nds-inline-code lang-html">data-share-url</code> and <code class="nds-inline-code lang-html">data-share-title</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-menu-01"></i>
-            <span class="nds-label">Named Menu</span>
-          </span>
-          <p class="nds-item-desc">The script adds <code class="nds-inline-code lang-html">.nds-share-menu</code> to each share menu, a class to style that menu by.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Automatic Start</span>
+              <p class="nds-card-description">One click listener on the page serves every share button, including the buttons you add later. You write no script.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-share-04" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Social Targets</span>
+              <p class="nds-card-description">X, LinkedIn and WhatsApp open their share page in a 600×400 window. X and WhatsApp send the title with the link. LinkedIn sends the link only.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-link-04" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Copy Link Feedback</span>
+              <p class="nds-card-description">Copy Link uses the <a href="../utilities/copy">Copy</a> script: a checkmark for 2 seconds, the label swap and a screen reader announcement.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-copy-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Multiple Instances</span>
+              <p class="nds-card-description">A page can hold any number of <code class="nds-inline-code lang-html">.nds-share</code> wrappers. Each reads its own <code class="nds-inline-code lang-html">data-share-url</code> and <code class="nds-inline-code lang-html">data-share-title</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-menu-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Named Menu</span>
+              <p class="nds-card-description">The script adds <code class="nds-inline-code lang-html">.nds-share-menu</code> to each share menu, a class to style that menu by.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

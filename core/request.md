@@ -86,57 +86,99 @@ async function search(term) {
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-clock-01"></i>
-            <span class="nds-label">Timeout by Default</span>
-          </span>
-          <p class="nds-item-desc">A request aborts after 15 seconds unless you set <code class="nds-inline-code lang-js">timeout</code>. When a server never answers, the promise rejects with a <code class="nds-inline-code lang-js">TimeoutError</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-database"></i>
-            <span class="nds-label">Response Size Cap</span>
-          </span>
-          <p class="nds-item-desc">The body is read as a stream and cancelled once it passes <code class="nds-inline-code lang-js">maxBytes</code>. When the <code class="nds-inline-code lang-js">Content-Length</code> header is already over the cap, the body is refused unread.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cancel-01"></i>
-            <span class="nds-label">Combined Abort Signals</span>
-          </span>
-          <p class="nds-item-desc">Your <code class="nds-inline-code lang-js">signal</code> and the timeout control the same request. Either one aborts it, and the error name says which.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-source-code"></i>
-            <span class="nds-label">JSON or Text</span>
-          </span>
-          <p class="nds-item-desc">The <code class="nds-inline-code lang-js">Content-Type</code> header decides how the body is read. <code class="nds-inline-code lang-js">json: true</code> parses it as JSON whatever the header says.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-alert-circle"></i>
-            <span class="nds-label">Errors With a Status</span>
-          </span>
-          <p class="nds-item-desc">A failed status rejects with an error that holds the HTTP code, the URL and the start of the response body.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-sliders-horizontal"></i>
-            <span class="nds-label">Fetch Options</span>
-          </span>
-          <p class="nds-item-desc">Every other option goes to <code class="nds-inline-code lang-js">fetch</code> unchanged, such as <code class="nds-inline-code lang-js">method</code>, <code class="nds-inline-code lang-js">headers</code>, <code class="nds-inline-code lang-js">body</code> and <code class="nds-inline-code lang-js">credentials</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-browser"></i>
-            <span class="nds-label">Older Safari</span>
-          </span>
-          <p class="nds-item-desc">Safari before 17.4 has no <code class="nds-inline-code lang-js">AbortSignal.any</code>. There, <code class="nds-inline-code lang-js">NDS.request</code> combines the signals itself, and the error names stay the same.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Timeout by Default</span>
+              <p class="nds-card-description">A request aborts after 15 seconds unless you set <code class="nds-inline-code lang-js">timeout</code>. When a server never answers, the promise rejects with a <code class="nds-inline-code lang-js">TimeoutError</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-database" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Response Size Cap</span>
+              <p class="nds-card-description">The body is read as a stream and cancelled once it passes <code class="nds-inline-code lang-js">maxBytes</code>. When the <code class="nds-inline-code lang-js">Content-Length</code> header is already over the cap, the body is refused unread.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-cancel-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Combined Abort Signals</span>
+              <p class="nds-card-description">Your <code class="nds-inline-code lang-js">signal</code> and the timeout control the same request. Either one aborts it, and the error name says which.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-source-code" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">JSON or Text</span>
+              <p class="nds-card-description">The <code class="nds-inline-code lang-js">Content-Type</code> header decides how the body is read. <code class="nds-inline-code lang-js">json: true</code> parses it as JSON whatever the header says.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-alert-circle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Errors With a Status</span>
+              <p class="nds-card-description">A failed status rejects with an error that holds the HTTP code, the URL and the start of the response body.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-sliders-horizontal" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Fetch Options</span>
+              <p class="nds-card-description">Every other option goes to <code class="nds-inline-code lang-js">fetch</code> unchanged, such as <code class="nds-inline-code lang-js">method</code>, <code class="nds-inline-code lang-js">headers</code>, <code class="nds-inline-code lang-js">body</code> and <code class="nds-inline-code lang-js">credentials</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-browser" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Older Safari</span>
+              <p class="nds-card-description">Safari before 17.4 has no <code class="nds-inline-code lang-js">AbortSignal.any</code>. There, <code class="nds-inline-code lang-js">NDS.request</code> combines the signals itself, and the error names stay the same.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

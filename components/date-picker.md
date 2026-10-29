@@ -192,50 +192,86 @@ The picker checks the field at each `change`, typed text included. A date that d
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-date-input</code> in a <code class="nds-inline-code lang-html">.nds-form-control</code> and a <code class="nds-inline-code lang-html">.nds-form-container</code> starts on load. The script builds the calendar the first time the user opens it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-exchange-01"></i>
-            <span class="nds-label">Dual Calendar System</span>
-          </span>
-          <p class="nds-item-desc">The script writes the same date in the other calendar to <code class="nds-inline-code lang-html">data-converted-date</code> on the input. A Gregorian field holds the Hijri date there, and a Hijri field holds the Gregorian date.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard Navigation</span>
-          </span>
-          <p class="nds-item-desc">Tab moves into the day grid on the chosen day, today, or the first day of the month. The arrow keys move a day or a week, and skip the days that cannot be picked. Page Up and Page Down change the month. A screen reader hears each day as a full date, in the field's calendar and language, and hears which day is today and which days are picked.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-time-zone"></i>
-            <span class="nds-label">Saudi Time</span>
-          </span>
-          <p class="nds-item-desc">Today, and the ring that marks it, follow the site's timezone, <code class="nds-inline-code lang-html">data-timezone</code> on <code class="nds-inline-code lang-html">&lt;html&gt;</code>. Without it, they follow the visitor's clock.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-globe-02"></i>
-            <span class="nds-label">Bilingual Support</span>
-          </span>
-          <p class="nds-item-desc">Month names, weekdays, buttons and error messages show in Arabic or English from the page language. They change when the page language changes.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-arrow-shrink-02"></i>
-            <span class="nds-label">Calendar Position</span>
-          </span>
-          <p class="nds-item-desc">The calendar opens below the field, or above it when the space below is too small. It lines up with the field and stays inside the screen. In a modal or a scrolling box, it moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code>, so nothing clips it.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">.nds-date-input</code> in a <code class="nds-inline-code lang-html">.nds-form-control</code> and a <code class="nds-inline-code lang-html">.nds-form-container</code> starts on load. The script builds the calendar the first time the user opens it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-exchange-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Dual Calendar System</span>
+              <p class="nds-card-description">The script writes the same date in the other calendar to <code class="nds-inline-code lang-html">data-converted-date</code> on the input. A Gregorian field holds the Hijri date there, and a Hijri field holds the Gregorian date.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Keyboard Navigation</span>
+              <p class="nds-card-description">Tab moves into the day grid on the chosen day, today, or the first day of the month. The arrow keys move a day or a week, and skip the days that cannot be picked. Page Up and Page Down change the month. A screen reader hears each day as a full date, in the field's calendar and language, and hears which day is today and which days are picked.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-time-zone" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Saudi Time</span>
+              <p class="nds-card-description">Today, and the ring that marks it, follow the site's timezone, <code class="nds-inline-code lang-html">data-timezone</code> on <code class="nds-inline-code lang-html">&lt;html&gt;</code>. Without it, they follow the visitor's clock.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-globe-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Bilingual Support</span>
+              <p class="nds-card-description">Month names, weekdays, buttons and error messages show in Arabic or English from the page language. They change when the page language changes.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-shrink-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Calendar Position</span>
+              <p class="nds-card-description">The calendar opens below the field, or above it when the space below is too small. It lines up with the field and stays inside the screen. In a modal or a scrolling box, it moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code>, so nothing clips it.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

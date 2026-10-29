@@ -501,64 +501,112 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-code"></i>
-            <span class="nds-label">Plain List</span>
-          </span>
-          <p class="nds-item-desc">The events are a plain list. Before the script starts, or without it, the page shows them as a list of rows.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-refresh"></i>
-            <span class="nds-label">Events Read Again</span>
-          </span>
-          <p class="nds-item-desc">When a script adds or removes events, the calendar reads the list again and places each event on its day.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-calendar-check-in-01"></i>
-            <span class="nds-label">Today</span>
-          </span>
-          <p class="nds-item-desc">Today's day button has a brand primary border, and <code class="nds-inline-code lang-html">aria-current="date"</code> for a screen reader. When it is also the picked day, a ring inside its fill keeps it in view.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-link-01"></i>
-            <span class="nds-label">Date in the Address</span>
-          </span>
-          <p class="nds-item-desc">The week or the month stays in the address as <code class="nds-inline-code lang-html">?date=</code>, and the view as <code class="nds-inline-code lang-html">?view=</code>, so a reload or a shared link opens the same one.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard</span>
-          </span>
-          <p class="nds-item-desc">The day buttons are one Tab stop. The arrow keys move between the days, as in the Date Picker.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-volume-high"></i>
-            <span class="nds-label">Announced Changes</span>
-          </span>
-          <p class="nds-item-desc">After a press on a day or a step button, a screen reader hears the day, the week or the month and its number of events, such as "Thursday 22 October 2026: 3 events". An empty week says the text of the empty message.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-accessibility"></i>
-            <span class="nds-label">Dates for Screen Readers</span>
-          </span>
-          <p class="nds-item-desc">Each day button holds the full date and its number of events as its description. In Grid, the date tiles are hidden on the screen, but a screen reader still reads each event's date.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
-            <span class="nds-label">Narrow Calendars</span>
-          </span>
-          <p class="nds-item-desc">The calendar's own width sets its layout, not the screen's. <code class="nds-inline-code lang-css">--calendar-max-width</code> caps it. Under 860px, Grid shows as Rows and the switch offers Rows and Month. From 860px, Rows and Month show the events in two columns, read across and then down. Under 480px, the days show one letter and a smaller day number.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-code" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Plain List</span>
+              <p class="nds-card-description">The events are a plain list. Before the script starts, or without it, the page shows them as a list of rows.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-refresh" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Events Read Again</span>
+              <p class="nds-card-description">When a script adds or removes events, the calendar reads the list again and places each event on its day.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-calendar-check-in-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Today</span>
+              <p class="nds-card-description">Today's day button has a brand primary border, and <code class="nds-inline-code lang-html">aria-current="date"</code> for a screen reader. When it is also the picked day, a ring inside its fill keeps it in view.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-link-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Date in the Address</span>
+              <p class="nds-card-description">The week or the month stays in the address as <code class="nds-inline-code lang-html">?date=</code>, and the view as <code class="nds-inline-code lang-html">?view=</code>, so a reload or a shared link opens the same one.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Keyboard</span>
+              <p class="nds-card-description">The day buttons are one Tab stop. The arrow keys move between the days, as in the Date Picker.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-volume-high" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Announced Changes</span>
+              <p class="nds-card-description">After a press on a day or a step button, a screen reader hears the day, the week or the month and its number of events, such as "Thursday 22 October 2026: 3 events". An empty week says the text of the empty message.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-accessibility" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Dates for Screen Readers</span>
+              <p class="nds-card-description">Each day button holds the full date and its number of events as its description. In Grid, the date tiles are hidden on the screen, but a screen reader still reads each event's date.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-smart-phone-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Narrow Calendars</span>
+              <p class="nds-card-description">The calendar's own width sets its layout, not the screen's. <code class="nds-inline-code lang-css">--calendar-max-width</code> caps it. Under 860px, Grid shows as Rows and the switch offers Rows and Month. From 860px, Rows and Month show the events in two columns, read across and then down. Under 480px, the days show one letter and a smaller day number.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

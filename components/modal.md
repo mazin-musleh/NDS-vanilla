@@ -239,78 +239,138 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Triggers and close controls work from their attributes, with no script of your own. A trigger added to the page later works too.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-focus-point"></i>
-            <span class="nds-label">Focus Management</span>
-          </span>
-          <p class="nds-item-desc">Focus moves to the field with <code class="nds-inline-code lang-html">autofocus</code> when the modal opens, else to the first close control, or to the modal when it has neither. The modal itself shows no focus ring. The page behind the modal is inert: Tab, a click and a screen reader cannot reach it. Focus goes back to the trigger when it closes.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard Control</span>
-          </span>
-          <p class="nds-item-desc">Escape closes the modal, wherever focus is. When the modal itself has focus, Enter presses the first primary button in <code class="nds-inline-code lang-html">.nds-card-actions</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-paint-board"></i>
-            <span class="nds-label">Backdrop Overlay</span>
-          </span>
-          <p class="nds-item-desc">A dimmed overlay covers the page, and a click on it closes the modal. Set <code class="nds-inline-code lang-css">--backdrop-blur</code> to blur the page behind it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-lock-key"></i>
-            <span class="nds-label">Body Scroll Lock</span>
-          </span>
-          <p class="nds-item-desc">The page does not scroll while the modal is open.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">Pinned Header and Actions</span>
-          </span>
-          <p class="nds-item-desc">A modal is at most 80% of the screen height. Past that, only its content scrolls, so the header and the actions stay in view.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
-            <span class="nds-label">Bottom Sheet on Phones</span>
-          </span>
-          <p class="nds-item-desc">On a phone, the modal slides up from the bottom, spans the full width and rounds only its top corners. Its action buttons stack, each at full width.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-motion-02"></i>
-            <span class="nds-label">Animations</span>
-          </span>
-          <p class="nds-item-desc">On a larger screen, the modal fades in and out.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-transition-left"></i>
-            <span class="nds-label">One Modal at a Time</span>
-          </span>
-          <p class="nds-item-desc">Opening a modal closes the open one first. The new modal keeps its own settings, such as <code class="nds-inline-code lang-html">data-modal-static</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-code-circle"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc">Open and close a modal from a script, check whether one is open, and listen to its events.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Triggers and close controls work from their attributes, with no script of your own. A trigger added to the page later works too.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-focus-point" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Focus Management</span>
+              <p class="nds-card-description">Focus moves to the field with <code class="nds-inline-code lang-html">autofocus</code> when the modal opens, else to the first close control, or to the modal when it has neither. The modal itself shows no focus ring. The page behind the modal is inert: Tab, a click and a screen reader cannot reach it. Focus goes back to the trigger when it closes.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Keyboard Control</span>
+              <p class="nds-card-description">Escape closes the modal, wherever focus is. When the modal itself has focus, Enter presses the first primary button in <code class="nds-inline-code lang-html">.nds-card-actions</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paint-board" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Backdrop Overlay</span>
+              <p class="nds-card-description">A dimmed overlay covers the page, and a click on it closes the modal. Set <code class="nds-inline-code lang-css">--backdrop-blur</code> to blur the page behind it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-lock-key" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Body Scroll Lock</span>
+              <p class="nds-card-description">The page does not scroll while the modal is open.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Pinned Header and Actions</span>
+              <p class="nds-card-description">A modal is at most 80% of the screen height. Past that, only its content scrolls, so the header and the actions stay in view.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-mobile-programming-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Bottom Sheet on Phones</span>
+              <p class="nds-card-description">On a phone, the modal slides up from the bottom, spans the full width and rounds only its top corners. Its action buttons stack, each at full width.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-motion-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Animations</span>
+              <p class="nds-card-description">On a larger screen, the modal fades in and out.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-transition-left" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">One Modal at a Time</span>
+              <p class="nds-card-description">Opening a modal closes the open one first. The new modal keeps its own settings, such as <code class="nds-inline-code lang-html">data-modal-static</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-code-circle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description">Open and close a modal from a script, check whether one is open, and listen to its events.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

@@ -170,36 +170,60 @@ The Drawer row and Card structures show where the line goes inside those compone
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-code"></i>
-            <span class="nds-label">Inline Markup</span>
-          </span>
-          <p class="nds-item-desc">The line and its facts are <code class="nds-inline-code lang-html">&lt;span&gt;</code> elements, so the line is valid inside a link or a button.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-wrap"></i>
-            <span class="nds-label">Wrap to Fit</span>
-          </span>
-          <p class="nds-item-desc">When the facts do not fit on one line, they wrap. Each fact moves down as a whole. Only a fact longer than the whole line wraps inside, and its icon stays beside its first line of text.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-resize-01"></i>
-            <span class="nds-label">Icon Size in Buttons</span>
-          </span>
-          <p class="nds-item-desc">Inside a button or a drawer row, the icon keeps the size of its line. The button's own icon size does not reach it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-paragraph"></i>
-            <span class="nds-label">Own Text Style</span>
-          </span>
-          <p class="nds-item-desc">The line sets its own size, weight and color, so it reads as secondary text inside a button, a card or a row.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-code" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Inline Markup</span>
+              <p class="nds-card-description">The line and its facts are <code class="nds-inline-code lang-html">&lt;span&gt;</code> elements, so the line is valid inside a link or a button.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-wrap" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Wrap to Fit</span>
+              <p class="nds-card-description">When the facts do not fit on one line, they wrap. Each fact moves down as a whole. Only a fact longer than the whole line wraps inside, and its icon stays beside its first line of text.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-resize-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Icon Size in Buttons</span>
+              <p class="nds-card-description">Inside a button or a drawer row, the icon keeps the size of its line. The button's own icon size does not reach it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paragraph" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Own Text Style</span>
+              <p class="nds-card-description">The line sets its own size, weight and color, so it reads as secondary text inside a button, a card or a row.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

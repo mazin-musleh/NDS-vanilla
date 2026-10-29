@@ -457,50 +457,86 @@ last_edit: "24/10/2026 - 11:27 PM"
             <p class="nds-section-description">Courses built for government teams, taught by people who do the work.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-definition-list nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1; --gap: var(--spacing-4xl);">
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-certificate-01" aria-hidden="true"></i>
-                        <span class="nds-label">Accredited certificates</span>
-                    </span>
-                    <p class="nds-item-desc">Each course ends with a certificate that counts toward your career record.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-teacher" aria-hidden="true"></i>
-                        <span class="nds-label">Expert trainers</span>
-                    </span>
-                    <p class="nds-item-desc">Trainers come from the agencies that run the services you work on.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-laptop" aria-hidden="true"></i>
-                        <span class="nds-label">Online or in class</span>
-                    </span>
-                    <p class="nds-item-desc">Join from your desk, or at one of our centers in Riyadh, Jeddah and Dammam.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>
-                        <span class="nds-label">Team bookings</span>
-                    </span>
-                    <p class="nds-item-desc">Book a whole course for your department, on dates that suit your team.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-calendar-check-01" aria-hidden="true"></i>
-                        <span class="nds-label">New dates every month</span>
-                    </span>
-                    <p class="nds-item-desc">Most courses run again within four weeks, so a missed date costs little.</p>
-                </div>
-                <div class="nds-definition-item">
-                    <span class="nds-item-title">
-                        <i class="hgi hgi-stroke hgi-mentoring" aria-hidden="true"></i>
-                        <span class="nds-label">Follow-up support</span>
-                    </span>
-                    <p class="nds-item-desc">Ask your trainer questions for 30 days after the course ends.</p>
-                </div>
-            </div>
+            <ul class="nds-feature-list nds-grid nds-icons-subtle" style="--max-col: 3; --mid-col: 2; --min-col: 1; --gap: var(--spacing-4xl);">
+                <li class="nds-card nds-horizontal">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-certificate-01" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-title">Accredited certificates</span>
+                            <p class="nds-card-description">Each course ends with a certificate that counts toward your career record.</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="nds-card nds-horizontal">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-teacher" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-title">Expert trainers</span>
+                            <p class="nds-card-description">Trainers come from the agencies that run the services you work on.</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="nds-card nds-horizontal">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-laptop" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-title">Online or in class</span>
+                            <p class="nds-card-description">Join from your desk, or at one of our centers in Riyadh, Jeddah and Dammam.</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="nds-card nds-horizontal">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-title">Team bookings</span>
+                            <p class="nds-card-description">Book a whole course for your department, on dates that suit your team.</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="nds-card nds-horizontal">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-calendar-check-01" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-title">New dates every month</span>
+                            <p class="nds-card-description">Most courses run again within four weeks, so a missed date costs little.</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="nds-card nds-horizontal">
+                    <div class="nds-card-header">
+                        <div class="nds-card-featured-icon">
+                            <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-mentoring" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                    <div class="nds-card-content">
+                        <div class="nds-card-text">
+                            <span class="nds-card-title">Follow-up support</span>
+                            <p class="nds-card-description">Ask your trainer questions for 30 days after the course ends.</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 </section>

@@ -452,71 +452,125 @@ The panel reads its English from the script and its Arabic from the `accessibili
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">The page carries only the FAB. The script and the panel load on the first press, so a visitor who never opens the panel downloads none of it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-package"></i>
-            <span class="nds-label">Seven Accessibility Modes</span>
-          </span>
-          <p class="nds-item-desc">One switch each for epilepsy, visual impairment, cognitive load, motor impairment, color blindness, dyslexia and ADHD. A mode changes only the settings the visitor left at default. Turning it off restores each one the visitor did not change since.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-font"></i>
-            <span class="nds-label">Ten Readable Tiles</span>
-          </span>
-          <p class="nds-item-desc">Font size, dyslexia font, title and link highlights, reading mask, motion pause, text alignment, line height, letter spacing and word spacing. A tile with levels shows a bar for each one.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-color-picker"></i>
-            <span class="nds-label">One Color Filter at a Time</span>
-          </span>
-          <p class="nds-item-desc">Boost contrast, monochrome, high contrast, high saturation, low saturation and a deuteranopia simulation. Turning one on turns the others off. Except High Contrast, the filters do not apply while a Windows contrast theme is on.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-search-01"></i>
-            <span class="nds-label">Reading Mask</span>
-          </span>
-          <p class="nds-item-desc">Dims the screen except for one band. The band stays put on scroll and moves only by drag or by key. Its toolbar changes the band's height or closes the mask, and moves above the band when there is no room below. The band keeps its place after a reload.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-database"></i>
-            <span class="nds-label">Cross-Page Persistence</span>
-          </span>
-          <p class="nds-item-desc">Every choice is saved in <code class="nds-inline-code lang-js">localStorage['nds-a11y']</code> and applies on every page. When every setting is back at default, the key is removed.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-browser"></i>
-            <span class="nds-label">OS Preference Sync</span>
-          </span>
-          <p class="nds-item-desc">The device's reduced motion and more contrast settings turn on Pause Motion and High Contrast. A change to them during the visit applies at once.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-megaphone-01"></i>
-            <span class="nds-label">Localized Live Announcements</span>
-          </span>
-          <p class="nds-item-desc">A screen reader hears every change and reset in the page's language. The text comes from the <code class="nds-inline-code lang-js">accessibility</code> section of the pack.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-refresh"></i>
-            <span class="nds-label">Two-Press Reset</span>
-          </span>
-          <p class="nds-item-desc">The first press on Reset Settings starts a 5-second countdown on the button. A second press within it resets everything.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">The page carries only the FAB. The script and the panel load on the first press, so a visitor who never opens the panel downloads none of it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-package" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Seven Accessibility Modes</span>
+              <p class="nds-card-description">One switch each for epilepsy, visual impairment, cognitive load, motor impairment, color blindness, dyslexia and ADHD. A mode changes only the settings the visitor left at default. Turning it off restores each one the visitor did not change since.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-font" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Ten Readable Tiles</span>
+              <p class="nds-card-description">Font size, dyslexia font, title and link highlights, reading mask, motion pause, text alignment, line height, letter spacing and word spacing. A tile with levels shows a bar for each one.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-color-picker" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">One Color Filter at a Time</span>
+              <p class="nds-card-description">Boost contrast, monochrome, high contrast, high saturation, low saturation and a deuteranopia simulation. Turning one on turns the others off. Except High Contrast, the filters do not apply while a Windows contrast theme is on.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-search-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Reading Mask</span>
+              <p class="nds-card-description">Dims the screen except for one band. The band stays put on scroll and moves only by drag or by key. Its toolbar changes the band's height or closes the mask, and moves above the band when there is no room below. The band keeps its place after a reload.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-database" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Cross-Page Persistence</span>
+              <p class="nds-card-description">Every choice is saved in <code class="nds-inline-code lang-js">localStorage['nds-a11y']</code> and applies on every page. When every setting is back at default, the key is removed.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-browser" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">OS Preference Sync</span>
+              <p class="nds-card-description">The device's reduced motion and more contrast settings turn on Pause Motion and High Contrast. A change to them during the visit applies at once.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-megaphone-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Localized Live Announcements</span>
+              <p class="nds-card-description">A screen reader hears every change and reset in the page's language. The text comes from the <code class="nds-inline-code lang-js">accessibility</code> section of the pack.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-refresh" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Two-Press Reset</span>
+              <p class="nds-card-description">The first press on Reset Settings starts a 5-second countdown on the button. A second press within it resets everything.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

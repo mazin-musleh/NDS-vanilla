@@ -220,29 +220,47 @@ A toast with a `duration` closes itself after that many milliseconds, and a ring
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-colors"></i>
-            <span class="nds-label">Status Icon and Color</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-html">data-status</code> sets the icon, the stripe color and the tint. The icon element stays empty in the markup.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Close Button</span>
-          </span>
-          <p class="nds-item-desc">The close button removes the alert. It works on alerts in the page at load. For alerts you add later, call <code class="nds-inline-code lang-js">NDS.Alert.init()</code>, or create them with <code class="nds-inline-code lang-js">NDS.Alert.create()</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-shield-01"></i>
-            <span class="nds-label">Safe Content</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-js">create()</code> escapes the title and the description. An action with an unsafe <code class="nds-inline-code lang-js">href</code>, such as <code class="nds-inline-code lang-js">javascript:</code>, becomes a plain button.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-colors" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Status Icon and Color</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-html">data-status</code> sets the icon, the stripe color and the tint. The icon element stays empty in the markup.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Close Button</span>
+              <p class="nds-card-description">The close button removes the alert. It works on alerts in the page at load. For alerts you add later, call <code class="nds-inline-code lang-js">NDS.Alert.init()</code>, or create them with <code class="nds-inline-code lang-js">NDS.Alert.create()</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-shield-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Safe Content</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-js">create()</code> escapes the title and the description. An action with an unsafe <code class="nds-inline-code lang-js">href</code>, such as <code class="nds-inline-code lang-js">javascript:</code>, becomes a plain button.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

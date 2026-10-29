@@ -126,57 +126,99 @@ Pick another component when:
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-font"></i>
-            <span class="nds-label">Classless Markup</span>
-          </span>
-          <p class="nds-item-desc">The elements inside the wrapper need no classes. Editor and CMS output renders as it is.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-shield-01"></i>
-            <span class="nds-label">Components Keep Their Look</span>
-          </span>
-          <p class="nds-item-desc">Prose rules weigh no more than one class, and they load before the components. A component inside the wrapper, such as an <code class="nds-inline-code lang-html">nds-table</code>, keeps its own styles.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">Vertical Rhythm</span>
-          </span>
-          <p class="nds-item-desc">Paragraphs, lists, quotes, figures, tables, code blocks and alerts get the same gap below them. <code class="nds-inline-code lang-html">h2</code> and <code class="nds-inline-code lang-html">h3</code> get a larger gap above them, which grows with the screen width up to 1200px. <code class="nds-inline-code lang-html">h4</code> to <code class="nds-inline-code lang-html">h6</code> get 24px.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-border-full"></i>
-            <span class="nds-label">Flush Edges</span>
-          </span>
-          <p class="nds-item-desc">The first child has no gap above it and the last child has no gap below it, so the wrapper sits flush in a card or a section body. The last child of a quote, a list item or a table cell has no gap below it either.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-wrap"></i>
-            <span class="nds-label">Long Words Break</span>
-          </span>
-          <p class="nds-item-desc">A long URL or word breaks to fit the width, so it never pushes the page sideways on a phone. A table cell that holds one can shrink too.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-left-to-right-list-number"></i>
-            <span class="nds-label">List Spacing</span>
-          </span>
-          <p class="nds-item-desc">List items get space between them. Right-to-left pages get more, because Arabic letters fill more of the line. Nested ordered lists use 1., then a., then i.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-edit-02"></i>
-            <span class="nds-label">Editor Preview</span>
-          </span>
-          <p class="nds-item-desc">The typing area of the <a href="../components/editor">Editor</a> uses the same spacing, so a draft looks like the published text.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-font" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Classless Markup</span>
+              <p class="nds-card-description">The elements inside the wrapper need no classes. Editor and CMS output renders as it is.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-shield-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Components Keep Their Look</span>
+              <p class="nds-card-description">Prose rules weigh no more than one class, and they load before the components. A component inside the wrapper, such as an <code class="nds-inline-code lang-html">nds-table</code>, keeps its own styles.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Vertical Rhythm</span>
+              <p class="nds-card-description">Paragraphs, lists, quotes, figures, tables, code blocks and alerts get the same gap below them. <code class="nds-inline-code lang-html">h2</code> and <code class="nds-inline-code lang-html">h3</code> get a larger gap above them, which grows with the screen width up to 1200px. <code class="nds-inline-code lang-html">h4</code> to <code class="nds-inline-code lang-html">h6</code> get 24px.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-border-full" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Flush Edges</span>
+              <p class="nds-card-description">The first child has no gap above it and the last child has no gap below it, so the wrapper sits flush in a card or a section body. The last child of a quote, a list item or a table cell has no gap below it either.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-wrap" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Long Words Break</span>
+              <p class="nds-card-description">A long URL or word breaks to fit the width, so it never pushes the page sideways on a phone. A table cell that holds one can shrink too.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-left-to-right-list-number" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">List Spacing</span>
+              <p class="nds-card-description">List items get space between them. Right-to-left pages get more, because Arabic letters fill more of the line. Nested ordered lists use 1., then a., then i.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-edit-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Editor Preview</span>
+              <p class="nds-card-description">The typing area of the <a href="../components/editor">Editor</a> uses the same spacing, so a draft looks like the published text.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

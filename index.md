@@ -57,13 +57,11 @@ bundle_sizes:
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
-                <div class="nds-grid" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
-                    <div class="nds-card nds-shadow nds-horizontal">
+                <ul class="nds-feature-list nds-grid nds-icons-circle" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
+                    <li class="nds-card nds-shadow nds-horizontal">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-building-06" aria-hidden="true"></i>
-                                </span>
+                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-building-06" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -72,13 +70,11 @@ bundle_sizes:
                                 <p class="nds-card-description">Deliver DGA-aligned digital services on the stack you already run.</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="nds-card nds-shadow nds-horizontal">
+                    </li>
+                    <li class="nds-card nds-shadow nds-horizontal">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-briefcase-01" aria-hidden="true"></i>
-                                </span>
+                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-briefcase-01" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -87,13 +83,11 @@ bundle_sizes:
                                 <p class="nds-card-description">Build client sites with a reusable component library and ready page templates.</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="nds-card nds-shadow nds-horizontal">
+                    </li>
+                    <li class="nds-card nds-shadow nds-horizontal">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-mortarboard-02" aria-hidden="true"></i>
-                                </span>
+                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-mortarboard-02" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -102,13 +96,11 @@ bundle_sizes:
                                 <p class="nds-card-description">Learn core HTML, CSS, and plain JavaScript from a readable, production-grade codebase.</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="nds-card nds-shadow nds-horizontal">
+                    </li>
+                    <li class="nds-card nds-shadow nds-horizontal">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-teaching" aria-hidden="true"></i>
-                                </span>
+                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-teaching" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -117,8 +109,8 @@ bundle_sizes:
                                 <p class="nds-card-description">Teach with real components, page templates, and patterns in web development courses, bootcamps, and workshops.</p>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
             <div class="nds-block">
                 <div class="nds-alert nds-card nds-inline" data-status="warning" role="alert">
@@ -397,13 +389,11 @@ bundle_sizes:
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
-                <div class="nds-grid nds-divided-rows" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
-                    <div class="nds-card nds-flush nds-horizontal">
+                <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-circle" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
+                    <li class="nds-card nds-horizontal">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i>
-                                </span>
+                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -412,13 +402,11 @@ bundle_sizes:
                                 <p class="nds-card-description">No Bootstrap, Tailwind, jQuery, or framework runtime. The output is plain HTML, CSS, and JavaScript, so it fits into an existing stack without a framework.</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="nds-card nds-flush nds-horizontal">
+                    </li>
+                    <li class="nds-card nds-horizontal">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-cpu-charge" aria-hidden="true"></i>
-                                </span>
+                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-cpu-charge" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -427,13 +415,11 @@ bundle_sizes:
                                 <p class="nds-card-description">The loader scans the page once and starts the components it finds: critical ones first, the rest when the browser is idle. Extra bundles load only when their components are on the page, so each page runs only the JavaScript it uses.</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="nds-card nds-flush nds-horizontal">
+                    </li>
+                    <li class="nds-card nds-horizontal">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-arrow-data-transfer-horizontal" aria-hidden="true"></i>
-                                </span>
+                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-data-transfer-horizontal" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -442,13 +428,11 @@ bundle_sizes:
                                 <p class="nds-card-description">Built with CSS Logical Properties from the start. Margins, padding, borders, and positioning adapt to direction without a separate RTL stylesheet or directional overrides. Switch between RTL and LTR with a single HTML attribute.</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="nds-card nds-flush nds-horizontal">
+                    </li>
+                    <li class="nds-card nds-horizontal">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-paint-brush-01" aria-hidden="true"></i>
-                                </span>
+                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paint-brush-01" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -457,13 +441,11 @@ bundle_sizes:
                                 <p class="nds-card-description">Palette, primitive, semantic, and component tokens are defined as CSS custom properties. Components expose public properties you can set, and keep their internals private.</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="nds-card nds-flush nds-horizontal">
+                    </li>
+                    <li class="nds-card nds-horizontal">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-paint-board" aria-hidden="true"></i>
-                                </span>
+                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paint-board" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -472,13 +454,11 @@ bundle_sizes:
                                 <p class="nds-card-description">Light and dark modes are built in, with support for full re-branding. Generate a palette from a single OKLCH seed color, select a predefined theme, or load a stylesheet theme. Theme selection is controlled through a single HTML attribute and requires no rebuild.</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="nds-card nds-flush nds-horizontal">
+                    </li>
+                    <li class="nds-card nds-horizontal">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-zap" aria-hidden="true"></i>
-                                </span>
+                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-zap" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -487,13 +467,11 @@ bundle_sizes:
                                 <p class="nds-card-description">The build splits the CSS in two. Critical styles load first; the rest load later without blocking the page.</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="nds-card nds-flush nds-horizontal">
+                    </li>
+                    <li class="nds-card nds-horizontal">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i>
-                                </span>
+                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -502,13 +480,11 @@ bundle_sizes:
                                 <p class="nds-card-description">The first paint arrives in five stages: inline critical skeleton → critical stylesheet → main stylesheet → main JavaScript → icons and font. Each stage shows only when it renders correctly, so there is no unstyled flash. Icons load last, so they do not delay the largest paint (LCP).</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="nds-card nds-flush nds-horizontal">
+                    </li>
+                    <li class="nds-card nds-horizontal">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-code-circle" aria-hidden="true"></i>
-                                </span>
+                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-code-circle" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -517,13 +493,11 @@ bundle_sizes:
                                 <p class="nds-card-description">The full library is ~{{ page.bundle_sizes.total_js }} KB gzipped, but it is not loaded as a single bundle. A lean ~{{ page.bundle_sizes.core_js }} KB core loads on every page. Components that can wait, or that only some pages use, load only when their markup is present. A typical page runs a fraction of the library.</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="nds-card nds-flush nds-horizontal">
+                    </li>
+                    <li class="nds-card nds-horizontal">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-chart-line-data-01" aria-hidden="true"></i>
-                                </span>
+                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-chart-line-data-01" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -532,13 +506,11 @@ bundle_sizes:
                                 <p class="nds-card-description">A Google PageSpeed score of 100, with LCP, CLS, and INP passing in the measured test. Performance is tested on desktop and mobile, over fast and slow connections.</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="nds-card nds-flush nds-horizontal">
+                    </li>
+                    <li class="nds-card nds-horizontal">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-lg">
-                                    <i class="hgi hgi-stroke hgi-dashboard-speed-01" aria-hidden="true"></i>
-                                </span>
+                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-dashboard-speed-01" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -547,8 +519,8 @@ bundle_sizes:
                                 <p class="nds-card-description">GPU-accelerated animations and scheduled rendering keep transitions smooth, even on low-end devices. Off-screen elements wait until they are needed.</p>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -565,54 +537,86 @@ bundle_sizes:
                 <p>The project uses <a href="https://jekyllrb.com/" target="_blank">Jekyll</a>, a static site generator supported by GitHub Pages. It compiles templates, stylesheets, and data files into static HTML with no external toolchain.</p>
             </div>
             <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid"
-                    style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:32px; --dl-title-FS: var(--typo-text-xl-FS); --row-gap: 24px; --col-gap: 32px;">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-artificial-intelligence-04"></i>
-                            <span class="nds-label">AI Integration</span>
-                        </span>
-                        <p class="nds-item-desc">NDS is designed to work with AI coding agents, with
-                            <a href="{{ '/guides/integration-quality.html' | relative_url }}">NDS IQ</a> providing the
-                            instructions and <a href="{{ '/guides/get-started.html' | relative_url }}">Get Started</a>
-                            guiding the setup and workflow.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-paint-brush-01"></i>
-                            <span class="nds-label">Sass Architecture</span>
-                        </span>
-                        <p class="nds-item-desc">Sass uses a modular file structure with one stylesheet per component. Shared variables, mixins, and design tokens are available across the system. Jekyll compiles and minifies the styles into the final CSS output.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-code"></i>
-                            <span class="nds-label">Modular JavaScript</span>
-                        </span>
-                        <p class="nds-item-desc">Vanilla JavaScript uses one source file per component and is controlled by the component loader. Only components present on a page initialize. A Ruby processor bundles and minifies with <a href="https://terser.org/" target="_blank">Terser</a> into tiered outputs: a lean core plus deferred and page-specific bundles loaded on demand.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-layout-03"></i>
-                            <span class="nds-label">Liquid Templates</span>
-                        </span>
-                        <p class="nds-item-desc">Jekyll's built-in template engine supports layouts, includes, partials, loops, conditions, and data binding. Pages are composed from reusable blocks rather than duplicated markup.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-database"></i>
-                            <span class="nds-label">YAML-Driven Data</span>
-                        </span>
-                        <p class="nds-item-desc">YAML files provide structured project data. Menus, navigation, hero content, and site configuration are stored as data and supplied to templates at build time.</p>
-                    </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-puzzle"></i>
-                            <span class="nds-label">Custom Plugins</span>
-                        </span>
-                        <p class="nds-item-desc">Custom Ruby scripts extend Jekyll's build process for tasks such as JavaScript bundling, HTML compression, and base URL resolution. Each plugin is project-specific and editable.</p>
-                    </div>
-                </div>
+                <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-circle" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
+                    <li class="nds-card nds-horizontal">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-artificial-intelligence-04" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">AI Integration</span>
+                                <p class="nds-card-description">NDS is designed to work with AI coding agents, with <a href="{{ '/guides/integration-quality.html' | relative_url }}">NDS IQ</a> providing the instructions and <a href="{{ '/guides/get-started.html' | relative_url }}">Get Started</a> guiding the setup and workflow.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nds-card nds-horizontal">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paint-brush-01" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Sass Architecture</span>
+                                <p class="nds-card-description">Sass uses a modular file structure with one stylesheet per component. Shared variables, mixins, and design tokens are available across the system. Jekyll compiles and minifies the styles into the final CSS output.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nds-card nds-horizontal">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-code" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Modular JavaScript</span>
+                                <p class="nds-card-description">Vanilla JavaScript uses one source file per component and is controlled by the component loader. Only components present on a page initialize. A Ruby processor bundles and minifies with <a href="https://terser.org/" target="_blank">Terser</a> into tiered outputs: a lean core plus deferred and page-specific bundles loaded on demand.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nds-card nds-horizontal">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-03" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Liquid Templates</span>
+                                <p class="nds-card-description">Jekyll's built-in template engine supports layouts, includes, partials, loops, conditions, and data binding. Pages are composed from reusable blocks rather than duplicated markup.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nds-card nds-horizontal">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-database" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">YAML-Driven Data</span>
+                                <p class="nds-card-description">YAML files provide structured project data. Menus, navigation, hero content, and site configuration are stored as data and supplied to templates at build time.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nds-card nds-horizontal">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-puzzle" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Custom Plugins</span>
+                                <p class="nds-card-description">Custom Ruby scripts extend Jekyll's build process for tasks such as JavaScript bundling, HTML compression, and base URL resolution. Each plugin is project-specific and editable.</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

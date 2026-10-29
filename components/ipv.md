@@ -85,78 +85,138 @@ The zoom badge goes on every `.nds-ipv-image-card` in the markup.
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">The viewer starts on any page that has an <code class="nds-inline-code lang-html">nds-ipv-thumbnail</code>. A thumbnail added later opens on a click with no call, and <code class="nds-inline-code lang-js">NDS.Ipv.reinit()</code> lets Tab reach it. The viewer itself is built on the first open, so a page where nobody opens an image carries none of it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-zoom-in-area"></i>
-            <span class="nds-label">Multi-input Zoom</span>
-          </span>
-          <p class="nds-item-desc">The mouse wheel zooms toward the pointer, and a pinch zooms toward the middle of the two fingers. The zoom buttons zoom by 1.5×. Zoom runs from 10% to 1000%, and a label shows the current value.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-move"></i>
-            <span class="nds-label">Drag to Pan</span>
-          </span>
-          <p class="nds-item-desc">Drag the image with the mouse or one finger to move it. A double-click or the reset button returns it to 100% in the center.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-arrow-left-right"></i>
-            <span class="nds-label">Gallery Navigation</span>
-          </span>
-          <p class="nds-item-desc">The arrow buttons show the image of the previous or next thumbnail on the page, and a counter shows the position. With one thumbnail on the page, the arrows and the counter are hidden.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard Controls</span>
-          </span>
-          <p class="nds-item-desc">The script adds <code class="nds-inline-code lang-html">tabindex="0"</code> and <code class="nds-inline-code lang-html">role="button"</code> to each thumbnail that has none. Tab reaches a thumbnail, and Enter or Space opens it. The viewer's keys are in the Keyboard table of the API.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-eye"></i>
-            <span class="nds-label">Distraction-free Mode</span>
-          </span>
-          <p class="nds-item-desc">The eye button hides the other buttons, the arrows, the counter, the zoom label and the control list. The eye button stays, to bring them back.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-image-02"></i>
-            <span class="nds-label">Adaptive Image Loading</span>
-          </span>
-          <p class="nds-item-desc">The page loads the small thumbnail. The viewer loads the full image from <code class="nds-inline-code lang-html">data-ipv-full</code> only when it opens, and shows a spinner until the image arrives.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-focus-point"></i>
-            <span class="nds-label">Accessible Dialog</span>
-          </span>
-          <p class="nds-item-desc">The viewer is a modal dialog. Focus moves to its close button and stays inside the viewer. On close, focus returns to the thumbnail that opened it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-translate"></i>
-            <span class="nds-label">Localized Controls</span>
-          </span>
-          <p class="nds-item-desc">The button labels and the control list follow the page language. The English is in the script, and the Arabic in the <code class="nds-inline-code">ipv</code> section of <code class="nds-inline-code">assets/i18n/ar.json</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
-            <span class="nds-label">Phone Layout</span>
-          </span>
-          <p class="nds-item-desc">On phones the buttons sit closer to the edge, and the control list is hidden.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">The viewer starts on any page that has an <code class="nds-inline-code lang-html">nds-ipv-thumbnail</code>. A thumbnail added later opens on a click with no call, and <code class="nds-inline-code lang-js">NDS.Ipv.reinit()</code> lets Tab reach it. The viewer itself is built on the first open, so a page where nobody opens an image carries none of it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-zoom-in-area" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Multi-input Zoom</span>
+              <p class="nds-card-description">The mouse wheel zooms toward the pointer, and a pinch zooms toward the middle of the two fingers. The zoom buttons zoom by 1.5×. Zoom runs from 10% to 1000%, and a label shows the current value.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-move" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Drag to Pan</span>
+              <p class="nds-card-description">Drag the image with the mouse or one finger to move it. A double-click or the reset button returns it to 100% in the center.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-left-right" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Gallery Navigation</span>
+              <p class="nds-card-description">The arrow buttons show the image of the previous or next thumbnail on the page, and a counter shows the position. With one thumbnail on the page, the arrows and the counter are hidden.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Keyboard Controls</span>
+              <p class="nds-card-description">The script adds <code class="nds-inline-code lang-html">tabindex="0"</code> and <code class="nds-inline-code lang-html">role="button"</code> to each thumbnail that has none. Tab reaches a thumbnail, and Enter or Space opens it. The viewer's keys are in the Keyboard table of the API.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-eye" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Distraction-free Mode</span>
+              <p class="nds-card-description">The eye button hides the other buttons, the arrows, the counter, the zoom label and the control list. The eye button stays, to bring them back.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-image-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Adaptive Image Loading</span>
+              <p class="nds-card-description">The page loads the small thumbnail. The viewer loads the full image from <code class="nds-inline-code lang-html">data-ipv-full</code> only when it opens, and shows a spinner until the image arrives.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-focus-point" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Accessible Dialog</span>
+              <p class="nds-card-description">The viewer is a modal dialog. Focus moves to its close button and stays inside the viewer. On close, focus returns to the thumbnail that opened it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-translate" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Localized Controls</span>
+              <p class="nds-card-description">The button labels and the control list follow the page language. The English is in the script, and the Arabic in the <code class="nds-inline-code">ipv</code> section of <code class="nds-inline-code">assets/i18n/ar.json</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-smart-phone-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Phone Layout</span>
+              <p class="nds-card-description">On phones the buttons sit closer to the edge, and the control list is hidden.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

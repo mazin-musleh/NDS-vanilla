@@ -527,57 +527,99 @@ Below 960px, the actions move into the drawer, in one row at its bottom. An acti
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto Start</span>
-          </span>
-          <p class="nds-item-desc">The script starts when <code class="nds-inline-code lang-html">.nds-main-nav</code> is on the page. Links and actions added or removed later are picked up with no call.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-smart-phone-01"></i>
-            <span class="nds-label">Responsive Drawer</span>
-          </span>
-          <p class="nds-item-desc">Below 960px, the links and the actions fold into a drawer that slides open under the bar. The menu button opens and closes it. When the bar is full, the brand text shrinks first, so the menu button always stays on screen.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-mouse-scroll-01"></i>
-            <span class="nds-label">Overflow Detection</span>
-          </span>
-          <p class="nds-item-desc">Links that do not fit scroll in place, and the show more arrow appears. Each press of the arrow shows the next links. At the end, it goes back to the first ones.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-drag-drop"></i>
-            <span class="nds-label">Drag and Wheel Scrolling</span>
-          </span>
-          <p class="nds-item-desc">On a desktop, links that do not fit scroll with a mouse drag, and the mouse wheel scrolls them sideways.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-navigation-03"></i>
-            <span class="nds-label">Same-Page Links</span>
-          </span>
-          <p class="nds-item-desc">A link to a section of the same page closes the open menus, then scrolls to the section.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">Backdrop Overlay</span>
-          </span>
-          <p class="nds-item-desc">An open menu or drawer dims the page behind it. A click on the dimmed page closes it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-shield-01"></i>
-            <span class="nds-label">Reduced Motion</span>
-          </span>
-          <p class="nds-item-desc">When the user asks for reduced motion, menus and the drawer open and close with no animation, and scrolls jump.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto Start</span>
+              <p class="nds-card-description">The script starts when <code class="nds-inline-code lang-html">.nds-main-nav</code> is on the page. Links and actions added or removed later are picked up with no call.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-smart-phone-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Responsive Drawer</span>
+              <p class="nds-card-description">Below 960px, the links and the actions fold into a drawer that slides open under the bar. The menu button opens and closes it. When the bar is full, the brand text shrinks first, so the menu button always stays on screen.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-mouse-scroll-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Overflow Detection</span>
+              <p class="nds-card-description">Links that do not fit scroll in place, and the show more arrow appears. Each press of the arrow shows the next links. At the end, it goes back to the first ones.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-drag-drop" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Drag and Wheel Scrolling</span>
+              <p class="nds-card-description">On a desktop, links that do not fit scroll with a mouse drag, and the mouse wheel scrolls them sideways.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-navigation-03" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Same-Page Links</span>
+              <p class="nds-card-description">A link to a section of the same page closes the open menus, then scrolls to the section.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Backdrop Overlay</span>
+              <p class="nds-card-description">An open menu or drawer dims the page behind it. A click on the dimmed page closes it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-shield-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Reduced Motion</span>
+              <p class="nds-card-description">When the user asks for reduced motion, menus and the drawer open and close with no animation, and scrolls jump.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

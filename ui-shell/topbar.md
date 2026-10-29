@@ -250,57 +250,99 @@ The widgets also work outside the top bar, such as in a kiosk header or a dashbo
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto Start</span>
-          </span>
-          <p class="nds-item-desc">The widgets, the stamp tab and the dark mode button start when their markup is on the page. A widget added or replaced later fills in too.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-shield-01"></i>
-            <span class="nds-label">Short Stamp Text</span>
-          </span>
-          <p class="nds-item-desc">The stamp tab shows its long text at 960px and up, and its short text below that.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-translate"></i>
-            <span class="nds-label">DGA Wording</span>
-          </span>
-          <p class="nds-item-desc">The stamp's text is DGA's current wording, in Arabic and English, with the address card for <code class="nds-inline-code lang-html">.gov.sa</code>, <code class="nds-inline-code lang-html">.edu.sa</code>, <code class="nds-inline-code lang-html">.sch.sa</code>, <code class="nds-inline-code lang-html">.med.sa</code>, <code class="nds-inline-code lang-html">.org.sa</code> and <code class="nds-inline-code lang-html">.sa</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-language-circle"></i>
-            <span class="nds-label">Hijri and Gregorian Calendars</span>
-          </span>
-          <p class="nds-item-desc">The date shows the Hijri date or the Gregorian date with the weekday. The Hijri date uses the Umm al-Qura calendar, computed in the browser with no network call.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-pin-location-01"></i>
-            <span class="nds-label">City and Weather</span>
-          </span>
-          <p class="nds-item-desc">The weather comes from Open-Meteo for the coordinates you set, with an icon for day or night. The city name comes from <code class="nds-inline-code lang-html">data-city</code>, or from a Nominatim lookup of the coordinates when it is not set.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-database"></i>
-            <span class="nds-label">Local Cache</span>
-          </span>
-          <p class="nds-item-desc">A looked-up city name is cached for 30 days. The weather is cached for 15 minutes in both languages, so a language switch needs no new weather request.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-view-off"></i>
-            <span class="nds-label">Failed Requests</span>
-          </span>
-          <p class="nds-item-desc">When the weather or city request fails, the script hides that widget.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto Start</span>
+              <p class="nds-card-description">The widgets, the stamp tab and the dark mode button start when their markup is on the page. A widget added or replaced later fills in too.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-shield-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Short Stamp Text</span>
+              <p class="nds-card-description">The stamp tab shows its long text at 960px and up, and its short text below that.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-translate" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">DGA Wording</span>
+              <p class="nds-card-description">The stamp's text is DGA's current wording, in Arabic and English, with the address card for <code class="nds-inline-code lang-html">.gov.sa</code>, <code class="nds-inline-code lang-html">.edu.sa</code>, <code class="nds-inline-code lang-html">.sch.sa</code>, <code class="nds-inline-code lang-html">.med.sa</code>, <code class="nds-inline-code lang-html">.org.sa</code> and <code class="nds-inline-code lang-html">.sa</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-language-circle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Hijri and Gregorian Calendars</span>
+              <p class="nds-card-description">The date shows the Hijri date or the Gregorian date with the weekday. The Hijri date uses the Umm al-Qura calendar, computed in the browser with no network call.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-pin-location-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">City and Weather</span>
+              <p class="nds-card-description">The weather comes from Open-Meteo for the coordinates you set, with an icon for day or night. The city name comes from <code class="nds-inline-code lang-html">data-city</code>, or from a Nominatim lookup of the coordinates when it is not set.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-database" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Local Cache</span>
+              <p class="nds-card-description">A looked-up city name is cached for 30 days. The weather is cached for 15 minutes in both languages, so a language switch needs no new weather request.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-view-off" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Failed Requests</span>
+              <p class="nds-card-description">When the weather or city request fails, the script hides that widget.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

@@ -317,43 +317,73 @@ A `nds-section-image` before the head holds a small image or an [avatar](../comp
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">Progressive Structure</span>
-          </span>
-          <p class="nds-item-desc">Start with a head and a body. Add an action, an image or a breakout body only when the content needs one.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-03"></i>
-            <span class="nds-label">Layout Aware</span>
-          </span>
-          <p class="nds-item-desc">The page layout sets the section spacing. A desktop page with no side column gets more space above and below each section, and card view shows each section as a card.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-font"></i>
-            <span class="nds-label">Fluid Typography</span>
-          </span>
-          <p class="nds-item-desc">The title and the subtitle sizes scale between phone and desktop. The title, subtitle and description stop at 720px wide, for a readable line length.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-contrast"></i>
-            <span class="nds-label">High Contrast</span>
-          </span>
-          <p class="nds-item-desc">In high contrast mode every section, including a colored one, takes the high contrast background and text colors.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-dashboard-speed-01"></i>
-            <span class="nds-label">Off-Screen Sections</span>
-          </span>
-          <p class="nds-item-desc">While the page loads, the browser skips the style and layout of a section that is not near the screen. It draws them later, one at a time, when it is idle or when the page scrolls near one. After it first draws, the section stays a normal section. The first two sections and a Side Info section always draw.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Progressive Structure</span>
+              <p class="nds-card-description">Start with a head and a body. Add an action, an image or a breakout body only when the content needs one.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-03" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Layout Aware</span>
+              <p class="nds-card-description">The page layout sets the section spacing. A desktop page with no side column gets more space above and below each section, and card view shows each section as a card.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-font" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Fluid Typography</span>
+              <p class="nds-card-description">The title and the subtitle sizes scale between phone and desktop. The title, subtitle and description stop at 720px wide, for a readable line length.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-contrast" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">High Contrast</span>
+              <p class="nds-card-description">In high contrast mode every section, including a colored one, takes the high contrast background and text colors.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-dashboard-speed-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Off-Screen Sections</span>
+              <p class="nds-card-description">While the page loads, the browser skips the style and layout of a section that is not near the screen. It draws them later, one at a time, when it is idle or when the page scrolls near one. After it first draws, the section stays a normal section. The first two sections and a Side Info section always draw.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

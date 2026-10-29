@@ -258,71 +258,125 @@ Every row goes on the wrapper. The wrapper fits its content, but never grows wid
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-scroll-more</code> on the page starts by itself. The overflow check, the scroll listener and the button need no call.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-arrow-data-transfer-vertical"></i>
-            <span class="nds-label">Axis Auto-detection</span>
-          </span>
-          <p class="nds-item-desc">The script measures both directions and scrolls the one that overflows. When both do, it scrolls vertically.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-blur"></i>
-            <span class="nds-label">Edge Fade Mask</span>
-          </span>
-          <p class="nds-item-desc">An edge fades only while more content lies past it, so there is no fade at the very start or the very end.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-mouse-scroll-01"></i>
-            <span class="nds-label">Item-aware Step</span>
-          </span>
-          <p class="nds-item-desc">Each click moves one page minus one item, so the last item stays in view as an anchor. The first item's size sets the step.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-repeat"></i>
-            <span class="nds-label">Loop to Start</span>
-          </span>
-          <p class="nds-item-desc">At the end, the button's arrow flips, and the next click scrolls back to the start.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-resize-01"></i>
-            <span class="nds-label">Reactive to Layout</span>
-          </span>
-          <p class="nds-item-desc">The script checks the overflow again when the content area changes size, so the button shows and hides as needed.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-touch-01"></i>
-            <span class="nds-label">Free-scroll Friendly</span>
-          </span>
-          <p class="nds-item-desc">Touch, trackpad and mouse-wheel scrolling work as usual. The scroll listener is passive and runs at most once a frame.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard Scroll</span>
-          </span>
-          <p class="nds-item-desc">Content that scrolls and holds no link or control gets <code class="nds-inline-code lang-html">tabindex="0"</code>, so a keyboard user can tab to it and scroll it with the arrow keys. A <code class="nds-inline-code lang-html">tabindex</code> in your markup stays as written.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-api"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc">Start a new wrapper, check the overflow again or remove the behavior through <code class="nds-inline-code lang-js">NDS.ScrollMore</code>.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">.nds-scroll-more</code> on the page starts by itself. The overflow check, the scroll listener and the button need no call.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-data-transfer-vertical" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Axis Auto-detection</span>
+              <p class="nds-card-description">The script measures both directions and scrolls the one that overflows. When both do, it scrolls vertically.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-blur" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Edge Fade Mask</span>
+              <p class="nds-card-description">An edge fades only while more content lies past it, so there is no fade at the very start or the very end.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-mouse-scroll-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Item-aware Step</span>
+              <p class="nds-card-description">Each click moves one page minus one item, so the last item stays in view as an anchor. The first item's size sets the step.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-repeat" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Loop to Start</span>
+              <p class="nds-card-description">At the end, the button's arrow flips, and the next click scrolls back to the start.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-resize-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Reactive to Layout</span>
+              <p class="nds-card-description">The script checks the overflow again when the content area changes size, so the button shows and hides as needed.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-touch-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Free-scroll Friendly</span>
+              <p class="nds-card-description">Touch, trackpad and mouse-wheel scrolling work as usual. The scroll listener is passive and runs at most once a frame.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Keyboard Scroll</span>
+              <p class="nds-card-description">Content that scrolls and holds no link or control gets <code class="nds-inline-code lang-html">tabindex="0"</code>, so a keyboard user can tab to it and scroll it with the arrow keys. A <code class="nds-inline-code lang-html">tabindex</code> in your markup stays as written.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-api" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description">Start a new wrapper, check the overflow again or remove the behavior through <code class="nds-inline-code lang-js">NDS.ScrollMore</code>.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

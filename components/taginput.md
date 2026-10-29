@@ -142,64 +142,112 @@ A form that edits saved data shows the tags the user saved before. For each tag,
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-taginput</code> on the page starts on load. A click anywhere on the field, except on a chip, puts the cursor in the text box.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Flexible Commit Keys</span>
-          </span>
-          <p class="nds-item-desc">Enter, a comma or the Arabic comma (،) adds the typed text as a tag. Pasted text splits into one tag per comma or line. Leaving the field adds the typed text. Enter in an empty box submits the form.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-edit-02"></i>
-            <span class="nds-label">Backspace to Edit</span>
-          </span>
-          <p class="nds-item-desc">Backspace in an empty box moves the last tag back into the box as text. The user fixes a typo and presses Enter again.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-file-validation"></i>
-            <span class="nds-label">Form Submission</span>
-          </span>
-          <p class="nds-item-desc">The script keeps one <code class="nds-inline-code lang-html">&lt;input type="hidden" name="skills[]"&gt;</code> per tag, named from <code class="nds-inline-code lang-html">data-taginput-name</code>. The form submits the tags as an array, in the order the user added them.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-alert-circle"></i>
-            <span class="nds-label">Rejection Feedback</span>
-          </span>
-          <p class="nds-item-desc">A tag the field already holds, in any letter case, is not added. The field shows "Already added", and the message clears at the next change.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-voice"></i>
-            <span class="nds-label">Screen Reader Support</span>
-          </span>
-          <p class="nds-item-desc">A screen reader reads each change and each rejected tag, such as "Added Data analysis" or "Already added", in English or Arabic.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-tag-01"></i>
-            <span class="nds-label">Removable Chips</span>
-          </span>
-          <p class="nds-item-desc">Each chip is a button: a click, Enter or Space removes its tag. Focus moves to the chip in its place, or to the text box after the last one.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-api"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc">Each field has an instance with <code class="nds-inline-code lang-js">getValues()</code>, <code class="nds-inline-code lang-js">addTag()</code>, <code class="nds-inline-code lang-js">removeTag()</code> and <code class="nds-inline-code lang-js">clear()</code>. The <code class="nds-inline-code lang-js">nds:taginput:change</code> event fires after each change.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">.nds-taginput</code> on the page starts on load. A click anywhere on the field, except on a chip, puts the cursor in the text box.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Flexible Commit Keys</span>
+              <p class="nds-card-description">Enter, a comma or the Arabic comma (،) adds the typed text as a tag. Pasted text splits into one tag per comma or line. Leaving the field adds the typed text. Enter in an empty box submits the form.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-edit-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Backspace to Edit</span>
+              <p class="nds-card-description">Backspace in an empty box moves the last tag back into the box as text. The user fixes a typo and presses Enter again.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-file-validation" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Form Submission</span>
+              <p class="nds-card-description">The script keeps one <code class="nds-inline-code lang-html">&lt;input type="hidden" name="skills[]"&gt;</code> per tag, named from <code class="nds-inline-code lang-html">data-taginput-name</code>. The form submits the tags as an array, in the order the user added them.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-alert-circle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Rejection Feedback</span>
+              <p class="nds-card-description">A tag the field already holds, in any letter case, is not added. The field shows "Already added", and the message clears at the next change.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-voice" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Screen Reader Support</span>
+              <p class="nds-card-description">A screen reader reads each change and each rejected tag, such as "Added Data analysis" or "Already added", in English or Arabic.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-tag-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Removable Chips</span>
+              <p class="nds-card-description">Each chip is a button: a click, Enter or Space removes its tag. Focus moves to the chip in its place, or to the text box after the last one.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-api" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description">Each field has an instance with <code class="nds-inline-code lang-js">getValues()</code>, <code class="nds-inline-code lang-js">addTag()</code>, <code class="nds-inline-code lang-js">removeTag()</code> and <code class="nds-inline-code lang-js">clear()</code>. The <code class="nds-inline-code lang-js">nds:taginput:change</code> event fires after each change.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

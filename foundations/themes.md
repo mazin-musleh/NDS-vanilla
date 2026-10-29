@@ -244,50 +244,86 @@ A theme option can load a stylesheet theme on click: `data-theme-css` names the 
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">A toggle or a theme menu works with no setup code. On a page that has none at load, call <code class="nds-inline-code lang-js">NDS.init.refresh()</code> after you add the first one.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-database"></i>
-            <span class="nds-label">Preference Persistence</span>
-          </span>
-          <p class="nds-item-desc">The script saves the mode and the theme in <code class="nds-inline-code lang-js">localStorage</code> (<code class="nds-inline-code lang-js">nds-theme</code>, and <code class="nds-inline-code lang-js">nds-palette</code> for a custom palette). Every page restores them.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-paint-bucket"></i>
-            <span class="nds-label">Zero-Flash</span>
-          </span>
-          <p class="nds-item-desc">A script in the <a href="../ui-shell/head">head</a> writes the saved mode and theme before first paint. A saved custom palette comes back after first paint, so it can flash on load.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-sparkles"></i>
-            <span class="nds-label">Circular Reveal Animation</span>
-          </span>
-          <p class="nds-item-desc">The new colors grow in a circle from the clicked control. Without View Transitions support, or with reduced motion, they change at once.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-moon-02"></i>
-            <span class="nds-label">Light and Dark</span>
-          </span>
-          <p class="nds-item-desc">Every theme and custom palette has a dark mode. Dark pages and dark areas print in light colors.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-api"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc">Read and change the mode with <code class="nds-inline-code lang-js">NDS.Theme.get()</code>, <code class="nds-inline-code lang-js">set()</code> and <code class="nds-inline-code lang-js">toggle()</code>.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">A toggle or a theme menu works with no setup code. On a page that has none at load, call <code class="nds-inline-code lang-js">NDS.init.refresh()</code> after you add the first one.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-database" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Preference Persistence</span>
+              <p class="nds-card-description">The script saves the mode and the theme in <code class="nds-inline-code lang-js">localStorage</code> (<code class="nds-inline-code lang-js">nds-theme</code>, and <code class="nds-inline-code lang-js">nds-palette</code> for a custom palette). Every page restores them.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paint-bucket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Zero-Flash</span>
+              <p class="nds-card-description">A script in the <a href="../ui-shell/head">head</a> writes the saved mode and theme before first paint. A saved custom palette comes back after first paint, so it can flash on load.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-sparkles" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Circular Reveal Animation</span>
+              <p class="nds-card-description">The new colors grow in a circle from the clicked control. Without View Transitions support, or with reduced motion, they change at once.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-moon-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Light and Dark</span>
+              <p class="nds-card-description">Every theme and custom palette has a dark mode. Dark pages and dark areas print in light colors.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-api" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description">Read and change the mode with <code class="nds-inline-code lang-js">NDS.Theme.get()</code>, <code class="nds-inline-code lang-js">set()</code> and <code class="nds-inline-code lang-js">toggle()</code>.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

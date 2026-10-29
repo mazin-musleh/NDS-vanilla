@@ -196,57 +196,99 @@ Keep the `<style>` gate and the inline script out of your bundler. A minifier ch
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-hourglass"></i>
-            <span class="nds-label">Startup Promise</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-js">NDS.init.ready</code> resolves once the last component on the page has started, the ones from late bundles included. A bundle that fails to load does not hold it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-refresh"></i>
-            <span class="nds-label">One Call, One Argument</span>
-          </span>
-          <p class="nds-item-desc">The same call covers a table, a card grid or any list. You do not track which component wants the content element and which wants an id.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-hierarchy-square-01"></i>
-            <span class="nds-label">Driven by the Registry</span>
-          </span>
-          <p class="nds-item-desc">A component runs because it is registered, not because you listed it. A component you add to the page later is covered with no change to your code.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-target-02"></i>
-            <span class="nds-label">Picked by the Container</span>
-          </span>
-          <p class="nds-item-desc">Only the components with an element in the container run, plus the ones that drive it from outside. Each one that runs scans the whole page, as its own <code class="nds-inline-code lang-js">init()</code> does.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cloud"></i>
-            <span class="nds-label">Safe for Server-Driven Lists</span>
-          </span>
-          <p class="nds-item-desc">The calls never sort, page or filter rows your server sent, and never send a request. Server pagination and filters that submit a form stay as they arrived.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-package"></i>
-            <span class="nds-label">Refresh Loads No Bundles</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-js">refresh()</code> skips a component whose bundle has not loaded. That bundle scans the page when it arrives. Only <code class="nds-inline-code lang-js">mount()</code> loads bundles.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-repeat"></i>
-            <span class="nds-label">Safe to Call Twice</span>
-          </span>
-          <p class="nds-item-desc">A second call on settled content leaves the page as it was. A client-side filter in the container fires <code class="nds-inline-code lang-js">nds:filter:change</code> again on each call.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-hourglass" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Startup Promise</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-js">NDS.init.ready</code> resolves once the last component on the page has started, the ones from late bundles included. A bundle that fails to load does not hold it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-refresh" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">One Call, One Argument</span>
+              <p class="nds-card-description">The same call covers a table, a card grid or any list. You do not track which component wants the content element and which wants an id.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-hierarchy-square-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Driven by the Registry</span>
+              <p class="nds-card-description">A component runs because it is registered, not because you listed it. A component you add to the page later is covered with no change to your code.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-target-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Picked by the Container</span>
+              <p class="nds-card-description">Only the components with an element in the container run, plus the ones that drive it from outside. Each one that runs scans the whole page, as its own <code class="nds-inline-code lang-js">init()</code> does.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-cloud" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Safe for Server-Driven Lists</span>
+              <p class="nds-card-description">The calls never sort, page or filter rows your server sent, and never send a request. Server pagination and filters that submit a form stay as they arrived.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-package" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Refresh Loads No Bundles</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-js">refresh()</code> skips a component whose bundle has not loaded. That bundle scans the page when it arrives. Only <code class="nds-inline-code lang-js">mount()</code> loads bundles.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-repeat" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Safe to Call Twice</span>
+              <p class="nds-card-description">A second call on settled content leaves the page as it was. A client-side filter in the container fires <code class="nds-inline-code lang-js">nds:filter:change</code> again on each call.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

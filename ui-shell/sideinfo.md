@@ -192,57 +192,99 @@ The `aside` shows where it is in the markup: after the content, it is on the end
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto Start</span>
-          </span>
-          <p class="nds-item-desc">The script starts each <code class="nds-inline-code lang-html">.nds-sideinfo</code> on the page when it loads.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-mobile-programming-01"></i>
-            <span class="nds-label">Responsive Stack</span>
-          </span>
-          <p class="nds-item-desc">Below 960px, the row becomes a column, and the side info takes the full width.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-resize-01"></i>
-            <span class="nds-label">Width by Content</span>
-          </span>
-          <p class="nds-item-desc">The column is 400px wide, or 300px when it holds a table of contents.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">Stacked Cards</span>
-          </span>
-          <p class="nds-item-desc">Several cards in the column stack, with <code class="nds-inline-code lang-css">--nds-sideinfo-gap</code> between them.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-right"></i>
-            <span class="nds-label">Column Card</span>
-          </span>
-          <p class="nds-item-desc">The card in the column fills its width, with the menu background and a larger padding.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-align-left"></i>
-            <span class="nds-label">Compact Facts</span>
-          </span>
-          <p class="nds-item-desc">A definition list in the column gets larger icons (24px) and smaller labels. A transparent button in a value loses its padding, so it lines up with the text.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-align-top"></i>
-            <span class="nds-label">Section Gaps</span>
-          </span>
-          <p class="nds-item-desc">In an <code class="nds-inline-code lang-html">article</code> in the content, each <code class="nds-inline-code lang-html">.nds-section-title</code> after the first gets space above it.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto Start</span>
+              <p class="nds-card-description">The script starts each <code class="nds-inline-code lang-html">.nds-sideinfo</code> on the page when it loads.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-mobile-programming-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Responsive Stack</span>
+              <p class="nds-card-description">Below 960px, the row becomes a column, and the side info takes the full width.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-resize-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Width by Content</span>
+              <p class="nds-card-description">The column is 400px wide, or 300px when it holds a table of contents.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Stacked Cards</span>
+              <p class="nds-card-description">Several cards in the column stack, with <code class="nds-inline-code lang-css">--nds-sideinfo-gap</code> between them.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-right" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Column Card</span>
+              <p class="nds-card-description">The card in the column fills its width, with the menu background and a larger padding.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-align-left" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Compact Facts</span>
+              <p class="nds-card-description">A definition list in the column gets larger icons (24px) and smaller labels. A transparent button in a value loses its padding, so it lines up with the text.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-align-top" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Section Gaps</span>
+              <p class="nds-card-description">In an <code class="nds-inline-code lang-html">article</code> in the content, each <code class="nds-inline-code lang-html">.nds-section-title</code> after the first gets space above it.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

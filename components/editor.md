@@ -165,71 +165,125 @@ The image button inserts an image from a URL, with alt text, a width and a heigh
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Automatic Setup</span>
-          </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">nds-editor</code> field starts when the page loads. The script makes the toolbar, the editing surface and the popovers, so you write only the textarea field.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-check"></i>
-            <span class="nds-label">Form Integration</span>
-          </span>
-          <p class="nds-item-desc">The textarea holds the value as formatted HTML. Saved HTML written in the textarea shows formatted when the editor starts. Its label and placeholder become the editing surface's name and placeholder. It submits with the form, takes <code class="nds-inline-code lang-html">required</code>, and fires <code class="nds-inline-code lang-js">input</code> on each edit and <code class="nds-inline-code lang-js">change</code> when the user leaves a changed field.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-clipboard"></i>
-            <span class="nds-label">Paste Conversion</span>
-          </span>
-          <p class="nds-item-desc">Text from Word and Google Docs keeps its lists, bold, italic and underline. A pasted table becomes an NDS table. HTML source pasted as text becomes formatted content.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-shield-01"></i>
-            <span class="nds-label">Safe Value</span>
-          </span>
-          <p class="nds-item-desc">The editor cleans every paste, every drop and every source edit. It removes scripts, styles, event attributes and unsafe URLs such as <code class="nds-inline-code lang-html">javascript:</code>. A link that opens a new tab always gets <code class="nds-inline-code lang-html">rel="noopener noreferrer"</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-link-01"></i>
-            <span class="nds-label">Link Popover</span>
-          </span>
-          <p class="nds-item-desc">The link button opens a form for the text and the URL, with Open in new tab, Hide external badge and Colored link options. On a link, it also shows Unlink.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-source-code"></i>
-            <span class="nds-label">HTML Source View</span>
-          </span>
-          <p class="nds-item-desc">The source button shows the formatted HTML for direct edits. The text that the user selected stays selected in the source. The formatting buttons are disabled while the source shows.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-arrow-turn-backward"></i>
-            <span class="nds-label">Undo History</span>
-          </span>
-          <p class="nds-item-desc">The editor keeps its own undo history, so undo also reverses a removed component and a popover edit.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-translation"></i>
-            <span class="nds-label">Arabic and English Labels</span>
-          </span>
-          <p class="nds-item-desc">The toolbar labels, tooltips and popover text follow the page language.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-view-off"></i>
-            <span class="nds-label">Loading Placeholder</span>
-          </span>
-          <p class="nds-item-desc">Until the script starts, the field shows a pulsing bar for the toolbar and a pulsing box for the text, at the editor's size.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Automatic Setup</span>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">nds-editor</code> field starts when the page loads. The script makes the toolbar, the editing surface and the popovers, so you write only the textarea field.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-check" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Form Integration</span>
+              <p class="nds-card-description">The textarea holds the value as formatted HTML. Saved HTML written in the textarea shows formatted when the editor starts. Its label and placeholder become the editing surface's name and placeholder. It submits with the form, takes <code class="nds-inline-code lang-html">required</code>, and fires <code class="nds-inline-code lang-js">input</code> on each edit and <code class="nds-inline-code lang-js">change</code> when the user leaves a changed field.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-clipboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Paste Conversion</span>
+              <p class="nds-card-description">Text from Word and Google Docs keeps its lists, bold, italic and underline. A pasted table becomes an NDS table. HTML source pasted as text becomes formatted content.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-shield-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Safe Value</span>
+              <p class="nds-card-description">The editor cleans every paste, every drop and every source edit. It removes scripts, styles, event attributes and unsafe URLs such as <code class="nds-inline-code lang-html">javascript:</code>. A link that opens a new tab always gets <code class="nds-inline-code lang-html">rel="noopener noreferrer"</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-link-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Link Popover</span>
+              <p class="nds-card-description">The link button opens a form for the text and the URL, with Open in new tab, Hide external badge and Colored link options. On a link, it also shows Unlink.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-source-code" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">HTML Source View</span>
+              <p class="nds-card-description">The source button shows the formatted HTML for direct edits. The text that the user selected stays selected in the source. The formatting buttons are disabled while the source shows.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-turn-backward" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Undo History</span>
+              <p class="nds-card-description">The editor keeps its own undo history, so undo also reverses a removed component and a popover edit.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-translation" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Arabic and English Labels</span>
+              <p class="nds-card-description">The toolbar labels, tooltips and popover text follow the page language.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-view-off" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Loading Placeholder</span>
+              <p class="nds-card-description">Until the script starts, the field shows a pulsing bar for the toolbar and a pulsing box for the text, at the editor's size.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

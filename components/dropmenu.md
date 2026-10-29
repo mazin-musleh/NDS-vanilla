@@ -308,50 +308,86 @@ A lazy menu keeps its items in a `<template>`, so they are not in the page until
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-menu-11"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-dropmenu</code> on the page starts by itself. Call <code class="nds-inline-code lang-js">NDS.Dropmenu.reinit()</code> after you add new ones.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-location-star-01"></i>
-            <span class="nds-label">Menu Position</span>
-          </span>
-          <p class="nds-item-desc">The menu opens below the trigger, and above it when there is more room there. A menu that fits on neither side shrinks its scroll area, so a search box or a footer stays in view. A menu with no scroll area, such as a calendar, keeps its size: the page scrolls to show it whole. Only where the page cannot, in a modal, in a fixed panel or on a very short screen, the menu scrolls instead. It never runs past the side of the screen. It stays on its trigger while the page or a box around it scrolls, inside a fixed panel too. When search or new content changes its height, it keeps its side, and a menu above the trigger moves so its bottom stays on the trigger.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">No Clipping</span>
-          </span>
-          <p class="nds-item-desc">The open menu shows in the browser's top layer, so a modal, a scrolling table or a drawer never cuts it off. It stays inside its wrapper in the page, so a dark area, a click listener on a parent and <code class="nds-inline-code lang-js">closest()</code> still reach it. It moves with the page as you scroll, over the sticky main navigation too, and closes when its trigger scrolls out of view.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard Navigation</span>
-          </span>
-          <p class="nds-item-desc">The arrow keys open the menu and move between items, and Escape closes it. The API lists every key.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-shield-user"></i>
-            <span class="nds-label">Accessibility</span>
-          </span>
-          <p class="nds-item-desc">The script sets the menu roles and <code class="nds-inline-code lang-html">aria-expanded</code> on the trigger. Focus returns to the trigger when the menu closes. The open animation stops when the user asks for reduced motion.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-code-circle"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc">Open, close and remove a dropmenu from a script, and listen to its events. A component built on it can turn off the trigger click or the keys, and drive the menu itself.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-menu-11" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">.nds-dropmenu</code> on the page starts by itself. Call <code class="nds-inline-code lang-js">NDS.Dropmenu.reinit()</code> after you add new ones.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-location-star-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Menu Position</span>
+              <p class="nds-card-description">The menu opens below the trigger, and above it when there is more room there. A menu that fits on neither side shrinks its scroll area, so a search box or a footer stays in view. A menu with no scroll area, such as a calendar, keeps its size: the page scrolls to show it whole. Only where the page cannot, in a modal, in a fixed panel or on a very short screen, the menu scrolls instead. It never runs past the side of the screen. It stays on its trigger while the page or a box around it scrolls, inside a fixed panel too. When search or new content changes its height, it keeps its side, and a menu above the trigger moves so its bottom stays on the trigger.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">No Clipping</span>
+              <p class="nds-card-description">The open menu shows in the browser's top layer, so a modal, a scrolling table or a drawer never cuts it off. It stays inside its wrapper in the page, so a dark area, a click listener on a parent and <code class="nds-inline-code lang-js">closest()</code> still reach it. It moves with the page as you scroll, over the sticky main navigation too, and closes when its trigger scrolls out of view.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Keyboard Navigation</span>
+              <p class="nds-card-description">The arrow keys open the menu and move between items, and Escape closes it. The API lists every key.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-shield-user" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Accessibility</span>
+              <p class="nds-card-description">The script sets the menu roles and <code class="nds-inline-code lang-html">aria-expanded</code> on the trigger. Focus returns to the trigger when the menu closes. The open animation stops when the user asks for reduced motion.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-code-circle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description">Open, close and remove a dropmenu from a script, and listen to its events. A component built on it can turn off the trigger click or the keys, and drive the menu itself.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

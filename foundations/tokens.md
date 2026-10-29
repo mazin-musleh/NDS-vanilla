@@ -231,36 +231,60 @@ To change a token on every page, set it in your own stylesheet, loaded after `nd
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-font"></i>
-            <span class="nds-label">Fluid Typography</span>
-          </span>
-          <p class="nds-item-desc">The <code class="nds-inline-code lang-css">--typo-display-clamp-*</code> and <code class="nds-inline-code lang-css">--typo-text-clamp-*</code> sizes grow with the screen width, between a minimum and a maximum.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-accessibility"></i>
-            <span class="nds-label">Font Sizing</span>
-          </span>
-          <p class="nds-item-desc">Every font size and line height multiplies by <code class="nds-inline-code lang-css">--user-font-scale</code>, which the <a href="../ui-shell/accessibility">Accessibility</a> panel sets on <code class="nds-inline-code lang-html">&lt;html&gt;</code>. It works there only: the tokens resolve on the root.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-resize-field"></i>
-            <span class="nds-label">Phone Padding</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-css">--nds-viewport-padding</code> is 32px, and half of that below 600px. Menus and tooltips keep the same space from the sides of the screen, so they line up with the page content.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-bold"></i>
-            <span class="nds-label">Weights per Theme</span>
-          </span>
-          <p class="nds-item-desc">The themes with a font of their own, Cairo or Readex Pro, set the <code class="nds-inline-code lang-css">--font-weight-*</code> tokens one step lower: 300 to 600.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-font" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Fluid Typography</span>
+              <p class="nds-card-description">The <code class="nds-inline-code lang-css">--typo-display-clamp-*</code> and <code class="nds-inline-code lang-css">--typo-text-clamp-*</code> sizes grow with the screen width, between a minimum and a maximum.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-accessibility" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Font Sizing</span>
+              <p class="nds-card-description">Every font size and line height multiplies by <code class="nds-inline-code lang-css">--user-font-scale</code>, which the <a href="../ui-shell/accessibility">Accessibility</a> panel sets on <code class="nds-inline-code lang-html">&lt;html&gt;</code>. It works there only: the tokens resolve on the root.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-resize-field" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Phone Padding</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-css">--nds-viewport-padding</code> is 32px, and half of that below 600px. Menus and tooltips keep the same space from the sides of the screen, so they line up with the page content.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-bold" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Weights per Theme</span>
+              <p class="nds-card-description">The themes with a font of their own, Cairo or Readex Pro, set the <code class="nds-inline-code lang-css">--font-weight-*</code> tokens one step lower: 300 to 600.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

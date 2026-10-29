@@ -100,43 +100,73 @@ Pick another component when:
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">The script sets up every <code class="nds-inline-code lang-html">.nds-breadcrumb-nav</code> when the page loads. It needs no call.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-menu-02"></i>
-            <span class="nds-label">Automatic Collapse</span>
-          </span>
-          <p class="nds-item-desc">A trail of more than 5 levels shows the first level, a More button and the last two. The button opens a menu of the hidden levels.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard Support</span>
-          </span>
-          <p class="nds-item-desc">The More menu is a <a href="../components/dropmenu">Dropmenu</a>, so it opens, moves between items and closes with the keyboard.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-loading-03"></i>
-            <span class="nds-label">Stable Layout</span>
-          </span>
-          <p class="nds-item-desc">Until the script runs, each label shows as a skeleton bar. A long trail already takes its collapsed size, so the page does not shift when it collapses.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-link-01"></i>
-            <span class="nds-label">Neutral Links</span>
-          </span>
-          <p class="nds-item-desc">The links use the neutral link colors, so the trail stays quieter than the page content. Add <code class="nds-inline-code lang-html">nds-primary</code> to one link that must stand out.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">The script sets up every <code class="nds-inline-code lang-html">.nds-breadcrumb-nav</code> when the page loads. It needs no call.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-menu-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Automatic Collapse</span>
+              <p class="nds-card-description">A trail of more than 5 levels shows the first level, a More button and the last two. The button opens a menu of the hidden levels.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Keyboard Support</span>
+              <p class="nds-card-description">The More menu is a <a href="../components/dropmenu">Dropmenu</a>, so it opens, moves between items and closes with the keyboard.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-loading-03" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Stable Layout</span>
+              <p class="nds-card-description">Until the script runs, each label shows as a skeleton bar. A long trail already takes its collapsed size, so the page does not shift when it collapses.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-link-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Neutral Links</span>
+              <p class="nds-card-description">The links use the neutral link colors, so the trail stays quieter than the page content. Add <code class="nds-inline-code lang-html">nds-primary</code> to one link that must stand out.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

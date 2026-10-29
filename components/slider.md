@@ -144,50 +144,86 @@ The `nds-loading` class shows the bar and the value as a skeleton, and hides the
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">nds-slider-container</code> on the page starts on its own, and so does a slider added later. The first slider on a page that had none needs <code class="nds-inline-code lang-js">NDS.init.mount()</code> on the new content.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard Control</span>
-          </span>
-          <p class="nds-item-desc">The arrow keys move the thumb one step. Home and End move it to the lowest and highest value. Page Up and Page Down move it in larger steps. The focus ring shows on keyboard focus only.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-touch-01"></i>
-            <span class="nds-label">Touch Target</span>
-          </span>
-          <p class="nds-item-desc">Each thumb takes a click or a touch in a 24px circle, the WCAG 2.5.8 minimum, while the dot you see stays 12px, or 16px with MD. The two thumbs of a range slider have one each.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-resize-field"></i>
-            <span class="nds-label">Steady Bar</span>
-          </span>
-          <p class="nds-item-desc">The value keeps the width of the widest value the slider can show. The bar does not move as the number of digits changes.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-loading-03"></i>
-            <span class="nds-label">Skeleton State</span>
-          </span>
-          <p class="nds-item-desc">Until the slider script starts, the bar and the value show as a skeleton and the thumb is hidden. The bar never shows a fill that does not match the value.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-square-lock-02"></i>
-            <span class="nds-label">State Sync</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-html">disabled</code> or <code class="nds-inline-code lang-html">readonly</code> on the inputs and the same <code class="nds-inline-code lang-html">data-state</code> token on the container stay in sync, in both directions. Write one: the forms script sets the other.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">nds-slider-container</code> on the page starts on its own, and so does a slider added later. The first slider on a page that had none needs <code class="nds-inline-code lang-js">NDS.init.mount()</code> on the new content.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Keyboard Control</span>
+              <p class="nds-card-description">The arrow keys move the thumb one step. Home and End move it to the lowest and highest value. Page Up and Page Down move it in larger steps. The focus ring shows on keyboard focus only.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-touch-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Touch Target</span>
+              <p class="nds-card-description">Each thumb takes a click or a touch in a 24px circle, the WCAG 2.5.8 minimum, while the dot you see stays 12px, or 16px with MD. The two thumbs of a range slider have one each.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-resize-field" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Steady Bar</span>
+              <p class="nds-card-description">The value keeps the width of the widest value the slider can show. The bar does not move as the number of digits changes.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-loading-03" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Skeleton State</span>
+              <p class="nds-card-description">Until the slider script starts, the bar and the value show as a skeleton and the thumb is hidden. The bar never shows a fill that does not match the value.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-square-lock-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">State Sync</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-html">disabled</code> or <code class="nds-inline-code lang-html">readonly</code> on the inputs and the same <code class="nds-inline-code lang-html">data-state</code> token on the container stay in sync, in both directions. Write one: the forms script sets the other.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

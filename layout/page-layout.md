@@ -545,64 +545,112 @@ A console has no side info, because the side menu holds the side column. What a 
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-distribute-horizontal-center"></i>
-            <span class="nds-label">Centered Content Width</span>
-          </span>
-          <p class="nds-item-desc">The content stops at <code class="nds-inline-code lang-css">--nds-content-max-width</code> and centers, with the same gutter as the header and the footer.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-align-bottom"></i>
-            <span class="nds-label">Footer at the Bottom</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-html">body</code> is a column, and <code class="nds-inline-code lang-html">main</code> and the content layout grow into the space left. On a short page, the footer stays at the bottom of the screen.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Skip Link</span>
-          </span>
-          <p class="nds-item-desc">The first Tab on a page shows a link to <code class="nds-inline-code lang-html">nds-content</code>, so a keyboard user skips the header, the hero and the side menu. The link is hidden until it has focus, from the first paint, and the content lands below the sticky main navigation.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-pin"></i>
-            <span class="nds-label">Sticky Parts</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-html">main</code> clips its overflow and does not scroll it. A sticky side menu or tab bar sticks to the screen, not to <code class="nds-inline-code lang-html">main</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-arrow-expand-01"></i>
-            <span class="nds-label">Minimum Content Height</span>
-          </span>
-          <p class="nds-item-desc">The content layout is at least 400px tall, and the sections grow to fill the space left.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-01"></i>
-            <span class="nds-label">Section Padding by Shape</span>
-          </span>
-          <p class="nds-item-desc">On a desktop, a page with no side column gives its sections 64px of padding above and below.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-search-02"></i>
-            <span class="nds-label">Layout Audit</span>
-          </span>
-          <p class="nds-item-desc"><code class="nds-inline-code lang-js">NDS.init.audit()</code> warns about an element between <code class="nds-inline-code lang-html">body</code> and <code class="nds-inline-code lang-html">main</code> that stops <code class="nds-inline-code lang-html">main</code> from growing, and about an extra child of the content layout.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-puzzle"></i>
-            <span class="nds-label">CSS Only</span>
-          </span>
-          <p class="nds-item-desc">The layout needs no script. The side menu's behavior comes from <a href="../ui-shell/sidemenu">Side Menu</a>.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-distribute-horizontal-center" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Centered Content Width</span>
+              <p class="nds-card-description">The content stops at <code class="nds-inline-code lang-css">--nds-content-max-width</code> and centers, with the same gutter as the header and the footer.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-align-bottom" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Footer at the Bottom</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-html">body</code> is a column, and <code class="nds-inline-code lang-html">main</code> and the content layout grow into the space left. On a short page, the footer stays at the bottom of the screen.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Skip Link</span>
+              <p class="nds-card-description">The first Tab on a page shows a link to <code class="nds-inline-code lang-html">nds-content</code>, so a keyboard user skips the header, the hero and the side menu. The link is hidden until it has focus, from the first paint, and the content lands below the sticky main navigation.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-pin" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Sticky Parts</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-html">main</code> clips its overflow and does not scroll it. A sticky side menu or tab bar sticks to the screen, not to <code class="nds-inline-code lang-html">main</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-expand-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Minimum Content Height</span>
+              <p class="nds-card-description">The content layout is at least 400px tall, and the sections grow to fill the space left.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Section Padding by Shape</span>
+              <p class="nds-card-description">On a desktop, a page with no side column gives its sections 64px of padding above and below.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-search-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Layout Audit</span>
+              <p class="nds-card-description"><code class="nds-inline-code lang-js">NDS.init.audit()</code> warns about an element between <code class="nds-inline-code lang-html">body</code> and <code class="nds-inline-code lang-html">main</code> that stops <code class="nds-inline-code lang-html">main</code> from growing, and about an extra child of the content layout.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-puzzle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">CSS Only</span>
+              <p class="nds-card-description">The layout needs no script. The side menu's behavior comes from <a href="../ui-shell/sidemenu">Side Menu</a>.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

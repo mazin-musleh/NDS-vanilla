@@ -272,64 +272,112 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-multiselect</code> on the page starts on load, with its dropmenu. The chips for checked options show before the page appears.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-tag-01"></i>
-            <span class="nds-label">Removable Chips</span>
-          </span>
-          <p class="nds-item-desc">A click on a chip unchecks its option and commits at once, with or without an Apply button. Focus moves to the next chip, or to the menu button after the last one.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-file-validation"></i>
-            <span class="nds-label">Native Form Submission</span>
-          </span>
-          <p class="nds-item-desc">The form submits each checked checkbox by its <code class="nds-inline-code lang-html">name</code> and <code class="nds-inline-code lang-html">value</code>. A checkbox with no name gets <code class="nds-inline-code lang-html">name="{data-multiselect-name}[]"</code>, so the server reads an array.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-database-01"></i>
-            <span class="nds-label">Saved Values</span>
-          </span>
-          <p class="nds-item-desc">To show a saved value, write <code class="nds-inline-code lang-html">checked</code> on its options. The field builds their chips when it starts, with no script on the page.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cursor-pointer-01"></i>
-            <span class="nds-label">Whole-Field Click</span>
-          </span>
-          <p class="nds-item-desc">A click anywhere on the field, except on a chip, opens the menu. The menu lines up with the start edge of the field.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard Navigation</span>
-          </span>
-          <p class="nds-item-desc">In the open menu, the arrow keys move through the options and the menu buttons, and Space checks an option. Escape closes the menu and moves focus back to the menu button.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-voice"></i>
-            <span class="nds-label">Screen Reader Support</span>
-          </span>
-          <p class="nds-item-desc">The menu button's name lists the chosen options, such as "Select: AI &amp; ML, Cloud". A screen reader reads each change, such as "Added Cloud", in English or Arabic.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">Menu Placement</span>
-          </span>
-          <p class="nds-item-desc">In a drawer, a modal or another scroll area that would cut it off, the menu moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code> while it is open.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">.nds-multiselect</code> on the page starts on load, with its dropmenu. The chips for checked options show before the page appears.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-tag-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Removable Chips</span>
+              <p class="nds-card-description">A click on a chip unchecks its option and commits at once, with or without an Apply button. Focus moves to the next chip, or to the menu button after the last one.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-file-validation" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Native Form Submission</span>
+              <p class="nds-card-description">The form submits each checked checkbox by its <code class="nds-inline-code lang-html">name</code> and <code class="nds-inline-code lang-html">value</code>. A checkbox with no name gets <code class="nds-inline-code lang-html">name="{data-multiselect-name}[]"</code>, so the server reads an array.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-database-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Saved Values</span>
+              <p class="nds-card-description">To show a saved value, write <code class="nds-inline-code lang-html">checked</code> on its options. The field builds their chips when it starts, with no script on the page.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-cursor-pointer-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Whole-Field Click</span>
+              <p class="nds-card-description">A click anywhere on the field, except on a chip, opens the menu. The menu lines up with the start edge of the field.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Keyboard Navigation</span>
+              <p class="nds-card-description">In the open menu, the arrow keys move through the options and the menu buttons, and Space checks an option. Escape closes the menu and moves focus back to the menu button.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-voice" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Screen Reader Support</span>
+              <p class="nds-card-description">The menu button's name lists the chosen options, such as "Select: AI &amp; ML, Cloud". A screen reader reads each change, such as "Added Cloud", in English or Arabic.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Menu Placement</span>
+              <p class="nds-card-description">In a drawer, a modal or another scroll area that would cut it off, the menu moves to <code class="nds-inline-code lang-html">&lt;body&gt;</code> while it is open.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

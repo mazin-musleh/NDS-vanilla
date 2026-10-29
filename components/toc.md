@@ -168,50 +168,86 @@ Without `data-toc-source`, the script reads the links you write. Pick it for som
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">Every <code class="nds-inline-code lang-html">.nds-toc</code> on the page starts by itself, before the page shows.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-link-square-02"></i>
-            <span class="nds-label">Heading Ids</span>
-          </span>
-          <p class="nds-item-desc">A heading with no <code class="nds-inline-code lang-html">id</code> gets one from its text. Two headings with the same text get two ids, such as <code class="nds-inline-code lang-html">setup</code> and <code class="nds-inline-code lang-html">setup-2</code>, so each link goes to its own heading.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-eye"></i>
-            <span class="nds-label">Active-Section Tracking</span>
-          </span>
-          <p class="nds-item-desc">As the reader scrolls, the link to the last section that passed under the main navigation shows as active. No link is active until the first section reaches the top. When the article scrolls in a panel or a modal, the TOC tracks and scrolls that box instead of the page.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-tap-01"></i>
-            <span class="nds-label">Click-to-Scroll</span>
-          </span>
-          <p class="nds-item-desc">A click scrolls the heading to just below the main navigation and updates the URL hash, with no new history entry. The scroll is instant when the reader asks for reduced motion.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-list-view"></i>
-            <span class="nds-label">Nested Levels</span>
-          </span>
-          <p class="nds-item-desc">Each nested list is indented, with a line along it, so the reader sees each section's level at a glance.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-api"></i>
-            <span class="nds-label">JavaScript API</span>
-          </span>
-          <p class="nds-item-desc">Start or stop a TOC from code, and check the active link again after the layout changes.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">.nds-toc</code> on the page starts by itself, before the page shows.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-link-square-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Heading Ids</span>
+              <p class="nds-card-description">A heading with no <code class="nds-inline-code lang-html">id</code> gets one from its text. Two headings with the same text get two ids, such as <code class="nds-inline-code lang-html">setup</code> and <code class="nds-inline-code lang-html">setup-2</code>, so each link goes to its own heading.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-eye" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Active-Section Tracking</span>
+              <p class="nds-card-description">As the reader scrolls, the link to the last section that passed under the main navigation shows as active. No link is active until the first section reaches the top. When the article scrolls in a panel or a modal, the TOC tracks and scrolls that box instead of the page.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-tap-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Click-to-Scroll</span>
+              <p class="nds-card-description">A click scrolls the heading to just below the main navigation and updates the URL hash, with no new history entry. The scroll is instant when the reader asks for reduced motion.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-list-view" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Nested Levels</span>
+              <p class="nds-card-description">Each nested list is indented, with a line along it, so the reader sees each section's level at a glance.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-api" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">JavaScript API</span>
+              <p class="nds-card-description">Start or stop a TOC from code, and check the active link again after the layout changes.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

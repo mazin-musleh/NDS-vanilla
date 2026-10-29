@@ -131,50 +131,86 @@ A server that signs out only on a POST, such as one that needs a CSRF token, get
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Built Modals</span>
-          </span>
-          <p class="nds-item-desc">The script builds the warning and the ended modal when each first opens, with the text of the page's language.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cursor-pointer-01"></i>
-            <span class="nds-label">Activity Renewal</span>
-          </span>
-          <p class="nds-item-desc">A click, a tap, a key or the mouse wheel renews the session while the warning is closed. It renews at most once a minute, or more often in a short session. A user who keeps working never sees the warning.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-computer-phone-sync"></i>
-            <span class="nds-label">Shared Across Tabs</span>
-          </span>
-          <p class="nds-item-desc">Tabs of the same service share one deadline in <code class="nds-inline-code lang-js">localStorage</code>. Work in one tab keeps every tab signed in, and a renewal in one tab closes the warning in the others.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-focus-point"></i>
-            <span class="nds-label">Focus Without a Ring</span>
-          </span>
-          <p class="nds-item-desc">The timer opens the warning, not the user, so focus goes to the modal itself and no focus ring shows. Tab shows the ring, and Enter presses Stay signed in.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-sleeping"></i>
-            <span class="nds-label">Sleep and Return</span>
-          </span>
-          <p class="nds-item-desc">The script checks the deadline again when a hidden tab shows, when the computer wakes, and when the browser restores the page from its history. A session that ended meanwhile ends at once.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-timer-02"></i>
-            <span class="nds-label">WCAG Time Check</span>
-          </span>
-          <p class="nds-item-desc">A <code class="nds-inline-code lang-js">warn</code> under 20 seconds logs a console warning. WCAG 2.2.1 gives the user at least 20 seconds to extend.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Built Modals</span>
+              <p class="nds-card-description">The script builds the warning and the ended modal when each first opens, with the text of the page's language.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-cursor-pointer-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Activity Renewal</span>
+              <p class="nds-card-description">A click, a tap, a key or the mouse wheel renews the session while the warning is closed. It renews at most once a minute, or more often in a short session. A user who keeps working never sees the warning.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-computer-phone-sync" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Shared Across Tabs</span>
+              <p class="nds-card-description">Tabs of the same service share one deadline in <code class="nds-inline-code lang-js">localStorage</code>. Work in one tab keeps every tab signed in, and a renewal in one tab closes the warning in the others.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-focus-point" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Focus Without a Ring</span>
+              <p class="nds-card-description">The timer opens the warning, not the user, so focus goes to the modal itself and no focus ring shows. Tab shows the ring, and Enter presses Stay signed in.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-sleeping" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Sleep and Return</span>
+              <p class="nds-card-description">The script checks the deadline again when a hidden tab shows, when the computer wakes, and when the browser restores the page from its history. A session that ended meanwhile ends at once.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-timer-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">WCAG Time Check</span>
+              <p class="nds-card-description">A <code class="nds-inline-code lang-js">warn</code> under 20 seconds logs a console warning. WCAG 2.2.1 gives the user at least 20 seconds to extend.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

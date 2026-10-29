@@ -569,78 +569,138 @@ Sort is not a filter value. Decide by what the server returns. All matching item
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">The script starts one filter for each <code class="nds-inline-code lang-html">data-filter-target</code> value and joins every element that carries it. A search box alone is a working filter.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-link-circle-02"></i>
-            <span class="nds-label">Shareable URL State</span>
-          </span>
-          <p class="nds-item-desc">The search term and the applied values stay in the URL query, so a reload or a shared link opens the same list. The search term's key is the search field's <code class="nds-inline-code lang-html">name</code>, or <code class="nds-inline-code lang-html">search</code> when it has none. A group's key is its <code class="nds-inline-code lang-html">data-filter</code> name, once per value, and a range has a key for each end. Links that joined the values with commas still open, so a checkbox or switch value must not contain a comma. The sort is <code class="nds-inline-code lang-html">sort</code> and <code class="nds-inline-code lang-html">order</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-search-01"></i>
-            <span class="nds-label">No Results Alert</span>
-          </span>
-          <p class="nds-item-desc">When no item matches, a warning alert with a Clear filters button shows in the item container. It closes when items match again. <code class="nds-inline-code lang-html">data-filter-no-results</code> on the container sets its text. A container with no items at all shows no alert: give it <a href="../components/empty">Empty</a> for that message.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-tag-01"></i>
-            <span class="nds-label">Filter Count Badge</span>
-          </span>
-          <p class="nds-item-desc">When a filter changes the count, a screen reader hears the count line, in your words. The <code class="nds-inline-code lang-html">nds-filter-btn</code> trigger shows a badge with the number of applied values. The Apply button adds the number of picked values to its label.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-grid"></i>
-            <span class="nds-label">Any Item Type</span>
-          </span>
-          <p class="nds-item-desc">Cards by default. <code class="nds-inline-code lang-html">data-filter-items</code> sets the items: a class, a tag such as <code class="nds-inline-code lang-html">tr</code>, or any selector. On a table, put it and the container's <code class="nds-inline-code lang-html">id</code> on the <code class="nds-inline-code lang-html">&lt;tbody&gt;</code>: it takes only the body's own rows.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">Pagination Support</span>
-          </span>
-          <p class="nds-item-desc">In a <a href="../components/pagination">Pagination</a> container, the pages hold only the matching items, and a new filter goes back to page 1.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-view-off"></i>
-            <span class="nds-label">No Flash on Load</span>
-          </span>
-          <p class="nds-item-desc">A container with <code class="nds-inline-code lang-html">data-filter-items</code> stays hidden until its filter has applied the values in the URL. A shared link never shows the full list first.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-flash"></i>
-            <span class="nds-label">Deferred Option Build</span>
-          </span>
-          <p class="nds-item-desc">Options for a group in the closed menu are built on its first open, not at page load. A group with a value in the URL is built at load.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-keyboard"></i>
-            <span class="nds-label">Keyboard</span>
-          </span>
-          <p class="nds-item-desc">Enter in the search box runs the search. Enter in the open menu runs Apply. Every option is a real input in a <code class="nds-inline-code lang-html">&lt;fieldset&gt;</code> with its legend. Slider thumbs have labels and move with the arrow keys.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-code"></i>
-            <span class="nds-label">Programmatic Control</span>
-          </span>
-          <p class="nds-item-desc">Set values and the search term, read the criteria and the matching items, or reset the filter from a script, through <code class="nds-inline-code lang-js">NDS.Filter</code>.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">The script starts one filter for each <code class="nds-inline-code lang-html">data-filter-target</code> value and joins every element that carries it. A search box alone is a working filter.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-link-circle-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Shareable URL State</span>
+              <p class="nds-card-description">The search term and the applied values stay in the URL query, so a reload or a shared link opens the same list. The search term's key is the search field's <code class="nds-inline-code lang-html">name</code>, or <code class="nds-inline-code lang-html">search</code> when it has none. A group's key is its <code class="nds-inline-code lang-html">data-filter</code> name, once per value, and a range has a key for each end. Links that joined the values with commas still open, so a checkbox or switch value must not contain a comma. The sort is <code class="nds-inline-code lang-html">sort</code> and <code class="nds-inline-code lang-html">order</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-search-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">No Results Alert</span>
+              <p class="nds-card-description">When no item matches, a warning alert with a Clear filters button shows in the item container. It closes when items match again. <code class="nds-inline-code lang-html">data-filter-no-results</code> on the container sets its text. A container with no items at all shows no alert: give it <a href="../components/empty">Empty</a> for that message.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-tag-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Filter Count Badge</span>
+              <p class="nds-card-description">When a filter changes the count, a screen reader hears the count line, in your words. The <code class="nds-inline-code lang-html">nds-filter-btn</code> trigger shows a badge with the number of applied values. The Apply button adds the number of picked values to its label.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-grid" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Any Item Type</span>
+              <p class="nds-card-description">Cards by default. <code class="nds-inline-code lang-html">data-filter-items</code> sets the items: a class, a tag such as <code class="nds-inline-code lang-html">tr</code>, or any selector. On a table, put it and the container's <code class="nds-inline-code lang-html">id</code> on the <code class="nds-inline-code lang-html">&lt;tbody&gt;</code>: it takes only the body's own rows.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Pagination Support</span>
+              <p class="nds-card-description">In a <a href="../components/pagination">Pagination</a> container, the pages hold only the matching items, and a new filter goes back to page 1.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-view-off" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">No Flash on Load</span>
+              <p class="nds-card-description">A container with <code class="nds-inline-code lang-html">data-filter-items</code> stays hidden until its filter has applied the values in the URL. A shared link never shows the full list first.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-flash" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Deferred Option Build</span>
+              <p class="nds-card-description">Options for a group in the closed menu are built on its first open, not at page load. A group with a value in the URL is built at load.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Keyboard</span>
+              <p class="nds-card-description">Enter in the search box runs the search. Enter in the open menu runs Apply. Every option is a real input in a <code class="nds-inline-code lang-html">&lt;fieldset&gt;</code> with its legend. Slider thumbs have labels and move with the arrow keys.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-code" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Programmatic Control</span>
+              <p class="nds-card-description">Set values and the search term, read the criteria and the matching items, or reset the filter from a script, through <code class="nds-inline-code lang-js">NDS.Filter</code>.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

@@ -298,71 +298,125 @@ When a user hides a column with the [Tables](../components/table) column menu, t
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-file-export"></i>
-            <span class="nds-label">Multi-Format Output</span>
-          </span>
-          <p class="nds-item-desc">One source exports to CSV, Excel or PDF. CSV quotes a value that holds a comma, a quote or a line break. Excel gets an HTML table that it opens as a sheet.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-file-management"></i>
-            <span class="nds-label">Pagination Aware</span>
-          </span>
-          <p class="nds-item-desc">A paged list exports every page in the HTML, not only the page on the screen. Rows a server has not sent are not in the file: see Server Pages.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-filter"></i>
-            <span class="nds-label">Filter Aware</span>
-          </span>
-          <p class="nds-item-desc">Rows that a <a href="../components/filter">Filter</a> hides are left out, so the file matches the active filter.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-shield-01"></i>
-            <span class="nds-label">Formula Guard</span>
-          </span>
-          <p class="nds-item-desc">A value that starts with <code class="nds-inline-code lang-html">=</code>, <code class="nds-inline-code lang-html">+</code>, <code class="nds-inline-code lang-html">-</code>, <code class="nds-inline-code lang-html">@</code>, a tab or a line break gets a leading apostrophe. A spreadsheet then reads it as text, not as a formula. A plain negative number stays a number.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-printer"></i>
-            <span class="nds-label">Print-Ready PDF</span>
-          </span>
-          <p class="nds-item-desc">PDF opens the browser's print dialog on a plain table of the data, even for a card list. The user saves it as a PDF. The table uses the light-mode table colors, repeats the header row on each page, and never splits a row. Focus goes back to the button when the dialog closes.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-globe-02"></i>
-            <span class="nds-label">Arabic in Every Format</span>
-          </span>
-          <p class="nds-item-desc">CSV and Excel files start with a UTF-8 byte order mark, so a spreadsheet shows Arabic text correctly. Excel and PDF use the page's language and text direction.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-document-validation"></i>
-            <span class="nds-label">Dated File Names</span>
-          </span>
-          <p class="nds-item-desc">The file is named <code class="nds-inline-code lang-html">{name}-YYYY-MM-DD</code>, with today in the site's timezone (<code class="nds-inline-code lang-html">data-timezone</code>), or the visitor's day without it. The script removes characters that a file system does not allow, and cuts the name to 64 characters.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-volume-high"></i>
-            <span class="nds-label">Screen Reader Notice</span>
-          </span>
-          <p class="nds-item-desc">After a CSV or Excel download, screen readers announce how many rows the file holds.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto-initialization</span>
-          </span>
-          <p class="nds-item-desc">The script loads when the page has a <code class="nds-inline-code lang-html">data-export</code> button. One listener on the document serves every button, including buttons added later.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-file-export" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Multi-Format Output</span>
+              <p class="nds-card-description">One source exports to CSV, Excel or PDF. CSV quotes a value that holds a comma, a quote or a line break. Excel gets an HTML table that it opens as a sheet.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-file-management" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Pagination Aware</span>
+              <p class="nds-card-description">A paged list exports every page in the HTML, not only the page on the screen. Rows a server has not sent are not in the file: see Server Pages.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-filter" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Filter Aware</span>
+              <p class="nds-card-description">Rows that a <a href="../components/filter">Filter</a> hides are left out, so the file matches the active filter.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-shield-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Formula Guard</span>
+              <p class="nds-card-description">A value that starts with <code class="nds-inline-code lang-html">=</code>, <code class="nds-inline-code lang-html">+</code>, <code class="nds-inline-code lang-html">-</code>, <code class="nds-inline-code lang-html">@</code>, a tab or a line break gets a leading apostrophe. A spreadsheet then reads it as text, not as a formula. A plain negative number stays a number.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-printer" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Print-Ready PDF</span>
+              <p class="nds-card-description">PDF opens the browser's print dialog on a plain table of the data, even for a card list. The user saves it as a PDF. The table uses the light-mode table colors, repeats the header row on each page, and never splits a row. Focus goes back to the button when the dialog closes.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-globe-02" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Arabic in Every Format</span>
+              <p class="nds-card-description">CSV and Excel files start with a UTF-8 byte order mark, so a spreadsheet shows Arabic text correctly. Excel and PDF use the page's language and text direction.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-document-validation" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Dated File Names</span>
+              <p class="nds-card-description">The file is named <code class="nds-inline-code lang-html">{name}-YYYY-MM-DD</code>, with today in the site's timezone (<code class="nds-inline-code lang-html">data-timezone</code>), or the visitor's day without it. The script removes characters that a file system does not allow, and cuts the name to 64 characters.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-volume-high" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Screen Reader Notice</span>
+              <p class="nds-card-description">After a CSV or Excel download, screen readers announce how many rows the file holds.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto-initialization</span>
+              <p class="nds-card-description">The script loads when the page has a <code class="nds-inline-code lang-html">data-export</code> button. One listener on the document serves every button, including buttons added later.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

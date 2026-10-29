@@ -421,57 +421,99 @@ In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the sc
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-            <span class="nds-label">Auto Start</span>
-          </span>
-          <p class="nds-item-desc">The script starts when <code class="nds-inline-code lang-html">.nds-sidemenu</code> is on the page. It shows the menu button and writes the current page's name in its label.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-target-01"></i>
-            <span class="nds-label">Current Page</span>
-          </span>
-          <p class="nds-item-desc">The groups above the current page's link open when the page loads, so the link is in view.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-unfold-less"></i>
-            <span class="nds-label">One Open Group</span>
-          </span>
-          <p class="nds-item-desc">A group that opens closes the other open group at the same level, so the list stays short.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-pin"></i>
-            <span class="nds-label">Sticky Menu</span>
-          </span>
-          <p class="nds-item-desc">The menu stays in view below the main navigation while the page scrolls: the column on a desktop, and the bar in top bar mode.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-mouse-scroll-01"></i>
-            <span class="nds-label">Overflow Detection</span>
-          </span>
-          <p class="nds-item-desc">A list taller than the screen scrolls in place, and the show more arrow appears at its bottom.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layers-01"></i>
-            <span class="nds-label">Backdrop Overlay</span>
-          </span>
-          <p class="nds-item-desc">Below 960px, the open menu dims the page behind it, and the page does not scroll.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-cancel-circle"></i>
-            <span class="nds-label">Close Triggers</span>
-          </span>
-          <p class="nds-item-desc">A second press on the menu button, Escape, a click outside the menu, or a change of the screen width closes it.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Auto Start</span>
+              <p class="nds-card-description">The script starts when <code class="nds-inline-code lang-html">.nds-sidemenu</code> is on the page. It shows the menu button and writes the current page's name in its label.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-target-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Current Page</span>
+              <p class="nds-card-description">The groups above the current page's link open when the page loads, so the link is in view.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-unfold-less" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">One Open Group</span>
+              <p class="nds-card-description">A group that opens closes the other open group at the same level, so the list stays short.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-pin" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Sticky Menu</span>
+              <p class="nds-card-description">The menu stays in view below the main navigation while the page scrolls: the column on a desktop, and the bar in top bar mode.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-mouse-scroll-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Overflow Detection</span>
+              <p class="nds-card-description">A list taller than the screen scrolls in place, and the show more arrow appears at its bottom.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Backdrop Overlay</span>
+              <p class="nds-card-description">Below 960px, the open menu dims the page behind it, and the page does not scroll.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-cancel-circle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Close Triggers</span>
+              <p class="nds-card-description">A second press on the menu button, Escape, a click outside the menu, or a change of the screen width closes it.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>

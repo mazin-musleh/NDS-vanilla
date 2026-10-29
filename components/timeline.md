@@ -511,36 +511,60 @@ A [Divider](../components/divider) at the start of a step's content labels the e
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-workflow-circle-06"></i>
-            <span class="nds-label">Automatic State</span>
-          </span>
-          <p class="nds-item-desc">Write <code class="nds-inline-code lang-html">data-current</code> and the script marks every event done, current or to come. Write a new number later and the events change with it.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-dashed-line-circle"></i>
-            <span class="nds-label">Placeholders Before Start</span>
-          </span>
-          <p class="nds-item-desc">Until the script starts, each event shows as a skeleton in its final layout.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-add-circle"></i>
-            <span class="nds-label">New Events</span>
-          </span>
-          <p class="nds-item-desc">Add a step and write the new count in <code class="nds-inline-code lang-html">data-total</code>, and the script reads the events again.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-notification-03"></i>
-            <span class="nds-label">Change Events</span>
-          </span>
-          <p class="nds-item-desc">The timeline fires <code class="nds-inline-code lang-js">nds:stepper:change</code> after <code class="nds-inline-code lang-html">data-current</code> or <code class="nds-inline-code lang-html">data-total</code> changes.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-workflow-circle-06" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Automatic State</span>
+              <p class="nds-card-description">Write <code class="nds-inline-code lang-html">data-current</code> and the script marks every event done, current or to come. Write a new number later and the events change with it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-dashed-line-circle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Placeholders Before Start</span>
+              <p class="nds-card-description">Until the script starts, each event shows as a skeleton in its final layout.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-add-circle" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">New Events</span>
+              <p class="nds-card-description">Add a step and write the new count in <code class="nds-inline-code lang-html">data-total</code>, and the script reads the events again.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-notification-03" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Change Events</span>
+              <p class="nds-card-description">The timeline fires <code class="nds-inline-code lang-js">nds:stepper:change</code> after <code class="nds-inline-code lang-html">data-current</code> or <code class="nds-inline-code lang-html">data-total</code> changes.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>
