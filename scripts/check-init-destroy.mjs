@@ -257,8 +257,8 @@ const pageList = (dir) => readdirSync(new URL(`../${dir}/`, import.meta.url))
     .map((f) => `${dir}/${f.replace(/\.md$/, '.html')}`);
 const PAGES = [...pageList('components'), ...pageList('examples'), 'index.html', 'playground.html'];
 // Instances a page SCRIPT made with create(): refresh() re-runs registry inits only, so the
-// script that made one re-makes it. ponytail: drop sort.html when Sort gets its markup API (TODO.md).
-const SCRIPT_CREATED = { 'components/sort.html': ['ndsSort'] };
+// script that made one re-makes it.
+const SCRIPT_CREATED = { 'examples/open-data.html': ['ndsChart'] };
 
 const results = [];
 const queue = [...PAGES];
