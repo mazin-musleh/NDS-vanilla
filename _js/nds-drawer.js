@@ -40,19 +40,6 @@
         no_results: 'No results',
     });
 
-    const config = {
-        selectors: {
-            drawer: '.nds-drawer'
-        },
-        states: {
-            open: 'open',
-            opening: 'opening',
-            closing: 'closing',
-            closed: '',
-            active: 'active'
-        }
-    };
-
 
     // ==============================================
     // STATE MANAGEMENT
@@ -71,12 +58,12 @@
 
     // A closed toggle keeps its highlight while its <li> is the current page.
     function clearButton(listItem, button) {
-        if (hasState(listItem, config.states.active)) setState(button, config.states.active);
+        if (hasState(listItem, 'active')) setState(button, 'active');
         else clearState(button);
     }
 
     function isOpen(listItem) {
-        return hasState(listItem, config.states.open) || hasState(listItem, config.states.opening);
+        return hasState(listItem, 'open') || hasState(listItem, 'opening');
     }
 
     // ==============================================
@@ -95,7 +82,7 @@
         } else {
             // Accordion: close siblings
             const parentList = listItem.parentElement;
-            if (parentList && !hasState(button.closest(config.selectors.drawer), 'always-open')) {
+            if (parentList && !hasState(button.closest('.nds-drawer'), 'always-open')) {
                 parentList.querySelectorAll(':scope > li').forEach(sibling => {
                     if (sibling === listItem) return;
                     if (!isOpen(sibling)) return;
@@ -118,59 +105,68 @@
         pendingEnd.delete(submenu);
     }
 
+    // The submenu's own duration: a --drawer-transition longer than the global speed would end on the default fallback mid-slide.
+    function getEndFallback(submenu) {
+        const style = getComputedStyle(submenu);
+        return ((parseFloat(style.transitionDuration) || 0) + (parseFloat(style.transitionDelay) || 0)) * 1000 + 50;
+    }
+
     function showSubmenu(listItem, button, submenu) {
         cancelPending(submenu);
-        setState(submenu, config.states.opening);
-        setState(listItem, config.states.opening);
+        setState(submenu, 'opening');
+        setState(listItem, 'opening');
         NDS.aria.expanded(button, true);
-        setState(button, config.states.active);
-        submenu.style.height = submenu.scrollHeight + 'px';
+        setState(button, 'active');
+        const height = submenu.scrollHeight;
+        const fallbackMs = getEndFallback(submenu);
+        submenu.style.height = height + 'px';
 
         pendingEnd.set(submenu, NDS.onTransitionEnd(submenu, () => {
             pendingEnd.delete(submenu);
-            setState(submenu, config.states.open);
-            setState(listItem, config.states.open);
+            setState(submenu, 'open');
+            setState(listItem, 'open');
             submenu.style.height = '';
             dispatchDrawerEvent(listItem, 'shown');
-        }));
+        }, { fallbackMs }));
     }
 
     function hideSubmenu(listItem, button, submenu) {
         cancelPending(submenu);
         submenu.style.height = submenu.scrollHeight + 'px';
         submenu.offsetHeight; // Force reflow
-        setState(submenu, config.states.closing);
+        const fallbackMs = getEndFallback(submenu);
+        setState(submenu, 'closing');
         submenu.style.height = '0px';
-        setState(listItem, config.states.closed);
+        setState(listItem, '');
         NDS.aria.expanded(button, false);
         clearButton(listItem, button);
 
         pendingEnd.set(submenu, NDS.onTransitionEnd(submenu, () => {
             pendingEnd.delete(submenu);
-            setState(submenu, config.states.closed);
+            setState(submenu, '');
             submenu.style.height = '';
             dispatchDrawerEvent(listItem, 'hidden');
-        }));
+        }, { fallbackMs }));
     }
 
     // Opens or closes a branch at once, with no animation; drops one in flight, or its end would undo this.
     function setBranch(listItem, open) {
         const button = listItem.querySelector(':scope > .nds-btn');
         const submenu = listItem.querySelector(':scope > ul');
-        setState(listItem, open ? config.states.open : config.states.closed);
+        setState(listItem, open ? 'open' : '');
         if (submenu) {
             cancelPending(submenu);
             submenu.style.height = '';
-            setState(submenu, open ? config.states.open : config.states.closed);
+            setState(submenu, open ? 'open' : '');
         }
         if (button) {
             NDS.aria.expanded(button, open);
-            if (open) setState(button, config.states.active); else clearButton(listItem, button);
+            if (open) setState(button, 'active'); else clearButton(listItem, button);
         }
     }
 
     function dispatchDrawerEvent(listItem, eventType) {
-        const drawer = listItem.closest(config.selectors.drawer);
+        const drawer = listItem.closest('.nds-drawer');
         drawer?.dispatchEvent(new CustomEvent(`nds:drawer:${eventType}`, {
             detail: { item: listItem, drawer },
             bubbles: true
@@ -185,7 +181,7 @@
         drawer.querySelectorAll('.nds-drawer-list li').forEach(item => {
             if (!item.querySelector(':scope > ul') || !item.querySelector(':scope > .nds-btn')) return;
             // Open where the markup says so
-            setBranch(item, hasState(item, config.states.open));
+            setBranch(item, hasState(item, 'open'));
         });
     }
 
@@ -221,7 +217,7 @@
     // through toggle() later, so a moved mark animates and closes sibling branches.
     function activateItem(drawer, activeItem, animate) {
         const activeBtn = activeItem.querySelector(':scope > .nds-btn');
-        if (activeBtn) setState(activeBtn, config.states.active);
+        if (activeBtn) setState(activeBtn, 'active');
 
         const closed = [];
         let parent = activeItem.closest('ul')?.closest('li');
@@ -249,9 +245,9 @@
         NDS.onAttributeChange('.nds-drawer[data-nds-drawer-initialized] li', ['data-state'], items => items.forEach(item => {
             const btn = item.querySelector(':scope > .nds-btn');
             if (!btn) return;
-            if (hasState(item, config.states.active)) {
-                if (!hasState(btn, config.states.active)) activateItem(item.closest(config.selectors.drawer), item, true);
-            } else if (!isOpen(item) && hasState(btn, config.states.active)) {
+            if (hasState(item, 'active')) {
+                if (!hasState(btn, 'active')) activateItem(item.closest('.nds-drawer'), item, true);
+            } else if (!isOpen(item) && hasState(btn, 'active')) {
                 clearButton(item, btn);
             }
         }));
@@ -372,7 +368,7 @@
     }
 
     function setupAllDrawers() {
-        document.querySelectorAll(config.selectors.drawer).forEach(drawer => {
+        document.querySelectorAll('.nds-drawer').forEach(drawer => {
             if (drawer.closest('code')) return;
             setupDrawer(drawer);
         });

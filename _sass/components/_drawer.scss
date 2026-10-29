@@ -1,6 +1,6 @@
 /**
  * NDS Drawer Component
- * A 2-level nested navigation drawer with grid-based animations
+ * A nested navigation drawer; nds-drawer.js animates each submenu's height
  * Uses --_ prefix pattern for internal custom properties
  * Uses CSS :has() for submenu detection - no .has-sub class needed
  */
