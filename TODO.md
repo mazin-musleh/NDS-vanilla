@@ -10,6 +10,17 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
 
 - **Autocomplete: one aborted request, once.** A screenshot run logged `docs-assets/data/appointment-services.json` as `ERR_ABORTED` on the first click. A trace showed one request that finishes, and two reruns were clean. Watch for it.
 
+### JS audit hotspots (full-tree `architecture` run, 2026-10-29)
+
+Suspected, not confirmed: one session each, best value first. Pagination, Drawer, Main Nav and Digital Stamp are done. Prove a behavior fix on your own `:4010` server, old bundles vs new.
+
+- [ ] `/nds-js-audit table,selection,export architecture`: a direct `NDS.Export.export*()` never starts Selection, so `scope: 'selected'` may export every row (`nds-export.js` `init`); `getRowToggles` may stamp a nested table's toggles (`nds-table.js`); a nested loop in a page-wide walk (`nds-selection.js` ~L120).
+- [ ] `/nds-js-audit nds-dropmenu.js architecture`: `_setupSearch` is 162 lines.
+- [ ] `/nds-js-audit form,otp,typing architecture`: `NDS.Form.setState(el, 'required')` walks every input in the container unguarded (`nds-form.js`); OTP `setValue`/`clear` on a group never set up; the `masks` map in `nds-typing.js` may only grow.
+- [ ] `/nds-js-audit nds-accessibility.js architecture`: four repeated-block pairs (~L1248–1343); likely LOW.
+- [ ] `/nds-js-audit nds-copy.js architecture`, `nds-countdown.js`: a module map that may only grow (`controllers`, `unitFormats`); likely a bounded cache.
+- **Smaller finds, not fixed:** Pagination `setPage()` takes a page out of range, and `setRecords()` puts the list id into a selector without `CSS.escape`. Drawer: the slide ignores the OS reduced-motion setting (CSS), and `destroy()` leaves the `nds-menu-btn` class `create()` added. Main Nav: a mode flip during a menu's open animation can still leave `opened`; `destroy()` leaves an open menu stamped open, and `reinit()` on a swapped nav skips `destroy()`.
+
 ### v2.0.0 release
 
 - **NDS IQ v4.0 on release day** (plan and status in `plans/iq-v4.md`; `IQv3.2` is already tagged and pushed, off main). [ ] `python scripts/publish-iq.py --apply` BEFORE the build and `mkrelease.py` (`verify()` checks the published copy and the guides' v4.0 render), `git push origin main IQv4.0`, then `nds-iq-eval` `evolve`. [ ] Optional, owner go: the S101 behavior run.
