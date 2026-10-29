@@ -132,6 +132,8 @@
                     // Escape hatch for display/sort-value divergence: authors set
                     // data-sort-value on the <td> when the rendered text would mis-type
                     // (e.g. "Free" in a numeric column, localized dates, etc.)
+                    // A sub row's one colspan cell is no column: on column 0 its text would type the sort as string.
+                    if (row.classList.contains('nds-sub')) return '';
                     const cell = row.cells[columnIndex];
                     if (!cell) return '';
                     const override = cell.getAttribute('data-sort-value');
@@ -142,8 +144,9 @@
                     // Runs after NDS.Sort has already re-appended the parent rows.
                     repairSubPairing(this._tbody);
 
+                    // A nested table's closest() climbs into the outer table's pager.
                     const pagedContent = this._tbody.closest('.nds-paged-content');
-                    if (pagedContent) NDS.Pagination.refresh(pagedContent);
+                    if (pagedContent && this._table.contains(pagedContent)) NDS.Pagination.refresh(pagedContent);
                 }
             });
         }
@@ -354,7 +357,8 @@
     // shifts a th-filtered, thead-wide list out of it, and .cells (not .children)
     // is what skips the <script>/<template> a <tr> may legally carry.
     const getHeadCells = (table) => Array.from(table.querySelector(':scope > thead > tr')?.cells || []);
-    const getBodyRows = (table) => table.querySelectorAll(':scope > tbody > tr:not(.nds-sub)');
+    // Not Empty's placeholder: hiding column 0 would hide its message.
+    const getBodyRows = (table) => table.querySelectorAll(':scope > tbody > tr:not(.nds-sub):not([data-nds-empty-placeholder])');
 
     // A footer row (a total) may span its first columns with one label, so its cells count from
     // the end. A hidden column under the label shrinks the span; with none left the label hides.
@@ -636,9 +640,10 @@
             const align = th.getAttribute('data-align');
             if (!alignValues[align]) return;
             // Child combinators, not descendants: a sub-row's nested table has
-            // its own columns, and a descendant rule would align those too.
+            // its own columns, and a descendant rule would align those too. A sub row's
+            // one cell is no column either, so it never takes column 1's alignment.
             // A footer row (a total) counts from the end, past a label that spans the first columns.
-            rules.push(`[data-nds-align="${scope}"] > tbody > tr > td:nth-child(${th.cellIndex + 1}),[data-nds-align="${scope}"] > tfoot > tr > :is(td, th):nth-last-child(${columnCount - th.cellIndex}):not([colspan]){text-align:${align}}`);
+            rules.push(`[data-nds-align="${scope}"] > tbody > tr:not(.nds-sub) > td:nth-child(${th.cellIndex + 1}),[data-nds-align="${scope}"] > tfoot > tr > :is(td, th):nth-last-child(${columnCount - th.cellIndex}):not([colspan]){text-align:${align}}`);
         });
         if (!rules.length) return;
 

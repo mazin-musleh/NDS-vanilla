@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 04:08 PM"
+last_edit: "29/10/2026 - 11:39 AM"
 ---
 
 <section id="export-overview" class="nds-content-section nds-doc-overview">
@@ -424,9 +424,9 @@ A source is an element or a CSS selector. A scope is `"auto"` (the default), `"s
 | Method | Effect |
 |---|---|
 | `NDS.Export.init()` | Adds the click listener for `data-export` buttons. The loader calls it |
-| `NDS.Export.export(source, format, scope, options)` | Exports the source. `format` is `"csv"`, `"xls"` or `"pdf"` |
+| `NDS.Export.export(source, format, scope, options)` | Exports the source. `format` is `"csv"`, `"xls"` or `"pdf"`. If [Selection](../components/selection) has not loaded yet, it waits for it and returns a promise, so the selected rows are right |
 | `NDS.Export.exportCsv(source, scope, options)` | Exports the source as CSV. `exportXls()` and `exportPdf()` work the same way |
-| `NDS.Export.collect(source, scope)` | Returns `{ columns, rows }` and downloads nothing. `columns` holds `{ key, label }` items. Each row maps a key to its value |
+| `NDS.Export.collect(source, scope)` | Returns `{ columns, rows }` and downloads nothing. `columns` holds `{ key, label }` items. Each row maps a key to its value. It cannot wait for Selection: call it after Selection loads, or it sees no selected row |
 | `NDS.Export.download(data, format, options)` | Downloads a `collect()` result, or opens the print dialog for `"pdf"` |
 | `NDS.Export.toCsv(data)` | Returns a `collect()` result as CSV text, with a UTF-8 byte order mark at the start |
 | `NDS.Export.toXlsHtml(data, options)` | Returns a `collect()` result as the HTML that Excel opens |
@@ -442,7 +442,7 @@ A source is an element or a CSS selector. A scope is `"auto"` (the default), `"s
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:export:start` | the source (bubbles, cancelable) | `{ format, scope, data, filename }`. It fires before the file is made. A button, `export()`, `csv()`, `xls()` and `pdf()` fire it, and `download()` does not. Change `data.rows` to change the file. Call `preventDefault()` to stop the export |
+| `nds:export:start` | the source (bubbles, cancelable) | `{ format, scope, data, filename }`. It fires before the file is made. A button, `export()`, `exportCsv()`, `exportXls()` and `exportPdf()` fire it, and `download()` does not. Change `data.rows` to change the file. Call `preventDefault()` to stop the export |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="export-js" data-canon data-lang="js">

@@ -58,10 +58,11 @@
     // and TanStack Table skip rows that cannot be selected. :disabled covers a disabled fieldset.
     const canSelect = (item) => !getBox(item)?.matches(':disabled');
 
-    // A sub row's nested table stays its own list (NDS.findOwnItems).
+    // A sub row's nested table stays its own list (NDS.findOwnItems): its paged rows never
+    // empty the outer list. A <tbody>'s items are rows, never a framework's <template>.
     function getItems(list) {
-        const paged = list.querySelectorAll('.nds-page-item');
-        return NDS.findOwnItems(list, paged.length ? paged : list.children);
+        const paged = NDS.findOwnItems(list, list.querySelectorAll('.nds-page-item'));
+        return paged.length ? paged : NDS.findOwnItems(list, list.tagName === 'TBODY' ? list.rows : list.children);
     }
 
     // The list a select-all box drives, or null for an item box.
@@ -257,10 +258,10 @@
 
     // With no list (the loader's hook), refresh updates every list: counters and select-all
     // boxes sit outside the list, so the container the walk passes would match nothing.
-    // refresh, selectAll and clear call init() first: the loader starts Selection only when a
+    // reinit, refresh, selectAll and clear call init() first: the loader starts Selection only when a
     // list is on the page at load, so a list added later gets the listeners from its first call.
     NDS.Selection = {
-        init, reinit: recountAll, refresh: (list) => { init(); if (list) return recount(list); recountAll(); },
+        init, reinit: () => { init(); recountAll(); }, refresh: (list) => { init(); if (list) return recount(list); recountAll(); },
         selectAll, clear, getSelected, isSelected, destroy
     };
 })();

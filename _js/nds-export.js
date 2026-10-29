@@ -29,6 +29,8 @@
  *   on a <th>:          data-export-label (column header override) · data-export-skip
  * Gotchas:
  *   - scope "auto" means: the selected rows if any row is selected, otherwise all of them.
+ *   - Before Selection's bundle loads, export() waits for it (scope selected or auto) and
+ *     returns a Promise. collect() cannot wait: before then it sees no row selected.
  *   - Rows hidden by PAGINATION are exported (every page); rows hidden by a FILTER are not.
  *   - Cell value order: data-export-value, then the cell's text. data-sort-value is never read.
  *   - data-export-skip works on a <th> or a field, never on a single <td>.
@@ -47,7 +49,7 @@
  *     source: Element | selector  (a <table>, .nds-table, or any container with data-export-rows)
  *     format: 'csv' | 'xls' | 'pdf'
  *     scope : 'selected' | 'all' | 'auto'  default 'auto'
- *             auto → 'selected' if any [data-state~="selected"] row, else 'all'
+ *             auto → 'selected' if NDS.Selection.isSelected finds a row (data-state or a checked box), else 'all'
  *     opts  : { filename?, title?, dir? }
  *
  * Two adapters:
@@ -103,7 +105,7 @@
             return columns;
         },
 
-        getRows(source, scope) {
+        getRows(source) {
             const tbody = source.querySelector(':scope > tbody');
             if (!tbody) return [];
             // Paginated tables hide off-page rows via .nds-page-item + [hidden].
@@ -113,12 +115,9 @@
             // then look for .nds-page-item rows the sub table never has.
             const paged = tbody.closest('.nds-paged-content');
             const isOwnPaged = paged && source.contains(paged);
-            const rows = (isOwnPaged
-                ? Array.from(tbody.querySelectorAll(':scope > tr.nds-page-item'))
-                : Array.from(tbody.rows))
-                .filter(row => !row.classList.contains('nds-sub') && !isRowFiltered(row));
-            if (scope === 'selected') return rows.filter(isSelected);
-            return rows;
+            // NDS.findOwnItems drops sub rows and Empty's placeholder.
+            return NDS.findOwnItems(tbody, isOwnPaged ? tbody.querySelectorAll(':scope > tr.nds-page-item') : tbody.rows)
+                .filter(row => !isRowFiltered(row));
         },
 
         getCell(row, column) {
@@ -138,21 +137,18 @@
     };
 
     const genericAdapter = {
-        getRows(source, scope) {
+        getRows(source) {
             const selector = source.dataset.exportRows;
-            const rows = (selector
-                ? Array.from(source.querySelectorAll(selector))
-                : Array.from(source.children))
-                .filter(row => !isRowFiltered(row));
-            if (scope === 'selected') return rows.filter(isSelected);
-            return rows;
+            // Empty's placeholder is no row.
+            return Array.from(selector ? source.querySelectorAll(selector) : source.children)
+                .filter(row => !row.hasAttribute('data-nds-empty-placeholder') && !isRowFiltered(row));
         },
 
         getColumns(source) {
             const skipKeys = new Set(
                 (source.dataset.exportSkip || '').split(/\s+/).filter(Boolean)
             );
-            const rows = this.getRows(source, 'all');
+            const rows = this.getRows(source);
             const columns = [];
             const seen = new Set();
             rows.forEach(row => {
@@ -193,22 +189,15 @@
         return source.matches('table, .nds-table') ? tableAdapter : genericAdapter;
     }
 
-    // Asks the same getRows the export itself will use, rather than a parallel
-    // "is anything selected" walk. A separate walk can see a selected row that
-    // getRows doesn't own (an unmarked <tr> in a paginated table), which flips
-    // the scope to 'selected' and then exports nothing.
-    function inferScope(source, adapter) {
-        return adapter.getRows(source, 'all').some(isSelected) ? 'selected' : 'all';
-    }
-
+    // One row walk decides 'auto' and makes the export, so they never disagree on which rows exist.
     function collect(source, scope) {
         const el = resolveSource(source);
         if (!el) return { columns: [], rows: [] };
         const adapter = pickAdapter(el);
-        const effective = scope === 'auto' || !scope ? inferScope(el, adapter) : scope;
+        const allRows = adapter.getRows(el);
+        const effective = scope === 'auto' || !scope ? (allRows.some(isSelected) ? 'selected' : 'all') : scope;
         const columns = adapter.getColumns(el);
-        const rawRows = adapter.getRows(el, effective);
-        const rows = rawRows.map(row => {
+        const rows = (effective === 'selected' ? allRows.filter(isSelected) : allRows).map(row => {
             const record = {};
             columns.forEach(column => { record[column.key] = adapter.getCell(row, column); });
             return record;
@@ -443,7 +432,16 @@
         }
     }
 
+    // A direct call can come before Selection's bundle, which init() alone loads: wait for it,
+    // or 'auto' exports every row and 'selected' none. Once: a failed load exports as before.
     function exportFrom(source, format, scope, opts) {
+        if (scope !== 'all' && NDS.Selection.__ndsStub) {
+            return NDS.Selection.init().then(() => exportNow(source, format, scope, opts));
+        }
+        exportNow(source, format, scope, opts);
+    }
+
+    function exportNow(source, format, scope, opts) {
         const el = resolveSource(source);
         if (!el) return;
         opts = opts || {};

@@ -309,6 +309,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Export** — the date in a file name is today in the site's timezone, not the UTC date.
 - **Export** — A negative number stays a number in CSV and Excel, so the column sums.
 - **Export** — An export started from a script before the table code loads writes the cell text. It wrote `[object Promise]`.
+- **Export** — An empty table or list exports no rows. It exported the "No content" placeholder as a row.
 - **FAB** — a FAB with `data-fab-pos="auto"` docks on its toggle's `data-panel-side` when the panel is built on first press. `data-panel-side` alone now moves the accessibility FAB and panel.
 - **Filter** — A click on the Filter button while the page is still starting does nothing, and the next click opens the full menu; it opened an empty menu that filled while open and grew over its button.
 - **Featured Icons** — In dark mode a dark-style icon follows its parent's status, and the neutral fill is darker for contrast.
@@ -422,6 +423,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Section** — A breakout body stops at the max width plus one gutter on wide screens. A `nds-section-action` in a section body keeps 32px above and below it, as a block does.
 - **Section** — An `nds-center` section with an image centers its title and description.
 - **Security** — The print export takes only real colors from the theme, so a saved palette value cannot run as script. The Editor escapes its id. Pagination escapes its page URL template and ignores a `javascript:` one.
+- **Selection** — `reinit()` adds the listeners when they are missing, as `refresh()` does, so a list added after the page loads takes clicks.
+- **Selection** — A table with a paged table in a sub row counts and selects its own rows. A `<template>` in a `<tbody>`, as Alpine needs, is no longer counted as an item.
 - **Side Info** — `--nds-sideinfo-top-offset` set by a page class works; the component's own `0px` won.
 - **Side Menu** — moving `data-state="active"` to another `li` after load (a client-side route) highlights its link, opens its groups and renames the top bar.
 - **Side Menu** — `destroy()` hides the toggle button again (the markup ships it hidden), removes the `aria-expanded` it wrote, and stops the peek timer.
@@ -445,6 +448,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Tables** — A table that scrolls sideways takes keyboard focus and, with a caption or a label, is a named region; it drops both when the columns fit.
 - **Tables** — `destroy()` takes back what the script wrote. A scroll box it built goes and the table returns to its place; a box you wrote keeps its own `--max-width`. The table's `data-align` rules go too, so a view that mounts tables again and again no longer piles them up.
 - **Tables** — A row added after a column is hidden (a fetch, a page, a framework render) keeps that column hidden. `NDS.Table.setColumnHidden()` now moves the column menu's checkbox and its badge.
+- **Tables** — Sorting a table in a sub row no longer sends the outer paged table back to page 1.
+- **Tables** — A number or date in the first column sorts as a number or a date when a sub row is open. The sub row's text made it sort as text.
+- **Tables** — Hiding the first column no longer hides the "No content" message of an empty table, and the first column's `data-align` no longer aligns a sub row.
 - **Tabs** — a tab set in a card no longer doubles the panel padding; Home and End go to the first and last tab in RTL too; a tab set in a column that centers its items keeps its full width; a vertical divided tab keeps its icon before the label and starts at the edge. A tab set inside a tab panel or a Content Switcher panel keeps its own look.
 - **Tabs** — In a ghost section on small screens, the tab divider spans the content.
 - **Tabs** — Vertical tabs in a card keep one gutter between the list and the panels: 24px, 16px on a phone. A whole-set card added the panels' own padding to the card's gap (40px), and a panel-only card sat 16px off the list on top of its padding.
