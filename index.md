@@ -397,77 +397,156 @@ bundle_sizes:
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid"
-                    style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:32px; --dl-title-FS: var(--typo-text-xl-FS); --row-gap: 24px; --col-gap: 32px;">
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-plug-socket"></i>
-                            <span class="nds-label">Zero Dependencies</span>
-                        </span>
-                        <p class="nds-item-desc">No Bootstrap, Tailwind, jQuery, or framework runtime. The output is plain HTML, CSS, and JavaScript, so it fits into an existing stack without a framework.</p>
+                <div class="nds-grid nds-divided-rows" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
+                    <div class="nds-card nds-flush nds-horizontal">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-lg">
+                                    <i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Zero Dependencies</span>
+                                <p class="nds-card-description">No Bootstrap, Tailwind, jQuery, or framework runtime. The output is plain HTML, CSS, and JavaScript, so it fits into an existing stack without a framework.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-cpu-charge"></i>
-                            <span class="nds-label">Smart Component Loader</span>
-                        </span>
-                        <p class="nds-item-desc">The loader scans the page once and starts the components it finds: critical ones first, the rest when the browser is idle. Extra bundles load only when their components are on the page, so each page runs only the JavaScript it uses.</p>
+                    <div class="nds-card nds-flush nds-horizontal">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-lg">
+                                    <i class="hgi hgi-stroke hgi-cpu-charge" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Smart Component Loader</span>
+                                <p class="nds-card-description">The loader scans the page once and starts the components it finds: critical ones first, the rest when the browser is idle. Extra bundles load only when their components are on the page, so each page runs only the JavaScript it uses.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-arrow-data-transfer-horizontal"></i>
-                            <span class="nds-label">RTL/LTR Native</span>
-                        </span>
-                        <p class="nds-item-desc">Built with CSS Logical Properties from the start. Margins, padding, borders, and positioning adapt to direction without a separate RTL stylesheet or directional overrides. Switch between RTL and LTR with a single HTML attribute.</p>
+                    <div class="nds-card nds-flush nds-horizontal">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-lg">
+                                    <i class="hgi hgi-stroke hgi-arrow-data-transfer-horizontal" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">RTL/LTR Native</span>
+                                <p class="nds-card-description">Built with CSS Logical Properties from the start. Margins, padding, borders, and positioning adapt to direction without a separate RTL stylesheet or directional overrides. Switch between RTL and LTR with a single HTML attribute.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-paint-brush-01"></i>
-                            <span class="nds-label">4-Tier Design Tokens</span>
-                        </span>
-                        <p class="nds-item-desc">Palette, primitive, semantic, and component tokens are defined as CSS custom properties. Components expose public properties you can set, and keep their internals private.</p>
+                    <div class="nds-card nds-flush nds-horizontal">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-lg">
+                                    <i class="hgi hgi-stroke hgi-paint-brush-01" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">4-Tier Design Tokens</span>
+                                <p class="nds-card-description">Palette, primitive, semantic, and component tokens are defined as CSS custom properties. Components expose public properties you can set, and keep their internals private.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-paint-board"></i>
-                            <span class="nds-label">Theming & Dark Mode</span>
-                        </span>
-                        <p class="nds-item-desc">Light and dark modes are built in, with support for full re-branding. Generate a palette from a single OKLCH seed color, select a predefined theme, or load a stylesheet theme. Theme selection is controlled through a single HTML attribute and requires no rebuild.</p>
+                    <div class="nds-card nds-flush nds-horizontal">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-lg">
+                                    <i class="hgi hgi-stroke hgi-paint-board" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Theming & Dark Mode</span>
+                                <p class="nds-card-description">Light and dark modes are built in, with support for full re-branding. Generate a palette from a single OKLCH seed color, select a predefined theme, or load a stylesheet theme. Theme selection is controlled through a single HTML attribute and requires no rebuild.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-zap"></i>
-                            <span class="nds-label">~{{ page.bundle_sizes.critical_css }} KB Critical CSS (gzipped)</span>
-                        </span>
-                        <p class="nds-item-desc">The build splits the CSS in two. Critical styles load first; the rest load later without blocking the page.</p>
+                    <div class="nds-card nds-flush nds-horizontal">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-lg">
+                                    <i class="hgi hgi-stroke hgi-zap" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">~{{ page.bundle_sizes.critical_css }} KB Critical CSS (gzipped)</span>
+                                <p class="nds-card-description">The build splits the CSS in two. Critical styles load first; the rest load later without blocking the page.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-layers-01"></i>
-                            <span class="nds-label">5-Stage Reveal</span>
-                        </span>
-                        <p class="nds-item-desc">The first paint arrives in five stages: inline critical skeleton → critical stylesheet → main stylesheet → main JavaScript → icons and font. Each stage shows only when it renders correctly, so there is no unstyled flash. Icons load last, so they do not delay the largest paint (LCP).</p>
+                    <div class="nds-card nds-flush nds-horizontal">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-lg">
+                                    <i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">5-Stage Reveal</span>
+                                <p class="nds-card-description">The first paint arrives in five stages: inline critical skeleton → critical stylesheet → main stylesheet → main JavaScript → icons and font. Each stage shows only when it renders correctly, so there is no unstyled flash. Icons load last, so they do not delay the largest paint (LCP).</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-code-circle"></i>
-                            <span class="nds-label">~{{ page.bundle_sizes.core_js }} KB Core JS (gzipped)</span>
-                        </span>
-                        <p class="nds-item-desc">The full library is ~{{ page.bundle_sizes.total_js }} KB gzipped, but it is not loaded as a single bundle. A lean ~{{ page.bundle_sizes.core_js }} KB core loads on every page. Components that can wait, or that only some pages use, load only when their markup is present. A typical page runs a fraction of the library.</p>
+                    <div class="nds-card nds-flush nds-horizontal">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-lg">
+                                    <i class="hgi hgi-stroke hgi-code-circle" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">~{{ page.bundle_sizes.core_js }} KB Core JS (gzipped)</span>
+                                <p class="nds-card-description">The full library is ~{{ page.bundle_sizes.total_js }} KB gzipped, but it is not loaded as a single bundle. A lean ~{{ page.bundle_sizes.core_js }} KB core loads on every page. Components that can wait, or that only some pages use, load only when their markup is present. A typical page runs a fraction of the library.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-chart-line-data-01"></i>
-                            <span class="nds-label">Web Vitals Compliant</span>
-                        </span>
-                        <p class="nds-item-desc">A Google PageSpeed score of 100, with LCP, CLS, and INP passing in the measured test. Performance is tested on desktop and mobile, over fast and slow connections.</p>
+                    <div class="nds-card nds-flush nds-horizontal">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-lg">
+                                    <i class="hgi hgi-stroke hgi-chart-line-data-01" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Web Vitals Compliant</span>
+                                <p class="nds-card-description">A Google PageSpeed score of 100, with LCP, CLS, and INP passing in the measured test. Performance is tested on desktop and mobile, over fast and slow connections.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="nds-definition-item">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-dashboard-speed-01"></i>
-                            <span class="nds-label">Animations</span>
-                        </span>
-                        <p class="nds-item-desc">GPU-accelerated animations and scheduled rendering keep transitions smooth, even on low-end devices. Off-screen elements wait until they are needed.</p>
+                    <div class="nds-card nds-flush nds-horizontal">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-lg">
+                                    <i class="hgi hgi-stroke hgi-dashboard-speed-01" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Animations</span>
+                                <p class="nds-card-description">GPU-accelerated animations and scheduled rendering keep transitions smooth, even on low-end devices. Off-screen elements wait until they are needed.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

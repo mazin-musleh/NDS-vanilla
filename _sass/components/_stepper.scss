@@ -90,8 +90,11 @@
     // Default horizontal stepper behavior
     .nds-stepper-step {
         flex: 1;
+
         // A step that also carries nds-card fills its column, not the card's own width cap
-        --card-width: 100%;
+        &.nds-card {
+            --card-width: 100%;
+        }
 
         // The last step has no line after it, in every layout.
         &:last-child .nds-stepper-base::after {
@@ -796,8 +799,8 @@
     .nds-stepper-step.nds-card,
     .nds-stepper-content.nds-card {
         --card-bg: var(--colors-alpha-white-10);
-        --card-border: var(--colors-alpha-white-20);
-        --card-text: var(--text-oncolor-primary);
+        --card-border-color: var(--colors-alpha-white-20);
+        --card-text-color: var(--text-oncolor-primary);
     }
 
     // The state border reads from the stepper's own palette: on color it is a white wash.

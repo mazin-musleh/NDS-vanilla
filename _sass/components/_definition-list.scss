@@ -230,8 +230,10 @@
 
 .nds-definition-list.nds-divided {
 
-    // Stacked divided (default for all)
-    @include dl-divided-stacked;
+    // Stacked divided; in a grid, the grid draws the lines.
+    &:where(:not(.nds-grid)) {
+        @include dl-divided-stacked;
+    }
 
     // TableView divided overrides
     &.nds-table-view:not([class*="nds-table-view-"]) {

@@ -53,8 +53,8 @@
   // FEATURED ICON SIZES
   // ==============================================
 
-  &.nds-md,
-  & {
+  // No size class: the 40px fallback above, so a parent's --featuredicon-size reaches the icon.
+  &.nds-md {
     --featuredicon-size: 40px;
   }
 

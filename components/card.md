@@ -477,9 +477,9 @@ Set these on `.nds-card`, except the image properties, which go on `.nds-card-im
 | `--card-bg` | `var(--background-card)` | Background |
 | `--card-bg-hover` | `var(--background-card-hovered)` | Background of a hovered link or button card |
 | `--card-bg-active` | the hover fill, a step darker | Background of a pressed link or button card |
-| `--card-border` | `var(--border-neutral-primary)` | Border color of a stroke card |
-| `--card-border-hover` | `var(--border-primary)` | Border color on hover |
-| `--card-border-active` | `var(--border-neutral-primary)` | Border color on press |
+| `--card-border-color` | `var(--border-neutral-primary)` | Border color of a stroke card |
+| `--card-border-color-hover` | `var(--border-primary)` | Border color on hover |
+| `--card-border-color-active` | `var(--border-neutral-primary)` | Border color on press |
 | `--card-padding` | `var(--spacing-xl)` | Padding on both axes |
 | `--card-padding-block` | `var(--card-padding)` | Top and bottom padding |
 | `--card-padding-inline` | `var(--card-padding)` | Start and end padding. Card-style tab panels read it too |
@@ -488,11 +488,11 @@ Set these on `.nds-card`, except the image properties, which go on `.nds-card-im
 | `--card-width` | `100%` | Width |
 | `--card-width-min` | `0` | Minimum width |
 | `--card-width-max` | `360px` | Maximum width |
-| `--card-title` | `var(--text-display)` | Title color |
-| `--card-subtitle` | `var(--text-secondary)` | Subtitle color |
-| `--card-text` | `var(--text-primary-paragraph)` | Description color |
-| `--card-number` | `var(--text-primary-strong)` | Color of the headline number, `.nds-card-number` |
-| `--card-rating` | `var(--text-secondary-paragraph)` | Rating count color |
+| `--card-title-color` | `var(--text-display)` | Title color |
+| `--card-subtitle-color` | `var(--text-secondary)` | Subtitle color |
+| `--card-text-color` | `var(--text-primary-paragraph)` | Description color |
+| `--card-number-color` | `var(--text-primary-strong)` | Color of the headline number, `.nds-card-number` |
+| `--card-rating-color` | `var(--text-secondary-paragraph)` | Rating count color |
 | `--featuredicon-color` | `var(--featuredicons-icon-primary)` | Featured icon and avatar color. Color classes change it |
 | `--featuredicon-bg` | `var(--featuredicons-background-primary-light)` | Featured icon background |
 | `--card-image-width` | `160px` | Image width in a row card. A wider image stacks the card sooner. No effect on a stacked card, where the image fills the width |

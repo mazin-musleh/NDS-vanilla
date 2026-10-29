@@ -295,7 +295,7 @@ A toast with a `duration` closes itself after that many milliseconds, and a ring
 | `--progress-duration` | `4000ms` | Length of the countdown ring on `.nds-alert-close`. `create()` sets it from `duration` |
 {: .nds-table .nds-responsive}
 
-An alert is a card, so the card color properties (`--card-bg`, `--card-border` and `--card-title`) also apply. See [Cards](../components/card).
+An alert is a card, so the card color properties (`--card-bg`, `--card-border-color` and `--card-title-color`) also apply. See [Cards](../components/card).
 
 ### JavaScript
 {: .nds-block-title}

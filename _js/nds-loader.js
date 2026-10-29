@@ -379,7 +379,7 @@
         {
             // Critical: a late mark flashes the line under a divided grid's last row.
             name: 'Grid',
-            selector: '.nds-divided.nds-grid',
+            selector: '.nds-grid:is(.nds-divided, .nds-divided-rows)',
             critical: true,
             destroyEach: true,
         },

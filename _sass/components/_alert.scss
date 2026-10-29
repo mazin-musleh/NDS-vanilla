@@ -28,7 +28,7 @@
   padding: var(--spacing-lg);
   padding-inline-start: calc(var(--spacing-lg) + 8px);
   border-radius: var(--radius-md);
-  border: 1px solid var(--_card-border);
+  border: 1px solid var(--_card-border-color);
   max-width: 100%;
   width: 100%;
   position: relative;
@@ -95,7 +95,7 @@
     font-size: var(--typo-text-md-FS);
     line-height: var(--typo-text-md-LH);
     font-weight: var(--font-weight-semibold);
-    color: var(--_card-title);
+    color: var(--_card-title-color);
     margin: 0;
   }
 
@@ -166,19 +166,19 @@
 
   // ==============================================
   // STATUS VARIANTS (alert-exclusive)
-  // Cards set --card-title unconditionally for status (correct for cards).
+  // Cards set --card-title-color unconditionally for status (correct for cards).
   // Alerts reset it for base (no fill) alerts; .nds-color re-inherits from
   // cards, .nds-inline re-sets it explicitly below.
   // Alert overrides --card-bg to lighter *-25 shades (card uses *-light).
-  // --card-border stays in card's &.nds-color block; inherited automatically.
+  // --card-border-color stays in card's &.nds-color block; inherited automatically.
   // --alert-stripe / --alert-icon-bg come from the status block after this rule.
   // ==============================================
 
   &:not(.nds-color, .nds-inline) {
-    --_card-title-base: initial;
+    --_card-title-color-base: initial;
     // Repeated under dark: card's dark neutral rule outranks the light-only
     // reset, so a base neutral alert kept a tinted title in dark alone.
-    @include dark { --_card-title-base: initial; }
+    @include dark { --_card-title-color-base: initial; }
   }
 
   &:is(.nds-color, .nds-inline) {
@@ -189,10 +189,10 @@
   }
 
   &.nds-inline {
-    &:is(.nds-green, [data-status="success"])                        { --_card-title-base: var(--text-success); }
-    &:is(.nds-blue,  [data-status="info"])                           { --_card-title-base: var(--text-info); }
-    &:is(.nds-yellow,[data-status="warning"])                        { --_card-title-base: var(--text-warning); }
-    &:is(.nds-red,   [data-status="error"], [data-status="critical"]){ --_card-title-base: var(--text-error); }
+    &:is(.nds-green, [data-status="success"])                        { --_card-title-color-base: var(--text-success); }
+    &:is(.nds-blue,  [data-status="info"])                           { --_card-title-color-base: var(--text-info); }
+    &:is(.nds-yellow,[data-status="warning"])                        { --_card-title-color-base: var(--text-warning); }
+    &:is(.nds-red,   [data-status="error"], [data-status="critical"]){ --_card-title-color-base: var(--text-error); }
     &:is(.nds-neutral,.nds-gray,[data-status="neutral"]) {
       --_card-bg-base: var(--background-neutral-light);
       @include dark { --_card-bg-base: var(--colors-alpha-white-10); }
@@ -248,7 +248,7 @@
     }
 
     .nds-alert-description {
-      color: var(--_inline-desc, var(--_card-title));
+      color: var(--_inline-desc, var(--_card-title-color));
     }
 
     .nds-alert-content {

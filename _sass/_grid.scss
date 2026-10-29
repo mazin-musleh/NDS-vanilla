@@ -17,10 +17,11 @@
 
 .nds-grid {
   --_gap-min: var(--spacing-md);
+  --_gap-scale: 1;
   --_cols: var(--max-col, auto-fit);
   --_tracks: var(--max-track);
-  --_row-gap: var(--row-gap, var(--gap, var(--spacing-2xl)));
-  --_col-gap: var(--col-gap, var(--gap, var(--spacing-2xl)));
+  --_row-gap: var(--row-gap, var(--gap, calc(var(--spacing-2xl) * var(--_gap-scale))));
+  --_col-gap: var(--col-gap, var(--gap, calc(var(--spacing-2xl) * var(--_gap-scale))));
 
   display: grid !important;
   grid-template-columns: var(--_tracks, repeat(var(--_cols), minmax(var(--min-width, 0), 1fr)));
@@ -42,8 +43,8 @@
   @include tablet(max) {
     --_cols: var(--mid-col, var(--max-col, auto-fit));
     --_tracks: var(--mid-track, var(--max-track));
-    --_row-gap: max(var(--_gap-min), calc(var(--row-gap, var(--gap, var(--spacing-4xl)/ 2))));
-    --_col-gap: max(var(--_gap-min), calc(var(--col-gap, var(--gap, var(--spacing-4xl)/ 2))));
+    --_row-gap: max(var(--_gap-min), calc(var(--row-gap, var(--gap, var(--spacing-4xl) / 2 * var(--_gap-scale)))));
+    --_col-gap: max(var(--_gap-min), calc(var(--col-gap, var(--gap, var(--spacing-4xl) / 2 * var(--_gap-scale)))));
   }
 
   @include mobile {
@@ -60,8 +61,8 @@
   @container (width <= 768px) {
     --_cols: var(--mid-col, var(--max-col, auto-fit));
     --_tracks: var(--mid-track, var(--max-track));
-    --_row-gap: max(var(--_gap-min), calc(var(--row-gap, var(--gap, var(--spacing-4xl)/ 2))));
-    --_col-gap: max(var(--_gap-min), calc(var(--col-gap, var(--gap, var(--spacing-4xl)/ 2))));
+    --_row-gap: max(var(--_gap-min), calc(var(--row-gap, var(--gap, var(--spacing-4xl) / 2 * var(--_gap-scale)))));
+    --_col-gap: max(var(--_gap-min), calc(var(--col-gap, var(--gap, var(--spacing-4xl) / 2 * var(--_gap-scale)))));
   }
 
   @container (width <= 480px) {
@@ -73,15 +74,33 @@
     --justify: center;
   }
 
-  // Divided: a line between items, in the middle of each gap, only where items sit on both
-  // sides. The browser draws it (gap decorations), so no row or column needs a mark.
-  // ponytail: no line where gap decorations are missing (Safari 26); the grid still lays out.
-  // Definition List draws its own lines under each item.
+  // Divided: a line in the middle of each gap between items. The line halves the gap, so the default gap doubles.
+  // Row lines: each item above the last row draws one under itself; the Grid script marks the last row.
+  // A pseudo-element, not a border: nds-flush zeroes a card's border and padding.
+  &:is(.nds-divided, .nds-divided-rows) {
+    --_gap-scale: 2;
+
+    > :not(.nds-last-row)::after {
+      content: '';
+      position: absolute;
+      inset-inline: 0;
+      bottom: calc(var(--_row-gap) / -2);
+      border-bottom: 1px solid var(--divider-color);
+      pointer-events: none;
+    }
+  }
+
+  // Column lines: the browser draws them (gap decorations), only between two items.
+  // ponytail: no column line where gap decorations are missing (older Chrome, Safari 26); rows still draw.
   &.nds-divided:not(.nds-definition-list) {
-    row-rule: 1px solid var(--divider-color);
     column-rule: 1px solid var(--divider-color);
     rule-visibility-items: between;
   }
+}
+
+// The row line's anchor; :where() lets an item's own position win.
+:where(.nds-grid:is(.nds-divided, .nds-divided-rows) > *) {
+  position: relative;
 }
 
 // Container-query opt-in — grid's companion. Add to any ancestor to make

@@ -112,6 +112,10 @@
 // ==============================================
 
 .nds-card:has(.nds-card-metric) {
+  // A small title, through the card's own size rungs: a size class or knob still wins.
+  --_card-title-FS-base: var(--typo-text-sm-FS);
+  --_card-title-LH-base: var(--typo-text-sm-LH);
+
   &[data-status="positive"] {
     --metric-trend-color: var(--text-success);
     --metric-chart-color: var(--border-success);
@@ -132,16 +136,6 @@
 
   > .nds-card-header {
     align-items: center;
-  }
-
-  .nds-card-text {
-    --_card-title-lh: var(--typo-text-sm-LH);
-  }
-
-  .nds-card-title {
-    margin: 0;
-    font-size: var(--typo-text-sm-FS);
-    line-height: var(--typo-text-sm-LH);
   }
 
   > .nds-card-actions {

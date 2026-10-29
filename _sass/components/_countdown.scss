@@ -94,7 +94,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: var(--_card-number, currentColor);
+  color: var(--_card-number-color, currentColor);
 
   > .nds-countdown-value {
     display: grid;
