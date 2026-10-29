@@ -80,38 +80,11 @@
   // FEATURED ICON STYLE VARIANTS
   // ==============================================
 
-  &.nds-circle {
-    border-radius: 50%;
-  }
-
-  &.nds-outline {
-    background-color: transparent;
-    border: 2px solid currentColor;
-  }
-
-  &.nds-subtle {
-    background-color: transparent;
-    padding: 0;
-    overflow: visible;
-    font-size: var(--_featuredicon-size) !important;
-    line-height: 1 !important;
-  }
-
-  &.nds-dark {
-    background-color: var(--_featuredicon-dark-bg);
-    border: 2px solid transparent;
-    color: var(--icon-oncolor); // text too, such as a stepper's number
-
-    :is(.nds-icon, i, svg) {
-      color: var(--icon-oncolor);
-    }
-
-    // Only the brand default, as the last fallback: a knob set here would beat the
-    // status a parent passes down. The status shades live in the cascade below.
-    @include dark {
-      --_featuredicon-dark-bg: var(--featuredicon-dark-bg-forced, var(--featuredicon-dark-bg, var(--colors-primary-700)));
-    }
-  }
+  // The looks live in _mixins.scss: a parent's icon switches (Feature List) include the same.
+  &.nds-circle { @include featured-icon-circle; }
+  &.nds-outline { @include featured-icon-outline; }
+  &.nds-subtle { @include featured-icon-subtle; }
+  &.nds-dark { @include featured-icon-dark; }
 }
 
 // ==============================================

@@ -36,23 +36,26 @@ An icon + title + line item had three builds (Definition List feature list, a pl
 
 - The root is a grid as well: columns, gaps and lines are Grid's, and the Grid script already watches it. No new JS.
 - `ul` / `li`: a screen reader hears "list, N items". The list resets its bullets and padding.
-- Items are plain cards with no variant classes. The root's switches style them; a class or knob on one card or one icon still wins.
+- Items are real cards. The root sets their defaults through knobs; each card and icon keeps its whole API (classes and knobs), so an item can differ from the others: that is the author's choice, not drift.
 
-## Switches (on the root)
+## Switches (on the root) — knobs only
 
-A set chosen for lists, not every card option. Anything else: the card's or the icon's own class or knob on that item.
+A set chosen for lists, not every card option. Each switch sets card or icon knobs on the root, and they inherit.
 
 | Switch | Classes | Default | Sets |
 |---|---|---|---|
-| Layout | `nds-horizontal`, `nds-center` | stacked | the card's row or centered rules |
-| Box | `nds-stroke`, `nds-shadow` | none: no fill, no padding, no border. Saves space and sets the list apart from a grid of cards | card knobs (`--card-bg`, `--card-padding`), the card's stroke/shadow rules |
+| Box | — | none: no fill, no padding. Saves space and sets the list apart from a grid of cards | `--card-bg`, `--card-padding` |
 | Description | — | muted (`--text-secondary-paragraph`), as the Definition List feature list | `--card-text-color` |
-| Size | `nds-sm`, `nds-lg` | md | icon size, title and description size, card gap |
-| Icon | `nds-icon-circle`, `nds-icon-subtle` | rounded square | the featured icon's radius knob, or its subtle rules |
+| Size | `nds-sm`, `nds-lg` | md | `--card-title-FS`/`-LH`, `--card-description-FS`/`-LH`, `--featuredicon-size`, `--card-gap` |
+| Icons | `nds-icons-circle`, `nds-icons-dark`, `nds-icons-outline`, `nds-icons-subtle` (the icon's own names; they combine as its classes do) | tinted rounded square | the icon's looks, shared as `featured-icon-*` mixins in `_mixins.scss`; an icon's own class wins |
 | Color | `data-status` | brand | already cascades to every featured icon |
 | Columns, gap, lines | Grid's knobs and `nds-divided`, `nds-divided-rows` | — | Grid, unchanged |
 
+On each card or icon, as the card's own classes: row (`nds-horizontal`), centered (`nds-center`), middle, stroke, shadow, the subtle icon. The canon writes the common one on every item.
+
 Names are placeholders: check each against existing classes before use (`nds-sm` on a grid root, an `nds-icon-*` collision).
+
+**Why not root switches for row, centered, stroke, shadow (decided 2026-10-29):** Card builds on those classes with "not" rules (`&:not(.nds-horizontal) … .nds-card-corner`, `&:not(.nds-center) .nds-card-featured-icon`), and other components key on them (Countdown `.nds-card.nds-horizontal`/`.nds-center`, Definition List and Stepper `.nds-card:not(.nds-stroke)`, Swiper `:has(.nds-card.nds-shadow)`). A parent-applied copy would make a list card differ from a real card, and every future rule would have to answer to both. ponytail: when container style queries reach every browser, Card can key its layout on a knob (`@container style(--card-layout: row)`), and the root gets a layout switch for free.
 
 ## Knob fixes (v2 breaks, Migration lines, no aliases)
 
@@ -63,14 +66,15 @@ Today two things stop a parent's knob from reaching a card or an icon, and some 
 3. **Card knob names say the property**, as Quote and Persona already do (`--quote-title-color`, `--quote-title-FS`): `--card-title` → `--card-title-color`, `--card-subtitle` → `--card-subtitle-color`, `--card-text` → `--card-text-color`, `--card-number` → `--card-number-color`, `--card-rating` → `--card-rating-color`, `--card-border` (and `-hover`, `-active`) → `--card-border-color` (and its states). `--card-bg` keeps its name. Grep each new name before use (knob/token collision).
 4. **New card knobs for text size**, FS with its LH: `--card-title-FS`/`-LH`, `--card-description-FS`/`-LH`. The text-size classes then set these knobs, and the list's Size switch sets the same ones.
 
+5. **Done with step 2: a status above a card reaches its icons.** Card forwarded `--featuredicon-color: var(--_card-icon)` while `--_card-icon` read `--featuredicon-color` (the old `--icon-color` forward from `c804e7c9`, made a self-cycle by a rename), so every card dropped an inherited status and its icons fell back to brand. The forward is gone; a scan of all 150 built pages found no card under an outer status or color class but the playground's, and the 88-view A/B shows no change.
+
 Other components' knob names are not this plan's scope.
 
 ## How the switches reach the items
 
-1. **A knob exists → the list sets it on its root** and it inherits (after fix 1 and 2): padding, fill, description color, text sizes, icon size and radius. A knob or class on one card or icon wins, because it sits closer.
-2. **Only a class exists (row, center, stroke, shadow, subtle icon) → the child offers a mixin, the parent includes it** (the `date-tile-sm` precedent in `_mixins.scss`). Card's `&.nds-horizontal { … }` body moves into `@mixin card-horizontal`; `.nds-card.nds-horizontal` and `.nds-feature-list.nds-horizontal > .nds-card` both include it. Card's CSS never names Feature List.
+The list sets knobs on its root and they inherit (after fixes 1 and 2): padding, fill, description color, text sizes, icon size and radius.
 
-Override order, lowest to highest: Card/Icon defaults → the list's switches → a class or knob on one card or icon → an inline style.
+Override order, lowest to highest: Card/Icon defaults → the list's switches → a knob on one card or icon (closer), or an icon's own size class → an inline style. A card's text-size class loses to the list's Size knobs, as every card class loses to a card knob; on one card, set the knob.
 
 ## Retire (v2 break)
 
@@ -79,9 +83,9 @@ Override order, lowest to highest: Card/Icon defaults → the list's switches �
 
 ## Steps
 
-0. **Done 2026-10-29** (uncommitted; Migration lines, `migrations.yml` rows and the new knobs' doc rows wait for the docs pass). Knob fixes 1–4: rename in `_card.scss` and by script in every page and doc that sets the old names; Migration lines and `_data/migrations.yml` rows. Card and every featured icon host (card, drawer, metric, stepper) must render the same: screenshot before and after.
-1. Card mixins: move the row, center and stroke/shadow bodies into mixins; Card's rendering must not change (screenshot every card canon before and after).
-2. `_sass/components/_feature-list.scss` + `@use` in `nds-main.min.scss`. Build it in `playground.md`.
+0. **Done 2026-10-29** (`2b254aec`; Migration lines, `migrations.yml` rows and the new knobs' doc rows wait for the docs pass). Knob fixes 1–4: rename in `_card.scss` and by script in every page and doc that sets the old names; Migration lines and `_data/migrations.yml` rows. Card and every featured icon host (card, drawer, metric, stepper) must render the same: screenshot before and after.
+1. ~~Card mixins~~ — dropped 2026-10-29: layout and box stay the card's own classes (see Switches).
+2. **Done 2026-10-29** (uncommitted). `_sass/components/_feature-list.scss` + `@use` in `nds-main.min.scss`; four cases in `playground.md` (default, row + `nds-sm` + `nds-circle`, `nds-lg` + status + a boxed and a knob-tuned item, inside prose), Chrome and WebKit.
 3. Pilot: index Who It's For and Architecture, and one doc page's Built-in Features. Compare with today's screenshots; settle the defaults.
 4. Migrate by script: 105 Built-in Features blocks, index Development Environment, `examples/training-academy.md`, and the pilots.
 5. Retire the DL feature list (above).

@@ -401,6 +401,42 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 // PROGRESS CIRCLE MIXINS
 // ==============================================
 
+// Featured icon looks: the icon's own classes and a parent's icon switches (Feature List's nds-icons-*) share them.
+@mixin featured-icon-circle {
+    border-radius: 50%;
+}
+
+@mixin featured-icon-outline {
+    background-color: transparent;
+    border: 2px solid currentColor;
+}
+
+// No tile, so the glyph would be twice the others' at the same size: it takes the next size down (the sizes step 8px).
+@mixin featured-icon-subtle {
+    --_featuredicon-size: calc(var(--featuredicon-size, 40px) - 8px);
+    background-color: transparent;
+    padding: 0;
+    overflow: visible;
+    font-size: var(--_featuredicon-size) !important;
+    line-height: 1 !important;
+}
+
+@mixin featured-icon-dark {
+    background-color: var(--_featuredicon-dark-bg);
+    border: 2px solid transparent;
+    color: var(--icon-oncolor); // text too, such as a stepper's number
+
+    :is(.nds-icon, i, svg) {
+        color: var(--icon-oncolor);
+    }
+
+    // Only the brand default, as the last fallback: a knob set here would beat the
+    // status a parent passes down. The status shades live in the featured icon's cascade.
+    @include dark {
+        --_featuredicon-dark-bg: var(--featuredicon-dark-bg-forced, var(--featuredicon-dark-bg, var(--colors-primary-700)));
+    }
+}
+
 // Date tile SM step: the .nds-sm class and a parent's container rule share it.
 @mixin date-tile-sm {
     --_date-tile-width: var(--date-tile-width, 48px);

@@ -77,10 +77,6 @@
   --_card-subtitle-color: var(--card-subtitle-color, var(--_card-subtitle-color-base));
   --_card-number-color-base: var(--text-primary-strong);
   --_card-number-color: var(--card-number-color, var(--_card-number-color-base));
-  --_card-icon: var(--featuredicon-color, var(--featuredicons-icon-primary));
-  --_card-icon-bg: var(--featuredicon-bg, var(--featuredicons-background-primary-light));
-  --featuredicon-color: var(--_card-icon);
-  --featuredicon-bg: var(--_card-icon-bg);
   --_card-rating-color-base: var(--text-secondary-paragraph);
   --_card-rating-color: var(--card-rating-color, var(--_card-rating-color-base));
   // Text sizes: the size classes on .nds-card-text retune these; the --card-*-FS/LH knobs win over both.
@@ -810,8 +806,6 @@
   --_card-subtitle-color: var(--text-default-disabled);
   --_card-number-color: var(--text-default-disabled);
   --_card-border-color: var(--border-disabled);
-  --_card-icon: var(--icon-default-disabled);
-  --_card-icon-bg: var(--background-inverse-disabled);
   --featuredicon-color: var(--icon-default-disabled);
   --featuredicon-bg: var(--background-inverse-disabled);
   --_card-rating-color: var(--text-default-disabled);
