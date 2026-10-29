@@ -57,36 +57,66 @@ bundle_sizes:
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
-                <div class="nds-definition-list nds-divided nds-grid"
-                    style="--max-col:2;--mid-col:1;--min-col:1; --dl-icon-size:32px; --dl-title-FS: var(--typo-text-xl-FS); --row-gap: 24px; --col-gap: 32px;">
-                    <div class="nds-definition-item nds-card nds-shadow">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-building-06"></i>
-                            <span class="nds-label">Government teams &amp; agencies</span>
-                        </span>
-                        <p class="nds-item-desc">Deliver DGA-aligned digital services on the stack you already run.</p>
+                <div class="nds-grid" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
+                    <div class="nds-card nds-shadow nds-horizontal">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-lg">
+                                    <i class="hgi hgi-stroke hgi-building-06" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Government teams &amp; agencies</span>
+                                <p class="nds-card-description">Deliver DGA-aligned digital services on the stack you already run.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="nds-definition-item nds-card nds-shadow">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-briefcase-01"></i>
-                            <span class="nds-label">Freelancers</span>
-                        </span>
-                        <p class="nds-item-desc">Build client sites with a reusable component library and ready page templates.</p>
+                    <div class="nds-card nds-shadow nds-horizontal">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-lg">
+                                    <i class="hgi hgi-stroke hgi-briefcase-01" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Freelancers</span>
+                                <p class="nds-card-description">Build client sites with a reusable component library and ready page templates.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="nds-definition-item nds-card nds-shadow">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-mortarboard-02"></i>
-                            <span class="nds-label">Students &amp; fresh graduates</span>
-                        </span>
-                        <p class="nds-item-desc">Learn core HTML, CSS, and plain JavaScript
-                            from a readable, production-grade codebase.</p>
+                    <div class="nds-card nds-shadow nds-horizontal">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-lg">
+                                    <i class="hgi hgi-stroke hgi-mortarboard-02" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Students &amp; fresh graduates</span>
+                                <p class="nds-card-description">Learn core HTML, CSS, and plain JavaScript from a readable, production-grade codebase.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="nds-definition-item nds-card nds-shadow">
-                        <span class="nds-item-title">
-                            <i class="hgi hgi-stroke hgi-teaching"></i>
-                            <span class="nds-label">Teachers &amp; trainers</span>
-                        </span>
-                        <p class="nds-item-desc">Teach with real components, page templates, and patterns in web development courses, bootcamps, and workshops.</p>
+                    <div class="nds-card nds-shadow nds-horizontal">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle nds-lg">
+                                    <i class="hgi hgi-stroke hgi-teaching" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Teachers &amp; trainers</span>
+                                <p class="nds-card-description">Teach with real components, page templates, and patterns in web development courses, bootcamps, and workshops.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
