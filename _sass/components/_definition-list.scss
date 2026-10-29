@@ -1,7 +1,7 @@
 /**
 * NDS Definition List
 * Component for displaying term-description pairs with icons
-* Works with semantic dl/dt/dd or any element using .nds-item-title / .nds-item-desc classes
+* Works with semantic dl/dt/dd; a list of features is a Feature List
 */
 
 @use '../mixins' as *;
@@ -15,7 +15,7 @@
     grid-template-columns: auto 1fr;
     height: 100%;
 
-    :is(dd, .nds-item-desc) {
+    dd {
         display: flex;
         align-items: center;
     }
@@ -29,7 +29,7 @@
     }
 
     // Reset stacked icon indent in tableView mode
-    .nds-definition-item:has(> :is(dt, .nds-item-title) :is(.nds-icon, i)) :is(dd, .nds-item-desc) {
+    .nds-definition-item:has(> dt :is(.nds-icon, i)) dd {
         padding-inline-start: 0;
     }
 }
@@ -46,7 +46,7 @@
     }
 
     // Reset stacked icon indent in rowView mode
-    .nds-definition-item:has(> :is(dt, .nds-item-title) :is(.nds-icon, i)) :is(dd, .nds-item-desc) {
+    .nds-definition-item:has(> dt :is(.nds-icon, i)) dd {
         padding-inline-start: 0;
     }
 }
@@ -71,7 +71,7 @@
 }
 
 @mixin dl-stacked-icon-indent {
-    .nds-definition-item:has(> :is(dt, .nds-item-title) :is(.nds-icon, i)) :is(dd, .nds-item-desc) {
+    .nds-definition-item:has(> dt :is(.nds-icon, i)) dd {
         padding-inline-start: calc(max(18px, var(--_dl-icon-size)) + var(--_dl-icon-gap) + 2px);
     }
 }
@@ -154,7 +154,7 @@
     text-align: start;
     width: 100%;
 
-    // A value (dd / .nds-item-desc) paired with one or more trailing action
+    // A value (dd) paired with one or more trailing action
     // buttons (copy, edit, share…). Flex row so any number of buttons share one
     // gap and stay aligned with the value — keeps small tap targets spaced apart
     // without per-button margins.
@@ -167,10 +167,10 @@
 }
 
 // ==============================================
-// DEFINITION TERM (dt or .nds-item-title)
+// DEFINITION TERM (dt)
 // ==============================================
 
-.nds-definition-list :is(dt, .nds-item-title) {
+.nds-definition-list dt {
     display: flex;
     align-items: center;
     gap: var(--_dl-icon-gap);
@@ -194,10 +194,10 @@
 }
 
 // ==============================================
-// DEFINITION DESCRIPTION (dd or .nds-item-desc)
+// DEFINITION DESCRIPTION (dd)
 // ==============================================
 
-.nds-definition-list :is(dd, .nds-item-desc) {
+.nds-definition-list dd {
     color: var(--text-secondary-paragraph);
     font-size: var(--_dl-desc-FS);
     margin: 0; // a <p> inside .nds-prose would take the paragraph gap
@@ -205,14 +205,14 @@
 
 // The value leads: the title takes the value's look and the value the title's.
 .nds-definition-list.nds-highlight-value {
-    :is(dt, .nds-item-title) {
+    dt {
         font-size: var(--_dl-desc-FS);
         color: var(--text-secondary-paragraph);
 
         .nds-label { font-weight: var(--font-weight-regular); }
     }
 
-    :is(dd, .nds-item-desc) {
+    dd {
         font-size: var(--_dl-title-FS);
         color: var(--text-primary-paragraph);
         font-weight: var(--font-weight-semibold);
@@ -277,7 +277,7 @@
     html:not([data-nds-loaded]) .nds-definition-list) {
     @include skeleton-pulse;
 
-    :is(dt, .nds-item-title, dd, .nds-item-desc) {
+    :is(dt, dd) {
         width: fit-content;
         @include skeleton-bar;
     }

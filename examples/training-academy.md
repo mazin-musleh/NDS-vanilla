@@ -449,7 +449,7 @@ last_edit: "24/10/2026 - 11:27 PM"
     </div>
 </section>
 
-<!-- Why train with us: Definition List, feature list structure -->
+<!-- Why train with us: Feature List -->
 <section id="why" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">

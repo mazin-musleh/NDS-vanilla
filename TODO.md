@@ -15,11 +15,9 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
 
 - **NDS IQ v4.0 on release day** (plan and status in `plans/iq-v4.md`; `IQv3.2` is already tagged and pushed, off main). [ ] `python scripts/publish-iq.py --apply` BEFORE the build and `mkrelease.py` (`verify()` checks the published copy and the guides' v4.0 render), `git push origin main IQv4.0`, then `nds-iq-eval` `evolve`. [ ] Optional, owner go: the S101 behavior run.
 - **v2.0.0 is the window for breaking improvements.** A major is the one time a wrong name or a split API can be fixed rather than aliased. For each find: add a sub-item here with the problem, the fix and its migration line, then decide build or drop with the owner. Every landed break gets a Migrating entry in `CHANGELOG.md`.
-  - **Definition List is for pairs only; a feature item is a Card in a Grid** (decided 2026-10-29). The DL feature list (`div` + `nds-item-title`/`nds-item-desc`) builds what a card already builds. `nds-card` on a list or its items is a borrowed look: keep it (`faculty-cv`, the side info).
-    - [ ] Retire the feature list: the `#dl-feature-list` canon and its Structure row (`components/definition-list.md`), the `nds-item-title`/`nds-item-desc` selectors (`_definition-list.scss`, `_sideinfo.scss`), and a `_data/migrations.yml` row. Migration: "A feature list (`nds-item-title`, `nds-item-desc`) → cards in an `nds-grid`."
-    - [ ] Move its 108 uses to cards by script: 105 doc "Built-in Features" blocks, `index.md` Architecture and Development Environment, `examples/training-academy.md` "Why train with us". Who It's For already moved (`d55fccdd`, row view).
-    - [ ] Box-free cards for those sections: try the knobs first (`--card-bg: transparent`, `--card-padding: 0`); add a style class only if the knobs fall short.
-    - [ ] Reword the rule: both `use_when` lines in `_data/catalog.yml` ("lighter than cards" goes), the home-page template row there, and Best Practices in both docs: "a name and its value → Definition List; an item → Card".
+  - **Feature List (v2), plan and status in `plans/feature-list.md`.** A name and its value is a Definition List; a set of features is a Feature List (`ul.nds-feature-list.nds-grid > li.nds-card`); one rich item is a Card. `nds-card` on a list or its items is a borrowed look: keep it.
+    - [x] Steps 0 to 5: knob fixes, the component, the pilot, 105 lists migrated, the DL feature list retired (`2b254aec`, `11ae7f18`, `2719b656`, and the step 5 commit after them).
+    - [ ] Step 6, the docs pass, and step 7, the checks: the plan has the file-by-file list. Restart the dev server once first (`docs_canon.rb` changed).
     - [ ] Not part of the break: the `#dl-actions` Copy button has no `nds-copy` + `data-copy-target` (see `utilities/copy.md`); "With actions" is an add-on to Details, not a Structure row.
 
 ### Parked features (owner calls; after v2.0.0 unless noted)

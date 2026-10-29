@@ -18,7 +18,7 @@ last_edit: "11/10/2026 - 03:40 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A definition list shows pairs of a title and a value, such as the fields of a profile or the points of a feature list. The list is `nds-definition-list`, and each pair is an `nds-definition-item`. A title can start with an icon.
+A definition list shows pairs of a title and a value, such as the fields of a profile or the details of a service. The list is `nds-definition-list`, and each pair is an `nds-definition-item`. A title can start with an icon.
 
 Pick another component when:
 
@@ -60,31 +60,6 @@ Pick another component when:
     <dd>Senior Developer</dd>
   </div>
 </dl>
-</script>
-<script type="text/html" id="dl-feature-list" data-canon>
-<div class="nds-definition-list">
-  <div class="nds-definition-item">
-    <span class="nds-item-title">
-      <i class="hgi hgi-stroke hgi-shield-01" aria-hidden="true"></i>
-      <span class="nds-label">Security</span>
-    </span>
-    <p class="nds-item-desc">Every request is checked and logged.</p>
-  </div>
-  <div class="nds-definition-item">
-    <span class="nds-item-title">
-      <i class="hgi hgi-stroke hgi-universal-access" aria-hidden="true"></i>
-      <span class="nds-label">Accessibility</span>
-    </span>
-    <p class="nds-item-desc">Full keyboard access and screen reader support.</p>
-  </div>
-  <div class="nds-definition-item">
-    <span class="nds-item-title">
-      <i class="hgi hgi-stroke hgi-flash" aria-hidden="true"></i>
-      <span class="nds-label">Speed</span>
-    </span>
-    <p class="nds-item-desc">Pages load in under two seconds on a mobile network.</p>
-  </div>
-</div>
 </script>
 <script type="text/html" id="dl-actions" data-canon>
 <dl class="nds-definition-list">
@@ -140,7 +115,6 @@ The Layout, Style, Emphasis, Size and Loading rows go on the list. The two Cards
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Details (default) | — | — | `dl`, `dt` and `dd`, for data where each title names its value, such as a profile |
-| Structure | Feature list | canon `#dl-feature-list` | — | Plain elements with `nds-item-title` and `nds-item-desc`, for feature lists and highlights |
 | Structure | With actions | canon `#dl-actions` | — | Values with buttons after them, such as copy and share. `nds-item-action` holds the value and its buttons in one row |
 | Layout | Stacked (default) | — | — | Each value under its title, for long values |
 | Layout | Table | `.nds-table-view` | `.nds-definition-list` | Titles in one column and values in the next, aligned across every item |
@@ -172,57 +146,99 @@ The Layout, Style, Emphasis, Size and Loading rows go on the list. The two Cards
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <div class="nds-definition-list nds-divided nds-grid">
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-layout-table-01"></i>
-            <span class="nds-label">Table View Layout</span>
-          </span>
-          <p class="nds-item-desc">Two columns built on CSS subgrid, so titles and values line up across every item.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-smartphone-wifi"></i>
-            <span class="nds-label">Responsive Table View</span>
-          </span>
-          <p class="nds-item-desc">Turn the table layout on for phones, tablets or desktops only. Combine the classes to cover more than one screen range.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-border-all-01"></i>
-            <span class="nds-label">Divided Borders</span>
-          </span>
-          <p class="nds-item-desc">Lines between items in every layout. With a responsive table view, the lines follow the layout on each screen size.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-grid-view"></i>
-            <span class="nds-label">Grid Layout</span>
-          </span>
-          <p class="nds-item-desc">Items in columns that change with the screen size, set with <code class="nds-inline-code lang-css">--max-col</code>, <code class="nds-inline-code lang-css">--mid-col</code> and <code class="nds-inline-code lang-css">--min-col</code>.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-paint-board"></i>
-            <span class="nds-label">CSS Custom Properties</span>
-          </span>
-          <p class="nds-item-desc">Custom properties set the icon size, the gaps and the font sizes, so no style needs an override.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-text-indent"></i>
-            <span class="nds-label">Automatic Icon Indent</span>
-          </span>
-          <p class="nds-item-desc">In the stacked layout, a value lines up with its title's text when the title has an icon.</p>
-        </div>
-        <div class="nds-definition-item">
-          <span class="nds-item-title">
-            <i class="hgi hgi-stroke hgi-loading-03"></i>
-            <span class="nds-label">Loading Skeleton</span>
-          </span>
-          <p class="nds-item-desc">Gray bars stand in for the titles and values before the page is ready, and while <code class="nds-inline-code lang-html">nds-loading</code> is on.</p>
-        </div>
-      </div>
+      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-table-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Table View Layout</span>
+              <p class="nds-card-description">Two columns built on CSS subgrid, so titles and values line up across every item.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-smartphone-wifi" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Responsive Table View</span>
+              <p class="nds-card-description">Turn the table layout on for phones, tablets or desktops only. Combine the classes to cover more than one screen range.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-border-all-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Divided Borders</span>
+              <p class="nds-card-description">Lines between items in every layout. With a responsive table view, the lines follow the layout on each screen size.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-grid-view" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Grid Layout</span>
+              <p class="nds-card-description">Items in columns that change with the screen size, set with <code class="nds-inline-code lang-css">--max-col</code>, <code class="nds-inline-code lang-css">--mid-col</code> and <code class="nds-inline-code lang-css">--min-col</code>.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paint-board" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">CSS Custom Properties</span>
+              <p class="nds-card-description">Custom properties set the icon size, the gaps and the font sizes, so no style needs an override.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-indent" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Automatic Icon Indent</span>
+              <p class="nds-card-description">In the stacked layout, a value lines up with its title's text when the title has an icon.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card nds-horizontal">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-loading-03" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Loading Skeleton</span>
+              <p class="nds-card-description">Gray bars stand in for the titles and values before the page is ready, and while <code class="nds-inline-code lang-html">nds-loading</code> is on.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </section>
@@ -235,7 +251,6 @@ The Layout, Style, Emphasis, Size and Loading rows go on the list. The two Cards
     <div class="nds-section-body nds-prose" markdown="1">
 
 - Use `dl`, `dt` and `dd` when each title names its value, such as a profile or the details of a service. Screen readers read them as pairs.
-- Use the plain elements with `nds-item-title` and `nds-item-desc` for feature lists and highlights.
 - Keep the stacked layout when values are long or wrap to more lines.
 - Use the table layout for short values side by side. For tablets and wider, add both `nds-table-view-md` and `nds-table-view-lg`.
 - Use the row layout for compact details inside a card.

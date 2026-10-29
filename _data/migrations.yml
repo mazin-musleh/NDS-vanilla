@@ -81,6 +81,8 @@
 - { kind: class, name: nds-hgi-refresh-ccw-02, scope: .nds-filter, status: removed, since: "2.0.0", fix: "Put data-filter-action=\"reset\" on the button: a refresh icon no longer makes it a reset button." }
 - { kind: class, name: nds-hijri, scope: "&.nds-date-picker", status: removed, since: "2.0.0", fix: "Write data-calendar=\"hijri\" on the picker, or on <html> for every picker on the site." }
 - { kind: class, name: nds-horizontal-lg, scope: .nds-stepper, status: removed, since: "2.0.0", fix: "Remove it: the plain layout class is the desktop layout; -sm and -md set phones and tablets." }
+- { kind: class, name: nds-item-desc, scope: .nds-definition-list, status: removed, since: "2.0.0", fix: "A list of features is a Feature List: ul.nds-feature-list.nds-grid with an li.nds-card per item, the title in .nds-card-title and the text in .nds-card-description. A name and its value stay a Definition List, with dt and dd." }
+- { kind: class, name: nds-item-title, scope: .nds-definition-list, status: removed, since: "2.0.0", fix: "A list of features is a Feature List: ul.nds-feature-list.nds-grid with an li.nds-card per item, the title in .nds-card-title and the text in .nds-card-description. A name and its value stay a Definition List, with dt and dd." }
 - { kind: class, name: nds-list, scope: .nds-main-nav, status: renamed, use: nds-nav-list, since: "2.0.0", fix: "Use nds-nav-list." }
 - { kind: class, name: nds-main-content, status: renamed, use: nds-content, since: "2.0.0", fix: "Use nds-content." }
 - { kind: class, name: nds-mainNav-toggler, scope: .nds-main-nav, status: renamed, use: nds-nav-toggler, since: "2.0.0", fix: "Use nds-nav-toggler." }
@@ -170,6 +172,14 @@
 - { kind: id, name: ndsNavCollapse, status: renamed, use: nds-nav-collapse, since: "2.0.0", fix: "Use id nds-nav-collapse (and the menu button's aria-controls)." }
 - { kind: id, name: ndsThemeToggle, status: renamed, use: data-theme-toggle, since: "2.0.0", fix: "Use data-theme-toggle on the toggle." }
 - { kind: property, name: --backdrop-z-index, status: removed, since: "2.0.0", fix: "Remove it: it never applied; each component sets its own backdrop z-index.", inert: true }
+- { kind: property, name: --card-border, status: renamed, use: --card-border-color, since: "2.0.0", fix: "Use --card-border-color." }
+- { kind: property, name: --card-border-active, status: renamed, use: --card-border-color-active, since: "2.0.0", fix: "Use --card-border-color-active." }
+- { kind: property, name: --card-border-hover, status: renamed, use: --card-border-color-hover, since: "2.0.0", fix: "Use --card-border-color-hover." }
+- { kind: property, name: --card-number, status: renamed, use: --card-number-color, since: "2.0.0", fix: "Use --card-number-color." }
+- { kind: property, name: --card-rating, status: renamed, use: --card-rating-color, since: "2.0.0", fix: "Use --card-rating-color." }
+- { kind: property, name: --card-subtitle, status: renamed, use: --card-subtitle-color, since: "2.0.0", fix: "Use --card-subtitle-color." }
+- { kind: property, name: --card-text, status: renamed, use: --card-text-color, since: "2.0.0", fix: "Use --card-text-color." }
+- { kind: property, name: --card-title, status: renamed, use: --card-title-color, since: "2.0.0", fix: "Use --card-title-color." }
 - { kind: property, name: --drawer-indicator-active, scope: .nds-drawer, status: removed, since: "2.0.0", fix: "Remove it: the drawer uses the button indicator. Set --btn-indicator-selected on .nds-drawer .nds-btn instead." }
 - { kind: property, name: --drawer-indicator-hover, scope: .nds-drawer, status: removed, since: "2.0.0", fix: "Remove it: the drawer uses the button indicator. Set --btn-indicator-color on .nds-drawer .nds-btn instead." }
 - { kind: property, name: --nds-content-MaxWidth, status: renamed, use: --nds-content-max-width, since: "2.0.0", fix: "Use --nds-content-max-width." }

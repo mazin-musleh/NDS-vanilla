@@ -37,7 +37,28 @@
     --featuredicon-size: 48px;
     --card-gap: var(--spacing-4xl);
   }
+}
 
+// One column until the author sets --max-col: a list stacks, where a bare grid puts every item in one row.
+// With --min-width, set --max-col: auto-fit too. After Grid's sheet, so it wins the tie with Grid's reset.
+:where(.nds-feature-list) {
+  --max-col: 1;
+}
+
+// In a card, the items are nested cards, and the nested-card reset drops what they inherit: they take
+// back the knobs the list sets. After Card's sheet, so it wins the tie with the reset.
+:where(.nds-feature-list > .nds-card) {
+  --card-bg: inherit;
+  --card-padding: inherit;
+  --card-text-color: inherit;
+}
+
+:where(.nds-feature-list:is(.nds-sm, .nds-lg) > .nds-card) {
+  --card-title-FS: inherit;
+  --card-title-LH: inherit;
+  --card-description-FS: inherit;
+  --card-description-LH: inherit;
+  --card-gap: inherit;
 }
 
 // Icon switches, named as the icon's own classes and combined the same way. :where() keeps them

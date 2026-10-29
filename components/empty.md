@@ -107,7 +107,9 @@ Add and remove items to watch the placeholder.
 
 <script type="text/html" id="empty-live" data-canon data-code="none">
 <div class="nds-flex nds-col">
-  <div id="empty-live-list" class="nds-definition-list nds-divided nds-card nds-stroke nds-empty" data-empty-message="No requests yet" style="--card-width: 300px;"></div>
+  <div class="nds-card nds-stroke" style="--card-width: 300px;">
+    <ul id="empty-live-list" class="nds-feature-list nds-grid nds-divided-rows nds-empty" data-empty-message="No requests yet"></ul>
+  </div>
   <div class="nds-flex nds-center">
     <button class="nds-btn nds-primary nds-sm" type="button" data-empty-live="add">
       <span class="nds-label">Add item</span>
@@ -125,7 +127,7 @@ Add and remove items to watch the placeholder.
     var btn = e.target.closest('[data-empty-live]'), list = document.getElementById('empty-live-list');
     if (!btn || !list) return;
     if (btn.getAttribute('data-empty-live') === 'add') {
-      list.insertAdjacentHTML('beforeend', '<div class="nds-definition-item"><span class="nds-item-title"><span class="nds-label">Request ' + (++n) + '</span></span><p class="nds-item-desc">Submitted today</p></div>');
+      list.insertAdjacentHTML('beforeend', '<li class="nds-card"><div class="nds-card-content"><div class="nds-card-text"><span class="nds-card-title">Request ' + (++n) + '</span><p class="nds-card-description">Submitted today</p></div></div></li>');
       return;
     }
     var items = list.querySelectorAll(':scope > :not([data-nds-empty-placeholder])');

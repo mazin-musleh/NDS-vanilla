@@ -134,11 +134,11 @@
             --dl-icon-gap: var(--spacing-md);
             gap: var(--spacing-xl);
 
-            :is(dt, .nds-item-title) {
+            dt {
                 font-size: var(--typo-text-md-FS);
             }
 
-            :is(dd, .nds-item-desc) {
+            dd {
                 .nds-btn.nds-transparent {
                     padding: 0;
                     --btn-height: fit-content;
