@@ -125,7 +125,7 @@ Layout, Color and Box options go on every item: write the class on each `li.nds-
 | Lines | Row lines (hint: A line between rows) | `.nds-divided-rows` | `.nds-feature-list` | A line between rows, in the middle of the gap |
 | Lines | All lines (hint: A line between rows and between columns) | `.nds-divided` | `.nds-feature-list` | A line between rows and between columns. Column lines show only in browsers that draw grid gap lines |
 | Color | Brand (default) | — | — | The brand color on the icons |
-| Color | Neutral | `.nds-neutral` | `.nds-feature-list > .nds-card` | Tints the title and the icon. Also `.nds-gray` |
+| Color | Neutral | `.nds-neutral` | `.nds-feature-list > .nds-card` | A neutral icon. The title keeps its color. Also `.nds-gray` |
 | Color | Green | `.nds-green` | `.nds-feature-list > .nds-card` | Tints the title and the icon |
 | Color | Yellow | `.nds-yellow` | `.nds-feature-list > .nds-card` | Tints the title and the icon |
 | Color | Red | `.nds-red` | `.nds-feature-list > .nds-card` | Tints the title and the icon |
