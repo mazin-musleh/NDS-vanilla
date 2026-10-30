@@ -196,7 +196,7 @@
 
 
         .nds-avatar {
-            --avatar-size: calc(var(--nds-nav-height) - 40px);
+            --_avatar-size-base: calc(var(--nds-nav-height) - 40px);
         }
     }
 

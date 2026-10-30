@@ -19,7 +19,7 @@
   --_chip-bg: var(--chip-bg, var(--chip-background-neutral-default));
   --_chip-text: var(--chip-text, var(--chip-text-neutral-default));
   --_chip-icon: var(--chip-icon, var(--_chip-text));
-  --_chip-size: var(--chip-size, 24px);
+  --_chip-size: var(--chip-size, var(--_chip-size-base, 24px));
 
   display: inline-flex;
   align-items: center;
@@ -86,17 +86,14 @@
   // CHIP SIZES
   // ==============================================
 
-  // No size class: a parent's step (chip-sm/lg with $base) before MD.
+  // A size class or a parent's step writes the -base; MD resets it.
   & {
-    --chip-size: var(--_chip-size-base, 24px);
     padding: var(--_chip-padding-base, var(--spacing-sm) var(--spacing-lg));
     font-size: var(--_chip-FS-base, var(--typo-text-xs-FS));
   }
 
   &.nds-md {
-    --chip-size: 24px;
-    padding: var(--spacing-sm) var(--spacing-lg);
-    font-size: var(--typo-text-xs-FS);
+    @include chip-md;
   }
 
   &.nds-sm {

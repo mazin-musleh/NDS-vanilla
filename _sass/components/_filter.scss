@@ -78,8 +78,8 @@
     // Applied-count tag on the header — knob-tuned to text-xs, a step under
     // the header's text-sm, instead of the tag default (text-md, 32px).
     .nds-tag[data-filter-count-for] {
-        --tag-fs: var(--typo-text-xs-FS);
-        --tag-height: var(--typo-text-xs-LH);
+        --_tag-fs-base: var(--typo-text-xs-FS);
+        --_tag-height-base: var(--typo-text-xs-LH);
         padding: var(--spacing-sm);
     }
 }

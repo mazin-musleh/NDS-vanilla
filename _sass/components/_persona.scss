@@ -18,7 +18,7 @@
     --_desc-LH: var(--persona-desc-LH, var(--typo-text-md-LH));
     --_desc-color: var(--persona-desc-color, var(--text-secondary-paragraph));
 
-    --avatar-size: 80px;
+    --_avatar-size-base: 80px;
 
     display: flex;
     flex-wrap: wrap;
@@ -90,7 +90,7 @@
     // ==============================================
 
     &.nds-md {
-        --avatar-size: 64px;
+        --_avatar-size-base: 64px;
         --persona-name-FS: var(--typo-text-lg-FS);
         --persona-name-LH: var(--typo-text-lg-LH);
         --persona-role-FS: var(--typo-text-md-FS);
@@ -100,7 +100,7 @@
     }
 
     &.nds-sm {
-        --avatar-size: 48px;
+        --_avatar-size-base: 48px;
         --persona-name-FS: var(--typo-text-md-FS);
         --persona-name-LH: var(--typo-text-md-LH);
         --persona-role-FS: var(--typo-text-sm-FS);

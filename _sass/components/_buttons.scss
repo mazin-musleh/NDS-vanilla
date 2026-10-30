@@ -693,7 +693,7 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
   }
 
   > .nds-avatar {
-    --avatar-size: var(--_btn-icon-size);
+    --_avatar-size-base: var(--_btn-icon-size);
   }
 
   // A photo ignores the transparent text color that hides the content under the spinner.
@@ -740,7 +740,7 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
     // Inherit button colors
     --progress-track-color: var(--_btn-loading-track, var(--colors-alpha-black-10));
     --progress-color: var(--_btn-color);
-    --_progress-size: var(--progress-size, calc(var(--btn-size) - 8px));
+    --_progress-size-base: calc(var(--btn-size) - 8px);
 
     // Hide text/percentage display; the fill itself is Progress's, from --progress-value
     .nds-progress-info {

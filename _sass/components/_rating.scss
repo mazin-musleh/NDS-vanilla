@@ -104,10 +104,10 @@
   &.nds-sm { @include rating-sm; }
 
   &.nds-lg {
-    --star-size: 48px;
+    --_star-size-base: 48px;
 
     @include mobile {
-      --star-size: 40px;
+      --_star-size-base: 40px;
     }
   }
 }

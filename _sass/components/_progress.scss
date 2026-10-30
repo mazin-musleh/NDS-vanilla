@@ -72,15 +72,15 @@
   }
 
   &.nds-lg {
-    --progress-size: 120px;
+    --_progress-size-base: 120px;
   }
 
   &.nds-xl {
-    --progress-size: 160px;
+    --_progress-size-base: 160px;
   }
 
   &.nds-2xl {
-    --progress-size: 200px;
+    --_progress-size-base: 200px;
   }
 
   // Style variants

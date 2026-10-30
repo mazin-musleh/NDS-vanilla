@@ -158,7 +158,7 @@
         .nds-feedback { display: var(--_file-feedback, flex); align-self: var(--_file-feedback-align, auto); }
         // Size default lives here, not on a style attribute — a strict style-src blocks
         // that form. Private name keeps --progress-size free for a consumer override.
-        .nds-progress-circle { --_progress-size: var(--progress-size, 24px); display: var(--_file-progress, none); }
+        .nds-progress-circle { --_progress-size-base: 24px; display: var(--_file-progress, none); }
         .nds-file-error { display: var(--_file-error-display, none); }
 
         // Uploading/processing: show progress, hide feedback

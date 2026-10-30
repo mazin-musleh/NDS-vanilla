@@ -15,7 +15,7 @@
   // the component defaults here, so any consumer can override a single aspect.
   // Hosts that color a nested featured icon (cards, drawer, metric) and the
   // status cascade below set the same --featuredicon-* knobs:
-  //   --featuredicon-size      container diameter (size classes set it)
+  //   --featuredicon-size      container diameter (beats a size class)
   //   --featuredicon-bg        background fill
   //   --featuredicon-color     glyph color
   //   --featuredicon-dark-bg   .nds-dark fill
@@ -53,9 +53,9 @@
   // FEATURED ICON SIZES
   // ==============================================
 
-  // No size class: the 40px fallback above, so a parent's --featuredicon-size reaches the icon.
+  // A size class writes the -base: the knob beats it, and MD resets a parent's step.
   &.nds-md {
-    --featuredicon-size: 40px;
+    @include featured-icon-md;
   }
 
   &.nds-sm {
@@ -67,7 +67,7 @@
   }
 
   &.nds-xl {
-    --featuredicon-size: 56px;
+    --_featuredicon-size-base: 56px;
   }
 
   // Brand is the default (no attribute needed). All other status color

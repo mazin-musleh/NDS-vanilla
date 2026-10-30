@@ -445,30 +445,33 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     --_date-tile-padding-base: var(--spacing-sm) var(--spacing-md);
 }
 
-// Part steps a parent shares with the part's own size class (see step-knob).
-@mixin featured-icon-sm($base: false) { #{step-knob(featuredicon-size, $base)}: 32px; }
-@mixin featured-icon-lg($base: false) { #{step-knob(featuredicon-size, $base)}: 48px; }
-@mixin avatar-lg($base: false) { #{step-knob(avatar-size, $base)}: 48px; }
-@mixin avatar-xl($base: false) { #{step-knob(avatar-size, $base)}: 64px; }
-@mixin avatar-2xl($base: false) { #{step-knob(avatar-size, $base)}: 80px; }
-@mixin progress-circle-md($base: false) { #{step-knob(progress-size, $base)}: 80px; }
-@mixin rating-xs($base: false) { #{step-knob(star-size, $base)}: 16px; }
-@mixin rating-sm($base: false) { #{step-knob(star-size, $base)}: 24px; }
-@mixin rating-md($base: false) { #{step-knob(star-size, $base)}: 32px; } // the default, which has no class
+// Part steps a parent shares with the part's own size class. A size knob always wins:
+// NDS writes only the -base, the part reads var(--x, var(--_x-base, default)), and MD resets it.
+@mixin featured-icon-md { --_featuredicon-size-base: initial; }
+@mixin featured-icon-sm { --_featuredicon-size-base: 32px; }
+@mixin featured-icon-lg { --_featuredicon-size-base: 48px; }
+@mixin avatar-md { --_avatar-size-base: initial; }
+@mixin avatar-lg { --_avatar-size-base: 48px; }
+@mixin avatar-xl { --_avatar-size-base: 64px; }
+@mixin avatar-2xl { --_avatar-size-base: 80px; }
+@mixin progress-circle-md { --_progress-size-base: 80px; }
+@mixin rating-xs { --_star-size-base: 16px; }
+@mixin rating-sm { --_star-size-base: 24px; }
+@mixin rating-md { --_star-size-base: 32px; } // the default, which has no class
 
 // Metric steps: a parent sets them, and the metric's value and trend read them.
 @mixin metric-sm {
-    --_metric-value-FS: var(--typo-display-clamp-sm-FS);
-    --_metric-value-LH: var(--typo-display-clamp-sm-LH);
-    --_metric-trend-FS: var(--typo-text-xs-FS);
-    --_metric-trend-LH: var(--typo-text-xs-LH);
+    --_metric-value-FS-base: var(--typo-display-clamp-sm-FS);
+    --_metric-value-LH-base: var(--typo-display-clamp-sm-LH);
+    --_metric-trend-FS-base: var(--typo-text-xs-FS);
+    --_metric-trend-LH-base: var(--typo-text-xs-LH);
 }
 
 @mixin metric-lg {
-    --_metric-value-FS: var(--typo-display-clamp-lg-FS);
-    --_metric-value-LH: var(--typo-display-clamp-lg-LH);
-    --_metric-trend-FS: var(--typo-text-md-FS);
-    --_metric-trend-LH: var(--typo-text-md-LH);
+    --_metric-value-FS-base: var(--typo-display-clamp-lg-FS);
+    --_metric-value-LH-base: var(--typo-display-clamp-lg-LH);
+    --_metric-trend-FS-base: var(--typo-text-md-FS);
+    --_metric-trend-LH-base: var(--typo-text-md-LH);
 }
 
 // -base values: a parent's step reaches a tag with no size class, and a --tag-* knob still wins.
@@ -491,16 +494,22 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     --_tag-padding-inline-base: var(--spacing-md);
 }
 
-@mixin chip-sm($base: false) {
-    #{step-knob(chip-size, $base)}: 20px;
-    #{step-knob(chip-padding, $base, padding)}: var(--spacing-xs) var(--spacing-md);
-    #{step-knob(chip-FS, $base, font-size)}: var(--typo-text-xs-FS);
+@mixin chip-md {
+    --_chip-size-base: initial;
+    --_chip-padding-base: initial;
+    --_chip-FS-base: initial;
 }
 
-@mixin chip-lg($base: false) {
-    #{step-knob(chip-size, $base)}: 32px;
-    #{step-knob(chip-padding, $base, padding)}: var(--spacing-md) var(--spacing-lg);
-    #{step-knob(chip-FS, $base, font-size)}: var(--typo-text-md-FS);
+@mixin chip-sm {
+    --_chip-size-base: 20px;
+    --_chip-padding-base: var(--spacing-xs) var(--spacing-md);
+    --_chip-FS-base: var(--typo-text-xs-FS);
+}
+
+@mixin chip-lg {
+    --_chip-size-base: 32px;
+    --_chip-padding-base: var(--spacing-md) var(--spacing-lg);
+    --_chip-FS-base: var(--typo-text-md-FS);
 }
 
 // Every card knob at one value: the nested-card reset and a list's boundary write them all.
@@ -540,15 +549,15 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 // they step to LG and 2XL, XS and MD.
 // Every step is inherited (-base values), so the nearest list's wins.
 @mixin card-sm-box {
-    @include featured-icon-sm($base: true);
-    @include avatar-lg($base: true);
+    @include featured-icon-sm;
+    @include avatar-lg;
     @include date-tile-sm;
     --_card-gap-base: var(--spacing-lg);
 }
 
 @mixin card-sm {
     @include card-sm-box;
-    @include rating-xs($base: true);
+    @include rating-xs;
     @include tag-xs;
     --_card-title-FS-base: var(--typo-text-md-FS);
     --_card-title-LH-base: var(--typo-text-md-LH);
@@ -558,25 +567,25 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     --_card-description-LH-base: var(--typo-text-sm-LH);
     --_card-number-FS-base: var(--typo-display-clamp-md-FS);
     // The price line; the rating text stays at 12px, its floor.
-    --_card-value-FS: var(--typo-text-lg-FS);
-    --_card-value-LH: var(--typo-text-lg-LH);
-    --_card-value-unit-FS: var(--typo-text-xs-FS);
-    --_card-value-unit-LH: var(--typo-text-xs-LH);
-    --_card-value-was-FS: var(--typo-text-sm-FS);
-    --_card-value-was-LH: var(--typo-text-sm-LH);
+    --_card-value-FS-base: var(--typo-text-lg-FS);
+    --_card-value-LH-base: var(--typo-text-lg-LH);
+    --_card-value-unit-FS-base: var(--typo-text-xs-FS);
+    --_card-value-unit-LH-base: var(--typo-text-xs-LH);
+    --_card-value-was-FS-base: var(--typo-text-sm-FS);
+    --_card-value-was-LH-base: var(--typo-text-sm-LH);
     @include metric-sm;
     --_card-image-width-base: 120px;
-    @include chip-sm($base: true);
+    @include chip-sm;
     @include meta-sm;
     @include btn-md($base: true);
 }
 
 @mixin card-lg {
-    @include featured-icon-lg($base: true);
-    @include avatar-2xl($base: true);
+    @include featured-icon-lg;
+    @include avatar-2xl;
     @include tag-md;
-    @include progress-circle-md($base: true);
-    @include rating-md($base: true);
+    @include progress-circle-md;
+    @include rating-md;
     --_card-gap-base: var(--spacing-4xl);
     --_card-title-FS-base: var(--typo-text-xl-FS);
     --_card-title-LH-base: var(--typo-text-xl-LH);
@@ -585,18 +594,18 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     --_card-description-FS-base: var(--typo-text-lg-FS);
     --_card-description-LH-base: var(--typo-text-lg-LH);
     --_card-number-FS-base: var(--typo-display-clamp-xl-FS);
-    --_card-value-FS: var(--typo-display-xs-FS);
-    --_card-value-LH: var(--typo-display-xs-LH);
-    --_card-value-unit-FS: var(--typo-text-md-FS);
-    --_card-value-unit-LH: var(--typo-text-md-LH);
-    --_card-value-was-FS: var(--typo-text-lg-FS);
-    --_card-value-was-LH: var(--typo-text-lg-LH);
-    --_card-rating-text-FS: var(--typo-text-sm-FS);
-    --_card-rating-text-LH: var(--typo-text-sm-LH);
+    --_card-value-FS-base: var(--typo-display-xs-FS);
+    --_card-value-LH-base: var(--typo-display-xs-LH);
+    --_card-value-unit-FS-base: var(--typo-text-md-FS);
+    --_card-value-unit-LH-base: var(--typo-text-md-LH);
+    --_card-value-was-FS-base: var(--typo-text-lg-FS);
+    --_card-value-was-LH-base: var(--typo-text-lg-LH);
+    --_card-rating-text-FS-base: var(--typo-text-sm-FS);
+    --_card-rating-text-LH-base: var(--typo-text-sm-LH);
     @include metric-lg;
     --_card-image-width-base: 200px;
     @include date-tile-lg;
-    @include chip-lg($base: true);
+    @include chip-lg;
     @include meta-lg;
 }
 
@@ -610,8 +619,8 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
         --_#{$name}-base: initial;
     }
     @each $name in (card-value, card-value-unit, card-value-was, card-rating-text, metric-value, metric-trend) {
-        --_#{$name}-FS: initial;
-        --_#{$name}-LH: initial;
+        --_#{$name}-FS-base: initial;
+        --_#{$name}-LH-base: initial;
     }
 }
 

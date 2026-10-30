@@ -216,9 +216,7 @@
         margin-inline-start: var(--spacing-md);
         // Centered on the title's first line.
         margin-block-start: calc((var(--typo-text-md-LH) - 20px) / 2);
-        --tag-height: 20px;
-        --tag-fs: var(--typo-text-xs-FS);
-        --tag-padding-inline: var(--spacing-md);
+        @include tag-xs;
     }
     .nds-description {
         width: 100%;

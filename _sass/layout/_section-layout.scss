@@ -137,11 +137,11 @@
     // Inside the title it is a mark beside the text, not the centering box it
     // is as a sibling of the head.
     .nds-section-icon {
-        // A featured icon sizes through its own knob, so glyph, padding and
+        // A featured icon sizes through its -base, so glyph, padding and
         // radius scale together. A size class (.nds-sm) ties on specificity and
         // ships in the later bundle, so it still wins: asking for one is asking
         // to opt out of title sizing.
-        --featuredicon-size: var(--_section-icon-size);
+        --_featuredicon-size-base: var(--_section-icon-size);
         // normal, not unset: font-weight inherits, so unset would keep the
         // title's bold and synthesize a heavier glyph.
         font-weight: normal;
@@ -275,10 +275,10 @@
     row-gap: var(--_section-row-gap);
 
     .nds-section-image .nds-avatar {
-        --avatar-size: 120px;
+        --_avatar-size-base: 120px;
 
         @include mobile {
-            --avatar-size: 80px;
+            --_avatar-size-base: 80px;
         }
     }
 

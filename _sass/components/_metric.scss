@@ -52,8 +52,8 @@
 .nds-card-metric-value {
   display: block;
   // A list's size steps it: metric-sm and metric-lg.
-  font-size: var(--_metric-value-FS, var(--typo-display-clamp-md-FS));
-  line-height: var(--_metric-value-LH, var(--typo-display-clamp-md-LH));
+  font-size: var(--_metric-value-FS-base, var(--typo-display-clamp-md-FS));
+  line-height: var(--_metric-value-LH-base, var(--typo-display-clamp-md-LH));
   font-weight: var(--font-weight-bold);
   color: var(--text-display);
 }
@@ -64,8 +64,8 @@
   flex-wrap: wrap;
   gap: var(--spacing-md);
   margin: 0;
-  font-size: var(--_metric-trend-FS, var(--typo-text-sm-FS));
-  line-height: var(--_metric-trend-LH, var(--typo-text-sm-LH));
+  font-size: var(--_metric-trend-FS-base, var(--typo-text-sm-FS));
+  line-height: var(--_metric-trend-LH-base, var(--typo-text-sm-LH));
   color: var(--text-secondary-paragraph);
 
   > i {

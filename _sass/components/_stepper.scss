@@ -212,7 +212,7 @@
 
     // The featured icon scales with the circle, so its padding and glyph follow the stepper size.
     &.nds-featured-icon {
-        --featuredicon-size: var(--stepper-size);
+        --_featuredicon-size-base: var(--stepper-size);
     }
 
     &::before {
@@ -688,7 +688,7 @@
     --_stepper-desc-FS-base: var(--typo-text-sm-FS);
     --_stepper-desc-LH-base: var(--typo-text-sm-LH);
     --_stepper-gap-base: var(--spacing-md);
-    --progress-size: var(--stepper-size);
+    --_progress-size-base: var(--stepper-size);
     --_stepper-gap: var(--stepper-gap, var(--_stepper-gap-base));
     align-items: center;
 
@@ -781,7 +781,7 @@
     // The ring is a Progress circle: it draws the arc from the --progress-value the script writes.
     // display: flex undoes the base rule's display: none, which outranks Progress's own flex.
     .nds-progress-circle {
-        --progress-size: var(--stepper-size);
+        --_progress-size-base: var(--stepper-size);
         display: flex;
         align-self: center;
         flex-shrink: 0;

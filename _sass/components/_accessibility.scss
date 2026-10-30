@@ -64,9 +64,9 @@
     line-height: var(--a11y-text-LH);
 }
 
-// Tag pills use --tag-fs as the public override channel.
+// Tag pills take the panel's text size.
 .nds-accessibility-panel .nds-tag {
-    --tag-fs: var(--a11y-text-FS);
+    --_tag-fs-base: var(--a11y-text-FS);
 }
 
 // ----------------------------------------------
@@ -227,7 +227,7 @@
     // doesn't overlap the centered confirm label. Reduce-motion exemption
     // for time-conveying progress is system-wide in _variables-a11y.scss.
     .nds-btn.nds-progress .nds-progress-circle {
-        --_progress-size: var(--progress-size, 24px);
+        --_progress-size-base: 24px;
         inset-inline-start: auto;
         inset-inline-end: var(--spacing-md);
     }
