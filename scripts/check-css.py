@@ -19,6 +19,11 @@ SCSS source, because the file a declaration came from is gone after compiling.
                 !important property on the main thread only (the Panel slide, 2026-10-16)
   6. selector   anything but a pseudo-class after a pseudo-element (`::after > *`): the
                 browser drops the whole rule without a word (v1.12.0 shipped one)
+  7. size-knob  NDS writing a part's public size knob (--avatar-size, --btn-size, …): the knob
+                is the author's, NDS writes the --_x-base under it (plans/part-sizes.md)
+  8. list-step  a property a List's size step writes that a nested list does not clear, the
+                card does not set on itself, and every list item does not set: a list
+                nested in an SM list would take the outer size (card-steps-reset)
 
 The [data-state] tail check stays in check-data-state-tails.py (mkrelease runs it).
 """
@@ -39,6 +44,12 @@ COMPOSITED = {'transform', 'translate', 'scale', 'rotate', 'opacity', 'filter', 
 IMPORTANT_OK = {
     '.nds-progress-circle svg': 'a fixed rotation; the ring animates its stroke, never the svg',
 }
+# Size knobs NDS never writes; `initial` only stops one inheriting (the button's own reset).
+SIZE_KNOBS = re.compile(r'--(featuredicon-size|avatar-size|progress-size|star-size|chip-size|date-tile-width'
+                        r'|tag-height|tag-fs|tag-padding-inline|btn-size|btn-gap|btn-indicator-size|btn-FS|btn-LH)$')
+# A List's size steps, the rule every item takes, a nested list's reset, the card itself (built selectors).
+LIST_STEPS = ('.nds-list.nds-sm>.nds-card', '.nds-list.nds-lg>.nds-card', ':where(.nds-list:not(.nds-sm,.nds-lg))>.nds-card')
+LIST_KEEP = (':where(.nds-list)>.nds-card', ':where(.nds-card .nds-list)', '.nds-card')
 # A pseudo-element (legacy one-colon forms too) followed by anything that is not a pseudo-class run.
 AFTER_PSEUDO_ELEMENT = re.compile(r'(?:::[\w-]+|:(?:before|after|first-line|first-letter))(?![\w-])(?!(?:\(\))?(?::[\w-]+(?:\(\))?)*$)')
 
@@ -188,6 +199,18 @@ def unused_report():
         print(f'{sum(map(len, texts)):6d} B  {len(texts):3d} rules  .{cls}  ({bundle}) — {tag}')
 
 
+def list_step_drift(css):
+    """Properties a List step writes that nothing resets for a nested list."""
+    step, keep = set(), set()
+    for prelude, body, _ in rules(css):
+        props = {p for p, _ in decls(body) if p.startswith('--')}
+        if prelude in LIST_STEPS:
+            step |= props
+        elif prelude in LIST_KEEP:
+            keep |= props
+    return sorted(step - keep)
+
+
 def main():
     if not CSS:
         sys.exit('No built CSS in _site/assets/css — build first.')
@@ -204,6 +227,8 @@ def main():
                 problems.append(('selector', bundle, prelude, f'{bad} — only a pseudo-class may follow a pseudo-element; the browser drops this whole rule'))
             seen = {}
             for prop, value in decls(body):
+                if SIZE_KNOBS.match(prop) and value != 'initial':
+                    problems.append(('size-knob', bundle, prelude, f'{prop}: {value} — write --_{prop[2:]}-base; the knob is the author\'s'))
                 if prop.startswith('--'):
                     declared.add(prop)
                     if on_root:
@@ -217,6 +242,10 @@ def main():
                     seen[prop] = (value, plain)
                     if prop in COMPOSITED and '!important' in value and not any(s in prelude for s in IMPORTANT_OK):
                         problems.append(('important', bundle, prelude, f'{prop}: {value} — an animation on it runs on the main thread; win on specificity instead'))
+
+    main_css = os.path.join(ROOT, '_site', 'assets', 'css', 'nds-main.min.css')
+    for name in list_step_drift(read(main_css)) if os.path.exists(main_css) else ():
+        problems.append(('list-step', 'nds-main.min.css', name, 'a List step a nested list keeps from its outer list: add it to card-steps-reset'))
 
     js_only, outside = set_outside_css()
     for name, sites in sorted(used.items()):

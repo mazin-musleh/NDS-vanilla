@@ -14,7 +14,8 @@ ruby _plugins/js_processor.rb check-audit   # the pre-commit hook: is the staged
 python scripts/optimize-assets.py <path>        # shrink SVG/PNG/JPG — dry-run report; add --apply to write
 node scripts/svg-render-diff.mjs <path>         # REQUIRED after an SVG --apply: proves the render is unchanged
 python scripts/check-data-state-tails.py        # after any [data-state]/[data-status] rule change, or a rule on a flag the JS writes on <html>/<body> — --report lists every tail
-python scripts/check-css.py [--report|--unused] # built CSS: dangling var(), dead fallbacks, duplicate decls, global token in a component dark block, !important on transform/opacity/filter, anything after a pseudo-element (`::after > *`); --unused = rules no page/JS uses
+python scripts/check-css.py [--report|--unused] # built CSS: dangling var(), dead fallbacks, duplicate decls, global token in a component dark block, !important on transform/opacity/filter, anything after a pseudo-element (`::after > *`), a part size knob NDS writes, a List step a nested list keeps; --unused = rules no page/JS uses
+node scripts/check-part-sizes.mjs               # part sizes: a knob beats the size class, the class a List's step; nested lists; a button's knob stays on the button; the Library's XS tags; ENGINE=webkit, CSS=<old main css> must fail
 node scripts/encode-webp.mjs <master>           # WebP at set widths, lowest quality above a PSNR floor — always from the master
 node scripts/run-audit.mjs [page.html]          # print a built page's NDS.init.audit() warnings
 node scripts/check-js-rules.mjs [file …]        # nds-js-audit's mechanical half: `finding` = decided, `verify` = left to read (rules in its header); --self-test; --names = the naming rules (PERSONA 1, 10, 12)

@@ -1,6 +1,6 @@
 # Part sizes — plan (v2.0.0)
 
-Status (2026-10-30): steps 0 and 1 committed (`41132f0f`, `161831bf`, `f5821460`); step 2 built and checked, waiting on its commit.
+Status (2026-10-30): steps 0 to 2 committed (`41132f0f`, `161831bf`, `f5821460`, `25959601`); step 3 built and checked, waiting on its commit.
 
 ## Why
 
