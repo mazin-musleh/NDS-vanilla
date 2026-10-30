@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "30/10/2026 - 11:52 PM"
 ---
 
 <section id="progress-overview" class="nds-content-section nds-doc-overview">
@@ -311,7 +311,7 @@ For Out of, the script sets `aria-valuemax` to `data-max`, not 100.
 ### CSS Custom Properties
 {: .nds-block-title}
 
-Set these in the `style` of the circle or the bar. The size classes set `--progress-size` and `--progress-height` on the element, so a value set on a parent does not reach it.
+Set these in the `style` of the circle or the bar. `--progress-size` wins over the circle's size classes, and it also reaches the circle from a parent. The bar's size classes set `--progress-height` on the bar, so a value set on a parent does not reach it.
 
 | Property | Default | Controls |
 |---|---|---|

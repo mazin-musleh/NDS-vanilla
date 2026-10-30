@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 02:27 PM"
+last_edit: "30/10/2026 - 11:52 PM"
 ---
 
 <section id="rating-overview" class="nds-content-section nds-doc-overview">
@@ -340,7 +340,7 @@ The Menu structure puts a display rating and a vote count in a [Dropmenu](../com
 ### CSS Custom Properties
 {: .nds-block-title}
 
-Set these on `.nds-rating`. The size classes set `--star-size`, and `nds-brand` sets the four color properties.
+Set these on `.nds-rating`. `--star-size` also reaches it from a parent, and it wins over the size classes. `nds-brand` sets the four color properties.
 
 | Property | Default | Controls |
 |---|---|---|

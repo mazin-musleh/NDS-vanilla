@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 02:43 AM"
+last_edit: "30/10/2026 - 11:52 PM"
 ---
 
 <section id="featured-icon-overview" class="nds-content-section nds-doc-overview">
@@ -203,7 +203,7 @@ Every row goes on the `.nds-featured-icon` element. Pick one option from each gr
 ### CSS Custom Properties
 {: .nds-block-title}
 
-Set these on the icon, in a `style` attribute or in your stylesheet. On a parent, they reach every featured icon inside it. The size classes set `--featuredicon-size`, and the color classes and statuses set the three color properties.
+Set these on the icon, in a `style` attribute or in your stylesheet. On a parent, they reach every featured icon inside it. `--featuredicon-size` wins over the size classes. The color classes and statuses set the three color properties.
 
 | Property | Default | Controls |
 |---|---|---|

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "30/10/2026 - 11:52 PM"
 ---
 
 <section id="chip-overview" class="nds-content-section nds-doc-overview">
@@ -217,7 +217,7 @@ A row on `.nds-chip` changes every chip. Selected goes on one chip: the builder 
 ### CSS Custom Properties
 {: .nds-block-title}
 
-Set these on the chip. The size classes set `--chip-size`, and the color classes set `--chip-bg` and `--chip-text`.
+Set these on the chip. `--chip-size` also reaches it from a parent, and it wins over the size classes. The color classes set `--chip-bg` and `--chip-text`.
 
 | Property | Default | Controls |
 |---|---|---|

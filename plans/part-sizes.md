@@ -1,6 +1,6 @@
 # Part sizes — plan (v2.0.0)
 
-Status (2026-10-30): steps 0 to 3 committed (`41132f0f`, `161831bf`, `f5821460`, `25959601`, `100ca074`); step 4 built and checked, waiting on its commit.
+Status (2026-10-30): done. Steps 0 to 4 committed (`41132f0f`, `161831bf`, `f5821460`, `25959601`, `100ca074`, `ca9be07f`); step 5 found no change on any page against step 0; step 6 is the docs commit. Next, its own task: the stepper's circles fade on load (`transition` on every property, `_stepper.scss:195`).
 
 ## Why
 

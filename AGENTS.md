@@ -161,7 +161,7 @@ not the obvious thing. Match the density of the file you are in; do not out-comm
 - **Reflow first.** Wrap or stack the parts. Shrink only what still squeezes the text after that.
 - **Shrink boxes, never reading text.** A tile, icon, avatar, padding or gap may step down. A title, description or meta wraps: body-size text is already at its floor, and the user's font scale enlarges it on purpose. Display text has the `--typo-display-clamp-*` tokens; a short value inside a box (the date tile's day) steps with its box.
 - **Down one step, never up.** Default to SM and stop, so the wide layout never changes.
-- **The child offers the step, the parent applies it.** The child's SM values live in a mixin in `_mixins.scss` (`date-tile-sm`) that its `.nds-sm` and the parent's container rule both include: a container query cannot add a class.
+- **The child offers the step, the parent applies it.** The child's SM values live in a mixin in `_mixins.scss` (`date-tile-sm`) that its `.nds-sm` and the parent's container rule both include: a container query cannot add a class. The mixin writes the `--_x-base` values, so a knob still wins (below).
 - **Only the default steps.** A size class the author wrote (`.nds-sm`, `.nds-lg`) is kept as written; anything past that is the developer's own tweak.
 - **Nothing tappable under 24px.**
 
@@ -178,6 +178,8 @@ not the obvious thing. Match the density of the file you are in; do not out-comm
 Rule-level dark tweaks (not tokens) stay next to the rule they modify via `@include dark`. `_variables-a11y.scss` is a separate `[data-a11y]` overlay in the accessibility bundle, not a tier.
 
 **Knobs** (`--btn-size`, `--section-*`, `--hero-*`) are NOT tokens: per-instance styling the consumer sets on the element, undefined by default, resolved via the `--_x: var(--x, default)` private pattern. Tokens theme the system; knobs style one element.
+
+**A size knob always wins.** A part (avatar, featured icon, stars, ring, chip, date tile, tag, button) reads `var(--x, var(--_x-base, default))`. Its size class and a parent's step (a List, a Persona) write only the `--_x-base`, so the nearer one wins and a knob beats both. NDS never writes a public size knob: `check-css.py` fails on one. A button's size knobs stop at the button (`:where(.nds-btn)` resets them), because a wrapper's `--btn-size` would resize other components' buttons. `plans/part-sizes.md` holds the reasons.
 
 **Global token or component knob? A value goes global (`:root`) only if something must REACH it from `:root` — stop at the first yes:**
 1. A **mode layer re-binds it** — dark, `[data-a11y]`, or a brand. They all write at `:root[…]` and cannot reach a value declared on a component selector.

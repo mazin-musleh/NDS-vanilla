@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 01:44 PM"
+last_edit: "30/10/2026 - 11:52 PM"
 ---
 
 <section id="avatar-overview" class="nds-content-section nds-doc-overview">
@@ -285,7 +285,7 @@ The Link, Menu trigger and Button structures take any of the three contents: a p
 
 | Property | Default | Controls |
 |---|---|---|
-| `--avatar-size` | `40px` | Width and height. The size classes set it. Set it on the avatar, or on a parent to size every avatar inside |
+| `--avatar-size` | `40px` | Width and height. It wins over the size classes. Set it on the avatar, or on a parent to size every avatar inside |
 | `--avatar-gap` | `6px` | Space between the avatars of a group. A stacked group overlaps them by twice this value. Set it on the group |
 {: .nds-table .nds-responsive}
 

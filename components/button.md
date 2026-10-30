@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "27/10/2026 - 01:22 AM"
+last_edit: "30/10/2026 - 11:52 PM"
 ---
 
 <section id="btn-overview" class="nds-content-section nds-doc-overview">
@@ -298,7 +298,7 @@ A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-ch
 ### CSS Custom Properties
 {: .nds-block-title}
 
-Set these on the button itself. The size and variant classes set many of them on the button, so a value set on a parent does not reach it.
+Set these on the button itself. There, a size property wins over the size classes. A `--btn-size`, `--btn-gap` or `--btn-indicator-size` set on a parent does not reach a button, because buttons sit inside other components. The variant classes set the colors on the button, so a color set on a parent does not reach it either.
 
 | Property | Default | Controls |
 |---|---|---|
