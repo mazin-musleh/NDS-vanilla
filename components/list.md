@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 08:28 PM"
+last_edit: "30/10/2026 - 10:18 PM"
 ---
 
 <section id="list-overview" class="nds-content-section nds-doc-overview">
@@ -582,7 +582,7 @@ Most options go on the list. Items puts its parts in every item. Icons and Icon 
 - A row list (`nds-horizontal`) needs wide items. An item under 324px wide puts its header back on top of the text, and an image drops under the text when it does not fit beside it. Give a row list fewer columns, or on a flex list a `--card-width` of about `360px`, never `auto`.
 - On a flex list, `nds-center`, `nds-middle` and `nds-reverse` change the items only. To move the rows, set `--justify` and `--align`.
 - A list fills its parent's width. In a box that sizes to its content (an inline block, a table cell), give the list a width: it measures itself to step down when narrow, so it cannot size the box.
-- Set the size, the item layout and the box on the list, never on one item: the list's class wins, and the items line up.
+- Set the size, the item layout and the box on the list, never on one item, so the items line up. A box class on one item mixes with the list's: a stroke on a flat list's item draws a border with no padding.
 - Give each icon its own look and color classes (`nds-subtle`, `nds-green`, …), so one icon can differ. An item may hold an avatar or an image instead of an icon.
 - Leave the size class off an icon, an avatar, a tag, a rating or a button: the list sizes it. An avatar is XL, LG in a small list (`nds-sm`) and 2XL in a large one (`nds-lg`). A tag or a rating is SM, XS in a small list and MD in a large one. A status tag in `.nds-card-corner` is the exception: it keeps `nds-xs`, as in a single card, so it stays small at every list size.
 - Hide every icon from screen readers with `aria-hidden="true"`. The title names the item.
