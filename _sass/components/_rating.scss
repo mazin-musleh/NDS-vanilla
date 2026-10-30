@@ -12,7 +12,7 @@
 
 .nds-rating {
   /* --- Rating custom properties --- */
-  --_star-size: var(--star-size, 32px);
+  --_star-size: var(--star-size, var(--_star-size-base, 32px));
   --_star-color: var(--star-color, var(--rating-star-default-default));
   --_star-selected: var(--star-selected, var(--rating-star-default-selected));
   --_star-pressed: var(--star-pressed, var(--rating-star-default-pressed));

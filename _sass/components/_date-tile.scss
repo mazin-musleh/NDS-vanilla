@@ -31,15 +31,16 @@
         width: var(--_date-tile-range-width);
     }
 
-    &,
+    --_date-tile-width: var(--date-tile-width, var(--_date-tile-width-base, 56px));
+    --_date-tile-range-width: var(--date-tile-width, var(--_date-tile-range-width-base, 80px));
+    --_date-tile-day-FS: var(--_date-tile-day-FS-base, var(--typo-text-xl-FS));
+    --_date-tile-day-LH: var(--_date-tile-day-LH-base, var(--typo-text-xl-LH));
+    --_date-tile-text-FS: var(--_date-tile-text-FS-base, var(--typo-text-xs-FS));
+    --_date-tile-text-LH: var(--_date-tile-text-LH-base, var(--typo-text-xs-LH));
+    --_date-tile-padding: var(--_date-tile-padding-base, var(--spacing-xs) var(--spacing-sm));
+
     &.nds-md {
-        --_date-tile-width: var(--date-tile-width, 56px);
-        --_date-tile-range-width: var(--date-tile-width, 80px);
-        --_date-tile-day-FS: var(--typo-text-xl-FS);
-        --_date-tile-day-LH: var(--typo-text-xl-LH);
-        --_date-tile-text-FS: var(--typo-text-xs-FS);
-        --_date-tile-text-LH: var(--typo-text-xs-LH);
-        --_date-tile-padding: var(--spacing-xs) var(--spacing-sm);
+        @include date-tile-md;
     }
 
     &.nds-sm {

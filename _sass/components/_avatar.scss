@@ -12,7 +12,7 @@
 // ==============================================
 
 .nds-avatar {
-  --_avatar-size: var(--avatar-size, 40px);
+  --_avatar-size: var(--avatar-size, var(--_avatar-size-base, 40px));
   display: inline-flex;
   align-items: center;
   justify-content: center;

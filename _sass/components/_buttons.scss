@@ -134,10 +134,16 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
   // BUTTON SIZES
   // ==============================================
 
-  // nds-lg is the default size — no explicit .nds-lg class needed
-  --btn-size: 40px;
-  --btn-gap: var(--spacing-md);
-  --btn-indicator-size: 3px;
+  // nds-lg is the default size — no explicit .nds-lg class needed. A parent's step (btn-md with $base) comes first.
+  --btn-size: var(--_btn-size-base, 40px);
+  --btn-gap: var(--_btn-gap-base, var(--spacing-md));
+  --btn-indicator-size: var(--_btn-indicator-size-base, 3px);
+
+  &.nds-lg {
+    @each $name in (size, gap, indicator-size, FS, LH) {
+      --_btn-#{$name}-base: initial;
+    }
+  }
 
   &.nds-md {
     @include btn-md;

@@ -86,8 +86,14 @@
   // CHIP SIZES
   // ==============================================
 
-  &.nds-md,
+  // No size class: a parent's step (chip-sm/lg with $base) before MD.
   & {
+    --chip-size: var(--_chip-size-base, 24px);
+    padding: var(--_chip-padding-base, var(--spacing-sm) var(--spacing-lg));
+    font-size: var(--_chip-FS-base, var(--typo-text-xs-FS));
+  }
+
+  &.nds-md {
     --chip-size: 24px;
     padding: var(--spacing-sm) var(--spacing-lg);
     font-size: var(--typo-text-xs-FS);

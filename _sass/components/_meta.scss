@@ -20,11 +20,12 @@
     font-weight: var(--font-weight-regular);
     white-space: normal;
 
-    &,
+    --_meta-FS: var(--_meta-FS-base, var(--typo-text-sm-FS));
+    --_meta-LH: var(--_meta-LH-base, var(--typo-text-sm-LH));
+    --_meta-icon-size: var(--_meta-icon-size-base, var(--typo-text-md-FS));
+
     &.nds-md {
-        --_meta-FS: var(--typo-text-sm-FS);
-        --_meta-LH: var(--typo-text-sm-LH);
-        --_meta-icon-size: var(--typo-text-md-FS);
+        @include meta-md;
     }
 
     &.nds-sm {

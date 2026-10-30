@@ -220,14 +220,26 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 // BUTTON BASE MIXINS
 // ==============================================
 
+// A step's property: the part's own ($own, else its knob) for its size class, or with $base the -base
+// a parent sets: it reaches every part within that has no size class, and a knob still beats it.
+@function step-knob($name, $base, $own: null) {
+  @if $base {
+    @return unquote('--_#{$name}-base');
+  }
+  @if $own {
+    @return $own;
+  }
+  @return unquote('--#{$name}');
+}
+
 // Button MD step: the .nds-md class and a parent's own rule share it.
-@mixin btn-md {
-  --btn-size: 32px;
-  --btn-gap: var(--spacing-sm);
-  --btn-indicator-size: 3px;
+@mixin btn-md($base: false) {
+  #{step-knob(btn-size, $base)}: 32px;
+  #{step-knob(btn-gap, $base)}: var(--spacing-sm);
+  #{step-knob(btn-indicator-size, $base)}: 3px;
   // Pin label typography to text-sm so LH matches the design system (20, not the calc's 21)
-  --btn-FS: var(--typo-text-sm-FS);
-  --btn-LH: var(--typo-text-sm-LH);
+  #{step-knob(btn-FS, $base)}: var(--typo-text-sm-FS);
+  #{step-knob(btn-LH, $base)}: var(--typo-text-sm-LH);
 }
 
 @mixin btn-base {
@@ -265,8 +277,8 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
   // a11y scale. Components that pin --user-font-scale: 1 inside their
   // subtree (e.g. the accessibility panel) get unscaled button labels
   // without having to override --_btn-FS directly.
-  --_btn-FS: calc(var(--btn-FS, calc(var(--_btn-size) / 4 + 6px)) * var(--user-font-scale, 1));
-  --_btn-LH: var(--btn-LH, calc(var(--_btn-FS) * 1.5));
+  --_btn-FS: calc(var(--btn-FS, var(--_btn-FS-base, calc(var(--_btn-size) / 4 + 6px))) * var(--user-font-scale, 1));
+  --_btn-LH: var(--btn-LH, var(--_btn-LH-base, calc(var(--_btn-FS) * 1.5)));
   --_btn-icon-size: var(--btn-icon-size, calc(var(--_btn-size) / 2 + 4px));
 
   // default, not --_btn-padding — spinner inset must survive a --btn-padding:0 override
@@ -401,40 +413,49 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 // PROGRESS CIRCLE MIXINS
 // ==============================================
 
-// Date tile SM step: the .nds-sm class and a parent's container rule share it.
+// Date tile steps, as -base values: the size class sets them on the tile, a parent on the tiles within.
+// The --date-tile-width knob beats them, as it beat the size classes. MD resets them.
+@mixin date-tile-md {
+    --_date-tile-width-base: initial;
+    --_date-tile-range-width-base: initial;
+    --_date-tile-day-FS-base: initial;
+    --_date-tile-day-LH-base: initial;
+    --_date-tile-text-FS-base: initial;
+    --_date-tile-text-LH-base: initial;
+    --_date-tile-padding-base: initial;
+}
+
 @mixin date-tile-sm {
-    --_date-tile-width: var(--date-tile-width, 48px);
-    --_date-tile-range-width: var(--date-tile-width, 64px);
-    --_date-tile-day-FS: var(--typo-text-lg-FS);
-    --_date-tile-day-LH: var(--typo-text-lg-LH);
-    --_date-tile-text-FS: var(--typo-text-2xs-FS);
-    --_date-tile-text-LH: var(--typo-text-2xs-LH);
-    --_date-tile-padding: var(--spacing-xs) var(--spacing-sm);
+    --_date-tile-width-base: 48px;
+    --_date-tile-range-width-base: 64px;
+    --_date-tile-day-FS-base: var(--typo-text-lg-FS);
+    --_date-tile-day-LH-base: var(--typo-text-lg-LH);
+    --_date-tile-text-FS-base: var(--typo-text-2xs-FS);
+    --_date-tile-text-LH-base: var(--typo-text-2xs-LH);
+    --_date-tile-padding-base: var(--spacing-xs) var(--spacing-sm);
 }
 
 @mixin date-tile-lg {
-    --_date-tile-width: var(--date-tile-width, 72px);
-    --_date-tile-range-width: var(--date-tile-width, 96px);
-    --_date-tile-day-FS: var(--typo-display-xs-FS);
-    --_date-tile-day-LH: var(--typo-display-xs-LH);
-    --_date-tile-text-FS: var(--typo-text-sm-FS);
-    --_date-tile-text-LH: var(--typo-text-sm-LH);
-    --_date-tile-padding: var(--spacing-sm) var(--spacing-md);
+    --_date-tile-width-base: 72px;
+    --_date-tile-range-width-base: 96px;
+    --_date-tile-day-FS-base: var(--typo-display-xs-FS);
+    --_date-tile-day-LH-base: var(--typo-display-xs-LH);
+    --_date-tile-text-FS-base: var(--typo-text-sm-FS);
+    --_date-tile-text-LH-base: var(--typo-text-sm-LH);
+    --_date-tile-padding-base: var(--spacing-sm) var(--spacing-md);
 }
 
-// Part steps a parent shares with the part's own size class. A knob step on a parent
-// reaches only a part with no size class: the class sets the knob on the part itself.
-@mixin featured-icon-sm { --featuredicon-size: 32px; }
-@mixin featured-icon-lg { --featuredicon-size: 48px; }
-@mixin avatar-lg { --avatar-size: 48px; }
-@mixin avatar-xl { --avatar-size: 64px; }
-@mixin avatar-2xl { --avatar-size: 80px; }
-@mixin progress-circle-md { --progress-size: 80px; }
-@mixin rating-xs { --star-size: 16px; }
-@mixin rating-sm { --star-size: 24px; }
-@mixin rating-md { --star-size: 32px; } // the default, which has no class
+// Part steps a parent shares with the part's own size class (see step-knob).
+@mixin featured-icon-sm($base: false) { #{step-knob(featuredicon-size, $base)}: 32px; }
+@mixin featured-icon-lg($base: false) { #{step-knob(featuredicon-size, $base)}: 48px; }
+@mixin avatar-lg($base: false) { #{step-knob(avatar-size, $base)}: 48px; }
+@mixin avatar-xl($base: false) { #{step-knob(avatar-size, $base)}: 64px; }
+@mixin avatar-2xl($base: false) { #{step-knob(avatar-size, $base)}: 80px; }
+@mixin progress-circle-md($base: false) { #{step-knob(progress-size, $base)}: 80px; }
+@mixin rating-xs($base: false) { #{step-knob(star-size, $base)}: 16px; }
+@mixin rating-sm($base: false) { #{step-knob(star-size, $base)}: 24px; }
+@mixin rating-md($base: false) { #{step-knob(star-size, $base)}: 32px; } // the default, which has no class
 
-// -base values: a parent's step reaches a tag with no size class, and a --tag-* knob still wins.
 // Metric steps: a parent sets them, and the metric's value and trend read them.
 @mixin metric-sm {
     --_metric-value-FS: var(--typo-display-clamp-sm-FS);
@@ -450,6 +471,7 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     --_metric-trend-LH: var(--typo-text-md-LH);
 }
 
+// -base values: a parent's step reaches a tag with no size class, and a --tag-* knob still wins.
 // MD resets them: the tag's own fallbacks are its MD size.
 @mixin tag-md {
     --_tag-height-base: initial;
@@ -469,17 +491,16 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     --_tag-padding-inline-base: var(--spacing-md);
 }
 
-// The chip sets its default on itself, so a parent applies these to the chip.
-@mixin chip-sm {
-    --chip-size: 20px;
-    padding: var(--spacing-xs) var(--spacing-md);
-    font-size: var(--typo-text-xs-FS);
+@mixin chip-sm($base: false) {
+    #{step-knob(chip-size, $base)}: 20px;
+    #{step-knob(chip-padding, $base, padding)}: var(--spacing-xs) var(--spacing-md);
+    #{step-knob(chip-FS, $base, font-size)}: var(--typo-text-xs-FS);
 }
 
-@mixin chip-lg {
-    --chip-size: 32px;
-    padding: var(--spacing-md) var(--spacing-lg);
-    font-size: var(--typo-text-md-FS);
+@mixin chip-lg($base: false) {
+    #{step-knob(chip-size, $base)}: 32px;
+    #{step-knob(chip-padding, $base, padding)}: var(--spacing-md) var(--spacing-lg);
+    #{step-knob(chip-FS, $base, font-size)}: var(--typo-text-md-FS);
 }
 
 // Every card knob at one value: the nested-card reset and a list's boundary write them all.
@@ -517,19 +538,17 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 // A button already at its largest size has no LG step; a ring has no SM.
 // The list sets an avatar to XL, and a tag and stars to SM, as the card canon writes them:
 // they step to LG and 2XL, XS and MD.
+// Every step is inherited (-base values), so the nearest list's wins.
 @mixin card-sm-box {
-    @include featured-icon-sm;
-    @include avatar-lg;
+    @include featured-icon-sm($base: true);
+    @include avatar-lg($base: true);
+    @include date-tile-sm;
     --_card-gap-base: var(--spacing-lg);
-
-    .nds-date-tile:not(.nds-sm, .nds-md, .nds-lg) {
-        @include date-tile-sm;
-    }
 }
 
 @mixin card-sm {
     @include card-sm-box;
-    @include rating-xs;
+    @include rating-xs($base: true);
     @include tag-xs;
     --_card-title-FS-base: var(--typo-text-md-FS);
     --_card-title-LH-base: var(--typo-text-md-LH);
@@ -547,26 +566,17 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     --_card-value-was-LH: var(--typo-text-sm-LH);
     @include metric-sm;
     --_card-image-width-base: 120px;
-
-    .nds-chip:not(.nds-sm, .nds-md, .nds-lg) {
-        @include chip-sm;
-    }
-
-    .nds-meta:not(.nds-sm, .nds-md, .nds-lg) {
-        @include meta-sm;
-    }
-
-    .nds-btn:not(.nds-sm, .nds-md, .nds-lg) {
-        @include btn-md;
-    }
+    @include chip-sm($base: true);
+    @include meta-sm;
+    @include btn-md($base: true);
 }
 
 @mixin card-lg {
-    @include featured-icon-lg;
-    @include avatar-2xl;
+    @include featured-icon-lg($base: true);
+    @include avatar-2xl($base: true);
     @include tag-md;
-    @include progress-circle-md;
-    @include rating-md;
+    @include progress-circle-md($base: true);
+    @include rating-md($base: true);
     --_card-gap-base: var(--spacing-4xl);
     --_card-title-FS-base: var(--typo-text-xl-FS);
     --_card-title-LH-base: var(--typo-text-xl-LH);
@@ -585,17 +595,23 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     --_card-rating-text-LH: var(--typo-text-sm-LH);
     @include metric-lg;
     --_card-image-width-base: 200px;
+    @include date-tile-lg;
+    @include chip-lg($base: true);
+    @include meta-lg;
+}
 
-    .nds-date-tile:not(.nds-sm, .nds-md, .nds-lg) {
-        @include date-tile-lg;
+// The steps a nested list must not take from its outer list; keep in step with card-sm and card-lg.
+// Avatar, tag and stars are left out: every list item sets its own.
+@mixin card-steps-reset {
+    @include date-tile-md;
+    @include meta-md;
+    @each $name in (featuredicon-size, progress-size, chip-size, chip-padding, chip-FS,
+        btn-size, btn-gap, btn-indicator-size, btn-FS, btn-LH) {
+        --_#{$name}-base: initial;
     }
-
-    .nds-chip:not(.nds-sm, .nds-md, .nds-lg) {
-        @include chip-lg;
-    }
-
-    .nds-meta:not(.nds-sm, .nds-md, .nds-lg) {
-        @include meta-lg;
+    @each $name in (card-value, card-value-unit, card-value-was, card-rating-text, metric-value, metric-trend) {
+        --_#{$name}-FS: initial;
+        --_#{$name}-LH: initial;
     }
 }
 
@@ -609,18 +625,24 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     --_quote-text-LH:   var(--quote-text-LH, var(--typo-text-lg-LH));
 }
 
-// Meta SM step: the .nds-sm class and a parent's container rule share it.
+// Meta steps, as -base values: the size class sets them on the meta, a parent on the metas within. MD resets them.
+@mixin meta-md {
+    --_meta-FS-base: initial;
+    --_meta-LH-base: initial;
+    --_meta-icon-size-base: initial;
+}
+
 @mixin meta-sm {
-    --_meta-FS: var(--typo-text-xs-FS);
-    --_meta-LH: var(--typo-text-xs-LH);
-    --_meta-icon-size: var(--typo-text-sm-FS);
+    --_meta-FS-base: var(--typo-text-xs-FS);
+    --_meta-LH-base: var(--typo-text-xs-LH);
+    --_meta-icon-size-base: var(--typo-text-sm-FS);
 }
 
 // Meta LG step: the .nds-lg class and the top bar's widgets share it.
 @mixin meta-lg {
-    --_meta-FS: var(--typo-text-md-FS);
-    --_meta-LH: var(--typo-text-md-LH);
-    --_meta-icon-size: var(--typo-text-lg-FS);
+    --_meta-FS-base: var(--typo-text-md-FS);
+    --_meta-LH-base: var(--typo-text-md-LH);
+    --_meta-icon-size-base: var(--typo-text-lg-FS);
 }
 
 @mixin progress-circle-base($size: 24px, $rotate: -90deg) {

@@ -25,9 +25,9 @@
 // MD is the card's own size, but an avatar is XL, as in a single card's canon, and a tag and stars SM.
 // SM and LG step every item one rung.
 :where(.nds-list) > .nds-card {
-  @include avatar-xl;
+  @include avatar-xl($base: true);
   @include tag-sm;
-  @include rating-sm;
+  @include rating-sm($base: true);
 }
 
 .nds-list.nds-sm > .nds-card {
@@ -63,8 +63,9 @@
   }
 }
 
-// In a card, the list is a fresh start: the outer card's knobs stop here, and the list's own reach its items.
+// In a card, the list is a fresh start: the outer card's knobs and an outer list's size stop here, and the list's own reach its items.
 :where(.nds-card .nds-list) {
   @include card-knobs(initial);
+  @include card-steps-reset;
   --grow: initial;
 }
