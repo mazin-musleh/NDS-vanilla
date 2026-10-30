@@ -63,14 +63,15 @@
     /* Side Menu Toggle Button */
     .nds-sidemenu-toggle {
         --_btn-size-base: 40px;
-        --_toggle-transform: translate(calc((var(--nds-sidemenu-width)) * -1), var(--_toggle-pos));
+        --_toggle-transform: translateX(calc(var(--nds-sidemenu-width) * -1));
         border: unset;
         border-radius: var(--radius-sm) 0 0 var(--radius-sm);
         position: fixed;
         right: 0;
         display: flex;
         justify-content: center;
-        top: calc(var(--nds-nav-height) + var(--spacing-md));
+        // The height sits in top, not in the sliding transform: a change of screen height moves it at once.
+        top: calc(var(--nds-nav-height) + var(--spacing-md) + var(--_toggle-pos));
         box-shadow: var(--shadow-md);
         // The closed slide-in aside is hidden; its button stays on screen.
         visibility: visible;
@@ -90,7 +91,7 @@
         }
 
         .nds-sidemenu-toggle {
-            --_toggle-transform: translate(calc(var(--nds-sidemenu-width)), var(--_toggle-pos));
+            --_toggle-transform: translateX(var(--nds-sidemenu-width));
             right: unset;
             left: 0;
             border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
@@ -153,12 +154,12 @@
                 }
 
                 &:not([data-state="open"]) {
-                    --_toggle-transform: translate(calc((var(--nds-sidemenu-width) - var(--btn-width)/1.5) * -1), var(--_toggle-pos));
+                    --_toggle-transform: translateX(calc((var(--nds-sidemenu-width) - var(--btn-width)/1.5) * -1));
                     --_btn-indicator-size-base: 5px;
                     --_peek-opacity: 0;
 
                     @include ltr {
-                        --_toggle-transform: translate(calc(var(--nds-sidemenu-width) - var(--btn-width)/1.5), var(--_toggle-pos));
+                        --_toggle-transform: translateX(calc(var(--nds-sidemenu-width) - var(--btn-width)/1.5));
                     }
                 }
             }

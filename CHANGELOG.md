@@ -442,6 +442,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Side Info** — `--nds-sideinfo-top-offset` set by a page class works; the component's own `0px` won.
 - **Side Menu** — moving `data-state="active"` to another `li` after load (a client-side route) highlights its link, opens its groups and renames the top bar.
 - **Side Menu** — `destroy()` hides the toggle button again (the markup ships it hidden), removes the `aria-expanded` it wrote, and stops the peek timer.
+- **Side Menu** — On a phone or tablet, the menu button slides in from the side only. When the screen height changed (a turned phone, a resized window, a browser that sets its height after load), it slid up or down to its place.
 - **Slider** — A disabled or read-only slider is locked, its keys included. Only a value with `nds-number-format` gets thousands separators.
 - **Sort** — the active trigger keeps its other `data-state` tokens; Sort replaced them with `selected`.
 - **Sort** — After `destroy()` the element has no `ndsSort` property (it was `null`). The sorted state stays on the triggers and rows.
