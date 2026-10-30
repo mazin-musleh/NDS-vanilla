@@ -104,11 +104,11 @@ last_edit: "30/10/2026 - 11:14 AM"
                         <span class="nds-card-description nds-truncate">{{ service.description }}</span>
                     </div>
                     <div class="nds-card-tags">
-                        <span class="nds-tag nds-blue nds-sm">
+                        <span class="nds-tag nds-blue">
                             <span class="nds-label" data-filter="system">{{ service.system }}</span>
                         </span>
                         {% if service.most_used %}
-                        <span class="nds-tag nds-green nds-sm">
+                        <span class="nds-tag nds-green">
                             <span class="nds-label" data-filter="most-used">Most Used</span>
                         </span>
                         {% endif %}

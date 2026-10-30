@@ -31,9 +31,9 @@ sidemenu_mode: false
                             <p class="nds-card-description">Install the template, set up NDS IQ, build pages gate by gate with browser verification, and upgrade when a new release ships.</p>
                         </div>
                         <div class="nds-card-tags">
-                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Workflow</span></span>
-                            <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Install</span></span>
-                            <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Upgrade</span></span>
+                            <span class="nds-tag nds-blue"><span class="nds-label">Workflow</span></span>
+                            <span class="nds-tag nds-gray"><span class="nds-label">Install</span></span>
+                            <span class="nds-tag nds-gray"><span class="nds-label">Upgrade</span></span>
                         </div>
                     </div>
                     <div class="nds-card-actions">
@@ -57,9 +57,9 @@ sidemenu_mode: false
                             <p class="nds-card-description">The instruction system AI agents follow to build with NDS: how it is made, tested, versioned, and updated.</p>
                         </div>
                         <div class="nds-card-tags">
-                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">System</span></span>
-                            <span class="nds-tag nds-gray nds-sm"><span class="nds-label">AI Agents</span></span>
-                            <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Revisions</span></span>
+                            <span class="nds-tag nds-blue"><span class="nds-label">System</span></span>
+                            <span class="nds-tag nds-gray"><span class="nds-label">AI Agents</span></span>
+                            <span class="nds-tag nds-gray"><span class="nds-label">Revisions</span></span>
                         </div>
                     </div>
                     <div class="nds-card-actions">
@@ -83,8 +83,8 @@ sidemenu_mode: false
                             <p class="nds-card-description">Upgrade a site to a newer release: what changed in each release after yours, and what to write instead.</p>
                         </div>
                         <div class="nds-card-tags">
-                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Reference</span></span>
-                            <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Upgrade</span></span>
+                            <span class="nds-tag nds-blue"><span class="nds-label">Reference</span></span>
+                            <span class="nds-tag nds-gray"><span class="nds-label">Upgrade</span></span>
                         </div>
                     </div>
                     <div class="nds-card-actions">
@@ -108,8 +108,8 @@ sidemenu_mode: false
                             <p class="nds-card-description">Run NDS under a strict policy: what each inline part needs, a policy that covers it all, and how to move inline knobs to classes.</p>
                         </div>
                         <div class="nds-card-tags">
-                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Reference</span></span>
-                            <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Security</span></span>
+                            <span class="nds-tag nds-blue"><span class="nds-label">Reference</span></span>
+                            <span class="nds-tag nds-gray"><span class="nds-label">Security</span></span>
                         </div>
                     </div>
                     <div class="nds-card-actions">

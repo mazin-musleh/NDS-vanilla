@@ -109,7 +109,7 @@ Pick another component when:
         <span class="nds-number-format" data-currency="SAR" data-filter="fee" data-filter-value="200">200</span>
       </div>
       <div class="nds-card-tags">
-        <span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="sector">Business</span></span>
+        <span class="nds-tag nds-blue"><span class="nds-label" data-filter="sector">Business</span></span>
       </div>
     </div>
   </li>
@@ -123,7 +123,7 @@ Pick another component when:
         <span class="nds-number-format" data-currency="SAR" data-filter="fee" data-filter-value="1500">1500</span>
       </div>
       <div class="nds-card-tags">
-        <span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="sector">Housing</span></span>
+        <span class="nds-tag nds-blue"><span class="nds-label" data-filter="sector">Housing</span></span>
       </div>
     </div>
   </li>
@@ -137,7 +137,7 @@ Pick another component when:
         <span class="nds-number-format" data-currency="SAR" data-filter="fee" data-filter-value="100">100</span>
       </div>
       <div class="nds-card-tags">
-        <span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="sector">Transport</span></span>
+        <span class="nds-tag nds-blue"><span class="nds-label" data-filter="sector">Transport</span></span>
       </div>
     </div>
   </li>
@@ -151,7 +151,7 @@ Pick another component when:
         <span class="nds-number-format" data-currency="SAR" data-filter="fee" data-filter-value="400">400</span>
       </div>
       <div class="nds-card-tags">
-        <span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="sector">Transport</span></span>
+        <span class="nds-tag nds-blue"><span class="nds-label" data-filter="sector">Transport</span></span>
       </div>
     </div>
   </li>
@@ -165,7 +165,7 @@ Pick another component when:
         <span class="nds-number-format" data-currency="SAR" data-filter="fee" data-filter-value="800">800</span>
       </div>
       <div class="nds-card-tags">
-        <span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="sector">Business</span></span>
+        <span class="nds-tag nds-blue"><span class="nds-label" data-filter="sector">Business</span></span>
       </div>
     </div>
   </li>
@@ -179,7 +179,7 @@ Pick another component when:
         <span data-filter="fee" data-filter-value="0">Free</span>
       </div>
       <div class="nds-card-tags">
-        <span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="sector">Housing</span></span>
+        <span class="nds-tag nds-blue"><span class="nds-label" data-filter="sector">Housing</span></span>
       </div>
     </div>
   </li>
@@ -193,7 +193,7 @@ Pick another component when:
         <span class="nds-number-format" data-currency="SAR" data-filter="fee" data-filter-value="200">200</span>
       </div>
       <div class="nds-card-tags">
-        <span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="sector">Business</span></span>
+        <span class="nds-tag nds-blue"><span class="nds-label" data-filter="sector">Business</span></span>
       </div>
     </div>
   </li>
@@ -207,7 +207,7 @@ Pick another component when:
         <span class="nds-number-format" data-currency="SAR" data-filter="fee" data-filter-value="2500">2500</span>
       </div>
       <div class="nds-card-tags">
-        <span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="sector">Transport</span></span>
+        <span class="nds-tag nds-blue"><span class="nds-label" data-filter="sector">Transport</span></span>
       </div>
     </div>
   </li>

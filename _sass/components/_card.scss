@@ -79,6 +79,8 @@
   --_card-subtitle-LH-base: var(--typo-text-md-LH);
   --_card-description-FS-base: var(--typo-text-md-FS);
   --_card-description-LH-base: var(--typo-text-md-LH);
+  --_card-number-FS-base: var(--typo-display-clamp-lg-FS);
+  --_card-image-width-base: 160px;
   // The width family stays on the public knob: --_card-width-max chains through
   // --card-width, so a variant that retuned a -base value would drop out of that
   // fallback and cap a full-width card at 360px.
@@ -162,7 +164,7 @@
       align-content: flex-start;
 
       .nds-card-image {
-        width: var(--card-image-width, 160px);
+        width: var(--card-image-width, var(--_card-image-width-base));
         min-width: 100%;
         max-width: 100%;
       }
@@ -586,7 +588,7 @@
 // The card's big number, in any card; a centered card centers it.
 .nds-card .nds-card-number {
   color: var(--_card-number-color);
-  font-size: var(--typo-display-clamp-lg-FS);
+  font-size: var(--_card-number-FS-base);
   line-height: 1;
   letter-spacing: -0.96px;
   direction: ltr;

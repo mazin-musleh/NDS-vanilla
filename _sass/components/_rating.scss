@@ -100,9 +100,16 @@
 // ==============================================
 
 .nds-rating {
-  &.nds-xs { --star-size: 16px; }
-  &.nds-sm { --star-size: 24px; }
-  &.nds-lg { --star-size: 48px; }
+  &.nds-xs { @include rating-xs; }
+  &.nds-sm { @include rating-sm; }
+
+  &.nds-lg {
+    --star-size: 48px;
+
+    @include mobile {
+      --star-size: 40px;
+    }
+  }
 }
 
 // ==============================================
@@ -158,16 +165,6 @@
   // Container-level pressed for brand
   &.nds-brand[data-state~="pressed"] {
     color: var(--_star-pressed);
-  }
-}
-
-// ==============================================
-// RESPONSIVE BEHAVIOR
-// ==============================================
-
-@include mobile {
-  .nds-rating.nds-lg {
-    --star-size: 40px;
   }
 }
 

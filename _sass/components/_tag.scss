@@ -60,16 +60,17 @@
   // SIZE VARIATIONS
   // ==============================================
 
+  // MD is the default; the class keeps it in a parent that steps its tags (a list).
+  &.nds-md {
+    @include tag-md;
+  }
+
   &.nds-sm {
-    --_tag-height-base: 24px;
-    --_tag-fs-base: var(--typo-text-sm-FS);
-    --_tag-padding-inline-base: var(--spacing-md);
+    @include tag-sm;
   }
 
   &.nds-xs {
-    --_tag-height-base: 20px;
-    --_tag-fs-base: var(--typo-text-xs-FS);
-    --_tag-padding-inline-base: var(--spacing-md);
+    @include tag-xs;
   }
 
   // ==============================================

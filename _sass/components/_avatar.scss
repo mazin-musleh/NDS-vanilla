@@ -109,15 +109,15 @@
 }
 
 .nds-avatar.nds-lg {
-  --avatar-size: 48px;
+  @include avatar-lg;
 }
 
 .nds-avatar.nds-xl {
-  --avatar-size: 64px;
+  @include avatar-xl;
 }
 
 .nds-avatar.nds-2xl {
-  --avatar-size: 80px;
+  @include avatar-2xl;
 }
 
 .nds-avatar.nds-3xl {

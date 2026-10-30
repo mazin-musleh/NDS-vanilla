@@ -94,15 +94,11 @@
   }
 
   &.nds-sm {
-    --chip-size: 20px;
-    padding: var(--spacing-xs) var(--spacing-md);
-    font-size: var(--typo-text-xs-FS);
+    @include chip-sm;
   }
 
   &.nds-lg {
-    --chip-size: 32px;
-    padding: var(--spacing-md) var(--spacing-lg);
-    font-size: var(--typo-text-md-FS);
+    @include chip-lg;
   }
 
   // ==============================================

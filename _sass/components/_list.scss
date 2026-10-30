@@ -20,7 +20,14 @@
   }
 }
 
-// MD is the card's own size. SM and LG step every item one rung.
+// MD is the card's own size, but an avatar is XL, as in a single card's canon, and a tag and stars SM.
+// SM and LG step every item one rung.
+:where(.nds-list) > .nds-card {
+  @include avatar-xl;
+  @include tag-sm;
+  @include rating-sm;
+}
+
 .nds-list.nds-sm > .nds-card {
   @include card-sm;
 }

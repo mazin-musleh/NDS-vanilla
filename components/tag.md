@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "16/10/2026 - 05:49 AM"
+last_edit: "30/10/2026 - 02:00 PM"
 ---
 
 <section id="tag-overview" class="nds-content-section nds-doc-overview">
@@ -190,6 +190,7 @@ A row on `.nds-tag:not([data-status])` applies to a standard tag only, and a row
 - Pick the style by weight. A standard tag is light, or outline to stay quiet. A status tag is light, inverted to stand out, or ghost to stay quiet.
 - Keep labels to one to three words. A label longer than 160px ends with an ellipsis.
 - Put related tags in one `nds-tags` group, so they share the gap and wrap together.
+- In a [List](../components/list), leave the size class off. The list makes a tag SM, a small list (`nds-sm`) XS, and a large list (`nds-lg`) MD. To keep one tag at 32px there, give it `nds-md`.
 - Keep the label of an icon-only tag, and give its icon `aria-hidden="true"`. Screen readers read the label.
 - On a deep primary or dark surface, give the surface `data-theme="dark"`: every tag inside takes its dark-mode colors, status tags included. See [Dark Areas](../foundations/themes#dark-areas). For the DGA white look on a standard tag, add `nds-oncolor` instead.
 
@@ -261,7 +262,7 @@ Source: the `tag` group in `_sass/tokens/_components.scss`.
 
 - [Manage Records](../examples/manage-records): status tags in the rows of a table.
 - [Admin Console Demo](../examples/console-demo): status tags beside the figures.
-- [Faculty CV](../examples/faculty-cv): small tags for the type and the year of each publication.
+- [Faculty CV](../examples/faculty-cv): tags for the type and the year of each publication, sized by their List.
 - [Service Page Template](../templates/service-template): tags for a popular service and the system that runs it.
 - [Cards](../components/card): the status tag in the card header.
 - [Chips](../components/chips): labels the user clicks or removes.

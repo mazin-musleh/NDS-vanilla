@@ -59,12 +59,11 @@
   }
 
   &.nds-sm {
-    --featuredicon-size: 32px;
+    @include featured-icon-sm;
   }
 
   &.nds-lg {
-    --featuredicon-size: 48px;
-
+    @include featured-icon-lg;
   }
 
   &.nds-xl {

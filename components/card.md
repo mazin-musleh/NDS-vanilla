@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 11:19 AM"
+last_edit: "30/10/2026 - 01:44 PM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -467,7 +467,7 @@ Pick another component when:
 - `nds-center` centers the card's content, not the card. To center the card itself, center it with its container: `nds-center` on an `nds-grid`, or on an `nds-flex` wrapper for a single card.
 - To fill the container, use `nds-full` on a card, not `nds-full-width`. Inside a section, `nds-full-width` breaks out to the full screen width.
 - Put `.nds-card-actions` after `.nds-card-content`, not inside it. In a [modal](../components/modal), only the content scrolls. Actions inside the content still work there, because the modal pins them to the bottom.
-- Size the featured icon or avatar up (`nds-lg`, `nds-xl`) on statistic cards and in grids, where the icon carries the meaning.
+- Size the featured icon or avatar up (`nds-lg`, `nds-xl`) on a statistic card, where the icon carries the meaning. In a [List](../components/list), leave the size class off: the list's size sets it.
 - Show a price with `.nds-card-value`, not with a tag.
 - Keep the description to one or two lines. For longer text, [truncate](../utilities/truncate-text) it or link to a detail page.
 - Do not put a card inside a card. Use `.nds-card-meta` or a [definition list](../components/definition-list) inside the content.

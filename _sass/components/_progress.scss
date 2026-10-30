@@ -68,7 +68,7 @@
 
   // Size variants (default 64px via fallback)
   &.nds-md {
-    --progress-size: 80px;
+    @include progress-circle-md;
   }
 
   &.nds-lg {

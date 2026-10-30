@@ -245,7 +245,7 @@ sidemenu_mode: false
                                 </div>
                                 <div class="nds-card-meta">
                                     <div class="nds-card-tags">
-                                        <span class="nds-tag nds-green nds-rounded nds-sm"><span class="nds-label">2009</span></span>
+                                        <span class="nds-tag nds-green nds-rounded"><span class="nds-label">2009</span></span>
                                     </div>
                                 </div>
                             </div>
@@ -265,7 +265,7 @@ sidemenu_mode: false
                                 </div>
                                 <div class="nds-card-meta">
                                     <div class="nds-card-tags">
-                                        <span class="nds-tag nds-green nds-rounded nds-sm"><span class="nds-label">2005</span></span>
+                                        <span class="nds-tag nds-green nds-rounded"><span class="nds-label">2005</span></span>
                                     </div>
                                 </div>
                             </div>
@@ -285,7 +285,7 @@ sidemenu_mode: false
                                 </div>
                                 <div class="nds-card-meta">
                                     <div class="nds-card-tags">
-                                        <span class="nds-tag nds-green nds-rounded nds-sm"><span class="nds-label">2002</span></span>
+                                        <span class="nds-tag nds-green nds-rounded"><span class="nds-label">2002</span></span>
                                     </div>
                                 </div>
                             </div>
@@ -318,8 +318,8 @@ sidemenu_mode: false
                                 </div>
                                 <div class="nds-card-meta">
                                     <div class="nds-card-tags">
-                                        <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Journal article</span></span>
-                                        <span class="nds-tag nds-green nds-rounded nds-sm"><span class="nds-label">2024</span></span>
+                                        <span class="nds-tag nds-blue"><span class="nds-label">Journal article</span></span>
+                                        <span class="nds-tag nds-green nds-rounded"><span class="nds-label">2024</span></span>
                                     </div>
                                 </div>
                             </div>
@@ -338,8 +338,8 @@ sidemenu_mode: false
                                 </div>
                                 <div class="nds-card-meta">
                                     <div class="nds-card-tags">
-                                        <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Journal article</span></span>
-                                        <span class="nds-tag nds-green nds-rounded nds-sm"><span class="nds-label">2024</span></span>
+                                        <span class="nds-tag nds-blue"><span class="nds-label">Journal article</span></span>
+                                        <span class="nds-tag nds-green nds-rounded"><span class="nds-label">2024</span></span>
                                     </div>
                                 </div>
                             </div>
@@ -358,8 +358,8 @@ sidemenu_mode: false
                                 </div>
                                 <div class="nds-card-meta">
                                     <div class="nds-card-tags">
-                                        <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Journal article</span></span>
-                                        <span class="nds-tag nds-green nds-rounded nds-sm"><span class="nds-label">2023</span></span>
+                                        <span class="nds-tag nds-blue"><span class="nds-label">Journal article</span></span>
+                                        <span class="nds-tag nds-green nds-rounded"><span class="nds-label">2023</span></span>
                                     </div>
                                 </div>
                             </div>
@@ -378,8 +378,8 @@ sidemenu_mode: false
                                 </div>
                                 <div class="nds-card-meta">
                                     <div class="nds-card-tags">
-                                        <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Conference paper</span></span>
-                                        <span class="nds-tag nds-green nds-rounded nds-sm"><span class="nds-label">2023</span></span>
+                                        <span class="nds-tag nds-gray"><span class="nds-label">Conference paper</span></span>
+                                        <span class="nds-tag nds-green nds-rounded"><span class="nds-label">2023</span></span>
                                     </div>
                                 </div>
                             </div>
@@ -398,8 +398,8 @@ sidemenu_mode: false
                                 </div>
                                 <div class="nds-card-meta">
                                     <div class="nds-card-tags">
-                                        <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Journal article</span></span>
-                                        <span class="nds-tag nds-green nds-rounded nds-sm"><span class="nds-label">2022</span></span>
+                                        <span class="nds-tag nds-blue"><span class="nds-label">Journal article</span></span>
+                                        <span class="nds-tag nds-green nds-rounded"><span class="nds-label">2022</span></span>
                                     </div>
                                 </div>
                             </div>
@@ -418,8 +418,8 @@ sidemenu_mode: false
                                 </div>
                                 <div class="nds-card-meta">
                                     <div class="nds-card-tags">
-                                        <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Journal article</span></span>
-                                        <span class="nds-tag nds-green nds-rounded nds-sm"><span class="nds-label">2022</span></span>
+                                        <span class="nds-tag nds-blue"><span class="nds-label">Journal article</span></span>
+                                        <span class="nds-tag nds-green nds-rounded"><span class="nds-label">2022</span></span>
                                     </div>
                                 </div>
                             </div>
@@ -438,8 +438,8 @@ sidemenu_mode: false
                                 </div>
                                 <div class="nds-card-meta">
                                     <div class="nds-card-tags">
-                                        <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Conference paper</span></span>
-                                        <span class="nds-tag nds-green nds-rounded nds-sm"><span class="nds-label">2021</span></span>
+                                        <span class="nds-tag nds-gray"><span class="nds-label">Conference paper</span></span>
+                                        <span class="nds-tag nds-green nds-rounded"><span class="nds-label">2021</span></span>
                                     </div>
                                 </div>
                             </div>
@@ -458,8 +458,8 @@ sidemenu_mode: false
                                 </div>
                                 <div class="nds-card-meta">
                                     <div class="nds-card-tags">
-                                        <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Journal article</span></span>
-                                        <span class="nds-tag nds-green nds-rounded nds-sm"><span class="nds-label">2021</span></span>
+                                        <span class="nds-tag nds-blue"><span class="nds-label">Journal article</span></span>
+                                        <span class="nds-tag nds-green nds-rounded"><span class="nds-label">2021</span></span>
                                     </div>
                                 </div>
                             </div>
@@ -478,8 +478,8 @@ sidemenu_mode: false
                                 </div>
                                 <div class="nds-card-meta">
                                     <div class="nds-card-tags">
-                                        <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Conference paper</span></span>
-                                        <span class="nds-tag nds-green nds-rounded nds-sm"><span class="nds-label">2020</span></span>
+                                        <span class="nds-tag nds-gray"><span class="nds-label">Conference paper</span></span>
+                                        <span class="nds-tag nds-green nds-rounded"><span class="nds-label">2020</span></span>
                                     </div>
                                 </div>
                             </div>
@@ -498,8 +498,8 @@ sidemenu_mode: false
                                 </div>
                                 <div class="nds-card-meta">
                                     <div class="nds-card-tags">
-                                        <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Journal article</span></span>
-                                        <span class="nds-tag nds-green nds-rounded nds-sm"><span class="nds-label">2019</span></span>
+                                        <span class="nds-tag nds-blue"><span class="nds-label">Journal article</span></span>
+                                        <span class="nds-tag nds-green nds-rounded"><span class="nds-label">2019</span></span>
                                     </div>
                                 </div>
                             </div>

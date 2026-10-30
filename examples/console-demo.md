@@ -556,7 +556,7 @@ hideFeedback: true
                     {% for user in site.data.content.users %}
                     <li class="nds-card nds-page-item">
                         <div class="nds-card-header">
-                            <div class="nds-avatar nds-2xl">
+                            <div class="nds-avatar">
                                 {% if user.avatar %}
                                 <img src="{{ user.avatar | relative_url }}" alt="{{ user.name }}" loading="lazy">
                                 {% else %}
@@ -568,15 +568,15 @@ hideFeedback: true
                             <div class="nds-card-text">
                                 <div class="nds-card-corner">
                                     {% if user.status == "active" %}
-                                    <span class="nds-tag nds-xs" data-status="success">
+                                    <span class="nds-tag" data-status="success">
                                         <span class="nds-label" data-filter="status" data-filter-value="active">Active</span>
                                     </span>
                                     {% elsif user.status == "away" %}
-                                    <span class="nds-tag nds-xs" data-status="warning">
+                                    <span class="nds-tag" data-status="warning">
                                         <span class="nds-label" data-filter="status" data-filter-value="away">Away</span>
                                     </span>
                                     {% elsif user.status == "offline" %}
-                                    <span class="nds-tag nds-xs" data-status="neutral">
+                                    <span class="nds-tag" data-status="neutral">
                                         <span class="nds-label" data-filter="status" data-filter-value="offline">Offline</span>
                                     </span>
                                     {% endif %}
@@ -586,7 +586,7 @@ hideFeedback: true
                             </div>
                             <div class="nds-card-meta">
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-blue nds-sm">
+                                    <span class="nds-tag nds-blue">
                                         <span class="nds-label" data-filter="department">{{ user.department }}</span>
                                     </span>
                                 </div>

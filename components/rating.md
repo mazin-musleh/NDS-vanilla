@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "30/10/2026 - 02:27 PM"
 ---
 
 <section id="rating-overview" class="nds-content-section nds-doc-overview">
@@ -292,6 +292,7 @@ The Menu structure puts a display rating and a vote count in a [Dropmenu](../com
 
 - Use five stars. Users expect five.
 - Use `nds-xs` or `nds-sm` next to a title or a list item. Use the default size in most layouts. Use `nds-lg` for a featured review.
+- In a [List](../components/list), leave the size class off. The list makes the stars SM, a small list (`nds-sm`) XS, and a large list (`nds-lg`) MD.
 - Set `data-rating` to the score on a display rating. Set it to `0` on an interactive rating that collects a new score.
 - Do not use a rating for a yes or no choice. Use a [Switch](../components/switch).
 - Do not use a rating to show progress. Use [Progress](../components/progress).

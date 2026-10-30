@@ -47,13 +47,7 @@
     }
 
     &.nds-lg {
-        --_date-tile-width: var(--date-tile-width, 72px);
-        --_date-tile-range-width: var(--date-tile-width, 96px);
-        --_date-tile-day-FS: var(--typo-display-xs-FS);
-        --_date-tile-day-LH: var(--typo-display-xs-LH);
-        --_date-tile-text-FS: var(--typo-text-sm-FS);
-        --_date-tile-text-LH: var(--typo-text-sm-LH);
-        --_date-tile-padding: var(--spacing-sm) var(--spacing-md);
+        @include date-tile-lg;
     }
 }
 

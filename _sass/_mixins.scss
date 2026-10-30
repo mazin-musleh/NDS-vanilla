@@ -412,6 +412,61 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     --_date-tile-padding: var(--spacing-xs) var(--spacing-sm);
 }
 
+@mixin date-tile-lg {
+    --_date-tile-width: var(--date-tile-width, 72px);
+    --_date-tile-range-width: var(--date-tile-width, 96px);
+    --_date-tile-day-FS: var(--typo-display-xs-FS);
+    --_date-tile-day-LH: var(--typo-display-xs-LH);
+    --_date-tile-text-FS: var(--typo-text-sm-FS);
+    --_date-tile-text-LH: var(--typo-text-sm-LH);
+    --_date-tile-padding: var(--spacing-sm) var(--spacing-md);
+}
+
+// Part steps a parent shares with the part's own size class. A knob step on a parent
+// reaches only a part with no size class: the class sets the knob on the part itself.
+@mixin featured-icon-sm { --featuredicon-size: 32px; }
+@mixin featured-icon-lg { --featuredicon-size: 48px; }
+@mixin avatar-lg { --avatar-size: 48px; }
+@mixin avatar-xl { --avatar-size: 64px; }
+@mixin avatar-2xl { --avatar-size: 80px; }
+@mixin progress-circle-md { --progress-size: 80px; }
+@mixin rating-xs { --star-size: 16px; }
+@mixin rating-sm { --star-size: 24px; }
+@mixin rating-md { --star-size: 32px; } // the default, which has no class
+
+// -base values: a parent's step reaches a tag with no size class, and a --tag-* knob still wins.
+// MD resets them: the tag's own fallbacks are its MD size.
+@mixin tag-md {
+    --_tag-height-base: initial;
+    --_tag-fs-base: initial;
+    --_tag-padding-inline-base: initial;
+}
+
+@mixin tag-sm {
+    --_tag-height-base: 24px;
+    --_tag-fs-base: var(--typo-text-sm-FS);
+    --_tag-padding-inline-base: var(--spacing-md);
+}
+
+@mixin tag-xs {
+    --_tag-height-base: 20px;
+    --_tag-fs-base: var(--typo-text-xs-FS);
+    --_tag-padding-inline-base: var(--spacing-md);
+}
+
+// The chip sets its default on itself, so a parent applies these to the chip.
+@mixin chip-sm {
+    --chip-size: 20px;
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--typo-text-xs-FS);
+}
+
+@mixin chip-lg {
+    --chip-size: 32px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: var(--typo-text-md-FS);
+}
+
 // Every card knob at one value: the nested-card reset and a list's boundary write them all.
 @mixin card-knobs($value) {
     --card-bg: #{$value};
@@ -443,26 +498,69 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 
 // Card SM and LG steps: a list's size classes apply them, and its narrow rule the box half.
 // Not card classes: on a modal card, .nds-sm is the modal's width.
+// Each part steps one rung from its default, and only when it has no size class.
+// A button already at its largest size has no LG step; a ring has no SM.
+// The list sets an avatar to XL, and a tag and stars to SM, as the card canon writes them:
+// they step to LG and 2XL, XS and MD.
 @mixin card-sm-box {
-    --featuredicon-size: 32px;
+    @include featured-icon-sm;
+    @include avatar-lg;
     --_card-gap-base: var(--spacing-lg);
+
+    .nds-date-tile:not(.nds-sm, .nds-md, .nds-lg) {
+        @include date-tile-sm;
+    }
 }
 
 @mixin card-sm {
     @include card-sm-box;
+    @include rating-xs;
+    @include tag-xs;
     --_card-title-FS-base: var(--typo-text-md-FS);
     --_card-title-LH-base: var(--typo-text-md-LH);
     --_card-description-FS-base: var(--typo-text-sm-FS);
     --_card-description-LH-base: var(--typo-text-sm-LH);
+    --_card-number-FS-base: var(--typo-display-clamp-md-FS);
+    --_card-image-width-base: 120px;
+
+    .nds-chip:not(.nds-sm, .nds-md, .nds-lg) {
+        @include chip-sm;
+    }
+
+    .nds-meta:not(.nds-sm, .nds-md, .nds-lg) {
+        @include meta-sm;
+    }
+
+    .nds-btn:not(.nds-sm, .nds-md, .nds-lg) {
+        @include btn-md;
+    }
 }
 
 @mixin card-lg {
-    --featuredicon-size: 48px;
+    @include featured-icon-lg;
+    @include avatar-2xl;
+    @include tag-md;
+    @include progress-circle-md;
+    @include rating-md;
     --_card-gap-base: var(--spacing-4xl);
     --_card-title-FS-base: var(--typo-text-xl-FS);
     --_card-title-LH-base: var(--typo-text-xl-LH);
     --_card-description-FS-base: var(--typo-text-lg-FS);
     --_card-description-LH-base: var(--typo-text-lg-LH);
+    --_card-number-FS-base: var(--typo-display-clamp-xl-FS);
+    --_card-image-width-base: 200px;
+
+    .nds-date-tile:not(.nds-sm, .nds-md, .nds-lg) {
+        @include date-tile-lg;
+    }
+
+    .nds-chip:not(.nds-sm, .nds-md, .nds-lg) {
+        @include chip-lg;
+    }
+
+    .nds-meta:not(.nds-sm, .nds-md, .nds-lg) {
+        @include meta-lg;
+    }
 }
 
 // Quote MD step: the .nds-md class and the phone rule share it.

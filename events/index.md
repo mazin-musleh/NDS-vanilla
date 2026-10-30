@@ -84,11 +84,11 @@ sidemenu_mode: false
                             <p class="nds-card-description">{{ ev.description }}</p>
                         </div>
                         <div class="nds-card-tags">
-                            <span class="nds-tag nds-blue nds-sm">
+                            <span class="nds-tag nds-blue">
                                 <span class="nds-label" data-filter="category">{{ ev.category }}</span>
                             </span>
                             {% for tag in ev.tags %}
-                            <span class="nds-tag nds-gray nds-sm">
+                            <span class="nds-tag nds-gray">
                                 <span class="nds-label" data-filter="tech">{{ tag }}</span>
                             </span>
                             {% endfor %}

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/10/2026 - 01:25 PM"
+last_edit: "30/10/2026 - 01:44 PM"
 ---
 
 <section id="avatar-overview" class="nds-content-section nds-doc-overview">
@@ -263,7 +263,8 @@ The Link, Menu trigger and Button structures take any of the three contents: a p
 - Use an icon avatar for an anonymous user or a system account, where no one is named.
 - Write `alt` text that names the person. Use `alt=""` only when the name shows in text next to the avatar.
 - Give a link or button avatar a name. A photo names it through its `alt`. An avatar with initials or an icon needs `aria-label`, such as `aria-label="Open the user menu"`.
-- Pick the size by place: XS or SM in a line of text or a table row, MD or LG in a card, XL and larger in a profile header.
+- Pick the size by place: XS or SM in a line of text or a table row, XL in a card, 3XL in a profile header.
+- In a [List](../components/list), leave the size class off. The list makes the avatar XL, a small list (`nds-sm`) LG, and a large list (`nds-lg`) 2XL.
 - In a group, set the size on `nds-avatar-group`. The group size replaces a size class on an avatar inside it.
 - Use a group to show the members of a team or the people on a task in little space.
 - End a long group with an initials avatar that counts the people it does not show, such as `+9`.
@@ -308,7 +309,7 @@ Source: the `avatar` group in `_sass/tokens/_components.scss`.
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- [Admin Console Demo](../examples/console-demo): a 2XL avatar in each card of the team directory, with an icon when there is no photo.
+- [Admin Console Demo](../examples/console-demo): an avatar in each item of the team directory, a List, with an icon when there is no photo.
 - [Faculty Profile](../examples/faculty): a 3XL photo with an image border beside the page title.
 - [Faculty CV](../examples/faculty-cv): a photo avatar in the hero, set by `hero_avatar`.
 - [Cards](../components/card): an avatar in the card header.

@@ -114,7 +114,7 @@ sidemenu_mode: false
                         </div>
                         <div class="nds-card-tags">
                             {% for label in item.labels %}
-                            <span class="nds-tag nds-gray nds-sm">
+                            <span class="nds-tag nds-gray">
                                 <span class="nds-label" {% if forloop.first %} data-filter="category" {% endif %}>{{ label }}</span>
                             </span>
                             {% endfor %}

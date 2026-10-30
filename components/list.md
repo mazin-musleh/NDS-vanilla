@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 11:19 AM"
+last_edit: "30/10/2026 - 02:27 PM"
 ---
 
 <section id="list-overview" class="nds-content-section nds-doc-overview">
@@ -255,6 +255,7 @@ Icons and Icon color options go on every icon: write the class on each `.nds-fea
 - A list fills its parent's width. In a box that sizes to its content (an inline block, a table cell, a flex row that centers), give the list a width: it measures itself to step down when narrow, so it cannot size the box.
 - Set the size, the layout and the box on the list, never on one item: the list's class wins, and the items line up.
 - Give each icon its own look and color classes (`nds-subtle`, `nds-green`, …), so one icon can differ. An item may hold an avatar or an image instead of an icon.
+- Leave the size class off an icon, an avatar, a tag or a rating: the list sizes it. An avatar is XL, LG in a small list (`nds-sm`) and 2XL in a large one (`nds-lg`). A tag or a rating is SM, XS in a small list and MD in a large one.
 - Hide every icon from screen readers with `aria-hidden="true"`. The title names the item.
 - Put the list after a heading that says what the features are for.
 
