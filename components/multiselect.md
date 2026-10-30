@@ -272,11 +272,11 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
-        <li class="nds-card nds-horizontal">
+      <ul class="nds-list nds-grid nds-flat nds-divided-rows nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -286,10 +286,10 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-tag-01" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-tag-01" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -299,10 +299,10 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-file-validation" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-file-validation" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -312,10 +312,10 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-database-01" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-database-01" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -325,10 +325,10 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-cursor-pointer-01" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-cursor-pointer-01" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -338,10 +338,10 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -351,10 +351,10 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-voice" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-voice" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -364,10 +364,10 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">

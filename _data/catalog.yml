@@ -548,7 +548,7 @@
   category: "Content"
   tags: ["CSS"]
   url: "/components/feature-list.html"
-  scss: _sass/components/_feature-list.scss
+  scss: _sass/components/_list.scss
 
 - title: "Featured Icons"
   description: "Decorative icon containers with shape and color options"

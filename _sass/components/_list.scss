@@ -1,0 +1,44 @@
+/**
+ * NDS List
+ * A set of cards in a grid (ul.nds-list.nds-grid > li.nds-card) that share one look.
+ * The card's own rules answer to the list's look classes (nds-stroke, nds-shadow, nds-flat,
+ * nds-horizontal, nds-reverse, nds-middle, nds-center); this file holds the size and the layout.
+ */
+
+@use '../mixins' as *;
+
+.nds-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  line-height: inherit; // the reset's 1.5 is for text items
+  // The list is the ruler: a narrow list steps its items down, on any screen.
+  container: nds-list / inline-size;
+}
+
+// MD is the card's own size. SM and LG step every item one rung.
+.nds-list.nds-sm > .nds-card {
+  @include card-sm;
+}
+
+.nds-list.nds-lg > .nds-card {
+  @include card-lg;
+}
+
+// Only a list with no size class steps; the text keeps its size and wraps.
+@container nds-list (width < 400px) {
+  :where(.nds-list:not(.nds-sm, .nds-lg)) > .nds-card {
+    @include card-sm-box;
+  }
+}
+
+// One column until the author sets --max-col: a list stacks, where a bare grid puts every item in one row.
+// With --min-width, set --max-col: auto-fit too. After Grid's sheet, so it wins the tie with Grid's reset.
+:where(.nds-list) {
+  --max-col: 1;
+}
+
+// In a card, the list is a fresh start: the outer card's knobs stop here, and the list's own reach its items.
+:where(.nds-card .nds-list) {
+  @include card-knobs(initial);
+}

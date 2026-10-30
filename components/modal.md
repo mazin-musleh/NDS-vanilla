@@ -239,11 +239,11 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
-        <li class="nds-card nds-horizontal">
+      <ul class="nds-list nds-grid nds-flat nds-divided-rows nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -253,10 +253,10 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-focus-point" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-focus-point" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -266,10 +266,10 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -279,10 +279,10 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paint-board" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-paint-board" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -292,10 +292,10 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-lock-key" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-lock-key" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -305,10 +305,10 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -318,10 +318,10 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-mobile-programming-01" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-mobile-programming-01" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -331,10 +331,10 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-motion-02" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-motion-02" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -344,10 +344,10 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-transition-left" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-transition-left" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -357,10 +357,10 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-code-circle" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-code-circle" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">

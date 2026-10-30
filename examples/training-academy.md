@@ -457,11 +457,11 @@ last_edit: "24/10/2026 - 11:27 PM"
             <p class="nds-section-description">Courses built for government teams, taught by people who do the work.</p>
         </div>
         <div class="nds-section-body">
-            <ul class="nds-feature-list nds-grid nds-icons-subtle" style="--max-col: 3; --mid-col: 2; --min-col: 1; --gap: var(--spacing-4xl);">
-                <li class="nds-card nds-horizontal">
+            <ul class="nds-list nds-grid nds-flat nds-horizontal" style="--max-col: 3; --mid-col: 2; --min-col: 1; --gap: var(--spacing-4xl);">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-certificate-01" aria-hidden="true"></i></span>
+                            <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-certificate-01" aria-hidden="true"></i></span>
                         </div>
                     </div>
                     <div class="nds-card-content">
@@ -471,10 +471,10 @@ last_edit: "24/10/2026 - 11:27 PM"
                         </div>
                     </div>
                 </li>
-                <li class="nds-card nds-horizontal">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-teacher" aria-hidden="true"></i></span>
+                            <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-teacher" aria-hidden="true"></i></span>
                         </div>
                     </div>
                     <div class="nds-card-content">
@@ -484,10 +484,10 @@ last_edit: "24/10/2026 - 11:27 PM"
                         </div>
                     </div>
                 </li>
-                <li class="nds-card nds-horizontal">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-laptop" aria-hidden="true"></i></span>
+                            <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-laptop" aria-hidden="true"></i></span>
                         </div>
                     </div>
                     <div class="nds-card-content">
@@ -497,10 +497,10 @@ last_edit: "24/10/2026 - 11:27 PM"
                         </div>
                     </div>
                 </li>
-                <li class="nds-card nds-horizontal">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i></span>
+                            <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i></span>
                         </div>
                     </div>
                     <div class="nds-card-content">
@@ -510,10 +510,10 @@ last_edit: "24/10/2026 - 11:27 PM"
                         </div>
                     </div>
                 </li>
-                <li class="nds-card nds-horizontal">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-calendar-check-01" aria-hidden="true"></i></span>
+                            <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-calendar-check-01" aria-hidden="true"></i></span>
                         </div>
                     </div>
                     <div class="nds-card-content">
@@ -523,10 +523,10 @@ last_edit: "24/10/2026 - 11:27 PM"
                         </div>
                     </div>
                 </li>
-                <li class="nds-card nds-horizontal">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-mentoring" aria-hidden="true"></i></span>
+                            <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-mentoring" aria-hidden="true"></i></span>
                         </div>
                     </div>
                     <div class="nds-card-content">

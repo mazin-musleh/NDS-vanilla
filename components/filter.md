@@ -569,11 +569,11 @@ Sort is not a filter value. Decide by what the server returns. All matching item
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
-        <li class="nds-card nds-horizontal">
+      <ul class="nds-list nds-grid nds-flat nds-divided-rows nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -583,10 +583,10 @@ Sort is not a filter value. Decide by what the server returns. All matching item
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-link-circle-02" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-link-circle-02" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -596,10 +596,10 @@ Sort is not a filter value. Decide by what the server returns. All matching item
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-search-01" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-search-01" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -609,10 +609,10 @@ Sort is not a filter value. Decide by what the server returns. All matching item
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-tag-01" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-tag-01" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -622,10 +622,10 @@ Sort is not a filter value. Decide by what the server returns. All matching item
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-grid" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-layout-grid" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -635,10 +635,10 @@ Sort is not a filter value. Decide by what the server returns. All matching item
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -648,10 +648,10 @@ Sort is not a filter value. Decide by what the server returns. All matching item
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-view-off" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-view-off" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -661,10 +661,10 @@ Sort is not a filter value. Decide by what the server returns. All matching item
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-flash" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-flash" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -674,10 +674,10 @@ Sort is not a filter value. Decide by what the server returns. All matching item
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-keyboard" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -687,10 +687,10 @@ Sort is not a filter value. Decide by what the server returns. All matching item
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-code" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-code" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">

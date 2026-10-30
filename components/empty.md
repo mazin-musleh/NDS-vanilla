@@ -108,7 +108,7 @@ Add and remove items to watch the placeholder.
 <script type="text/html" id="empty-live" data-canon data-code="none">
 <div class="nds-flex nds-col">
   <div class="nds-card nds-stroke" style="--card-width: 300px;">
-    <ul id="empty-live-list" class="nds-feature-list nds-grid nds-divided-rows nds-empty" data-empty-message="No requests yet"></ul>
+    <ul id="empty-live-list" class="nds-list nds-grid nds-flat nds-divided-rows nds-empty" data-empty-message="No requests yet"></ul>
   </div>
   <div class="nds-flex nds-center">
     <button class="nds-btn nds-primary nds-sm" type="button" data-empty-live="add">
@@ -151,11 +151,11 @@ In a table, the placeholder is one row with one cell across every column. The sc
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
-        <li class="nds-card nds-horizontal">
+      <ul class="nds-list nds-grid nds-flat nds-divided-rows nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -165,10 +165,10 @@ In a table, the placeholder is one row with one cell across every column. The sc
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -178,10 +178,10 @@ In a table, the placeholder is one row with one cell across every column. The sc
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-translation" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-translation" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -191,10 +191,10 @@ In a table, the placeholder is one row with one cell across every column. The sc
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-refresh" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-refresh" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -204,10 +204,10 @@ In a table, the placeholder is one row with one cell across every column. The sc
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-view-off" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-view-off" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">

@@ -12,32 +12,25 @@
 // A card's knobs stop at a card nested inside it; a knob on any other parent (a list,
 // a section) reaches every card within. :where() keeps the reset at zero specificity,
 // so a consumer's single-class knob rule on the nested card still wins.
-:where(.nds-card .nds-card) {
+// A list item skips it: a list in a card stops the outer card's knobs itself, and passes its own.
+:where(.nds-card .nds-card:not(.nds-list > *)) {
+  @include card-knobs(initial);
+}
+
+// A color or status card keeps its tint over a knob a parent sets; a knob on the card itself still wins.
+:where(.nds-card:is(.nds-color, [data-status], .nds-neutral, .nds-gray, .nds-yellow, .nds-red, .nds-blue, .nds-green)) {
+  --card-title-color: initial;
+  --card-subtitle-color: initial;
+  --card-number-color: initial;
+  --card-border-color-hover: initial;
+  --card-border-color-active: initial;
+}
+
+:where(.nds-card.nds-color) {
   --card-bg: initial;
   --card-bg-hover: initial;
   --card-bg-active: initial;
   --card-border-color: initial;
-  --card-border-color-hover: initial;
-  --card-border-color-active: initial;
-  --card-padding: initial;
-  --card-padding-block: initial;
-  --card-padding-inline: initial;
-  --card-gap: initial;
-  --card-radius: initial;
-  --card-text-color: initial;
-  --card-title-color: initial;
-  --card-subtitle-color: initial;
-  --card-number-color: initial;
-  --card-rating-color: initial;
-  --card-title-FS: initial;
-  --card-title-LH: initial;
-  --card-subtitle-FS: initial;
-  --card-subtitle-LH: initial;
-  --card-description-FS: initial;
-  --card-description-LH: initial;
-  --card-width: initial;
-  --card-width-min: initial;
-  --card-width-max: initial;
 }
 
 .nds-card {
@@ -122,10 +115,11 @@
   }
 
   // Shadow variant
-  &.nds-shadow {
+  // A list's look class reaches its items: :where() keeps each rule at the card's own strength.
+  &:is(.nds-shadow, :where(.nds-list.nds-shadow) > *) {
     box-shadow: var(--shadow-md);
 
-    &:not(.nds-stroke) {
+    &:not(.nds-stroke, :where(.nds-list.nds-stroke) > *) {
       border: 1px solid var(--border-neutral-tertiary);
 
       &.nds-oncolor {
@@ -135,7 +129,7 @@
   }
 
   // Stroke variant
-  &.nds-stroke {
+  &:is(.nds-stroke, :where(.nds-list.nds-stroke) > *) {
     border: 1px solid var(--_card-border-color);
   }
 
@@ -145,7 +139,7 @@
     box-shadow: none;
   }
 
-  &.nds-horizontal {
+  &:is(.nds-horizontal, :where(.nds-list.nds-horizontal) > *) {
     flex-direction: row;
     // Actions are a SIBLING of the content, so a row card would line them up
     // beside it — squeezing the text and pushing the buttons past the card
@@ -196,7 +190,7 @@
 
     // Reverse: the header at the end side of the row, for a figure that closes it (a progress
     // ring). row-reverse, not order: the header stays first, so once the row breaks it is on top.
-    &.nds-reverse {
+    &:is(.nds-reverse, :where(.nds-list.nds-reverse) > *) {
       flex-direction: row-reverse;
     }
   }
@@ -212,6 +206,14 @@
     @include dark {
       --_card-bg-hover-base: var(--colors-primary-alpha-20);
     }
+  }
+
+  // Flat: no fill, no padding, a muted description, for items that read as text, not boxes.
+  // After the color fill, so a flat list keeps its items flat.
+  &:is(.nds-flat, :where(.nds-list.nds-flat) > *) {
+    --_card-bg-base: transparent;
+    --_card-padding-base: 0;
+    --_card-text-color-base: var(--text-secondary-paragraph);
   }
 
   &.nds-full {
@@ -234,7 +236,7 @@
     margin-inline: 0;
   }
 
-  &.nds-center {
+  &:is(.nds-center, :where(.nds-list.nds-center) > *) {
     :is(.nds-card-header, .nds-card-content > *, .nds-card-text > *, .nds-card-tags, .nds-card-actions) {
       align-items: center;
       justify-content: center;
@@ -253,12 +255,12 @@
   }
 
   // Short content sits in the middle of a taller card, or beside a taller header in a row card.
-  &.nds-middle :is(.nds-card-content, .nds-card-text) {
+  &:is(.nds-middle, :where(.nds-list.nds-middle) > *) :is(.nds-card-content, .nds-card-text) {
     justify-content: center;
   }
 
   // The text is a block: align-content centers its lines.
-  &.nds-middle .nds-card-text {
+  &:is(.nds-middle, :where(.nds-list.nds-middle) > *) .nds-card-text {
     align-content: center;
   }
 
@@ -315,7 +317,7 @@
   // A centred card centres its header too. Wins on source order over the
   // space-between rule above, which would otherwise pin the featured icon to
   // the start. The close button leaves the flow so it cannot pull it off-centre.
-  &.nds-center .nds-card-header {
+  &:is(.nds-center, :where(.nds-list.nds-center) > *) .nds-card-header {
     justify-content: center;
 
     .nds-close {
@@ -330,7 +332,7 @@
     height: 100%;
   }
 
-  &:not(.nds-center) .nds-card-featured-icon {
+  &:not(.nds-center, :where(.nds-list.nds-center) > *) .nds-card-featured-icon {
     align-self: flex-start;
   }
 
@@ -495,7 +497,7 @@
   // The corner is always written first in the text. Below a header it leaves the title line
   // for the card's top end corner, beside the header. A row card keeps it on the title line,
   // which already sits in that corner, until a narrow one stacks.
-  &:not(.nds-horizontal) > .nds-card-header ~ .nds-card-content > .nds-card-text > .nds-card-corner {
+  &:not(.nds-horizontal, :where(.nds-list.nds-horizontal) > *) > .nds-card-header ~ .nds-card-content > .nds-card-text > .nds-card-corner {
     position: absolute;
     top: calc(var(--_card-padding-block) + var(--_card-corner-inset));
     inset-inline-end: calc(var(--_card-padding-inline) + var(--_card-corner-inset));
@@ -508,7 +510,7 @@
     --_card-corner-inset: var(--spacing-md);
   }
 
-  &.nds-horizontal {
+  &:is(.nds-horizontal, :where(.nds-list.nds-horizontal) > *) {
     @container (width < 324px) {
       > .nds-card-content > .nds-card-text > .nds-card-corner {
         position: absolute;

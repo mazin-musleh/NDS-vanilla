@@ -57,11 +57,11 @@ bundle_sizes:
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
-                <ul class="nds-feature-list nds-grid nds-icons-circle" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
-                    <li class="nds-card nds-shadow nds-horizontal">
+                <ul class="nds-list nds-grid nds-shadow nds-horizontal" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
+                    <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-building-06" aria-hidden="true"></i></span>
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-building-06" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -71,10 +71,10 @@ bundle_sizes:
                             </div>
                         </div>
                     </li>
-                    <li class="nds-card nds-shadow nds-horizontal">
+                    <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-briefcase-01" aria-hidden="true"></i></span>
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-briefcase-01" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -84,10 +84,10 @@ bundle_sizes:
                             </div>
                         </div>
                     </li>
-                    <li class="nds-card nds-shadow nds-horizontal">
+                    <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-mortarboard-02" aria-hidden="true"></i></span>
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-mortarboard-02" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -97,10 +97,10 @@ bundle_sizes:
                             </div>
                         </div>
                     </li>
-                    <li class="nds-card nds-shadow nds-horizontal">
+                    <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-teaching" aria-hidden="true"></i></span>
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-teaching" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -389,11 +389,11 @@ bundle_sizes:
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
-                <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-circle" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
-                    <li class="nds-card nds-horizontal">
+                <ul class="nds-list nds-grid nds-flat nds-divided-rows nds-horizontal" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
+                    <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-plug-socket" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -403,10 +403,10 @@ bundle_sizes:
                             </div>
                         </div>
                     </li>
-                    <li class="nds-card nds-horizontal">
+                    <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-cpu-charge" aria-hidden="true"></i></span>
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-cpu-charge" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -416,10 +416,10 @@ bundle_sizes:
                             </div>
                         </div>
                     </li>
-                    <li class="nds-card nds-horizontal">
+                    <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-data-transfer-horizontal" aria-hidden="true"></i></span>
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-arrow-data-transfer-horizontal" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -429,10 +429,10 @@ bundle_sizes:
                             </div>
                         </div>
                     </li>
-                    <li class="nds-card nds-horizontal">
+                    <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paint-brush-01" aria-hidden="true"></i></span>
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-paint-brush-01" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -442,10 +442,10 @@ bundle_sizes:
                             </div>
                         </div>
                     </li>
-                    <li class="nds-card nds-horizontal">
+                    <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paint-board" aria-hidden="true"></i></span>
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-paint-board" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -455,10 +455,10 @@ bundle_sizes:
                             </div>
                         </div>
                     </li>
-                    <li class="nds-card nds-horizontal">
+                    <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-zap" aria-hidden="true"></i></span>
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-zap" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -468,10 +468,10 @@ bundle_sizes:
                             </div>
                         </div>
                     </li>
-                    <li class="nds-card nds-horizontal">
+                    <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -481,10 +481,10 @@ bundle_sizes:
                             </div>
                         </div>
                     </li>
-                    <li class="nds-card nds-horizontal">
+                    <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-code-circle" aria-hidden="true"></i></span>
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-code-circle" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -494,10 +494,10 @@ bundle_sizes:
                             </div>
                         </div>
                     </li>
-                    <li class="nds-card nds-horizontal">
+                    <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-chart-line-data-01" aria-hidden="true"></i></span>
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-chart-line-data-01" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -507,10 +507,10 @@ bundle_sizes:
                             </div>
                         </div>
                     </li>
-                    <li class="nds-card nds-horizontal">
+                    <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-dashboard-speed-01" aria-hidden="true"></i></span>
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-dashboard-speed-01" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -537,11 +537,11 @@ bundle_sizes:
                 <p>The project uses <a href="https://jekyllrb.com/" target="_blank">Jekyll</a>, a static site generator supported by GitHub Pages. It compiles templates, stylesheets, and data files into static HTML with no external toolchain.</p>
             </div>
             <div class="nds-block">
-                <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-circle" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
-                    <li class="nds-card nds-horizontal">
+                <ul class="nds-list nds-grid nds-flat nds-divided-rows nds-horizontal" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
+                    <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-artificial-intelligence-04" aria-hidden="true"></i></span>
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-artificial-intelligence-04" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -551,10 +551,10 @@ bundle_sizes:
                             </div>
                         </div>
                     </li>
-                    <li class="nds-card nds-horizontal">
+                    <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paint-brush-01" aria-hidden="true"></i></span>
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-paint-brush-01" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -564,10 +564,10 @@ bundle_sizes:
                             </div>
                         </div>
                     </li>
-                    <li class="nds-card nds-horizontal">
+                    <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-code" aria-hidden="true"></i></span>
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-code" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -577,10 +577,10 @@ bundle_sizes:
                             </div>
                         </div>
                     </li>
-                    <li class="nds-card nds-horizontal">
+                    <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-03" aria-hidden="true"></i></span>
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-layout-03" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -590,10 +590,10 @@ bundle_sizes:
                             </div>
                         </div>
                     </li>
-                    <li class="nds-card nds-horizontal">
+                    <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-database" aria-hidden="true"></i></span>
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-database" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">
@@ -603,10 +603,10 @@ bundle_sizes:
                             </div>
                         </div>
                     </li>
-                    <li class="nds-card nds-horizontal">
+                    <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-puzzle" aria-hidden="true"></i></span>
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-puzzle" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="nds-card-content">

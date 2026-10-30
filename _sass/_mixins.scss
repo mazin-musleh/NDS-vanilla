@@ -401,42 +401,6 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 // PROGRESS CIRCLE MIXINS
 // ==============================================
 
-// Featured icon looks: the icon's own classes and a parent's icon switches (Feature List's nds-icons-*) share them.
-@mixin featured-icon-circle {
-    border-radius: 50%;
-}
-
-@mixin featured-icon-outline {
-    background-color: transparent;
-    border: 2px solid currentColor;
-}
-
-// No tile, so the glyph would be twice the others' at the same size: it takes the next size down (the sizes step 8px).
-@mixin featured-icon-subtle {
-    --_featuredicon-size: calc(var(--featuredicon-size, 40px) - 8px);
-    background-color: transparent;
-    padding: 0;
-    overflow: visible;
-    font-size: var(--_featuredicon-size) !important;
-    line-height: 1 !important;
-}
-
-@mixin featured-icon-dark {
-    background-color: var(--_featuredicon-dark-bg);
-    border: 2px solid transparent;
-    color: var(--icon-oncolor); // text too, such as a stepper's number
-
-    :is(.nds-icon, i, svg) {
-        color: var(--icon-oncolor);
-    }
-
-    // Only the brand default, as the last fallback: a knob set here would beat the
-    // status a parent passes down. The status shades live in the featured icon's cascade.
-    @include dark {
-        --_featuredicon-dark-bg: var(--featuredicon-dark-bg-forced, var(--featuredicon-dark-bg, var(--colors-primary-700)));
-    }
-}
-
 // Date tile SM step: the .nds-sm class and a parent's container rule share it.
 @mixin date-tile-sm {
     --_date-tile-width: var(--date-tile-width, 48px);
@@ -446,6 +410,59 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     --_date-tile-text-FS: var(--typo-text-2xs-FS);
     --_date-tile-text-LH: var(--typo-text-2xs-LH);
     --_date-tile-padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+// Every card knob at one value: the nested-card reset and a list's boundary write them all.
+@mixin card-knobs($value) {
+    --card-bg: #{$value};
+    --card-bg-hover: #{$value};
+    --card-bg-active: #{$value};
+    --card-border-color: #{$value};
+    --card-border-color-hover: #{$value};
+    --card-border-color-active: #{$value};
+    --card-padding: #{$value};
+    --card-padding-block: #{$value};
+    --card-padding-inline: #{$value};
+    --card-gap: #{$value};
+    --card-radius: #{$value};
+    --card-text-color: #{$value};
+    --card-title-color: #{$value};
+    --card-subtitle-color: #{$value};
+    --card-number-color: #{$value};
+    --card-rating-color: #{$value};
+    --card-title-FS: #{$value};
+    --card-title-LH: #{$value};
+    --card-subtitle-FS: #{$value};
+    --card-subtitle-LH: #{$value};
+    --card-description-FS: #{$value};
+    --card-description-LH: #{$value};
+    --card-width: #{$value};
+    --card-width-min: #{$value};
+    --card-width-max: #{$value};
+}
+
+// Card SM and LG steps: a list's size classes apply them, and its narrow rule the box half.
+// Not card classes: on a modal card, .nds-sm is the modal's width.
+@mixin card-sm-box {
+    --featuredicon-size: 32px;
+    --_card-gap-base: var(--spacing-lg);
+}
+
+@mixin card-sm {
+    @include card-sm-box;
+    --_card-title-FS-base: var(--typo-text-md-FS);
+    --_card-title-LH-base: var(--typo-text-md-LH);
+    --_card-description-FS-base: var(--typo-text-sm-FS);
+    --_card-description-LH-base: var(--typo-text-sm-LH);
+}
+
+@mixin card-lg {
+    --featuredicon-size: 48px;
+    --_card-gap-base: var(--spacing-4xl);
+    --_card-title-FS-base: var(--typo-text-xl-FS);
+    --_card-title-LH-base: var(--typo-text-xl-LH);
+    --_card-description-FS-base: var(--typo-text-lg-FS);
+    --_card-description-LH-base: var(--typo-text-lg-LH);
 }
 
 // Quote MD step: the .nds-md class and the phone rule share it.

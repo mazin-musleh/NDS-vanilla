@@ -157,11 +157,11 @@ Pick another component when:
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
-        <li class="nds-card nds-horizontal">
+      <ul class="nds-list nds-grid nds-flat nds-divided-rows nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-colors" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-colors" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -171,10 +171,10 @@ Pick another component when:
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-chart-line-data-01" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-chart-line-data-01" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -184,10 +184,10 @@ Pick another component when:
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-align-left" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-text-align-left" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -197,10 +197,10 @@ Pick another component when:
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layout-top" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-layout-top" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -210,10 +210,10 @@ Pick another component when:
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -223,10 +223,10 @@ Pick another component when:
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-paint-bucket" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-paint-bucket" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">

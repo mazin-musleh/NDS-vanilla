@@ -2,13 +2,13 @@
 layout: page
 title: Feature List
 hero_title: Feature List - National Design System
-hero_description: A list of features, each with an icon, a title and one or two lines of text
+hero_description: A list of features, each with a title, one or two lines of text and often an icon
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 02:43 AM"
+last_edit: "30/10/2026 - 10:55 AM"
 ---
 
 <section id="feature-list-overview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "30/10/2026 - 02:43 AM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A feature list shows a set of features, benefits or reasons in a [grid](../layout/grid). The list is a `ul`, and each item is a [card](../components/card) with a [featured icon](../components/featured-icon), a title and a description. The list gives its cards a lighter look: no box, and a muted description.
+A feature list shows a set of features, benefits or reasons in a [grid](../layout/grid). The list is a `ul`, and each item is a [card](../components/card) with a title, a description and often a [featured icon](../components/featured-icon). Classes on the list give every item the same look: the size, the layout, and either no box (`nds-flat`) or a card box (`nds-stroke`, `nds-shadow`).
 
 Pick another component when:
 
@@ -37,7 +37,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body">
 <script type="text/html" id="feature-list-base" data-canon data-variants="feature-list-variants-table">
-<ul class="nds-feature-list nds-grid" style="--max-col: 2; --min-col: 1;">
+<ul class="nds-list nds-grid nds-flat" style="--max-col: 2; --min-col: 1;">
   <li class="nds-card">
     <div class="nds-card-header">
       <div class="nds-card-featured-icon">
@@ -103,35 +103,38 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-Layout, Color and Box options go on every item: write the class on each `li.nds-card`.
+Icons and Icon color options go on every icon: write the class on each `.nds-featured-icon`. The other options go on the list.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Columns | Two (default) | — | — | The canon writes `--max-col: 2` and `--min-col: 1`: two columns, and one on phones. Tablets take `--max-col` unless the list sets `--mid-col` |
-| Columns | One (hint: One item per row) | `--max-col: 1` | `.nds-feature-list` | One item per row. A list with no `--max-col` gets it too |
-| Columns | Minimum width (hint: As many columns as fit; the rest wrap) | `--min-width: 220px` | `.nds-feature-list` | As many columns as fit at a minimum width. Write `--max-col: auto-fit` too: the list's one-column default otherwise wins |
-| Columns | Minimum width (hint: As many columns as fit; the rest wrap) | `--max-col: auto-fit` | `.nds-feature-list` | As many columns as fit at a minimum width. Write `--min-width` too |
+| Columns | One (hint: One item per row) | `--max-col: 1` | `.nds-list` | One item per row. A list with no `--max-col` gets it too |
+| Columns | Minimum width (hint: As many columns as fit; the rest wrap) | `--min-width: 220px` | `.nds-list` | As many columns as fit at a minimum width. Write `--max-col: auto-fit` too: the list's one-column default otherwise wins |
+| Columns | Minimum width (hint: As many columns as fit; the rest wrap) | `--max-col: auto-fit` | `.nds-list` | As many columns as fit at a minimum width. Write `--min-width` too |
 | Layout | Stacked (default) | — | — | The icon above the text |
-| Layout | Row (hint: The icon beside the text) | `.nds-horizontal` | `.nds-feature-list > .nds-card` | The icon beside the text. Use it for a long list, or a list in a narrow column |
-| Layout | Centered | `.nds-center` | `.nds-feature-list > .nds-card` | The icon and the text centered. Use it for a short list of three or four items |
-| Size | SM | `.nds-sm` | `.nds-feature-list` | Smaller icons, text and gaps, for a list in a card or a side column |
+| Layout | Row (hint: The icon beside the text) | `.nds-horizontal` | `.nds-list` | The icon beside the text. Use it for a long list, or a list in a narrow column |
+| Layout | Centered | `.nds-center` | `.nds-list` | The icon and the text centered. Use it for a short list of three or four items |
+| Size | SM | `.nds-sm` | `.nds-list` | Smaller icons, text and gaps, for a list in a card or a side column |
 | Size | MD (default) | — | — | The card's own sizes: a 40px icon |
-| Size | LG | `.nds-lg` | `.nds-feature-list` | Larger icons, text and gaps, for a list that leads a page |
-| Icon style | Light (default) | — | — | A light fill in the icon's color |
-| Icon style | Outline | `.nds-icons-outline` | `.nds-feature-list` | No fill and a border in the icon's color |
-| Icon style | Dark (hint: A solid fill and a white icon) | `.nds-icons-dark` | `.nds-feature-list` | A solid fill and a white icon |
-| Icon style | Subtle (hint: The icon alone, with no container) | `.nds-icons-subtle` | `.nds-feature-list` | The icon alone, one size smaller. Use it where the list sits beside other content and must read lighter |
-| Circle icons | Circle icons | `.nds-icons-circle` | `.nds-feature-list:not(.nds-icons-subtle)` | Round icons. It combines with Outline and Dark |
-| Lines | Row lines (hint: A line between rows) | `.nds-divided-rows` | `.nds-feature-list` | A line between rows, in the middle of the gap |
-| Lines | All lines (hint: A line between rows and between columns) | `.nds-divided` | `.nds-feature-list` | A line between rows and between columns. Column lines show only in browsers that draw grid gap lines |
-| Color | Brand (default) | — | — | The brand color on the icons |
-| Color | Neutral | `.nds-neutral` | `.nds-feature-list > .nds-card` | A neutral icon. The title keeps its color. Also `.nds-gray` |
-| Color | Green | `.nds-green` | `.nds-feature-list > .nds-card` | Tints the title and the icon |
-| Color | Yellow | `.nds-yellow` | `.nds-feature-list > .nds-card` | Tints the title and the icon |
-| Color | Red | `.nds-red` | `.nds-feature-list > .nds-card` | Tints the title and the icon |
-| Color | Blue | `.nds-blue` | `.nds-feature-list > .nds-card` | Tints the title and the icon |
-| Box (any) | Stroke (hint: A card box with a border) | `.nds-stroke` | `.nds-feature-list > .nds-card` | Each item gets the card's fill and padding back, with a 1px border. It combines with Shadow |
-| Box (any) | Shadow (hint: A card box with a shadow) | `.nds-shadow` | `.nds-feature-list > .nds-card` | Each item gets the card's fill and padding back, with a shadow. It combines with Stroke |
+| Size | LG | `.nds-lg` | `.nds-list` | Larger icons, text and gaps, for a list that leads a page |
+| Icons (any) | Default (default) (hint: A light fill in the icon's color) | — | — | The icon as the canon writes it: a light fill in its color, with square corners |
+| Icons (any) | Outline (limit: 1 icon style) | `.nds-outline` | `.nds-list .nds-featured-icon` | No fill and a border in the icon's color. Not with Dark or Subtle |
+| Icons (any) | Dark (limit: 1 icon style) (hint: A solid fill and a white icon) | `.nds-dark` | `.nds-list .nds-featured-icon` | A solid fill and a white icon. Not with Outline or Subtle |
+| Icons (any) | Subtle (limit: 1 icon style) (hint: The icon alone, with no container) | `.nds-subtle` | `.nds-list .nds-featured-icon` | The icon alone, one size smaller. Use it where the list sits beside other content and must read lighter. Not with Outline, Dark or Circle |
+| Icons (any) | Circle (hint: Round icons) | `.nds-circle` | `.nds-list .nds-featured-icon:not(.nds-subtle)` | Round icons. It combines with Outline and Dark |
+| Icons (any) | None (hint: A title and a description only) | remove | `.nds-list > .nds-card > .nds-card-header` | Items with no header: a title and a description only |
+| Icon color | Brand (default) | — | `.nds-list .nds-featured-icon` | The brand color on the icons |
+| Icon color | Neutral | `.nds-neutral` | `.nds-list .nds-featured-icon` | A neutral icon. Also `.nds-gray` |
+| Icon color | Green | `.nds-green` | `.nds-list .nds-featured-icon` | A green icon |
+| Icon color | Yellow | `.nds-yellow` | `.nds-list .nds-featured-icon` | A yellow icon |
+| Icon color | Red | `.nds-red` | `.nds-list .nds-featured-icon` | A red icon |
+| Icon color | Blue | `.nds-blue` | `.nds-list .nds-featured-icon` | A blue icon |
+| Lines | None (default) | — | — | No lines between the items |
+| Lines | Row lines (hint: A line between rows) | `.nds-divided-rows` | `.nds-list` | A line between rows, in the middle of the gap |
+| Lines | All lines (hint: A line between rows and between columns) | `.nds-divided` | `.nds-list` | A line between rows and between columns. Column lines show only in browsers that draw grid gap lines |
+| Box (any) | Flat (default) (hint: No fill and no padding) | `.nds-flat` | `.nds-list:not(.nds-stroke, .nds-shadow)` | No fill and no padding, and a muted description: the items read as text, not boxes. Not with Stroke or Shadow |
+| Box (any) | Stroke (hint: A card box with a border) | `.nds-stroke` | `.nds-list:not(.nds-flat)` | Every item is a card box with a 1px border. Not with Flat. It combines with Shadow |
+| Box (any) | Shadow (hint: A card box with a shadow) | `.nds-shadow` | `.nds-list:not(.nds-flat)` | Every item is a card box with a shadow. Not with Flat. It combines with Stroke |
 {: #feature-list-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -144,24 +147,24 @@ Layout, Color and Box options go on every item: write the class on each `li.nds-
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
-        <li class="nds-card nds-horizontal">
+      <ul class="nds-list nds-grid nds-flat nds-divided-rows nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-layers-01" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Real Cards</span>
-              <p class="nds-card-description">Each item is a card. Its classes and knobs still work, so one item can differ from the others.</p>
+              <p class="nds-card-description">Each item is a card. Its knobs and its icon's classes still work, so one item can differ from the others.</p>
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-grid-view" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-grid-view" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -171,10 +174,10 @@ Layout, Color and Box options go on every item: write the class on each `li.nds-
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-font" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-text-font" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -184,36 +187,49 @@ Layout, Color and Box options go on every item: write the class on each `li.nds-
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-colors" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-smart-phone-01" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
             <div class="nds-card-text">
-              <span class="nds-card-title">Icon Look from the List</span>
-              <p class="nds-card-description">One class on the list sets the look of every icon. A class on one icon wins.</p>
+              <span class="nds-card-title">Fits Narrow Columns</span>
+              <p class="nds-card-description">A list under 400px wide makes its icons and gaps smaller. The text keeps its size. A size class written on the list stays as written.</p>
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-package" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-colors" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">One Look for Every Item</span>
+              <p class="nds-card-description">One class on the list gives every item the same box and layout: flat, a border, a shadow, a row or centered.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-package" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Lists Inside Cards</span>
-              <p class="nds-card-description">In a card, the items keep the list's look, not the look of a card inside a card.</p>
+              <p class="nds-card-description">In a card, the items take the list's look and knobs, not the outer card's.</p>
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-accessibility" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-accessibility" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -238,10 +254,8 @@ Layout, Color and Box options go on every item: write the class on each `li.nds-
 - Keep each item to a short title and one or two lines. An item that needs more is a [card](../components/card).
 - For more than one column, set `--max-col` on the list. Without it, the items stack in one column.
 - With `--min-width`, also write `--max-col: auto-fit`.
-- Write a layout class (`nds-horizontal`, `nds-center`) on every item, so the items line up.
-- Set the size and the icon look on the list, not on each icon. The `nds-icons-*` classes go on the list only.
-- For one icon that must differ, write the icon's own class on its `.nds-featured-icon`: `nds-outline`, `nds-dark`, `nds-subtle`, `nds-circle`, or a size such as `nds-lg`.
-- Write a box class (`nds-stroke`, `nds-shadow`) on every item, the same as a layout class. On one item only, it marks that item, such as a new one.
+- Set the size, the layout and the box on the list, never on one item: the list's class wins, and the items line up.
+- Give each icon its own look and color classes (`nds-subtle`, `nds-green`, …), so one icon can differ. An item may hold an avatar or an image instead of an icon.
 - Hide every icon from screen readers with `aria-hidden="true"`. The title names the item.
 - Put the list after a heading that says what the features are for.
 
@@ -259,17 +273,17 @@ Layout, Color and Box options go on every item: write the class on each `li.nds-
 ### CSS Custom Properties
 {: .nds-block-title}
 
-The list sets these card and icon knobs, and its items inherit them. Set one on the list to change every item, or on one card or icon to change that item.
+These card and icon knobs set on the list reach every item. Set one on one card or icon to change that item only. The list's classes change the defaults as the table says.
 
 | Property | Default | Controls |
 |---|---|---|
-| `--card-bg` | `transparent` | Item fill |
-| `--card-padding` | `0` | Item padding |
-| `--card-text-color` | `var(--text-secondary-paragraph)` | Description color |
+| `--card-bg` | the card's. `nds-flat`: `transparent` | Item fill |
+| `--card-padding` | the card's. `nds-flat`: `0` | Item padding |
+| `--card-text-color` | the card's. `nds-flat`: `var(--text-secondary-paragraph)` | Description color |
 | `--card-title-FS`, `--card-title-LH` | the card's: `--typo-text-lg-*` | Title size. `nds-sm` sets `--typo-text-md-*`, `nds-lg` sets `--typo-text-xl-*` |
 | `--card-description-FS`, `--card-description-LH` | the card's: `--typo-text-md-*` | Description size. `nds-sm` sets `--typo-text-sm-*`, `nds-lg` sets `--typo-text-lg-*` |
-| `--card-gap` | the card's: `var(--spacing-3xl)`, `var(--spacing-xl)` on phones | Space between the icon and the text. `nds-sm` sets `var(--spacing-lg)`, `nds-lg` sets `var(--spacing-4xl)` |
-| `--featuredicon-size` | `40px` | Icon size. `nds-sm` sets `32px`, `nds-lg` sets `48px` |
+| `--card-gap` | the card's: `var(--spacing-3xl)`, `var(--spacing-xl)` on phones | Space between the icon and the text. `nds-sm` and a list under 400px wide set `var(--spacing-lg)`, `nds-lg` sets `var(--spacing-4xl)` |
+| `--featuredicon-size` | `40px` | Icon size. `nds-sm` and a list under 400px wide set `32px`, `nds-lg` sets `48px` |
 {: .nds-table .nds-responsive}
 
 The list is a [grid](../layout/grid#grid-api), so its columns and gaps are the grid's knobs. One default differs: `--max-col` is `1`.

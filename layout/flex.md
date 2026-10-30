@@ -94,11 +94,11 @@ Each Justify, Align and Gap option sets one custom property in the `style` of `.
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <ul class="nds-feature-list nds-grid nds-divided-rows nds-icons-subtle">
-        <li class="nds-card nds-horizontal">
+      <ul class="nds-list nds-grid nds-flat nds-divided-rows nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-code" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-code" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -108,10 +108,10 @@ Each Justify, Align and Gap option sets one custom property in the `style` of `.
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-align-box-middle-center" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-align-box-middle-center" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -121,10 +121,10 @@ Each Justify, Align and Gap option sets one custom property in the `style` of `.
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-distribute-horizontal-center" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-distribute-horizontal-center" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -134,10 +134,10 @@ Each Justify, Align and Gap option sets one custom property in the `style` of `.
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-exchange-01" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-exchange-01" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -147,10 +147,10 @@ Each Justify, Align and Gap option sets one custom property in the `style` of `.
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-arrow-left-right" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-arrow-left-right" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
@@ -160,10 +160,10 @@ Each Justify, Align and Gap option sets one custom property in the `style` of `.
             </div>
           </div>
         </li>
-        <li class="nds-card nds-horizontal">
+        <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon"><i class="hgi hgi-stroke hgi-text-wrap" aria-hidden="true"></i></span>
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-text-wrap" aria-hidden="true"></i></span>
             </div>
           </div>
           <div class="nds-card-content">
