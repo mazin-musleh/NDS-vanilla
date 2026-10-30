@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "13/10/2026 - 09:30 PM"
+last_edit: "30/10/2026 - 02:43 AM"
 ---
 
 <section id="helpers-overview" class="nds-content-section nds-doc-overview">
@@ -70,7 +70,7 @@ The canon is a request confirmation on an Arabic page. Each Class chip adds its 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Class (any) | Center | `.nds-center` | `#helpers-card` | Centers the text in an element and everything inside it. On a card it centers the content, not the card |
-| Class (any) | Flush (hint: Removes padding, margin, border and corner radius) (limit: 1 flush) | `.nds-flush` | `#helpers-card` | Removes a component's own padding, margin, border and corner radius when the frame around it gives them. Here the card loses its border and padding, so its content sits straight on the page |
+| Class (any) | Flush (hint: Removes padding, margin, border and corner radius) (limit: 1 flush) | `.nds-flush` | `#helpers-card` | Removes a component's own padding, margin, border and corner radius when the frame around it gives them. Here the card loses its border and padding, and a card also loses its fill and shadow, so its content sits straight on the page |
 | Class (any) | Flush sides (hint: Removes only the padding at the start and the end) (limit: 1 flush) | `.nds-flush-inline` | `#helpers-card` | Removes only the padding at the start and the end, so the content lines up with the edge around it. On [Tabs](../components/tabs), write it on each panel |
 | Class (any) | Flush top and bottom (hint: Removes only the padding above and below) (limit: 1 flush) | `.nds-flush-block` | `#helpers-card` | Removes only the padding above and below. |
 | Class (any) | LTR | `.nds-ltr` | `#helpers-number` | A request number, phone number, IBAN, email address or URL inside Arabic text. Without it, the hyphens and the plus sign move to the wrong end |

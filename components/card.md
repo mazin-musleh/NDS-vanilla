@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "25/10/2026 - 09:11 PM"
+last_edit: "30/10/2026 - 02:43 AM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -473,6 +473,8 @@ Pick another component when:
 - Do not put a card inside a card. Use `.nds-card-meta` or a [definition list](../components/definition-list) inside the content.
 - Use `data-status` only when the card really has that status. For a color without a status, use the color class.
 - Put a row of cards in a [grid](../layout/grid).
+- For a set of features, each an icon, a title and one line, use a [Feature List](../components/feature-list). Its items are cards with no box.
+- To show a card's content with no box, add `nds-flush`. It drops the padding, the border, the fill and the shadow.
 - Put a card's small extras in `.nds-card-corner`, first in `.nds-card-text`: a status tag, a menu or "View all" button, or a select checkbox. A bare button in the header shrinks when the title is long, and its label spills out.
 - Keep the corner to one or two small items: an `nds-xs` tag, an `nds-sm` subtle button, an icon-only button, or a checkbox. A wide corner meets the header icon on a narrow card.
 - Write the tag first and the checkbox last, so the checkbox sits in the corner.
@@ -500,13 +502,14 @@ Pick another component when:
 | Attribute | Element | Effect |
 |---|---|---|
 | `data-status` | `.nds-card` | The status of the card: `neutral`, `warning`, `error`, `critical`, `info` or `success`. It shows the matching color |
+| `data-status` | any parent of `.nds-card` | Colors the card's featured icons, as on the card itself |
 | `data-state~="loading"` | `.nds-card`, or a parent `.nds-grid`, `.nds-paged-content` or `.nds-swiper` | Skeleton placeholders on the card, or on every card inside the parent. The same as the `nds-loading` class |
 {: .nds-table .nds-responsive}
 
 ### CSS Custom Properties
 {: .nds-block-title}
 
-Set these on `.nds-card`, except the image properties, which go on `.nds-card-image`.
+Set these on `.nds-card`, or on a parent to set every card inside it. The image properties go on `.nds-card-image`. A card inside a card does not take the outer card's values.
 
 | Property | Default | Controls |
 |---|---|---|
@@ -529,6 +532,9 @@ Set these on `.nds-card`, except the image properties, which go on `.nds-card-im
 | `--card-text-color` | `var(--text-primary-paragraph)` | Description color |
 | `--card-number-color` | `var(--text-primary-strong)` | Color of the headline number, `.nds-card-number` |
 | `--card-rating-color` | `var(--text-secondary-paragraph)` | Rating count color |
+| `--card-title-FS`, `--card-title-LH` | `var(--typo-text-lg-FS)`, `var(--typo-text-lg-LH)` | Title font size and line height. They win over the text size classes |
+| `--card-subtitle-FS`, `--card-subtitle-LH` | `var(--typo-text-md-FS)`, `var(--typo-text-md-LH)` | Subtitle font size and line height |
+| `--card-description-FS`, `--card-description-LH` | `var(--typo-text-md-FS)`, `var(--typo-text-md-LH)` | Description font size and line height |
 | `--featuredicon-color` | `var(--featuredicons-icon-primary)` | Featured icon and avatar color. Color classes change it |
 | `--featuredicon-bg` | `var(--featuredicons-background-primary-light)` | Featured icon background |
 | `--card-image-width` | `160px` | Image width in a row card. A wider image stacks the card sooner. No effect on a stacked card, where the image fills the width |

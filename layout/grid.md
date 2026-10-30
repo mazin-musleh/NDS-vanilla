@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 09:12 AM"
+last_edit: "30/10/2026 - 02:43 AM"
 ---
 
 <section id="grid-overview" class="nds-content-section nds-doc-overview">
@@ -116,6 +116,17 @@ Pick another component when:
   <div>Item 6</div>
 </div>
 </script>
+<script type="text/html" id="grid-divided-rows" data-canon>
+<!-- A line between rows only, in the middle of each row gap: 3 columns on desktop, 1 on phones -->
+<div class="nds-grid nds-divided-rows" style="--max-col: 3; --min-col: 1;">
+  <div>Item 1</div>
+  <div>Item 2</div>
+  <div>Item 3</div>
+  <div>Item 4</div>
+  <div>Item 5</div>
+  <div>Item 6</div>
+</div>
+</script>
 <script type="text/html" id="grid-container" data-canon>
 <!-- The same grid in a wide column and in a 280px side column. Each takes its columns
      from its nds-cq parent's width, not the screen's: the side column gets one -->
@@ -158,7 +169,8 @@ Each example is a whole grid. Change its values to fit your content: the knobs a
 | Example | Fixed side column | canon `#grid-fixed-side` | — | A side column at a set width and a main column that takes the rest |
 | Example | Gaps | canon `#grid-gaps` | — | Row and column gaps set apart. `--gap` sets both |
 | Example | Centered items | canon `#grid-center` | — | Children at their own width, in the middle of their columns. The text inside is centered too |
-| Example | Divided (hint: A line between items) | canon `#grid-divided` | — | A line between items that sit side by side or one above the other, in the middle of the gap, never at the outer edge. For items with no border of their own. Safari 26 draws no lines |
+| Example | Divided (hint: A line between items) | canon `#grid-divided` | — | A line between items that sit side by side or one above the other, in the middle of the gap, never at the outer edge. For items with no border of their own. The default gap doubles. Row lines show in every browser. Column lines show only in browsers that draw gap lines, such as a recent Chrome |
+| Example | Row lines (hint: A line between rows only) | canon `#grid-divided-rows` | — | A line between rows only, as `nds-divided` draws them. Use it for a list whose columns need no line between them |
 | Example | Container width (hint: The grid follows its parent's width, not the screen's) | canon `#grid-container` | — | A grid inside an `nds-cq` element follows that element's width, not the screen's. The same grid shows more columns in a wide column than in a narrow one. The container steps are 768px and 480px |
 {: #grid-variants-table .nds-table .nds-responsive}
 
@@ -285,7 +297,7 @@ Each example is a whole grid. Change its values to fit your content: the knobs a
 - Add `nds-cq` only when a grid sits in a narrow column and must follow that column's width. It traps `position: fixed` children, such as a modal or a dropmenu, inside that element.
 - Set `--gap` with a spacing token, such as `var(--spacing-md)`.
 - Use `nds-divided` for items with no border or background of their own. Cards already have an edge.
-- Do not let the lines of a divided grid carry meaning alone: Safari 26 does not draw them.
+- Do not let the column lines of a divided grid carry meaning alone: Safari and older browsers do not draw them. Row lines show in every browser.
 
 </div>
   </div>
@@ -305,9 +317,10 @@ Each example is a whole grid. Change its values to fit your content: the knobs a
 |---|---|---|
 | `nds-grid` | The element that holds the items | Makes it a full-width grid |
 | `nds-center` | `.nds-grid` | Centers each child in its column and centers the text inside. Sets `--justify: center` |
-| `nds-divided` | `.nds-grid` | Draws a line in the middle of each gap between two items, in the divider color |
+| `nds-divided` | `.nds-grid` | Draws a line in the middle of each gap between two items, in the divider color. The default gap doubles |
+| `nds-divided-rows` | `.nds-grid` | Draws the row lines of `nds-divided` only |
 | `nds-cq` | Any element around a grid | Makes the grid inside follow this element's width. See the next table |
-| `nds-last-row` | Each item in the last row of a divided grid | Set by the script, which moves it when the row changes. Definition List reads it. Do not set it yourself |
+| `nds-last-row` | Each item in the last row of a divided grid | Set by the script, which moves it when the row changes. The grid's row lines read it: the last row draws none. Do not set it yourself |
 {: .nds-table .nds-responsive}
 
 ### CSS Custom Properties
@@ -324,7 +337,7 @@ Set these in the `style` of `.nds-grid`.
 | `--mid-track` | `--max-track` | Track value from 600px to 959px |
 | `--min-track` | `--mid-track` | Track value below 600px |
 | `--min-width` | `0` | Smallest column width. With no column count, as many columns as fit, and the rest wrap |
-| `--gap` | `var(--spacing-2xl)` | Space between rows and columns. The default is 16px below 960px |
+| `--gap` | `var(--spacing-2xl)` | Space between rows and columns. The default is 16px below 960px. On a divided grid, the default doubles |
 | `--row-gap`, `--col-gap` | `--gap` | Space between rows, or between columns, alone |
 | `--justify` | `stretch` | `justify-items`: how a child sits across its column |
 | `--align` | `start` | `align-items`. Children fill the row height, so it changes only a child with its own height |
@@ -352,7 +365,7 @@ The container widths apply only inside an `nds-cq` element. The screen widths st
 | `NDS.Grid.destroy(el)` | Stops watching `el`, or the divided grids inside it, and removes their `nds-last-row` marks |
 {: .nds-table .nds-responsive}
 
-The script runs only for `.nds-grid.nds-divided`. It measures the rows, so a grid whose column count changes with its width marks itself again when it resizes. For a view that may hold other components, call [`NDS.init.mount(el)`](../core/init) after it mounts and `NDS.init.destroy(el)` before it goes, rather than the grid calls. The full API is in the banner of `_js/nds-grid.js`.
+The script runs only for a grid with `nds-divided` or `nds-divided-rows`. It measures the rows, so a grid whose column count changes with its width marks itself again when it resizes. For a view that may hold other components, call [`NDS.init.mount(el)`](../core/init) after it mounts and `NDS.init.destroy(el)` before it goes, rather than the grid calls. The full API is in the banner of `_js/nds-grid.js`.
 
 <script type="text/html" id="grid-js" data-canon data-lang="js">
 // A divided grid built after load: mark its last row now

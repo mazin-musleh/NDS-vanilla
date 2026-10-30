@@ -1,6 +1,6 @@
 # Feature List — plan (v2.0.0)
 
-Status (2026-10-29, end of session): steps 0–5 built and committed; step 6 (docs) and 7 (checks) are next. Owner picked "Metric-style": a thin layer over Card + Grid.
+Status (2026-10-30): steps 0–5 committed; step 6 (docs) written and checked, waiting on the owner's review and commit; step 7's browser runs (`check-a11y.mjs`, `doc-check.mjs`, screenshots) wait on the owner's go-ahead. Owner picked "Metric-style": a thin layer over Card + Grid.
 
 ## Why
 
@@ -55,11 +55,11 @@ A set chosen for lists, not every card option. Each switch sets card or icon kno
 
 | Switch | Classes | Default | Sets |
 |---|---|---|---|
-| Box | — | none: no fill, no padding. Saves space and sets the list apart from a grid of cards | `--card-bg`, `--card-padding` |
+| Box | — | none: no fill, no padding. Saves space and sets the list apart from a grid of cards. `nds-stroke`/`nds-shadow` on every item box them all (owner, 2026-10-30) | `--card-bg`, `--card-padding` |
 | Description | — | muted (`--text-secondary-paragraph`), as the Definition List feature list | `--card-text-color` |
 | Size | `nds-sm`, `nds-lg` | md | `--card-title-FS`/`-LH`, `--card-description-FS`/`-LH`, `--featuredicon-size`, `--card-gap` |
 | Icons | `nds-icons-circle`, `nds-icons-dark`, `nds-icons-outline`, `nds-icons-subtle` (the icon's own names; they combine as its classes do) | tinted rounded square | the icon's looks, shared as `featured-icon-*` mixins in `_mixins.scss`; an icon's own class wins |
-| Color | `data-status` | brand | already cascades to every featured icon |
+| Color | the card's color classes (`nds-green`, …) on every item; `data-status` on the root still cascades | brand | the doc builder shows the card classes (owner, 2026-10-30) |
 | Columns, gap, lines | Grid's knobs and `nds-divided`, `nds-divided-rows` | — | Grid, unchanged |
 
 On each card or icon, as the card's own classes: row (`nds-horizontal`), centered (`nds-center`), middle, stroke, shadow, the subtle icon. The canon writes the common one on every item.
@@ -100,7 +100,7 @@ Override order, lowest to highest: Card/Icon defaults → the list's switches �
 3. **Done 2026-10-29.** Pilot: index Who It's For and Architecture (`nds-icons-circle`), Accordion's Built-in Features. Docs' Built-in Features settled on the default size + `nds-icons-subtle` + row cards (the description is reading text: no `nds-sm`). `docs_canon.rb` DOC_STYLE gives `.nds-doc-features .nds-feature-list` the 2-1-1 columns.
 4. **Done 2026-10-29** (`2719b656`). `tmp/migrate-feature-lists.py`: 103 Built-in Features blocks, index Development Environment, `examples/training-academy.md`; no skips. The three event pages are not doc-canon pages (no DOC_STYLE), so their lists carry the columns inline and `nds-doc-features` moved to their section (their old list squeezed every item into one row: A/B on the old build). Checked on 106 pages × 2 widths: columns, last-row marks, sizes, no overflow; axe on all 106 (only the event pages' old link finding, in TODO); audits 0 except Themes' old duplicate id.
 5. **Done 2026-10-29** (committed with the handoff). Retired: the `#dl-feature-list` canon, its Structure row and Best Practices line; `nds-item-title`/`nds-item-desc` out of `_definition-list.scss` and `_sideinfo.scss` (selectors now `dt`/`dd`: 48 views A/B identical, color and weight included); the DL page's own Built-in Features moved; `migrations.yml` rows for both classes and the step 0 knob renames. The Empty demo is a Feature List in a card (a `dl` failed axe: Empty's `div` placeholder is not a dt/dd group). That exposed a bug, fixed: in a card, the items are nested cards and the reset dropped the list's knobs, so the items take them back (`inherit`, after Card's sheet). Left alone: the `nakheel-clinics` eval rig (an `nds-iq-eval` fixture). **Default one column** (owner, 2026-10-29): `:where(.nds-feature-list) { --max-col: 1 }`, after Grid's sheet; a bare grid put every item in one row (the doc pages, the event pages, the Empty demo). With `--min-width`, write `--max-col: auto-fit`.
-6. **Docs in one pass — next session.** Follow `EDITORIAL.md` and the `nds-doc` skill. Front matter: `since`/`updated` "2.0.0" (`version` in `_config.yml`, minus `-dev`); `last_edit` in GMT+3 from the local `date`.
+6. **Done 2026-10-30, not committed yet.** `components/feature-list.md`, registered; Card, Definition List, Featured Icon, Grid (a Row lines example), Helpers, Empty; catalog rules; CHANGELOG; the `nds-doc` skill's Built-in Features wrapper. Checked: `js_processor.rb`, build, `check-docs.py` on 6 pages, `check-css.py`, `check-data-state-tails.py`, `run-audit.mjs` (0 warnings), a cold read (fixed what it guessed). The event pages' one-row bug was dev-only (1.12.0 styled them in `_showcase.scss`): no Fixed line. The original checklist: Follow `EDITORIAL.md` and the `nds-doc` skill. Front matter: `since`/`updated` "2.0.0" (`version` in `_config.yml`, minus `-dev`); `last_edit` in GMT+3 from the local `date`.
    - **New `components/feature-list.md`** (`/nds-doc feature-list`, one-source format: `data-canon` blocks, builder, hidden Variants table, Built-in Features (itself a Feature List), Best Practices, API). Canons: stacked (default) and row (`nds-horizontal` on each item). Variants: Icons (`nds-icons-circle`/`-dark`/`-outline`/`-subtle`, combinable), Size (`nds-sm`, `nds-lg`), Lines (`nds-divided-rows`, `nds-divided`), Status (`data-status`), a boxed item (`nds-stroke`/`nds-shadow`/`nds-color` gets its box back). API: the classes; the knobs the list sets (`--card-bg`, `--card-padding`, `--card-text-color`, the size FS/LH, `--featuredicon-size`, `--card-gap`); columns (one by default, `--max-col`; `--min-width` needs `--max-col: auto-fit`). Practices: a name and its value is a Definition List, one rich item is a Card; per item, the card's own classes and knobs win; it works inside a card.
    - **Register it:** `_data/sidemenu/sidemenu.yml` (Components, beside Definition List) and `_data/catalog.yml` (match a neighbor's keys: title, description, use_when, category, tags, url, scss).
    - **Catalog rule:** Card `use_when` (`_data/catalog.yml:499`: "For an icon, a title and one line per item, a Definition List is lighter" becomes Feature List); Definition List `use_when` (~532: drop "Also a light list of items … (the Feature list structure)"); Training Academy (~1131: "An icon, a title and one line: a Definition List in a grid" becomes a Feature List; its tags list "Definition List"); `examples/training-academy.md:19`, the opening comment with the same rule.
@@ -127,3 +127,7 @@ Override order, lowest to highest: Card/Icon defaults → the list's switches �
 - Description: muted gray.
 - Name: `nds-feature-list` (a list of features; "featured", as in `nds-featured-icon`, means highlighted).
 - Today's work stays: it is the base (row lines, `nds-divided-rows`, gaps, `nds-flush` on a card, the DL on the grid line).
+
+## Next: Card List (owner, 2026-10-30)
+
+With Box and Color on every item, a Feature List is a list of cards with list semantics and the size and icon switches. Owner's question: make it the canon list for every card set (services, news, courses)? Picked: commit the Feature List as is, then plan a general Card List before v2 ships (Feature List is unreleased, so a rename costs no Migration row). First step: count every card grid in the repo (link cards, boxed or not, `ul` or `div`) and pick the name and defaults from that. Open points: link cards need `li > a.nds-card` (the CSS reads `> .nds-card`); a services list wants a box by default, a features list none.

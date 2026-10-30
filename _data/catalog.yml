@@ -496,7 +496,7 @@
 
 - title: "Cards"
   description: "Versatile content containers for articles, profiles, and actions"
-  use_when: "A boxed content container: article teasers, profile cards, service tiles, dashboard panels, grid items. Pick it for items that carry several details, such as an image, tags, a rating, a price or actions. A link card (the whole card one link) is only a navigation tile, such as a system's icon and name; a card that carries an action, a price or tags keeps action buttons. For a list of page links, use a Drawer: its arrows show each row is a link. For an icon, a title and one line per item, a Definition List is lighter."
+  use_when: "A boxed content container: article teasers, profile cards, service tiles, dashboard panels, grid items. Pick it for items that carry several details, such as an image, tags, a rating, a price or actions. A link card (the whole card one link) is only a navigation tile, such as a system's icon and name; a card that carries an action, a price or tags keeps action buttons. For a list of page links, use a Drawer: its arrows show each row is a link. For an icon, a title and one line per item, a Feature List is lighter."
   category: "Content"
   tags: ["CSS"]
   url: "/components/card.html"
@@ -529,7 +529,7 @@
 
 - title: "Definition List"
   description: "Structured key-value pairs in grid or list layouts"
-  use_when: "Key-value pairs in a grid or list: detail views, summary panels, specification tables, review-your-answers screens, profile field lists. Also a light list of items with an icon, a title and one line each, such as features or benefits (the Feature list structure): lighter than cards. A list of page links is a Drawer."
+  use_when: "Key-value pairs in a grid or list: detail views, summary panels, specification tables, review-your-answers screens, profile field lists. For a list of features, each an icon, a title and one line, use Feature List. A list of page links is a Drawer."
   category: "Content"
   tags: ["CSS"]
   url: "/components/definition-list.html"
@@ -541,6 +541,14 @@
   category: "Content"
   tags: ["CSS"]
   url: "/components/divider.html"
+
+- title: "Feature List"
+  description: "A list of features, each with an icon, a title and one or two lines"
+  use_when: "A set of features, benefits or reasons, each an icon, a title and one or two lines: why use a service, what a program offers, a product's features. Lighter than cards: no box, a muted description. For a name and its value use Definition List; for an item with an image, tags, a price or actions use Cards."
+  category: "Content"
+  tags: ["CSS"]
+  url: "/components/feature-list.html"
+  scss: _sass/components/_feature-list.scss
 
 - title: "Featured Icons"
   description: "Decorative icon containers with shape and color options"
@@ -1128,10 +1136,10 @@
 
 - title: "Training Academy"
   description: "A training center's home page with four lists, each showing its items a different way."
-  use_when: "Pick how a list section shows its items, by how much each item holds. Places to go, an icon and a name each: link cards as navigation tiles, the only use of a whole-card link. Items with several details to compare, such as an image, tags, a rating and a price: full cards with action buttons. A short list the user opens one item at a time, newest first: Drawer rows with a Date Tile and a Meta line; a plain list of page links is a Drawer with an arrow on each row. An icon, a title and one line: a Definition List in a grid. Use for any home or landing page made of list sections: categories, featured products, courses or services, announcements or news, features. For a full catalog with search and filters, see Services List; for records the user sorts or pages, see Manage Records. Full chrome with a sub hero, striped sections (nds-stripe on .nds-content), and no side menu. The page's opening comment gives these rules."
+  use_when: "Pick how a list section shows its items, by how much each item holds. Places to go, an icon and a name each: link cards as navigation tiles, the only use of a whole-card link. Items with several details to compare, such as an image, tags, a rating and a price: full cards with action buttons. A short list the user opens one item at a time, newest first: Drawer rows with a Date Tile and a Meta line; a plain list of page links is a Drawer with an arrow on each row. An icon, a title and one line: a Feature List. Use for any home or landing page made of list sections: categories, featured products, courses or services, announcements or news, features. For a full catalog with search and filters, see Services List; for records the user sorts or pages, see Manage Records. Full chrome with a sub hero, striped sections (nds-stripe on .nds-content), and no side menu. The page's opening comment gives these rules."
   icon: '<i class="hgi hgi-stroke hgi-school"></i>'
   category: "Content"
-  tags: ["Definition List", "Drawer", "Date Tile", "Cards", "Rating"]
+  tags: ["Feature List", "Drawer", "Date Tile", "Cards", "Rating"]
   url: "/examples/training-academy.html"
   new: true
 

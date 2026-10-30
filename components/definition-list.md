@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "11/10/2026 - 03:40 PM"
+last_edit: "30/10/2026 - 02:43 AM"
 ---
 
 <section id="dl-overview" class="nds-content-section nds-doc-overview">
@@ -25,6 +25,7 @@ Pick another component when:
 - the data has several values for each row, or the user sorts it: [Tables](../components/table)
 - the items are links to other pages: [Link](../components/link) in a plain list
 - the items start actions: [Dropmenu](../components/dropmenu)
+- each item is a feature with an icon, a title and one line: [Feature List](../components/feature-list)
 
 </div>
   </div>
@@ -126,7 +127,7 @@ The Layout, Style, Emphasis, Size and Loading rows go on the list. The two Cards
 | Layout | Row (hint: Title and value on one line that wraps) | `.nds-horizontal` | `.nds-definition-list` | Each title and value on one row that wraps, with no shared columns. For compact card details |
 | Grid | Grid | `.nds-grid` | `.nds-definition-list:not(.nds-table-view):not(.nds-table-view-sm):not(.nds-table-view-md):not(.nds-table-view-lg)` | Items in columns. `--max-col`, `--mid-col` and `--min-col` set the columns, see [Grid](../layout/grid) |
 | Style | Plain (default) | — | — | No lines between items |
-| Style | Divided | `.nds-divided` | `.nds-definition-list` | A line between items. In a table layout, the lines span both columns |
+| Style | Divided | `.nds-divided` | `.nds-definition-list` | A line between items. In a table layout, the lines span both columns. In a grid, they are the grid's row lines |
 | Style | Cards | `.nds-card` | `.nds-definition-item` | Each item in its own card |
 | Style | Cards | `.nds-stroke` | `.nds-definition-item` | The same: gives each card its border |
 | Emphasis | Highlight value | `.nds-highlight-value` | `.nds-definition-list` | The value large and bold, the title small and muted. For records the reader scans by value, such as a student's status card |
@@ -256,7 +257,7 @@ The Layout, Style, Emphasis, Size and Loading rows go on the list. The two Cards
 - Use the row layout for compact details inside a card.
 - Give every title icon `aria-hidden="true"`. The label names the item.
 - Keep the label inside an icon-only action button. Screen readers read it as the button's name.
-- In a divided list, add `nds-last-row` to the last item when another element comes after it in the list. Otherwise the item keeps the line under it.
+- In a divided list that is not a grid, add `nds-last-row` to the last item when another element comes after it in the list. Otherwise the item keeps the line under it.
 
 </div>
   </div>
@@ -316,7 +317,6 @@ Set these on the list. The size classes set the icon size, the title size and th
 - [Contact Us Template](../templates/contact-us-template): contact details in a table layout.
 - [Form Template](../templates/form-template): a divided list of the answers to review before the user sends the form.
 - [Help and Support Template](../templates/help-support-template): medium lists of support channels.
-- Every component page: the Built-in Features section is a divided definition list in a grid.
 
 </div>
   </div>
