@@ -38,16 +38,16 @@
 // --_btn-FS calc reads --user-font-scale. Pinning literal px bypasses
 // the calc so panel buttons stay readable regardless of global scaling.
 :root .nds-accessibility-panel .nds-btn {
-    --btn-size: var(--a11y-btn-size);
+    --_btn-size-base: var(--a11y-btn-size);
     --_btn-FS: var(--a11y-text-FS);
     --_btn-LH: var(--a11y-text-LH);
 
     &.nds-md {
-        --btn-size: var(--a11y-btn-size-md);
+        --_btn-size-base: var(--a11y-btn-size-md);
     }
 
     &.nds-sm {
-        --btn-size: var(--a11y-btn-size-sm);
+        --_btn-size-base: var(--a11y-btn-size-sm);
     }
 }
 

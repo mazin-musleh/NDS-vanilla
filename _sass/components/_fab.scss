@@ -63,10 +63,10 @@
 // Sizing has to reach those children directly: .nds-btn re-declares --_btn-size
 // on every button, so a value set on the group wrapper would be shadowed.
 .nds-btn:is(.nds-fab, .nds-fab *) {
-    --_btn-size: calc(var(--btn-size) + 16px);
+    --_btn-size: calc(var(--btn-size, var(--_btn-size-base, 40px)) + 16px);
 
     @include mobile {
-        --_btn-size: calc(var(--btn-size) + 8px);
+        --_btn-size: calc(var(--btn-size, var(--_btn-size-base, 40px)) + 8px);
     }
 }
 

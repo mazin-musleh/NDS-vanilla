@@ -139,7 +139,7 @@
 
             @include mobile {
                 >.nds-btn {
-                    --btn-size: 32px;
+                    --_btn-size-base: 32px;
                 }
             }
         }
@@ -167,7 +167,7 @@
             margin: 0 var(--spacing-md);
 
             .nds-btn {
-                --btn-size: 32px;
+                --_btn-size-base: 32px;
             }
 
             > ::before {
@@ -191,7 +191,7 @@
 
     /* Navigation Links */
     .nds-nav-link {
-        --btn-indicator-size: 5px;
+        --_btn-indicator-size-base: 5px;
         --btn-height: var(--nds-nav-height);
 
 
@@ -759,7 +759,7 @@
         transition: opacity .1s, visibility .1s;
 
         > .nds-nav-link {
-            --btn-indicator-size: 0px;
+            --_btn-indicator-size-base: 0px;
             border-radius: 0;
         }
     }

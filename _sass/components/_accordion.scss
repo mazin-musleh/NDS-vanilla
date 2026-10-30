@@ -146,17 +146,17 @@
 
         // Same values as .nds-btn.nds-md / .nds-sm
         &.nds-md .nds-accordion-btn {
-            --btn-size: 32px;
-            --btn-gap: var(--spacing-sm);
-            --btn-FS: var(--typo-text-sm-FS);
-            --btn-LH: var(--typo-text-sm-LH);
+            --_btn-size-base: 32px;
+            --_btn-gap-base: var(--spacing-sm);
+            --_btn-FS-base: var(--typo-text-sm-FS);
+            --_btn-LH-base: var(--typo-text-sm-LH);
         }
 
         &.nds-sm .nds-accordion-btn {
-            --btn-size: 24px;
-            --btn-gap: var(--spacing-xs);
-            --btn-FS: var(--typo-text-xs-FS);
-            --btn-LH: var(--typo-text-xs-LH);
+            --_btn-size-base: 24px;
+            --_btn-gap-base: var(--spacing-xs);
+            --_btn-FS-base: var(--typo-text-xs-FS);
+            --_btn-LH-base: var(--typo-text-xs-LH);
         }
     }
 

@@ -62,7 +62,7 @@
 
     /* Side Menu Toggle Button */
     .nds-sidemenu-toggle {
-        --btn-size: 40px;
+        --_btn-size-base: 40px;
         --_toggle-transform: translate(calc((var(--nds-sidemenu-width)) * -1), var(--_toggle-pos));
         border: unset;
         border-radius: var(--radius-sm) 0 0 var(--radius-sm);
@@ -135,7 +135,7 @@
             --btn-bg-active: var(--button-background-primary-pressed);
             --btn-bg-selected: var(--button-background-primary-selected);
             --btn-color: var(--text-oncolor-primary);
-            --btn-indicator-size: 3px;
+            --_btn-indicator-size-base: 3px;
             --btn-indicator-color: var(--button-indicator-primary);
             @include btn-indicator('v');
 
@@ -154,7 +154,7 @@
 
                 &:not([data-state="open"]) {
                     --_toggle-transform: translate(calc((var(--nds-sidemenu-width) - var(--btn-width)/1.5) * -1), var(--_toggle-pos));
-                    --btn-indicator-size: 5px;
+                    --_btn-indicator-size-base: 5px;
                     --_peek-opacity: 0;
 
                     @include ltr {
@@ -170,7 +170,7 @@
     // ========================================
     .nds-sidemenu.nds-top {
         grid-column: 1 / -1;
-        --btn-gap: var(--spacing-md);
+        --_btn-gap-base: var(--spacing-md);
         position: sticky;
         top: var(--nds-nav-height);
         --nds-sidemenu-width: 100%;
@@ -190,7 +190,7 @@
             --btn-bg-hover: var(--button-background-secondary-hovered);
             --btn-bg-active: var(--button-background-secondary-pressed);
             --btn-bg-selected: var(--button-background-secondary-selected);
-            --btn-indicator-size: 3px;
+            --_btn-indicator-size-base: 3px;
             --btn-height: var(--nds-sidemenu-toggle-height);
             max-width: var(--nds-content-max-width);
             margin: 0 auto;

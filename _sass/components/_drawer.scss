@@ -104,11 +104,11 @@
 
     // Button/link styling within drawer
     >.nds-btn {
-        --btn-size: 32px;
+        --_btn-size-base: 32px;
         --btn-height: var(--drawer-btn-height, fit-content);
         --btn-height-min: 36px;
         --btn-width: 100%;
-        --btn-gap: var(--drawer-btn-gap, var(--spacing-md));
+        --_btn-gap-base: var(--drawer-btn-gap, var(--spacing-md));
         --_row-pad: calc(var(--_btn-padding)/2);
         padding-block: var(--_row-pad);
         justify-content: flex-start;
@@ -136,7 +136,7 @@
 // ==============================================
 
 .nds-drawer .nds-btn.nds-indicator {
-    --btn-indicator-size: var(--_indicator-width);
+    --_btn-indicator-size-base: var(--_indicator-width);
     @include btn-indicator('v');
 }
 
@@ -286,8 +286,7 @@
 
             &.nds-indicator:not(:hover, :active, [data-state~="active"], [data-state~="selected"]) {
                 &::before {
-                    --btn-indicator-size: var(--_indicator-width);
-                    height: var(--btn-indicator-size);
+                    height: var(--_indicator-width);
                     display: block;
                     background-color: var(--_indicator);
                 }
@@ -373,7 +372,7 @@
 .nds-drawer.nds-lg {
     --drawer-indent: var(--spacing-2xl);
 
-    .nds-btn { --btn-size: 48px; }
+    .nds-btn { --_btn-size-base: 48px; }
 }
 
 // ==============================================

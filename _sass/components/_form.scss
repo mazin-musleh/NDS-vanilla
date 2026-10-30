@@ -334,7 +334,7 @@ fieldset {
         font-size: var(--typo-text-sm-FS);
 
         .nds-form-action>.nds-btn {
-            --btn-size: 32px;
+            --_btn-size-base: 32px;
         }
     }
 
@@ -448,13 +448,13 @@ fieldset {
 
         &:not(.nds-prefix, .nds-suffix) {
             >.nds-btn {
-                --btn-size: 32px;
+                --_btn-size-base: 32px;
             }
         }
 
         // A loading spinner keeps the in-field size, in a suffix too.
         >.nds-btn[data-state~="loading"] {
-            --btn-size: 32px;
+            --_btn-size-base: 32px;
         }
 
         // Disabled, a field's buttons match its label: a dark button elsewhere takes the on-color alpha.

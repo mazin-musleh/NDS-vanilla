@@ -78,7 +78,7 @@
 
   // Pagination button styling
   .nds-btn {
-    --btn-FS: var(--typo-text-md-FS);
+    --_btn-FS-base: var(--typo-text-md-FS);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -156,7 +156,7 @@
   --_pagination-reserve: 32px;
 
   .nds-btn {
-    --btn-size: 32px;
+    --_btn-size-base: 32px;
   }
 }
 
@@ -164,8 +164,8 @@
   --_pagination-reserve: 24px;
 
   .nds-btn {
-    --btn-size: 24px;
-    --btn-FS: var(--typo-text-sm-FS);
+    --_btn-size-base: 24px;
+    --_btn-FS-base: var(--typo-text-sm-FS);
   }
 }
 
@@ -180,7 +180,7 @@
     --_pagination-reserve: 32px;
 
     .nds-btn {
-      --btn-size: 32px;
+      --_btn-size-base: 32px;
     }
   }
 }
@@ -200,7 +200,7 @@
   // `initial` un-sets the generic .nds-ellipsis zero-padding override, so the
   // btn-base default padding comes back without duplicating its value.
   width: auto;
-  min-width: var(--btn-size);
+  min-width: var(--_btn-size);
   --btn-padding: initial;
   --_ellipsis-label-display: block;
 
@@ -210,6 +210,6 @@
 
   &:not(.nds-loading)::after {
     position: absolute;
-    transform: translateY(calc((var(--btn-size) / 2) - 2px));
+    transform: translateY(calc((var(--_btn-size) / 2) - 2px));
   }
 }

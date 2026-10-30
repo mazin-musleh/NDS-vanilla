@@ -1,6 +1,6 @@
 # Part sizes — plan (v2.0.0)
 
-Status (2026-10-30): step 0 committed (`41132f0f`, `161831bf`); step 1 built and checked, waiting on its commit.
+Status (2026-10-30): steps 0 and 1 committed (`41132f0f`, `161831bf`, `f5821460`); step 2 built and checked, waiting on its commit.
 
 ## Why
 
@@ -59,6 +59,8 @@ For avatar, featured icon, rating, progress ring, chip, date tile, meta (tag alr
 - One naming: the inherited card steps without a knob (`--_card-value-*`, `--_card-rating-text-*`, `--_metric-*`) take the `-base` suffix too.
 
 ## Step 2 — button (M/L, the risky one)
+
+**Changed (owner, 2026-10-30): a button's size knobs work on the button itself, never from a wrapper.** Buttons sit inside other components (date picker days, pagination, tabs, the a11y panel), whose own buttons a wrapper's `--btn-size` would resize. `:where(.nds-btn)` resets `--btn-size`, `--btn-gap` and `--btn-indicator-size`, as Grid resets its column knobs; on the button, a knob still beats its size class, and the class a parent's step. `--btn-FS` and `--btn-LH` still reach from a wrapper, as before. Parts inside a button (Drawer rows: 3,381 tags, 1,494 icons on our pages) read their own knobs, so step 1 holds for them. No page nests a button in a button.
 
 The button sizes 50 lines in 14 files and reads `--btn-size` / `--btn-indicator-size` bare in 22 places. Each line is classified by hand before it changes:
 

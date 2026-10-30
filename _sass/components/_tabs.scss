@@ -28,7 +28,7 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
 // ==============================================
 
 .nds-tabs {
-  --btn-indicator-size: 3px;
+  --_tabs-indicator-size: 3px; // the rail and the strip's padding; each tab draws its own
   display: flex;
   flex-direction: column;
 
@@ -51,18 +51,18 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
       position: absolute;
       bottom: 0;
       width: 100%;
-      height: var(--btn-indicator-size);
+      height: var(--_tabs-indicator-size);
       background-color: var(--divider-color);
       border-radius: var(--radius-full);
       z-index: -1;
     }
 
     > #{$strip} .nds-tab {
-      margin-bottom: var(--btn-indicator-size);
+      margin-bottom: var(--_btn-indicator-size);
       border-radius: var(--radius-sm) var(--radius-sm) 0 0;
 
       &::before {
-        margin-bottom: calc(var(--btn-indicator-size) * -1);
+        margin-bottom: calc(var(--_btn-indicator-size) * -1);
       }
     }
   }
@@ -76,7 +76,7 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
       flex-direction: column;
       flex-wrap: nowrap;
       min-width: fit-content;
-      padding-inline-end: var(--btn-indicator-size);
+      padding-inline-end: var(--_tabs-indicator-size);
       position: sticky;
       z-index: 2;
       top: var(--nds-nav-height);
@@ -107,7 +107,7 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
         }
 
         &::before {
-          margin-inline-end: calc(var(--btn-indicator-size) * -1);
+          margin-inline-end: calc(var(--_btn-indicator-size) * -1);
           inset-inline-end: 0;
           inset-inline-start: unset;
         }
@@ -116,7 +116,7 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
       > .nds-tab-list-container::after {
         inset-inline-end: 0;
         height: 100%;
-        width: var(--btn-indicator-size);
+        width: var(--_tabs-indicator-size);
       }
     }
   }
@@ -241,15 +241,15 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
   // the button default. Set on the tab, not the root: a root declaration would
   // leak --btn-size into every button inside the panels.
   .nds-tabs.nds-sm > #{$strip} & {
-    --btn-size: 32px;
+    --_btn-size-base: 32px;
     // Same reason as the button's own 32px rung: pin to text-sm so LH lands on
     // the design system's 20, not the calc's 21.
-    --btn-FS: var(--typo-text-sm-FS);
-    --btn-LH: var(--typo-text-sm-LH);
+    --_btn-FS-base: var(--typo-text-sm-FS);
+    --_btn-LH-base: var(--typo-text-sm-LH);
   }
 
   .nds-tabs.nds-lg > #{$strip} & {
-    --btn-size: 48px;
+    --_btn-size-base: 48px;
   }
 
   &[aria-selected="true"] .nds-label {
@@ -266,7 +266,7 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
   }
 
   &.nds-show-more {
-    min-width: var(--btn-size);
+    min-width: var(--_btn-size);
     aspect-ratio: 1 / 1;
     padding: 0;
   }
@@ -384,7 +384,7 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
     overflow: hidden;
 
     > #{$strip} .nds-tab {
-      --btn-height: calc(var(--btn-size) * 1.25);
+      --btn-height: calc(var(--_btn-size) * 1.25);
     }
   }
 

@@ -220,26 +220,19 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 // BUTTON BASE MIXINS
 // ==============================================
 
-// A step's property: the part's own ($own, else its knob) for its size class, or with $base the -base
-// a parent sets: it reaches every part within that has no size class, and a knob still beats it.
-@function step-knob($name, $base, $own: null) {
-  @if $base {
-    @return unquote('--_#{$name}-base');
-  }
-  @if $own {
-    @return $own;
-  }
-  @return unquote('--#{$name}');
+// Button steps, as -base values under the knobs. The box half is a List's step: there the label follows the height.
+@mixin btn-md-box {
+  --_btn-size-base: 32px;
+  --_btn-gap-base: var(--spacing-sm);
+  --_btn-indicator-size-base: 3px;
 }
 
 // Button MD step: the .nds-md class and a parent's own rule share it.
-@mixin btn-md($base: false) {
-  #{step-knob(btn-size, $base)}: 32px;
-  #{step-knob(btn-gap, $base)}: var(--spacing-sm);
-  #{step-knob(btn-indicator-size, $base)}: 3px;
+@mixin btn-md {
+  @include btn-md-box;
   // Pin label typography to text-sm so LH matches the design system (20, not the calc's 21)
-  #{step-knob(btn-FS, $base)}: var(--typo-text-sm-FS);
-  #{step-knob(btn-LH, $base)}: var(--typo-text-sm-LH);
+  --_btn-FS-base: var(--typo-text-sm-FS);
+  --_btn-LH-base: var(--typo-text-sm-LH);
 }
 
 @mixin btn-base {
@@ -261,13 +254,14 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
   --_btn-indicator-selected: var(--btn-indicator-selected, var(--button-indicator-selected));
   --_btn-loading-color: var(--btn-loading-color, var(--text-default));
   --_btn-loading-track: var(--btn-loading-track, var(--colors-alpha-black-10));
-  --_btn-size: var(--btn-size, 40px);
+  --_btn-size: var(--btn-size, var(--_btn-size-base, 40px));
   --_btn-height: var(--btn-height, var(--_btn-size));
   // Floored at the button's own size, so an auto/100% height never shrinks it; one
   // content line (+ 1px border each side) still grows it with the text scale.
   --_btn-height-min: var(--btn-height-min, max(var(--_btn-size), var(--_btn-LH) + 2px, var(--_btn-icon-size) + 2px));
   --_btn-width: var(--btn-width, fit-content);
-  --_btn-gap: var(--btn-gap, var(--spacing-xs));
+  --_btn-gap: var(--btn-gap, var(--_btn-gap-base, var(--spacing-md)));
+  --_btn-indicator-size: var(--btn-indicator-size, var(--_btn-indicator-size-base, 3px));
   --_btn-padding-default: calc((var(--_btn-size) - 8px) / 2);
   --_btn-padding: var(--btn-padding, var(--_btn-padding-default));
   --_btn-radius: var(--btn-radius, var(--radius-sm));
@@ -382,7 +376,7 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 // BUTTON INDICATOR MIXINS
 // ==============================================
 
-@mixin btn-indicator($position: 'b', $size: var(--btn-indicator-size)) {
+@mixin btn-indicator($position: 'b', $size: var(--_btn-indicator-size)) {
   &::before {
     content: '';
     position: absolute !important;
@@ -577,7 +571,7 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     --_card-image-width-base: 120px;
     @include chip-sm;
     @include meta-sm;
-    @include btn-md($base: true);
+    @include btn-md-box;
 }
 
 @mixin card-lg {
@@ -615,7 +609,7 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     @include date-tile-md;
     @include meta-md;
     @each $name in (featuredicon-size, progress-size, chip-size, chip-padding, chip-FS,
-        btn-size, btn-gap, btn-indicator-size, btn-FS, btn-LH) {
+        btn-size, btn-gap, btn-indicator-size) {
         --_#{$name}-base: initial;
     }
     @each $name in (card-value, card-value-unit, card-value-was, card-rating-text, metric-value, metric-trend) {

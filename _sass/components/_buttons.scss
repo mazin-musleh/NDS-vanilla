@@ -20,6 +20,15 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
 // BASE BUTTON STYLES
 // ==============================================
 
+// A size knob works on the button itself, never from a wrapper: buttons sit inside other components,
+// whose own buttons a wrapper's knob would resize. :where() lets any rule on the button win.
+// ponytail: a button inside a button takes the outer one's size class; none does today.
+:where(.nds-btn) {
+  --btn-size: initial;
+  --btn-gap: initial;
+  --btn-indicator-size: initial;
+}
+
 .nds-btn {
   @include btn-base;
 
@@ -134,10 +143,7 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
   // BUTTON SIZES
   // ==============================================
 
-  // nds-lg is the default size — no explicit .nds-lg class needed. A parent's step (btn-md with $base) comes first.
-  --btn-size: var(--_btn-size-base, 40px);
-  --btn-gap: var(--_btn-gap-base, var(--spacing-md));
-  --btn-indicator-size: var(--_btn-indicator-size-base, 3px);
+  // LG (40px) is the default, in btn-base's fallbacks. A size class or a parent's step writes the -base; LG resets it.
 
   &.nds-lg {
     @each $name in (size, gap, indicator-size, FS, LH) {
@@ -150,11 +156,11 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
   }
 
   &.nds-sm {
-    --btn-size: 24px;
-    --btn-gap: var(--spacing-xs);
-    --btn-indicator-size: 2px;
-    --btn-FS: var(--typo-text-xs-FS);
-    --btn-LH: var(--typo-text-xs-LH);
+    --_btn-size-base: 24px;
+    --_btn-gap-base: var(--spacing-xs);
+    --_btn-indicator-size-base: 2px;
+    --_btn-FS-base: var(--typo-text-xs-FS);
+    --_btn-LH-base: var(--typo-text-xs-LH);
   }
 
   // Stacked button (.nds-col from the flex utilities): the icon sits above the
@@ -562,7 +568,7 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
   // ==============================================
 
   &.nds-ellipsis {
-    width: var(--btn-size);
+    width: var(--_btn-size);
     --btn-padding: 0;
 
     &:not(.nds-loading)::after {
@@ -649,7 +655,7 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
   &.nds-full {
     width: 100% !important;
     justify-content: center !important;
-    min-width: var(--btn-size);
+    min-width: var(--_btn-size);
 
     .nds-label {
       text-align: center !important;
@@ -667,7 +673,7 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
   /* Icon-Only Button Configurations */
   &.nds-icon-only {
     justify-content: center;
-    width: var(--btn-size);
+    width: var(--_btn-size);
     --btn-padding: 0;
 
     // A built-in icon is a second icon: widen to fit both, inset like the square's
@@ -740,7 +746,7 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
     // Inherit button colors
     --progress-track-color: var(--_btn-loading-track, var(--colors-alpha-black-10));
     --progress-color: var(--_btn-color);
-    --_progress-size-base: calc(var(--btn-size) - 8px);
+    --_progress-size-base: calc(var(--_btn-size) - 8px);
 
     // Hide text/percentage display; the fill itself is Progress's, from --progress-value
     .nds-progress-info {

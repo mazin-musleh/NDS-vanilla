@@ -58,7 +58,7 @@
 // ==============================================
 
 .nds-date-picker-menu {
-    --btn-size: 32px;
+    --_date-picker-cell: 32px; // the day cells' size; the weekdays line up with it
     // Drive sizing through NDS.Dropmenu tokens so the menu picks up the
     // calendar's width/clamp/padding without an inline-style stomp from JS.
     // `--dropmenu-width: 100%` fills the form-control (the absolute-positioned
@@ -72,9 +72,8 @@
     background-color: var(--form-field-background-default);
     border: 1px solid var(--form-field-border-default);
     box-shadow: var(--shadow-md);
-    // .nds-btn sets its own 40px, so the menu-level value only reaches non-buttons (weekdays).
     .nds-btn {
-        --btn-size: 32px;
+        --_btn-size-base: var(--_date-picker-cell);
     }
     // ==============================================
     // CALENDAR HEADER STYLES
@@ -129,7 +128,7 @@
             font-weight: var(--font-weight-regular);
             color: var(--text-primary-paragraph);
             padding: var(--spacing-md) var(--spacing-xs);
-            min-width: var(--btn-size);
+            min-width: var(--_date-picker-cell);
             @include mobile {
                 font-size: var(--typo-text-sm-FS);
             }
@@ -171,8 +170,8 @@
         }
         .nds-date-cell {
             border-radius: 50% !important;
-            width: var(--btn-size);
-            height: var(--btn-size);
+            width: var(--_btn-size);
+            height: var(--_btn-size);
             font-weight: var(--font-weight-regular);
             padding: 0;
             .nds-label {
