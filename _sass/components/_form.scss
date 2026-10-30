@@ -411,12 +411,27 @@ fieldset {
             }
         }
 
+        // The dropdown caret, at the end edge in either direction.
         &::after {
-            @extend %select-caret-after;
+            content: "";
+            pointer-events: none;
+            position: absolute;
+            inset-inline-end: var(--spacing-md);
+            transition: transform 0.1s ease;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: currentColor;
+            mask: var(--nds-icon-arrow-left-01) center / contain no-repeat;
+            opacity: var(--nds-icons-opacity, 1);
+            rotate: -90deg;
+            transform: rotate(var(--_caret-flip, 0deg)); // open hosts set --_caret-flip
+            top: 50%;
+            translate: 0 -50%;
         }
     }
 
-    // The caret (%select-caret-after) reads --_caret-flip; set on the host, not on
+    // The caret reads --_caret-flip; set on the host, not on
     // the control's ::after (PERF-06).
     @at-root .nds-select[data-state~="open"] {
         --_caret-flip: 180deg;

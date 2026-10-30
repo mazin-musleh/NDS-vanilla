@@ -22,7 +22,8 @@
         @return ':is(:not(.nds-vertical, .nds-radial, .nds-vertical-#{$bp}, .nds-radial-#{$bp}), .nds-horizontal-#{$bp})';
     }
     $other: if($layout == vertical, radial, vertical);
-    @return ':is(.nds-#{$layout}:not(.nds-horizontal-#{$bp}, .nds-#{$other}-#{$bp}), .nds-#{$layout}-#{$bp})';
+    // :where() keeps the exclusion weightless, so a phone rule weighs what the desktop one does.
+    @return ':is(.nds-#{$layout}:where(:not(.nds-horizontal-#{$bp}, .nds-#{$other}-#{$bp})), .nds-#{$layout}-#{$bp})';
 }
 
 @mixin stepper-layout($layout) {

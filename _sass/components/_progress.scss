@@ -6,6 +6,86 @@
 
 @use '../mixins' as *;
 
+@mixin progress-circle-base($size: 24px, $rotate: -90deg) {
+  --_progress-track-color: var(--progress-track-color, var(--colors-neutral-100));
+  --_progress-color: var(--progress-color, var(--background-primary));
+
+  position: relative;
+  width: var(--progress-size, #{$size}) !important;
+  height: var(--progress-size, #{$size}) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: var(--progress-size, #{$size}) !important;
+    height: var(--progress-size, #{$size}) !important;
+    transform: rotate($rotate) !important;
+
+    @include ltr {
+      transform: rotate($rotate) scaleY(-1) !important;
+    }
+
+    circle {
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      transform: scale(1.08);
+      transform-origin: center center;
+
+      &.nds-progress-bg {
+        stroke: var(--_progress-track-color);
+      }
+
+      &.nds-progress-track {
+        stroke: var(--_progress-color);
+      }
+    }
+  }
+
+  .nds-progress-info {
+    position: absolute;
+    color: var(--text-primary-paragraph);
+    line-height: 1;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+@mixin progress-circle-text($size: 24px) {
+  .nds-progress-info {
+    padding: 0 clamp(8px, calc(var(--_progress-size, #{$size}) * 0.2), 40px) !important;
+
+    :is(.nds-progress-percentage, .nds-progress-out-of) {
+      display: flex;
+      flex-wrap: nowrap;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-xxs);
+      direction: ltr;
+      letter-spacing: clamp(0rem, calc(var(--_progress-size, #{$size}) * -0.0006), -0.12rem) !important;
+    }
+
+    :is(.nds-progress-number, .nds-progress-symbol) {
+      font-size: clamp(10px, calc(var(--_progress-size, #{$size}) * 0.15 + 6px), 36px) !important;
+      font-weight: var(--font-weight-bold) !important;
+      line-height: normal;
+    }
+    .nds-progress-of {
+      font-size: clamp(12px, calc(var(--_progress-size, #{$size}) * 0.1 + 4px), 30px);
+      line-height: normal;
+    }
+    .nds-progress-text {
+      font-size: clamp(10px, calc(var(--_progress-size, #{$size}) * 0.1), 20px);
+      line-height: clamp(20px, calc(var(--_progress-size, #{$size}) * 0.125 + 5px), 30px);
+      max-height: max(0px, calc(var(--_progress-size, #{$size}) - 80px));
+      overflow: hidden;
+      display: block;
+    }
+  }
+}
+
 // ==============================================
 // PROGRESS CIRCLE COMPONENT
 // ==============================================

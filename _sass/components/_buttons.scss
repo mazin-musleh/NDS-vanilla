@@ -9,6 +9,80 @@
 
 @use '../mixins' as *;
 
+@mixin btn-base {
+  --_btn-bg: var(--btn-bg, transparent);
+  --_btn-bg-hover: var(--btn-bg-hover, var(--_btn-bg));
+  --_btn-bg-active: var(--btn-bg-active, var(--_btn-bg));
+  --_btn-bg-selected: var(--btn-bg-selected, var(--_btn-bg));
+  --_btn-bg-disabled: var(--btn-bg-disabled, var(--background-disabled));
+  --_btn-color: var(--btn-color, var(--text-default));
+  --_btn-color-hover: var(--btn-color-hover, var(--_btn-color));
+  --_btn-color-disabled: var(--btn-color-disabled, var(--text-default-disabled));
+  --_btn-border: var(--btn-border, transparent);
+  --_btn-border-hover: var(--btn-border-hover, var(--_btn-border));
+  --_btn-border-active: var(--btn-border-active, var(--_btn-border));
+  --_btn-border-selected: var(--btn-border-selected, var(--_btn-border));
+  --_btn-border-disabled: var(--btn-border-disabled, transparent);
+  --_btn-indicator-color: var(--btn-indicator-color, var(--button-indicator-default));
+  --_btn-indicator-active: var(--btn-indicator-active, var(--button-indicator-pressed));
+  --_btn-indicator-selected: var(--btn-indicator-selected, var(--button-indicator-selected));
+  --_btn-loading-color: var(--btn-loading-color, var(--text-default));
+  --_btn-loading-track: var(--btn-loading-track, var(--colors-alpha-black-10));
+  --_btn-size: var(--btn-size, var(--_btn-size-base, 40px));
+  --_btn-height: var(--btn-height, var(--_btn-size));
+  // Floored at the button's own size, so an auto/100% height never shrinks it; one
+  // content line (+ 1px border each side) still grows it with the text scale.
+  --_btn-height-min: var(--btn-height-min, max(var(--_btn-size), var(--_btn-LH) + 2px, var(--_btn-icon-size) + 2px));
+  --_btn-width: var(--btn-width, fit-content);
+  --_btn-gap: var(--btn-gap, var(--_btn-gap-base, var(--spacing-md)));
+  --_btn-indicator-size: var(--btn-indicator-size, var(--_btn-indicator-size-base, 3px));
+  --_btn-padding-default: calc((var(--_btn-size) - 8px) / 2);
+  --_btn-padding: var(--btn-padding, var(--_btn-padding-default));
+  --_btn-radius: var(--btn-radius, var(--radius-sm));
+
+  // Outer * --user-font-scale wraps both the consumer-override path and
+  // the default calc, so an explicit --btn-FS still respects the global
+  // a11y scale. Components that pin --user-font-scale: 1 inside their
+  // subtree (e.g. the accessibility panel) get unscaled button labels
+  // without having to override --_btn-FS directly.
+  --_btn-FS: calc(var(--btn-FS, var(--_btn-FS-base, calc(var(--_btn-size) / 4 + 6px))) * var(--user-font-scale, 1));
+  --_btn-LH: var(--btn-LH, var(--_btn-LH-base, calc(var(--_btn-FS) * 1.5)));
+  --_btn-icon-size: var(--btn-icon-size, calc(var(--_btn-size) / 2 + 4px));
+
+  // default, not --_btn-padding — spinner inset must survive a --btn-padding:0 override
+  --_btn-space: calc(var(--_btn-size) - var(--_btn-padding-default));
+  --loading-size: var(--_btn-space) !important;
+  --loading-border: max(2px, calc(var(--_btn-space) / 10)) !important;
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_btn-gap);
+
+  border: 1px solid transparent;
+  border-radius: var(--_btn-radius);
+  white-space: nowrap;
+  position: relative;
+  box-sizing: border-box;
+  vertical-align: middle;
+  justify-content: center;
+
+  height: var(--_btn-height);
+  min-height: var(--_btn-height-min);
+  width: var(--_btn-width);
+  min-width: var(--_btn-size);
+
+  padding-inline: var(--_btn-padding);
+  padding-block: 0;
+
+  >.nds-label,
+  i {
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+    font-size: var(--_btn-FS);
+    line-height: var(--_btn-LH);
+  }
+}
+
 // What "disabled" means for a button, in one place. Loading, progress and status
 // are carved out of it: a button locked for its own request or countdown, or
 // during NDS.Copy's success flash, keeps its colours and its group seam. The seam rules outrank the base

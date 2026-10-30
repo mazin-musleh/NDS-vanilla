@@ -1,5 +1,12 @@
 @use '../mixins' as *;
 
+@mixin reset-section-style($important: null) {
+  --_section-bg-base: transparent #{$important};
+  --_section-shadow-base: none #{$important};
+  --_section-border-base: none #{$important};
+  --_section-border-radius-base: 0 #{$important};
+}
+
 /* ── Section visual tokens ── */
 
 :is(.nds-hero-section, .nds-content-section) {
