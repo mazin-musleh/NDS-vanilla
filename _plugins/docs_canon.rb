@@ -409,7 +409,11 @@ module DocsCanon
         need = need.empty? ? limit : "#{need}. #{limit}" if limit
       end
       full = lim && !sel && rows.count { |x| rival[x] && x[:option].include?('(default)') } >= lim.to_i
-      off = !applies?(r, src, js) || full
+      # In one `(any)` row, chips that rule each other out by `:not(.x)` swap (nds-docs.js): one held off only by its default rival starts on.
+      swaps = group.end_with?(' (any)') && rows.any? do |x|
+        x[:group] == r[:group] && x[:option].include?('(default)') && (x[:adds] || []).any? { |a| a.start_with?('.') && (r[:targets] || []).any? { |t| t =~ /:not\([^)]*#{Regexp.escape(a)}\b/ } }
+      end && applies?(r.merge(targets: r[:targets].map { |t| t.gsub(/:not\([^)]*\)/, '') }), src, js)
+      off = !(applies?(r, src, js) || swaps) || full
       state = [('selected' if sel), ('disabled' if off)].compact.join(' ')
       msg = off && !need.empty? ? need : (tip.empty? ? need : tip)
       tooltip = msg.empty? ? '' : %( data-tooltip-hover="#{off ? 0 : 500}" data-tooltip-message="#{esc[msg]}"#{%( data-hint="#{esc[tip]}") unless tip.empty?}#{%( data-reason="#{esc[need]}") unless need.empty?})

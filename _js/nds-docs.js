@@ -326,7 +326,7 @@
         });
         // A group with no chip on starts on its default (None has no chip).
         order.forEach(function (group) { if (!active[group] && defaults[group]) active[group] = defaults[group]; });
-        var pristine = document.createElement('div'), call = null, html = false, dark = false, darkWins = false, wasOncolor = false;
+        var pristine = document.createElement('div'), source = pristine, call = null, html = false, dark = false, darkWins = false, wasOncolor = false;
         var page = script.getAttribute('data-preview') === 'page';
 
         // A choice is enabled only when the element it changes is in the current markup ("Row" needs a group).
@@ -356,7 +356,27 @@
                 if (isJs(row.target)) return !!call && callMatches(call, row.target);
                 // A chosen `remove` row took its own target away: it stays on, so it can be turned off.
                 if (row.op && row.op.kind === 'remove' && active[choice.group] === choice) return true;
-                return html && (!row.target || row.target === '—' || findTargets(pristine, row.target).length > 0);
+                return html && (!row.target || row.target === '—' || findTargets(pristine, row.target).length > 0 || findHiders(choice).length > 0
+                    || (findExcluders(choice).length > 0 && findTargets(pristine, row.target.replace(/:not\([^)]*\)/g, '')).length > 0));
+            });
+        }
+        // A `remove` row and a choice whose element it takes away (icons None and Outline) are mutual: picking one turns the other off.
+        function isHiddenBy(remover, choice) {
+            var gone = [];
+            remover.ops.forEach(function (row) { if (row.op && row.op.kind === 'remove') gone = gone.concat(findTargets(source, row.target)); });
+            return gone.length > 0 && choice.ops.some(function (row) {
+                return row.target && row.target !== '—' && findTargets(source, row.target).some(function (el) { return gone.some(function (removed) { return removed.contains(el); }); });
+            });
+        }
+        function findHiders(choice) {
+            return order.map(function (group) { return active[group]; }).filter(function (other) { return other && other !== choice && isHiddenBy(other, choice); });
+        }
+        // In one `(any)` row, chips that rule each other out by `:not(.x)` (Flat, Stroke) swap: picking one turns the other off.
+        function findExcluders(choice) {
+            return order.map(function (group) { return active[group]; }).filter(function (other) {
+                return other && other !== choice && rowOf(other.group) === rowOf(choice.group) && other.ops.some(function (row) {
+                    return row.op && row.op.kind === 'class' && choice.ops.some(function (own) { return own.target && new RegExp(':not\\([^)]*\\.' + row.op.name + '\\b').test(own.target); });
+                });
             });
         }
         function showApplicable() {
@@ -391,6 +411,7 @@
             // A page canon is a whole <body>, which innerHTML drops: it parses as a document.
             if (page) pristine = new DOMParser().parseFromString(dedent(srcEl.textContent), 'text/html');
             else pristine.innerHTML = html ? dedent(srcEl.textContent) : '';
+            source = pristine.cloneNode(true);
             call = callEl ? parseCall(dedent(callEl.textContent)) : null;
             [html && pristine, call].forEach(function (root) {
                 if (!root) return;
@@ -530,6 +551,13 @@
             // A multi-select group toggles each chip; a group whose default is None turns off when
             // its chosen chip is tapped again; any other group is pick-one; a single option toggles.
             var on = true, wasOn = active[choice.group] === choice;
+            if (!wasOn) {
+                findHiders(choice).concat(findExcluders(choice)).forEach(function (other) { set(other, false); });
+                order.forEach(function (group) {
+                    var other = active[group];
+                    if (other && other !== choice && other !== defaults[group] && isHiddenBy(choice, other)) defaults[group] ? set(defaults[group], true) : set(other, false);
+                });
+            }
             if (combos[choice.group]) toggle(choice);
             else if (sizes[choice.group] > 1 && active[choice.group] === choice && isNone(defaults[choice.group])) set(defaults[choice.group], true);
             else { on = sizes[choice.group] > 1 || active[choice.group] !== choice; set(choice, on); }
@@ -538,6 +566,14 @@
             if (on && !wasOn && limit && parseInt(limit, 10) === 1) order.forEach(function (group) {
                 if (group !== choice.group && rowOf(group) === rowOf(choice.group) && active[group] && limitOf(active[group]) === limit) set(active[group], false);
             });
+            // A `(any)` row's default with no markup (icons Default) is the row's reset: picking it turns the
+            // row's other chips off, picking another turns it off, and it comes back when the last one goes.
+            var isReset = function (option) { return !!option && option === defaults[option.group] && / \(any\)\|/.test(option.group) && !option.ops.some(function (row) { return row.op; }); };
+            var rowGroups = order.filter(function (group) { return rowOf(group) === rowOf(choice.group); });
+            var resetChoice = rowGroups.map(function (group) { return defaults[group]; }).filter(isReset)[0];
+            if (resetChoice === choice) rowGroups.forEach(function (group) { if (group !== choice.group && active[group]) set(active[group], false); set(choice, true); });
+            else if (resetChoice && on) set(resetChoice, false);
+            if (resetChoice && !rowGroups.some(function (group) { return active[group]; })) set(resetChoice, true);
             // `(demo: + x)` turns on the row marked `(id: x)`, by id so a translated page keeps
             // working. An option can carry several. A tap on the chip already on changes nothing.
             (on && !wasOn && choice.option.match(/\(demo:\s*\+\s*[^)]+\)/g) || []).forEach(function (marker) {
