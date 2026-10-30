@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 01:44 PM"
+last_edit: "30/10/2026 - 04:23 PM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -333,6 +333,7 @@ Pick another component when:
 | Actions order | Main last (hint: The first button shows last. Not stacked) | `.nds-reverse` | `.nds-card-actions:not(.nds-stacked):not(.nds-col)` | Write the main action first, and it shows last in the row, as in a dialog's Back and Next. The row stays at its side, with or without End. Stacked buttons keep the markup order, so the main action stays on top |
 | Stroke | Stroke (default) | `.nds-stroke` | `.nds-card` | A 1px border. For flat and content-heavy layouts. Leave out both stroke and shadow for a plain card |
 | Shadow | Shadow | `.nds-shadow` | `.nds-card` | An elevation shadow. For floating or modal-adjacent cards. It combines with the stroke |
+| Flat | Flat (hint: No fill and no padding) | `.nds-flat` | `.nds-card:not(.nds-stroke, .nds-shadow)` | No fill and no padding, and a muted description: the card reads as text on its section. Not with Stroke or Shadow |
 | Color | None (default) | — | — | The default colors |
 | Color | Neutral | `.nds-neutral` | `.nds-card` | Also `.nds-gray` |
 | Color | Green | `.nds-green` | `.nds-card` | Tints the title, the icon and the hover border |
@@ -473,7 +474,7 @@ Pick another component when:
 - Do not put a card inside a card. Use `.nds-card-meta` or a [definition list](../components/definition-list) inside the content.
 - Use `data-status` only when the card really has that status. For a color without a status, use the color class.
 - Put a row of cards in a [grid](../layout/grid).
-- For a set of cards that share one look, such as features with an icon, a title and one line, use a [List](../components/list).
+- For a set of cards, use a [List](../components/list): each card is a list item, and the list sets the look they share. A set of link cards stays a [Grid](../layout/grid).
 - To show a card's content with no box, add `nds-flush`. It drops the padding, the border, the fill and the shadow.
 - Put a card's small extras in `.nds-card-corner`, first in `.nds-card-text`: a status tag, a menu or "View all" button, or a select checkbox. A bare button in the header shrinks when the title is long, and its label spills out.
 - Keep the corner to one or two small items: an `nds-xs` tag, an `nds-sm` subtle button, an icon-only button, or a checkbox. A wide corner meets the header icon on a narrow card.

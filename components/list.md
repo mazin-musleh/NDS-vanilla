@@ -2,13 +2,13 @@
 layout: page
 title: List
 hero_title: List - National Design System
-hero_description: A set of items in a grid or in rows that fill, each a card with a title, one or two lines of text and often an icon
+hero_description: A set of like items in a grid or in rows that fill, each a card that shares the list's look
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 03:33 PM"
+last_edit: "30/10/2026 - 05:58 PM"
 ---
 
 <section id="list-overview" class="nds-content-section nds-doc-overview">
@@ -18,13 +18,15 @@ last_edit: "30/10/2026 - 03:33 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A list shows a set of items, such as features, benefits or reasons, in a [grid](../layout/grid) of equal columns, or in [flex](../layout/flex) rows that the items grow to fill. The list is a `ul` with `nds-grid` or `nds-flex`, and each item is a [card](../components/card) with a title, a description and often a [featured icon](../components/featured-icon). Classes on the list give every item the same look: the size, the item layout (stacked or row), and either no box (`nds-flat`) or a card box (`nds-stroke`, `nds-shadow`).
+A list shows a set of like items, such as services, features, courses or people, in a [grid](../layout/grid) of equal columns, or in [flex](../layout/flex) rows that the items grow to fill. The list is a `ul` with `nds-grid` or `nds-flex`, and each item is a [card](../components/card). An item holds any card parts: a [featured icon](../components/featured-icon), an image, an avatar, tags, a price or actions. Classes on the list give every item the same look: the size, the item layout (stacked or row), and either no box (`nds-flat`) or a card box (`nds-stroke`, `nds-shadow`).
 
 Pick another component when:
 
+- the item stands alone: [Card](../components/card)
 - each item is a name and its value: [Definition List](../components/definition-list)
-- an item carries an image, tags, a price or actions: [Card](../components/card)
-- each item opens a page: [Drawer](../components/drawer)
+- the items slide in a carousel: [Swiper](../components/swiper)
+- each item is a navigation tile, one link: a [Grid](../layout/grid) of link cards
+- each item is a page link in a column: [Drawer](../components/drawer)
 
 </div>
   </div>
@@ -161,6 +163,218 @@ Pick another component when:
   </li>
 </ul>
 </script>
+<script type="text/html" id="list-part-person-1-avatar" data-canon>
+<div class="nds-card-header">
+  <div class="nds-avatar">
+    <img src="../docs-assets/img/avatar2.webp" alt="">
+  </div>
+</div>
+</script>
+<script type="text/html" id="list-part-person-1" data-canon>
+<div class="nds-card-text">
+  <div class="nds-card-corner">
+    <span class="nds-tag nds-xs" data-status="success">
+      <span class="nds-label">Active</span>
+    </span>
+  </div>
+  <span class="nds-card-title">Noura Al-Qahtani</span>
+  <p class="nds-card-description">Service Design Lead</p>
+</div>
+</script>
+<script type="text/html" id="list-part-person-2-avatar" data-canon>
+<div class="nds-card-header">
+  <div class="nds-avatar">
+    <img src="../docs-assets/img/avatar3.webp" alt="">
+  </div>
+</div>
+</script>
+<script type="text/html" id="list-part-person-2" data-canon>
+<div class="nds-card-text">
+  <div class="nds-card-corner">
+    <span class="nds-tag nds-xs" data-status="warning">
+      <span class="nds-label">Away</span>
+    </span>
+  </div>
+  <span class="nds-card-title">Faisal Al-Harbi</span>
+  <p class="nds-card-description">Front-End Developer</p>
+</div>
+</script>
+<script type="text/html" id="list-part-person-3-avatar" data-canon>
+<div class="nds-card-header">
+  <div class="nds-avatar">
+    <img src="../docs-assets/img/avatar4.webp" alt="">
+  </div>
+</div>
+</script>
+<script type="text/html" id="list-part-person-3" data-canon>
+<div class="nds-card-text">
+  <div class="nds-card-corner">
+    <span class="nds-tag nds-xs" data-status="success">
+      <span class="nds-label">Active</span>
+    </span>
+  </div>
+  <span class="nds-card-title">Reem Al-Otaibi</span>
+  <p class="nds-card-description">Content Designer</p>
+</div>
+</script>
+<script type="text/html" id="list-part-person-4-avatar" data-canon>
+<div class="nds-card-header">
+  <div class="nds-avatar">
+    <img src="../docs-assets/img/avatar5.webp" alt="">
+  </div>
+</div>
+</script>
+<script type="text/html" id="list-part-person-4" data-canon>
+<div class="nds-card-text">
+  <div class="nds-card-corner">
+    <span class="nds-tag nds-xs" data-status="neutral">
+      <span class="nds-label">Offline</span>
+    </span>
+  </div>
+  <span class="nds-card-title">Sara Al-Dosari</span>
+  <p class="nds-card-description">Accessibility Tester</p>
+</div>
+</script>
+<script type="text/html" id="list-part-person-5-avatar" data-canon>
+<div class="nds-card-header">
+  <div class="nds-avatar">
+    <span class="nds-label">KM</span>
+  </div>
+</div>
+</script>
+<script type="text/html" id="list-part-person-5" data-canon>
+<div class="nds-card-text">
+  <div class="nds-card-corner">
+    <span class="nds-tag nds-xs" data-status="success">
+      <span class="nds-label">Active</span>
+    </span>
+  </div>
+  <span class="nds-card-title">Khalid Al-Mutairi</span>
+  <p class="nds-card-description">Data Analyst</p>
+</div>
+</script>
+<script type="text/html" id="list-part-course-1-image" data-canon>
+<div class="nds-card-header">
+  <div class="nds-card-image">
+    <img src="../assets/img/journy_students.webp" alt="">
+  </div>
+</div>
+</script>
+<script type="text/html" id="list-part-course-1" data-canon>
+<div class="nds-card-content">
+  <div class="nds-card-text">
+    <span class="nds-card-title">Data Analysis for Decision Makers</span>
+    <p class="nds-card-description">Read a dashboard and turn its numbers into a plan.</p>
+  </div>
+  <div class="nds-card-value">
+    <span class="nds-number-format" data-currency="SAR">2400</span>
+  </div>
+  <div class="nds-card-tags">
+    <span class="nds-tag nds-blue">
+      <span class="nds-label">Intermediate</span>
+    </span>
+  </div>
+</div>
+</script>
+<script type="text/html" id="list-part-course-2-image" data-canon>
+<div class="nds-card-header">
+  <div class="nds-card-image">
+    <img src="../docs-assets/img/card_img.webp" alt="">
+  </div>
+</div>
+</script>
+<script type="text/html" id="list-part-course-2" data-canon>
+<div class="nds-card-content">
+  <div class="nds-card-text">
+    <span class="nds-card-title">Writing for Government Services</span>
+    <p class="nds-card-description">Write service pages that people read and act on.</p>
+  </div>
+  <div class="nds-card-value">
+    <span class="nds-number-format" data-currency="SAR">1800</span>
+  </div>
+  <div class="nds-card-tags">
+    <span class="nds-tag nds-green">
+      <span class="nds-label">Beginner</span>
+    </span>
+  </div>
+</div>
+</script>
+<script type="text/html" id="list-part-course-3-image" data-canon>
+<div class="nds-card-header">
+  <div class="nds-card-image">
+    <img src="../assets/img/riyadhcenter.webp" alt="">
+  </div>
+</div>
+</script>
+<script type="text/html" id="list-part-course-3" data-canon>
+<div class="nds-card-content">
+  <div class="nds-card-text">
+    <span class="nds-card-title">Project Management Basics</span>
+    <p class="nds-card-description">Plan a project, track its risks and report its progress.</p>
+  </div>
+  <div class="nds-card-value">
+    <span class="nds-number-format" data-currency="SAR">3100</span>
+  </div>
+  <div class="nds-card-tags">
+    <span class="nds-tag nds-green">
+      <span class="nds-label">Beginner</span>
+    </span>
+  </div>
+</div>
+</script>
+<script type="text/html" id="list-part-course-4-image" data-canon>
+<div class="nds-card-header">
+  <div class="nds-card-image">
+    <img src="../assets/img/riyadhcenter_ai.webp" alt="">
+  </div>
+</div>
+</script>
+<script type="text/html" id="list-part-course-4" data-canon>
+<div class="nds-card-content">
+  <div class="nds-card-text">
+    <span class="nds-card-title">AI in Public Services</span>
+    <p class="nds-card-description">Find where AI saves time in a service, and where it does not.</p>
+  </div>
+  <div class="nds-card-value">
+    <span class="nds-number-format" data-currency="SAR">2900</span>
+  </div>
+  <div class="nds-card-tags">
+    <span class="nds-tag nds-yellow">
+      <span class="nds-label">Advanced</span>
+    </span>
+  </div>
+</div>
+</script>
+<script type="text/html" id="list-part-course-5-image" data-canon>
+<div class="nds-card-header">
+  <div class="nds-card-image">
+    <img src="../assets/img/riyadhcenter3s.webp" alt="">
+  </div>
+</div>
+</script>
+<script type="text/html" id="list-part-course-5" data-canon>
+<div class="nds-card-content">
+  <div class="nds-card-text">
+    <span class="nds-card-title">Accessible Digital Content</span>
+    <p class="nds-card-description">Make documents and pages that everyone can use.</p>
+  </div>
+  <div class="nds-card-value">
+    <span class="nds-number-format" data-currency="SAR">1500</span>
+  </div>
+  <div class="nds-card-tags">
+    <span class="nds-tag nds-blue">
+      <span class="nds-label">Intermediate</span>
+    </span>
+  </div>
+</div>
+</script>
+<script type="text/html" id="list-part-actions" data-canon>
+<div class="nds-card-actions">
+  <a href="#" class="nds-btn nds-primary">
+    <span class="nds-label">Enroll</span>
+  </a>
+</div>
+</script>
     </div>
   </div>
 </section>
@@ -172,12 +386,38 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-Most options go on the list. Icons and Icon color go on each `.nds-featured-icon`, and Featured item goes on the one item it features. Columns (Grid) and Lines (Grid) are for a grid list, and Item width (Flex) is for a flex list: each group is off on the other structure. Two rows with the same Group and Option are one choice: write both.
+Most options go on the list. Items puts its parts in every item. Icons and Icon color go on each `.nds-featured-icon`, and Featured item goes on the one item it features. Columns (Grid) and Lines (Grid) are for a grid list, and Item width (Flex) is for a flex list: each group is off on the other structure. Two rows with the same Group and Option are one choice: write both.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Grid (default) | — | — | Equal columns, and rows that line up. Use it for most lists, and for lines between the items |
 | Structure | Flex (hint: Items that grow to fill each row) | canon `#list-flex` | — | Rows that wrap: each item starts at `--card-width` and grows to fill its row, the last row too. Use it when a short last row must not leave a gap, or for one featured item |
+| Items | Icon (default) | — | — | The canon's items: a featured icon, a title and one line |
+| Items | Person (hint: An avatar, a name, a role and a status tag) | remove | `.nds-list > .nds-card > .nds-card-header:has(> .nds-card-featured-icon)` | Each item takes a person: an avatar in place of the icon, then a name, a role and a status tag in `.nds-card-corner`. The list sizes the avatar, so it takes no size class. The status tag keeps `nds-xs`. The rows here write one sample person into each item |
+| Items | Person (hint: An avatar, a name, a role and a status tag) | remove | `.nds-list .nds-card-text:not(:has(> .nds-card-corner))` | Each item takes a person: an avatar in place of the icon, then a name, a role and a status tag in `.nds-card-corner`. The list sizes the avatar, so it takes no size class. The status tag keeps `nds-xs`. The rows here write one sample person into each item |
+| Items | Person (hint: An avatar, a name, a role and a status tag) | canon `#list-part-person-1-avatar` | `.nds-list > .nds-card:nth-child(1)` (start) | Each item takes a person: an avatar in place of the icon, then a name, a role and a status tag in `.nds-card-corner`. The list sizes the avatar, so it takes no size class. The status tag keeps `nds-xs`. The rows here write one sample person into each item |
+| Items | Person (hint: An avatar, a name, a role and a status tag) | canon `#list-part-person-1` | `.nds-list > .nds-card:nth-child(1) > .nds-card-content` (start) | Each item takes a person: an avatar in place of the icon, then a name, a role and a status tag in `.nds-card-corner`. The list sizes the avatar, so it takes no size class. The status tag keeps `nds-xs`. The rows here write one sample person into each item |
+| Items | Person (hint: An avatar, a name, a role and a status tag) | canon `#list-part-person-2-avatar` | `.nds-list > .nds-card:nth-child(2)` (start) | Each item takes a person: an avatar in place of the icon, then a name, a role and a status tag in `.nds-card-corner`. The list sizes the avatar, so it takes no size class. The status tag keeps `nds-xs`. The rows here write one sample person into each item |
+| Items | Person (hint: An avatar, a name, a role and a status tag) | canon `#list-part-person-2` | `.nds-list > .nds-card:nth-child(2) > .nds-card-content` (start) | Each item takes a person: an avatar in place of the icon, then a name, a role and a status tag in `.nds-card-corner`. The list sizes the avatar, so it takes no size class. The status tag keeps `nds-xs`. The rows here write one sample person into each item |
+| Items | Person (hint: An avatar, a name, a role and a status tag) | canon `#list-part-person-3-avatar` | `.nds-list > .nds-card:nth-child(3)` (start) | Each item takes a person: an avatar in place of the icon, then a name, a role and a status tag in `.nds-card-corner`. The list sizes the avatar, so it takes no size class. The status tag keeps `nds-xs`. The rows here write one sample person into each item |
+| Items | Person (hint: An avatar, a name, a role and a status tag) | canon `#list-part-person-3` | `.nds-list > .nds-card:nth-child(3) > .nds-card-content` (start) | Each item takes a person: an avatar in place of the icon, then a name, a role and a status tag in `.nds-card-corner`. The list sizes the avatar, so it takes no size class. The status tag keeps `nds-xs`. The rows here write one sample person into each item |
+| Items | Person (hint: An avatar, a name, a role and a status tag) | canon `#list-part-person-4-avatar` | `.nds-list > .nds-card:nth-child(4)` (start) | Each item takes a person: an avatar in place of the icon, then a name, a role and a status tag in `.nds-card-corner`. The list sizes the avatar, so it takes no size class. The status tag keeps `nds-xs`. The rows here write one sample person into each item |
+| Items | Person (hint: An avatar, a name, a role and a status tag) | canon `#list-part-person-4` | `.nds-list > .nds-card:nth-child(4) > .nds-card-content` (start) | Each item takes a person: an avatar in place of the icon, then a name, a role and a status tag in `.nds-card-corner`. The list sizes the avatar, so it takes no size class. The status tag keeps `nds-xs`. The rows here write one sample person into each item |
+| Items | Person (hint: An avatar, a name, a role and a status tag) | canon `#list-part-person-5-avatar` | `.nds-list > .nds-card:nth-child(5)` (start) | Each item takes a person: an avatar in place of the icon, then a name, a role and a status tag in `.nds-card-corner`. The list sizes the avatar, so it takes no size class. The status tag keeps `nds-xs`. The rows here write one sample person into each item |
+| Items | Person (hint: An avatar, a name, a role and a status tag) | canon `#list-part-person-5` | `.nds-list > .nds-card:nth-child(5) > .nds-card-content` (start) | Each item takes a person: an avatar in place of the icon, then a name, a role and a status tag in `.nds-card-corner`. The list sizes the avatar, so it takes no size class. The status tag keeps `nds-xs`. The rows here write one sample person into each item |
+| Items | Course (hint: An image, a title, a price, a level tag and an action) | canon `#list-part-course-1` | `.nds-list > .nds-card:nth-child(1)` (start) | Each item takes a course: an image in place of the icon, then a title, a line, a price and a level tag, and an action after the content. Each part sits where the [Card](../components/card) page puts it. The rows here write one sample course into each item |
+| Items | Course (hint: An image, a title, a price, a level tag and an action) | canon `#list-part-course-1-image` | `.nds-list > .nds-card:nth-child(1)` (start) | Each item takes a course: an image in place of the icon, then a title, a line, a price and a level tag, and an action after the content. Each part sits where the [Card](../components/card) page puts it. The rows here write one sample course into each item |
+| Items | Course (hint: An image, a title, a price, a level tag and an action) | canon `#list-part-course-2` | `.nds-list > .nds-card:nth-child(2)` (start) | Each item takes a course: an image in place of the icon, then a title, a line, a price and a level tag, and an action after the content. Each part sits where the [Card](../components/card) page puts it. The rows here write one sample course into each item |
+| Items | Course (hint: An image, a title, a price, a level tag and an action) | canon `#list-part-course-2-image` | `.nds-list > .nds-card:nth-child(2)` (start) | Each item takes a course: an image in place of the icon, then a title, a line, a price and a level tag, and an action after the content. Each part sits where the [Card](../components/card) page puts it. The rows here write one sample course into each item |
+| Items | Course (hint: An image, a title, a price, a level tag and an action) | canon `#list-part-course-3` | `.nds-list > .nds-card:nth-child(3)` (start) | Each item takes a course: an image in place of the icon, then a title, a line, a price and a level tag, and an action after the content. Each part sits where the [Card](../components/card) page puts it. The rows here write one sample course into each item |
+| Items | Course (hint: An image, a title, a price, a level tag and an action) | canon `#list-part-course-3-image` | `.nds-list > .nds-card:nth-child(3)` (start) | Each item takes a course: an image in place of the icon, then a title, a line, a price and a level tag, and an action after the content. Each part sits where the [Card](../components/card) page puts it. The rows here write one sample course into each item |
+| Items | Course (hint: An image, a title, a price, a level tag and an action) | canon `#list-part-course-4` | `.nds-list > .nds-card:nth-child(4)` (start) | Each item takes a course: an image in place of the icon, then a title, a line, a price and a level tag, and an action after the content. Each part sits where the [Card](../components/card) page puts it. The rows here write one sample course into each item |
+| Items | Course (hint: An image, a title, a price, a level tag and an action) | canon `#list-part-course-4-image` | `.nds-list > .nds-card:nth-child(4)` (start) | Each item takes a course: an image in place of the icon, then a title, a line, a price and a level tag, and an action after the content. Each part sits where the [Card](../components/card) page puts it. The rows here write one sample course into each item |
+| Items | Course (hint: An image, a title, a price, a level tag and an action) | canon `#list-part-course-5` | `.nds-list > .nds-card:nth-child(5)` (start) | Each item takes a course: an image in place of the icon, then a title, a line, a price and a level tag, and an action after the content. Each part sits where the [Card](../components/card) page puts it. The rows here write one sample course into each item |
+| Items | Course (hint: An image, a title, a price, a level tag and an action) | canon `#list-part-course-5-image` | `.nds-list > .nds-card:nth-child(5)` (start) | Each item takes a course: an image in place of the icon, then a title, a line, a price and a level tag, and an action after the content. Each part sits where the [Card](../components/card) page puts it. The rows here write one sample course into each item |
+| Items | Course (hint: An image, a title, a price, a level tag and an action) | canon `#list-part-actions` | `.nds-list > .nds-card` | Each item takes a course: an image in place of the icon, then a title, a line, a price and a level tag, and an action after the content. Each part sits where the [Card](../components/card) page puts it. The rows here write one sample course into each item |
+| Items | Course (hint: An image, a title, a price, a level tag and an action) | remove | `.nds-list > .nds-card > .nds-card-header:has(> .nds-card-featured-icon) + .nds-card-content` | Each item takes a course: an image in place of the icon, then a title, a line, a price and a level tag, and an action after the content. Each part sits where the [Card](../components/card) page puts it. The rows here write one sample course into each item |
+| Items | Course (hint: An image, a title, a price, a level tag and an action) | remove | `.nds-list > .nds-card > .nds-card-header:has(> .nds-card-featured-icon)` | Each item takes a course: an image in place of the icon, then a title, a line, a price and a level tag, and an action after the content. Each part sits where the [Card](../components/card) page puts it. The rows here write one sample course into each item |
 | Columns (Grid) | Two (default) | `--max-col: 2` | `.nds-list.nds-grid` | Two columns, and one on phones. Tablets take `--max-col` unless the list sets `--mid-col` |
 | Columns (Grid) | Two (default) | `--min-col: 1` | `.nds-list.nds-grid` | Two columns, and one on phones. Tablets take `--max-col` unless the list sets `--mid-col` |
 | Columns (Grid) | Three (hint: Three, then two on tablets, then one on phones) | `--max-col: 3` | `.nds-list.nds-grid` | Three columns on desktops, two on tablets, one on phones. Each screen size has its own count, and a missing one takes the next larger |
@@ -195,7 +435,8 @@ Most options go on the list. Icons and Icon color go on each `.nds-featured-icon
 | Featured item | Featured item (hint: The first item twice as wide) (limit: 1 width choice) | `--card-width: 480px` | `.nds-list.nds-flex > .nds-card:first-child` | The item starts at twice the list's `--card-width` and grows twice as fast. Write both values on that item. Not with Fill with a cap, which holds it to the others' width, or Own width, where it alone grows |
 | Featured item | Featured item (hint: The first item twice as wide) (limit: 1 width choice) | `--grow: 2` | `.nds-list.nds-flex > .nds-card:first-child` | The item starts at twice the list's `--card-width` and grows twice as fast. Write both values on that item. Not with Fill with a cap, which holds it to the others' width, or Own width, where it alone grows |
 | Layout | Stacked (default) | — | — | The icon above the text |
-| Layout | Row (hint: The icon beside the text) | `.nds-horizontal` | `.nds-list` | The icon beside the text. Use it for a long list, or a list in a narrow column |
+| Layout | Row (hint: The header beside the text) | `.nds-horizontal` | `.nds-list` | The header beside the text. Use it for a long list. An item under 324px wide puts its header back on top, and an image drops under the text when it does not fit beside it. On a flex list, write a wider `--card-width` too, such as `360px` |
+| Layout | Row (hint: The header beside the text) | `--card-width: 360px` | `.nds-list.nds-flex` | The header beside the text. Use it for a long list. An item under 324px wide puts its header back on top, and an image drops under the text when it does not fit beside it. On a flex list, write a wider `--card-width` too, such as `360px` |
 | Layout | Centered | `.nds-center` | `.nds-list` | The icon and the text centered. Use it for a short list of three or four items |
 | Size | SM | `.nds-sm` | `.nds-list` | Smaller icons, text and gaps, for a list in a card or a side column |
 | Size | MD (default) | — | — | The card's own sizes: a 40px icon |
@@ -205,7 +446,7 @@ Most options go on the list. Icons and Icon color go on each `.nds-featured-icon
 | Icons (any) | Dark (limit: 1 icon style) (hint: A solid fill and a white icon) | `.nds-dark` | `.nds-list .nds-featured-icon` | A solid fill and a white icon. Not with Outline or Subtle |
 | Icons (any) | Subtle (limit: 1 icon style) (hint: The icon alone, with no container) | `.nds-subtle` | `.nds-list .nds-featured-icon` | The icon alone, one size smaller. Use it where the list sits beside other content and must read lighter. Not with Outline, Dark or Circle |
 | Icons (any) | Circle (hint: Round icons) | `.nds-circle` | `.nds-list .nds-featured-icon:not(.nds-subtle)` | Round icons. It combines with Outline and Dark |
-| Icons (any) | None (hint: A title and a description only) | remove | `.nds-list > .nds-card > .nds-card-header` | Items with no header: a title and a description only |
+| Icons (any) | None (hint: A title and a description only) | remove | `.nds-list > .nds-card > .nds-card-header:has(> .nds-card-featured-icon)` | Items with no header: a title and a description only |
 | Icon color | Brand (default) | — | `.nds-list .nds-featured-icon` | The brand color on the icons |
 | Icon color | Neutral | `.nds-neutral` | `.nds-list .nds-featured-icon` | A neutral icon. Also `.nds-gray` |
 | Icon color | Green | `.nds-green` | `.nds-list .nds-featured-icon` | A green icon |
@@ -252,8 +493,8 @@ Most options go on the list. Icons and Icon color go on each `.nds-featured-icon
           </div>
           <div class="nds-card-content">
             <div class="nds-card-text">
-              <span class="nds-card-title">Grid Layout</span>
-              <p class="nds-card-description">Columns, gaps and lines are the grid's. Row lines show in every browser.</p>
+              <span class="nds-card-title">Grid or Flex</span>
+              <p class="nds-card-description">A grid list takes Grid's columns, gaps and lines. A flex list grows its items to fill each row, the last row too.</p>
             </div>
           </div>
         </li>
@@ -266,7 +507,7 @@ Most options go on the list. Icons and Icon color go on each `.nds-featured-icon
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">One Size for All Items</span>
-              <p class="nds-card-description"><code class="nds-inline-code lang-html">nds-sm</code> and <code class="nds-inline-code lang-html">nds-lg</code> on the list change every icon, title, description and gap together.</p>
+              <p class="nds-card-description"><code class="nds-inline-code lang-html">nds-sm</code> and <code class="nds-inline-code lang-html">nds-lg</code> on the list change every part of every item together: icons, avatars, date tiles, tags, buttons, prices, numbers, text and gaps.</p>
             </div>
           </div>
         </li>
@@ -279,7 +520,7 @@ Most options go on the list. Icons and Icon color go on each `.nds-featured-icon
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Fits Narrow Columns</span>
-              <p class="nds-card-description">A list under 400px wide makes its icons and gaps smaller. The text keeps its size. A size class written on the list stays as written.</p>
+              <p class="nds-card-description">A list under 400px wide makes its icons, avatars, date tiles and gaps smaller. The text keeps its size. A size class written on the list stays as written.</p>
             </div>
           </div>
         </li>
@@ -334,16 +575,17 @@ Most options go on the list. Icons and Icon color go on each `.nds-featured-icon
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Keep each item to a short title and one or two lines. An item that needs more is a [card](../components/card).
+- Build each item as the [Card](../components/card) page writes its parts: the header holds an icon, an image or an avatar, and the content holds the text, tags, a price and actions.
+- Keep link cards out of a list. A set of navigation tiles, each one link, is a [Grid](../layout/grid) of link cards.
 - Pick Grid for equal columns, one column, rows that line up or lines between the items. Pick Flex for rows that fill, the last one too, or for one featured item. A flex list always wraps and has no lines.
 - In a grid list, set `--max-col` for more than one column. Without it, the items stack in one column.
 - In a flex list, a lone item in the last row takes the whole row. Set `--card-width-max` to stop it, and `--justify: center` to center the row.
-- Do not give a row card (`nds-horizontal`) `--card-width: auto` in a flex list. It takes its width from the list, so it squeezes.
+- A row list (`nds-horizontal`) needs wide items. An item under 324px wide puts its header back on top of the text, and an image drops under the text when it does not fit beside it. Give a row list fewer columns, or on a flex list a `--card-width` of about `360px`, never `auto`.
 - On a flex list, `nds-center`, `nds-middle` and `nds-reverse` change the items only. To move the rows, set `--justify` and `--align`.
 - A list fills its parent's width. In a box that sizes to its content (an inline block, a table cell), give the list a width: it measures itself to step down when narrow, so it cannot size the box.
 - Set the size, the item layout and the box on the list, never on one item: the list's class wins, and the items line up.
 - Give each icon its own look and color classes (`nds-subtle`, `nds-green`, …), so one icon can differ. An item may hold an avatar or an image instead of an icon.
-- Leave the size class off an icon, an avatar, a tag or a rating: the list sizes it. An avatar is XL, LG in a small list (`nds-sm`) and 2XL in a large one (`nds-lg`). A tag or a rating is SM, XS in a small list and MD in a large one.
+- Leave the size class off an icon, an avatar, a tag, a rating or a button: the list sizes it. An avatar is XL, LG in a small list (`nds-sm`) and 2XL in a large one (`nds-lg`). A tag or a rating is SM, XS in a small list and MD in a large one. A status tag in `.nds-card-corner` is the exception: it keeps `nds-xs`, as in a single card, so it stays small at every list size.
 - Hide every icon from screen readers with `aria-hidden="true"`. The title names the item.
 - Put the list after a heading that says what the items are for.
 
@@ -409,6 +651,8 @@ List has no script of its own. With `nds-divided` or `nds-divided-rows`, the [gr
     <div class="nds-section-body nds-prose" markdown="1">
 
 - [Training Academy](../examples/training-academy): the "Why train with us" section, with subtle icons in three columns.
+- [Services List](../examples/services-list): service cards with tags and actions, filtered and split into pages.
+- [Admin Console Demo](../examples/console-demo): the team directory, row cards with an avatar, a status tag and a Meta line.
 
 </div>
   </div>

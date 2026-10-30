@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 09:28 PM"
+last_edit: "30/10/2026 - 04:23 PM"
 ---
 
 <section id="flex-overview" class="nds-content-section nds-doc-overview">
@@ -185,6 +185,7 @@ Each Justify, Align and Gap option sets one custom property in the `style` of `.
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
+- For a set of cards whose rows fill, use a [List](../components/list) with `nds-flex`. On a list, `nds-center`, `nds-middle` and `nds-reverse` change the items, and `--justify` and `--align` move the rows.
 - Use flex to lay out a few elements in one line, such as buttons, tags or icons. Use [Grid](../layout/grid) for columns of content, and [Section](../layout/section) for page regions.
 - For a row that becomes a column on phones, use a grid with `--max-col: 2; --min-col: 1;`. Flex has no values for each screen size.
 - Set `--gap` with a spacing token, such as `var(--spacing-sm)`.

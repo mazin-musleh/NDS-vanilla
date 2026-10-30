@@ -435,6 +435,21 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 @mixin rating-md { --star-size: 32px; } // the default, which has no class
 
 // -base values: a parent's step reaches a tag with no size class, and a --tag-* knob still wins.
+// Metric steps: a parent sets them, and the metric's value and trend read them.
+@mixin metric-sm {
+    --_metric-value-FS: var(--typo-display-clamp-sm-FS);
+    --_metric-value-LH: var(--typo-display-clamp-sm-LH);
+    --_metric-trend-FS: var(--typo-text-xs-FS);
+    --_metric-trend-LH: var(--typo-text-xs-LH);
+}
+
+@mixin metric-lg {
+    --_metric-value-FS: var(--typo-display-clamp-lg-FS);
+    --_metric-value-LH: var(--typo-display-clamp-lg-LH);
+    --_metric-trend-FS: var(--typo-text-md-FS);
+    --_metric-trend-LH: var(--typo-text-md-LH);
+}
+
 // MD resets them: the tag's own fallbacks are its MD size.
 @mixin tag-md {
     --_tag-height-base: initial;
@@ -518,9 +533,19 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     @include tag-xs;
     --_card-title-FS-base: var(--typo-text-md-FS);
     --_card-title-LH-base: var(--typo-text-md-LH);
+    --_card-subtitle-FS-base: var(--typo-text-sm-FS);
+    --_card-subtitle-LH-base: var(--typo-text-sm-LH);
     --_card-description-FS-base: var(--typo-text-sm-FS);
     --_card-description-LH-base: var(--typo-text-sm-LH);
     --_card-number-FS-base: var(--typo-display-clamp-md-FS);
+    // The price line; the rating text stays at 12px, its floor.
+    --_card-value-FS: var(--typo-text-lg-FS);
+    --_card-value-LH: var(--typo-text-lg-LH);
+    --_card-value-unit-FS: var(--typo-text-xs-FS);
+    --_card-value-unit-LH: var(--typo-text-xs-LH);
+    --_card-value-was-FS: var(--typo-text-sm-FS);
+    --_card-value-was-LH: var(--typo-text-sm-LH);
+    @include metric-sm;
     --_card-image-width-base: 120px;
 
     .nds-chip:not(.nds-sm, .nds-md, .nds-lg) {
@@ -545,9 +570,20 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     --_card-gap-base: var(--spacing-4xl);
     --_card-title-FS-base: var(--typo-text-xl-FS);
     --_card-title-LH-base: var(--typo-text-xl-LH);
+    --_card-subtitle-FS-base: var(--typo-text-lg-FS);
+    --_card-subtitle-LH-base: var(--typo-text-lg-LH);
     --_card-description-FS-base: var(--typo-text-lg-FS);
     --_card-description-LH-base: var(--typo-text-lg-LH);
     --_card-number-FS-base: var(--typo-display-clamp-xl-FS);
+    --_card-value-FS: var(--typo-display-xs-FS);
+    --_card-value-LH: var(--typo-display-xs-LH);
+    --_card-value-unit-FS: var(--typo-text-md-FS);
+    --_card-value-unit-LH: var(--typo-text-md-LH);
+    --_card-value-was-FS: var(--typo-text-lg-FS);
+    --_card-value-was-LH: var(--typo-text-lg-LH);
+    --_card-rating-text-FS: var(--typo-text-sm-FS);
+    --_card-rating-text-LH: var(--typo-text-sm-LH);
+    @include metric-lg;
     --_card-image-width-base: 200px;
 
     .nds-date-tile:not(.nds-sm, .nds-md, .nds-lg) {

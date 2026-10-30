@@ -82,7 +82,7 @@ sidemenu_mode: false
                         <div class="nds-card-text">
                             {%- if ex.new %}
                             <div class="nds-card-corner">
-                                <span class="nds-tag" data-status="info">
+                                <span class="nds-tag nds-xs" data-status="info">
                                     <span class="nds-label">New</span>
                                 </span>
                             </div>

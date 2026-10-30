@@ -456,9 +456,10 @@
     gap: var(--spacing-xs);
   }
 
+  // The --_card-*-FS/LH values below are steps a list's size sets on its items.
   .nds-card-rating-text {
-    font-size: var(--typo-text-xs-FS);
-    line-height: var(--typo-text-xs-LH);
+    font-size: var(--_card-rating-text-FS, var(--typo-text-xs-FS));
+    line-height: var(--_card-rating-text-LH, var(--typo-text-xs-LH));
     font-weight: var(--font-weight-regular);
     color: var(--_card-rating-color);
     margin: 0;
@@ -477,20 +478,20 @@
     display: flex;
     align-items: baseline;
     gap: var(--spacing-sm);
-    font-size: var(--typo-text-sm-FS);
-    line-height: var(--typo-text-sm-LH);
+    font-size: var(--_card-value-unit-FS, var(--typo-text-sm-FS));
+    line-height: var(--_card-value-unit-LH, var(--typo-text-sm-LH));
     color: var(--_card-text-color);
 
     .nds-number-format:not(s) {
-      font-size: var(--typo-text-xl-FS);
-      line-height: var(--typo-text-xl-LH);
+      font-size: var(--_card-value-FS, var(--typo-text-xl-FS));
+      line-height: var(--_card-value-LH, var(--typo-text-xl-LH));
       font-weight: var(--font-weight-bold);
       color: var(--_card-title-color);
     }
 
     s {
-      font-size: var(--typo-text-md-FS);
-      line-height: var(--typo-text-md-LH);
+      font-size: var(--_card-value-was-FS, var(--typo-text-md-FS));
+      line-height: var(--_card-value-was-LH, var(--typo-text-md-LH));
     }
   }
 

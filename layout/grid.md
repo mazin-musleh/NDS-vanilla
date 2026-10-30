@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 02:43 AM"
+last_edit: "30/10/2026 - 04:23 PM"
 ---
 
 <section id="grid-overview" class="nds-content-section nds-doc-overview">
@@ -288,6 +288,7 @@ Each example is a whole grid. Change its values to fit your content: the knobs a
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
+- For a set of like items, such as cards, use a [List](../components/list): a `ul` that is a grid and sets the items' look. Keep a plain grid for page regions, fields and link cards.
 - Use Equal columns for a short set of items that must stay in one row. Use a minimum width when the number of columns should follow the space.
 - With a fixed column count, set values for smaller screens too, such as `--mid-col: 2` and `--min-col: 1`. Without them, a phone gets the desktop column count.
 - Use tracks for columns of different widths, such as main content and a side column. Add `--mid-track: 1fr` to stack them below 960px.
