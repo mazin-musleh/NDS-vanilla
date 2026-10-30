@@ -559,7 +559,7 @@
   scss: _sass/components/_image.scss
 
 - title: "List"
-  description: "A set of items in a grid, each a card that shares the list's look"
+  description: "A set of items in a grid or in rows that fill, each a card that shares the list's look"
   use_when: "A set of like items that share one look: features, benefits or reasons (an icon, a title and one or two lines), services, results, people, KPI tiles. One class on the list sets the box (flat, stroke, shadow), the layout and the size of every item. For a name and its value use Definition List; for an item with an image, tags, a price or actions use Cards."
   category: "Content"
   tags: ["CSS"]

@@ -13,7 +13,8 @@
 
 // Centers the children along the row; a column also centers them across, where a
 // lone child (a card) would otherwise start at the edge.
-.nds-flex.nds-center {
+// On a list, this and middle and reverse are item looks: the list's rows take --justify and --align.
+.nds-flex.nds-center:not(.nds-list) {
   --justify: center;
 
   &.nds-col {
@@ -22,7 +23,7 @@
 }
 
 // Middle: the children line up on their middles across the row; .nds-center is along it.
-.nds-flex.nds-middle {
+.nds-flex.nds-middle:not(.nds-list) {
   --align: center;
 }
 
@@ -42,7 +43,7 @@
 
 // Reverse directions — flip the flex utility's child order. Scoped to .nds-flex / .nds-row:
 // a component that takes .nds-reverse defines its own meaning (card, card actions, stepper, sideinfo, switch).
-:is(.nds-flex, .nds-row).nds-reverse:not(.nds-col) {
+:is(.nds-flex, .nds-row).nds-reverse:not(.nds-col, .nds-list) {
   flex-direction: row-reverse !important;
 }
 

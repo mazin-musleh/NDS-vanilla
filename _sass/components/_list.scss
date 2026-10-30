@@ -10,6 +10,8 @@
 .nds-list {
   list-style: none;
   padding: 0;
+  width: 100%; // it measures itself, so it cannot take its content's width: in a centering parent it would be 0
+
   line-height: inherit; // the reset's 1.5 is for text items
   // The list is the ruler: a narrow list steps its items down, on any screen.
   container: nds-list / inline-size;
@@ -49,7 +51,20 @@
   --max-col: 1;
 }
 
+// Flex: rows that wrap, and items that grow from --card-width to fill each row, the last one too.
+// The card's 360px cap is off: --card-width-max sets one.
+.nds-list.nds-flex {
+  flex-wrap: wrap;
+
+  > .nds-card {
+    flex: var(--grow, 1) 1 var(--card-width, 320px);
+    width: auto;
+    max-width: var(--card-width-max, none);
+  }
+}
+
 // In a card, the list is a fresh start: the outer card's knobs stop here, and the list's own reach its items.
 :where(.nds-card .nds-list) {
   @include card-knobs(initial);
+  --grow: initial;
 }
