@@ -192,7 +192,6 @@
     height: var(--stepper-size);
     font-size: 0; // Hide HTML text content: the number is the counter below
     font-weight: var(--font-weight-medium);
-    transition: var(--nds-transition);
     position: relative;
     z-index: 1;
     flex-shrink: 0;
