@@ -146,6 +146,15 @@
                 background-color: var(--_btn-indicator-color);
             }
 
+            // A 48px tap area from the screen edge; the button draws 40px.
+            &:not(.nds-loading)::after {
+                content: '';
+                position: absolute;
+                inset-block: 0;
+                inset-inline-start: 0;
+                inset-inline-end: calc(100% - 48px);
+            }
+
             &.nds-peek {
                 // The icon reads --_peek-opacity: an `i` tail after [data-state]
                 // would join the shared invalidation set (PERF-06).

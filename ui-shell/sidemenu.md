@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "29/10/2026 - 02:00 AM"
+last_edit: "31/10/2026 - 12:14 AM"
 ---
 
 <section id="sidemenu-overview" class="nds-content-section nds-doc-overview">
@@ -510,6 +510,19 @@ In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the sc
             <div class="nds-card-text">
               <span class="nds-card-title">Close Triggers</span>
               <p class="nds-card-description">A second press on the menu button, Escape, a click outside the menu, or a change of the screen width closes it.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-tap-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Wide Tap Area</span>
+              <p class="nds-card-description">On a phone or tablet, the menu button takes a tap up to 48px from the screen edge. It draws 40px wide.</p>
             </div>
           </div>
         </li>
