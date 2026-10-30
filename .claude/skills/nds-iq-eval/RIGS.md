@@ -199,7 +199,6 @@ A run tests either the published rules and release, or the unreleased ones on ma
 When the run ends, open a session in this repo and ask for a review of the rig's `NDS-REPORT.md` and `NDS-PLAN.md`.
 
 - **The report is self-reported.** Check each claim against the repo, and the rig's pages in a headless browser (`scripts/lib/browser.mjs`), before you fix anything. A claim can be wrong (run 8's late-rows search was a URL key mix-up), or worse than stated (run 8's Contact reset never ran at all).
-- **Measure the run before the reset:** `python scripts/rig.py cost 5` gives minutes and tokens per plan row, split from the session transcript by the row's Started and Finished, and counts the helper agents.
 - **Read the plan's Status column and open items.** A run that ends with rows still `In Progress`, or with the agent's own checks filed as open items, is a rules finding.
 - **Fix at the source.** An `NDS.Init.audit()` rule first, then the doc or canon, and rules text last. A rules gap becomes a scenario (`SKILL.md`, Scenario files): the field FAIL stands in for the floor.
 
