@@ -16,7 +16,7 @@ last_edit: "24/10/2026 - 11:27 PM"
      - Places to go, an icon and a name each: link cards as navigation tiles, the whole card one link (Course categories). A whole-card link is only for this.
      - Items with several details to compare, such as an image, tags, a rating and a price: full cards with action buttons, in a Swiper when there are more than fit in one row (Featured courses).
      - A short list the user opens one item at a time, newest first: Drawer rows with a Date Tile and a Meta line (Latest announcements). A plain list of page links is a Drawer too, with an arrow on each row.
-     - An icon, a title and one line, read at a glance: a Feature List (Why train with us).
+     - An icon, a title and one line, read at a glance: a List (Why train with us).
      - Records the user sorts, filters or pages: a Table, as in the Manage Records example. A full catalog with search and filters: the Services List example. -->
 
 <!-- Course categories: link cards as navigation tiles, an icon and a name each -->
@@ -449,7 +449,7 @@ last_edit: "24/10/2026 - 11:27 PM"
     </div>
 </section>
 
-<!-- Why train with us: Feature List -->
+<!-- Why train with us: List -->
 <section id="why" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">

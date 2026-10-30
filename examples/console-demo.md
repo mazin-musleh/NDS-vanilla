@@ -552,9 +552,9 @@ hideFeedback: true
                 </div>
             </div>
             <div class="nds-cq">
-                <div class="nds-grid nds-paged-content" id="team-directory-grid" data-filter-items="nds-card" style="--per-page:6;--max-col:3;--mid-col:2;--min-col:1;">
+                <ul class="nds-list nds-grid nds-paged-content nds-stroke nds-horizontal" id="team-directory-grid" data-filter-items="nds-card" style="--per-page:6;--max-col:3;--mid-col:2;--min-col:1;">
                     {% for user in site.data.content.users %}
-                    <div class="nds-card nds-stroke nds-horizontal nds-page-item">
+                    <li class="nds-card nds-page-item">
                         <div class="nds-card-header">
                             <div class="nds-avatar nds-2xl">
                                 {% if user.avatar %}
@@ -598,9 +598,9 @@ hideFeedback: true
                                 <span class="nds-label">Contact</span>
                             </a>
                         </div>
-                    </div>
+                    </li>
                     {% endfor %}
-                </div>
+                </ul>
                 <nav class="nds-pagination" data-auto-pagination="team-directory-grid" aria-label="Team directory pagination"></nav>
             </div>
         </div>

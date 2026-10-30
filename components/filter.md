@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "28/10/2026 - 01:11 AM"
+last_edit: "30/10/2026 - 11:14 AM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -98,8 +98,8 @@ Pick another component when:
     <div class="nds-chips"></div>
   </div>
 </div>
-<div id="flt-items" class="nds-grid nds-paged-content" data-filter-items="nds-card" style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
-  <div class="nds-card nds-stroke nds-page-item">
+<ul id="flt-items" class="nds-list nds-grid nds-paged-content nds-stroke" data-filter-items="nds-card" style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Commercial registration</span>
@@ -112,8 +112,8 @@ Pick another component when:
         <span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="sector">Business</span></span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Building permit</span>
@@ -126,8 +126,8 @@ Pick another component when:
         <span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="sector">Housing</span></span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Vehicle registration renewal</span>
@@ -140,8 +140,8 @@ Pick another component when:
         <span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="sector">Transport</span></span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Driver's license renewal</span>
@@ -154,8 +154,8 @@ Pick another component when:
         <span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="sector">Transport</span></span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Municipal license</span>
@@ -168,8 +168,8 @@ Pick another component when:
         <span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="sector">Business</span></span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Housing support request</span>
@@ -182,8 +182,8 @@ Pick another component when:
         <span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="sector">Housing</span></span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Trade name reservation</span>
@@ -196,8 +196,8 @@ Pick another component when:
         <span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="sector">Business</span></span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Truck operating card</span>
@@ -210,8 +210,8 @@ Pick another component when:
         <span class="nds-tag nds-blue nds-sm"><span class="nds-label" data-filter="sector">Transport</span></span>
       </div>
     </div>
-  </div>
-</div>
+  </li>
+</ul>
 <nav class="nds-pagination" data-auto-pagination="flt-items" aria-label="Services pagination"></nav>
 </script>
 <script type="text/html" id="filter-part-search" data-canon>

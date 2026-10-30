@@ -13,10 +13,10 @@ sidemenu_mode: false
 <section id="help-channels" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-body">
-            <div class="nds-block nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
+            <ul class="nds-list nds-block nds-grid nds-stroke" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
 
                 <!-- Contact Us -->
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -51,10 +51,10 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
                 <!-- FAQs -->
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -89,10 +89,10 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
                 <!-- Live Chat -->
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -127,10 +127,10 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
                 <!-- Call Center -->
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -165,10 +165,10 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
                 <!-- Visit an Office -->
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -203,10 +203,10 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
                 <!-- Report an Issue -->
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -241,9 +241,9 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
-            </div>
+            </ul>
         </div>
     </div>
 </section>

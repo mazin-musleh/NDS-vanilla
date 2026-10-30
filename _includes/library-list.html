@@ -67,14 +67,14 @@
                     <div class="nds-chips"></div>
                 </div>
             </div>
-            <div id="components_list" class="nds-paged-content nds-grid"
+            <ul id="components_list" class="nds-list nds-paged-content nds-grid nds-stroke"
                 style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
 
                 {% for comp in library %}
                 {%- assign _shelf = comp.url | split: "/" %}
                 {%- assign _shelf = _shelf[1] %}
                 {%- if _shelf == "ui-shell" %}{% assign _shelf = "UI Shell" %}{% else %}{% assign _shelf = _shelf | capitalize %}{% endif %}
-                <div class="nds-page-item nds-card nds-stroke">
+                <li class="nds-page-item nds-card">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <span class="nds-card-title">{{ comp.title }}</span>
@@ -120,9 +120,9 @@
                         </a>
                     </div>
                     {% endif %}
-                </div>
+                </li>
                 {% endfor %}
 
-            </div>
+            </ul>
             <nav class="nds-pagination" data-auto-pagination="components_list" aria-label="Pagination" data-i18n-aria-label="pagination.pagination"></nav>
         </div>

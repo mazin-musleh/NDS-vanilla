@@ -66,11 +66,11 @@ sidemenu_mode: false
                     <div class="nds-chips"></div>
                 </div>
             </div>
-            <div id="events_list" class="nds-paged-content nds-grid"
+            <ul id="events_list" class="nds-list nds-paged-content nds-grid nds-stroke"
                 style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
 
                 {% for ev in events %}
-                <div class="nds-page-item nds-card nds-stroke">
+                <li class="nds-page-item nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -101,10 +101,10 @@ sidemenu_mode: false
                         </a>
                     </div>
                     {% endif %}
-                </div>
+                </li>
                 {% endfor %}
 
-            </div>
+            </ul>
             <nav class="nds-pagination" data-auto-pagination="events_list" aria-label="Pagination" data-i18n-aria-label="pagination.pagination"></nav>
         </div>
     </div>

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 02:43 AM"
+last_edit: "30/10/2026 - 11:19 AM"
 ---
 
 <section id="dl-overview" class="nds-content-section nds-doc-overview">
@@ -25,7 +25,7 @@ Pick another component when:
 - the data has several values for each row, or the user sorts it: [Tables](../components/table)
 - the items are links to other pages: [Link](../components/link) in a plain list
 - the items start actions: [Dropmenu](../components/dropmenu)
-- each item is a feature with an icon, a title and one line: [Feature List](../components/feature-list)
+- each item is a feature with an icon, a title and one line: [List](../components/list)
 
 </div>
   </div>

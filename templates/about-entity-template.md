@@ -13,10 +13,10 @@ sidemenu_mode: false
 <section id="entity-topics" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-body">
-            <div class="nds-block nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
+            <ul class="nds-list nds-block nds-grid nds-stroke" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
 
                 <!-- About us -->
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -34,10 +34,10 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
                 <!-- Organizational Structure -->
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -55,10 +55,10 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
                 <!-- Strategy, Policies, and Regulations -->
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -76,10 +76,10 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
                 <!-- Budget and Expenditures -->
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -97,10 +97,10 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
                 <!-- Tenders and Procurements -->
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -118,10 +118,10 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
                 <!-- E-Participation -->
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -139,10 +139,10 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
                 <!-- Our Partners / Partnerships -->
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -160,10 +160,10 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
                 <!-- Sustainable Development -->
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -181,10 +181,10 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
                 <!-- Careers -->
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -202,10 +202,10 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
                 <!-- News and Events -->
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -223,10 +223,10 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
                 <!-- Contact Us -->
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -244,9 +244,9 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
-            </div>
+            </ul>
         </div>
     </div>
 </section>

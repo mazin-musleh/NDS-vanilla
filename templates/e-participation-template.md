@@ -18,9 +18,9 @@ sidemenu_mode: false
             <p class="nds-section-description nds-full">This is an example of a section description in the Design System, where the same consistent style is maintained across all other sections. This is an example of a section description in the Design System, where the same consistent style is maintained across all other sections.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-block nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 1;">
+            <ul class="nds-list nds-block nds-grid nds-shadow" style="--max-col: 4; --mid-col: 2; --min-col: 1;">
 
-                <div class="nds-card nds-shadow">
+                <li class="nds-card">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <span class="nds-card-title">e-Participation Policy</span>
@@ -31,9 +31,9 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
-                <div class="nds-card nds-shadow">
+                <li class="nds-card">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <span class="nds-card-title">Consultations</span>
@@ -44,9 +44,9 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
-                <div class="nds-card nds-shadow">
+                <li class="nds-card">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <span class="nds-card-title">Co-Creation and Ideas</span>
@@ -57,9 +57,9 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
-                <div class="nds-card nds-shadow">
+                <li class="nds-card">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <span class="nds-card-title">Open Data</span>
@@ -70,9 +70,9 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
-                <div class="nds-card nds-shadow">
+                <li class="nds-card">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <span class="nds-card-title">Complaints and Suggestions</span>
@@ -83,9 +83,9 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
-                <div class="nds-card nds-shadow">
+                <li class="nds-card">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <span class="nds-card-title">Beneficiary Voice Reports</span>
@@ -96,9 +96,9 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
-                <div class="nds-card nds-shadow">
+                <li class="nds-card">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <span class="nds-card-title">Website and Services Statistics</span>
@@ -109,9 +109,9 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
-                <div class="nds-card nds-shadow">
+                <li class="nds-card">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <span class="nds-card-title">Social Media</span>
@@ -122,9 +122,9 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
-            </div>
+            </ul>
         </div>
     </div>
 </section>

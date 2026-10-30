@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 02:43 AM"
+last_edit: "30/10/2026 - 11:19 AM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -473,7 +473,7 @@ Pick another component when:
 - Do not put a card inside a card. Use `.nds-card-meta` or a [definition list](../components/definition-list) inside the content.
 - Use `data-status` only when the card really has that status. For a color without a status, use the color class.
 - Put a row of cards in a [grid](../layout/grid).
-- For a set of features, each an icon, a title and one line, use a [Feature List](../components/feature-list). Its items are cards with no box.
+- For a set of cards that share one look, such as features with an icon, a title and one line, use a [List](../components/list).
 - To show a card's content with no box, add `nds-flush`. It drops the padding, the border, the fill and the shadow.
 - Put a card's small extras in `.nds-card-corner`, first in `.nds-card-text`: a status tag, a menu or "View all" button, or a select checkbox. A bare button in the header shrinks when the title is long, and its label spills out.
 - Keep the corner to one or two small items: an `nds-xs` tag, an `nds-sm` subtle button, an icon-only button, or a checkbox. A wide corner meets the header icon on a narrow card.

@@ -15,9 +15,9 @@ sidemenu_mode: false
             <p class="nds-section-description">Start with Get Started. Each other guide covers one topic in depth.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-grid" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
+            <ul class="nds-list nds-grid nds-stroke" style="--max-col: 2; --mid-col: 2; --min-col: 1;">
 
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -41,9 +41,9 @@ sidemenu_mode: false
                             <span class="nds-label">Read Guide</span>
                         </a>
                     </div>
-                </div>
+                </li>
 
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -67,9 +67,9 @@ sidemenu_mode: false
                             <span class="nds-label">Read Guide</span>
                         </a>
                     </div>
-                </div>
+                </li>
 
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -92,9 +92,9 @@ sidemenu_mode: false
                             <span class="nds-label">Read Guide</span>
                         </a>
                     </div>
-                </div>
+                </li>
 
-                <div class="nds-card nds-stroke">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -117,9 +117,9 @@ sidemenu_mode: false
                             <span class="nds-label">Read Section</span>
                         </a>
                     </div>
-                </div>
+                </li>
 
-            </div>
+            </ul>
         </div>
     </div>
 </section>

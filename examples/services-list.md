@@ -8,7 +8,7 @@ breadcrumb:
 hero_title: "Government Services"
 hero_description: "Browse all available government digital services"
 sidemenu_mode: false
-last_edit: "19/10/2026 - 11:26 PM"
+last_edit: "30/10/2026 - 11:14 AM"
 ---
 
 <section id="services-list" class="nds-content-section">
@@ -86,11 +86,11 @@ last_edit: "19/10/2026 - 11:26 PM"
                     </div>
                 </div>
             </div>
-        <div id="services_list_content" class="nds-paged-content nds-grid"
+        <ul id="services_list_content" class="nds-list nds-paged-content nds-grid nds-stroke"
             style="--per-page: 12; --max-col: 3; --mid-col: 2; --min-col: 1;">
 
             {% for service in site.data.content.services %}
-            <div class="nds-page-item nds-card nds-stroke">
+            <li class="nds-page-item nds-card">
                 <div class="nds-card-header">
                     <div class="nds-card-featured-icon">
                         <span class="nds-featured-icon nds-circle nds-lg">
@@ -124,10 +124,10 @@ last_edit: "19/10/2026 - 11:26 PM"
                         <span class="nds-label">Get Started</span>
                     </a>
                 </div>
-            </div>
+            </li>
             {% endfor %}
 
-        </div>
+        </ul>
         <nav class="nds-pagination" data-auto-pagination="services_list_content" aria-label="Pagination" data-i18n-aria-label="pagination.pagination"></nav>
         </div>
     </div>

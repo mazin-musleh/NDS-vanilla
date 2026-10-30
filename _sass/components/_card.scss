@@ -237,6 +237,8 @@
   }
 
   &:is(.nds-center, :where(.nds-list.nds-center) > *) {
+    text-align: center; // the list's .nds-center centers the list's text, and the card's own start would win over it
+
     :is(.nds-card-header, .nds-card-content > *, .nds-card-text > *, .nds-card-tags, .nds-card-actions) {
       align-items: center;
       justify-content: center;

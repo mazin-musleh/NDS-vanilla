@@ -9,11 +9,15 @@
 
 .nds-list {
   list-style: none;
-  margin: 0;
   padding: 0;
   line-height: inherit; // the reset's 1.5 is for text items
   // The list is the ruler: a narrow list steps its items down, on any screen.
   container: nds-list / inline-size;
+
+  // A block keeps its gap below; this sheet comes after Block's.
+  &:not(.nds-block) {
+    margin: 0;
+  }
 }
 
 // MD is the card's own size. SM and LG step every item one rung.
@@ -33,8 +37,8 @@
 }
 
 // One column until the author sets --max-col: a list stacks, where a bare grid puts every item in one row.
-// With --min-width, set --max-col: auto-fit too. After Grid's sheet, so it wins the tie with Grid's reset.
-:where(.nds-list) {
+// A --min-width in the style fits columns like a grid. After Grid's sheet, so it wins the tie with Grid's reset.
+:where(.nds-list:not([style*="--min-width"])) {
   --max-col: 1;
 }
 

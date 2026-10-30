@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "27/10/2026 - 11:40 PM"
+last_edit: "30/10/2026 - 11:14 AM"
 ---
 
 <section id="sort-overview" class="nds-content-section nds-doc-overview">
@@ -44,7 +44,7 @@ Pick another component when:
 The triggers sit in a [Toolbar](../components/toolbar) above the list. The list needs only the `id` that the triggers name.
 
 <script type="text/html" id="sort-direct" data-canon data-variants="sort-variants-table">
-<div>
+<div class="nds-block">
   <div class="nds-toolbar">
     <div class="nds-toolbar-end">
       <div class="nds-dropmenu">
@@ -79,8 +79,8 @@ The triggers sit in a [Toolbar](../components/toolbar) above the list. The list 
       </div>
     </div>
   </div>
-  <div id="sort-services" class="nds-grid" style="--max-col:3;--mid-col:2;--min-col:2;">
-    <div class="nds-card nds-stroke" data-sort-name="Zakat Payment" data-sort-price="75">
+  <ul id="sort-services" class="nds-list nds-grid nds-stroke" style="--max-col:3;--mid-col:2;--min-col:2;">
+    <li class="nds-card" data-sort-name="Zakat Payment" data-sort-price="75">
       <div class="nds-card-content">
         <div class="nds-card-text">
           <span class="nds-card-title">Zakat Payment</span>
@@ -89,8 +89,8 @@ The triggers sit in a [Toolbar](../components/toolbar) above the list. The list 
           <span class="nds-number-format" data-currency="SAR">75</span>
         </div>
       </div>
-    </div>
-    <div class="nds-card nds-stroke" data-sort-name="Passport Renewal" data-sort-price="300">
+    </li>
+    <li class="nds-card" data-sort-name="Passport Renewal" data-sort-price="300">
       <div class="nds-card-content">
         <div class="nds-card-text">
           <span class="nds-card-title">Passport Renewal</span>
@@ -99,8 +99,8 @@ The triggers sit in a [Toolbar](../components/toolbar) above the list. The list 
           <span class="nds-number-format" data-currency="SAR">300</span>
         </div>
       </div>
-    </div>
-    <div class="nds-card nds-stroke" data-sort-name="Birth Certificate" data-sort-price="25">
+    </li>
+    <li class="nds-card" data-sort-name="Birth Certificate" data-sort-price="25">
       <div class="nds-card-content">
         <div class="nds-card-text">
           <span class="nds-card-title">Birth Certificate</span>
@@ -109,8 +109,8 @@ The triggers sit in a [Toolbar](../components/toolbar) above the list. The list 
           <span class="nds-number-format" data-currency="SAR">25</span>
         </div>
       </div>
-    </div>
-    <div class="nds-card nds-stroke" data-sort-name="Identity Verification" data-sort-price="0">
+    </li>
+    <li class="nds-card" data-sort-name="Identity Verification" data-sort-price="0">
       <div class="nds-card-content">
         <div class="nds-card-text">
           <span class="nds-card-title">Identity Verification</span>
@@ -119,8 +119,8 @@ The triggers sit in a [Toolbar](../components/toolbar) above the list. The list 
           <span class="nds-number-format">Free</span>
         </div>
       </div>
-    </div>
-    <div class="nds-card nds-stroke" data-sort-name="Driver License" data-sort-price="150">
+    </li>
+    <li class="nds-card" data-sort-name="Driver License" data-sort-price="150">
       <div class="nds-card-content">
         <div class="nds-card-text">
           <span class="nds-card-title">Driver License</span>
@@ -129,8 +129,8 @@ The triggers sit in a [Toolbar](../components/toolbar) above the list. The list 
           <span class="nds-number-format" data-currency="SAR">150</span>
         </div>
       </div>
-    </div>
-    <div class="nds-card nds-stroke" data-sort-name="Business Registration" data-sort-price="1200">
+    </li>
+    <li class="nds-card" data-sort-name="Business Registration" data-sort-price="1200">
       <div class="nds-card-content">
         <div class="nds-card-text">
           <span class="nds-card-title">Business Registration</span>
@@ -139,12 +139,12 @@ The triggers sit in a [Toolbar](../components/toolbar) above the list. The list 
           <span class="nds-number-format" data-currency="SAR">1200</span>
         </div>
       </div>
-    </div>
-  </div>
+    </li>
+  </ul>
 </div>
 </script>
 <script type="text/html" id="sort-cycle" data-canon>
-<div>
+<div class="nds-block">
   <div class="nds-toolbar">
     <div class="nds-toolbar-end">
       <div class="nds-btn-group">
@@ -159,8 +159,8 @@ The triggers sit in a [Toolbar](../components/toolbar) above the list. The list 
       </div>
     </div>
   </div>
-  <div id="sort-services-cycle" class="nds-grid" style="--max-col:3;--mid-col:2;--min-col:2;">
-    <div class="nds-card nds-stroke" data-sort-name="Zakat Payment" data-sort-price="75">
+  <ul id="sort-services-cycle" class="nds-list nds-grid nds-stroke" style="--max-col:3;--mid-col:2;--min-col:2;">
+    <li class="nds-card" data-sort-name="Zakat Payment" data-sort-price="75">
       <div class="nds-card-content">
         <div class="nds-card-text">
           <span class="nds-card-title">Zakat Payment</span>
@@ -169,8 +169,8 @@ The triggers sit in a [Toolbar](../components/toolbar) above the list. The list 
           <span class="nds-number-format" data-currency="SAR">75</span>
         </div>
       </div>
-    </div>
-    <div class="nds-card nds-stroke" data-sort-name="Passport Renewal" data-sort-price="300">
+    </li>
+    <li class="nds-card" data-sort-name="Passport Renewal" data-sort-price="300">
       <div class="nds-card-content">
         <div class="nds-card-text">
           <span class="nds-card-title">Passport Renewal</span>
@@ -179,8 +179,8 @@ The triggers sit in a [Toolbar](../components/toolbar) above the list. The list 
           <span class="nds-number-format" data-currency="SAR">300</span>
         </div>
       </div>
-    </div>
-    <div class="nds-card nds-stroke" data-sort-name="Birth Certificate" data-sort-price="25">
+    </li>
+    <li class="nds-card" data-sort-name="Birth Certificate" data-sort-price="25">
       <div class="nds-card-content">
         <div class="nds-card-text">
           <span class="nds-card-title">Birth Certificate</span>
@@ -189,8 +189,8 @@ The triggers sit in a [Toolbar](../components/toolbar) above the list. The list 
           <span class="nds-number-format" data-currency="SAR">25</span>
         </div>
       </div>
-    </div>
-    <div class="nds-card nds-stroke" data-sort-name="Identity Verification" data-sort-price="0">
+    </li>
+    <li class="nds-card" data-sort-name="Identity Verification" data-sort-price="0">
       <div class="nds-card-content">
         <div class="nds-card-text">
           <span class="nds-card-title">Identity Verification</span>
@@ -199,8 +199,8 @@ The triggers sit in a [Toolbar](../components/toolbar) above the list. The list 
           <span class="nds-number-format">Free</span>
         </div>
       </div>
-    </div>
-    <div class="nds-card nds-stroke" data-sort-name="Driver License" data-sort-price="150">
+    </li>
+    <li class="nds-card" data-sort-name="Driver License" data-sort-price="150">
       <div class="nds-card-content">
         <div class="nds-card-text">
           <span class="nds-card-title">Driver License</span>
@@ -209,8 +209,8 @@ The triggers sit in a [Toolbar](../components/toolbar) above the list. The list 
           <span class="nds-number-format" data-currency="SAR">150</span>
         </div>
       </div>
-    </div>
-    <div class="nds-card nds-stroke" data-sort-name="Business Registration" data-sort-price="1200">
+    </li>
+    <li class="nds-card" data-sort-name="Business Registration" data-sort-price="1200">
       <div class="nds-card-content">
         <div class="nds-card-text">
           <span class="nds-card-title">Business Registration</span>
@@ -219,8 +219,8 @@ The triggers sit in a [Toolbar](../components/toolbar) above the list. The list 
           <span class="nds-number-format" data-currency="SAR">1200</span>
         </div>
       </div>
-    </div>
-  </div>
+    </li>
+  </ul>
 </div>
 </script>
 

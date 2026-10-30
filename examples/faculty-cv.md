@@ -229,8 +229,8 @@ sidemenu_mode: false
                 </div>
                 <div class="nds-section-body">
                     <!-- --gap is set here, not inherited, so an ancestor can never retune this list -->
-                    <div class="nds-flex nds-col" style="--gap: var(--spacing-xl);">
-                        <div class="nds-card nds-stroke nds-horizontal" style="--card-width: 100%;">
+                    <ul class="nds-list nds-grid nds-stroke nds-horizontal" style="--gap: var(--spacing-xl);">
+                        <li class="nds-card" style="--card-width: 100%;">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
                                     <span class="nds-featured-icon">
@@ -249,8 +249,8 @@ sidemenu_mode: false
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="nds-card nds-stroke nds-horizontal" style="--card-width: 100%;">
+                        </li>
+                        <li class="nds-card" style="--card-width: 100%;">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
                                     <span class="nds-featured-icon">
@@ -269,8 +269,8 @@ sidemenu_mode: false
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="nds-card nds-stroke nds-horizontal" style="--card-width: 100%;">
+                        </li>
+                        <li class="nds-card" style="--card-width: 100%;">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
                                     <span class="nds-featured-icon">
@@ -289,8 +289,8 @@ sidemenu_mode: false
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
@@ -307,9 +307,9 @@ sidemenu_mode: false
                 </div>
                 <div class="nds-section-body">
                     <!-- --gap is set here, not inherited, so an ancestor can never retune this list -->
-                    <div id="faculty-publication-list" class="nds-paged-content nds-flex nds-col"
+                    <ul id="faculty-publication-list" class="nds-list nds-grid nds-paged-content nds-stroke"
                         style="--per-page: 5; --gap: var(--spacing-xl);">
-                        <div class="nds-page-item nds-card nds-stroke" style="--card-width: 100%;">
+                        <li class="nds-page-item nds-card" style="--card-width: 100%;">
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
                                     <span class="nds-card-title">A two-stage framework for school bus routing and scheduling</span>
@@ -328,8 +328,8 @@ sidemenu_mode: false
                                     <span class="nds-label">View publication</span>
                                 </a>
                             </div>
-                        </div>
-                        <div class="nds-page-item nds-card nds-stroke" style="--card-width: 100%;">
+                        </li>
+                        <li class="nds-page-item nds-card" style="--card-width: 100%;">
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
                                     <span class="nds-card-title">Capacity planning for walk-in government service centres</span>
@@ -348,8 +348,8 @@ sidemenu_mode: false
                                     <span class="nds-label">View publication</span>
                                 </a>
                             </div>
-                        </div>
-                        <div class="nds-page-item nds-card nds-stroke" style="--card-width: 100%;">
+                        </li>
+                        <li class="nds-page-item nds-card" style="--card-width: 100%;">
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
                                     <span class="nds-card-title">Operating room scheduling under demand uncertainty</span>
@@ -368,8 +368,8 @@ sidemenu_mode: false
                                     <span class="nds-label">View publication</span>
                                 </a>
                             </div>
-                        </div>
-                        <div class="nds-page-item nds-card nds-stroke" style="--card-width: 100%;">
+                        </li>
+                        <li class="nds-page-item nds-card" style="--card-width: 100%;">
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
                                     <span class="nds-card-title">Measuring process quality in shared service centres</span>
@@ -388,8 +388,8 @@ sidemenu_mode: false
                                     <span class="nds-label">View publication</span>
                                 </a>
                             </div>
-                        </div>
-                        <div class="nds-page-item nds-card nds-stroke" style="--card-width: 100%;">
+                        </li>
+                        <li class="nds-page-item nds-card" style="--card-width: 100%;">
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
                                     <span class="nds-card-title">Simulating pilgrim flow at transport hubs in peak season</span>
@@ -408,8 +408,8 @@ sidemenu_mode: false
                                     <span class="nds-label">View publication</span>
                                 </a>
                             </div>
-                        </div>
-                        <div class="nds-page-item nds-card nds-stroke" style="--card-width: 100%;">
+                        </li>
+                        <li class="nds-page-item nds-card" style="--card-width: 100%;">
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
                                     <span class="nds-card-title">Robust vehicle routing for municipal waste collection</span>
@@ -428,8 +428,8 @@ sidemenu_mode: false
                                     <span class="nds-label">View publication</span>
                                 </a>
                             </div>
-                        </div>
-                        <div class="nds-page-item nds-card nds-stroke" style="--card-width: 100%;">
+                        </li>
+                        <li class="nds-page-item nds-card" style="--card-width: 100%;">
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
                                     <span class="nds-card-title">Assessing learning outcomes across three domains</span>
@@ -448,8 +448,8 @@ sidemenu_mode: false
                                     <span class="nds-label">View publication</span>
                                 </a>
                             </div>
-                        </div>
-                        <div class="nds-page-item nds-card nds-stroke" style="--card-width: 100%;">
+                        </li>
+                        <li class="nds-page-item nds-card" style="--card-width: 100%;">
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
                                     <span class="nds-card-title">Lot sizing with setup carryover in small manufacturing plants</span>
@@ -468,8 +468,8 @@ sidemenu_mode: false
                                     <span class="nds-label">View publication</span>
                                 </a>
                             </div>
-                        </div>
-                        <div class="nds-page-item nds-card nds-stroke" style="--card-width: 100%;">
+                        </li>
+                        <li class="nds-page-item nds-card" style="--card-width: 100%;">
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
                                     <span class="nds-card-title">A digital quality management system for standardised outcomes</span>
@@ -488,8 +488,8 @@ sidemenu_mode: false
                                     <span class="nds-label">View publication</span>
                                 </a>
                             </div>
-                        </div>
-                        <div class="nds-page-item nds-card nds-stroke" style="--card-width: 100%;">
+                        </li>
+                        <li class="nds-page-item nds-card" style="--card-width: 100%;">
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
                                     <span class="nds-card-title">Queueing analysis of appointment systems in public clinics</span>
@@ -508,8 +508,8 @@ sidemenu_mode: false
                                     <span class="nds-label">View publication</span>
                                 </a>
                             </div>
-                        </div>
-                    </div>
+                        </li>
+                    </ul>
                     <nav class="nds-pagination" data-auto-pagination="faculty-publication-list" aria-label="Publications pagination"></nav>
                 </div>
             </div>

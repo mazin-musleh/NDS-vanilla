@@ -103,10 +103,10 @@ sidemenu_mode: false
                     </div>
                 </div>
             </div>
-            <div id="search_results_content" class="nds-paged-content nds-grid"
+            <ul id="search_results_content" class="nds-list nds-paged-content nds-grid nds-stroke"
                 style="--per-page: 10; --max-col: 1; --mid-col: 1; --min-col: 1;">
                 {% for item in site.data.content["search-results"] %}
-                <div class="nds-page-item nds-card nds-stroke" data-sort-title="{{ item.title }}">
+                <li class="nds-page-item nds-card" data-sort-title="{{ item.title }}">
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <span class="nds-card-title">{{ item.title }}</span>
@@ -125,9 +125,9 @@ sidemenu_mode: false
                             <span class="nds-label">Action</span>
                         </a>
                     </div>
-                </div>
+                </li>
                 {% endfor %}
-            </div>
+            </ul>
             <nav class="nds-pagination" data-auto-pagination="search_results_content" aria-label="Pagination" data-i18n-aria-label="pagination.pagination"></nav>
         </div>
     </div>

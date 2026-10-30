@@ -106,8 +106,8 @@ direction: ltr
                 </div>
                 <div class="nds-section-body">
                     <div class="nds-block">
-                        <div class="nds-grid nds-center" style="--max-col:4;--mid-col:2;--min-col:2;">
-                            <div class="nds-card nds-center">
+                        <ul class="nds-list nds-grid nds-center" style="--max-col:4;--mid-col:2;--min-col:2;">
+                            <li class="nds-card">
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
                                         <span class="nds-featured-icon nds-circle nds-xl">
@@ -121,8 +121,8 @@ direction: ltr
                                         <p class="nds-card-description">Person</p>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="nds-card nds-center">
+                            </li>
+                            <li class="nds-card">
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
                                         <span class="nds-featured-icon nds-circle nds-xl">
@@ -136,8 +136,8 @@ direction: ltr
                                         <p class="nds-card-description">Person</p>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="nds-card nds-center">
+                            </li>
+                            <li class="nds-card">
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
                                         <span class="nds-featured-icon nds-circle nds-xl">
@@ -151,8 +151,8 @@ direction: ltr
                                         <p class="nds-card-description">Person</p>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="nds-card nds-center">
+                            </li>
+                            <li class="nds-card">
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
                                         <span class="nds-featured-icon nds-circle nds-xl">
@@ -166,8 +166,8 @@ direction: ltr
                                         <p class="nds-card-description">Person</p>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

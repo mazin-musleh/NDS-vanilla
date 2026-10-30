@@ -1,24 +1,24 @@
 ---
 layout: page
-title: Feature List
-hero_title: Feature List - National Design System
-hero_description: A list of features, each with a title, one or two lines of text and often an icon
+title: List
+hero_title: List - National Design System
+hero_description: A set of items in a grid, each a card with a title, one or two lines of text and often an icon
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 10:55 AM"
+last_edit: "30/10/2026 - 11:19 AM"
 ---
 
-<section id="feature-list-overview" class="nds-content-section nds-doc-overview">
+<section id="list-overview" class="nds-content-section nds-doc-overview">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Overview</h2>
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A feature list shows a set of features, benefits or reasons in a [grid](../layout/grid). The list is a `ul`, and each item is a [card](../components/card) with a title, a description and often a [featured icon](../components/featured-icon). Classes on the list give every item the same look: the size, the layout, and either no box (`nds-flat`) or a card box (`nds-stroke`, `nds-shadow`).
+A list shows a set of items, such as features, benefits or reasons, in a [grid](../layout/grid). The list is a `ul`, and each item is a [card](../components/card) with a title, a description and often a [featured icon](../components/featured-icon). Classes on the list give every item the same look: the size, the layout, and either no box (`nds-flat`) or a card box (`nds-stroke`, `nds-shadow`).
 
 Pick another component when:
 
@@ -30,13 +30,13 @@ Pick another component when:
   </div>
 </section>
 
-<section id="feature-list-markup" class="nds-content-section nds-doc-markup nds-demo-section">
+<section id="list-markup" class="nds-content-section nds-doc-markup nds-demo-section">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="feature-list-base" data-canon data-variants="feature-list-variants-table">
+<script type="text/html" id="list-base" data-canon data-variants="list-variants-table">
 <ul class="nds-list nds-grid nds-flat" style="--max-col: 2; --min-col: 1;">
   <li class="nds-card">
     <div class="nds-card-header">
@@ -96,7 +96,7 @@ Pick another component when:
   </div>
 </section>
 
-<section id="feature-list-variants" class="nds-content-section nds-doc-variants" hidden>
+<section id="list-variants" class="nds-content-section nds-doc-variants" hidden>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Variants</h2>
@@ -108,9 +108,8 @@ Icons and Icon color options go on every icon: write the class on each `.nds-fea
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Columns | Two (default) | — | — | The canon writes `--max-col: 2` and `--min-col: 1`: two columns, and one on phones. Tablets take `--max-col` unless the list sets `--mid-col` |
-| Columns | One (hint: One item per row) | `--max-col: 1` | `.nds-list` | One item per row. A list with no `--max-col` gets it too |
-| Columns | Minimum width (hint: As many columns as fit; the rest wrap) | `--min-width: 220px` | `.nds-list` | As many columns as fit at a minimum width. Write `--max-col: auto-fit` too: the list's one-column default otherwise wins |
-| Columns | Minimum width (hint: As many columns as fit; the rest wrap) | `--max-col: auto-fit` | `.nds-list` | As many columns as fit at a minimum width. Write `--min-width` too |
+| Columns | One (hint: One item per row) | `--max-col: 1` | `.nds-list` | One item per row. A list with no `--max-col` and no `--min-width` gets it too |
+| Columns | Minimum width (hint: As many columns as fit; the rest wrap) | `--min-width: 220px` | `.nds-list` | As many columns as fit at a minimum width. Write it in the list's `style`: there it turns off the one-column default |
 | Layout | Stacked (default) | — | — | The icon above the text |
 | Layout | Row (hint: The icon beside the text) | `.nds-horizontal` | `.nds-list` | The icon beside the text. Use it for a long list, or a list in a narrow column |
 | Layout | Centered | `.nds-center` | `.nds-list` | The icon and the text centered. Use it for a short list of three or four items |
@@ -135,13 +134,13 @@ Icons and Icon color options go on every icon: write the class on each `.nds-fea
 | Box (any) | Flat (default) (hint: No fill and no padding) | `.nds-flat` | `.nds-list:not(.nds-stroke, .nds-shadow)` | No fill and no padding, and a muted description: the items read as text, not boxes. Not with Stroke or Shadow |
 | Box (any) | Stroke (hint: A card box with a border) | `.nds-stroke` | `.nds-list:not(.nds-flat)` | Every item is a card box with a 1px border. Not with Flat. It combines with Shadow |
 | Box (any) | Shadow (hint: A card box with a shadow) | `.nds-shadow` | `.nds-list:not(.nds-flat)` | Every item is a card box with a shadow. Not with Flat. It combines with Stroke |
-{: #feature-list-variants-table .nds-table .nds-responsive}
+{: #list-variants-table .nds-table .nds-responsive}
 
 </div>
   </div>
 </section>
 
-<section id="feature-list-features" class="nds-content-section nds-doc-features">
+<section id="list-features" class="nds-content-section nds-doc-features">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Built-in Features</h2>
@@ -244,7 +243,7 @@ Icons and Icon color options go on every icon: write the class on each `.nds-fea
   </div>
 </section>
 
-<section id="feature-list-practices" class="nds-content-section nds-doc-practices">
+<section id="list-practices" class="nds-content-section nds-doc-practices">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Best Practices</h2>
@@ -253,7 +252,7 @@ Icons and Icon color options go on every icon: write the class on each `.nds-fea
 
 - Keep each item to a short title and one or two lines. An item that needs more is a [card](../components/card).
 - For more than one column, set `--max-col` on the list. Without it, the items stack in one column.
-- With `--min-width`, also write `--max-col: auto-fit`.
+- A list fills its parent's width. In a box that sizes to its content (an inline block, a table cell, a flex row that centers), give the list a width: it measures itself to step down when narrow, so it cannot size the box.
 - Set the size, the layout and the box on the list, never on one item: the list's class wins, and the items line up.
 - Give each icon its own look and color classes (`nds-subtle`, `nds-green`, …), so one icon can differ. An item may hold an avatar or an image instead of an icon.
 - Hide every icon from screen readers with `aria-hidden="true"`. The title names the item.
@@ -263,7 +262,7 @@ Icons and Icon color options go on every icon: write the class on each `.nds-fea
   </div>
 </section>
 
-<section id="feature-list-api" class="nds-content-section nds-doc-api">
+<section id="list-api" class="nds-content-section nds-doc-api">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">API</h2>
@@ -286,18 +285,18 @@ These card and icon knobs set on the list reach every item. Set one on one card 
 | `--featuredicon-size` | `40px` | Icon size. `nds-sm` and a list under 400px wide set `32px`, `nds-lg` sets `48px` |
 {: .nds-table .nds-responsive}
 
-The list is a [grid](../layout/grid#grid-api), so its columns and gaps are the grid's knobs. One default differs: `--max-col` is `1`.
+The list is a [grid](../layout/grid#grid-api), so its columns and gaps are the grid's knobs. One default differs: `--max-col` is `1`, unless the list's `style` writes `--min-width`.
 
 ### JavaScript
 {: .nds-block-title}
 
-Feature List has no script of its own. With `nds-divided` or `nds-divided-rows`, the [grid](../layout/grid) script marks the last row, so no line shows under it.
+List has no script of its own. With `nds-divided` or `nds-divided-rows`, the [grid](../layout/grid) script marks the last row, so no line shows under it.
 
 </div>
   </div>
 </section>
 
-<section id="feature-list-related" class="nds-content-section nds-doc-related">
+<section id="list-related" class="nds-content-section nds-doc-related">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Related</h2>

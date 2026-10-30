@@ -24,8 +24,8 @@ sidemenu_mode: false
         <div class="nds-section-body">
             <!-- KPI tiles -->
             <div class="nds-block">
-            <div class="nds-grid" style="--max-col:4; --min-col:2;">
-                <div class="nds-card nds-shadow nds-center">
+            <ul class="nds-list nds-grid nds-shadow nds-center" style="--max-col:4; --min-col:2;">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -39,8 +39,8 @@ sidemenu_mode: false
                             <p class="nds-card-description">Users</p>
                         </div>
                     </div>
-                </div>
-                <div class="nds-card nds-shadow nds-center">
+                </li>
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -54,8 +54,8 @@ sidemenu_mode: false
                             <p class="nds-card-description">Visits</p>
                         </div>
                     </div>
-                </div>
-                <div class="nds-card nds-shadow nds-center">
+                </li>
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -69,8 +69,8 @@ sidemenu_mode: false
                             <p class="nds-card-description">Page Views Count</p>
                         </div>
                     </div>
-                </div>
-                <div class="nds-card nds-shadow nds-center">
+                </li>
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -84,8 +84,8 @@ sidemenu_mode: false
                             <p class="nds-card-description">Bounce Rate</p>
                         </div>
                     </div>
-                </div>
-            </div>
+                </li>
+            </ul>
             </div>
 
             <!-- 2x2 grid of pie charts -->
@@ -323,8 +323,8 @@ sidemenu_mode: false
         <div class="nds-section-body">
             <!-- KPI tiles -->
             <div class="nds-block">
-            <div class="nds-grid" style="--max-col:4; --min-col:2;">
-                <div class="nds-card nds-shadow nds-center">
+            <ul class="nds-list nds-grid nds-shadow nds-center" style="--max-col:4; --min-col:2;">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -338,8 +338,8 @@ sidemenu_mode: false
                             <p class="nds-card-description">User Satisfaction</p>
                         </div>
                     </div>
-                </div>
-                <div class="nds-card nds-shadow nds-center">
+                </li>
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -353,8 +353,8 @@ sidemenu_mode: false
                             <p class="nds-card-description">Completion Rate</p>
                         </div>
                     </div>
-                </div>
-                <div class="nds-card nds-shadow nds-center">
+                </li>
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -368,8 +368,8 @@ sidemenu_mode: false
                             <p class="nds-card-description">Digital Percentage</p>
                         </div>
                     </div>
-                </div>
-                <div class="nds-card nds-shadow nds-center">
+                </li>
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -383,8 +383,8 @@ sidemenu_mode: false
                             <p class="nds-card-description">Total Transactions</p>
                         </div>
                     </div>
-                </div>
-            </div>
+                </li>
+            </ul>
             </div>
 
             <!-- Government entity table -->

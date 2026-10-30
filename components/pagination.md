@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "27/10/2026 - 11:40 PM"
+last_edit: "30/10/2026 - 11:14 AM"
 ---
 
 <section id="pagination-overview" class="nds-content-section nds-doc-overview">
@@ -112,71 +112,71 @@ Pick another component when:
 </nav>
 </script>
 <script type="text/html" id="pg-grid" data-canon>
-<div id="pg-cards" class="nds-grid nds-paged-content" style="--per-page: 3; --max-col: 3; --mid-col: 3; --min-col: 1;">
-  <div class="nds-card nds-stroke nds-page-item">
+<ul id="pg-cards" class="nds-list nds-grid nds-paged-content nds-stroke" style="--per-page: 3; --max-col: 3; --mid-col: 3; --min-col: 1;">
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Passport renewal</span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">National ID renewal</span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Driver's license renewal</span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Vehicle registration</span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Exit and re-entry visa</span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Birth certificate</span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Commercial registration</span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Building permit</span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Traffic fine payment</span>
       </div>
     </div>
-  </div>
-</div>
+  </li>
+</ul>
 <nav class="nds-pagination" data-auto-pagination="pg-cards" aria-label="Services pagination"></nav>
 </script>
 <script type="text/html" id="pg-table" data-canon>
@@ -234,71 +234,71 @@ Pick another component when:
     </div>
   </div>
 </div>
-<div id="pg-results" class="nds-grid nds-paged-content" style="--per-page: 3; --max-col: 3; --mid-col: 3; --min-col: 1;">
-  <div class="nds-card nds-stroke nds-page-item">
+<ul id="pg-results" class="nds-list nds-grid nds-paged-content nds-stroke" style="--per-page: 3; --max-col: 3; --mid-col: 3; --min-col: 1;">
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Passport renewal</span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">National ID renewal</span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Driver's license renewal</span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Vehicle registration</span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Exit and re-entry visa</span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Birth certificate</span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Commercial registration</span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Building permit</span>
       </div>
     </div>
-  </div>
-  <div class="nds-card nds-stroke nds-page-item">
+  </li>
+  <li class="nds-card nds-page-item">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Traffic fine payment</span>
       </div>
     </div>
-  </div>
-</div>
+  </li>
+</ul>
 <nav class="nds-pagination" data-auto-pagination="pg-results" aria-label="Services pagination"></nav>
 </script>
     </div>

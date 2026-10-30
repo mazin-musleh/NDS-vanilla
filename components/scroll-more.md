@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "30/10/2026 - 11:14 AM"
 ---
 
 <section id="scroll-more-overview" class="nds-content-section nds-doc-overview">
@@ -82,56 +82,56 @@ Pick another component when:
 </script>
 <script type="text/html" id="sm-cards" data-canon>
 <div class="nds-scroll-more">
-  <div class="nds-scroll-more-content nds-grid" style="--max-col: 6; --min-width: 280px;">
-    <div class="nds-card nds-stroke">
+  <ul class="nds-list nds-scroll-more-content nds-grid nds-stroke" style="--max-col: 6; --min-width: 280px;">
+    <li class="nds-card">
       <div class="nds-card-content">
         <div class="nds-card-text">
           <span class="nds-card-title">Renew a passport</span>
           <p class="nds-card-description">Renew it online before it expires.</p>
         </div>
       </div>
-    </div>
-    <div class="nds-card nds-stroke">
+    </li>
+    <li class="nds-card">
       <div class="nds-card-content">
         <div class="nds-card-text">
           <span class="nds-card-title">Book an appointment</span>
           <p class="nds-card-description">Pick a time at the nearest service center.</p>
         </div>
       </div>
-    </div>
-    <div class="nds-card nds-stroke">
+    </li>
+    <li class="nds-card">
       <div class="nds-card-content">
         <div class="nds-card-text">
           <span class="nds-card-title">Pay a fine</span>
           <p class="nds-card-description">See your traffic fines and pay them.</p>
         </div>
       </div>
-    </div>
-    <div class="nds-card nds-stroke">
+    </li>
+    <li class="nds-card">
       <div class="nds-card-content">
         <div class="nds-card-text">
           <span class="nds-card-title">Register a business</span>
           <p class="nds-card-description">Get a commercial registration in one day.</p>
         </div>
       </div>
-    </div>
-    <div class="nds-card nds-stroke">
+    </li>
+    <li class="nds-card">
       <div class="nds-card-content">
         <div class="nds-card-text">
           <span class="nds-card-title">Apply for housing</span>
           <p class="nds-card-description">Check your eligibility for housing support.</p>
         </div>
       </div>
-    </div>
-    <div class="nds-card nds-stroke">
+    </li>
+    <li class="nds-card">
       <div class="nds-card-content">
         <div class="nds-card-text">
           <span class="nds-card-title">Report an issue</span>
           <p class="nds-card-description">Tell us about a problem with a service.</p>
         </div>
       </div>
-    </div>
-  </div>
+    </li>
+  </ul>
   <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
     <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
     <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
@@ -139,8 +139,8 @@ Pick another component when:
 </div>
 </script>
 <script type="text/html" id="sm-grid" data-canon>
-<div class="nds-grid" style="--max-col: 2; --min-col: 1;">
-  <div class="nds-card nds-stroke">
+<ul class="nds-list nds-grid nds-stroke" style="--max-col: 2; --min-col: 1;">
+  <li class="nds-card">
     <div class="nds-card-content">
       <div class="nds-card-text">
         <span class="nds-card-title">Main office</span>
@@ -184,8 +184,8 @@ Pick another component when:
         </div>
       </dl>
     </div>
-  </div>
-  <div class="nds-card nds-stroke">
+  </li>
+  <li class="nds-card">
     <div class="nds-card-header">
       <div class="nds-card-text">
         <span class="nds-card-title">Branches</span>
@@ -221,8 +221,8 @@ Pick another component when:
         </button>
       </div>
     </div>
-  </div>
-</div>
+  </li>
+</ul>
 </script>
     </div>
   </div>

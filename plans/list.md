@@ -1,6 +1,6 @@
 # List — plan (v2.0.0)
 
-Status (2026-10-30): step 1 built on this design, not committed. Grows out of `plans/feature-list.md` (Feature List: committed, never shipped).
+Status (2026-10-30): steps 1 and 2 committed (`9d881e9e`, and the step 2 commit after `3ba7717c`); next, step 3. Grows out of `plans/feature-list.md` (Feature List: committed, never shipped).
 
 ## Why
 
@@ -22,6 +22,8 @@ A set of items is the most common thing on a page, and today it has no name an a
 - **Size is the list's only, not a card class:** on `nds-modal nds-card`, `nds-sm`/`nds-lg` are the modal's width. The card offers its steps as mixins (`card-sm`, `card-lg`, `card-sm-box`); a single card has its text sizes on `.nds-card-text`.
 - **Icons are styled per icon** (`nds-subtle` on each `.nds-featured-icon`); `nds-icons-*` is dropped.
 - **The narrow step stays on the list** (AGENTS.md "the parent decides"): below 400px, the items of a list with no size class take `card-sm-box` (icon and gap, never the text).
+- **Size covers every card part** (owner): the list's SM and LG step every part a card holds, not only the icon, text and gap: avatar, image, date tile, tags, buttons, rating, number. Each part offers its step as a mixin (as `date-tile-sm` does); `card-sm` and `card-lg` include them, and the narrow step takes the box parts only.
+- **A list fills its parent's width** (owner): it measures itself for the narrow step, so it cannot size a box that sizes to its content (an inline block, a table cell, a centering flex row). There the author gives it a width; the doc says so.
 - Feature List is renamed to List before v2 ships: no Migration row. A plain grid of cards keeps working.
 - Link cards stay out of the list. Links in a list and Drawer's role come later, once the list settles.
 
@@ -43,7 +45,7 @@ A set of items is the most common thing on a page, and today it has no name an a
 
 Features (the Built-in Features lists): `ul.nds-list.nds-grid.nds-flat.nds-horizontal.nds-divided-rows`, `nds-subtle` on each icon.
 
-The root is a grid: columns, gaps, lines (`nds-divided`, `nds-divided-rows`) and the last-row script are Grid's. One column until the author sets `--max-col`. No new JS.
+The root is a grid: columns, gaps, lines (`nds-divided`, `nds-divided-rows`) and the last-row script are Grid's. One column until the author sets `--max-col`, or writes `--min-width` in the list's `style` (CSS cannot see a knob set in a stylesheet: there, write `--max-col: auto-fit` with it). No new JS.
 
 ## How the CSS works
 
@@ -55,7 +57,7 @@ Each In modifier is one rule in `_card.scss` that answers to the card's own clas
 
 `:where()` keeps the list part at zero specificity, so every card rule keeps today's strength and order. A `:not(.nds-x)` rule becomes `:not(.nds-x, :where(.nds-list.nds-x) > *)`. No mixin copies, no list-side card CSS.
 
-`_list.scss` keeps only the list's own: the `<ul>` reset, `container: nds-list / inline-size`, `--max-col: 1`, the narrow step, and the nested-card boundary below.
+`_list.scss` keeps only the list's own: the `<ul>` reset, `container: nds-list / inline-size`, `--max-col: 1` (not with `--min-width` in the style), the narrow step, and the nested-card boundary below.
 
 **In a card:** the nested-card reset (`:where(.nds-card .nds-card)`) would stop the list's knobs at its items. A list inside a card resets every card knob on itself (the outer card's stop there) and its items inherit them back (the list's pass). One `$card-knobs` list in `_mixins.scss` feeds Card's reset and both list rules.
 
@@ -77,10 +79,11 @@ Each In modifier is one rule in `_card.scss` that answers to the card's own clas
 
 ## Steps
 
-1. **Rename and rebuild** (done, not committed): `_list.scss` keeps only the list's own; `_card.scss`: the In modifiers answer to the list (the `:where` pattern), `nds-flat`, the `card-knobs` mixin, the color reset; `_mixins.scss`: `card-knobs`, `card-sm`, `card-lg`, `card-sm-box`. The 110 lists with a look class shared by every item carry it on the list (`tmp/list-hoist.py`): 109 `nds-horizontal`; the home page's flat list of shadow cards is a shadow list now (its description is no longer muted). Checked: `check-css.py`, `check-data-state-tails.py`, 18 playground claims in Chrome and WebKit, every page with cards old vs new at 1280 and 390 (`tmp/ab-css.mjs`).
-2. **Migrate our pages**, by a script in `tmp/`; Liquid templates by hand: the 57 sets become `ul.nds-list`, and a look class every card in a set shares moves to the list (`tmp/list-hoist.py`). A/B each page old vs new (boxes, sizes, columns); check one paged and one filtered page.
-3. **Docs in one pass** (`/nds-doc list`): `components/feature-list.md` → `components/list.md` (the In list as builder groups), Card (`nds-flat`, "for a set of cards, use List"), Grid, the catalog rules (Card, Definition List, Training Academy; "features" stays a word in List's `use_when`), the `nds-doc` skill's features canon, the audit warning, CHANGELOG (Added: List; Card's new classes; Feature List never shipped, so it is not named).
-4. **Checks:** `js_processor.rb`, `check-docs.py`, `check-css.py`, `check-data-state-tails.py`, `check-a11y.mjs`, `doc-check.mjs`, `run-audit.mjs`; Chrome and WebKit, light and dark, desktop and phone.
+1. **Rename and rebuild** (done, `9d881e9e`): `_list.scss` keeps only the list's own; `_card.scss`: the In modifiers answer to the list (the `:where` pattern), `nds-flat`, the `card-knobs` mixin, the color reset; `_mixins.scss`: `card-knobs`, `card-sm`, `card-lg`, `card-sm-box`. The 110 lists with a look class shared by every item carry it on the list (`tmp/list-hoist.py`): 109 `nds-horizontal`; the home page's flat list of shadow cards is a shadow list now (its description is no longer muted). Checked: `check-css.py`, `check-data-state-tails.py`, 18 playground claims in Chrome and WebKit, every page with cards old vs new at 1280 and 390 (`tmp/ab-css.mjs`).
+2. **Migrate our pages** (done): `tmp/to-list2.py` moved 30 sets, 19 written out and 11 built by Liquid loops (the Library, Events, Examples, Templates, Services and Search lists, the life journey lists, the team directory), and `tmp/list-hoist.py` moved their shared look classes to the list. Stay grids: page layout (sign-in, registration), dashboard panels (student portal, console, the KPI charts), and the Grid, Block, Themes and Expandable pages' own demos. Fixed on the way: a list that is also `nds-block` keeps the block's gap; the list's `nds-center` centers its items' text; the one-column default skips a list with `--min-width` in its style; the Sort demos take the full width. Checked: 25 pages, the last commit's build vs this one (`tmp/ab-html.mjs`), 1280 and 390: the same, but the narrow step on phones (4px less gap; the faculty CV's icons 40 to 32).
+3. **Size covers every card part:** list each part a card can hold (avatar, card image, date tile, tags, chips, buttons, rating, number, meta, progress ring) and the size classes it has today; give each an SM and LG step mixin beside `date-tile-sm`; `card-sm` and `card-lg` include them, `card-sm-box` the box parts only. A/B the lists that hold those parts.
+4. **Docs in one pass** (`/nds-doc list`): `components/list.md` (renamed from `feature-list.md` already; reword it for any set of items, the In list as builder groups), Card (`nds-flat`, "for a set of cards, use List"), Grid, the catalog rules (Card, Definition List, Training Academy; "features" stays a word in List's `use_when`), the `nds-doc` skill's features canon, the audit warning, CHANGELOG (Added: List; Card's new classes; Feature List never shipped, so it is not named).
+5. **Checks:** `js_processor.rb`, `check-docs.py`, `check-css.py`, `check-data-state-tails.py`, `check-a11y.mjs`, `doc-check.mjs`, `run-audit.mjs`; Chrome and WebKit, light and dark, desktop and phone.
 
 ## Later (own plans, after the list settles)
 

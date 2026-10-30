@@ -24,7 +24,7 @@ hero_float_actions:
         <div class="nds-form-header"><label for="journey-done-toggle"><span class="nds-note">Completed</span></label></div>
         <div class="nds-form-control"><div class="nds-switch-toggle"><input type="checkbox" id="journey-done-toggle" class="nds-switch-input"><div class="nds-switch-track"><div class="nds-switch-thumb"></div></div></div></div>
         </div>
-last_edit: "04/12/2020 - 04:13 PM"
+last_edit: "30/10/2026 - 11:14 AM"
 steps:
   - title: "Get the investment registration certificate"
     description: "The journey enables the investor to issue the investment registration certificate, which gives them the legal right to carry out investment activity inside the Kingdom. It is the first step to establish the legal entity."
@@ -237,9 +237,9 @@ related:
         <p class="nds-section-description">Suggested journeys related to this one.</p>
     </div>
     <div class="nds-section-body">
-        <div class="nds-block nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
+        <ul class="nds-list nds-block nds-grid nds-stroke" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
             {% for journey in page.related %}
-            <div class="nds-card nds-stroke">
+            <li class="nds-card">
                 <div class="nds-card-header">
                     <div class="nds-card-featured-icon">
                         <span class="nds-featured-icon nds-circle nds-lg">
@@ -258,9 +258,9 @@ related:
                         <i class="nds-icon nds-hgi-arrow-next-02" aria-hidden="true"></i>
                     </a>
                 </div>
-            </div>
+            </li>
             {% endfor %}
-        </div>
+        </ul>
         <a href="{{ '/templates/life-journey-template' | relative_url }}" class="nds-btn nds-transparent nds-color nds-lg">
             <span class="nds-label">View more journeys</span>
         </a>

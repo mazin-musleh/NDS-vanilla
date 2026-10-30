@@ -55,7 +55,8 @@
         border-radius: var(--radius-md);
     }
 
-    :where(ul, ol) > :where(li) {
+    // Text lists only: a List's items are cards with their own padding, which :first-child would outrank.
+    :where(ul:not(.nds-list), ol:not(.nds-list)) > :where(li) {
         padding-block: var(--_list-item-pad);
 
         &:first-child { padding-block-start: 0; }

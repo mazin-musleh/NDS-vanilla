@@ -806,8 +806,8 @@ hideFeedback: true
             <p class="nds-section-description">The tasks students do most, one click away.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-grid" style="--max-col: 4; --mid-col: 2; --min-col: 2;">
-                <div class="nds-card nds-stroke">
+            <ul class="nds-list nds-grid nds-stroke" style="--max-col: 4; --mid-col: 2; --min-col: 2;">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle">
@@ -826,8 +826,8 @@ hideFeedback: true
                             <i class="nds-icon nds-hgi-arrow-next-02" aria-hidden="true"></i>
                         </button>
                     </div>
-                </div>
-                <div class="nds-card nds-stroke">
+                </li>
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle">
@@ -846,8 +846,8 @@ hideFeedback: true
                             <i class="nds-icon nds-hgi-arrow-next-02" aria-hidden="true"></i>
                         </button>
                     </div>
-                </div>
-                <div class="nds-card nds-stroke">
+                </li>
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle">
@@ -866,8 +866,8 @@ hideFeedback: true
                             <i class="nds-icon nds-hgi-arrow-next-02" aria-hidden="true"></i>
                         </button>
                     </div>
-                </div>
-                <div class="nds-card nds-stroke">
+                </li>
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle">
@@ -886,8 +886,8 @@ hideFeedback: true
                             <i class="nds-icon nds-hgi-arrow-next-02" aria-hidden="true"></i>
                         </a>
                     </div>
-                </div>
-            </div>
+                </li>
+            </ul>
         </div>
     </div>
 </section>

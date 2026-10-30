@@ -14,10 +14,10 @@ sidemenu_mode: false
 <section id="social-channels" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-body">
-            <div class="nds-block nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
+            <ul class="nds-list nds-block nds-grid nds-shadow" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
 
             <!-- X Platform -->
-                <div class="nds-card nds-shadow">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -35,10 +35,10 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
                 <!-- YouTube -->
-                <div class="nds-card nds-shadow">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -56,10 +56,10 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
                 <!-- Instagram -->
-                <div class="nds-card nds-shadow">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -77,10 +77,10 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
                 <!-- LinkedIn -->
-                <div class="nds-card nds-shadow">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -98,10 +98,10 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
                 <!-- Snapchat -->
-                <div class="nds-card nds-shadow">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -119,10 +119,10 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
                 <!-- Facebook -->
-                <div class="nds-card nds-shadow">
+                <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle nds-xl">
@@ -140,9 +140,9 @@ sidemenu_mode: false
                             <i class="nds-icon nds-hgi-arrow-next-02"></i>
                         </a>
                     </div>
-                </div>
+                </li>
 
-            </div>
+            </ul>
             <div class="nds-block">
                 <p class="nds-section-description">Social Media Usage Guidelines <a href="#usage-guidelines">Click here</a></p>
             </div>
