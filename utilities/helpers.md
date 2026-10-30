@@ -93,7 +93,7 @@ The canon is a request confirmation on an Arabic page. Each Class chip adds its 
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <ul class="nds-list nds-grid nds-flat nds-divided-rows nds-horizontal">
+      <ul class="nds-list nds-grid nds-flat nds-divided nds-horizontal">
         <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">

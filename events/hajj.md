@@ -196,7 +196,7 @@ hero_float_actions:
             <h2 class="nds-section-title">Built-in Features</h2>
         </div>
         <div class="nds-section-body">
-            <ul class="nds-list nds-grid nds-flat nds-divided-rows nds-horizontal" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
+            <ul class="nds-list nds-grid nds-flat nds-divided nds-horizontal" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">

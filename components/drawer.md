@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "23/10/2026 - 04:34 PM"
+last_edit: "30/10/2026 - 08:42 PM"
 ---
 
 <section id="drawer-overview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "23/10/2026 - 04:34 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A drawer is a vertical list of links and buttons. An item can hold a submenu: a nested list that opens in place under it. The same list also holds flat links, or notification rows with a title and a description. A search box above the list can filter a long menu.
+A drawer is a vertical list of links and buttons. An item can hold a submenu: a nested list that opens in place under it. The same list also holds flat links, or notification rows with a title and a description, in one column or in columns. A search box above the list can filter a long menu.
 
 Pick another component when:
 
@@ -116,7 +116,7 @@ Pick another component when:
 <nav class="nds-drawer" aria-label="Quick links">
   <ul class="nds-drawer-list">
     <li>
-      <a href="#" class="nds-btn nds-subtle nds-indicator">
+      <a href="#" class="nds-btn nds-subtle">
         <span class="nds-featured-icon nds-sm">
           <i class="hgi hgi-stroke hgi-link-02" aria-hidden="true"></i>
         </span>
@@ -125,7 +125,7 @@ Pick another component when:
       </a>
     </li>
     <li>
-      <a href="#" class="nds-btn nds-subtle nds-indicator">
+      <a href="#" class="nds-btn nds-subtle">
         <span class="nds-featured-icon nds-sm">
           <i class="hgi hgi-stroke hgi-link-02" aria-hidden="true"></i>
         </span>
@@ -134,7 +134,7 @@ Pick another component when:
       </a>
     </li>
     <li>
-      <a href="#" class="nds-btn nds-subtle nds-indicator">
+      <a href="#" class="nds-btn nds-subtle">
         <span class="nds-featured-icon nds-sm">
           <i class="hgi hgi-stroke hgi-link-02" aria-hidden="true"></i>
         </span>
@@ -143,7 +143,7 @@ Pick another component when:
       </a>
     </li>
     <li>
-      <a href="#" class="nds-btn nds-subtle nds-indicator">
+      <a href="#" class="nds-btn nds-subtle">
         <span class="nds-featured-icon nds-sm">
           <i class="hgi hgi-stroke hgi-link-02" aria-hidden="true"></i>
         </span>
@@ -158,7 +158,7 @@ Pick another component when:
 <nav class="nds-drawer" aria-label="Notifications">
   <ul class="nds-drawer-list">
     <li data-status="success">
-      <a href="#" class="nds-btn nds-subtle nds-indicator">
+      <a href="#" class="nds-btn nds-subtle">
         <span class="nds-featured-icon nds-sm">
           <i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i>
         </span>
@@ -174,7 +174,7 @@ Pick another component when:
       </a>
     </li>
     <li data-status="warning">
-      <a href="#" class="nds-btn nds-subtle nds-indicator">
+      <a href="#" class="nds-btn nds-subtle">
         <span class="nds-featured-icon nds-sm">
           <i class="hgi hgi-stroke hgi-alert-02" aria-hidden="true"></i>
         </span>
@@ -190,7 +190,7 @@ Pick another component when:
       </a>
     </li>
     <li data-status="info">
-      <a href="#" class="nds-btn nds-subtle nds-indicator">
+      <a href="#" class="nds-btn nds-subtle">
         <span class="nds-featured-icon nds-sm">
           <i class="hgi hgi-stroke hgi-mail-01" aria-hidden="true"></i>
         </span>
@@ -213,42 +213,42 @@ Pick another component when:
   <div class="nds-scroll-more">
     <ul class="nds-drawer-list nds-scroll-more-content">
       <li>
-        <a href="#" class="nds-btn nds-subtle nds-indicator">
+        <a href="#" class="nds-btn nds-subtle">
           <span class="nds-label">Riyadh</span>
         </a>
       </li>
       <li>
-        <a href="#" class="nds-btn nds-subtle nds-indicator">
+        <a href="#" class="nds-btn nds-subtle">
           <span class="nds-label">Jeddah</span>
         </a>
       </li>
       <li>
-        <a href="#" class="nds-btn nds-subtle nds-indicator">
+        <a href="#" class="nds-btn nds-subtle">
           <span class="nds-label">Makkah</span>
         </a>
       </li>
       <li>
-        <a href="#" class="nds-btn nds-subtle nds-indicator">
+        <a href="#" class="nds-btn nds-subtle">
           <span class="nds-label">Madinah</span>
         </a>
       </li>
       <li>
-        <a href="#" class="nds-btn nds-subtle nds-indicator">
+        <a href="#" class="nds-btn nds-subtle">
           <span class="nds-label">Dammam</span>
         </a>
       </li>
       <li>
-        <a href="#" class="nds-btn nds-subtle nds-indicator">
+        <a href="#" class="nds-btn nds-subtle">
           <span class="nds-label">Tabuk</span>
         </a>
       </li>
       <li>
-        <a href="#" class="nds-btn nds-subtle nds-indicator">
+        <a href="#" class="nds-btn nds-subtle">
           <span class="nds-label">Abha</span>
         </a>
       </li>
       <li>
-        <a href="#" class="nds-btn nds-subtle nds-indicator">
+        <a href="#" class="nds-btn nds-subtle">
           <span class="nds-label">Hail</span>
         </a>
       </li>
@@ -259,6 +259,88 @@ Pick another component when:
     </button>
   </div>
 </nav>
+</script>
+<script type="text/html" id="drawer-panel-rows" data-canon>
+<div class="nds-drawer nds-divided">
+  <ul class="nds-drawer-list" aria-label="Upcoming exams">
+    <li>
+      <button type="button" class="nds-btn nds-subtle" data-panel-toggle="drawer-exam-panel">
+        <time class="nds-date-tile" datetime="2026-12-13"></time>
+        <span class="nds-drawer-item">
+          <span class="nds-drawer-item-head">
+            <span class="nds-label">ACCT 301 · Managerial Accounting</span>
+          </span>
+          <span class="nds-meta">
+            <span class="nds-meta-item">
+              <i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>
+              9:00 – 11:00 AM
+            </span>
+            <span class="nds-meta-item">
+              <i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>
+              Exam Hall A-12
+            </span>
+          </span>
+        </span>
+      </button>
+    </li>
+    <li>
+      <button type="button" class="nds-btn nds-subtle" data-panel-toggle="drawer-exam-panel">
+        <time class="nds-date-tile" datetime="2026-12-14"></time>
+        <span class="nds-drawer-item">
+          <span class="nds-drawer-item-head">
+            <span class="nds-label">FIN 320 · Corporate Finance</span>
+          </span>
+          <span class="nds-meta">
+            <span class="nds-meta-item">
+              <i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>
+              1:00 – 3:00 PM
+            </span>
+            <span class="nds-meta-item">
+              <i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>
+              Exam Hall B-04
+            </span>
+          </span>
+        </span>
+      </button>
+    </li>
+    <li>
+      <button type="button" class="nds-btn nds-subtle" data-panel-toggle="drawer-exam-panel">
+        <time class="nds-date-tile" datetime="2026-12-16"></time>
+        <span class="nds-drawer-item">
+          <span class="nds-drawer-item-head">
+            <span class="nds-label">STAT 210 · Business Statistics</span>
+          </span>
+          <span class="nds-meta">
+            <span class="nds-meta-item">
+              <i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>
+              9:00 – 11:00 AM
+            </span>
+            <span class="nds-meta-item">
+              <i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>
+              Exam Hall A-07
+            </span>
+          </span>
+        </span>
+      </button>
+    </li>
+  </ul>
+</div>
+<dialog id="drawer-exam-panel" class="nds-panel" aria-label="Exam details">
+  <div class="nds-panel-header">
+    <div class="nds-panel-text">
+      <span class="nds-panel-title">Exam details</span>
+      <p class="nds-panel-description">The time, the hall and what to bring.</p>
+    </div>
+    <div class="nds-panel-action">
+      <button type="button" class="nds-btn nds-subtle nds-icon-only" data-panel-close aria-label="Close panel" data-i18n-aria-label="panel.close_panel">
+        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+  <div class="nds-panel-body">
+    <p>Bring your student card. The hall opens 15 minutes before the exam.</p>
+  </div>
+</dialog>
 </script>
     </div>
   </div>
@@ -279,9 +361,15 @@ The current page's `<li>` carries `data-state="active"`. To open a submenu at lo
 | Structure | Quick links | canon #drawer-links | — | A flat list of links, each with an arrow, for a side column or a card |
 | Structure | Notifications | canon #drawer-rich | — | Rows with an icon, a tag, a title and a description line, for notifications or recent activity |
 | Structure | Scrolling list | canon #drawer-scroll | — | A long list held to a set height, with a Show more button. Set the height with `--drawer-max-height` |
+| Structure | Panel rows (hint: Each row opens one panel on the page) (id: panel-rows) | canon #drawer-panel-rows | — | Each row is a `<button>` that opens one [Panel](../components/panel) with `data-panel-toggle`, for details the user reads without leaving the page. Your script fills the panel from the row the user clicked. Here each row holds a Date Tile and a Meta line |
+| Columns | Columns (hint: The rows in two columns) | `.nds-grid` | `.nds-drawer-list:not(:has(.nds-menu-btn))` | The rows in two columns on desktops and one on phones, as a [Grid](../layout/grid). The rows keep the drawer's spacing, and the columns take the grid's gap. With Divided, the last row draws no line. For flat links or notification rows, not a menu with submenus. Write all three |
+| Columns | Columns (hint: The rows in two columns) | `--max-col: 2` | `.nds-drawer-list:not(:has(.nds-menu-btn))` | The rows in two columns on desktops and one on phones, as a [Grid](../layout/grid). The rows keep the drawer's spacing, and the columns take the grid's gap. With Divided, the last row draws no line. For flat links or notification rows, not a menu with submenus. Write all three |
+| Columns | Columns (hint: The rows in two columns) | `--min-col: 1` | `.nds-drawer-list:not(:has(.nds-menu-btn))` | The rows in two columns on desktops and one on phones, as a [Grid](../layout/grid). The rows keep the drawer's spacing, and the columns take the grid's gap. With Divided, the last row draws no line. For flat links or notification rows, not a menu with submenus. Write all three |
 | Size | MD (default) | — | — | For most lists |
 | Size | LG | `.nds-lg` | `.nds-drawer` | Taller items and a deeper submenu indent, for a menu that is the page's main content |
-| Divided | Divided | `.nds-divided` | `.nds-drawer` | A line between the top-level items. Use it when rows have two lines, such as a description or a date |
+| Indicator | Indicator (hint: A line beside the hovered or current row) | `.nds-indicator` | `.nds-drawer-list .nds-btn` | A line beside the row the pointer is on, and beside the current page's row. The menu writes it on every item, to show the current page. Leave it off a list of links or notices, where the row's fill shows the hover. Write it on each row's button |
+| Indicator | Indicator (hint: A line beside the hovered or current row) | — | `.nds-drawer-list:not(:has(.nds-menu-btn))` | |
+| Divided | Divided (not: panel-rows) | `.nds-divided` | `.nds-drawer` | A line between the top-level items. Use it when rows have two lines, such as a description or a date |
 | Lined | Lined (hint: A line along each submenu shows its depth) | `.nds-lined` | `.nds-drawer:has(.nds-menu-btn)` | A vertical line along each submenu, which shows the depth of a long tree |
 | Card | Card | `.nds-card` | `.nds-drawer` | A card background and rounded corners, so the drawer sits in a grid of cards |
 | Stroke | Stroke | `.nds-stroke` | `.nds-drawer.nds-card` | A border around the card |
@@ -346,7 +434,7 @@ A [Scroll More](../components/scroll-more) wrapper around the list holds the dra
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <ul class="nds-list nds-grid nds-flat nds-divided-rows nds-horizontal">
+      <ul class="nds-list nds-grid nds-flat nds-divided nds-horizontal">
         <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
@@ -439,6 +527,7 @@ A [Scroll More](../components/scroll-more) wrapper around the list holds the dra
 
 - Give the `<nav>` an `aria-label` that names the menu. A page often has more than one `nav`, and the label tells them apart.
 - Put `data-state="active"` only on the current page's `<li>`, never on the items above it.
+- Use `nds-indicator` on the items of a menu, where it marks the current page. Leave it off a list of links, notices or dated rows.
 - Use a `<button type="button">` for an item that only opens a submenu.
 - Keep trees to two or three levels. A deeper tree is hard to scan, and often means the section should be split into pages.
 - Keep labels short. A label wraps to a new line when it is too long.
@@ -447,6 +536,8 @@ A [Scroll More](../components/scroll-more) wrapper around the list holds the dra
 - Leave `nds-truncate` off the title in a Notifications row. A cut title cannot wrap under the tag, so it shows less text.
 - Add search to a menu of about 20 items or more. Use `data-search="20"` when the item count changes, so a short menu gets no box.
 - Use Divided when rows have two lines. Leave it off a list of short links, where the lines only add noise.
+- For rows in columns, put `nds-grid` on the list and set the columns as on a [Grid](../layout/grid). Keep `nds-divided` on the drawer: the last row draws no line.
+- Make a row a `<button>` when it opens a panel or a modal on the page, and an `<a>` when it opens a page.
 - After you add a drawer to the page, call `NDS.Drawer.reinit()`. After you change the items of a drawer that started, call `NDS.Drawer.destroy(drawer)`, then `NDS.Drawer.create(drawer)`.
 
 </div>
@@ -465,6 +556,7 @@ A [Scroll More](../components/scroll-more) wrapper around the list holds the dra
 
 | Class | Element | Effect |
 |---|---|---|
+| `nds-grid` | `.nds-drawer-list` | Lays the rows out in columns, with the [Grid](../layout/grid) knobs. The rows keep `--drawer-gap`, and the columns take the grid's gap. On a divided drawer, the Grid script marks the last row, which draws no line |
 | `nds-fit` | `.nds-drawer` inside `.nds-grid` | The drawer fills the height of its grid row, and the items share the height. Use it with `nds-card` to match the cards next to it. It has no effect outside `.nds-grid` |
 | `nds-oncolor` | `.nds-drawer` | Lighter divider lines, for a drawer on a colored surface. Put `nds-oncolor` on each button too, so the text reads on the surface |
 | `nds-divided` | a submenu `<ul>` | A line between the items of that submenu |

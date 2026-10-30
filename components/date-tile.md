@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "25/10/2026 - 03:10 PM"
+last_edit: "30/10/2026 - 08:58 PM"
 ---
 
 <section id="date-tile-overview" class="nds-content-section nds-doc-overview">
@@ -43,7 +43,7 @@ Pick another component when:
 <div class="nds-drawer nds-divided">
   <ul class="nds-drawer-list" aria-label="Final exams">
     <li>
-      <a href="#" class="nds-btn nds-subtle nds-indicator">
+      <a href="#" class="nds-btn nds-subtle">
         <time class="nds-date-tile" datetime="2026-12-13"></time>
         <span class="nds-drawer-item">
           <span class="nds-drawer-item-head">
@@ -57,7 +57,7 @@ Pick another component when:
       </a>
     </li>
     <li>
-      <a href="#" class="nds-btn nds-subtle nds-indicator">
+      <a href="#" class="nds-btn nds-subtle">
         <time class="nds-date-tile" datetime="2026-12-14"></time>
         <span class="nds-drawer-item">
           <span class="nds-drawer-item-head">
@@ -182,7 +182,7 @@ The Drawer row, Card header and Timeline structures show the tile beside the tex
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <ul class="nds-list nds-grid nds-flat nds-divided-rows nds-horizontal">
+      <ul class="nds-list nds-grid nds-flat nds-divided nds-horizontal">
         <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">

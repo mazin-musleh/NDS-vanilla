@@ -1461,25 +1461,25 @@ hideFeedback: true
         <nav class="nds-drawer nds-divided" aria-label="Common questions">
             <ul class="nds-drawer-list nds-empty" data-empty-message="No questions yet">
                 <li>
-                    <a href="#" class="nds-btn nds-subtle nds-indicator">
+                    <a href="#" class="nds-btn nds-subtle">
                         <span class="nds-label">How do I join an online exam?</span>
                         <i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nds-btn nds-subtle nds-indicator">
+                    <a href="#" class="nds-btn nds-subtle">
                         <span class="nds-label">Can I take an exam on a phone or tablet?</span>
                         <i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nds-btn nds-subtle nds-indicator">
+                    <a href="#" class="nds-btn nds-subtle">
                         <span class="nds-label">What if my internet drops during an exam?</span>
                         <i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nds-btn nds-subtle nds-indicator">
+                    <a href="#" class="nds-btn nds-subtle">
                         <span class="nds-label">How do I send an excuse for a missed exam?</span>
                         <i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i>
                     </a>

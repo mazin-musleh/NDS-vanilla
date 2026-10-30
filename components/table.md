@@ -618,7 +618,7 @@ Keep Selection only when the page has a bulk action that acts on the selected ro
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <ul class="nds-list nds-grid nds-flat nds-divided-rows nds-horizontal">
+      <ul class="nds-list nds-grid nds-flat nds-divided nds-horizontal">
         <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">

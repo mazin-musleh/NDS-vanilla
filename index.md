@@ -389,7 +389,7 @@ bundle_sizes:
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
-                <ul class="nds-list nds-grid nds-flat nds-divided-rows nds-horizontal" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
+                <ul class="nds-list nds-grid nds-flat nds-divided nds-horizontal" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
                     <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
@@ -537,7 +537,7 @@ bundle_sizes:
                 <p>The project uses <a href="https://jekyllrb.com/" target="_blank">Jekyll</a>, a static site generator supported by GitHub Pages. It compiles templates, stylesheets, and data files into static HTML with no external toolchain.</p>
             </div>
             <div class="nds-block">
-                <ul class="nds-list nds-grid nds-flat nds-divided-rows nds-horizontal" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
+                <ul class="nds-list nds-grid nds-flat nds-divided nds-horizontal" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
                     <li class="nds-card">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">

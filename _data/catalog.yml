@@ -336,7 +336,7 @@
 
 - title: "Drawer"
   description: "Collapsible navigation lists with accordion groups"
-  use_when: "A vertical list container for sidebar navigation, submenus, quick links (an arrow on each row shows it is a link), and inline notifications, in compact or expanded layouts. Also a tree view of nested items, such as folders or categories: add `.nds-lined` to show depth and `data-state=\"always-open\"` to keep branches open. Also a short list the user opens one item at a time, such as their latest requests, with a Date Tile and a Meta line. For a surface that slides in over the page use Panels; for the main collapsible sidebar use Side Menu."
+  use_when: "A vertical list container for sidebar navigation, submenus, quick links (an arrow on each row shows it is a link), and inline notifications, in compact or expanded layouts. Its rows can sit in columns: `nds-grid` on the list. A row that opens a panel on the page is a button. Also a tree view of nested items, such as folders or categories: add `.nds-lined` to show depth and `data-state=\"always-open\"` to keep branches open. Also a short list the user opens one item at a time, such as their latest requests, with a Date Tile and a Meta line. For a surface that slides in over the page use Panels; for the main collapsible sidebar use Side Menu."
   category: "Navigation"
   tags: ["JS", "CSS", "API"]
   url: "/components/drawer.html"

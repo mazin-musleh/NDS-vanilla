@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "17/10/2026 - 01:58 PM"
+last_edit: "30/10/2026 - 08:58 PM"
 ---
 
 <section id="meta-overview" class="nds-content-section nds-doc-overview">
@@ -55,7 +55,7 @@ Pick another component when:
 <div class="nds-drawer nds-divided">
   <ul class="nds-drawer-list" aria-label="Today's classes">
     <li>
-      <a href="#" class="nds-btn nds-subtle nds-indicator">
+      <a href="#" class="nds-btn nds-subtle">
         <span class="nds-featured-icon nds-sm">
           <i class="hgi hgi-stroke hgi-computer" aria-hidden="true"></i>
         </span>
@@ -84,7 +84,7 @@ Pick another component when:
       </a>
     </li>
     <li>
-      <a href="#" class="nds-btn nds-subtle nds-indicator">
+      <a href="#" class="nds-btn nds-subtle">
         <span class="nds-featured-icon nds-sm">
           <i class="hgi hgi-stroke hgi-teacher" aria-hidden="true"></i>
         </span>
@@ -170,7 +170,7 @@ The Drawer row and Card structures show where the line goes inside those compone
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <ul class="nds-list nds-grid nds-flat nds-divided-rows nds-horizontal">
+      <ul class="nds-list nds-grid nds-flat nds-divided nds-horizontal">
         <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">

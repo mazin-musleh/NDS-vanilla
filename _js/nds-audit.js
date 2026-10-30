@@ -938,7 +938,7 @@
         'nds-loading on a form field, which has a loading look of its own', 'Remove it. See Forms for the field loading state.');
     addPractice('list-item-box', 'components/list.html', '.nds-list:is(.nds-flat, .nds-stroke, .nds-shadow) > .nds-card:is(.nds-flat, .nds-stroke, .nds-shadow)',
         'a box class on a list item under a list box class: the list\'s class wins', 'Set the box on the list only, or take it off the list to style each card.');
-    addPractice('list-flex-grid-only', 'components/list.html', '.nds-list.nds-flex:is(.nds-col, .nds-nowrap, .nds-divided, .nds-divided-rows)',
+    addPractice('list-flex-grid-only', 'components/list.html', '.nds-list.nds-flex:is(.nds-col, .nds-nowrap, .nds-divided)',
         'a flex list with a column, no wrap or lines: those are a grid list\'s', 'Use nds-grid for one column or lines. A flex list always wraps.');
 
     addRule({ id: 'voice-secret', group: 'practice', severity: 'info', docs: 'components/voice-input.html', check(context) {

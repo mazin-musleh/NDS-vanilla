@@ -427,6 +427,19 @@
 }
 
 
+// In columns, rows keep the drawer's row gap and columns take the grid's.
+.nds-drawer-list.nds-grid {
+    --row-gap: var(--_gap);
+    row-gap: var(--_row-gap);
+    column-gap: var(--_col-gap);
+}
+
+// Divided in columns: the Grid script marks the last row, which draws no line.
+.nds-drawer.nds-divided .nds-drawer-list.nds-grid > li.nds-last-row {
+    border-block-end: none;
+    padding-bottom: 0;
+}
+
 // ==============================================
 // FIT MODE
 // ==============================================

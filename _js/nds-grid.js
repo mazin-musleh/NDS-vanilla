@@ -10,7 +10,8 @@
  *   .nds-last-row   written on the items of a divided grid's last visual row; the grid's row
  *                   lines read it
  * Gotchas:
- *   - Only a .nds-grid with .nds-divided or .nds-divided-rows is watched: a plain grid runs no script.
+ *   - Only a .nds-grid with .nds-divided, or a Drawer list in columns under .nds-drawer.nds-divided,
+ *     is watched: a plain grid runs no script.
  *   - The rows are measured, not counted: a grid whose columns change with its width re-marks
  *     itself when its first item resizes.
  */
@@ -18,7 +19,7 @@
 (() => {
     'use strict';
 
-    const SELECTOR = '.nds-grid:is(.nds-divided, .nds-divided-rows)';
+    const SELECTOR = '.nds-grid.nds-divided, .nds-drawer.nds-divided .nds-drawer-list.nds-grid';
     const CLASS_NAME = 'nds-last-row';
 
     // Reads only; returns the class writes so the pooled ResizeObserver can

@@ -74,10 +74,11 @@
     --justify: center;
   }
 
-  // Divided: a line in the middle of each gap between items. The line halves the gap, so the default gap doubles.
-  // Row lines: each item above the last row draws one under itself; the Grid script marks the last row.
+  // Divided: a line in the middle of each row gap. The line halves the gap, so the default gap doubles.
+  // Each item above the last row draws one under itself; the Grid script marks the last row.
   // A pseudo-element, not a border: nds-flush zeroes a card's border and padding.
-  &:is(.nds-divided, .nds-divided-rows) {
+  // ponytail: rows only; column lines need gap decorations, in new Chrome only. Add them when every engine draws them.
+  &.nds-divided {
     --_gap-scale: 2;
 
     > :not(.nds-last-row)::after {
@@ -89,17 +90,10 @@
       pointer-events: none;
     }
   }
-
-  // Column lines: the browser draws them (gap decorations), only between two items.
-  // ponytail: no column line where gap decorations are missing (older Chrome, Safari 26); rows still draw.
-  &.nds-divided:not(.nds-definition-list) {
-    column-rule: 1px solid var(--divider-color);
-    rule-visibility-items: between;
-  }
 }
 
 // The row line's anchor; :where() lets an item's own position win.
-:where(.nds-grid:is(.nds-divided, .nds-divided-rows) > *) {
+:where(.nds-grid.nds-divided > *) {
   position: relative;
 }
 

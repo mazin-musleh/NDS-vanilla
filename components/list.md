@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 05:58 PM"
+last_edit: "30/10/2026 - 08:28 PM"
 ---
 
 <section id="list-overview" class="nds-content-section nds-doc-overview">
@@ -454,8 +454,7 @@ Most options go on the list. Items puts its parts in every item. Icons and Icon 
 | Icon color | Red | `.nds-red` | `.nds-list .nds-featured-icon` | A red icon |
 | Icon color | Blue | `.nds-blue` | `.nds-list .nds-featured-icon` | A blue icon |
 | Lines (Grid) | None (default) | — | `.nds-list.nds-grid` | No lines between the items |
-| Lines (Grid) | Row lines (hint: A line between rows) | `.nds-divided-rows` | `.nds-list.nds-grid` | A line between rows, in the middle of the gap |
-| Lines (Grid) | All lines (hint: A line between rows and between columns) | `.nds-divided` | `.nds-list.nds-grid` | A line between rows and between columns. Column lines show only in browsers that draw grid gap lines |
+| Lines (Grid) | Row lines (hint: A line between rows) | `.nds-divided` | `.nds-list.nds-grid` | A line between rows, in the middle of the gap, never under the last row |
 | Box (any) | Flat (hint: No fill and no padding) | `.nds-flat` | `.nds-list:not(.nds-stroke, .nds-shadow)` | No fill and no padding, and a muted description: the items read as text, not boxes. Not with Stroke or Shadow |
 | Box (any) | Stroke (default) (hint: A card box with a border) | `.nds-stroke` | `.nds-list:not(.nds-flat)` | Every item is a card box with a 1px border. Not with Flat. It combines with Shadow |
 | Box (any) | Shadow (default) (hint: A card box with a shadow) | `.nds-shadow` | `.nds-list:not(.nds-flat)` | Every item is a card box with a shadow. Not with Flat. It combines with Stroke |
@@ -471,7 +470,7 @@ Most options go on the list. Items puts its parts in every item. Icons and Icon 
       <h2 class="nds-section-title">Built-in Features</h2>
     </div>
     <div class="nds-section-body">
-      <ul class="nds-list nds-grid nds-flat nds-divided-rows nds-horizontal">
+      <ul class="nds-list nds-grid nds-flat nds-divided nds-horizontal">
         <li class="nds-card">
           <div class="nds-card-header">
             <div class="nds-card-featured-icon">
@@ -637,7 +636,7 @@ Set these on the list for every item, or on one item. `--gap` and `--align` are 
 ### JavaScript
 {: .nds-block-title}
 
-List has no script of its own. With `nds-divided` or `nds-divided-rows`, the [grid](../layout/grid) script marks the last row, so no line shows under it.
+List has no script of its own. With `nds-divided`, the [grid](../layout/grid) script marks the last row, so no line shows under it.
 
 </div>
   </div>

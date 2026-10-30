@@ -248,7 +248,7 @@ Only for a layout component whose builder shows placeholders, not a real use (to
 
 The component's showcase: its highlights and what they give the developer. An existing list is kept, with its titles and icons: improve the wording, fix a claim the source disproves, and add a highlight the source supports that the list misses.
 
-- Wrapper: `<ul class="nds-list nds-grid nds-flat nds-horizontal nds-divided-rows">` inside the section, each item a plain `li.nds-card` with `nds-subtle` on its featured icon. The build sets the columns: no inline style, no extra class.
+- Wrapper: `<ul class="nds-list nds-grid nds-flat nds-horizontal nds-divided">` inside the section, each item a plain `li.nds-card` with `nds-subtle` on its featured icon. The build sets the columns: no inline style, no extra class.
 - Item markup comes from a model page. Title: a short noun phrase. Description: one or two sentences.
 - RTL and dark mode are project features, not a component's: leave them out.
 - Only what happens with no option. What an option turns on goes to Behavior.
