@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "25/10/2026 - 08:31 PM"
+last_edit: "31/10/2026 - 08:31 PM"
 ---
 
 <section id="ipv-overview" class="nds-content-section nds-doc-overview">
@@ -286,6 +286,8 @@ The zoom badge goes on every `.nds-ipv-image-card` in the markup.
 
 ### JavaScript
 {: .nds-block-title}
+
+The `NDS.Ipv` script loads after the page shows. Until it loads, each call loads it and returns a promise of the result, so `await` a call whose result you use.
 
 One viewer serves the whole page. The methods below drive it. The viewer fires no events.
 

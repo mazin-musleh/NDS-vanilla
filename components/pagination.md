@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 11:14 AM"
+last_edit: "31/10/2026 - 08:31 PM"
 ---
 
 <section id="pagination-overview" class="nds-content-section nds-doc-overview">
@@ -581,6 +581,8 @@ After a page change, the script scrolls the content back into view when its top 
 
 ### JavaScript
 {: .nds-block-title}
+
+The `NDS.Pagination` script loads after the page shows. Until it loads, each call loads it and returns a promise of the result, so `await` a call whose result you use.
 
 | Method | Effect |
 |---|---|

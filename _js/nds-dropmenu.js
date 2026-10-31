@@ -1398,8 +1398,9 @@
     NDS.Dropmenu = {
         init: setupDropmenus,
         reinit: setupDropmenus,
-        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-dropmenu') || el, checkField, opts),
+        validate: (el, opts) => NDS.Form.validateField(NDS.resolveElement(el)?.closest('.nds-dropmenu') || el, checkField, opts),
         create: (element, opts) => {
+            element = NDS.resolveElement(element);
             if (!element) return null;
             if (element.ndsDropmenu) return element.ndsDropmenu;
             const unstamp = opts && stampField(element, opts);
@@ -1415,7 +1416,7 @@
             else if (unstamp) unstamp();
             return instance;
         },
-        destroy: (element) => element?.ndsDropmenu?.destroy(),
+        destroy: (element) => NDS.resolveElement(element)?.ndsDropmenu?.destroy(),
         from: (el) => el?.closest('.nds-dropmenu') || null,
         // First match is the wrapper's own menu: a nested one sits inside it.
         getMenu: (dropmenu) => dropmenu?.querySelector('.nds-dropmenu-menu') || null,

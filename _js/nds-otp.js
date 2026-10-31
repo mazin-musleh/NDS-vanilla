@@ -323,17 +323,21 @@
 
     NDS.Otp = {
         init: init,
-        validate: function (el, opts) { return NDS.Form.validateField(el.closest('.nds-form-group') || el, answerField, opts); },
+        validate: function (el, opts) { return NDS.Form.validateField(NDS.resolveElement(el)?.closest('.nds-form-group') || el, answerField, opts); },
 
-        getValue: getValue,
+        getValue: function (group) { group = NDS.resolveElement(group); return group ? getValue(group) : ''; },
 
         setValue: function (group, value) {
+            group = NDS.resolveElement(group);
+            if (!group) return false;
             // One sync, in distributeDigits: the carrier hears the new value, never '' first.
             getOtpInputs(group).forEach(function (i) { i.value = ''; });
             distributeDigits(group, NDS.toLatinDigits(value).replace(/\D/g, ''), 0);
         },
 
         clear: function (group) {
+            group = NDS.resolveElement(group);
+            if (!group) return false;
             clearInputs(group);
             dispatch(group, 'nds:otp:clear');
             var inputs = getOtpInputs(group);

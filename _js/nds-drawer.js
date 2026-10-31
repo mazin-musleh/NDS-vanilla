@@ -71,7 +71,8 @@
     // ==============================================
 
     function toggle(button) {
-        const listItem = button.closest('li');
+        button = NDS.resolveElement(button);
+        const listItem = button?.closest('li');
         if (!listItem) return;
 
         const submenu = listItem.querySelector(':scope > ul');
@@ -371,7 +372,8 @@
     // ==============================================
 
     function setupDrawer(drawer) {
-        if (drawer.hasAttribute('data-nds-drawer-initialized')) return;
+        drawer = NDS.resolveElement(drawer);
+        if (!drawer || drawer.hasAttribute('data-nds-drawer-initialized')) return;
 
         setupOpenState(drawer);
         setupToggles(drawer);
@@ -390,6 +392,8 @@
     }
 
     function destroyDrawer(drawer) {
+        drawer = NDS.resolveElement(drawer);
+        if (!drawer) return;
         togglesAbortControllers.get(drawer)?.abort();
         togglesAbortControllers.delete(drawer);
         searchTeardowns.get(drawer)?.();

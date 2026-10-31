@@ -507,12 +507,14 @@
     NDS.Multiselect = {
         init: setupMultiselects,
         reinit: setupMultiselects,
-        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-multiselect') || el, checkField, opts),
+        validate: (el, opts) => NDS.Form.validateField(NDS.resolveElement(el)?.closest('.nds-multiselect') || el, checkField, opts),
         create: (element) => {
+            element = NDS.resolveElement(element);
+            if (!element) return null;
             if (element.ndsMultiselect) return element.ndsMultiselect;
             const instance = new NdsMultiselect(element);
             return instance._valid ? instance : null;
         },
-        destroy: (element) => element.ndsMultiselect?.destroy()
+        destroy: (element) => NDS.resolveElement(element)?.ndsMultiselect?.destroy()
     };
 })();

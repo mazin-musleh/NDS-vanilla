@@ -192,6 +192,7 @@
             });
         },
         destroy: function (el) {
+            if (typeof el === 'string' && !(el = NDS.resolveElement(el))) return; // a missed ref is not "every slider"
             var list = el ? [el] : document.querySelectorAll('[' + SENTINEL + ']');
             list.forEach(function (container) {
                 container.removeAttribute(SENTINEL);
@@ -202,6 +203,10 @@
             // needs per-instance teardown (e.g. native vertical orientation).
         },
         // A page with no slider at load never runs init(), so create() binds the delegates too.
-        create: function (el) { addDocumentListeners(); setupContainer(el); return el; }
+        create: function (el) {
+            el = NDS.resolveElement(el);
+            if (!el) return null;
+            addDocumentListeners(); setupContainer(el); return el;
+        }
     };
 })();

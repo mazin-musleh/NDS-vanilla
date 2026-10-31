@@ -20,7 +20,7 @@
         select_option: 'Please select an option',
     });
 
-    const getGroup = (el) => el.closest('.nds-form-group') || el;
+    const getGroup = (el) => NDS.resolveElement(el)?.closest('.nds-form-group') || el;
     const check = (group) => {
         const picked = Array.from(group.querySelectorAll('input[type="radio"]')).some((radio) => radio.checked);
         const valid = !NDS.validation.isRequired(group) || picked;

@@ -487,9 +487,11 @@
         reinit: setupTooltips,
         // The constructor publishes el.ndsTooltip only on success → null on a bail.
         create: (el) => {
+            el = NDS.resolveElement(el);
+            if (!el) return null;
             if (!el.ndsTooltip) new NdsTooltip(el);
             return el.ndsTooltip || null;
         },
-        destroy: (el) => el?.ndsTooltip?.destroy(),
+        destroy: (el) => NDS.resolveElement(el)?.ndsTooltip?.destroy(),
     };
 })();

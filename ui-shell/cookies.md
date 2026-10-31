@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 06:54 PM"
+last_edit: "31/10/2026 - 08:31 PM"
 ---
 
 <section id="cookies-overview" class="nds-content-section nds-doc-overview">
@@ -376,6 +376,8 @@ A category that is not in this table reaches only `isAllowed()` and the event.
 
 ### JavaScript
 {: .nds-block-title}
+
+The `NDS.Cookies` script loads after the page shows. Until it loads, each call loads it and returns a promise of the result, so `await` a call whose result you use.
 
 | Method | Effect |
 |---|---|

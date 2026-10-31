@@ -318,11 +318,13 @@
         reinit: setupExpandableContent,
         refresh: syncAllHeights,
         create: (container) => {
+            container = NDS.resolveElement(container);
+            if (!container) return null;
             if (container.ndsExpandable) return container.ndsExpandable;
             const instance = new NdsExpandable(container);
             return instance._valid ? instance : null;
         },
-        destroy: (container) => container?.ndsExpandable?.destroy(),
+        destroy: (container) => NDS.resolveElement(container)?.ndsExpandable?.destroy(),
     };
 
     // Note: Initialization now handled by nds-loader.js unified system

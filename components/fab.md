@@ -6,7 +6,7 @@ hero_description: A floating action button (FAB) stays at an edge of the screen 
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 06:54 PM"
+last_edit: "31/10/2026 - 08:31 PM"
 lang: en
 direction: ltr
 ---
@@ -372,6 +372,8 @@ The script makes the docks, so set the dock properties on `:root`, or on a dock 
 
 ### JavaScript
 {: .nds-block-title}
+
+The `NDS.Fab` script loads after the page shows. Until it loads, each call loads it and returns a promise of the result, so `await` a call whose result you use.
 
 A FAB in the page docks by itself. Call the API for a FAB that a script makes after the page loads.
 

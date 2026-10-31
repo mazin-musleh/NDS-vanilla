@@ -371,6 +371,8 @@
         // One field by its rule (or check, the component's own): the result each component's
         // validate() returns, its status shown when asked.
         validateField: function(el, check, options) {
+            el = NDS.resolveElement(el);
+            if (!el) return null;
             options = options || { showMessage: true };
             var result = NDS.validation.check(el, check);
             if (!result) return null;
@@ -386,6 +388,8 @@
         // Runs every check, shows the outcome, focuses the first failure, reports.
         // Synchronous by contract: the submit handler reads the result to gate preventDefault.
         validateForm: function(formElement, options) {
+            formElement = NDS.resolveElement(formElement);
+            if (!formElement) return null;
             options = options || { showMessages: true, focusFirst: true };
             var form = formElement.closest('.nds-form') || formElement;
             var validationResult = NDS.validation.checkAll(form, { extra: getRangeMessage });
@@ -825,7 +829,7 @@
     NDS.Form = {
         // Core initialization
         init: function() { strings.load(); NDS.field.create(document.body); },
-        create: NDS.field.create,
+        create: function(el) { return NDS.field.create(NDS.resolveElement(el)); },
 
         // Status Management API
         setStatus: function(element, status, options) {

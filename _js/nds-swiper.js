@@ -1067,6 +1067,8 @@
         init: setupSwipers,
         reinit: setupSwipers,
         create: (element) => {
+            element = NDS.resolveElement(element);
+            if (!element) return null;
             if (element.ndsSwiper) return element.ndsSwiper;
             const instance = new NdsSwiper(element);
             if (!instance._valid) return null;
@@ -1074,7 +1076,7 @@
             return instance;
         },
         destroy: (element) => {
-            const instance = element?.ndsSwiper;
+            const instance = NDS.resolveElement(element)?.ndsSwiper;
             if (!instance) return;
             instance.destroy();
         }

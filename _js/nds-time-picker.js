@@ -947,6 +947,7 @@
     }
 
     function create(input, formControl) {
+        input = NDS.resolveElement(input);
         const group = findGroup(input);
         if (group) {
             if (!group.ndsTimePicker) {
@@ -974,6 +975,7 @@
     }
 
     const getInstance = (el) => {
+        el = NDS.resolveElement(el);
         const group = findGroup(el);
         if (group) return group.ndsTimePicker || null;
         const input = findInput(el);
@@ -999,7 +1001,7 @@
     NDS.TimePicker = {
         init: init,
         reinit: init,
-        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-time-fields') || el, checkField, opts),
+        validate: (el, opts) => NDS.Form.validateField(NDS.resolveElement(el)?.closest('.nds-time-fields') || el, checkField, opts),
         create: create,
         destroy: (el) => {
             const instance = getInstance(el);

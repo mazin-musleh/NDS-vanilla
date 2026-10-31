@@ -210,6 +210,7 @@
     // input, the form-control, or any container holding one (create()'s
     // tolerance).
     function findFormControl(el) {
+        el = NDS.resolveElement(el);
         if (!el || !el.closest) return null;
         if (el.classList.contains('nds-select-input')) return el.closest('.nds-form-control');
         var input = el.querySelector && el.querySelector('.nds-select-input');
@@ -276,9 +277,10 @@
     NDS.CustomSelect = {
         init: init,
         reinit: init,
-        validate: function (el, opts) { return NDS.Form.validateField(el.closest('.nds-select') || el, checkField, opts); },
+        validate: function (el, opts) { return NDS.Form.validateField(NDS.resolveElement(el)?.closest('.nds-select') || el, checkField, opts); },
         // Programmatic build for a select input (or its form-control).
         create: function (el) {
+            el = NDS.resolveElement(el);
             if (!el) return;
             var input = (el.classList && el.classList.contains('nds-select-input'))
                 ? el

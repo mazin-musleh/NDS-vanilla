@@ -355,6 +355,7 @@
     // (`item.hidden`) is left untouched: a teardown of the UI shouldn't decide
     // what to render in its absence.
     function destroyPaginationNav(nav) {
+        nav = NDS.resolveElement(nav);
         if (!nav) return;
         // Already torn down (explicit destroy() before the removal sweep) or
         // never initialized — nothing to release.
@@ -1645,6 +1646,8 @@
         reinit: () => { setupPagination(); initAuto(); },
         initAuto,
         create: (container) => {
+            container = NDS.resolveElement(container);
+            if (!container) return null;
             // A live nav is returned as-is — re-wiring its click handler would
             // stack a second listener on the same element.
             if (container.ndsPagination) return container.ndsPagination;

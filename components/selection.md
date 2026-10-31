@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "29/10/2026 - 11:39 AM"
+last_edit: "31/10/2026 - 08:31 PM"
 ---
 
 <section id="selection-overview" class="nds-content-section nds-doc-overview">
@@ -414,6 +414,8 @@ The list is the element with the id that `data-selection-target` names. Its item
 
 ### JavaScript
 {: .nds-block-title}
+
+The `NDS.Selection` script loads after the page shows. Until it loads, each call loads it and returns a promise of the result, so `await` a call whose result you use.
 
 The script starts on its own. Call `refresh(list)` or `reinit()` after a change that fires no `change` event: a `checked` set from code, or an item marked only with `data-state`. A method that takes a list takes its id or the element.
 

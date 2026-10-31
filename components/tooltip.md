@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "23/10/2026 - 10:22 PM"
+last_edit: "31/10/2026 - 08:31 PM"
 ---
 
 <section id="tooltip-overview" class="nds-content-section nds-doc-overview">
@@ -301,6 +301,8 @@ Source: the `tooltip` group in `_sass/tokens/_components.scss`.
 
 ### JavaScript
 {: .nds-block-title}
+
+The `NDS.Tooltip` script loads after the page shows. Until it loads, each call loads it and returns a promise of the result, so `await` a call whose result you use.
 
 The instance is on the element as `el.ndsTooltip`. It is there once the component starts: code that runs at page load waits for [`NDS.init.ready`](../core/init#instance-lookup).
 

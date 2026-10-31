@@ -596,7 +596,7 @@
     NDS.Ipv = {
         init: setupIpv,
         reinit: setupIpv,
-        open: (thumb) => { if (!viewer) setupIpv(); viewer.open(thumb); },
+        open: (thumb) => { thumb = NDS.resolveElement(thumb); if (!thumb) return; if (!viewer) setupIpv(); viewer.open(thumb); },
         close: () => viewer?.close(),
         next: () => viewer?._showNext(),
         prev: () => viewer?._showPrev(),

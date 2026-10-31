@@ -342,14 +342,16 @@
     NDS.Taginput = {
         init: setupTagInputs,
         reinit: setupTagInputs,
-        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-taginput') || el, checkField, opts),
+        validate: (el, opts) => NDS.Form.validateField(NDS.resolveElement(el)?.closest('.nds-taginput') || el, checkField, opts),
         // Construction fails (missing required elements, or the root is already
         // initialized) → null, never a dud instance whose every method throws.
         create: (element) => {
+            element = NDS.resolveElement(element);
+            if (!element) return null;
             if (element.ndsTaginput) return element.ndsTaginput;
             const instance = new NdsTaginput(element);
             return instance._valid ? instance : null;
         },
-        destroy: (element) => element.ndsTaginput?.destroy()
+        destroy: (element) => NDS.resolveElement(element)?.ndsTaginput?.destroy()
     };
 })();

@@ -563,6 +563,8 @@
     }
 
     function create(el) {
+        el = NDS.resolveElement(el);
+        if (!el) return null;
         if (el.ndsCalendar) return el.ndsCalendar;
         addGlobalListeners();
         const calendar = new NdsCalendar(el);

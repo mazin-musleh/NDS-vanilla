@@ -147,11 +147,13 @@
         init: setupBreadcrumbs,
         reinit: setupBreadcrumbs,
         create: (nav) => {
+            nav = NDS.resolveElement(nav);
+            if (!nav) return null;
             if (nav.ndsBreadcrumb) return nav.ndsBreadcrumb;
             const instance = new NdsBreadcrumb(nav);
             return instance._valid ? instance : null;
         },
-        destroy: (nav) => nav?.ndsBreadcrumb?.destroy(),
+        destroy: (nav) => NDS.resolveElement(nav)?.ndsBreadcrumb?.destroy(),
     };
 
     // Note: Initialization now handled by nds-loader.js unified system

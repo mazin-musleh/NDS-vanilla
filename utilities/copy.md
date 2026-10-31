@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 05:53 PM"
+last_edit: "31/10/2026 - 08:31 PM"
 ---
 
 <section id="copy-overview" class="nds-content-section nds-doc-overview">
@@ -251,6 +251,8 @@ The script reads these attributes on `.nds-copy` and on the elements that match 
 
 ### JavaScript
 {: .nds-block-title}
+
+The `NDS.Copy` script loads after the page shows. Until it loads, each call loads it and returns a promise of the result, so `await` a call whose result you use.
 
 | Method | Effect |
 |---|---|

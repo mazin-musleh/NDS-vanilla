@@ -1000,6 +1000,8 @@
         refresh: syncAllWidths,
         // The constructors publish their expando only on success → null on a bail.
         create: (table) => {
+            table = NDS.resolveElement(table);
+            if (!table) return null;
             // Stands alone for a table mounted after load; a detached one has no place for the wrapper yet.
             if (table.isConnected) setupTable(table);
             if (!table.ndsTableControls) new NdsTable(table);
@@ -1011,6 +1013,7 @@
             return root.ndsColumnToggle || null;
         },
         destroy: (el) => {
+            el = NDS.resolveElement(el);
             el?.ndsTableControls?.destroy();
             el?.ndsTableResponsive?.destroy();
             el?.ndsColumnToggle?.destroy();

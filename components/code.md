@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "19/10/2026 - 12:45 AM"
+last_edit: "31/10/2026 - 08:31 PM"
 ---
 
 <section id="code-overview" class="nds-content-section nds-doc-overview">
@@ -392,6 +392,8 @@ Set these on the block, on a parent, or on `:root`. The `--syntax-*` properties 
 
 ### JavaScript
 {: .nds-block-title}
+
+The `NDS.Code` script loads after the page shows. Until it loads, each call loads it and returns a promise of the result, so `await` a call whose result you use.
 
 The script colors every code block on the page by itself. Call it again for a code block that you add or change later.
 

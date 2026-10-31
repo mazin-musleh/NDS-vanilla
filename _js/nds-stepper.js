@@ -240,6 +240,8 @@
 
     // A page with no stepper at load never runs init(), so this wires the globals too.
     function create(el) {
+        el = NDS.resolveElement(el);
+        if (!el) return null;
         if (el.ndsStepper) return el.ndsStepper;
         addGlobalListeners();
         const stepper = new NdsStepper(el);

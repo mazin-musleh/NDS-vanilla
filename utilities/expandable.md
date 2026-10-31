@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "31/10/2026 - 08:31 PM"
 ---
 
 <section id="expandable-overview" class="nds-content-section nds-doc-overview">
@@ -275,6 +275,8 @@ Put `nds-expand-all` on the parent of several expandable boxes. Show More on one
 
 ### JavaScript
 {: .nds-block-title}
+
+The `NDS.Expandable` script loads after the page shows. Until it loads, each call loads it and returns a promise of the result, so `await` a call whose result you use.
 
 The instance is on the box as `el.ndsExpandable`. It is there once the component starts: code that runs at page load waits for [`NDS.init.ready`](../core/init#instance-lookup).
 

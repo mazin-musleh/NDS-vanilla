@@ -103,8 +103,9 @@ NDS.UserFeedback = (() => {
     // Initialize a single .nds-user-feedback element. Idempotent — bails if
     // the element already carries the initialized marker.
     function create(feedbackComponent) {
+        feedbackComponent = NDS.resolveElement(feedbackComponent);
         // Skip if already initialized
-        if (feedbackComponent.hasAttribute('data-nds-user-feedback-initialized')) return;
+        if (!feedbackComponent || feedbackComponent.hasAttribute('data-nds-user-feedback-initialized')) return;
         // NDS.init.destroy(view) finds instances through an nds* backref on the element.
         feedbackComponent.ndsUserFeedback = { destroy: () => destroy(feedbackComponent) };
 
@@ -324,6 +325,8 @@ NDS.UserFeedback = (() => {
     // "already submitted" path never created one) and clears the init marker
     // so a later create() can re-wire the element.
     function destroy(feedbackComponent) {
+        feedbackComponent = NDS.resolveElement(feedbackComponent);
+        if (!feedbackComponent) return;
         abortControllers.get(feedbackComponent)?.abort();
         abortControllers.delete(feedbackComponent);
         finishers.delete(feedbackComponent);

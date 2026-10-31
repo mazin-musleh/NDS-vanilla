@@ -17,7 +17,7 @@
 (() => {
     'use strict';
 
-    const getGroup = (el) => el.closest('.nds-form-group') || el;
+    const getGroup = (el) => NDS.resolveElement(el)?.closest('.nds-form-group') || el;
     const check = (group) => NDS.validation.checkCount(group, group.querySelectorAll('input[type="checkbox"]'));
 
     // A group answers when it holds a checkbox and opts in. Focus goes to an enabled box: validation

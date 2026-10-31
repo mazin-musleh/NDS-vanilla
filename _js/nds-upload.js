@@ -870,7 +870,7 @@
     NDS.Upload = {
         init: setupUploads,
         reinit: setupUploads,
-        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-upload') || el, checkField, opts),
+        validate: (el, opts) => NDS.Form.validateField(NDS.resolveElement(el)?.closest('.nds-upload') || el, checkField, opts),
         create: (container, options) => {
             container = NDS.resolveElement(container);
             if (!container) { warn('create: container not found'); return null; }

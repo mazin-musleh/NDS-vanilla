@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "31/10/2026 - 08:31 PM"
 ---
 
 <section id="password-overview" class="nds-content-section nds-doc-overview">
@@ -402,6 +402,8 @@ The chip is optional. Without it, leave out `.nds-password-rules` and the input'
 {: .nds-table .nds-responsive}
 ### JavaScript
 {: .nds-block-title}
+
+The `NDS.Password` script loads after the page shows. Until it loads, each call loads it and returns a promise of the result, so `await` a call whose result you use.
 
 The instance is on the field's `.nds-form-container` as `ndsPassword`. It is there once the component starts: code that runs at page load waits for [`NDS.init.ready`](../core/init#instance-lookup).
 

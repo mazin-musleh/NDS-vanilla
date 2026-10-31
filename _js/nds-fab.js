@@ -270,6 +270,7 @@
     // view. The `hidden` attribute goes back on too — it is how the FAB shipped, so a later
     // register() reveals it exactly as it did the first time.
     function destroy(elOrRoot) {
+        elOrRoot = NDS.resolveElement(elOrRoot);
         if (!elOrRoot) return 0;
 
         if (elOrRoot.classList?.contains('nds-fab')) {

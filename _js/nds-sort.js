@@ -551,6 +551,7 @@
         init,
         refresh,
         create: (root, options) => {
+            root = NDS.resolveElement(root);
             if (!root) return null;
             if (root.ndsSort) return root.ndsSort;
             const instance = new NdsSort(root, options);

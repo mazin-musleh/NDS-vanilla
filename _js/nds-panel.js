@@ -216,9 +216,8 @@
     }
 
     function open(ref, { focus = true } = {}) {
-        let panel = NDS.resolveElement(ref);
-        // A string ref that missed may name a template-wrapped panel.
-        if (!panel && typeof ref === 'string') panel = NDS.fromTemplate(ref.replace(/^#/, ''));
+        // An id first, also one still inside a <template>, so a tag name never wins.
+        let panel = typeof ref === 'string' ? NDS.fromTemplate(ref.replace(/^#/, '')) || NDS.resolveElement(ref) : ref;
         if (!panel) return;
         // A panel added after load without NDS.init.mount: its close controls are wired here.
         createPanel(panel);
@@ -393,7 +392,8 @@
     // ==============================================
 
     function createPanel(panel) {
-        if (panel.hasAttribute(INIT_ATTRIBUTE)) return;
+        panel = NDS.resolveElement(panel);
+        if (!panel || panel.hasAttribute(INIT_ATTRIBUTE)) return;
         // A page with no panel at load never runs init(), so create() wires the toggles too.
         addToggleListeners();
 
@@ -432,6 +432,8 @@
     }
 
     function destroyPanel(panel) {
+        panel = NDS.resolveElement(panel);
+        if (!panel) return;
         // Cancelling the transition below drops the close callback that would
         // have flushed the swap slot, so carry a pending OTHER panel over and
         // open it once teardown is done — destroying this one says nothing

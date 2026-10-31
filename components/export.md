@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 05:30 PM"
+last_edit: "31/10/2026 - 08:31 PM"
 ---
 
 <section id="export-overview" class="nds-content-section nds-doc-overview">
@@ -472,6 +472,8 @@ A button with no `data-export-target` exports the table or `[data-export-rows]` 
 
 ### JavaScript
 {: .nds-block-title}
+
+The `NDS.Export` script loads after the page shows. Until it loads, each call loads it and returns a promise of the result, so `await` a call whose result you use.
 
 A source is an element or a CSS selector. A scope is `"auto"` (the default), `"selected"` or `"all"`.
 

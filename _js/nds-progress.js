@@ -130,5 +130,5 @@
         watch();
     }
 
-    NDS.Progress = { init, create: el => { watch(); syncFromData(el); }, destroy: el => el?.ndsProgress?.destroy(), setValue, setOutOf };
+    NDS.Progress = { init, create: el => { el = NDS.resolveElement(el); if (!el) return; watch(); syncFromData(el); }, destroy: el => NDS.resolveElement(el)?.ndsProgress?.destroy(), setValue, setOutOf };
 })();

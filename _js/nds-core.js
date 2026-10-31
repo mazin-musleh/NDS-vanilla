@@ -1174,11 +1174,12 @@
     // Resolve a consumer-supplied reference to an element. Canonical form is
     // a bare id ('resultsGrid' — matches data-auto-pagination /
     // data-columns-target); '#id', any CSS selector, or an Element also
-    // work. Misses and invalid selectors return null.
+    // work. Misses and invalid selectors return null. A non-string comes back as is, so an
+    // omitted argument stays undefined and a method's "none means all" still holds.
     // Usage: const grid = NDS.resolveElement('resultsGrid');
     NDS.resolveElement = (ref) => {
-        if (!ref) return null;
         if (typeof ref !== 'string') return ref;
+        if (!ref) return null;
         const byId = document.getElementById(ref.replace(/^#/, ''));
         if (byId) return byId;
         try { return document.querySelector(ref); } catch { return null; }

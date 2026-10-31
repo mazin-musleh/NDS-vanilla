@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 03:49 PM"
+last_edit: "31/10/2026 - 08:31 PM"
 ---
 
 <section id="voice-overview" class="nds-content-section nds-doc-overview">
@@ -295,6 +295,8 @@ A button inside `.nds-form-control` dictates into that field's input or text are
 
 ### JavaScript
 {: .nds-block-title}
+
+The `NDS.VoiceInput` script loads after the page shows. Until it loads, each call loads it and returns a promise of the result, so `await` a call whose result you use.
 
 | Method | Effect |
 |---|---|

@@ -989,6 +989,7 @@
     }
 
     function open(triggerEl) {
+        triggerEl = NDS.resolveElement(triggerEl);
         runArmed(() => {
             openerEl = document.activeElement;
             NDS.Panel.open(panel);
@@ -1000,6 +1001,7 @@
     }
 
     function toggle(triggerEl) {
+        triggerEl = NDS.resolveElement(triggerEl);
         runArmed(() => {
             openerEl = document.activeElement;
             NDS.Panel.toggle(panel);

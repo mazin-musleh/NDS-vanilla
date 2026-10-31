@@ -191,13 +191,15 @@
         init: setupSideinfos,
         reinit: setupSideinfos,
         create: (element) => {
+            element = NDS.resolveElement(element);
+            if (!element) return null;
             if (element.ndsSideinfo) return element.ndsSideinfo;
             const instance = new NdsSideinfo(element);
             if (!instance._valid) return null;
             element.ndsSideinfo = instance;
             return instance;
         },
-        destroy: (element) => element?.ndsSideinfo?.destroy()
+        destroy: (element) => NDS.resolveElement(element)?.ndsSideinfo?.destroy()
     };
 
 })();

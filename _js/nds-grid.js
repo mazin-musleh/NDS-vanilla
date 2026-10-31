@@ -83,6 +83,7 @@
 
     // Stops watching and takes back the marks it wrote.
     function destroy(container) {
+        if (typeof container === 'string' && !(container = NDS.resolveElement(container))) return; // a missed ref is not "every grid"
         const grids = findGrids(container);
         for (let i = 0; i < grids.length; i++) {
             unwatch(grids[i]);

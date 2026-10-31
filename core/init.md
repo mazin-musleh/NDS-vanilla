@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 06:54 PM"
+last_edit: "31/10/2026 - 08:31 PM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -341,6 +341,8 @@ Keep the `<style>` gate and the inline script out of your bundler. A minifier ch
 {: .nds-block-title}
 
 A component stores its instance on the element it starts, as an `nds{Name}` property: `el.ndsAccordion`, `el.ndsChart`, `el.ndsSort`. `destroy()` releases each one it finds there, and calls `NDS.{Name}.destroy(el)` for the components that keep no such property. Filter, Sort and Upload also have `getInstance(el)`, and Filter has `getByTarget(id)` and `whenReady(el, callback)`.
+
+Each `create`, `destroy`, `getInstance`, `whenReady`, `open`, `close`, `toggle` and `validate` method takes the element, its `id`, or a CSS selector: `NDS.Tabs.destroy('service-tabs')` and `NDS.Tabs.destroy('#service-tabs')` both work. A reference that matches nothing does nothing.
 
 Most components load after the page shows, so the property is missing until the component starts. Code that runs at load waits for `NDS.init.ready`:
 

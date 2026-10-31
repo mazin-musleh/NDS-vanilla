@@ -41,8 +41,8 @@
   function open(target) {
     // A page with no modal at load never runs init(), so open() wires the close controls too.
     init();
-    // fromTemplate covers an id still inside a <template>
-    const modal = typeof target === 'string' ? NDS.fromTemplate(target) : target;
+    // An id first, also one still inside a <template>, so 'dialog' never matches the tag.
+    const modal = typeof target === 'string' ? NDS.fromTemplate(target.replace(/^#/, '')) || NDS.resolveElement(target) : target;
     if (!modal || !modal.classList.contains('nds-modal')) return;
     if (!(modal instanceof HTMLDialogElement)) {
       console.error('NDS Modal: .nds-modal must be a <dialog>.', modal);
@@ -136,7 +136,8 @@
   function destroy(root) {
     const modal = activeModal;
     if (!modal) return 0;
-    const scope = root || document;
+    const scope = NDS.resolveElement(root ?? document);
+    if (!scope) return 0;
     if (scope !== document && scope !== modal && !scope.contains?.(modal)) return 0;
     activeModal = null;
     openAbortController?.abort();

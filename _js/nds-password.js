@@ -268,11 +268,13 @@
         init: setupPasswords,
         reinit: setupPasswords,
         create: function (element) {
+            element = NDS.resolveElement(element);
+            if (!element) return null;
             if (element.ndsPassword) return element.ndsPassword;
             var instance = new NdsPassword(element);
             return instance._valid ? instance : null;
         },
-        destroy: function (element) { if (element.ndsPassword) element.ndsPassword.destroy(); },
+        destroy: function (element) { element = NDS.resolveElement(element); if (element && element.ndsPassword) element.ndsPassword.destroy(); },
         check: function (element) { return element.ndsPassword ? element.ndsPassword.check() : null; },
         addRule: function (name, test) { RULES[name] = test; }
     };

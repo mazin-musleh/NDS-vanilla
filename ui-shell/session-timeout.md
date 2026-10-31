@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "31/10/2026 - 08:31 PM"
 ---
 
 <section id="session-timeout-overview" class="nds-content-section nds-doc-overview">
@@ -254,6 +254,8 @@ The modals read their English from the script and their Arabic from the `session
 
 ### JavaScript
 {: .nds-block-title}
+
+The `NDS.SessionTimeout` script loads after the page shows. Until it loads, each call loads it and returns a promise of the result, so `await` a call whose result you use.
 
 | Method | Effect |
 |---|---|

@@ -1924,6 +1924,7 @@
     };
 
     function createInstance(dateInput, formControl) {
+        dateInput = NDS.resolveElement(dateInput);
         if (!dateInput) return null;
         if (dateInput.ndsDatePicker) return dateInput.ndsDatePicker;
         formControl = formControl || dateInput.closest('.nds-form-control');
@@ -1967,7 +1968,7 @@
         reinit: setupCalendar,
         create: createInstance,
         destroy: (input) => {
-            const instance = input?.ndsDatePicker;
+            const instance = NDS.resolveElement(input)?.ndsDatePicker;
             if (!instance) return false;
             instance.destroy();
             return true;

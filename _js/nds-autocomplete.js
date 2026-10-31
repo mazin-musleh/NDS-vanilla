@@ -773,11 +773,12 @@
     NDS.Autocomplete = {
         init: setupAutocompletes,
         reinit: setupAutocompletes,
-        validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-form-container') || el, checkField, opts),
-        destroy: (element) => element?.ndsAutocomplete?.destroy(),
+        validate: (el, opts) => NDS.Form.validateField(NDS.resolveElement(el)?.closest('.nds-form-container') || el, checkField, opts),
+        destroy: (element) => NDS.resolveElement(element)?.ndsAutocomplete?.destroy(),
         // Programmatic construction. Pass { filter, renderItem } to override
         // the default substring match and dropdown-row renderer.
         create: function (element, options) {
+            element = NDS.resolveElement(element);
             if (!element) return null;
             // A page with no [data-url] at load never ran init(): later fields build on focus too.
             setupAutocompletes();

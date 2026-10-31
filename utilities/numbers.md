@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 06:32 AM"
+last_edit: "31/10/2026 - 08:31 PM"
 ---
 
 <section id="numbers-overview" class="nds-content-section nds-doc-overview">
@@ -231,6 +231,8 @@ The counter reads `data-counter` when the count starts, not when the page loads.
 
 ### JavaScript
 {: .nds-block-title}
+
+The `NDS.Numbers` script loads after the page shows. Until it loads, each call loads it and returns a promise of the result, so `await` a call whose result you use.
 
 | Method | Effect |
 |---|---|

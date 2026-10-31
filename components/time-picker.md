@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 05:53 PM"
+last_edit: "31/10/2026 - 08:31 PM"
 ---
 
 <section id="time-picker-overview" class="nds-content-section nds-doc-overview">
@@ -342,6 +342,8 @@ Any other character stays as written. `ss` adds a Second list, and `A` or `a` ad
 
 ### JavaScript
 {: .nds-block-title}
+
+The `NDS.TimePicker` script loads after the page shows. Until it loads, each call loads it and returns a promise of the result, so `await` a call whose result you use.
 
 `el` can be the `.nds-time-input`, its `.nds-form-control` or its `.nds-form-container`. In Boxes, it can be the `.nds-time-fields` or either box.
 

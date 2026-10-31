@@ -263,14 +263,17 @@
     }
   }
 
-  const create = (element) => element.ndsRating || (element.ndsRating = new NdsRating(element));
+  const create = (element) => {
+    element = NDS.resolveElement(element);
+    return element && (element.ndsRating || (element.ndsRating = new NdsRating(element)));
+  };
 
   function setupRatings() {
     document.querySelectorAll('.nds-rating').forEach(create);
   }
 
   function enable(element) {
-    create(element).enable();
+    create(element)?.enable();
   }
 
   // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
@@ -289,9 +292,9 @@
   NDS.Rating = {
     init: setupRatings,
     reinit: setupRatings,
-    validate: (el, opts) => NDS.Form.validateField(el.closest('.nds-form-group') || el, checkField, opts),
+    validate: (el, opts) => NDS.Form.validateField(NDS.resolveElement(el)?.closest('.nds-form-group') || el, checkField, opts),
     create,
-    destroy: (element) => element?.ndsRating?.destroy(),
+    destroy: (element) => NDS.resolveElement(element)?.ndsRating?.destroy(),
     enable: enable,
   };
 

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:38 PM"
+last_edit: "31/10/2026 - 08:31 PM"
 hideFeedback: true
 ---
 
@@ -482,6 +482,8 @@ The field rules (`data-required`, `data-min-checked`) and `data-feedback-target`
 
 ### JavaScript
 {: .nds-block-title}
+
+The `NDS.UserFeedback` script loads after the page shows. Until it loads, each call loads it and returns a promise of the result, so `await` a call whose result you use.
 
 | Method | Effect |
 |---|---|

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 11:14 AM"
+last_edit: "31/10/2026 - 08:31 PM"
 ---
 
 <section id="sort-overview" class="nds-content-section nds-doc-overview">
@@ -445,6 +445,8 @@ Sort ships in the delegated bundle, which the loader injects after first paint. 
 
 ### JavaScript
 {: .nds-block-title}
+
+The `NDS.Sort` script loads after the page shows. Until it loads, each call loads it and returns a promise of the result, so `await` a call whose result you use.
 
 Markup wiring is a `create()` call on the list with the defaults below: `items` is the children of the list, `triggers` is the buttons that name it, and `data-sort-mode` sets `mode`. Call `create()` yourself for any other option.
 

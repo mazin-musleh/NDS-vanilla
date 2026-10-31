@@ -3336,6 +3336,7 @@
         // the target registry and the ready event, so getInstance/getByTarget/
         // whenReady all missed an instance that was otherwise working.
         create: (container) => {
+            container = NDS.resolveElement(container);
             if (!container) return null;
             if (container.ndsFilter) return container.ndsFilter;
             const id = container.getAttribute('data-filter-target');
@@ -3346,9 +3347,7 @@
         destroy: (container) => NDS.Filter.getInstance(container)?.destroy(),
 
         getInstance: (container) => {
-            if (typeof container === 'string') {
-                container = document.querySelector(container);
-            }
+            container = NDS.resolveElement(container);
             if (!container) return null;
             // Direct backref (representative element), else resolve via the
             // element's target linkage so any surface element works.
@@ -3417,9 +3416,7 @@
          * @param {Function} callback - Receives the filter instance
          */
         whenReady: (container, callback) => {
-            if (typeof container === 'string') {
-                container = document.querySelector(container);
-            }
+            container = NDS.resolveElement(container);
             if (!container) return;
 
             // Already initialized — resolve immediately (backref or target map)

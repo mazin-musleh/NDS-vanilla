@@ -178,7 +178,7 @@
     function resolveSource(source) {
         if (!source) return null;
         if (typeof source === 'string') {
-            const el = document.querySelector(source);
+            const el = NDS.resolveElement(source);
             if (!el) console.warn('[NDS.Export] source not found:', source);
             return el;
         }

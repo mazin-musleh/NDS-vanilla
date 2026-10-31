@@ -83,6 +83,11 @@ Renamed, no aliases: Autocomplete `data-name` → `data-display-field` (voice an
 
 Main Nav's menu triggers and Show More are `<button type="button">` in the include and the three canons, and every nav button carries `type="button"` (section 4's row, for the nav). Additive: the JS and CSS key on classes, so an authored `<a href="#">` trigger still works; no migration row. Space now opens a menu. Check: `scripts/check-v2-batch5.mjs` (Chrome and WebKit). Left as is: the nakheel-clinics IQ rig's `<a>` Show More (a consumer copy, still valid).
 
+## Batch 6a, checked against the code (2026-10-31)
+
+Shipped in two commits. **6a-1:** 2.5 at the owner's scope (lifecycle + value + validate, not every element-first method): `create`, `destroy`, `getInstance`, `whenReady`, `open`, `close`, `toggle`, `validate` and the existing Otp, Time Picker and Custom Select value methods resolve an id or selector (~40 files). `NDS.resolveElement` returns a non-string as is, so "no argument means all" holds; a missed string on such a method does nothing. Modal and Panel `open` try the id (template included) before a selector, so `'dialog'` never matches the tag. 2.10: one stock line opens each lazy page's JavaScript section (Alert, Filter, Chart and Accessibility keep their own). Still element-only, outside the row: `Slider.reinit`, `Grid.refresh`, `Filter.refresh`, `Sort.refresh`, `Table.createResponsive`/`createColumnToggle`, `Rating.enable`, setters such as `Pagination.setPage`. Check: `scripts/check-v2-batch6a.mjs`.
+**6a-2 (next):** 3.25, owner (2026-10-31): every value field gets `NDS.X.getValue(el)`, `setValue(el, v)`, `clear(el)`, and the instance trio where an instance exists (no new instances); a refused set returns `false`; `getValue` returns the value a form submits (Date Picker ISO, a phone in E.164). Multiselect's `getSelected`/`reset` renames stay in 6b (3.12).
+
 ## How we stay safe
 
 1. **Baseline first, made stable.** Build today's `HEAD` into `tmp/ab/base/`. `scripts/ab-pages.mjs` diffs base against head, with the clock frozen, animations and swiper autoplay off, fonts loaded:
@@ -91,6 +96,7 @@ Main Nav's menu triggers and Show More are `<button type="button">` in the inclu
    - each doc page's Variants hashes, and the touched components opened (menus, drawers, toasts, the phone nav, built rows);
    - one pass with JS off (first paint keys on some renamed names), an LTR subset, print emulation on the swiper, accordion and chart pages.
    The diff must be zero outside the rows the batch means to change.
+   **Which pages** (owner, 2026-10-31): every page only when the change reaches every page: core, the loader, a shared base, a chrome include (nav, footer), shared Sass, or many components at once. A change to one component's JS, Sass or doc shoots only the pages that hold it: its doc page plus each example and template that uses it (`snap <name> --pages=…`, found by grepping the built site for its root class), diffed against the same pages of the base.
 2. **A scoped rename map.** Each entry names its selector context, never a bare global word (`active`, `nds-minimal`, `nds-stacked`, `nds-dark`, `data-name`, `variant` stay manual). Match with `(?<![\w-])name(?![\w-])`. Also rename the camelCase `dataset` reads and option keys, the names the JS builds by concatenation (listed per batch by hand), and tokens that contain the name. Update the `use:` chains of existing rows in `_data/migrations.yml`.
    **Never touched:** `_includes/NDS-IQ.md` (only `publish-iq.py` writes it), `CHANGELOG-v1.md`, released CHANGELOG sections, `DEPRECATIONS.md`, `plans/`, and the IQ fixtures that are old on purpose (`fixtures/mini-root/`, `states/spa-old-runtime/`). Rig fixtures: one by one.
 3. **Every rename a user wrote gets a `_data/migrations.yml` row**, so `NDS.audit` flags it. Proof per batch: a fixture page with every old name; the audit finds each one. (The audit skips event-pack CSS.)

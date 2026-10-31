@@ -6,7 +6,7 @@ hero_description: A panel is a surface that slides in from an edge of the screen
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "24/10/2026 - 10:21 AM"
+last_edit: "31/10/2026 - 08:31 PM"
 lang: en
 direction: ltr
 ---
@@ -366,6 +366,8 @@ Set these on the `.nds-panel` element.
 
 ### JavaScript
 {: .nds-block-title}
+
+The `NDS.Panel` script loads after the page shows. Until it loads, each call loads it and returns a promise of the result, so `await` a call whose result you use.
 
 Each method takes the panel element or its `id`.
 

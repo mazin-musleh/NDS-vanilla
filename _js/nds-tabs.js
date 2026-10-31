@@ -306,9 +306,11 @@
         reinit: setupTabs,
         // The constructor publishes el.ndsTabs only on success → null on a bail.
         create: (container) => {
+            container = NDS.resolveElement(container);
+            if (!container) return null;
             if (!container.ndsTabs) new NdsTabs(container);
             return container.ndsTabs || null;
         },
-        destroy: (container) => container?.ndsTabs?.destroy(),
+        destroy: (container) => NDS.resolveElement(container)?.ndsTabs?.destroy(),
     };
 })();

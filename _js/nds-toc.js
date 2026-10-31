@@ -281,13 +281,15 @@
         init: setupComponents,
         reinit: setupComponents,
         create: (el) => {
+            el = NDS.resolveElement(el);
+            if (!el) return null;
             if (el.ndsToc) return el.ndsToc;
             const instance = new NdsToc(el);
             if (!instance._valid) return null;
             el.ndsToc = instance;
             return instance;
         },
-        destroy: (el) => el?.ndsToc?.destroy()
+        destroy: (el) => NDS.resolveElement(el)?.ndsToc?.destroy()
     };
 
 })();

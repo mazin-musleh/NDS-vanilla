@@ -421,13 +421,14 @@
         // toggles twice — open then straight back closed. Registering here also
         // lets a later reinit() find the instance instead of duplicating it.
         create: (container) => {
+            container = NDS.resolveElement(container);
             if (!container) return null;
             if (container.ndsAccordion) return container.ndsAccordion;
             const instance = new NdsAccordion(container);
             activate(container, instance);
             return instance._valid ? instance : null;
         },
-        destroy: (container) => container?.ndsAccordion?.destroy(),
+        destroy: (container) => NDS.resolveElement(container)?.ndsAccordion?.destroy(),
     };
 
     // Note: Initialization now handled by nds-loader.js unified system

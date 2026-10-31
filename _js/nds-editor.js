@@ -2902,11 +2902,13 @@
         // Construction fails (missing required elements) → null, never a
         // dud instance whose every method throws.
         create: (element) => {
+            element = NDS.resolveElement(element);
+            if (!element) return null;
             if (element.ndsEditor) return element.ndsEditor;
             const instance = new NdsEditor(element);
             return instance._valid ? instance : null;
         },
-        destroy: (element) => element.ndsEditor?.destroy(),
+        destroy: (element) => NDS.resolveElement(element)?.ndsEditor?.destroy(),
         _sanitize: sanitizeHtml // dev/test hook — the full interpret+enforce pipeline, consumed by scripts/editor-fixtures.mjs
     };
 })();

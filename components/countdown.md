@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 05:30 PM"
+last_edit: "31/10/2026 - 08:31 PM"
 ---
 
 <section id="countdown-overview" class="nds-content-section nds-doc-overview">
@@ -400,6 +400,8 @@ Set them on the root of Cards or Banner. Each one beats the size class.
 
 ### JavaScript
 {: .nds-block-title}
+
+The `NDS.Countdown` script loads after the page shows. Until it loads, each call loads it and returns a promise of the result, so `await` a call whose result you use.
 
 | Method | Effect |
 |---|---|

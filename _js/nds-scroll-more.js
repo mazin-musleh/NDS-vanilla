@@ -165,7 +165,8 @@
     }
 
     function setupElement(wrapper) {
-        if (wrapper.hasAttribute('data-nds-scroll-more-initialized')) return;
+        wrapper = NDS.resolveElement(wrapper);
+        if (!wrapper || wrapper.hasAttribute('data-nds-scroll-more-initialized')) return;
         const content = wrapper.querySelector(config.selectors.content);
         if (!content) return;
 
@@ -217,6 +218,8 @@
     }
 
     function destroy(wrapper) {
+        wrapper = NDS.resolveElement(wrapper);
+        if (!wrapper) return;
         const setup = wrapperSetups.get(wrapper);
         wrapperSetups.delete(wrapper);
         setup?.abortController?.abort();
