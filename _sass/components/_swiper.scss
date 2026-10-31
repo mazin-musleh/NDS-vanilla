@@ -22,8 +22,7 @@
 .nds-swiper {
     // The author's knobs sit on the element (--max/mid/min-slides, --peek),
     // so CSS sizes the row the moment main CSS applies — before any JS, in every
-    // browser. --slides (loader preset, then init) wins once written; it is also
-    // how the deprecated bare attributes still work, since only JS can read those.
+    // browser. --slides (loader preset, then init) wins once written.
     --swiper-total: var(--total, 1);
     --swiper-slides: var(--slides, var(--min-slides, 1));
     --swiper-gap: var(--gap, var(--spacing-xl));

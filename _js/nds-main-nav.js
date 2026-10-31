@@ -7,12 +7,11 @@
  *   .nds-has-menu needs :scope > .nds-nav-link — the menu has no trigger
  *   .nds-has-menu needs .nds-nav-menu — the trigger opens nothing
  * Methods:
- *   NDS.MainNav.init()               wire the one nav on the page
- *   NDS.MainNav.reinit()             re-resolve the markup and wire it again — for a nav
- *                                    that mounted after the bundle ran, or was replaced by
- *                                    a route change. NDS.init.refresh() calls it
+ *   NDS.MainNav.init() / .reinit()   wire the one nav on the page. A nav that mounted after the
+ *                                    bundle ran, or was replaced by a route change, is wired
+ *                                    again; a live one is left as is. NDS.init.refresh() calls it
  *   NDS.MainNav.destroy()            release every listener, observer and the backdrop; the
- *                                    markup stays, and reinit() wires it again
+ *                                    markup stays, and init() wires it again
  *   NDS.MainNav.open() / close()     open or close the drawer (toggle() flips it)
  *   NDS.MainNav.openMenu(trigger)    open the menu of the .nds-has-menu that holds trigger
  *   NDS.MainNav.closeMenus()         close every open menu
@@ -26,14 +25,13 @@
  * Gotchas:
  *   - One nav per page. dom references resolve when the file loads; a nav that mounts LATER
  *     (a framework rendering the chrome after the deferred bundle) or is swapped in by a
- *     route change needs reinit() — until then CSS paints the nav and nothing works.
+ *     route change needs init() (NDS.init.refresh() calls it) — until then CSS paints the nav and nothing works.
  *   - Minimal (mobile) mode starts under --nds-minimal-nav-bp, default 960px. Set that
  *     custom property on :root to move it.
  *   - A .nds-pinned item is MOVED into the minimal bar and moved back — do not reparent one
  *     yourself at runtime.
- *   - Minimal mode is the nds-minimal class on the nav itself; <body> carried it
- *     until 1.11.0, so consumer CSS keyed on body.nds-minimal must move.
- *   - A menu trigger writes data-state="open" while its menu is open ("active" until 2.0.0).
+ *   - Minimal mode is the nds-minimal class on the nav itself.
+ *   - A menu trigger writes data-state="open" while its menu is open.
  */
 // NDS Navigation Controller
 //
@@ -810,7 +808,7 @@
     function setupInteractions() {
         if (!dom.primary) return;
 
-        // One controller per run, aborted on the next: a reinit on a kept root
+        // One controller per run, aborted on the next: an init on a kept root
         // would otherwise stack every interaction listener (wheel scroll doubles).
         if (interactionsAbortController) interactionsAbortController.abort();
         interactionsAbortController = new AbortController();
@@ -942,7 +940,7 @@
     }
 
     function addMutationAndResizeListeners() {
-        // Captured, unlike before: reinit() re-runs this, and an uncaptured pooled
+        // Captured, unlike before: init() re-runs this, and an uncaptured pooled
         // subscriber would stack one closure per re-run for the page lifetime.
         offDomWatches.splice(0).forEach(off => off());
         const navChanged = NDS.debounce(() => { state._navChanged = true; scheduleUpdate(); }, 100);
@@ -1021,19 +1019,16 @@
     //
     // Safe to call repeatedly. setupEventListeners aborts the previous batch, and the
     // pooled onResize / onElementResize / onDomAdd handles are all released before re-registering.
-    function reinit() {
-        const live = document.querySelector('.nds-main-nav');
-        if (!live) return;
-        if (initDone && dom.nav === live && live.isConnected
-            && dom.collapse?.isConnected && !dom.collapse.hasAttribute('hidden')) return;
-        if (!captureDom()) return;
-        initDone = false;
-        init();
-    }
-
     function init() {
-        // Entry guard: mainnav is a singleton, so repeat init() calls are no-ops. Use
-        // reinit() when the markup itself changed — it re-resolves dom and rewires.
+        // Entry guard: a repeat init() on the nav it wired is a no-op. A different nav, or a kept
+        // root whose collapse was swapped out or re-hidden, re-resolves dom and wires again.
+        const live = document.querySelector('.nds-main-nav');
+        // [hidden] counts only after a first init: the markup ships the collapse hidden.
+        if (live && (dom.nav !== live || !dom.collapse?.isConnected
+            || (initDone && dom.collapse.hasAttribute('hidden')))) {
+            if (!captureDom()) return;
+            initDone = false;
+        }
         if (initDone || !dom.collapse) return;
         initDone = true;
 
@@ -1092,7 +1087,7 @@
         scheduleUpdate();
     });
 
-    // Release every listener and observer, and the backdrop. The markup stays; reinit() wires it again.
+    // Release every listener and observer, and the backdrop. The markup stays; init() wires it again.
     function destroy() {
         if (!initDone) return;
         initDone = false;
@@ -1112,7 +1107,7 @@
 
     NDS.MainNav = {
         init,
-        reinit,
+        reinit: init,
         destroy,
         open: () => { if (!isDrawerOpen()) toggleNavbar(); },
         close: () => { if (isDrawerOpen()) toggleNavbar(); },

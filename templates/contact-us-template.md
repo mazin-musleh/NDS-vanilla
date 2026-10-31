@@ -476,7 +476,7 @@ sidemenu_mode: false
                 e.preventDefault && e.preventDefault();
                 if (window.NDS && NDS.Alert) {
                     NDS.Alert.create({
-                        variant: 'success',
+                        status: 'success',
                         title: 'Request sent',
                         description: 'We will get back to you shortly.',
                         display: 'toast',

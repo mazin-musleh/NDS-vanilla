@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 05:30 PM"
+last_edit: "01/11/2026 - 12:30 AM"
 ---
 
 <section id="alert-overview" class="nds-content-section nds-doc-overview">
@@ -102,7 +102,7 @@ Pick another component when:
 </script>
 <script type="text/html" id="alert-js" data-canon data-lang="js">
 NDS.Alert.create({
-  variant: 'info',
+  status: 'info',
   title: 'Update available',
   description: 'A new version is ready. Update now to get the latest fixes.',
   target: '#messages'
@@ -110,7 +110,7 @@ NDS.Alert.create({
 </script>
 <script type="text/html" id="alert-toast" data-canon data-lang="js">
 NDS.Alert.create({
-  variant: 'info',
+  status: 'info',
   title: 'Update available',
   description: 'A new version is ready. Update now to get the latest fixes.',
   display: 'toast',
@@ -153,17 +153,17 @@ actions: [
 | Structure | Inline | `display: 'inline'` | `create()` | The same, in JavaScript |
 | Structure | Toast (hint: Floats over the page and can close itself) | canon `#alert-toast` | — | Floats at a corner of the screen, so it needs no `target`. `duration` closes it after that many ms; `0` keeps it until the user closes it. A toast is made only with JavaScript: its timer and placement need the script |
 | Status | Info (default) | `[data-status="info"]` | `.nds-alert` | Neutral news or an update |
-| Status | Info (default) | `variant: 'info'` | `create()` | The same, in JavaScript |
+| Status | Info (default) | `status: 'info'` | `create()` | The same, in JavaScript |
 | Status | Success | `[data-status="success"]` | `.nds-alert` | A confirmation |
-| Status | Success | `variant: 'success'` | `create()` | The same, in JavaScript |
+| Status | Success | `status: 'success'` | `create()` | The same, in JavaScript |
 | Status | Warning | `[data-status="warning"]` | `.nds-alert` | A risk the user should know about |
-| Status | Warning | `variant: 'warning'` | `create()` | The same, in JavaScript |
+| Status | Warning | `status: 'warning'` | `create()` | The same, in JavaScript |
 | Status | Error | `[data-status="error"]` | `.nds-alert` | A failure |
-| Status | Error | `variant: 'error'` | `create()` | The same, in JavaScript |
+| Status | Error | `status: 'error'` | `create()` | The same, in JavaScript |
 | Status | Critical (hint: Error colors with its own icon) | `[data-status="critical"]` | `.nds-alert` | A system-level emergency. Same colors as Error, with its own icon |
-| Status | Critical (hint: Error colors with its own icon) | `variant: 'critical'` | `create()` | The same, in JavaScript |
+| Status | Critical (hint: Error colors with its own icon) | `status: 'critical'` | `create()` | The same, in JavaScript |
 | Status | Neutral | `[data-status="neutral"]` | `.nds-alert` | A general notice |
-| Status | Neutral | `variant: 'neutral'` | `create()` | The same, in JavaScript |
+| Status | Neutral | `status: 'neutral'` | `create()` | The same, in JavaScript |
 | Actions | None (default) | — | — | No actions. Actions go last in `.nds-alert-content`, after `.nds-alert-text` |
 | Actions | Buttons | canon `#alert-actions` | `.nds-alert-content` | Buttons that let the user respond, such as retry, undo or update. Use `nds-sm` buttons |
 | Actions | Buttons | canon `#alert-js-actions` | `create()` | The same, in JavaScript. `onClick` gets the alert element. `dismiss: true` closes the alert after the click |
@@ -329,7 +329,7 @@ An alert is a card, so the card color properties (`--card-bg`, `--card-border-co
 
 | Option | Default | Effect |
 |---|---|---|
-| `variant` | `'info'` | The status, as in `data-status` |
+| `status` | `'info'` | The status, as in `data-status` |
 | `title` | `''` | Title text. Leave it empty for no title |
 | `description` | `''` | Description text |
 | `display` | `'default'` | `'default'`, `'inline'` or `'toast'` |
@@ -359,7 +359,7 @@ Alerts fire no events. Use `onClick` on an action. The full API is in the banner
 
 <script type="text/html" id="alert-create-js" data-canon data-lang="js">
 var alert = NDS.Alert.create({
-  variant: 'error',
+  status: 'error',
   title: 'Request failed',
   description: 'The request could not be completed.',
   target: '#messages',

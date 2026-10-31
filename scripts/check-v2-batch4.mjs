@@ -123,11 +123,9 @@ for (const off of [true, false]) {
     await page.context().close();
 }
 
-// v2 only: the audit names every old spelling; the loader warns about an old page switch.
+// v2 only: the audit names every old spelling, the <html> switches included.
 if (NEW) {
-    const { page, warnings } = await open('components/fab.html', { htmlAttr: 'data-nds-auto-init="false" data-nds-disable-all="true"', ready: false });
-    check(warnings.some((w) => w.includes('data-nds-auto-init')) && warnings.some((w) => w.includes('data-nds-disable-all')),
-        `loader: warns about an old page switch (${warnings.filter((w) => /data-nds-/.test(w)).join(' | ').slice(0, 200) || 'no warning'})`);
+    const { page } = await open('components/fab.html', { htmlAttr: 'data-nds-auto-init="false" data-nds-disable-all="true"', ready: false });
     const found = await page.evaluate(async () => {
         const box = document.createElement('div');
         box.innerHTML = '<div class="nds-form-container" data-url="x.json" data-name="Name"><input class="nds-input"></div>'

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "01/11/2026 - 12:30 AM"
 ---
 
 <section id="cooldown-overview" class="nds-content-section nds-doc-overview">
@@ -235,12 +235,12 @@ btn.addEventListener('nds:cooldown:start', async () => {
     // failed resend as though it had worked.
     await NDS.request('/api/resend', { method: 'POST' });
     NDS.Alert.create({
-      variant: 'success', title: 'Code sent',
+      status: 'success', title: 'Code sent',
       display: 'toast', position: 'top', duration: 4000
     });
   } catch (err) {
     NDS.Alert.create({
-      variant: 'error', title: 'Could not send the code',
+      status: 'error', title: 'Could not send the code',
       display: 'toast', position: 'top', duration: 0
     });
     // Let the user retry at once, instead of waiting out a cooldown

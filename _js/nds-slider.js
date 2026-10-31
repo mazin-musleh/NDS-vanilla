@@ -5,9 +5,10 @@
  *   .nds-slider-container.nds-slider-range needs .nds-slider-min — the thumbs are not clamped and the fill never paints
  *   .nds-slider-container.nds-slider-range needs .nds-slider-max — the thumbs are not clamped and the fill never paints
  * Methods:
- *   NDS.Slider.init()          wire the delegated input listener; initialize every
+ *   NDS.Slider.init() / .reinit()   wire the delegated input listener; initialize every
  *                              .nds-slider-container
- *   NDS.Slider.reinit(el)      re-initialize one container, or all of them with no argument
+ *   NDS.Slider.refresh(el)     measure one container again, or all of them with no argument,
+ *                              after its min or max changed
  *   NDS.Slider.create(el)      initialize one container
  *   NDS.Slider.destroy(el)     release one container, or all of them with no argument
  *   NDS.Slider.getValue(el)    a single slider's number; el is its container or an input in it; '' on a missed ref or a range
@@ -225,19 +226,24 @@
         NDS.onDomAdd('.nds-slider-container', function (nodes) { nodes.forEach(setupContainer); });
     }
 
+    function init() {
+        addDocumentListeners();
+        document.querySelectorAll('.nds-slider-container').forEach(setupContainer);
+    }
+
+    function refresh(el) {
+        addDocumentListeners();
+        var list = el ? [el] : document.querySelectorAll('.nds-slider-container');
+        list.forEach(function (container) {
+            container.removeAttribute(SENTINEL);
+            setupContainer(container);
+        });
+    }
+
     NDS.Slider = {
-        init: function () {
-            addDocumentListeners();
-            document.querySelectorAll('.nds-slider-container').forEach(setupContainer);
-        },
-        reinit: function (el) {
-            addDocumentListeners();
-            var list = el ? [el] : document.querySelectorAll('.nds-slider-container');
-            list.forEach(function (container) {
-                container.removeAttribute(SENTINEL);
-                setupContainer(container);
-            });
-        },
+        init: init,
+        reinit: init,
+        refresh: refresh,
         destroy: function (el) {
             if (typeof el === 'string' && !(el = NDS.resolveElement(el))) return; // a missed ref is not "every slider"
             var list = el ? [el] : document.querySelectorAll('[' + SENTINEL + ']');
@@ -246,7 +252,7 @@
                 if (offResizes.has(container)) { offResizes.get(container)(); offResizes.delete(container); }
             });
             // ponytail: delegated input listener stays bound for the page lifetime —
-            // reinit re-uses it. Upgrade to AbortController if a future variant
+            // refresh re-uses it. Upgrade to AbortController if a future variant
             // needs per-instance teardown (e.g. native vertical orientation).
         },
         // A page with no slider at load never runs init(), so create() binds the delegates too.

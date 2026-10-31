@@ -23,7 +23,7 @@ hero_float_actions:
         <div class="nds-form-header"><label for="journey-done-toggle"><span class="nds-note">Completed</span></label></div>
         <div class="nds-form-control"><div class="nds-switch-toggle"><input type="checkbox" id="journey-done-toggle" class="nds-switch-input"><div class="nds-switch-track"><div class="nds-switch-thumb"></div></div></div></div>
         </div>
-last_edit: "30/10/2026 - 11:14 AM"
+last_edit: "01/11/2026 - 12:30 AM"
 steps:
   - title: "Get the investment registration certificate"
     description: "The journey enables the investor to issue the investment registration certificate, which gives them the legal right to carry out investment activity inside the Kingdom. It is the first step to establish the legal entity."
@@ -351,7 +351,7 @@ related:
 // Send the scores, then thank the user.
 document.getElementById('journey-survey').addEventListener('nds:form:valid', () => {
     NDS.Modal.close();
-    NDS.Alert.create({ variant: 'success', title: 'Thank you', description: 'Your rating was sent.', display: 'toast', duration: 4000 });
+    NDS.Alert.create({ status: 'success', title: 'Thank you', description: 'Your rating was sent.', display: 'toast', duration: 4000 });
 });
 </script>
 

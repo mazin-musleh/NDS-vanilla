@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.2.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 09:20 PM"
+last_edit: "01/11/2026 - 12:30 AM"
 ---
 
 <section id="slider-overview" class="nds-content-section nds-doc-overview">
@@ -243,7 +243,7 @@ The `nds-loading` class shows the bar and the value as a skeleton, and hides the
 - Use MD on touch-first screens. Its 16px dot is easier to see under a finger. Both sizes take a touch in a 24px circle.
 - Use Stacked with Currency, so a wide value does not shorten the bar.
 - To set the value from a script, call `NDS.Slider.setValue()`. After you set `input.value` yourself, fire an `input` event on the input. The bar and the value then update.
-- After you change `min` or `max` from a script, call `NDS.Slider.reinit(container)`. The value width is measured again for the new bounds.
+- After you change `min` or `max` from a script, call `NDS.Slider.refresh(container)`. The value width is measured again for the new bounds.
 - For the label, info text and feedback, see [Forms](../components/form). They work the same on every field.
 
 </div>
@@ -289,7 +289,8 @@ The `NDS.Slider` script loads after the page shows. Until it loads, each call lo
 | Method | Effect |
 |---|---|
 | `NDS.Slider.init()` | Starts every slider on the page. It runs once at page load, and a slider added later starts on its own. The first slider on a page that had none needs `NDS.init.mount()` on the new content |
-| `NDS.Slider.reinit(container)` | Starts one container again, or every container with no argument |
+| `NDS.Slider.refresh(container)` | Measures one container again, or every container with no argument |
+| `NDS.Slider.reinit()` | The same as `init()` |
 | `NDS.Slider.create(container)` | Starts one container and returns it |
 | `NDS.Slider.destroy(container)` | Stops one container, or every container with no argument |
 | `NDS.Slider.getValue(el)` | Single slider. Returns its value as a number, or `''` for a range or when the slider is not found. `el` is the container, an input in it, its `id` or a selector |

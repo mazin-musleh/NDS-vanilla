@@ -361,7 +361,7 @@ sidemenu_mode: false
       e.detail.waitUntil(request().then(function () {
         addSent('Re: ' + replyTo.replace(/^Re: /, ''), text);
         NDS.Panel.close('message-panel');
-        NDS.Alert.create({ variant: 'success', title: 'Reply sent', description: 'The answer arrives in your inbox.', display: 'toast', duration: 4000 });
+        NDS.Alert.create({ status: 'success', title: 'Reply sent', description: 'The answer arrives in your inbox.', display: 'toast', duration: 4000 });
       }));
     });
 
@@ -373,7 +373,7 @@ sidemenu_mode: false
         composeForm.reset();
         NDS.Panel.close('compose-panel');
         document.getElementById('inbox-tabs').ndsTabs.goTo(1);
-        NDS.Alert.create({ variant: 'success', title: 'Message sent', description: 'The support team answers within two working days.', display: 'toast', duration: 4000 });
+        NDS.Alert.create({ status: 'success', title: 'Message sent', description: 'The support team answers within two working days.', display: 'toast', duration: 4000 });
       }));
     });
   }

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "01/11/2026 - 12:30 AM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -331,7 +331,7 @@ Keep the `<style>` gate and the inline script out of your bundler. A minifier ch
 | Any component with an element in the container | Wires the new elements: dropmenus, numbers, form controls, copy buttons, tooltips and the rest |
 | [Filter](../components/filter) | Starts a filter whose region is new, and finds the new items, so they can be filtered. Builds the options of an auto filter again, so a new value can be picked. Skips a filter that submits a form, with or without `data-ajax` |
 | [Selection](../components/selection) | Counts the selected and total items again |
-| [Main Nav](../ui-shell/main-nav) | Runs its `reinit()` |
+| [Main Nav](../ui-shell/main-nav) | Runs its `init()`, which wires a nav the page re-rendered |
 | [Pagination](../components/pagination) | Nothing. An auto pagination pages again on its own when items are added or removed, and keeps the current page. A server pagination keeps its page count and record numbers |
 | [Empty](../components/empty) | Nothing. It watches its own container and shows or hides itself |
 | [Sort](../components/sort) | Nothing. It never sorts again on its own |

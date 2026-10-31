@@ -329,7 +329,7 @@ report.push(...await recordsPage.evaluate(async () => {
     NDS.Dropmenu.reinit();
     NDS.Numbers.reinit();
     NDS.Pagination.refresh(tbody, { keepPage: true });
-    NDS.Selection.reinit();
+    NDS.Selection.refresh();
     NDS.Filter.getByTarget('requests-table-body')?.refresh();
     await wait(600);
     const viaManual = fullState();

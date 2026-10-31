@@ -445,12 +445,12 @@ sidemenu_mode: false
                 NDS.state.add(btn, 'loading');
                 sendCode()
                     .then(() => NDS.Alert.create({
-                        variant: 'success', title: 'Verification code sent',
+                        status: 'success', title: 'Verification code sent',
                         description: 'A new code has been sent to your mobile number.',
                         display: 'toast', position: 'top', duration: 4000
                     }))
                     .catch(() => NDS.Alert.create({
-                        variant: 'error', title: 'Could not send the code',
+                        status: 'error', title: 'Could not send the code',
                         description: 'Check your connection and try again.',
                         display: 'toast', position: 'top', duration: 0
                     }))
@@ -570,7 +570,7 @@ sidemenu_mode: false
                 submitApplication()
                     .then(() => NDS.Stepper.next('form-stepper'))
                     .catch(() => NDS.Alert.create({
-                        variant: 'error', title: 'Could not submit the application',
+                        status: 'error', title: 'Could not submit the application',
                         description: 'Check your connection and try again.',
                         display: 'toast', position: 'top', duration: 0
                     }))

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "01/11/2026 - 12:30 AM"
 ---
 
 <section id="selection-overview" class="nds-content-section nds-doc-overview">
@@ -417,7 +417,7 @@ The list is the element with the id that `data-selection-target` names. Its item
 
 The `NDS.Selection` script loads after the page shows. Until it loads, each call loads it and returns a promise of the result, so `await` a call whose result you use.
 
-The script starts on its own. Call `refresh(list)` or `reinit()` after a change that fires no `change` event: a `checked` set from code, or an item marked only with `data-state`. A method that takes a list takes its id or the element.
+The script starts on its own. Call `refresh(list)` after a change that fires no `change` event: a `checked` set from code, or an item marked only with `data-state`. A method that takes a list takes its id or the element.
 
 | Method | Effect |
 |---|---|
@@ -426,7 +426,7 @@ The script starts on its own. Call `refresh(list)` or `reinit()` after a change 
 | `NDS.Selection.clear(list)` | Clears every item, including items a filter hides and items with no checkbox. An item with a disabled checkbox keeps its state. Call it after a bulk action |
 | `NDS.Selection.getSelected(list)` | Returns the selected items, in page order |
 | `NDS.Selection.isSelected(item)` | Returns `true` when the item is selected. [Export](../components/export) uses it to pick the selected rows |
-| `NDS.Selection.reinit()` | Updates every list, and adds the listeners if they are missing |
+| `NDS.Selection.reinit()` | The same as `init()`: adds the listeners if they are missing |
 | `NDS.Selection.refresh(list)` | Updates one list's states, select-all and counters, and adds the listeners if they are missing, so a list added after the page loads works. With no list, it updates every list. `NDS.init.refresh()` calls it that way |
 | `NDS.Selection.destroy()` | Removes the listeners. Use it when a single-page app tears the view down |
 {: .nds-table .nds-responsive}

@@ -1023,10 +1023,10 @@ hideFeedback: true
       return parts.length === 3 ? parts[2] + '-' + parts[1] + '-' + parts[0] : value;
     }
 
-    function toast(variant, title, description) {
+    function toast(status, title, description) {
       if (!NDS.Alert) return;
       NDS.Alert.create({
-        variant: variant, title: title, description: description,
+        status: status, title: title, description: description,
         display: 'toast', position: 'top', duration: 4000
       });
     }

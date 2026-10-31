@@ -1,8 +1,7 @@
 /* NDS.Selection — public surface
  * Rides: nds-forms (the indeterminate select-all box) · nds-filter (data-filtered; soft)
  * Methods:
- *   NDS.Selection.init()                    wire the document listeners (the loader calls this)
- *   NDS.Selection.reinit()                  resync every list after the DOM changed
+ *   NDS.Selection.init() / .reinit()        wire the document listeners (the loader calls this)
  *   NDS.Selection.refresh(list?)            resync one list (its id or the element); with no
  *                                           list, every list — the NDS.init.refresh hook
  *   NDS.Selection.selectAll(list, on=true, scope)  check or clear every item a filter shows, but
@@ -258,10 +257,10 @@
 
     // With no list (the loader's hook), refresh updates every list: counters and select-all
     // boxes sit outside the list, so the container the walk passes would match nothing.
-    // reinit, refresh, selectAll and clear call init() first: the loader starts Selection only when a
+    // refresh, selectAll and clear call init() first: the loader starts Selection only when a
     // list is on the page at load, so a list added later gets the listeners from its first call.
     NDS.Selection = {
-        init, reinit: () => { init(); recountAll(); }, refresh: (list) => { init(); if (list) return recount(list); recountAll(); },
+        init, reinit: init, refresh: (list) => { init(); if (list) return recount(list); recountAll(); },
         selectAll, clear, getSelected, isSelected, destroy
     };
 })();

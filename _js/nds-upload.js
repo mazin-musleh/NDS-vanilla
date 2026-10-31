@@ -7,7 +7,8 @@
  * Methods:
  *   NDS.Upload.init() / .reinit()                scan + initialize .nds-upload
  *   NDS.Upload.create(el, options)               instance one uploader; options override the
- *                                                data-* config, and merge into a started one.
+ *                                                data-* config. A started one is returned
+ *                                                unchanged (setOptions changes it).
  *                                                Selector string accepted
  *   NDS.Upload.validate(el, opts)  its check → {valid, message, count, pending}; opts {showMessage}
  *   NDS.Upload.getInstance(el)                   the existing instance, or null
@@ -26,6 +27,7 @@
  *   instance.validateFile(file)                  [] when it passes, [messages] when it fails —
  *                                                checks without staging anything
  *   instance.getConfig()                         the resolved, frozen config
+ *   instance.setOptions(opts)                    merge options into a started uploader
  *   instance.enable() / .disable() / .refresh() / .destroy()
  *   instance.container                           the .nds-upload root, read-only
  * Events (bubble from the .nds-upload container):
@@ -228,8 +230,8 @@
             return Object.freeze({ ...this._readConfig() });
         }
 
-        // create() on a started field merges its options here, so they never go missing.
-        _setOptions(options) {
+        // Public: merge options into a started field, as create() does for a new one.
+        setOptions(options) {
             Object.assign(this._options, this._normalizeOptions(options));
             this._syncAccept();
         }
@@ -874,10 +876,7 @@
         create: (container, options) => {
             container = NDS.resolveElement(container);
             if (!container) { warn('create: container not found'); return null; }
-            if (container.ndsUpload) {                              // already built → merge, return it
-                if (options) container.ndsUpload._setOptions(options);
-                return container.ndsUpload;
-            }
+            if (container.ndsUpload) return container.ndsUpload;   // already built → return it unchanged
             const instance = new NdsUpload(container, options);
             return instance._initialized ? instance : null;       // null if the constructor bailed
         },

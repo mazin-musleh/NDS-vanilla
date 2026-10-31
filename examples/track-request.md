@@ -27,7 +27,7 @@ hero_float_actions:
         <option value="rejected">Rejected</option>
         </select></div>
         </div>
-last_edit: "25/10/2026 - 04:48 PM"
+last_edit: "01/11/2026 - 12:30 AM"
 ---
 
 <!-- Layout rules: one request the user already sent.
@@ -365,7 +365,7 @@ last_edit: "25/10/2026 - 04:48 PM"
     document.getElementById('request-upload').addEventListener('nds:form:valid', function (e) {
       e.detail.waitUntil(new Promise(function (resolve) { setTimeout(resolve, 1200); }).then(function () {
         showState('review');
-        NDS.Alert.create({ variant: 'success', title: 'Document sent', description: 'Your request is back in review.', display: 'toast', duration: 4000 });
+        NDS.Alert.create({ status: 'success', title: 'Document sent', description: 'Your request is back in review.', display: 'toast', duration: 4000 });
       }));
     });
   }

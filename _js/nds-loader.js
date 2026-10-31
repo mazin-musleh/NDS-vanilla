@@ -72,9 +72,8 @@
             // The nav paints with no script, but its toggle and menus need one: idle, they
             // stayed dead for ~2 s after the reveal on a busy phone (iu.edu.sa, CPU ×6.6).
             critical: true,
-            // Owner hook: the container passed is usually the view INSIDE the chrome, and
-            // a plain init() would no-op on the stale guard after a route change.
-            refresh: () => NDS.MainNav?.reinit?.(),
+            // Owner hook: the container passed is usually the view INSIDE the chrome; init() adopts a replaced nav.
+            refresh: () => NDS.MainNav?.init?.(),
         },
         {
             // Deferred: the inline head script stamps the saved theme pre-paint; init only syncs the toggle UI.
@@ -344,7 +343,7 @@
             // Delegated: crit shows the first page (splitPaged) and _pagination.scss reserves the nav row.
             name: 'Pagination',
             selector: '.nds-pagination',
-            init: () => { NDS.Pagination?.init?.(); NDS.Pagination?.initAuto?.(); },
+            init: () => NDS.Pagination?.init?.(),
             destroyEach: true,
         },
         {
@@ -889,10 +888,6 @@
     // window.NDS_INIT_CONFIG wins over the <html> data-attributes.
     const rootEl = document.documentElement;
     const initConfig = window.NDS_INIT_CONFIG || {};
-    // v1's switches are ignored now, so a page that kept one starts everything: say so.
-    [['data-nds-auto-init', 'data-no-auto-init'], ['data-nds-disable-all', 'data-no-init-all']].forEach(([old, use]) => {
-        if (rootEl.hasAttribute(old)) console.warn(`[NDS:init] <html ${old}> is not read in v2: write ${use} instead.`);
-    });
 
     const config = {
         // Below ~40 keeps clear of TBT's 50ms long-task threshold on throttled CPUs.

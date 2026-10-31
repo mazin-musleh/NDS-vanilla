@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "01/11/2026 - 12:30 AM"
 ---
 
 <section id="code-overview" class="nds-content-section nds-doc-overview">
@@ -54,7 +54,7 @@ async function submitRequest(form) {
   });
 
   NDS.Alert.create({
-    variant: response.ok ? 'success' : 'error',
+    status: response.ok ? 'success' : 'error',
     title: response.ok ? 'Request sent' : 'Request failed',
     description: 'Request number 20481',
     target: container

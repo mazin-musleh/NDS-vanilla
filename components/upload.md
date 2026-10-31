@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "01/11/2026 - 12:30 AM"
 ---
 
 <section id="upload-overview" class="nds-content-section nds-doc-overview">
@@ -379,7 +379,7 @@ A file is an object `{ file, id, status, progress, error, response }`. `file` is
 |---|---|
 | `NDS.Upload.init()` | Starts every `.nds-upload` that has not started. The loader calls it on load |
 | `NDS.Upload.reinit()` | The same as `init()` |
-| `NDS.Upload.create(el, options)` | Starts one field and returns its instance. `el` is the element or a selector. On a field that has started, it adds `options` to it and returns the same instance. It returns `null` when the field has no file input, `.nds-form-control` or `.nds-file-list` |
+| `NDS.Upload.create(el, options)` | Starts one field and returns its instance. `el` is the element or a selector. On a field that has started, it returns the same instance unchanged: use `instance.setOptions(options)` to change it. It returns `null` when the field has no file input, `.nds-form-control` or `.nds-file-list` |
 | `NDS.Upload.destroy(el)` | The same as `instance.destroy()`. `el` is the element or a selector |
 | `NDS.Upload.validate(el, options)` | Checks the field and returns `{ valid, message, count, pending }`. `pending` is true while a file uploads or processes. Pass `{ showMessage: false }` to check without a message |
 | `NDS.Upload.getInstance(el)` | Returns the instance of the field, or `null` |
@@ -395,6 +395,7 @@ A file is an object `{ file, id, status, progress, error, response }`. `file` is
 | `instance.setFileStatus(id, status, options)` | Sets the status of a file. Options: `progress` and `error`. A move to `complete` fires `nds:upload:success`, and a move to `error` fires `nds:upload:error`, as an upload the script sends does. The field's check runs again, so a "wait for the upload" message clears |
 | `instance.setFileProgress(id, percent)` | Sets the progress ring. At `100`, an uploading file goes to `processing` |
 | `instance.validateFile(file)` | Runs the checks on a `File` without adding it. Returns `[]` when it passes, or an array of messages |
+| `instance.setOptions(options)` | Adds the options to a field that has started. They override the attributes, as the `create()` options do |
 | `instance.getConfig()` | Returns the settings in use, from the attributes and the `create()` options, as a frozen object |
 | `instance.enable()`, `instance.disable()` | Enables or disables the field |
 | `instance.refresh()` | Draws every row again |

@@ -644,9 +644,9 @@ breadcrumb: [["Examples", "/examples"]]
       pending = null;
     }
 
-    function toast(variant, title, description) {
+    function toast(status, title, description) {
       return NDS.Alert.create({
-        variant: variant,
+        status: status,
         title: title,
         description: description,
         display: 'toast',
@@ -687,7 +687,7 @@ breadcrumb: [["Examples", "/examples"]]
 
     // A server rejection belongs in the card, not a toast — it must stay until
     // fixed. Create it on demand from the failure path:
-    //   NDS.Alert.create({ variant: 'error', title: 'Sign-in failed',
+    //   NDS.Alert.create({ status: 'error', title: 'Sign-in failed',
     //     description: reason, target: '#credentials-form .nds-card-content',
     //     prepend: true, closable: false });
     credForm.addEventListener('nds:form:valid', function () {
@@ -739,7 +739,7 @@ breadcrumb: [["Examples", "/examples"]]
     // The cooldown button owns the throttle and the countdown label; the send and its
     // confirmation are yours. Confirm from the outcome, never from the click — this
     // demo issues the code locally so it cannot fail, but against a real endpoint the
-    // alert moves into the response handler and failures show an error variant.
+    // alert moves into the response handler and failures show an error status.
     var otpResendBtn = document.getElementById('otp-resend');
     otpResendBtn.addEventListener('nds:cooldown:start', function () {
       // withLoading stands in for the request: it holds data-state="loading" for as
@@ -747,7 +747,7 @@ breadcrumb: [["Examples", "/examples"]]
       withLoading(otpResendBtn, 1200, function () {
         sendCode();
         NDS.Alert.create({
-          variant: 'success', title: 'Code sent',
+          status: 'success', title: 'Code sent',
           description: 'A new code is on its way.',
           display: 'toast', position: 'top', duration: 4000
         });

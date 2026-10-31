@@ -638,7 +638,7 @@
         var form = e.target;
         if (!form.querySelector('[data-demo-slot]')) return;
         dropAlert(form);
-        NDS.Alert.create({ variant: 'success', display: 'inline', title: 'Valid:', description: 'every rule passes.', target: form });
+        NDS.Alert.create({ status: 'success', display: 'inline', title: 'Valid:', description: 'every rule passes.', target: form });
     });
     document.addEventListener('nds:form:invalid', function (e) { dropAlert(e.target); });
 

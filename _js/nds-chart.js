@@ -3,9 +3,9 @@
  * Methods:
  *   NDS.Chart.init() / .reinit()      scan .nds-chart and build the ones that declare a
  *                                     type or a series
- *   NDS.Chart.create(elOrSel, opts)   build one chart — replaces any chart already on the
- *                                     element. Returns the instance. No opts: the data-chart-*
- *                                     its markup declares (null when it declares no series)
+ *   NDS.Chart.create(elOrSel, opts)   build one chart — a live chart is returned unchanged
+ *                                     (change it with setOptions). Returns the instance. No opts:
+ *                                     the data-chart-* its markup declares (null when it declares no series)
  *   NDS.Chart.destroy(elOrSel)        undo create()
  *   instance.setOptions(newOpts)      MERGE new options in and re-render
  *   instance.render()                 redraw in place from the current options
@@ -1126,13 +1126,13 @@
     function createChart(el, opts) {
         el = NDS.resolveElement(el);
         if (!el) return null;
+        if (el.ndsChart) return el.ndsChart;
         // No options: the chart its markup declares, so destroy → create rebuilds it.
         if (!opts) {
             opts = readChartConfig(el);
             if (!opts.series) return null;
         }
         setupDirObserver();
-        if (el.ndsChart) el.ndsChart.destroy();
         el.ndsChart = new NdsChart(el, opts);
         el.setAttribute('data-nds-chart-initialized', '');
         return el.ndsChart;

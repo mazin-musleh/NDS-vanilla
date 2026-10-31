@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "27/10/2026 - 09:13 AM"
+last_edit: "01/11/2026 - 12:30 AM"
 ---
 
 <section id="chart-overview" class="nds-content-section nds-doc-overview">
@@ -354,7 +354,7 @@ Set them on the chart or on any parent.
 
 | Method | Effect |
 |---|---|
-| `NDS.Chart.create(el, options)` | Draws a chart on an element, its id or a selector, and returns the instance. A chart already on the element is destroyed first. With no `options`, it reads the `data-chart-*` attributes of the element. Returns `null` when nothing matches, or when those attributes declare no series. |
+| `NDS.Chart.create(el, options)` | Draws a chart on an element, its id or a selector, and returns the instance. A chart already on the element is returned unchanged: use `chart.setOptions(options)` to change it, or `destroy()` first to draw a new one. With no `options`, it reads the `data-chart-*` attributes of the element. Returns `null` when nothing matches, or when those attributes declare no series. |
 | `NDS.Chart.destroy(el)` | The same as `chart.destroy()`. `el` is the element, its id or a selector. |
 | `NDS.Chart.init()` | Draws every `.nds-chart` with a series in its attributes that has no chart yet, and redraws a chart whose element was emptied. |
 | `NDS.Chart.reinit()` | The same as `init()`. |

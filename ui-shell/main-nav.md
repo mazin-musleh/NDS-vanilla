@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 07:26 PM"
+last_edit: "01/11/2026 - 12:30 AM"
 ---
 
 <section id="mainnav-overview" class="nds-content-section nds-doc-overview">
@@ -710,9 +710,9 @@ Below 960px, the actions move into the drawer, in one row at its bottom. An acti
 
 | Method | Effect |
 |---|---|
-| `NDS.MainNav.init()` | Starts the main navigation. It runs on page load, and a second call does nothing |
-| `NDS.MainNav.reinit()` | Finds the main navigation again and starts it. Call it when the nav itself is new: rendered after the NDS script ran, or replaced by a route change. `NDS.init.refresh()` calls it too |
-| `NDS.MainNav.destroy()` | Removes every listener and observer, and the backdrop. The markup stays, and `reinit()` starts it again |
+| `NDS.MainNav.init()` | Starts the main navigation. It runs on page load. Call it again when the nav itself is new: rendered after the NDS script ran, or replaced by a route change. It starts that nav, and does nothing while the nav it started is still in the page. `NDS.init.refresh()` calls it too |
+| `NDS.MainNav.reinit()` | The same as `init()` |
+| `NDS.MainNav.destroy()` | Removes every listener and observer, and the backdrop. The markup stays, and `init()` starts it again |
 | `NDS.MainNav.open()` | Opens the drawer |
 | `NDS.MainNav.close()` | Closes the drawer |
 | `NDS.MainNav.toggle()` | Opens or closes the drawer |
@@ -728,7 +728,7 @@ Below 960px, the actions move into the drawer, in one row at its bottom. An acti
 
 <script type="text/html" id="mainnav-js" data-canon data-lang="js" data-preview="none">
 // A framework rendered the header after the NDS script ran
-NDS.MainNav.reinit();
+NDS.MainNav.init();
 
 // Open the drawer from a link in the page
 document.querySelector('#menu-link').addEventListener('click', (e) => {

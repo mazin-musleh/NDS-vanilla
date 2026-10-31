@@ -567,7 +567,7 @@ sidemenu_mode: false
     NDS.SessionTimeout.init({ timeout: 900, warn: 120 });
 
     var toast = function (title, description) {
-      NDS.Alert.create({ variant: 'success', title: title, description: description, display: 'toast', duration: 4000 });
+      NDS.Alert.create({ status: 'success', title: title, description: description, display: 'toast', duration: 4000 });
     };
     // Demo only: a fake server that answers after a short wait, and takes any code
     var request = function () { return new Promise(function (resolve) { setTimeout(resolve, 800); }); };

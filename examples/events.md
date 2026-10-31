@@ -9,7 +9,7 @@ lang: en
 direction: ltr
 content_class: nds-stripe
 sidemenu_mode: false
-last_edit: "27/10/2026 - 01:51 PM"
+last_edit: "01/11/2026 - 12:30 AM"
 ---
 
 <!-- Layout rules: how an event opens depends on what the user does with it.
@@ -588,7 +588,7 @@ last_edit: "27/10/2026 - 01:51 PM"
       var updates = e.target;
       e.detail.waitUntil(new Promise(function (resolve) { setTimeout(resolve, 800); }).then(function () {
         updates.reset();
-        NDS.Alert.create({ variant: 'success', title: 'Subscribed', description: 'We will email you when new events open.', display: 'toast', duration: 4000 });
+        NDS.Alert.create({ status: 'success', title: 'Subscribed', description: 'We will email you when new events open.', display: 'toast', duration: 4000 });
       }));
     });
   }

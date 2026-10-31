@@ -598,7 +598,7 @@ sidemenu_mode: false
       whoBlock.hidden = true;
       loadTimes();
       showView('new');
-      NDS.Alert.create({ variant: 'info', title: 'Appointment cancelled', description: 'The time is free again. You can book a new one below.', display: 'toast', duration: 4000 });
+      NDS.Alert.create({ status: 'info', title: 'Appointment cancelled', description: 'The time is free again. You can book a new one below.', display: 'toast', duration: 4000 });
     });
   }
   // Runs on a classic load AND when this markup is injected after load (SPA, Turbo, htmx)

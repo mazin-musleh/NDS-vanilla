@@ -121,7 +121,7 @@
                 setAuth(true);
                 NDS.Modal.close();
                 loginForm.reset();
-                NDS.Alert.create({ variant: 'success', title: 'Welcome back!', description: 'You have successfully logged in.', display: 'toast', position: 'top', duration: 3000 });
+                NDS.Alert.create({ status: 'success', title: 'Welcome back!', description: 'You have successfully logged in.', display: 'toast', position: 'top', duration: 3000 });
             }, 1500);
         });
 
@@ -135,7 +135,7 @@
                     btn.removeAttribute('data-state');
                     closeNavDropdown();
                     setAuth(false);
-                    NDS.Alert.create({ variant: 'info', title: 'Logged out', description: 'You have been successfully logged out.', display: 'toast', position: 'top', duration: 3000 });
+                    NDS.Alert.create({ status: 'info', title: 'Logged out', description: 'You have been successfully logged out.', display: 'toast', position: 'top', duration: 3000 });
                 }, 1500);
             }
         });

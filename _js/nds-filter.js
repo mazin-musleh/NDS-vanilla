@@ -786,7 +786,7 @@
 
             NDS.Alert.create({
                 display: 'toast',
-                variant: 'error',
+                status: 'error',
                 title: strings.text('update_failed'),
                 description: strings.text('update_failed_description'),
                 id: alertId,
@@ -2105,7 +2105,7 @@
                 filterInput.minInput.value = low;
                 filterInput.maxInput.value = high;
             }
-            NDS.Slider.reinit(filterInput.controlContainer);
+            NDS.Slider.refresh(filterInput.controlContainer);
             this._syncRangeCriteria(filterName);
         }
 
@@ -2789,7 +2789,7 @@
             }
 
             NDS.Alert.create({
-                variant: 'warning',
+                status: 'warning',
                 description: this._targetContainer.getAttribute('data-filter-no-results') || strings.text('no_results_description'),
                 target: insertTarget,
                 title: strings.text('no_results'),

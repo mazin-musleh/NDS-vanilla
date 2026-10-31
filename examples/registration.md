@@ -307,7 +307,7 @@ breadcrumb: [["Examples", "/examples"]]
       // locally so it cannot fail; against a real endpoint, move this into the
       // response handler and show an error alert from the failure path.
       NDS.Alert.create({
-        variant: 'success', title: 'Code sent',
+        status: 'success', title: 'Code sent',
         description: 'A new code is on its way.',
         display: 'toast', position: 'top', duration: 4000
       });
@@ -346,7 +346,7 @@ breadcrumb: [["Examples", "/examples"]]
 
     // Step 1 — Create account. A server rejection belongs in the card, not a
     // toast — it must stay until fixed. Create it on demand from the failure path:
-    //   NDS.Alert.create({ variant: 'error', title: 'Registration failed',
+    //   NDS.Alert.create({ status: 'error', title: 'Registration failed',
     //     description: reason, target: '#registration-form-1 .nds-card-content',
     //     prepend: true, closable: false });
     form1.addEventListener('nds:form:valid', function () {

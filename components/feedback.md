@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "25/10/2026 - 05:18 PM"
+last_edit: "01/11/2026 - 12:30 AM"
 ---
 
 <section id="feedback-overview" class="nds-content-section nds-doc-overview">
@@ -264,7 +264,7 @@ There is no `init()`: nothing scans the page for feedback. The script only build
 | `message` | `''` | The message text. Leave it out for an icon alone |
 | `status` | `'neutral'` | The status, as in `data-status` |
 | `target` | `null` | The element or selector the message goes to |
-| `position` | `'append'` | `'append'` or `'prepend'` puts it inside the target, `'before'` or `'after'` beside it |
+| `position` | `'append'` | `'append'` or `'prepend'` puts it inside the target, `'before'` or `'after'` beside it. This is where the message goes in the page, unlike Alert's `position`, which is the toast's screen corner |
 | `size` | `'sm'` | `'sm'`, `'md'` or `'lg'` |
 | `style` | `'outline'` | `'outline'`, `''` for solid, or `'ring'` |
 | `showIcon` | `true` | `false` leaves out the icon |

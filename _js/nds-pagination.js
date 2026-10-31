@@ -1,7 +1,7 @@
 /* NDS.Pagination — public surface
  * Rides: nds-dropmenu (ellipsis menu + per-page picker)
  * Methods:
- *   NDS.Pagination.init() / .reinit()          scan + initialize navs (reinit also runs initAuto)
+ *   NDS.Pagination.init() / .reinit()          scan + initialize navs, auto-pagination included
  *   NDS.Pagination.initAuto()                  initialize auto-pagination containers only
  *   NDS.Pagination.create(nav)                 instance one .nds-pagination nav
  *   NDS.Pagination.refresh(contentContainer)   recompute an auto-pagination after its items
@@ -173,7 +173,7 @@
 
             this._valid = true;
             // Registered here, not in the sweep, so every construction path —
-            // sweep, reinit() and programmatic create() — reaches destroy() and is stamped.
+            // sweep and programmatic create() — reaches destroy() and is stamped.
             paginationNav.ndsPagination = this;
             this.init();
             paginationNav.setAttribute('data-nds-pagination-initialized', 'true');
@@ -1640,10 +1640,16 @@
         syncPage(paginationNav, target);
     }
 
+    // Every nav the page holds, manual and auto; both sweeps skip a stamped nav, so a repeat call is safe.
+    function init() {
+        setupPagination();
+        initAuto();
+    }
+
     // Expose global API for unified init system
     NDS.Pagination = {
-        init: setupPagination,
-        reinit: () => { setupPagination(); initAuto(); },
+        init,
+        reinit: init,
         initAuto,
         create: (container) => {
             container = NDS.resolveElement(container);
@@ -1655,7 +1661,7 @@
             addNavCleanupListeners();
             addPerPagePickerListeners();
             // Manual navs take init's full path (URL page, states, reveal); auto-paginations
-            // are wired by reinit() (setupAutoContainer).
+            // are wired by init() (setupAutoContainer).
             const instance = container.hasAttribute('data-auto-pagination')
                 ? new NdsPagination(container)
                 : setupNav(container);

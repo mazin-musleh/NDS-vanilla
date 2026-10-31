@@ -3,7 +3,7 @@
  * Methods:
  *   NDS.Alert.init()               wire the close button on alerts already in the page
  *   NDS.Alert.create(options)      build and insert one alert — returns the element.
- *                                  options {variant, title, description, target, closable,
+ *                                  options {status, title, description, target, closable,
  *                                  shadow, color, id, prepend, actions[], display, position,
  *                                  duration}
  *   NDS.Alert.dismiss(elOrSel)     remove one alert (toasts animate out first)
@@ -32,11 +32,11 @@
  * NDS Alert Component
  * Programmatic alert creation API
  *
- * Variants: success, warning, error, info, neutral
+ * Statuses: success, warning, error, info, neutral
  *
  * Usage:
  * NDS.Alert.create({
- *     variant: 'info',
+ *     status: 'info',
  *     title: 'Update Available',
  *     description: 'A new version is available.',
  *     target: '#container',
@@ -61,7 +61,7 @@
         /**
          * Create and insert an alert
          * @param {Object} options
-         * @param {string} options.variant - 'success', 'warning', 'error', 'info', 'neutral'
+         * @param {string} options.status - 'success', 'warning', 'error', 'info', 'neutral'
          * @param {string} options.title - Alert title (optional)
          * @param {string} options.description - Alert description
          * @param {string|Element} options.target - Target selector or element
@@ -84,7 +84,7 @@
          */
         create(options = {}) {
             const {
-                variant = 'info',
+                status = 'info',
                 title = '',
                 description = '',
                 target = null,
@@ -101,7 +101,7 @@
 
             const alert = document.createElement('div');
             alert.className = 'nds-alert nds-card';
-            NDS.status.set(alert, variant);
+            NDS.status.set(alert, status);
             if (shadow) alert.classList.add('nds-shadow');
             if (color) alert.classList.add('nds-color');
             if (display === 'inline') alert.classList.add('nds-inline');
