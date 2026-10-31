@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "31/10/2026 - 09:20 PM"
 ---
 
 <section id="rating-overview" class="nds-content-section nds-doc-overview">
@@ -374,8 +374,12 @@ The instance is on the element as `el.ndsRating`. It is there once the component
 | `NDS.Rating.destroy(el)` | The same as `el.ndsRating.destroy()` |
 | `NDS.Rating.validate(el, options)` | Check the rating group and return `{ valid, message, rating }`. Pass `{ showMessage: false }` to check without a message |
 | `NDS.Rating.enable(el)` | Start the rating if needed, then take it out of disabled |
-| `el.ndsRating.setValue(v)` | Set the score, from 0 to the star count. The event fires only when the score changes |
+| `NDS.Rating.getValue(el)` | Return the score, 0 for no stars, or `''` when the rating is not found. `el` is the rating, its group, its hidden input, its `id` or a selector |
+| `NDS.Rating.setValue(el, value)` | Set the score and return `true`. It returns `false`, and changes nothing, when `value` is not from 0 to the star count, or the rating is not found. The event fires only when the score changes |
+| `NDS.Rating.clear(el)` | Set the score to 0, with no stars. Return `true`, or `false` when the rating is not found |
+| `el.ndsRating.setValue(v)` | The same as `NDS.Rating.setValue`, on a rating that has started |
 | `el.ndsRating.getValue()` | Return the score |
+| `el.ndsRating.clear()` | Set the score to 0 |
 | `el.ndsRating.enable()`, `el.ndsRating.disable()` | Enable or disable the rating |
 | `el.ndsRating.isDisabled()` | Return whether the rating is disabled |
 | `el.ndsRating.destroy()` | Remove the listeners and `el.ndsRating`. `NDS.Rating.create(el)` then starts a new one |

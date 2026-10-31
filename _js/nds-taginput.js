@@ -7,7 +7,11 @@
  *   NDS.Taginput.create(el)           instance one field — null when the markup is incomplete
  *   NDS.Taginput.validate(el, opts)   its check → {valid, message, count}; opts {showMessage}
  *   NDS.Taginput.destroy(el)          tear one field down
+ *   NDS.Taginput.getValues(el)        the tags, in order ([] on a missed ref)
+ *   NDS.Taginput.setValues(el, values)  replace every tag; false (and nothing written) if any would be refused
+ *   NDS.Taginput.clear(el)            remove every tag → true; false on a missed ref
  *   instance.getValues()              the tags, in order
+ *   instance.setValues(values)        replace every tag, one change event → true; false when refused
  *   instance.addTag(value)            commit one tag (rejects duplicates and over-max)
  *   instance.removeTag(value)         remove one tag
  *   instance.clear()                  remove every tag
@@ -56,6 +60,9 @@
         strict: 'Choose from the suggestions',
         tag_required: 'Please add at least one tag',
     });
+
+    // Strip stray separators too (single-value paste, IME edge cases).
+    const cleanTag = (value) => String(value).replace(/^[\s,،]+|[\s,،]+$/g, '');
 
     class NdsTaginput {
         constructor(root) {
@@ -217,8 +224,7 @@
         }
 
         addTag(value) {
-            // Strip stray separators too (single-value paste, IME edge cases).
-            value = String(value).replace(/^[\s,،]+|[\s,،]+$/g, '');
+            value = cleanTag(value);
             if (!value) return;
             // Rejections get VISIBLE feedback in the field footer, not just
             // the live-region announce — cleared on the next successful commit.
@@ -257,11 +263,26 @@
         }
 
         clear() {
-            if (!this._tags.length) return;
+            if (!this._tags.length) return true;
             this._tags = [];
             this._renderChips();
             NDS.announce(strings.text('cleared'));
             this._dispatchChange();
+            return true;
+        }
+
+        // All or nothing: a value addTag would refuse (empty, over max, duplicate) refuses the list.
+        setValues(values) {
+            if (!Array.isArray(values)) return false;
+            const tags = values.map(cleanTag);
+            const seen = new Set(tags.map(tag => tag.toLowerCase()));
+            if (tags.includes('') || seen.size !== tags.length || tags.length > this._maxTags) return false;
+            if (!tags.length) return this.clear();
+            if (tags.length === this._tags.length && tags.every((tag, i) => tag === this._tags[i])) return true;
+            this._tags = tags;
+            this._renderChips();
+            this._dispatchChange();
+            return true;
         }
 
         // Chips render as direct flex items before the input — no wrapper, so
@@ -339,6 +360,9 @@
         // The typing field is empty at submit even with tags: the native pass leaves the field to this rule.
         { owns: (control) => control.classList.contains('nds-taginput'), on: ['nds:taginput:change'] });
 
+    // The wired field from the root, its input or a selector; no instance is made.
+    const findInstance = (el) => NDS.resolveElement(el)?.closest?.('.nds-taginput')?.ndsTaginput;
+
     NDS.Taginput = {
         init: setupTagInputs,
         reinit: setupTagInputs,
@@ -352,6 +376,9 @@
             const instance = new NdsTaginput(element);
             return instance._valid ? instance : null;
         },
-        destroy: (element) => NDS.resolveElement(element)?.ndsTaginput?.destroy()
+        destroy: (element) => NDS.resolveElement(element)?.ndsTaginput?.destroy(),
+        getValues: (el) => findInstance(el)?.getValues() ?? [],
+        setValues: (el, values) => findInstance(el)?.setValues(values) ?? false,
+        clear: (el) => findInstance(el)?.clear() ?? false
     };
 })();

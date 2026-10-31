@@ -13,6 +13,16 @@
  *                                              (parseDate / formatDate, on NDS.Date)
  *   NDS.DatePicker.Calendar                    the instance class; its members are internal
  *   el.ndsDatePicker.destroy()                 instance: tear it down (what NDS.DatePicker.destroy calls)
+ *   NDS.DatePicker.getValue(el)                a single field's day as Gregorian YYYY-MM-DD, whatever calendar and
+ *                                              format it shows; el is the .nds-form-container, the .nds-date-input
+ *                                              or a part in it. '' when empty, unreadable, refused or a range
+ *   NDS.DatePicker.setValue(el, day)           write the day (a YYYY-MM-DD string or a Date) in the field's format,
+ *                                              like a pick; false, nothing written, when it is no date, the field
+ *                                              refuses it (bounds, unavailable day) or is a range
+ *   NDS.DatePicker.getValues(el)               a range field's [start, end] as YYYY-MM-DD; [] otherwise
+ *   NDS.DatePicker.setValues(el, [start, end]) write both days; false when either is refused or start is after end
+ *   NDS.DatePicker.clear(el)                   empty the field
+ *   el.ndsDatePicker.getValue() / .setValue() / .getValues() / .setValues() / .clear()   the same, on the instance
  * Events:
  *   (none — a pick writes the input and dispatches a native `change`; listen on the input)
  * Hooks:
@@ -1714,6 +1724,52 @@
             });
         },
 
+        // The field's days as Gregorian ISO strings, whatever calendar and format it shows: one, or two
+        // in range mode. Empty, unreadable or refused text gives [].
+        _getIsoDays: function () {
+            var text = this._elements.input.value.trim(), parts = text.split(' - ');
+            if (!text || parts.length !== (this._isRangeMode() ? 2 : 1) || this._validationError(text)) return [];
+            var calendar = this._getCurrentCalendar(), format = this._state.format;
+            return parts.map(function (part) {
+                return NDS.Date.format(calendar.parseDate(part.trim(), format), { format: 'YYYY-MM-DD', calendar: 'gregory' });
+            });
+        },
+
+        // Write days in the field's format and calendar, as a pick does. False, nothing written, when the
+        // field would refuse them. No days: empty the field.
+        _writeDays: function (days) {
+            var calendar = this._getCurrentCalendar(), format = this._state.format, input = this._elements.input;
+            var text = days.map(function (day) { return calendar.formatDate(day, format); }).join(' - ');
+            if (text && this._validationError(text)) return false;
+            if (text) input.dataset.convertedDate = days.map(function (day) { return this._getConvertedDate(day); }, this).join(' - ');
+            else delete input.dataset.convertedDate;
+            NDS.setValue(input, text);
+            return true;
+        },
+
+        getValue: function () {
+            return this._isRangeMode() ? '' : this._getIsoDays()[0] || '';
+        },
+
+        setValue: function (value) {
+            var day = toDay(value);
+            return !this._isRangeMode() && !!day && this._writeDays([day]);
+        },
+
+        getValues: function () {
+            return this._isRangeMode() ? this._getIsoDays() : [];
+        },
+
+        setValues: function (values) {
+            if (!this._isRangeMode() || !Array.isArray(values) || values.length !== 2) return false;
+            var days = values.map(toDay);
+            return days.indexOf(null) < 0 && this._writeDays(days);
+        },
+
+        clear: function () {
+            return this._writeDays([]);
+        },
+
         // The other calendar's value, for data-converted-date.
         _getConvertedDate: function (date) {
             if (!date) return '';
@@ -1937,6 +1993,20 @@
         return instance;
     }
 
+    // A Gregorian ISO day (YYYY-MM-DD) or a Date, as a local day; null when it is neither.
+    function toDay(value) {
+        if (value instanceof Date) return isNaN(value) ? null : new Date(value.getFullYear(), value.getMonth(), value.getDate());
+        return typeof value === 'string' ? NDS.Date.readDay(value) : null;
+    }
+
+    // The instance of a field, from its container, its input or a part in it; null on a miss.
+    function findPicker(ref) {
+        var el = NDS.resolveElement(ref);
+        if (!el || !el.closest) return null;
+        var input = el.matches('.nds-date-input') ? el : (el.closest(SELECTORS.container) || el).querySelector('.nds-date-input');
+        return (input && input.ndsDatePicker) || null;
+    }
+
     // Self-driven: sweep every .nds-date-input and attach a calendar. create()
     // is idempotent (skips inputs already wired) so this is reinit-safe.
     function setupCalendar() {
@@ -1972,7 +2042,12 @@
             if (!instance) return false;
             instance.destroy();
             return true;
-        }
+        },
+        getValue: (el) => findPicker(el)?.getValue() ?? '',
+        setValue: (el, value) => findPicker(el)?.setValue(value) ?? false,
+        getValues: (el) => findPicker(el)?.getValues() ?? [],
+        setValues: (el, values) => findPicker(el)?.setValues(values) ?? false,
+        clear: (el) => findPicker(el)?.clear() ?? false
     };
 
 })();

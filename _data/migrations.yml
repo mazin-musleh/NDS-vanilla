@@ -325,6 +325,8 @@
 - { kind: api, name: el.ndsFilter.applyFilters, status: renamed, use: el.ndsFilter.syncFilters, since: "2.0.0", fix: "Use el.ndsFilter.syncFilters." }
 - { kind: api, name: el.ndsFilter.populateFilter, status: renamed, use: el.ndsFilter.renderFilter, since: "2.0.0", fix: "Use renderFilter(name, values, type): it takes the same arguments." }
 - { kind: api, name: el.ndsMultiselect.populate, status: renamed, use: el.ndsMultiselect.renderOptions, since: "2.0.0", fix: "Use renderOptions(options, selected): it takes the same arguments." }
+- { kind: api, name: el.ndsMultiselect.getSelected, status: renamed, use: el.ndsMultiselect.getValues, since: "2.0.0", fix: "Use el.ndsMultiselect.getValues()." }
+- { kind: api, name: el.ndsMultiselect.reset, status: renamed, use: el.ndsMultiselect.clear, since: "2.0.0", fix: "Use el.ndsMultiselect.clear()." }
 - { kind: api, name: el.ndsSort.apply, status: renamed, use: el.ndsSort.setSort, since: "2.0.0", fix: "Use setSort(key, order): it takes the same arguments." }
 - { kind: api, name: NDS.Pagination.updateRecords, status: renamed, use: NDS.Pagination.setRecords, since: "2.0.0", fix: "Use setRecords(listOrId, { from, to, count }): it takes the same arguments." }
 - { kind: api, name: NDS.Tables.row, status: renamed, use: NDS.Table.getRow, since: "2.0.0", fix: "Use NDS.Table.getRow." }

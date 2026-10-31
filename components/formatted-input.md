@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "29/10/2026 - 02:09 PM"
+last_edit: "31/10/2026 - 09:20 PM"
 ---
 
 <section id="formatted-input-overview" class="nds-content-section nds-doc-overview">
@@ -476,7 +476,7 @@ NDS.FormattedInput.addFormat('card', {
 - On a site outside Saudi Arabia, set `data-country` on `<html>`, and add your country's ID rule with `addIdRule()`.
 - For a passport or a foreign ID, set `data-country="any"` on the field, and leave `inputmode` and `maxlength` off.
 - For a value with a known shape that no built-in kind covers, such as a reference number, write the shape in `data-format`. The shape already fails a value that is too short. Add a `pattern` and a `data-error-message` only for a rule the shape cannot hold, and write the pattern with the separators the field shows.
-- To fill a field from a script, set `input.value`, then call `NDS.Form.refresh(input)`. The field then takes its shape.
+- To fill a field from a script, call `NDS.FormattedInput.setValue(input, text)`. The field then takes its shape.
 
 </div>
   </div>
@@ -537,6 +537,9 @@ The script shows the message in Arabic or English to match the page. The other c
 
 | Method | Effect |
 |---|---|
+| `NDS.FormattedInput.getValue(el)` | Returns the value the form submits: no group spaces, a phone in E.164, a plate in Latin. It returns `''` when the field is not found. `el` is the `.nds-formatted` container, its input, its `id` or a selector |
+| `NDS.FormattedInput.setValue(el, text)` | Writes the text as a user does, and the field formats it. Returns `true`, even when the text is invalid: the field then shows the usual invalid status. It returns `false` only when the field is not found |
+| `NDS.FormattedInput.clear(el)` | Empties the field |
 | `NDS.FormattedInput.isNationalId(value, country)`, `isIban(value)` | Return `true` when the string passes the `national-id` or `iban` check. They take the clean value: Latin digits only, or capitals with no spaces. Remove an IBAN field's spaces first: `input.value.replace(/\s/g, '')`. `country` is `SA` by default. A country with no rule passes |
 | `NDS.FormattedInput.addFormat(name, rule)` | Adds a named format for `data-format="name"`, or replaces one. `rule` is `{ format, check, message }`: `format` the slots, `check(value)` returns `true` for a valid value (the value the form submits), `message` shows when it fails. `check` and `message` are optional. See Named Formats |
 | `NDS.FormattedInput.addIdRule(country, rule)` | Adds the national ID rule of a country (`'AE'`), or replaces one. `rule` is `{ check, digits, length }`: `check(value)` returns `true` for a valid clean value, `digits: true` keeps digits only (else capitals and digits), and `length` is the most characters. Fields already on the page take it at once |

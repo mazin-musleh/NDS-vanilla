@@ -8,6 +8,10 @@
  *   NDS.Editor.create(el)           instance one editor — null when the markup is
  *                                   incomplete; returns the live one if there is already one
  *   NDS.Editor.destroy(el)          tear one down
+ *   NDS.Editor.getValue(el)         the sanitized HTML ('' on a missed ref); el is the root, its textarea or a selector
+ *   NDS.Editor.setValue(el, html)   refill the surface and the textarea → true; false on a missed ref
+ *   NDS.Editor.clear(el)            empty the editor → true; false on a missed ref
+ *   instance.getValue() / .setValue(html) / .clear()   the same, on the wired editor
  *   instance.setImageUpload(config) set the image popover's file picker from code
  *   instance.source                 the hidden field that holds the HTML, read-only
  * Events (bubble from the .nds-editor root):
@@ -2857,6 +2861,20 @@
             flush();
         }
 
+        getValue() {
+            return this.source.value;
+        }
+
+        // Through NDS.setValue: the textarea's change event refills the surface.
+        setValue(html) {
+            NDS.setValue(this.source, html == null ? '' : String(html));
+            return true;
+        }
+
+        clear() {
+            return this.setValue('');
+        }
+
         // A block element (table, card, figure…) as the document's last node
         // traps the caret — there is nowhere to click/arrow to continue after
         // it. Keep an empty paragraph after any trailing block.
@@ -2896,6 +2914,9 @@
         });
     }
 
+    // The wired editor from the root, an element inside it or a selector.
+    const findInstance = (el) => NDS.resolveElement(el)?.closest?.('.nds-editor')?.ndsEditor;
+
     NDS.Editor = {
         init: setupEditors,
         reinit: setupEditors,
@@ -2909,6 +2930,9 @@
             return instance._valid ? instance : null;
         },
         destroy: (element) => NDS.resolveElement(element)?.ndsEditor?.destroy(),
+        getValue: (el) => findInstance(el)?.getValue() ?? '',
+        setValue: (el, html) => findInstance(el)?.setValue(html) ?? false,
+        clear: (el) => findInstance(el)?.clear() ?? false,
         _sanitize: sanitizeHtml // dev/test hook — the full interpret+enforce pipeline, consumed by scripts/editor-fixtures.mjs
     };
 })();

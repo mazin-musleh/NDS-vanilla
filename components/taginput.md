@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 06:54 PM"
+last_edit: "31/10/2026 - 09:20 PM"
 ---
 
 <section id="taginput-overview" class="nds-content-section nds-doc-overview">
@@ -243,7 +243,7 @@ A form that edits saved data shows the tags the user saved before. For each tag,
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Programmatic Control</span>
-              <p class="nds-card-description">Each field has an instance with <code class="nds-inline-code lang-js">getValues()</code>, <code class="nds-inline-code lang-js">addTag()</code>, <code class="nds-inline-code lang-js">removeTag()</code> and <code class="nds-inline-code lang-js">clear()</code>. The <code class="nds-inline-code lang-js">nds:taginput:change</code> event fires after each change.</p>
+              <p class="nds-card-description">Each field has an instance with <code class="nds-inline-code lang-js">getValues()</code>, <code class="nds-inline-code lang-js">setValues()</code>, <code class="nds-inline-code lang-js">addTag()</code>, <code class="nds-inline-code lang-js">removeTag()</code> and <code class="nds-inline-code lang-js">clear()</code>. The <code class="nds-inline-code lang-js">nds:taginput:change</code> event fires after each change.</p>
             </div>
           </div>
         </li>
@@ -306,7 +306,11 @@ A form that edits saved data shows the tags the user saved before. For each tag,
 | `NDS.Taginput.destroy(el)` | Removes the listeners and the chips. The hidden inputs stay, and `init()` builds the chips from them to start the field again. Call it before you remove the field from the page |
 | `NDS.Taginput.validate(el, options)` | Checks the field and returns `{ valid, message, count }`: a required field needs a tag, and `data-max-tags` caps the count. Pass `{ showMessage: false }` to check without a message |
 | `el.ndsTaginput` | The instance of a field that has started |
+| `NDS.Taginput.getValues(el)` | Returns the tags in order, or `[]` when the field is not found. `el` is the `.nds-taginput`, its text box, its `id` or a selector |
+| `NDS.Taginput.setValues(el, values)` | Replaces every tag with the array `values` and returns `true`. One `nds:taginput:change` fires, not one per tag. It returns `false`, and writes nothing, when `addTag()` would refuse a tag: an empty tag, a repeat in the list, or more tags than `data-max-tags` |
+| `NDS.Taginput.clear(el)` | Removes every tag. Returns `true`, or `false` when the field is not found |
 | `instance.getValues()` | Returns the tags, in the order they were added |
+| `instance.setValues(values)` | The same as `NDS.Taginput.setValues`, on a field that has started |
 | `instance.addTag(value)` | Adds one tag. It trims spaces and commas, and rejects a repeat or a tag past the limit with the same message as typing |
 | `instance.removeTag(value)` | Removes the tag with this exact text |
 | `instance.clear()` | Removes every tag |

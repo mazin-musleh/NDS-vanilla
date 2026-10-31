@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "31/10/2026 - 09:20 PM"
 ---
 
 <section id="autocomplete-overview" class="nds-content-section nds-doc-overview">
@@ -317,6 +317,10 @@ The `NDS.Autocomplete` script loads after the page shows. Until it loads, each c
 | `NDS.Autocomplete.reinit()` | The same as `init()` |
 | `NDS.Autocomplete.create(container, options)` | Starts one field now: pass its `.nds-form-container`. Use it to pass options, or for a field that code searches before the user focuses it. Returns the running instance when the field has already started, and `null` when it has no input. Call it before the first focus: a started field ignores the options |
 | `NDS.Autocomplete.validate(el, options)` | Checks a `data-strict` field and returns `{ valid, message, picked }`. Pass `{ showMessage: false }` to check without a message |
+| `NDS.Autocomplete.getValue(el)` | Returns the text in the input, or `''` when the field is not found. `el` is the `.nds-form-container`, its input, its `id` or a selector |
+| `NDS.Autocomplete.setValue(el, text)` | Writes the text as a user does, with no fetch and no menu. Returns `true`, or `false` when the field is not found. A `data-strict` field accepts text that matches no pick, and validation reports it as it does for typed text |
+| `NDS.Autocomplete.clear(el)` | Empties the field and forgets the pick |
+| `container.ndsAutocomplete.getValue()`, `.setValue(text)`, `.clear()` | The same, on a field that has started |
 | `NDS.Autocomplete.destroy(container)` | The same as `instance.destroy()` for the field in `container` |
 | `instance.destroy()` | Removes the menu, the listeners and the hidden input. A `role` or `aria-*` attribute you wrote on the input stays. The field starts again on its next focus |
 {: .nds-table .nds-responsive}

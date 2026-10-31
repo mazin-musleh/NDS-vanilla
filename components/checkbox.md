@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/10/2026 - 12:02 PM"
+last_edit: "31/10/2026 - 09:20 PM"
 ---
 
 <section id="checkbox-overview" class="nds-content-section nds-doc-overview">
@@ -270,6 +270,11 @@ Source: the `checkbox` group in `_sass/tokens/_components.scss`.
 | Method | Effect |
 |---|---|
 | `NDS.Checkbox.setIndeterminate(checkbox, value)` | Shows or clears the dash, and fires `nds:checkbox:indeterminate` |
+| `NDS.Checkbox.getValue(el)` | One box. Returns `true` when it is checked and `false` when it is not, or `''` when the box is not found. `el` is the `.nds-checkbox` field, its input, its `id` or a selector |
+| `NDS.Checkbox.setValue(el, value)` | One box. Checks or unchecks it as a user does, and returns `true`. It returns `false`, and changes nothing, when `value` is not `true` or `false` |
+| `NDS.Checkbox.getValues(el)` | A group. Returns the `value` of each checked box, or `[]` when the group is not found. `el` is the `.nds-form-group`, or an element in it |
+| `NDS.Checkbox.setValues(el, values)` | A group. Checks exactly the boxes with the values in the array `values`, and returns `true`. It returns `false`, and changes nothing, when a value has no box |
+| `NDS.Checkbox.clear(el)` | Unchecks one box, when `el` is a field or an input, or every box of the group |
 | `NDS.Checkbox.validate(group, options)` | Checks the group and returns `{ valid, checked, min, max, message }`. Pass `{ showMessage: false }` to check without a message. A group that shows an error is checked again on each change |
 | `NDS.Form.refresh(input)` | Updates the field after you set `.checked` from code. It fires no event |
 | `NDS.Form.setStatus(element, status, { message })` | Shows a status and a message on a field or a group, such as an error from the server |

@@ -7,8 +7,12 @@
  *   NDS.Multiselect.validate(el, opts)   its check → {valid, message, checked, min, max}; opts {showMessage}
  *   NDS.Multiselect.destroy(el)          tear one field down
  *   instance.renderOptions(options, selected) rebuild the option set at runtime
- *   instance.getSelected()               the picked values
- *   instance.apply() / .reset()          apply the menu's picks / clear them
+ *   NDS.Multiselect.getValues(el)        the picked values ([] on a missed ref)
+ *   NDS.Multiselect.setValues(el, values)  pick exactly these and commit; false (nothing written) if a value has no option
+ *   NDS.Multiselect.clear(el)            unpick everything → true; false on a missed ref
+ *   instance.getValues()                 the picked values
+ *   instance.setValues(values)           pick exactly these and commit → true; false when a value has no option
+ *   instance.apply() / .clear()          apply the menu's picks / clear them → clear returns true
  *   instance.removeValue(value)          unpick one value
  * Events (bubble from .nds-multiselect):
  *   nds:multiselect:change   detail {name, values, labels} — on every commit
@@ -119,7 +123,7 @@
             this._collectCheckboxes();
             // Last committed values — the revert target when an apply-mode
             // panel closes without Apply.
-            this._applied = this.getSelected();
+            this._applied = this.getValues();
             this._addEventListeners();
             this._renderChips();
             // A narrow field wraps the trigger onto its own top row, a shape only
@@ -237,7 +241,7 @@
         renderOptions(options, selected) {
             this._buildOptions(options, selected || []);
             this._collectCheckboxes();
-            this._applied = this.getSelected();
+            this._applied = this.getValues();
             this._renderChips();
         }
 
@@ -321,7 +325,7 @@
                 this._resetButton.addEventListener('click', (e) => {
                     e.preventDefault();
                     if (this._isReadonly()) return;
-                    this.reset();
+                    this.clear();
                 }, { signal });
             }
             // No data-no-auto-close on Apply — the dropmenu closes it and
@@ -332,7 +336,7 @@
 
             // A form reset ticks the boxes back without a change event.
             NDS.field.onReset(this._root.closest('form'), () => {
-                this._applied = this.getSelected();
+                this._applied = this.getValues();
                 this._renderChips();
             }, { signal });
 
@@ -371,12 +375,12 @@
         }
 
         // Readonly blocks the user only: chips and Reset are keyboard-reachable
-        // past the readonly CSS, while removeValue()/reset() stay callable from code.
+        // past the readonly CSS, while removeValue()/clear() stay callable from code.
         _isReadonly() {
             return NDS.state.has(this._root, 'readonly');
         }
 
-        getSelected() {
+        getValues() {
             return this._checkboxes.filter(checkbox => checkbox.checked).map(checkbox => checkbox.value);
         }
 
@@ -384,21 +388,31 @@
         // In apply mode this is the Apply button's handler; callable directly
         // in either mode.
         apply() {
-            this._applied = this.getSelected();
+            this._applied = this.getValues();
             this._renderChips();
             const labels = this._applied.map(value => this._getLabel(value));
             NDS.announce(labels.length ? strings.text('applied', { value: labels.join(', ') }) : strings.text('cleared'));
             this._dispatchChange();
         }
 
-        reset() {
+        // All or nothing: a value with no option refuses the list. Commits like apply().
+        setValues(values) {
+            if (!Array.isArray(values)) return false;
+            const wanted = values.map(String);
+            if (!wanted.every(value => this._checkboxes.some(checkbox => checkbox.value === value))) return false;
+            this._checkboxes.forEach(checkbox => { checkbox.checked = wanted.includes(checkbox.value); });
+            this.apply();
+            return true;
+        }
+
+        clear() {
             // Apply mode with the panel open: clear the STAGED set only —
             // Apply commits it, closing without Apply restores `applied`.
             if (this._applyMode && this._isOpen()) {
                 this._checkboxes.forEach(checkbox => { checkbox.checked = false; });
-                return;
+                return true;
             }
-            const before = this.getSelected();
+            const before = this.getValues();
             this._checkboxes.forEach(checkbox => {
                 if (checkbox.checked) checkbox.checked = false;
             });
@@ -408,6 +422,7 @@
                 NDS.announce(strings.text('cleared'));
                 this._dispatchChange();
             }
+            return true;
         }
 
         // Apply mode: the boxes go back to the applied set.
@@ -444,7 +459,7 @@
         }
 
         _renderChips() {
-            const selected = this.getSelected();
+            const selected = this.getValues();
             this._chipsElement.replaceChildren();
             selected.forEach(value => { this._chipsElement.appendChild(this._buildChip(value)); });
             // New chips take the field's disabled.
@@ -473,7 +488,7 @@
         }
 
         _dispatchChange() {
-            const values = this.getSelected();
+            const values = this.getValues();
             this._root.dispatchEvent(new CustomEvent('nds:multiselect:change', {
                 detail: {
                     name: this._name,
@@ -504,6 +519,9 @@
         // Its commit event, not the boxes' change: a chip removal or a reset unchecks with no change event.
         { on: ['nds:multiselect:change'] });
 
+    // The wired field from the root, an element inside it or a selector; no instance is made.
+    const findInstance = (el) => NDS.resolveElement(el)?.closest?.('.nds-multiselect')?.ndsMultiselect;
+
     NDS.Multiselect = {
         init: setupMultiselects,
         reinit: setupMultiselects,
@@ -515,6 +533,9 @@
             const instance = new NdsMultiselect(element);
             return instance._valid ? instance : null;
         },
-        destroy: (element) => NDS.resolveElement(element)?.ndsMultiselect?.destroy()
+        destroy: (element) => NDS.resolveElement(element)?.ndsMultiselect?.destroy(),
+        getValues: (el) => findInstance(el)?.getValues() ?? [],
+        setValues: (el, values) => findInstance(el)?.setValues(values) ?? false,
+        clear: (el) => findInstance(el)?.clear() ?? false
     };
 })();

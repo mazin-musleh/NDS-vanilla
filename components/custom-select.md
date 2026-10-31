@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "26/10/2026 - 08:22 AM"
+last_edit: "31/10/2026 - 09:20 PM"
 ---
 
 <section id="custom-select-overview" class="nds-content-section nds-doc-overview">
@@ -321,15 +321,17 @@ To show a saved value, write it in the `value` of `.nds-select-value`, and leave
 ### JavaScript
 {: .nds-block-title}
 
-`el` can be the `.nds-select-input`, or an element that holds it, such as its `.nds-form-control` or `.nds-form-container`.
+`el` can be the `.nds-select-input`, an element that holds it, such as its `.nds-form-control` or `.nds-form-container`, its `id` or a selector.
 
 | Method | Effect |
 |---|---|
 | `NDS.CustomSelect.init()` | Writes the label of every saved value. The first call also starts to watch the page for focus and picks. The loader calls it on load. Call it again after you add a field with a saved value |
 | `NDS.CustomSelect.reinit()` | The same as `init()` |
 | `NDS.CustomSelect.create(el)` | Builds the list of one field now, instead of at its first focus. A built field is left as it is. Call it, or focus the field, before a script opens it with `click()`: a click with no focus does not open an unbuilt field |
+| `NDS.CustomSelect.getValue(el)` | Returns the `data-value` of the picked option, or `''` when none is picked or the field is not found |
 | `NDS.CustomSelect.setValue(el, 'makkah')` | Picks the option with that `data-value`, the same as a click, and returns `true`. It returns `false`, and changes nothing, when no option has the value. It works before the list is built |
-| `NDS.CustomSelect.clear(el)` | Empties the text box and the value, removes the `selected` state, and returns `true` |
+| `NDS.CustomSelect.clear(el)` | Empties the text box and the value, removes the `selected` state, and returns `true`. It returns `false` when the field is not found |
+| `formControl.ndsCustomSelect.getValue()`, `.setValue(value)`, `.clear()` | The same, on a field that has built its list |
 | `NDS.CustomSelect.destroy(el)` | Undoes `create()` for one field: pass the input or its field. The list is hidden again and the field builds again at its next focus. Call it before you remove the field from the page |
 | `NDS.CustomSelect.validate(el, options)` | Checks the field and returns `{ valid, message, value }`. Pass `{ showMessage: false }` to check without a message |
 {: .nds-table .nds-responsive}

@@ -8,6 +8,11 @@
  *                                            Null when the markup is incomplete; the live one if started
  *   NDS.Autocomplete.validate(el, opts)  a data-strict field's check → {valid, message, picked}; opts {showMessage}
  *   NDS.Autocomplete.destroy(el)             undo create() before you discard the field
+ *   NDS.Autocomplete.getValue(el)            the text in the input; el is the .nds-form-container[data-url] or its input;
+ *                                            '' on a missed ref. Also container.ndsAutocomplete.getValue()
+ *   NDS.Autocomplete.setValue(el, text)      write the text like a user, with no fetch and no menu; false on a missed ref.
+ *                                            Also container.ndsAutocomplete.setValue(text)
+ *   NDS.Autocomplete.clear(el)               empty the field and forget the pick. Also container.ndsAutocomplete.clear()
  * Events (bubble from the .nds-form-container):
  *   nds:autocomplete:fetch    detail {query, results} — after every result set is rendered
  *   nds:autocomplete:select   detail {item, text} — a suggestion was picked
@@ -30,6 +35,9 @@
  *     in the browser.
  *   - Inside a .nds-search-box, picking a suggestion clicks the .nds-search-btn.
  *   - No results shows the empty state only under data-strict; otherwise the menu closes.
+ *   - setValue()/clear() are not a pick or the clear button: no nds:autocomplete:select or :clear. Under data-strict
+ *     a text other than the last pick fails validation, as typed text does.
+ *   - On a data-strict field not focused yet, a text written with setValue() counts as a pick when the field builds.
  */
 
 (function () {
@@ -549,9 +557,7 @@
             // Trigger input/change events so forms JS updates state. Fetching on
             // the value we just picked would reopen the menu — suppress just this
             // one dispatch (setValue is synchronous, so the flag can't leak).
-            this._suppressFetch = true;
-            NDS.setValue(this._input, text);
-            this._suppressFetch = false;
+            this._writeText(text);
 
             this._close();
             this._input.focus();
@@ -569,6 +575,32 @@
                     searchBtn.click();
                 }
             }
+        }
+
+        // Write text and fire the pair without the fetch an input event starts: it would reopen the menu.
+        _writeText(text) {
+            this._suppressFetch = true;
+            NDS.setValue(this._input, text);
+            this._suppressFetch = false;
+        }
+
+        getValue() {
+            return this._input.value;
+        }
+
+        // The text is not a pick: the carrier keeps the last one, so a data-strict field reports it as typed text.
+        setValue(value) {
+            this._selectedItem = null;
+            this._results = [];
+            this._close();
+            this._writeText(value == null ? '' : String(value));
+            return true;
+        }
+
+        clear() {
+            this.setValue('');
+            if (this._carrier) this._carrier.value = '';
+            return true;
         }
 
         _handleClear() {
@@ -770,7 +802,26 @@
         (container) => (container.classList.contains('nds-taginput') ? null : Object.assign(checkField(container), { focus: container.ndsAutocomplete?._input || null })),
         { on: ['input'] });
 
+    // The built instance and the input of a field from its container, its input or a selector.
+    // A field nothing has focused is not built: no menu, no listeners, so a plain write is all it needs.
+    const find = (ref) => {
+        const container = NDS.resolveElement(ref)?.closest?.('.nds-form-container[data-url]');
+        return { instance: container?.ndsAutocomplete, input: container?.querySelector('input[autocomplete="on"]') };
+    };
+
     NDS.Autocomplete = {
+        getValue: (el) => find(el).input?.value ?? '',
+        setValue: (el, value) => {
+            const { instance, input } = find(el);
+            if (instance) return instance.setValue(value);
+            if (!input) return false;
+            NDS.setValue(input, value == null ? '' : String(value));
+            return true;
+        },
+        clear: (el) => {
+            const { instance } = find(el);
+            return instance ? instance.clear() : NDS.Autocomplete.setValue(el, '');
+        },
         init: setupAutocompletes,
         reinit: setupAutocompletes,
         validate: (el, opts) => NDS.Form.validateField(NDS.resolveElement(el)?.closest('.nds-form-container') || el, checkField, opts),

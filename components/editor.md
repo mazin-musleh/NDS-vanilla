@@ -11,7 +11,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "31/10/2026 - 09:20 PM"
 ---
 
 <section id="editor-overview" class="nds-content-section nds-doc-overview">
@@ -386,6 +386,10 @@ The `NDS.Editor` script loads after the page shows. Until it loads, each call lo
 | `NDS.Editor.init()` | Starts every `.nds-editor` on the page that has not started. `reinit()` does the same |
 | `NDS.Editor.create(el)` | Starts one editor and returns it. Returns the running editor when `el` already has one, and `null` when the field has no textarea |
 | `NDS.Editor.destroy(el)` | Removes the toolbar and the editing surface. The plain textarea field stays, with its value |
+| `NDS.Editor.getValue(el)` | Returns the sanitized HTML, or `''` when the editor is not found. `el` is the `.nds-editor`, its textarea, its `id` or a selector |
+| `NDS.Editor.setValue(el, html)` | Fills the editing surface and the textarea with `html`. Returns `true`, or `false` when the editor is not found |
+| `NDS.Editor.clear(el)` | Empties the editor. Returns `true`, or `false` when the editor is not found |
+| `el.ndsEditor.getValue()`, `.setValue(html)`, `.clear()` | The same, on an editor that has started |
 | `instance.setImageUpload(config)` | Sets the image popover's file picker from code. `config` takes the `data-editor-upload-*` options in camel case: `uploadUrl`, `autoUpload`, `maxFileSize`, `allowedTypes`, `allowedMimeTypes`. `null` or `false` removes an option. Returns the instance |
 {: .nds-table .nds-responsive}
 
@@ -396,7 +400,7 @@ The `NDS.Editor` script loads after the page shows. Until it loads, each call lo
 
 The running editor is also `el.ndsEditor`. File Upload events, such as `nds:upload:error`, bubble from the image popover.
 
-To set the text from a script, call `NDS.setValue(textarea, html)`. The editing surface fills from it. A form reset puts the textarea's first value back in the surface too.
+A form reset puts the textarea's first value back in the surface.
 
 <script type="text/html" id="editor-js" data-canon data-lang="js">
 document.addEventListener('nds:editor:ready', function (e) {

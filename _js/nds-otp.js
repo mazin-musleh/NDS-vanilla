@@ -7,9 +7,10 @@
  * Methods:
  *   NDS.Otp.init()                  wire every .nds-otp-group, and self-arm for late ones
  *   NDS.Otp.validate(el, opts)      the group's check → {valid, message, filled}; opts {showMessage}
- *   NDS.Otp.getValue(group)         the digits, joined
- *   NDS.Otp.setValue(group, value)  fill the boxes (non-digits stripped)
- *   NDS.Otp.clear(group)            empty the boxes, focus the first
+ *   NDS.Otp.getValue(group)         the digits, joined ('' on a missed ref)
+ *   NDS.Otp.setValue(group, value)  fill the boxes (non-digits stripped) → true; false on a missed ref
+ *   NDS.Otp.clear(group)            empty the boxes, focus the first → true; false on a missed ref
+ *   group.ndsOtp.getValue() / .setValue(value) / .clear()   the same, on the wired group
  * Events (bubble from the .nds-otp-group; every detail carries `value`):
  *   nds:otp:change     detail {value, filled} — on every edit
  *   nds:otp:complete   detail {value} — the moment every box holds a digit
@@ -97,6 +98,27 @@
     function clearInputs(group) {
         getOtpInputs(group).forEach(function (i) { i.value = ''; });
         syncHidden(group);
+    }
+
+    // The group from the group, a box or a selector.
+    function findGroup(el) {
+        el = NDS.resolveElement(el);
+        return el && el.closest ? el.closest('.nds-otp-group') : null;
+    }
+
+    function setGroupValue(group, value) {
+        // One sync, in distributeDigits: the carrier hears the new value, never '' first.
+        getOtpInputs(group).forEach(function (i) { i.value = ''; });
+        distributeDigits(group, NDS.toLatinDigits(value).replace(/\D/g, ''), 0);
+        return true;
+    }
+
+    function clearGroup(group) {
+        clearInputs(group);
+        dispatch(group, 'nds:otp:clear');
+        var inputs = getOtpInputs(group);
+        if (inputs[0]) inputs[0].focus();
+        return true;
     }
 
     function clearStaleStatus(group) {
@@ -242,6 +264,9 @@
         var signal = abortController.signal;
         group.ndsOtp = {
             boxes: inputs,
+            getValue: function () { return getValue(group); },
+            setValue: function (value) { return setGroupValue(group, value); },
+            clear: function () { return clearGroup(group); },
             destroy: function () {
                 abortController.abort();
                 group.removeAttribute('data-nds-otp-initialized');
@@ -325,24 +350,11 @@
         init: init,
         validate: function (el, opts) { return NDS.Form.validateField(NDS.resolveElement(el)?.closest('.nds-form-group') || el, answerField, opts); },
 
-        getValue: function (group) { group = NDS.resolveElement(group); return group ? getValue(group) : ''; },
+        getValue: function (el) { var group = findGroup(el); return group ? getValue(group) : ''; },
 
-        setValue: function (group, value) {
-            group = NDS.resolveElement(group);
-            if (!group) return false;
-            // One sync, in distributeDigits: the carrier hears the new value, never '' first.
-            getOtpInputs(group).forEach(function (i) { i.value = ''; });
-            distributeDigits(group, NDS.toLatinDigits(value).replace(/\D/g, ''), 0);
-        },
+        setValue: function (el, value) { var group = findGroup(el); return group ? setGroupValue(group, value) : false; },
 
-        clear: function (group) {
-            group = NDS.resolveElement(group);
-            if (!group) return false;
-            clearInputs(group);
-            dispatch(group, 'nds:otp:clear');
-            var inputs = getOtpInputs(group);
-            if (inputs[0]) inputs[0].focus();
-        }
+        clear: function (el) { var group = findGroup(el); return group ? clearGroup(group) : false; }
     };
 
 })();

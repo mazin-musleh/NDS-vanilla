@@ -12,6 +12,10 @@
  *                                     returns bool (ctx.minLength, ctx.matchValue
  *                                     available); chips with that data-rule name then
  *                                     count like the built-ins and gate submit
+ *   NDS.Password.getValue(el)         the input's text ('' on a missed ref); el is the container or its input
+ *   NDS.Password.setValue(el, value)  write the text like a user edit (rules re-check) → true; false on a missed ref
+ *   NDS.Password.clear(el)            empty the input → true; false on a missed ref
+ *   instance.getValue() / .setValue(value) / .clear()   the same, on the wired container
  *   instance.getStrength()            → last computed {strength, allPass, rules:{name:bool}}
  *                                     (no recompute, no event — check() forces one)
  * Events (bubble from the .nds-form-container):
@@ -242,6 +246,12 @@
 
         getStrength() { return this._last; }
 
+        getValue() { return this._input.value; }
+
+        setValue(value) { return writeInput(this._input, value); }
+
+        clear() { return writeInput(this._input, ''); }
+
         destroy() {
             if (this.abortController) { this.abortController.abort(); this.abortController = null; }
             if (this._announce) this._announce.cancel();
@@ -254,6 +264,21 @@
             this._container.removeAttribute('data-nds-password-initialized');
             this._container.ndsPassword = null;
         }
+    }
+
+    // The text input from the container, the input itself or a selector.
+    function findInput(element) {
+        element = NDS.resolveElement(element);
+        if (!element || !element.matches) return null;
+        if (element.matches('input')) return element;
+        return (element.closest('.nds-form-container') || element)
+            .querySelector('.nds-form-control > input[type="password"], .nds-form-control > input[type="text"]');
+    }
+
+    // Through NDS.setValue: input and change fire, so the rules re-check.
+    function writeInput(input, value) {
+        NDS.setValue(input, value == null ? '' : String(value));
+        return true;
     }
 
     function setupPasswords() {
@@ -276,6 +301,9 @@
         },
         destroy: function (element) { element = NDS.resolveElement(element); if (element && element.ndsPassword) element.ndsPassword.destroy(); },
         check: function (element) { return element.ndsPassword ? element.ndsPassword.check() : null; },
-        addRule: function (name, test) { RULES[name] = test; }
+        addRule: function (name, test) { RULES[name] = test; },
+        getValue: function (element) { var input = findInput(element); return input ? input.value : ''; },
+        setValue: function (element, value) { var input = findInput(element); return input ? writeInput(input, value) : false; },
+        clear: function (element) { var input = findInput(element); return input ? writeInput(input, '') : false; }
     };
 })();

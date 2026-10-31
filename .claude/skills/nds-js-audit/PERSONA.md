@@ -383,7 +383,7 @@ One pattern lets a reader guess a new component's names. Declaring them once sto
 | Wire every element / wire one / undo | `init()` / `create(el, opts?)` / `destroy(el?)` |
 | Something changed: read or measure again | `refresh(el?)` — the component does what it needs, so a caller never tells a content change from a size change |
 | Open and close | entry 3 |
-| A value | `getValue` / `setValue` / `clear`; several values `getValues`; anything else `getX` / `setX` |
+| A value | `getValue` / `setValue` / `clear`; several values `getValues` / `setValues` / `clear`; `setValue` / `setValues` return `false` when they refuse the value, `true` when they write it; anything else `getX` / `setX` |
 | On and off | `enable()` / `disable()` (Bootstrap, Swiper, Choices.js) |
 | Items in a list | `addX` / `removeX` |
 | Find an instance / wait for one | `getInstance(elOrSelOrId)` → the instance or `null` (Bootstrap) / `whenReady(el, cb)` (as `customElements.whenDefined`) |

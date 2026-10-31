@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.2.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "31/10/2026 - 09:20 PM"
 ---
 
 <section id="slider-overview" class="nds-content-section nds-doc-overview">
@@ -242,7 +242,7 @@ The `nds-loading` class shows the bar and the value as a skeleton, and hides the
 - Give each input of a range slider an `aria-label`, such as "Lowest price" and "Highest price". The one label does not name the two thumbs.
 - Use MD on touch-first screens. Its 16px dot is easier to see under a finger. Both sizes take a touch in a 24px circle.
 - Use Stacked with Currency, so a wide value does not shorten the bar.
-- After you set `input.value` from a script, fire an `input` event on the input. The bar and the value then update.
+- To set the value from a script, call `NDS.Slider.setValue()`. After you set `input.value` yourself, fire an `input` event on the input. The bar and the value then update.
 - After you change `min` or `max` from a script, call `NDS.Slider.reinit(container)`. The value width is measured again for the new bounds.
 - For the label, info text and feedback, see [Forms](../components/form). They work the same on every field.
 
@@ -292,6 +292,11 @@ The `NDS.Slider` script loads after the page shows. Until it loads, each call lo
 | `NDS.Slider.reinit(container)` | Starts one container again, or every container with no argument |
 | `NDS.Slider.create(container)` | Starts one container and returns it |
 | `NDS.Slider.destroy(container)` | Stops one container, or every container with no argument |
+| `NDS.Slider.getValue(el)` | Single slider. Returns its value as a number, or `''` for a range or when the slider is not found. `el` is the container, an input in it, its `id` or a selector |
+| `NDS.Slider.setValue(el, n)` | Single slider. Moves it as a user does and returns `true`. It returns `false`, and changes nothing, when `n` is not a finite number or is outside the input's `min` and `max` |
+| `NDS.Slider.getValues(el)` | Range slider (`.nds-slider-range`). Returns `[min, max]` as numbers, or `[]` for a single slider or when the slider is not found |
+| `NDS.Slider.setValues(el, [min, max])` | Range slider. Moves both thumbs and returns `true`. It returns `false`, and changes nothing, when a number is bad or `min` is above `max` |
+| `NDS.Slider.clear(el)` | Moves a single slider to its `min`, and a range to its whole span |
 {: .nds-table .nds-responsive}
 
 The slider fires no event of its own. Listen for the native `input` event on the input.

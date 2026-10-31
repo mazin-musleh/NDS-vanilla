@@ -9,8 +9,12 @@
  *   NDS.Rating.validate(el, opts)   the rating group's check → {valid, message, rating}; opts {showMessage}
  *   NDS.Rating.destroy(el)          undo create()
  *   NDS.Rating.enable(el)           build it if needed, then take it out of disabled
- *   instance.setValue(v)            set the rating (fires the event)
+ *   NDS.Rating.getValue(el)         the score (0 for none, '' on a missed ref); el is the rating, its group or the hidden input
+ *   NDS.Rating.setValue(el, value)  set the score (fires the event) → true; false when not 0..max or a missed ref
+ *   NDS.Rating.clear(el)            no stars (0), fires the event → true; false on a missed ref
+ *   instance.setValue(v)            set the rating (fires the event) → true; false when not 0..max
  *   instance.getValue()             the current value
+ *   instance.clear()                no stars (0)
  *   instance.enable() / .disable() / .isDisabled()
  *   instance.destroy()
  * Events (bubble from the .nds-rating):
@@ -227,9 +231,14 @@
     }
 
     setValue(value) {
-      if (value >= 0 && value <= this._stars.length) {
-        this._setRating(value);
-      }
+      const n = parseFloat(value);
+      if (!(n >= 0 && n <= this._stars.length)) return false;
+      this._setRating(n);
+      return true;
+    }
+
+    clear() {
+      return this.setValue(0);
     }
 
     _setDisabled(disabled) {
@@ -272,6 +281,15 @@
     document.querySelectorAll('.nds-rating').forEach(create);
   }
 
+  // The rating from itself, an element inside it, or the group that holds it (the hidden input's).
+  const findRating = (element) => {
+    element = NDS.resolveElement(element);
+    const root = element?.closest?.('.nds-rating')
+      || element?.querySelector?.('.nds-rating')
+      || element?.closest?.('.nds-form-group')?.querySelector('.nds-rating');
+    return root ? create(root) : null;
+  };
+
   function enable(element) {
     create(element)?.enable();
   }
@@ -296,6 +314,9 @@
     create,
     destroy: (element) => NDS.resolveElement(element)?.ndsRating?.destroy(),
     enable: enable,
+    getValue: (el) => findRating(el)?.getValue() ?? '',
+    setValue: (el, value) => findRating(el)?.setValue(value) ?? false,
+    clear: (el) => findRating(el)?.clear() ?? false,
   };
 
   NDS.onDomAdd('.nds-rating', (nodes) => nodes.forEach(create));

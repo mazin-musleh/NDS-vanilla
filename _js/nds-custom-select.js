@@ -8,8 +8,10 @@
  *   NDS.CustomSelect.create(el)            build one select now — pass the input or its form-control
  *   NDS.CustomSelect.validate(el, opts)    its check → {valid, message, value}; opts {showMessage}
  *   NDS.CustomSelect.destroy(el)           undo create() before you discard the field
+ *   NDS.CustomSelect.getValue(el)          the picked option's value ('' when none, or a missed ref)
  *   NDS.CustomSelect.setValue(el, value)   pick by option value; false when no option carries it
- *   NDS.CustomSelect.clear(el)             back to placeholder
+ *   NDS.CustomSelect.clear(el)             back to placeholder → true; false on a missed ref
+ *   formControl.ndsCustomSelect.getValue() / .setValue(value) / .clear()   the same, on a built select
  * Events (fire ON the .nds-form-control — this one does NOT bubble):
  *   nds:custom-select:change   detail {value, text} — every pick, by click or by
  *                             setValue()/clear()
@@ -140,6 +142,9 @@
 
         // Takes back what build() wrote on the author's markup, so a later focus builds again.
         formControl.ndsCustomSelect = {
+            getValue: function () { return getFieldValue(formControl); },
+            setValue: function (value) { return setFieldValue(formControl, value); },
+            clear: function () { return setOption(formControl, null); },
             destroy: function () {
                 controller.abort();
                 NDS.Dropmenu.destroy(formControl);
@@ -215,6 +220,16 @@
         if (el.classList.contains('nds-select-input')) return el.closest('.nds-form-control');
         var input = el.querySelector && el.querySelector('.nds-select-input');
         return input ? input.closest('.nds-form-control') : null;
+    }
+
+    function getFieldValue(formControl) {
+        var hidden = formControl.querySelector('.nds-select-value');
+        return hidden ? hidden.value : '';
+    }
+
+    function setFieldValue(formControl, value) {
+        var option = findOption(formControl, String(value));
+        return option ? setOption(formControl, option) : false;
     }
 
     // Delegated option pick → run the shared write sequence. The dropmenu's
@@ -298,11 +313,13 @@
         // label, hidden value, selected markers, input/change events,
         // nds:custom-select:change). Returns false when no option carries the value —
         // display and value are never desynced. Works before the dropmenu is built.
+        getValue: function (el) {
+            var formControl = findFormControl(el);
+            return formControl ? getFieldValue(formControl) : '';
+        },
         setValue: function (el, value) {
             var formControl = findFormControl(el);
-            if (!formControl) return false;
-            var option = findOption(formControl, String(value));
-            return option ? setOption(formControl, option) : false;
+            return formControl ? setFieldValue(formControl, value) : false;
         },
         // Back to placeholder: both inputs emptied, markers off, same events.
         clear: function (el) {

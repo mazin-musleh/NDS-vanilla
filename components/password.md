@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "31/10/2026 - 09:20 PM"
 ---
 
 <section id="password-overview" class="nds-content-section nds-doc-overview">
@@ -415,6 +415,10 @@ The instance is on the field's `.nds-form-container` as `ndsPassword`. It is the
 | `NDS.Password.destroy(container)` | Stops one field, removes its submit block and sets its chips back to neutral |
 | `NDS.Password.check(container)` | Checks the value now, fires `nds:password:change` and returns `{ strength, allPass, rules }` |
 | `NDS.Password.addRule(name, test)` | Registers a rule. `test(value, ctx)` returns `true` when the value passes. `ctx.minLength` is the length minimum, and `ctx.matchValue` is the first field's value, or `null` with no match. Chips with that `data-rule` count from the next keystroke |
+| `NDS.Password.getValue(container)` | Returns the text in the password input, or `''` when the field is not found. `container` is the `.nds-form-container`, its input, its `id` or a selector |
+| `NDS.Password.setValue(container, value)` | Writes the text as a user would, so the rules check again. Returns `true`, or `false` when the field is not found |
+| `NDS.Password.clear(container)` | Empties the input. Returns `true`, or `false` when the field is not found |
+| `container.ndsPassword.getValue()`, `.setValue(value)`, `.clear()` | The same, on a field that has started |
 | `container.ndsPassword.getStrength()` | Returns the last result, with no new check and no event |
 {: .nds-table .nds-responsive}
 

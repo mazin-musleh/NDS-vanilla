@@ -12,6 +12,11 @@
  *                                     data-format="name": format, its slots; check gets the value the form
  *                                     submits and returns true when it is valid; message, shown when it is not
  *                                     ("Invalid value" by default). Replaces one set before; refuses a built-in kind
+ *   NDS.FormattedInput.getValue(el)   the value the form submits (no group spaces, a phone in E.164, a plate in
+ *                                     Latin); el is the .nds-formatted container or its input; '' on a missed ref
+ *   NDS.FormattedInput.setValue(el, text)   write the text like a user; the field formats it, and an invalid
+ *                                     one gets the usual invalid status. false only on a missed ref
+ *   NDS.FormattedInput.clear(el)      empty the field
  * Events:
  *   nds:phone:change            detail {value, countryCode, nationalNumber} — from a phone field's input,
  *                               when the number it submits changes (typing, a paste, a country pick, a reset)
@@ -510,6 +515,28 @@
         }
     }
 
+    // What the form submits for a field's text (the formdata handler below sets it). Null: the browser's own value goes.
+    function getSubmitted(input) {
+        var kind = getKind(input);
+        if (!kind || kind === 'national-id' || (kind === 'formatted' && !getGroupFormat(input))) return null;
+        if (kind === 'phone') return getPhoneNumber(input).value;
+        if (kind === 'plate') return formatPlate(input, input.value, 0).submitted;
+        return [].filter.call(input.value, NDS.typing.isSlotCharacter).join('');
+    }
+
+    // The text box of a .nds-formatted field, from its container or its input; null on a miss.
+    function findInput(ref) {
+        var el = NDS.resolveElement(ref), container = el && el.closest && el.closest('.nds-formatted');
+        return container && container.querySelector('.nds-form-control > input:not([type="hidden"])');
+    }
+
+    function setValue(el, value) {
+        var input = findInput(el);
+        if (!input) return false;
+        NDS.setValue(input, value == null ? '' : String(value));
+        return true;
+    }
+
     // Registered before Form's parts (this file loads first), so its beforeinput runs before Form's digits part.
     NDS.field.addType('formatted', {
         setupInput: function(input) { stampIdentifier(input, { country: true }); },
@@ -563,11 +590,8 @@
             // ponytail: a name two fields share keeps what the browser wrote.
             'formdata:capture': function(e) {
                 [].forEach.call(e.target.elements || [], function(el) {
-                    var kind = el.name && getKind(el);
-                    if (!kind || kind === 'national-id' || (kind === 'formatted' && !getGroupFormat(el)) || e.formData.getAll(el.name).length !== 1) return;
-                    var sent = [].filter.call(el.value, NDS.typing.isSlotCharacter).join('');
-                    if (kind === 'phone') sent = getPhoneNumber(el).value;
-                    else if (kind === 'plate') sent = formatPlate(el, el.value, 0).submitted;
+                    var sent = el.name ? getSubmitted(el) : null;
+                    if (sent === null || e.formData.getAll(el.name).length !== 1) return;
                     e.formData.set(el.name, sent);
                 });
             }
@@ -585,7 +609,13 @@
         addIdRule: addIdRule,
         addFormat: addFormat,
         isNationalId: isNationalId,
-        isIban: isIban
+        isIban: isIban,
+        getValue: function(el) {
+            var input = findInput(el), sent = input && getSubmitted(input);
+            return input ? (sent === null ? input.value : sent) : '';
+        },
+        setValue: setValue,
+        clear: function(el) { return setValue(el, ''); }
     };
 
 })();

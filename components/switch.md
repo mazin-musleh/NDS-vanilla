@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "28/10/2026 - 10:41 PM"
+last_edit: "31/10/2026 - 09:20 PM"
 ---
 
 <section id="switch-overview" class="nds-content-section nds-doc-overview">
@@ -286,12 +286,19 @@ Source: the `switch` group in `_sass/tokens/_components.scss`.
 ### JavaScript
 {: .nds-block-title}
 
+| Method | Effect |
+|---|---|
+| `NDS.Switch.getValue(el)` | Returns `true` when the switch is on and `false` when it is off, or `''` when the switch is not found. `el` is the `.nds-switch`, its input, its `id` or a selector |
+| `NDS.Switch.setValue(el, value)` | Turns the switch on or off as a user does, and returns `true`. It returns `false`, and changes nothing, when `value` is not `true` or `false` |
+| `NDS.Switch.clear(el)` | Turns the switch off |
+{: .nds-table .nds-responsive}
+
 | Event | Fired on | Detail |
 |---|---|---|
 | `nds:switch:change` | `.nds-switch-toggle` (bubbles) | `{ checked, value, input }` |
 {: .nds-table .nds-responsive}
 
-To change a switch from code, set `checked` on the input and dispatch `change`. The full API is in the banner of `_js/nds-switch.js`.
+The full API is in the banner of `_js/nds-switch.js`.
 
 <script type="text/html" id="switch-js" data-canon data-lang="js">
 document.querySelector('.nds-switch-toggle').addEventListener('nds:switch:change', function (e) {

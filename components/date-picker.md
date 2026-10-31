@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "31/10/2026 - 09:20 PM"
 ---
 
 <section id="date-picker-overview" class="nds-content-section nds-doc-overview">
@@ -374,6 +374,12 @@ The `NDS.DatePicker` script loads after the page shows. Until it loads, each cal
 | `NDS.DatePicker.reinit()` | The same as `init()` |
 | `NDS.DatePicker.create(input, formControl)` | Starts one field, and returns its instance. `formControl` is optional: the default is the input's `.nds-form-control`. On a field that has started, it returns the same instance. It returns `null` when the input has no `.nds-form-control` or no `.nds-form-container` |
 | `NDS.DatePicker.destroy(input)` | Runs `instance.destroy()` on the field's picker. `NDS.init.destroy()` calls it |
+| `NDS.DatePicker.getValue(el)` | Single field. Returns the day as an ISO `YYYY-MM-DD` date, in any calendar and in any format the field shows. It returns `''` when the field is empty, holds text that is not a date, is a range, or is not found. `el` is the `.nds-form-container`, the `.nds-date-input`, a part in it, its `id` or a selector |
+| `NDS.DatePicker.setValue(el, day)` | Single field. Writes the day, an ISO string or a `Date`, in the field's own format and calendar, as a pick does. Returns `true`. It returns `false`, and writes nothing, when `day` is not a date, the field refuses it (outside the bounds or an unavailable day), or the field is a range |
+| `NDS.DatePicker.getValues(el)` | Range field (`.nds-date-range`). Returns `[start, end]` as ISO dates, or `[]` for any other field |
+| `NDS.DatePicker.setValues(el, [start, end])` | Range field. Writes both days and returns `true`. It returns `false`, and writes nothing, when a day is refused or `start` is after `end` |
+| `NDS.DatePicker.clear(el)` | Empties a single field or a range |
+| `input.ndsDatePicker.getValue()`, `.setValue(day)`, `.getValues()`, `.setValues(days)`, `.clear()` | The same, on a field that has started |
 | `instance.destroy()` | Removes the calendar and its listeners, and clears the picker's own date error. `create()` can start the field again. Call it before you remove the field from the page |
 | `NDS.DatePicker.CalendarConfig.gregorian`, `.hijri` | The two calendars. Each has `formatDate(date, format)` and `parseDate(text, format)` |
 {: .nds-table .nds-responsive}

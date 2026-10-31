@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/10/2026 - 12:02 PM"
+last_edit: "31/10/2026 - 09:20 PM"
 ---
 
 <section id="radio-overview" class="nds-content-section nds-doc-overview">
@@ -244,6 +244,9 @@ Source: the `radio` group in `_sass/tokens/_components.scss`.
 
 | Method | Effect |
 |---|---|
+| `NDS.Radio.getValue(el)` | Returns the `value` of the checked radio, or `''` when none is checked or the group is not found. `el` is the `.nds-form-group`, a radio in it, its `id` or a selector |
+| `NDS.Radio.setValue(el, value)` | Checks the radio with that `value` as a user does, and returns `true`. It returns `false`, and changes nothing, when no radio has the value |
+| `NDS.Radio.clear(el)` | Unchecks the checked radio |
 | `NDS.Radio.validate(group, options)` | Checks the group and returns `{ valid, selected, message }`: `selected` is `true` when an option is checked. Pass `{ showMessage: false }` to check without a message |
 | `NDS.Form.refresh(input)` | Updates the field after you set `.checked` from code. It fires no event |
 | `NDS.Form.setStatus(group, status, { message })` | Shows a status and a message on the group, such as an error from the server |

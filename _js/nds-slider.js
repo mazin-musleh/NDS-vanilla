@@ -10,6 +10,12 @@
  *   NDS.Slider.reinit(el)      re-initialize one container, or all of them with no argument
  *   NDS.Slider.create(el)      initialize one container
  *   NDS.Slider.destroy(el)     release one container, or all of them with no argument
+ *   NDS.Slider.getValue(el)    a single slider's number; el is its container or an input in it; '' on a missed ref or a range
+ *   NDS.Slider.setValue(el, n) move a single slider like a user; false (nothing written) when n is not a finite
+ *                              number or lies outside the input's min..max
+ *   NDS.Slider.getValues(el)   a range slider's [min, max]; [] on a missed ref or a single slider
+ *   NDS.Slider.setValues(el, [min, max])   move both thumbs; false (nothing written) on a bad number or min above max
+ *   NDS.Slider.clear(el)       back to the input's min (a range: its whole span)
  * Events:
  *   (none — the native `input` event on the range input IS the signal; listen for that)
  * Hooks:
@@ -18,7 +24,7 @@
  *    .nds-slider-value (or -value-min / -value-max))
  * Gotchas:
  *   - The native <input type="range"> owns drag, keyboard, touch and screen-reader
- *     behaviour. Read input.value; there is no custom event and no getValue().
+ *     behaviour. There is no custom event: listen for `input`, read it with getValue()/getValues().
  *   - A readonly input ignores the step keys (browsers ignore readonly on a range input);
  *     data-state="readonly" on the container sets it through the forms script.
  *   - Range mode is the .nds-slider-range class on the container. The two thumbs are
@@ -42,13 +48,54 @@
     var STEP_KEYS = /^(Arrow(Up|Down|Left|Right)|Home|End|Page(Up|Down))$/;
     var offResizes = new WeakMap();
 
-    function getPercent(input) {
+    function getBounds(input) {
         var min = parseFloat(input.min);
         var max = parseFloat(input.max);
-        if (isNaN(min)) min = 0;
-        if (isNaN(max)) max = 100;
-        if (max === min) return 0;
-        return ((parseFloat(input.value) - min) / (max - min)) * 100;
+        return { min: isNaN(min) ? 0 : min, max: isNaN(max) ? 100 : max };
+    }
+
+    function getPercent(input) {
+        var bounds = getBounds(input);
+        if (bounds.max === bounds.min) return 0;
+        return ((parseFloat(input.value) - bounds.min) / (bounds.max - bounds.min)) * 100;
+    }
+
+    // The inputs of a container, an input or a part in it: {one} for a single slider, {min, max} for a range; {} on a missed ref.
+    function getInputs(el) {
+        var container = NDS.resolveElement(el);
+        container = container && container.closest ? container.closest('.nds-slider-container') : null;
+        if (!container) return {};
+        if (container.classList.contains('nds-slider-range')) {
+            return { min: container.querySelector('.nds-slider-min'), max: container.querySelector('.nds-slider-max') };
+        }
+        return { one: container.querySelector('.nds-slider') };
+    }
+
+    // A number, or a numeric string, inside the input's min..max; null otherwise.
+    function toNumber(input, value) {
+        var n = typeof value === 'string' && value.trim() !== '' ? Number(value) : value;
+        var bounds = getBounds(input);
+        return Number.isFinite(n) && n >= bounds.min && n <= bounds.max ? n : null;
+    }
+
+    function writeOne(input, value) {
+        var n = input ? toNumber(input, value) : null;
+        if (n === null) return false;
+        NDS.setValue(input, String(n));
+        return true;
+    }
+
+    function writePair(minInput, maxInput, values) {
+        if (!minInput || !maxInput || !Array.isArray(values) || values.length !== 2) return false;
+        var start = toNumber(minInput, values[0]);
+        var end = toNumber(maxInput, values[1]);
+        if (start === null || end === null || start > end) return false;
+        // Write the thumb that moves away from the other first, so syncRange never sees them cross.
+        var first = start > parseFloat(maxInput.value) ? [maxInput, end] : [minInput, start];
+        var second = first[0] === maxInput ? [minInput, start] : [maxInput, end];
+        NDS.setValue(first[0], String(first[1]));
+        NDS.setValue(second[0], String(second[1]));
+        return true;
     }
 
     function formatOutput(el) {
@@ -207,6 +254,24 @@
             el = NDS.resolveElement(el);
             if (!el) return null;
             addDocumentListeners(); setupContainer(el); return el;
+        },
+        getValue: function (el) {
+            var inputs = getInputs(el);
+            return inputs.one ? Number(inputs.one.value) : '';
+        },
+        setValue: function (el, value) { return writeOne(getInputs(el).one, value); },
+        getValues: function (el) {
+            var inputs = getInputs(el);
+            return inputs.min && inputs.max ? [Number(inputs.min.value), Number(inputs.max.value)] : [];
+        },
+        setValues: function (el, values) {
+            var inputs = getInputs(el);
+            return writePair(inputs.min, inputs.max, values);
+        },
+        clear: function (el) {
+            var inputs = getInputs(el);
+            if (inputs.one) return writeOne(inputs.one, getBounds(inputs.one).min);
+            return inputs.min && inputs.max ? writePair(inputs.min, inputs.max, [getBounds(inputs.min).min, getBounds(inputs.max).max]) : false;
         }
     };
 })();

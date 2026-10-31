@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "29/10/2026 - 02:09 PM"
+last_edit: "31/10/2026 - 09:20 PM"
 ---
 
 <section id="otp-overview" class="nds-content-section nds-doc-overview">
@@ -300,13 +300,12 @@ For another code length, copy a box and give it a unique `id`. The script number
 ### JavaScript
 {: .nds-block-title}
 
-Each method takes the `.nds-otp-group` element.
-
 | Method | Effect |
 |---|---|
-| `NDS.Otp.getValue(group)` | Returns the digits as one string. An empty box adds nothing |
-| `NDS.Otp.setValue(group, value)` | Fills the boxes from the first, and removes characters that are not digits. It fires no `nds:otp` event. The hidden input gets one `input` and `change` when its value changes |
-| `NDS.Otp.clear(group)` | Empties the boxes, focuses the first box and fires `nds:otp:clear`. It does not remove an error: call `NDS.Form.clearStatus(group)` for that |
+| `NDS.Otp.getValue(group)` | Returns the digits as one string, or `''` when the group is not found. `group` is the `.nds-otp-group`, its `id` or a selector. An empty box adds nothing |
+| `NDS.Otp.setValue(group, value)` | Fills the boxes from the first, and removes characters that are not digits. Returns `true`, or `false` when the group is not found. It fires no `nds:otp` event. The hidden input gets one `input` and `change` when its value changes |
+| `NDS.Otp.clear(group)` | Empties the boxes, focuses the first box and fires `nds:otp:clear`. Returns `true`, or `false` when the group is not found. It does not remove an error: call `NDS.Form.clearStatus(group)` for that |
+| `group.ndsOtp.getValue()`, `.setValue(value)`, `.clear()` | The same, on a group that has started |
 | `NDS.Otp.init()` | Starts every group on the page that has not started. It runs at page load, and a group added later starts on its own. The first group on a page that had none needs `NDS.init.mount()` on the new content. `NDS.init.destroy(view)` releases a group |
 | `NDS.Otp.validate(group, options)` | Checks that every box holds a digit, shows the error when one is empty, and returns `{ valid, message, filled }`. Pass `{ showMessage: false }` to check without showing the error |
 {: .nds-table .nds-responsive}

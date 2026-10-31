@@ -248,7 +248,7 @@ NDS.UserFeedback = (() => {
             // Rating variant: send the picked stars back to zero along with the rest.
             // Scoped away from .nds-user-feedback-score, which holds the average.
             const picked = feedbackComponent.querySelector('.nds-user-feedback-details .nds-rating');
-            if (picked && picked.ndsRating) picked.ndsRating.setValue(0);
+            if (picked && picked.ndsRating) picked.ndsRating.clear();
             const ratingField = feedbackComponent.querySelector('[data-rating-value]');
             if (ratingField) NDS.setValue(ratingField, '0');
             const recapScore = feedbackComponent.querySelector('[data-rating-score]');

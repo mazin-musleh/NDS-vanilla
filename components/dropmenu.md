@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "29/10/2026 - 01:15 PM"
+last_edit: "31/10/2026 - 09:20 PM"
 ---
 
 <section id="dropmenu-overview" class="nds-content-section nds-doc-overview">
@@ -495,6 +495,10 @@ Set these on the `.nds-dropmenu` wrapper. The menu inherits them.
 | `NDS.Dropmenu.from(el)` | Returns the wrapper of any element in the dropmenu |
 | `NDS.Dropmenu.getMenu(wrapper)` | Returns the menu of a wrapper |
 | `NDS.Dropmenu.validate(el, options)` | Checks a select-mode picker and returns `{ valid, message, value }`. Pass `{ showMessage: false }` to check without a message |
+| `NDS.Dropmenu.getValue(el)` | Returns the `data-value` of the picked item in a picker, or `''` when none is picked or `el` is not a picker. `el` is the wrapper, an element in it, its `id` or a selector |
+| `NDS.Dropmenu.setValue(el, value)` | Picks the item with that `data-value` and returns `true`. It returns `false`, and changes nothing, when no item has the value or `el` is not a picker |
+| `NDS.Dropmenu.clear(el)` | Picks nothing: the hidden field is empty and the trigger label goes back to its placeholder. Returns `true`, or `false` when `el` is not a picker |
+| `wrapper.ndsDropmenu.getValue()`, `.setValue(value)`, `.clear()` | The same, on a picker that has started |
 | `wrapper.ndsDropmenu.open()`, `.close()`, `.toggle(event)` | Opens or closes the menu. Pass the click `event` to `toggle()`: on a `data-anchor-cursor` menu, the menu then opens under the pointer |
 | `wrapper.ndsDropmenu.destroy()` | The same as `NDS.Dropmenu.destroy(wrapper)` |
 {: .nds-table .nds-responsive}

@@ -13,6 +13,10 @@
  *   instance.open() / .close() / .toggle(event?)   a click event anchors the menu under the
  *                                        pointer when the wrapper has data-anchor-cursor
  *   instance.syncPosition()             place the open menu again
+ *   NDS.Dropmenu.getValue(el)            a select-mode picker's value, its picked item's data-value ('' when none, or not a picker)
+ *   NDS.Dropmenu.setValue(el, value)     pick the item with that data-value → true; false when no item has it or el is not a picker
+ *   NDS.Dropmenu.clear(el)               pick nothing, label back to its placeholder → true; false when el is not a picker
+ *   instance.getValue() / .setValue(value) / .clear()   the same, on a wired picker
  *   instance.setSelection(item)        pick an item in a select-mode picker
  *   instance.isOpen / .trigger / .dropmenu   read-only state; dropmenu is the wrapper
  * Events (bubble from the .nds-dropmenu wrapper):
@@ -44,6 +48,8 @@
  *     trigger in a fixed or sticky box (a panel) gets a fixed menu; without them JS follows.
  *     It rides over the sticky nav and closes when its trigger leaves view. Without popover
  *     (Safari < 17, Firefox < 125) it is fixed and follows every scroll.
+ *   - clear() fires the hidden input's input and change but no nds:dropmenu:select (Pagination and Filter read
+ *     that event's value), so a required picker re-checks on the next submit.
  */
 
 /**
@@ -450,13 +456,19 @@
                 if (builtHidden) hidden.remove();
                 if (triggerLabel) triggerLabel.textContent = startLabel;
             };
+            // Nothing picked: the trigger shows its own text again. Quiet for a form reset.
+            const clearPick = (quiet) => {
+                this._getOwnItems().forEach((entry) => removeState(entry, 'selected'));
+                if (triggerLabel) triggerLabel.textContent = startLabel;
+                if (quiet) { hidden.value = ''; return; }
+                NDS.setValue(hidden, '');
+            };
+            this._clearSelection = () => clearPick(false);
             if (initialItem) this.setSelection(initialItem, { silent: true });
             // A form reset never touches a hidden input or a label: go back to the first pick.
             NDS.field.onReset(hidden.form, () => {
                 if (initialItem) { this.setSelection(initialItem, { silent: true }); return; }
-                hidden.value = '';
-                this._getOwnItems().forEach((entry) => removeState(entry, 'selected'));
-                if (triggerLabel) triggerLabel.textContent = startLabel;
+                clearPick(true);
             }, { signal });
 
             this._menu.addEventListener('click', (e) => {
@@ -507,6 +519,24 @@
                     bubbles: true
                 }));
             }
+        }
+
+        getValue() {
+            return this._selectHidden ? this._selectHidden.value : '';
+        }
+
+        setValue(value) {
+            if (!this._selectHidden) return false;
+            const item = this._getOwnItems().find(entry => entry.getAttribute('data-value') === String(value));
+            if (!item) return false;
+            this.setSelection(item);
+            return true;
+        }
+
+        clear() {
+            if (!this._selectHidden) return false;
+            this._clearSelection();
+            return true;
         }
 
         // Only where the author wrote none; destroy() takes back what this wrote.
@@ -1394,6 +1424,9 @@
         (dropmenu) => Object.assign(checkField(dropmenu), { focus: findOwnFirstIn(dropmenu, '.nds-dropmenu-trigger') || dropmenu }),
         { on: ['nds:dropmenu:select'] });
 
+    // The wired select-mode picker from its wrapper, an element inside it or a selector.
+    const findPicker = (el) => NDS.resolveElement(el)?.closest?.('.nds-dropmenu[data-select-name]')?.ndsDropmenu;
+
     // Expose global API (called by nds-loader.js unified system)
     NDS.Dropmenu = {
         init: setupDropmenus,
@@ -1420,5 +1453,8 @@
         from: (el) => el?.closest('.nds-dropmenu') || null,
         // First match is the wrapper's own menu: a nested one sits inside it.
         getMenu: (dropmenu) => dropmenu?.querySelector('.nds-dropmenu-menu') || null,
+        getValue: (el) => findPicker(el)?.getValue() ?? '',
+        setValue: (el, value) => findPicker(el)?.setValue(value) ?? false,
+        clear: (el) => findPicker(el)?.clear() ?? false,
     };
 })();

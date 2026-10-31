@@ -1,7 +1,11 @@
 /* NDS.Switch — public surface
  * Rides: nds-field (the field's states and sync) · nds-form (a toggle checks the field again)
  * Methods:
- *   (none — the track, Space or Enter on the input, and a label in the same control toggle it)
+ *   NDS.Switch.getValue(el)         the switch's checked state; el is its .nds-switch (or .nds-switch-toggle) root or its input;
+ *                                   '' on a missed ref
+ *   NDS.Switch.setValue(el, bool)   check or uncheck it like a user; false (nothing written) when bool is not a boolean
+ *   NDS.Switch.clear(el)            uncheck it
+ *   (the track, Space or Enter on the input, and a label in the same control also toggle it)
  * Events:
  *   nds:switch:change   detail {checked, value, input} — from the .nds-switch-toggle, and it bubbles
  * Hooks:
@@ -82,5 +86,22 @@
         },
     });
 
-    NDS.Switch = {};
+    const resolveInput = (el) => {
+        el = NDS.resolveElement(el);
+        if (!el || !el.matches) return null;
+        return el.matches('.nds-switch-input') ? el : el.querySelector('.nds-switch-input');
+    };
+
+    function setValue(el, value) {
+        const input = resolveInput(el);
+        if (!input || typeof value !== 'boolean') return false;
+        if (input.checked !== value) NDS.setValue(input, value);
+        return true;
+    }
+
+    NDS.Switch = {
+        getValue: (el) => { const input = resolveInput(el); return input ? input.checked : ''; },
+        setValue,
+        clear: (el) => setValue(el, false),
+    };
 })();

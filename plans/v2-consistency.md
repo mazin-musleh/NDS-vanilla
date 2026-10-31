@@ -86,7 +86,7 @@ Main Nav's menu triggers and Show More are `<button type="button">` in the inclu
 ## Batch 6a, checked against the code (2026-10-31)
 
 Shipped in two commits. **6a-1:** 2.5 at the owner's scope (lifecycle + value + validate, not every element-first method): `create`, `destroy`, `getInstance`, `whenReady`, `open`, `close`, `toggle`, `validate` and the existing Otp, Time Picker and Custom Select value methods resolve an id or selector (~40 files). `NDS.resolveElement` returns a non-string as is, so "no argument means all" holds; a missed string on such a method does nothing. Modal and Panel `open` try the id (template included) before a selector, so `'dialog'` never matches the tag. 2.10: one stock line opens each lazy page's JavaScript section (Alert, Filter, Chart and Accessibility keep their own). Still element-only, outside the row: `Slider.reinit`, `Grid.refresh`, `Filter.refresh`, `Sort.refresh`, `Table.createResponsive`/`createColumnToggle`, `Rating.enable`, setters such as `Pagination.setPage`. Check: `scripts/check-v2-batch6a.mjs`.
-**6a-2 (next):** 3.25, owner (2026-10-31): every value field gets `NDS.X.getValue(el)`, `setValue(el, v)`, `clear(el)`, and the instance trio where an instance exists (no new instances); a refused set returns `false`; `getValue` returns the value a form submits (Date Picker ISO, a phone in E.164). Multiselect's `getSelected`/`reset` renames stay in 6b (3.12).
+**6a-2:** 3.25, owner (2026-10-31): every value field answers `NDS.X.getValue(el)` / `setValue(el, v)` / `clear(el)`, or `getValues` / `setValues` / `clear` for several (Taginput, Multiselect, a Checkbox group, a Date Picker or Slider range), and the instance does the same where one exists (no new instances). 15 fields: Otp, Custom Select, Rating, Taginput, Multiselect, Dropmenu (select mode), Password, Editor, Date Picker, Slider, Switch, Checkbox, Radio, Formatted Input, Autocomplete (Time Picker had it). A refused set returns `false` and writes nothing; `getValue` returns what the field stands for (Date Picker an ISO date in any calendar, Formatted Input what the form submits). PERSONA entry 10 gained `setValues` and the return rule. Pulled forward from 6b (3.12): Multiselect `getSelected` → `getValues`, `reset` → `clear`, with migration rows. Out: Upload (no script sets a file input), Filter (not a field). Check: `scripts/check-v2-batch6a2.mjs` (Chrome and WebKit).
 
 ## How we stay safe
 
@@ -121,7 +121,7 @@ Shipped in two commits. **6a-1:** 2.5 at the owner's scope (lifecycle + value + 
 | 4 | attribute renames 2.7, 3.9, 3.20 | medium: JS readers change |
 | 5 | structure 3.23 (Main Nav triggers to `<button>`) | medium: both engines |
 | 6a | JS additive: 2.5, 3.25, 2.10 | medium |
-| 6b | JS: 2.9, 3.11, 3.12, 3.13 | high |
+| 6b | JS: 2.9, 3.11, 3.13 (3.12 shipped in 6a-2) | high |
 | 6c | JS: 3.26 (additive form), 3.28, 3.14 docs | medium |
 | 7 | docs sweep, `NDS-INDEX.md`, IQ draft check | low |
 
