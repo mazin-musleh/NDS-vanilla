@@ -79,6 +79,10 @@ Renamed, no aliases: Autocomplete `data-name` → `data-display-field` (voice an
 
 **Seen in the A/B, not this batch:** a Console Demo menu button gets `role="menuitem"` only when Dropmenu stamps after Filter builds its menu (b3 had it, base/b1/b2/b4 not). A load-order race; the 390px doc thumb and Upload's progress number are timing noise too.
 
+## Batch 5, checked against the code (2026-10-31)
+
+Main Nav's menu triggers and Show More are `<button type="button">` in the include and the three canons, and every nav button carries `type="button"` (section 4's row, for the nav). Additive: the JS and CSS key on classes, so an authored `<a href="#">` trigger still works; no migration row. Space now opens a menu. Check: `scripts/check-v2-batch5.mjs` (Chrome and WebKit). Left as is: the nakheel-clinics IQ rig's `<a>` Show More (a consumer copy, still valid).
+
 ## How we stay safe
 
 1. **Baseline first, made stable.** Build today's `HEAD` into `tmp/ab/base/`. `scripts/ab-pages.mjs` diffs base against head, with the clock frozen, animations and swiper autoplay off, fonts loaded:

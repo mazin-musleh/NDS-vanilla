@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 05:53 PM"
+last_edit: "31/10/2026 - 07:26 PM"
 ---
 
 <section id="mainnav-overview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "31/10/2026 - 05:53 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-The main navigation is the bar below the top bar. On the start side, the brand links to the home page. Next to it, the primary links take people to the main pages of the site, and a dropdown groups the pages under one link. On the end side, the actions hold search, language and the other site tools.
+The main navigation is the bar below the top bar. On the start side, the brand links to the home page. Next to it, the primary links take people to the main pages of the site, and a dropdown groups the pages under one button. On the end side, the actions hold search, language and the other site tools.
 
 The main navigation is a page shell part. The preview shows it in a frame of its own, so it does not clash with this page's own main navigation.
 
@@ -45,7 +45,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
     </a>
     <ul class="nds-nav-minimal" hidden>
       <li class="nds-nav-toggler nds-nav-item">
-        <button class="nds-nav-link nds-btn nds-subtle nds-indicator" aria-label="Toggle navigation menu" data-i18n-aria-label="main-nav.toggle_menu" aria-expanded="false" aria-controls="nds-nav-collapse">
+        <button type="button" class="nds-nav-link nds-btn nds-subtle nds-indicator" aria-label="Toggle navigation menu" data-i18n-aria-label="main-nav.toggle_menu" aria-expanded="false" aria-controls="nds-nav-collapse">
           <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
         </button>
       </li>
@@ -69,9 +69,9 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
             </a>
           </li>
           <li class="nds-nav-item nds-has-menu">
-            <a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
+            <button type="button" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
               <span class="nds-label">Services</span>
-            </a>
+            </button>
             <div class="nds-nav-menu" hidden>
               <div class="nds-nav-menu-content nds-content-wrapper">
                 <div class="nds-nav-columns">
@@ -132,13 +132,13 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
           </li>
         </ul>
         <div class="nds-nav-item nds-show-more">
-          <a href="#" class="nds-nav-link nds-btn nds-subtle nds-indicator nds-full" title="Show more" data-i18n-title="scroll-more.show_more" aria-label="Show more" data-i18n-aria-label="scroll-more.show_more">
+          <button type="button" class="nds-nav-link nds-btn nds-subtle nds-indicator nds-full" title="Show more" data-i18n-title="scroll-more.show_more" aria-label="Show more" data-i18n-aria-label="scroll-more.show_more">
             <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-          </a>
+          </button>
         </div>
         <ul class="nds-nav-actions">
           <li class="nds-nav-item nds-has-menu nds-icon-only nds-search nds-pinned">
-            <button class="nds-nav-link nds-btn nds-subtle nds-indicator nds-tooltip" data-tooltip-hover="500" title="Search" aria-expanded="false"><i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i><span class="nds-label" data-hidden="sm md sr">Search</span></button>
+            <button type="button" class="nds-nav-link nds-btn nds-subtle nds-indicator nds-tooltip" data-tooltip-hover="500" title="Search" aria-expanded="false"><i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i><span class="nds-label" data-hidden="sm md sr">Search</span></button>
             <div class="nds-nav-menu" hidden>
               <div class="nds-nav-menu-content">
                 <div class="nds-content-wrapper">
@@ -174,9 +174,9 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
 </script>
 <script type="text/html" id="mainnav-columns" data-canon>
 <li class="nds-nav-item nds-has-menu">
-  <a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
+  <button type="button" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
     <span class="nds-label">Services</span>
-  </a>
+  </button>
   <div class="nds-nav-menu" hidden>
     <div class="nds-nav-menu-content nds-content-wrapper">
       <div class="nds-nav-columns">
@@ -238,9 +238,9 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
 </script>
 <script type="text/html" id="mainnav-rows" data-canon>
 <li class="nds-nav-item nds-has-menu">
-  <a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
+  <button type="button" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator" aria-expanded="false">
     <span class="nds-label">Media Center</span>
-  </a>
+  </button>
   <div class="nds-nav-menu" hidden>
     <div class="nds-nav-menu-content nds-content-wrapper">
       <div class="nds-nav-row">
@@ -300,7 +300,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
 </script>
 <script type="text/html" id="mainnav-search" data-canon data-form>
 <li class="nds-nav-item nds-has-menu nds-icon-only nds-search nds-pinned">
-  <button class="nds-nav-link nds-btn nds-subtle nds-indicator nds-tooltip" data-tooltip-hover="500" title="Search" aria-expanded="false"><i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i><span class="nds-label" data-hidden="sm md sr">Search</span></button>
+  <button type="button" class="nds-nav-link nds-btn nds-subtle nds-indicator nds-tooltip" data-tooltip-hover="500" title="Search" aria-expanded="false"><i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i><span class="nds-label" data-hidden="sm md sr">Search</span></button>
   <div class="nds-nav-menu" hidden>
     <div class="nds-nav-menu-content">
       <div class="nds-content-wrapper">
@@ -328,7 +328,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
 </script>
 <script type="text/html" id="mainnav-notifications" data-canon>
 <li class="nds-nav-item nds-has-menu nds-icon-only" id="nav-notifications">
-  <button class="nds-nav-link nds-btn nds-subtle nds-indicator nds-tooltip" data-tooltip-hover="500" title="Notifications" aria-expanded="false"><i class="nds-icon nds-hgi-notification-02" aria-hidden="true"><span class="nds-badge" data-count="2"></span></i><span class="nds-label" data-hidden="sm md sr">Notifications</span></button>
+  <button type="button" class="nds-nav-link nds-btn nds-subtle nds-indicator nds-tooltip" data-tooltip-hover="500" title="Notifications" aria-expanded="false"><i class="nds-icon nds-hgi-notification-02" aria-hidden="true"><span class="nds-badge" data-count="2"></span></i><span class="nds-label" data-hidden="sm md sr">Notifications</span></button>
   <div class="nds-nav-menu nds-fit" hidden>
     <div class="nds-nav-menu-content">
       <div class="nds-nav-column">
@@ -387,7 +387,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
 </script>
 <script type="text/html" id="mainnav-user" data-canon>
 <li class="nds-nav-item nds-has-menu nds-icon-only" id="nav-user">
-  <button class="nds-nav-link nds-btn nds-subtle nds-lg nds-indicator nds-tooltip" data-tooltip-hover="500" title="Ahmed" aria-expanded="false"><span class="nds-avatar"><img src="../docs-assets/img/avatar3.webp" alt="Ahmed" class="nds-icon" loading="lazy"></span><span class="nds-label" data-hidden="sm md sr">Ahmed</span></button>
+  <button type="button" class="nds-nav-link nds-btn nds-subtle nds-lg nds-indicator nds-tooltip" data-tooltip-hover="500" title="Ahmed" aria-expanded="false"><span class="nds-avatar"><img src="../docs-assets/img/avatar3.webp" alt="Ahmed" class="nds-icon" loading="lazy"></span><span class="nds-label" data-hidden="sm md sr">Ahmed</span></button>
   <div class="nds-nav-menu nds-fit" hidden>
     <div class="nds-nav-menu-content">
       <div class="nds-nav-column">
@@ -447,7 +447,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
 | `ul.nds-nav-minimal` | The menu button (`li.nds-nav-toggler`), and the pinned actions below 960px. It ships `hidden` | Yes |
 | `#nds-nav-collapse.nds-nav-collapse` | The drawer: one `.nds-nav-collapse-content` with the links, the show more button and the actions. It ships `hidden`. The script finds it by this id | Yes |
 | `ul.nds-nav-primary` | The primary links, one `li.nds-nav-item` each | Yes |
-| `li.nds-nav-item.nds-has-menu` | A link that opens a menu: the trigger `a.nds-nav-link.nds-menu-btn`, then `.nds-nav-menu` > `.nds-nav-menu-content` | No |
+| `li.nds-nav-item.nds-has-menu` | An item that opens a menu: the trigger `button.nds-nav-link.nds-menu-btn`, then `.nds-nav-menu` > `.nds-nav-menu-content` | No |
 | `.nds-nav-columns` or `.nds-nav-row` | The menu's content. `.nds-nav-columns` holds titled columns (`.nds-nav-column` with a `.nds-nav-title` and a `.nds-nav-list`); `.nds-nav-row` holds one row of links (one `.nds-nav-list`) | With a dropdown |
 | `a.nds-nav-menu-item` | One link in a menu | With a dropdown |
 | `.nds-show-more` | The arrow that scrolls the links when they do not fit. Write it right after `.nds-nav-primary` | Yes |
@@ -505,7 +505,7 @@ The canon carries the Services dropdown, the search action and the language acti
 ### Dropdowns
 {: .nds-block-title}
 
-A click on a dropdown link opens its menu, and closes any other open menu. A second click, a click outside the menu, or Escape closes it. On a desktop, a primary menu spans the page width below the bar. In the drawer, it opens in place, under its link.
+A click on a dropdown button opens its menu, and closes any other open menu. A second click, a click outside the menu, or Escape closes it. On a desktop, a primary menu spans the page width below the bar. In the drawer, it opens in place, under its button.
 
 ### Small Menus
 {: .nds-block-title}
@@ -661,7 +661,7 @@ Below 960px, the actions move into the drawer, in one row at its bottom. An acti
 |---|---|---|
 | `nds-oncolor` | `a.nds-brand` | In dark mode, shows the logo in white |
 | `nds-icon-only` | An action's `li` | Shows only the icon. The label stays for screen readers |
-| `nds-menu-btn` | A dropdown's trigger link | The arrow that turns when the menu opens. See [Button](../components/button) |
+| `nds-menu-btn` | A dropdown's trigger button | The arrow that turns when the menu opens. See [Button](../components/button) |
 | `nds-multi-col` | A `.nds-nav-list` in a menu | Spreads the links over 3 columns, and 2 below 960px |
 | `nds-fit` | `.nds-nav-menu` | Makes the menu as wide as its content. See Small Menus under Behavior |
 | `nds-nav-cta` | An action's `li` | Makes the action's button 32px high, for a call to action written as `nds-btn nds-primary`. A pinned one comes first in the bar |

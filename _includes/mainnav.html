@@ -26,7 +26,7 @@
         </a>
         <ul class="nds-nav-minimal" hidden>
             <li class="nds-nav-toggler nds-nav-item">
-                <button class="nds-nav-link nds-btn nds-subtle nds-indicator" aria-label="Toggle navigation menu" data-i18n-aria-label="main-nav.toggle_menu"
+                <button type="button" class="nds-nav-link nds-btn nds-subtle nds-indicator" aria-label="Toggle navigation menu" data-i18n-aria-label="main-nav.toggle_menu"
                     aria-expanded="false" aria-controls="nds-nav-collapse">
                     <i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i>
                 </button>
@@ -40,11 +40,11 @@
                     {%- for item in nav_data.primary_nav %}
                     <li class="nds-nav-item{%- if item.type == 'dropdown' %} nds-has-menu{%- endif %}" {{ item.attr }}>
                         {%- if item.type %}
-                        <a href="#" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator"
+                        <button type="button" class="nds-nav-link nds-btn nds-subtle nds-menu-btn nds-indicator"
                             {%- if item.type == 'modal' %} data-modal-target="{{ item.id | default: item.label | slugify | append: '-modal' }}"{%- endif %}
                             {%- if item.type == 'dropdown' %} aria-expanded="false"{%- endif %}>
                             <span class="nds-label">{{ item.label }}</span>
-                        </a>
+                        </button>
                         {%- if item.type == 'dropdown' %}
                         <div class="nds-nav-menu" hidden>
                             <div class="nds-nav-menu-content nds-content-wrapper">
@@ -63,9 +63,9 @@
                     {%- endfor %}
                 </ul>
                 <div class="nds-nav-item nds-show-more">
-                    <a href="#" class="nds-nav-link nds-btn nds-subtle nds-indicator nds-full" title="Show more" data-i18n-title="scroll-more.show_more" aria-label="Show more" data-i18n-aria-label="scroll-more.show_more">
+                    <button type="button" class="nds-nav-link nds-btn nds-subtle nds-indicator nds-full" title="Show more" data-i18n-title="scroll-more.show_more" aria-label="Show more" data-i18n-aria-label="scroll-more.show_more">
                         <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
-                    </a>
+                    </button>
                 </div>
                 {%- endif %}
 
@@ -104,7 +104,7 @@
                             {%- if item.id %} id="{{ item.id }}"{%- endif %}
                             {%- if item.data_attr %} {{ item.data_attr }}{%- endif %}>{{ action_inner }}</a>
                         {%- else %}
-                        <button class="{{ action_class }}"{{ action_tip }}
+                        <button type="button" class="{{ action_class }}"{{ action_tip }}
                             {%- if item.type == 'modal' %} data-modal-target="{{ modal_target }}"{%- endif %}
                             title="{{ item.label }}"
                             {%- if item.id %} id="{{ item.id }}"{%- endif %}
