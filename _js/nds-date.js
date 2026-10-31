@@ -157,7 +157,7 @@
             return Math.max(index, 0);
         };
         // "fri sat" → [5, 6]: the weekday words data-week-start takes, in a list.
-        const readWeekdays = (text) => String(text || '').toLowerCase().split(/[\s,]+/).filter(Boolean).map((word) => {
+        const readWeekdays = (text) => NDS.splitList(String(text || '').toLowerCase()).map((word) => {
             const index = WEEKDAYS.indexOf(word);
             if (index < 0) warnOnce(`"${word}" is not one of ${WEEKDAYS.join(' ')}; skipped`);
             return index;

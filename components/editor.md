@@ -11,7 +11,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "31/10/2026 - 05:30 PM"
 ---
 
 <section id="editor-overview" class="nds-content-section nds-doc-overview">
@@ -112,7 +112,7 @@ Every state row goes on the field's `<textarea>`. The editor reads it from there
 ### Toolbar
 {: .nds-block-title}
 
-`data-editor-toolbar` on `.nds-editor` picks the toolbar buttons. Write the command names with spaces between them, and `|` to start a new button group. Without the attribute, the toolbar has the full set. The command names are in the API.
+`data-editor-toolbar` on `.nds-editor` picks the toolbar buttons. Write the command names with spaces or commas between them, and `|` to start a new button group. Without the attribute, the toolbar has the full set. The command names are in the API.
 
 ### Pasted Components
 {: .nds-block-title}
@@ -142,7 +142,7 @@ The image button inserts an image from a URL, with alt text, a width and a heigh
 ### Image Upload
 {: .nds-block-title}
 
-`data-editor-upload-url` with your server's URL adds a file picker to the image popover. With `data-editor-upload-auto-upload="true"`, the picker sends each file to the server, the way [File Upload](../components/upload) does. It then inserts the URL that the server returns. A file that fails a check shows its message in the picker.
+`data-editor-upload-url` with your server's URL adds a file picker to the image popover. With `data-editor-upload-auto-upload`, the picker sends each file to the server, the way [File Upload](../components/upload) does. It then inserts the URL that the server returns. A file that fails a check shows its message in the picker.
 
 ### Embedded Images
 {: .nds-block-title}
@@ -321,11 +321,11 @@ The image button inserts an image from a URL, with alt text, a width and a heigh
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-editor-toolbar` | `.nds-editor` | The toolbar commands, from the Toolbar Commands table. `none` removes the toolbar |
+| `data-editor-toolbar` | `.nds-editor` | The toolbar commands, from the Toolbar Commands table, separated by spaces or commas. `\|` starts a new group. `none` removes the toolbar |
 | `data-editor-upload-url` | `.nds-editor` | Adds a file picker to the image popover. Your server's URL, or `embed` to put the file in the value as a `data:` URL. The server returns `{ "url": "…" }` or the URL as text |
-| `data-editor-upload-auto-upload` | `.nds-editor` | `true` sends the file as soon as the user picks it. Set it with a server URL. Ignored with `embed` |
+| `data-editor-upload-auto-upload` | `.nds-editor` | Sends the file as soon as the user picks it. On when present; `false`, `0`, `no` or `off` keeps it off. Set it with a server URL. Ignored with `embed` |
 | `data-editor-upload-max-file-size` | `.nds-editor` | The largest file in bytes. Default `2097152` (2 MB). With `embed`, it also limits a pasted screenshot |
-| `data-editor-upload-allowed-types` | `.nds-editor` | The file extensions the picker takes. Default `jpg,jpeg,png,gif,webp,svg`. List `jpg` and `jpeg` both to take either |
+| `data-editor-upload-allowed-types` | `.nds-editor` | The file extensions the picker takes, separated by spaces or commas. Default `jpg,jpeg,png,gif,webp,svg`. List `jpg` and `jpeg` both to take either |
 | `data-editor-upload-allowed-mime-types` | `.nds-editor` | The MIME types the picker takes, such as `image/*`. A second check after the extension |
 | `data-state~="readonly"` | `.nds-editor` | Set by the script at load when the textarea has `readonly`. Add or remove it with `NDS.state` after load. See Read-only and Disabled |
 | `data-state~="disabled"` | `.nds-editor` | Set by the script at load when the textarea has `disabled`. Add or remove it with `NDS.state` after load. See Read-only and Disabled |

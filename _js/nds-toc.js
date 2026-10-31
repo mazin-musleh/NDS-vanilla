@@ -220,11 +220,14 @@
             if (this._active) {
                 NDS.state.remove(this._active.li, 'active');
                 NDS.state.remove(this._active.link, 'active');
+                NDS.aria.current(this._active.link, null);
             }
             this._active = entry;
             if (entry) {
                 NDS.state.add(entry.li, 'active');
                 NDS.state.add(entry.link, 'active');
+                // The section in view, not a page: "true", not "page".
+                NDS.aria.current(entry.link, 'true');
             }
         }
 
@@ -254,6 +257,7 @@
             if (this._active) {
                 NDS.state.remove(this._active.li, 'active');
                 NDS.state.remove(this._active.link, 'active');
+                NDS.aria.current(this._active.link, null);
             }
             this._toc.removeAttribute('data-nds-toc-initialized');
             // A surviving backref would hand create() this dead instance.

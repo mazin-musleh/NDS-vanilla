@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "28/10/2026 - 03:53 PM"
+last_edit: "31/10/2026 - 05:30 PM"
 ---
 
 <section id="timeline-overview" class="nds-content-section nds-doc-overview">
@@ -579,7 +579,7 @@ A [Divider](../components/divider) at the start of a step's content labels the e
 - Write the events oldest first and add `nds-reverse` for newest on top. A new event then goes at the end.
 - Write every date label in one format, such as `4 January 2026`.
 - Keep a title to what happened, in 2 to 4 words. Put who, where and when in the description, or in a [Meta](../components/meta) line inside `nds-stepper-text`, so it stays close to the title.
-- Say in the text when an event is still to come, such as "Pending". The dot shows the state to the eye only, and a screen reader does not announce it.
+- Say in the text when an event is still to come, such as "Pending". A screen reader hears the current event, but not which events are completed or upcoming.
 - Give the timeline an `id` when a script changes it. The Stepper methods find it by its id.
 - Give a circle icon `aria-hidden="true"`. The title names the event.
 - Put a timeline that can grow long in a [Scroll More](../components/scroll-more), so the page keeps its length.

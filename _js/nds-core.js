@@ -40,6 +40,7 @@
  *     NDS.cache.get / .clear (key) · .set (key, value, minutes)   localStorage with expiry
  *     NDS.cookie.get / .delete (name) · .set (name, value, days)   a cookie, no consent check; delete covers parent domains
  *     NDS.formatNumber(n, opts) · NDS.toLatinDigits(s) · NDS.escapeHtml(s) · NDS.toSafeUrl(url) · NDS.getUniqueId(prefix)
+ *     NDS.splitList(s)                a list attribute's value → its items: spaces or commas both split
  *     NDS.Date                         dates in Gregorian and Hijri: _js/nds-date.js
  *     NDS.announce(text)               say something in the shared live region
  *     NDS.i18n.load(component, lang)   a promise of a section's words
@@ -554,6 +555,8 @@
 
     // Arabic digits (both Unicode forms) → ASCII by their low nibble: what a field reads from a paste or autofill.
     NDS.toLatinDigits = (text) => String(text ?? '').replace(/[٠-٩۰-۹]/g, (char) => char.charCodeAt(0) & 15);
+    // One reader for every list attribute, so a page never has to know which separator it takes.
+    NDS.splitList = (text) => String(text ?? '').split(/[\s,]+/).filter(Boolean);
 
 
     // ── Run-When-Idle ────────────────────────────────────────────────

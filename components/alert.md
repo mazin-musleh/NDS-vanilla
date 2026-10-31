@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/10/2026 - 11:49 AM"
+last_edit: "31/10/2026 - 05:30 PM"
 ---
 
 <section id="alert-overview" class="nds-content-section nds-doc-overview">
@@ -300,6 +300,7 @@ A toast with a `duration` closes itself after that many milliseconds, and a ring
 |---|---|---|
 | `data-status` | `.nds-alert` | The status: `info`, `success`, `warning`, `error`, `critical` or `neutral`. Sets the icon and the colors |
 | `data-position` | `.nds-alert-placeholder` | Where toasts dock. Place your own placeholder with this attribute, and toasts for that position go into it instead of a new one |
+| `data-alert-close` | A button inside `.nds-alert` | Closes the alert on click, as `data-modal-close` does on a modal. `.nds-alert-close` still works, and it also places the built close button |
 | `data-state` | `.nds-toast` | Set by the script: `toast-show`, `toast-hide` and `paused`. Do not set it yourself |
 {: .nds-table .nds-responsive}
 

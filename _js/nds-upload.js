@@ -192,10 +192,11 @@
             const dataset = this.container.dataset;
             const attributeConfig = {
                 uploadUrl: dataset.uploadUrl || null,
-                autoUpload: dataset.autoUpload === 'true',
+                // On when present (bare, as every flag); a template's printed false (false, False, 0, no, off) stays off.
+                autoUpload: dataset.autoUpload !== undefined && !/^(false|0|no|off)$/i.test(dataset.autoUpload.trim()),
                 maxFileSize: parseInt(dataset.maxFileSize) || 10 * 1024 * 1024,
-                allowedTypes: dataset.allowedTypes ? dataset.allowedTypes.split(',').map(type => type.trim().toLowerCase()) : null,
-                allowedMimeTypes: dataset.allowedMimeTypes ? dataset.allowedMimeTypes.split(',').map(type => type.trim().toLowerCase()) : null,
+                allowedTypes: dataset.allowedTypes ? NDS.splitList(dataset.allowedTypes.toLowerCase()) : null,
+                allowedMimeTypes: dataset.allowedMimeTypes ? NDS.splitList(dataset.allowedMimeTypes.toLowerCase()) : null,
                 maxFiles: parseInt(dataset.maxFiles) || Infinity,
                 fieldName: dataset.fieldName || 'file',
                 uploadTimeout: parseFloat(dataset.uploadTimeout) || 0
@@ -210,8 +211,8 @@
         // them. allowedTypes / allowedMimeTypes accept an array or a comma string.
         _normalizeOptions(options) {
             if (!options || typeof options !== 'object') return {};
-            const toList = (value) => (Array.isArray(value) ? value : String(value).split(','))
-                .map(token => token.trim().toLowerCase()).filter(Boolean);
+            const toList = (value) => (Array.isArray(value) ? value : NDS.splitList(value))
+                .map(token => String(token).trim().toLowerCase()).filter(Boolean);
             const out = {};
             if (options.uploadUrl != null) out.uploadUrl = options.uploadUrl;
             if (options.autoUpload != null) out.autoUpload = options.autoUpload === true || options.autoUpload === 'true';

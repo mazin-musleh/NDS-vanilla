@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "31/10/2026 - 05:30 PM"
 ---
 
 <section id="toc-overview" class="nds-content-section nds-doc-overview">
@@ -299,7 +299,7 @@ Without `data-toc-source`, the script reads the links you write. Pick it for som
 | `data-toc-source` | `.nds-toc` | A CSS selector for the container whose headings build the list. It replaces the list you write |
 | `data-toc-levels` | `.nds-toc` | The heading levels to list, comma-separated. Default `h2,h3,h4` |
 | `data-state="loading"` | `.nds-toc` | The same as `nds-loading`, for a script that already sets states |
-| `data-state="active"` | `<li>` and its link | Set by the script on the link to the current section |
+| `data-state="active"` | `<li>` and its link | Set by the script on the link to the current section. It also writes `aria-current="true"` on that link, and removes it when the section changes |
 {: .nds-table .nds-responsive}
 
 ### CSS Custom Properties

@@ -183,6 +183,7 @@
                 } else {
                     NDS.state.set(step, 'upcoming');
                 }
+                NDS.aria.current(step, !allCompleted && stepNumber === this._currentStep ? 'step' : null);
             });
         }
 

@@ -232,8 +232,22 @@
         });
     }
 
+    // The marked page link tells a screen reader too. A TOC's mark is its scroll-spy, not a page: Toc owns
+    // its aria. Clear only a value this wrote, never one the author set.
+    const wroteCurrent = new WeakSet();
+    function markCurrent(drawer, item, on) {
+        const link = item.querySelector(':scope > a');
+        // A TOC wraps its drawer (nav.nds-toc > .nds-drawer); a href="#" link is a branch toggle, not a page.
+        if (!link || link.getAttribute('href') === '#' || drawer?.closest('.nds-toc')) return;
+        if (on && !link.hasAttribute('aria-current')) { NDS.aria.current(link, 'page'); wroteCurrent.add(link); }
+        else if (!on && wroteCurrent.delete(link)) NDS.aria.current(link, null);
+    }
+
     function setupActiveStates(drawer) {
-        drawer.querySelectorAll('li[data-state~="active"]').forEach(item => activateItem(drawer, item, false));
+        drawer.querySelectorAll('li[data-state~="active"]').forEach(item => {
+            activateItem(drawer, item, false);
+            markCurrent(drawer, item, true);
+        });
     }
 
     // A page that routes on the client moves the <li>'s active mark after init; the
@@ -243,6 +257,7 @@
         if (watchingActive) return;
         watchingActive = true;
         NDS.onAttributeChange('.nds-drawer[data-nds-drawer-initialized] li', ['data-state'], items => items.forEach(item => {
+            markCurrent(item.closest('.nds-drawer'), item, hasState(item, 'active'));
             const btn = item.querySelector(':scope > .nds-btn');
             if (!btn) return;
             if (hasState(item, 'active')) {
@@ -378,6 +393,7 @@
         togglesAbortControllers.get(drawer)?.abort();
         togglesAbortControllers.delete(drawer);
         searchTeardowns.get(drawer)?.();
+        drawer.querySelectorAll('li > a[aria-current]').forEach(link => { if (wroteCurrent.delete(link)) NDS.aria.current(link, null); });
 
         drawer.removeAttribute('data-nds-drawer-initialized');
     }

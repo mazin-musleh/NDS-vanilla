@@ -258,8 +258,9 @@ async function diff(baseName, headName) {
 
 // The checks that drive pages, by how each takes its site. Left out: check-a11y (builds _site),
 // check-filter-dates (dev server only), check-form-interact/-validate/-speed (they A/B two commits
-// themselves: run them with BASE=<commit>), and the static ones.
-const URL_ARG = ['dialogs', 'dropmenu-placement', 'filter-form-assoc', 'filter-server-mode', 'filter-sort-ownership', 'form-reset', 'frameworks', 'init-destroy', 'ipv', 'mainnav', 'menus-in-modal', 'mount-timing', 'pagination-data', 'refresh', 'scroll-jump', 'set-value', 'sort-api', 'swiper-loop', 'time-picker', 'v2-batch1'];
+// themselves: run them with BASE=<commit>), the static ones, and check-v2-batch*.mjs (each has an
+// old-names and a --new mode tied to one batch: run it by hand with that batch).
+const URL_ARG = ['dialogs', 'dropmenu-placement', 'filter-form-assoc', 'filter-server-mode', 'filter-sort-ownership', 'form-reset', 'frameworks', 'init-destroy', 'ipv', 'mainnav', 'menus-in-modal', 'mount-timing', 'pagination-data', 'refresh', 'scroll-jump', 'set-value', 'sort-api', 'swiper-loop', 'time-picker'];
 const SITE_ENV = ['part-sizes', 'typing'];
 
 async function behave(name) {

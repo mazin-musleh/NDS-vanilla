@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 08:42 PM"
+last_edit: "31/10/2026 - 05:30 PM"
 ---
 
 <section id="drawer-overview" class="nds-content-section nds-doc-overview">
@@ -353,7 +353,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-The current page's `<li>` carries `data-state="active"`. To open a submenu at load, see `data-state="open"` under Data Attributes. Every option goes on `.nds-drawer`.
+The current page's `<li>` carries `data-state="active"`. Screen readers hear its link as the current page. To open a submenu at load, see `data-state="open"` under Data Attributes. Every option goes on `.nds-drawer`.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
@@ -574,7 +574,7 @@ A [Scroll More](../components/scroll-more) wrapper around the list holds the dra
 | `data-search` | `.nds-drawer` | Adds a search box above the list. A number, such as `data-search="20"`, adds it only when the drawer has that many items or more |
 | `data-search-empty` | `.nds-drawer` | The text shown when nothing matches. The default is "No results" |
 | `data-search-style` | `.nds-drawer` | The search box's field style: `darker` (the default), `lighter` or `outline`, as the Forms field styles |
-| `data-state="active"` | `<li>` | Marks the current page. Its line shows, and every submenu above it opens at load |
+| `data-state="active"` | `<li>` | Marks the current page. Its line shows, and every submenu above it opens at load. The script writes `aria-current="page"` on the `<li>`'s link and moves it with the mark. It keeps an `aria-current` you wrote |
 | `data-state="open"` | `<li>` and its submenu `<ul>` | Opens the submenu at load, before the script runs. Set it on both, with `aria-expanded="true"` on the toggle button. The script keeps it in step: `opening` and `closing` during the slide, `open` while the submenu is open |
 | `data-status` | `<li>` | `success`, `info`, `warning`, `error` or `neutral`. Colors the featured icon in the row |
 | `data-search-value` | `<li>` | More words the item is found by, such as its name in another language |

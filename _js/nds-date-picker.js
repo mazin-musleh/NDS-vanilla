@@ -636,15 +636,18 @@
             this._state.minDate = readBound(this._elements.input.getAttribute('data-min-date'));
             this._state.maxDate = readBound(this._elements.input.getAttribute('data-max-date'));
             // Days that can't be picked: weekdays (sun … sat), and dates in the picker's format or
-            // YYYY-MM-DD, comma-separated, so code can write a server's dates as they come.
+            // YYYY-MM-DD, comma-separated, so code can write a server's dates as they come. A part that
+            // is no date but holds spaces is split again: "2026-10-01 2026-10-02", as weekdays take.
             this._state.disabledWeekdays = NDS.Date.readWeekdays(this._elements.input.getAttribute('data-disabled-weekdays'));
             this._state.disabledDates = new Set();
+            var readDate = (text) => calendar.parseDate(text, format) || NDS.Date.readDay(text);
             (this._elements.input.getAttribute('data-disabled-dates') || '').split(',').forEach((text) => {
                 text = text.trim();
                 if (!text) return;
-                var day = calendar.parseDate(text, format) || NDS.Date.readDay(text);
-                if (day) this._state.disabledDates.add(getDayKey(day));
-                else console.warn('NDS DatePicker: data-disabled-dates: "' + text + '" is not a date in ' + format + ' or YYYY-MM-DD');
+                var whole = readDate(text);
+                var days = whole ? [whole] : NDS.splitList(text).map(readDate);
+                days.forEach((day) => { if (day) this._state.disabledDates.add(getDayKey(day)); });
+                if (!days.length || days.some((day) => !day)) console.warn('NDS DatePicker: data-disabled-dates: "' + text + '" is not a date in ' + format + ' or YYYY-MM-DD');
             });
             // Open at the nearest bound when the view falls outside [min, max] —
             // otherwise the month shown is entirely disabled.

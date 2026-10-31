@@ -854,7 +854,7 @@
         for (const group of spec.split('|')) {
             let cluster = '';
             const flush = () => { if (cluster) { start += `<div class="nds-btn-group">${cluster}</div>`; cluster = ''; } };
-            for (const command of group.trim().split(/\s+/).filter(Boolean)) {
+            for (const command of NDS.splitList(group)) {
                 if (command === 'source') {
                     const label = getLabelHtml('source');
                     end = `<button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only nds-tooltip" data-source-toggle aria-pressed="false" aria-label="${label}" data-tooltip-message="${label}" data-tooltip-hover="500"><i class="hgi hgi-stroke hgi-source-code" aria-hidden="true"></i></button>`;

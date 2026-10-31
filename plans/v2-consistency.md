@@ -55,6 +55,15 @@ A fresh Opus pass checked the plan against the code; the top claims were hand-ch
 
 **Checks written first** (`scripts/check-v2-batch1.mjs`, outcome-based so they pass on old and new): a `<time>` opted into Hijri renders a Hijri date, also under an ancestor; swiper bullet and spotlight slide styled after a move; ND-96 card state; chart hover shows the tooltip and grows the dot; editor source view toggles and the placeholder shows when empty; password toggle shows and hides the text and resets on submit; voice input finds its target.
 
+## Batch 2, checked against the code (2026-10-31)
+
+Built: `aria-current` on Side Menu and Drawer page links (`page`, moved with the mark, an author's own value kept), TOC (`true`), Stepper (`step`); `data-auto-upload` on when present (a printed `false`, `0`, `no`, `off` stays off); `NDS.splitList` for every list attribute (`data-disabled-dates` still commas first); `data-alert-close`. Check: `scripts/check-v2-batch2.mjs`.
+
+**Dropped after the check:**
+- 2.8 status defaults: the premise was wrong. With no `data-status` these components render neutral; the docs' "(default)" labels name what the canon shows (nds-doc convention), not a code default.
+- `.nds-autocomplete` root class: once in a canon, the audit's `part-outside` rule would warn on every existing `nds-autocomplete-row` template. Cost over gain.
+- `data-toc-levels` keeps commas: its value is a selector list.
+
 ## How we stay safe
 
 1. **Baseline first, made stable.** Build today's `HEAD` into `tmp/ab/base/`. `scripts/ab-pages.mjs` diffs base against head, with the clock frozen, animations and swiper autoplay off, fonts loaded:

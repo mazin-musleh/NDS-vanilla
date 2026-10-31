@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 03:49 PM"
+last_edit: "31/10/2026 - 05:30 PM"
 ---
 
 <section id="upload-overview" class="nds-content-section nds-doc-overview">
@@ -337,13 +337,13 @@ The token `disabled` in `data-state` on `.nds-upload` stops the user from adding
 | `data-state~="disabled"` | `.nds-upload` | Set it yourself, or call `setDisabled()`. See Disabled |
 | `data-required` | `.nds-upload` | The form needs at least one file that passed the checks |
 | `data-max-file-size` | `.nds-upload` | The largest file, in bytes. The default is `10485760` (10 MB) |
-| `data-allowed-types` | `.nds-upload` | The allowed extensions, with commas and no dots: `jpg,png,pdf`. The script writes the matching `accept` on the file input when it starts |
-| `data-allowed-mime-types` | `.nds-upload` | The allowed file types, with commas: `image/*,application/pdf`. `image/*` takes every image type. A file whose type the browser does not report passes this check |
+| `data-allowed-types` | `.nds-upload` | The allowed extensions, with no dots, separated by spaces or commas: `jpg png pdf`. The script writes the matching `accept` on the file input when it starts |
+| `data-allowed-mime-types` | `.nds-upload` | The allowed file types, separated by spaces or commas: `image/* application/pdf`. `image/*` takes every image type. A file whose type the browser does not report passes this check |
 | `data-max-files` | `.nds-upload` | How many files the list holds. The default is no limit. Ignored with `single` |
 | `data-upload-url` | `.nds-upload` | The address each file is sent to, one POST request per file. See Upload as You Go |
 | `data-field-name` | `.nds-upload` | The name of the form field that holds the file in each upload request. The default is `file` |
 | `data-upload-timeout` | `.nds-upload` | The time limit for each upload, in milliseconds (`30000` is 30 seconds). The default is `0`, no limit. See Upload as You Go |
-| `data-auto-upload="true"` | `.nds-upload` | Sends each file as soon as it passes the checks. Needs `data-upload-url` |
+| `data-auto-upload` | `.nds-upload` | Sends each file as soon as it passes the checks. On when present; `false`, `0`, `no` or `off` keeps it off. Needs `data-upload-url` |
 | `data-state~="drag-over"` | `.nds-form-control` | The script sets it while a file is dragged over the drop zone. It removes it when the file leaves, on the drop, and on `destroy()` |
 | `accept` | `.nds-file-input` | The script writes it from `data-allowed-types`. Do not write it yourself |
 | `data-file-id` | `.nds-file-item` | The script writes the file's id when it draws the row. The row's `.nds-remove-file` gets the same id |
@@ -404,11 +404,11 @@ The `create()` options override the attributes of the same name.
 | Option | Default | Effect |
 |---|---|---|
 | `uploadUrl` | `data-upload-url` | The address each file is sent to |
-| `autoUpload` | `data-auto-upload` | `true` sends each file as soon as it passes the checks |
+| `autoUpload` | `data-auto-upload` | `true` sends each file as soon as it passes the checks. The attribute alone turns it on |
 | `maxFileSize` | `data-max-file-size` | The largest file, in bytes |
 | `maxFiles` | `data-max-files` | How many files the list holds |
-| `allowedTypes` | `data-allowed-types` | An array of extensions, or a string with commas |
-| `allowedMimeTypes` | `data-allowed-mime-types` | An array of file types, or a string with commas |
+| `allowedTypes` | `data-allowed-types` | An array of extensions, or a string separated by spaces or commas |
+| `allowedMimeTypes` | `data-allowed-mime-types` | An array of file types, or a string separated by spaces or commas |
 | `fieldName` | `data-field-name` | The name of the form field that holds the file |
 | `uploadTimeout` | `data-upload-timeout` | The time limit for each upload, in milliseconds |
 {: .nds-table .nds-responsive}

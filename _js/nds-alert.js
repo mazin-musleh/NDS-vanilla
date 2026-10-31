@@ -11,6 +11,7 @@
  * Events:
  *   (none — pass an onClick on an action, or watch the DOM)
  * Hooks:
+ *   data-alert-close  on a button inside the alert: a click closes it (.nds-alert-close does too)
  *   data-position   on a .nds-alert-placeholder you place yourself, so toasts for that
  *                   position land in your container instead of an auto-created one
  * Gotchas:
@@ -136,7 +137,7 @@
                 ` : '';
 
                 html += `
-                    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close${progressClass}">
+                    <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close${progressClass}" data-alert-close>
                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                         ${progressSvg}
                     </button>
@@ -366,10 +367,10 @@
             document.querySelectorAll('.nds-alert').forEach(alert => {
                 if (alert.hasAttribute('data-nds-alert-initialized') || alert.closest('code')) return;
 
-                const closeBtn = alert.querySelector('.nds-alert-close');
-                if (closeBtn) {
-                    closeBtn.addEventListener('click', () => this.dismiss(alert));
-                }
+                // The close button, and any other button that closes it (data-alert-close, as Modal's and Panel's).
+                alert.querySelectorAll('.nds-alert-close, [data-alert-close]').forEach(btn => {
+                    if (btn.closest('.nds-alert') === alert) btn.addEventListener('click', () => this.dismiss(alert));
+                });
                 alert.setAttribute('data-nds-alert-initialized', 'true');
             });
         },

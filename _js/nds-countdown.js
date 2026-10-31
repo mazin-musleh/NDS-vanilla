@@ -22,9 +22,9 @@
  *                           a centered .nds-card (.nds-center) per unit bringing every card variant and knob,
  *                           or plain units (number over word), as in a row card's banner
  *   [data-countdown-hide-zero]  on a unit: hidden while its value is 0 (the default markup's days)
- *   data-countdown-hide     ids, space-separated: those elements get hidden at zero (an action that ends with the
+ *   data-countdown-hide     ids, spaces or commas: those elements get hidden at zero (an action that ends with the
  *                           deadline), anywhere on the page. setTarget() shows them again
- *   data-countdown-show     ids, space-separated: hidden until zero, then shown (a closed message outside the root)
+ *   data-countdown-show     ids, spaces or commas: hidden until zero, then shown (a closed message outside the root)
  *   .nds-countdown-ended    at zero it becomes the root's only content, from any depth; setTarget() puts the rest back.
  *                           Without it the zeros stay
  *   no [data-unit] at all   the script writes the default: days with their word (hidden at 0), then hh:mm:ss
@@ -64,7 +64,7 @@
     // The elements the root names by id: data-countdown-hide ones go at zero, data-countdown-show ones come.
     function toggleLinked(el, ended) {
         for (const [attribute, hide] of [['data-countdown-hide', ended], ['data-countdown-show', !ended]]) {
-            for (const id of (el.getAttribute(attribute) || '').split(/\s+/)) {
+            for (const id of NDS.splitList(el.getAttribute(attribute))) {
                 if (!id) continue;
                 const linked = document.getElementById(id);
                 if (linked) linked.hidden = hide;

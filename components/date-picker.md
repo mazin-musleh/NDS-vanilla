@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/10/2026 - 11:35 AM"
+last_edit: "31/10/2026 - 05:30 PM"
 ---
 
 <section id="date-picker-overview" class="nds-content-section nds-doc-overview">
@@ -158,7 +158,7 @@ To filter a list by date, put the picker in a [Filter](../components/filter) gro
 ### Unavailable Days
 {: .nds-block-title}
 
-`data-disabled-weekdays` on `.nds-date-input` turns off weekdays: `sun`, `mon`, `tue`, `wed`, `thu`, `fri` or `sat`, with spaces between them. `data-disabled-dates` turns off single days, with commas between them. Write each date in the field's format and calendar, or as `YYYY-MM-DD`, so code can write the dates a server sends as they come. An office closed at the weekend and on two holidays takes `data-disabled-weekdays="fri sat" data-disabled-dates="23/09/2026, 2026-12-02"`.
+`data-disabled-weekdays` on `.nds-date-input` turns off weekdays: `sun`, `mon`, `tue`, `wed`, `thu`, `fri` or `sat`, with spaces or commas between them. `data-disabled-dates` turns off single days, with commas between them. Write each date in the field's format and calendar, or as `YYYY-MM-DD`, so code can write the dates a server sends as they come. An office closed at the weekend and on two holidays takes `data-disabled-weekdays="fri sat" data-disabled-dates="23/09/2026, 2026-12-02"`.
 
 The calendar shows these days off, the arrow keys skip them, and Tab never lands on one. When today is one of them, the Today button is off. An empty field whose month has no day left to pick opens on the next month that has one. A typed or pasted date on one of them shows an error under the field, such as "18/09/2026 is not available. Pick another day". In a range, the start and the end cannot be such a day, but the days between them can. Code can change either attribute at any time, such as after a request for the fully booked days, and the calendar and the value's check follow at once. A word that is not a weekday, or a date the picker cannot read, is skipped with a warning in the console.
 
@@ -321,8 +321,8 @@ The picker checks the field at each `change`, typed text included. A date that d
 | `data-state~="open"` | `.nds-date-picker` | The script sets it when the calendar opens, and removes it when the calendar closes. No NDS style reads it: it is for your CSS |
 | `data-picker-mode` | `.nds-date-picker` | The script writes `day`, `month` or `year` from `data-format` when the field starts. The CSS reads it to show the month or the year grid |
 | `data-min-date`, `data-max-date` | `.nds-date-input` | The first and the last day the user can pick, in the field's format and calendar, `today`, or `today±N` with an optional `m` or `y`. See Date Bounds |
-| `data-disabled-weekdays` | `.nds-date-input` | Weekdays the user cannot pick, `sun` to `sat`, with spaces between them, such as `fri sat`. See Unavailable Days |
-| `data-disabled-dates` | `.nds-date-input` | Single days the user cannot pick, in the field's format and calendar or as `YYYY-MM-DD`, with commas between them. A change applies at once. See Unavailable Days |
+| `data-disabled-weekdays` | `.nds-date-input` | Weekdays the user cannot pick, `sun` to `sat`, with spaces or commas between them, such as `fri sat`. See Unavailable Days |
+| `data-disabled-dates` | `.nds-date-input` | Single days the user cannot pick, in the field's format and calendar or as `YYYY-MM-DD`, with commas between them. A part with spaces that is not one date splits again on spaces. A change applies at once. See Unavailable Days |
 | `data-year-before`, `data-year-after` | `.nds-date-input` | How many years before and after this year the year menu lists. The defaults are `5` and `0`. See Year List |
 | `data-lang` | `.nds-date-input` | The language of the calendar text, such as `ar` or `en`. Without it, the picker reads the nearest `lang`, the input's own included. See [Internationalization](../core/i18n) |
 | `data-converted-date` | `.nds-date-input` | The script writes the date in the other calendar, in the field's format, when the user presses Save, and when the calendar opens on a field that holds a date. Clear, and Save with no date, remove it. A typed date does not update it |

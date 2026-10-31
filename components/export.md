@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "29/10/2026 - 11:39 AM"
+last_edit: "31/10/2026 - 05:30 PM"
 ---
 
 <section id="export-overview" class="nds-content-section nds-doc-overview">
@@ -460,7 +460,7 @@ A button with no `data-export-target` exports the table or `[data-export-rows]` 
 | `data-export-scope` | a button | `"selected"` exports only the selected rows, and `"all"` exports every row. The default is `"auto"`: see Export Scope above |
 | `data-export-name` | a source | The file name, before the date. The default is `nds-export`. On a button it does nothing |
 | `data-export-rows="selector"` | a list that is not a table | Selects its rows. Without it, the rows are the list's direct children |
-| `data-export-skip="keys"` | a list that is not a table | Leaves out the fields with these keys. Separate the keys with spaces |
+| `data-export-skip="keys"` | a list that is not a table | Leaves out the fields with these keys. Separate the keys with spaces or commas |
 | `data-export-label` | a `<th>` | The column name in the file. The default is the header text |
 | `data-export-skip` | a `<th>` | Leaves out the column. [Tables](../components/table) also sets it while a user hides the column. It has no effect on a `<td>` |
 | `data-export-field="key"` | an element in a row | Makes the element a field: its text goes in the column with this key |

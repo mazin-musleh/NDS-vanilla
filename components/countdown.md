@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "25/10/2026 - 02:17 PM"
+last_edit: "31/10/2026 - 05:30 PM"
 ---
 
 <section id="countdown-overview" class="nds-content-section nds-doc-overview">
@@ -221,7 +221,7 @@ At zero, the root gets `data-state="ended"`. A `.nds-countdown-ended` element an
 ### Linked Elements
 {: .nds-block-title}
 
-`data-countdown-hide` on the root lists element ids, separated by spaces. At zero, the script hides those elements, such as the actions row of an offer that ends with the deadline. `data-countdown-show` lists elements to show at zero instead, such as a closed message outside the countdown. The elements can be anywhere on the page. `set()` puts both back.
+`data-countdown-hide` on the root lists element ids, separated by spaces or commas. At zero, the script hides those elements, such as the actions row of an offer that ends with the deadline. `data-countdown-show` lists elements to show at zero instead, such as a closed message outside the countdown. The elements can be anywhere on the page. `set()` puts both back.
 
 </div>
   </div>
@@ -375,8 +375,8 @@ At zero, the root gets `data-state="ended"`. A `.nds-countdown-ended` element an
 | `data-countdown-seconds` | `.nds-countdown` | A duration in seconds, counted from the moment the countdown starts. It wins over `data-countdown` |
 | `data-countdown-warn` | `.nds-countdown` | Seconds left at which the script adds `warning` to `data-state` |
 | `data-countdown-now` | `.nds-countdown`, or any element around it, such as `<html>` | The server's current time, in the format of `data-countdown`. The script reads it once, when the countdown starts |
-| `data-countdown-hide` | `.nds-countdown` | Element ids, separated by spaces. The script adds `hidden` to each at zero, and removes it when the countdown starts and on `set()`. An id with no element logs a console warning |
-| `data-countdown-show` | `.nds-countdown` | Element ids, separated by spaces. The script removes `hidden` from each at zero, and adds it when the countdown starts and on `set()`. Write `hidden` on them yourself too, so they stay hidden before the script runs. An id with no element logs a console warning |
+| `data-countdown-hide` | `.nds-countdown` | Element ids, separated by spaces or commas. The script adds `hidden` to each at zero, and removes it when the countdown starts and on `set()`. An id with no element logs a console warning |
+| `data-countdown-show` | `.nds-countdown` | Element ids, separated by spaces or commas. The script removes `hidden` from each at zero, and adds it when the countdown starts and on `set()`. Write `hidden` on them yourself too, so they stay hidden before the script runs. An id with no element logs a console warning |
 | `dir` | `.nds-countdown` | Fixes the direction, such as `dir="ltr"` to keep the number left of the word on an Arabic page. Without it, the script sets `dir="auto"`: digits and separators alone read left to right, and Arabic unit words read right to left. A CSS `direction` on the root works too |
 | `data-state="warning"` | `.nds-countdown` | The script adds it when the time left reaches `data-countdown-warn`. It removes it at zero and on `set()` |
 | `data-state="ended"` | `.nds-countdown` | The script adds it at zero. It removes it on `set()` |

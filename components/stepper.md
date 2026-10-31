@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "28/10/2026 - 04:14 PM"
+last_edit: "31/10/2026 - 05:30 PM"
 ---
 
 <section id="stepper-overview" class="nds-content-section nds-doc-overview">
@@ -403,7 +403,7 @@ When something can refuse the move, such as validation or a request, call `NDS.S
 - To change the layout after load, change the class on the stepper. CSS alone sets the layout, so the change shows at once.
 - Use `nds-static` for a list that explains an order. A flow the user moves through keeps the step states.
 - Give a circle icon `aria-hidden="true"`. The step title names the step.
-- Name the current step in the page as well, such as in the form heading. The stepper shows the step to the eye only, and a screen reader does not announce it.
+- Name the current step in the page as well, such as in the form heading. A screen reader hears the current step, but not which steps are completed or upcoming.
 
 </div>
   </div>
@@ -438,6 +438,7 @@ When something can refuse the move, such as validation or a request, call `NDS.S
 | `data-total` | `.nds-stepper` | The number of steps. The script writes it when it starts. After you add or remove steps, write the new count in it, and the script reads the steps again |
 | `data-state` | `.nds-stepper` | The script writes `completed` when `next()` runs on the last step, or when `data-current` is past it. It removes it when the stepper moves back. Write `loading` yourself to show the skeleton: it works the same as `nds-loading` |
 | `data-state` | `.nds-stepper-step` | The script writes `completed`, `current` or `upcoming` on each step from `data-current`. It colors the circle and the border of a card on the step or its content. The script writes none on a static stepper. Do not write it yourself |
+| `aria-current="step"` | `.nds-stepper-step` | The script writes it on the current step, so screen readers hear it. No step has it when all are completed, or on a static stepper |
 | `data-step-text` | `.nds-stepper-circle` | Text in place of the step number, such as a letter. A completed step shows its check mark. A dot and `nds-icons` show no text |
 | `data-stepper-control` | `button` | `next`, `previous` or `goto`. The click moves the stepper. See Step Controls under Behavior |
 | `data-stepper-target` | `button` with `data-stepper-control` | The id of the stepper the button moves |

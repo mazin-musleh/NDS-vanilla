@@ -24,7 +24,7 @@
  *                       data-export-scope
  *   on any source:      data-export-name (filename) · data-export-rows (row selector; a
  *                       source that is not a table reads its direct children without it)
- *                       · data-export-skip (space-separated field keys, non-table only)
+ *                       · data-export-skip (field keys, spaces or commas, non-table only)
  *   on a cell or field: data-export-field (its key) · data-export-value (the exact value)
  *   on a <th>:          data-export-label (column header override) · data-export-skip
  * Gotchas:
@@ -146,7 +146,7 @@
 
         getColumns(source) {
             const skipKeys = new Set(
-                (source.dataset.exportSkip || '').split(/\s+/).filter(Boolean)
+                NDS.splitList(source.dataset.exportSkip)
             );
             const rows = this.getRows(source);
             const columns = [];
