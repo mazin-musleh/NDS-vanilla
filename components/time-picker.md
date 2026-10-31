@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "31/10/2026 - 10:30 PM"
 ---
 
 <section id="time-picker-overview" class="nds-content-section nds-doc-overview">
@@ -357,6 +357,8 @@ The `NDS.TimePicker` script loads after the page shows. Until it loads, each cal
 | `NDS.TimePicker.clear(el)` | Empties the field and every list, and returns `true` |
 | `NDS.TimePicker.destroy(el)` | Runs `instance.destroy()` on the picker of `el`: the input, or in Boxes the group or a box. `NDS.init.destroy()` calls it |
 | `NDS.TimePicker.validate(el, options)` | Checks the boxes of a Boxes field and returns `{ valid, message }`. Pass `{ showMessage: false }` to check without a message |
+| `instance.elements` | `{ input, formControl, container, … }`. Read-only |
+| `instance.isPanelCreated` | `true` once the panel is built, on the first open |
 | `instance.destroy()` | Removes the panel and its listeners. `create()` can start the field again. Call it before you remove the field from the page. The instance is on the input as `input.ndsTimePicker`, and in Boxes on the group as `group.ndsTimePicker` |
 {: .nds-table .nds-responsive}
 

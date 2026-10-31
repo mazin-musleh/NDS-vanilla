@@ -359,7 +359,7 @@
             }
 
             this.root.dispatchEvent(new CustomEvent('nds:sort:change', {
-                detail: { key: this._state.key, order: this._state.order, orderedItems: ordered, sort: this },
+                detail: { key: this._state.key, order: this._state.order, orderedItems: ordered, sort: this.root },
                 bubbles: true
             }));
         }

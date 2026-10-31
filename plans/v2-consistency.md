@@ -96,6 +96,15 @@ Shipped in two commits. **6a-1:** 2.5 at the owner's scope (lifecycle + value + 
 - **No code for removed names (owner, 2026-11-01):** no console warning for an old key, attribute or v1 behaviour; the migration rows, the audit and the changelog carry them. Removed in this batch: the Alert `variant` warn, the Chart and Upload create warns, batch 4's loader warn for old `<html>` switches, the button CSS that kept a pre-1.12 `hidden` progress circle visible (migration row added), and version-history comments (Main Nav, Swiper). A sweep of every 2.0.0 migration name over `_js`, `_sass`, `_includes`, `_layouts`, `_plugins` found no other reader.
 - Check: `scripts/check-v2-batch6b.mjs` (Chrome and WebKit).
 
+## Batch 6c, checked against the code (2026-10-31)
+
+Each change was checked against the component's shape first (owner, 2026-10-31: "not all components are the same").
+
+- **3.26, owner (2026-10-31): breaking is fine in v2 when it is more consistent.** `detail.{component}` is the host element: 8 components already did this (Accordion, Dropmenu, Pagination, Tooltip, Feedback, Panel, Table, Drawer). Every component has an element, but not every one has an instance. Filter's `detail.filter` (change, reset, clear) is now the element the event fires on, which holds `ndsFilter`. Sort's `detail.sort` is its root, which holds `ndsSort` (every path goes through `create`). `nds:filter:ready` carries `{ instance }`, like Editor and Upload, and `whenReady` still passes the instance. Rating gains `value` beside `rating`. PERSONA entry 10 rule 10 was rewritten to match: it said the instance. Migration rows added for Filter and Sort. Left as is: Switch's `value` is the input's form value and `checked` is its state, as on a native checkbox.
+- **3.28:** Swiper `goTo(i, { instant })` and `goToFull(i, { instant })` (one word for both; reduced motion still forces an instant move). Selection `selectAll(list, on, { scope })`. Both forms are new in v2: 1.12 had `slideTo(i, animate)`, so its migration row's fix text changed. Kept: `Table.setColumnHidden(t, i, hidden)` and `Form.setState(el, name, add)`, where the boolean is the value, as in `setValue(el, bool)`.
+- **3.14:** the instance names were added to their pages (Accessibility, Dropmenu, Filter, Sort, Swiper, Time Picker, Upload). Shared bases and core helpers (`NDS.Backdrop`, `dialog`, `popup`, `field`, `validation`, `typing`, about 40 core helpers) get one core reference page in batch 7 (owner, 2026-10-31), with an `NDS-INDEX.md` row.
+- Check: `scripts/check-v2-batch6c.mjs` (Chrome and WebKit).
+
 ## How we stay safe
 
 1. **Baseline first, made stable.** Build today's `HEAD` into `tmp/ab/base/`. `scripts/ab-pages.mjs` diffs base against head, with the clock frozen, animations and swiper autoplay off, fonts loaded:
@@ -131,7 +140,7 @@ Shipped in two commits. **6a-1:** 2.5 at the owner's scope (lifecycle + value + 
 | 6a | JS additive: 2.5, 3.25, 2.10 | medium |
 | 6b | JS: 2.9, 3.11, 3.13 (3.12 shipped in 6a-2) | high |
 | 6c | JS: 3.26 (additive form), 3.28, 3.14 docs | medium |
-| 7 | docs sweep, `NDS-INDEX.md`, IQ draft check | low |
+| 7 | docs sweep, `NDS-INDEX.md`, IQ draft check, core reference page (3.14) | low |
 
 **3.15 cut down:** Tabs, Switcher and OTP sit one rung above the button on purpose (`_tabs.scss:238`). Shifting their names (`nds-sm` → `nds-md`) would make an existing `nds-md` on tabs silently shrink from 40 to 32px, a break the audit cannot see. So: keep the ladders, document the rung in each page. The Switch default stays MD (a default change restyles every switch with no markup to flag).
 

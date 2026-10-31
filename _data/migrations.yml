@@ -262,6 +262,9 @@
 - { kind: event, name: nds:table:sub-close, status: renamed, use: nds:table:sub-closed, since: "2.0.0", fix: "Listen for nds:table:sub-closed." }
 - { kind: event, name: nds:table:sub-open, status: renamed, use: nds:table:sub-opened, since: "2.0.0", fix: "Listen for nds:table:sub-opened." }
 - { kind: event, name: nds:upload:selected, status: renamed, use: nds:upload:select, since: "2.0.0", fix: "Listen for nds:upload:select." }
+- { kind: api, name: "nds:filter:ready detail", status: renamed, use: "detail.instance", since: "2.0.0", fix: "Read e.detail.instance: the detail was the instance. NDS.Filter.whenReady() still passes the instance." }
+- { kind: api, name: "nds:filter:* detail.filter", status: renamed, use: detail.filter.ndsFilter, since: "2.0.0", fix: "detail.filter is the filter element on change, reset and clear: read its instance from detail.filter.ndsFilter." }
+- { kind: api, name: "nds:sort:change detail.sort", status: renamed, use: detail.sort.ndsSort, since: "2.0.0", fix: "detail.sort is the root element: read its instance from detail.sort.ndsSort." }
 - { kind: attribute, name: data-nds-cooldown-button-initialized, status: renamed, use: data-nds-cooldown-initialized, since: "2.0.0", fix: "NDS writes data-nds-cooldown-initialized; read that one." }
 - { kind: attribute, name: data-nds-tables-initialized, status: renamed, use: data-nds-table-initialized, since: "2.0.0", fix: "NDS writes data-nds-table-initialized; read that one." }
 - { kind: attribute, name: data-sort-dir, status: renamed, use: data-sort-order, since: "2.0.0", fix: "Use data-sort-order." }
@@ -372,7 +375,7 @@
 - { kind: api, name: NDS.TimeDate.getHijriDate, status: removed, since: "2.0.0", fix: "Use NDS.Date.format(NDS.Date.getToday(), { calendar: 'hijri', format: 'D M YYYY' })." }
 - { kind: api, name: el.ndsTabs.switchTo, status: renamed, use: el.ndsTabs.goTo, since: "2.0.0", fix: "Use el.ndsTabs.goTo(index)." }
 - { kind: api, name: el._ndsSwiper, status: renamed, use: el.ndsSwiper, since: "2.0.0", fix: "Use el.ndsSwiper." }
-- { kind: api, name: el._ndsSwiper.slideTo, status: renamed, use: el.ndsSwiper.goTo, since: "2.0.0", fix: "Use el.ndsSwiper.goTo(index, animate); it stops at the last page, as slideTo did." }
+- { kind: api, name: el._ndsSwiper.slideTo, status: renamed, use: el.ndsSwiper.goTo, since: "2.0.0", fix: "Use el.ndsSwiper.goTo(index, { instant }); it stops at the last page, as slideTo did. Pass instant: true where animate was false." }
 - { kind: api, name: NDS.Drawer.initDrawer, status: renamed, use: NDS.Drawer.create, since: "2.0.0", fix: "Use NDS.Drawer.create(drawer)." }
 - { kind: api, name: NDS.triggerEvents, status: renamed, use: NDS.setValue, since: "2.0.0", fix: "Use NDS.setValue(el, value): it writes the value and fires input and change. el.value = x; NDS.triggerEvents(el); becomes NDS.setValue(el, x);" }
 - { kind: api, name: NDS.langKey, status: renamed, use: NDS.lang, since: "2.0.0", fix: "Use NDS.lang: it holds the page language, not only ar or en." }

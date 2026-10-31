@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "31/10/2026 - 10:30 PM"
 ---
 
 <section id="swiper-overview" class="nds-content-section nds-doc-overview">
@@ -500,8 +500,12 @@ A swiper far down the page sets up when its section is about to show, so the pag
 | `NDS.Swiper.create(el)` | Starts one swiper and returns its instance, or the instance it already has. Returns `null` when the swiper has no wrapper or no slides |
 | `NDS.Swiper.destroy(el)` | Stops one swiper and puts its markup back as written. `NDS.init.destroy()` calls it |
 | `instance.next()`, `instance.prev()` | Moves one page |
-| `instance.goTo(index, animate)` | Moves to a slide, no further than the last page. A looping swiper has no last page, so it moves to any slide. `false` for `animate` moves at once |
+| `instance.goTo(index, { instant })` | Moves to a slide, no further than the last page. A looping swiper has no last page, so it moves to any slide. `instant: true` moves at once |
 | `instance.realIndex` | The current slide. Loop copies are not counted |
+| `instance.wrapper`, `instance.currentIndex`, `instance.lastIndex`, `instance.slidesPerView` | Read-only state. `currentIndex` counts loop copies |
+| `instance.toRealIndex(index)` | Returns the slide of a row index. A row index counts loop copies |
+| `instance.syncState()` | Updates the buttons, bullets and classes to the current slide |
+| `instance.goToFull(index, { instant })` | Moves to a row index, which counts loop copies. `instant: true` moves at once. Every move runs through it |
 | `instance.destroy()` | The same as `NDS.Swiper.destroy(el)` |
 {: .nds-table .nds-responsive}
 
@@ -515,7 +519,7 @@ var el = document.querySelector('.nds-swiper');
 var swiper = el.ndsSwiper;
 
 swiper.goTo(3);        // animated
-swiper.goTo(0, false); // at once
+swiper.goTo(0, { instant: true }); // at once
 
 // Change something outside the swiper with the slide
 el.addEventListener('nds:swiper:change', function (e) {

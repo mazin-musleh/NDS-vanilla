@@ -4,8 +4,8 @@
  *   NDS.Selection.init() / .reinit()        wire the document listeners (the loader calls this)
  *   NDS.Selection.refresh(list?)            resync one list (its id or the element); with no
  *                                           list, every list — the NDS.init.refresh hook
- *   NDS.Selection.selectAll(list, on=true, scope)  check or clear every item a filter shows, but
- *                                           not a disabled box; scope 'page' = only the current page
+ *   NDS.Selection.selectAll(list, on=true, { scope })  check or clear every item a filter shows,
+ *                                           but not a disabled box; scope 'page' = only the current page
  *   NDS.Selection.clear(list)               clear EVERY item, filter-hidden and box-less too, but
  *                                           not a disabled box
  *   NDS.Selection.getSelected(list)         the selected items, in DOM order
@@ -152,7 +152,7 @@
         getLists().forEach(recount);
     }
 
-    function selectAll(list, on = true, scope) {
+    function selectAll(list, on = true, { scope } = {}) {
         init();
         list = NDS.resolveElement(list);
         if (!list) return;
@@ -188,7 +188,7 @@
         const box = e.target;
         if (!(box instanceof Element) || !box.matches('input.nds-checkbox-input')) return;
         const allList = getTargetList(box);
-        if (allList) { selectAll(allList, box.checked, 'page'); return; }
+        if (allList) { selectAll(allList, box.checked, { scope: 'page' }); return; }
 
         // The innermost list wins: a sub row's nested table never moves its outer table.
         let list = null;

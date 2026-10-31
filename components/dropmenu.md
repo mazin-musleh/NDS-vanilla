@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 09:20 PM"
+last_edit: "31/10/2026 - 10:30 PM"
 ---
 
 <section id="dropmenu-overview" class="nds-content-section nds-doc-overview">
@@ -500,6 +500,10 @@ Set these on the `.nds-dropmenu` wrapper. The menu inherits them.
 | `NDS.Dropmenu.clear(el)` | Picks nothing: the hidden field is empty and the trigger label goes back to its placeholder. Returns `true`, or `false` when `el` is not a picker |
 | `wrapper.ndsDropmenu.getValue()`, `.setValue(value)`, `.clear()` | The same, on a picker that has started |
 | `wrapper.ndsDropmenu.open()`, `.close()`, `.toggle(event)` | Opens or closes the menu. Pass the click `event` to `toggle()`: on a `data-anchor-cursor` menu, the menu then opens under the pointer |
+| `wrapper.ndsDropmenu.syncPosition()` | Places the open menu again |
+| `wrapper.ndsDropmenu.setSelection(item)` | Picks an item in a picker |
+| `wrapper.ndsDropmenu.isOpen` | `true` while the menu is open. A property, not a method |
+| `wrapper.ndsDropmenu.trigger`, `.dropmenu` | The trigger, and the wrapper. Read-only |
 | `wrapper.ndsDropmenu.destroy()` | The same as `NDS.Dropmenu.destroy(wrapper)` |
 {: .nds-table .nds-responsive}
 

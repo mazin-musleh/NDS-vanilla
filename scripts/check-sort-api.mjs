@@ -151,7 +151,7 @@ const ok = (name, pass, got) => results.push({ name, pass, got });
     r1.addEventListener('nds:sort:change', e => { order.push('event'); detail = e.detail; });
     const s1 = NDS.Sort.create(r1, { items: '.row', triggers: '.t', onChange: a => { order.push('onChange'); changeArg = a; } });
     r1.querySelector('.t').click();
-    out.c1 = [L(r1), order.join('>'), detail.key, detail.order, detail.orderedItems.length, detail.sort === s1, changeArg.key, changeArg.order, JSON.stringify(changeArg.state), changeArg.orderedItems.length];
+    out.c1 = [L(r1), order.join('>'), detail.key, detail.order, detail.orderedItems.length, detail.sort === r1 && r1.ndsSort === s1, changeArg.key, changeArg.order, JSON.stringify(changeArg.state), changeArg.orderedItems.length];
     out.sameInstance = NDS.Sort.create(r1, { mode: 'cycle' }) === s1 && s1.options.mode === 'direct';
     r1.id = 'r1x';
     out.getInstance = [NDS.Sort.getInstance(r1) === s1, NDS.Sort.getInstance('#r1x') === s1, NDS.Sort.getInstance(document.body), NDS.Sort.create(null)];

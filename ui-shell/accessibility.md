@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.5"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 06:54 PM"
+last_edit: "31/10/2026 - 10:30 PM"
 ---
 
 <section id="accessibility-overview" class="nds-content-section nds-doc-overview">
@@ -726,6 +726,7 @@ The toolbar's size buttons change the band's height in 40px steps, from 40px to 
 | `NDS.Accessibility.reset()` | Resets every setting at once, with no second press |
 | `NDS.Accessibility.state` | A copy of the saved settings. Changing it changes nothing |
 | `NDS.Accessibility.isReady` | `true` once the panel is built and wired |
+| `NDS.Accessibility.isStarted` | `true` once `init()` has run, from a press or from the loader |
 | `NDS.Accessibility.init(trigger)` | Builds and wires the panel. The first press calls it, so you rarely need it |
 {: .nds-table .nds-responsive}
 

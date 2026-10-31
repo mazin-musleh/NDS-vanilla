@@ -422,7 +422,7 @@ The script starts on its own. Call `refresh(list)` after a change that fires no 
 | Method | Effect |
 |---|---|
 | `NDS.Selection.init()` | Adds the document listeners. The loader calls it |
-| `NDS.Selection.selectAll(list, on, scope)` | Selects every item the filter shows, or clears them when `on` is `false`. `on` defaults to `true`. With `scope` set to `'page'`, it acts only on the items on the current page |
+| `NDS.Selection.selectAll(list, on, { scope })` | Selects every item the filter shows, or clears them when `on` is `false`. `on` defaults to `true`. With `scope: 'page'`, it acts only on the items on the current page |
 | `NDS.Selection.clear(list)` | Clears every item, including items a filter hides and items with no checkbox. An item with a disabled checkbox keeps its state. Call it after a bulk action |
 | `NDS.Selection.getSelected(list)` | Returns the selected items, in page order |
 | `NDS.Selection.isSelected(item)` | Returns `true` when the item is selected. [Export](../components/export) uses it to pick the selected rows |

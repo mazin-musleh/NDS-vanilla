@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "31/10/2026 - 10:45 PM"
 ---
 
 <section id="sort-overview" class="nds-content-section nds-doc-overview">
@@ -464,6 +464,7 @@ Markup wiring is a `create()` call on the list with the defaults below: `items` 
 | `sort.reset()` | Restores the original order. Items added after setup follow the others. |
 | `sort.refresh()` | Sorts the items again by the active key. Does nothing when no sort is active. |
 | `sort.getState()` | Returns `{ key, order }`. |
+| `sort.hasMarkupTriggers` | A property. `true` when `data-sort-target` buttons drive the sort, not a Filter or a Table. |
 | `sort.destroy()` | Removes the listeners. The sort states on the triggers and the order of the items stay. |
 {: .nds-table .nds-responsive}
 
@@ -487,7 +488,7 @@ The `create()` options:
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:sort:change` | the root, bubbles | `{ key, order, orderedItems, sort }`, after every sort, reset and `apply()`. |
+| `nds:sort:change` | the root, bubbles | `{ key, order, orderedItems, sort }`, after every sort, reset and `apply()`. `sort` is the root; its instance is `sort.ndsSort`. |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="sort-api-js" data-canon data-lang="js">

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 09:20 PM"
+last_edit: "31/10/2026 - 10:10 PM"
 ---
 
 <section id="rating-overview" class="nds-content-section nds-doc-overview">
@@ -387,7 +387,7 @@ The instance is on the element as `el.ndsRating`. It is there once the component
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:rating:change` | `.nds-rating` (bubbles) | `{ rating, element }` |
+| `nds:rating:change` | `.nds-rating` (bubbles) | `{ rating, value, element }`. `rating` and `value` are the same score |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="rating-js" data-canon data-lang="js">

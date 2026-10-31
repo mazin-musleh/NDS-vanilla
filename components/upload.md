@@ -399,6 +399,7 @@ A file is an object `{ file, id, status, progress, error, response }`. `file` is
 | `instance.getConfig()` | Returns the settings in use, from the attributes and the `create()` options, as a frozen object |
 | `instance.enable()`, `instance.disable()` | Enables or disables the field |
 | `instance.refresh()` | Draws every row again |
+| `instance.container` | The `.nds-upload` root. Read-only |
 | `instance.destroy()` | Removes the listeners, stops the uploads and empties the list |
 {: .nds-table .nds-responsive}
 

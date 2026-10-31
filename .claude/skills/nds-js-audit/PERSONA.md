@@ -516,7 +516,7 @@ Use counts never decide. A meaning these four leave open is a new decision here,
 7. **An internal JS class** is `Nds{Name}`, PascalCase, with entry 9's name (`NdsTable`, `NdsIpv`); a class for a part adds the part (`NdsDatePickerCalendar`). An acronym is one word.
 8. **A module-level constant** is upper snake case when it is a primitive, a RegExp or a frozen value that is never reassigned (`INIT_ATTRIBUTE`, `SELECTOR`, `TOKENS = /…/g`), in whole words like every name (entry 10 rule 8); everything else is camelCase (functions, elements, `Map`, `WeakMap`, an array or object literal that is not frozen). `check-js-rules.mjs --names` flags an upper-snake array, object or `new` value (`Object.freeze(…)` and `new RegExp` pass).
 9. **A true/false value**: a public property or method is `isX` / `hasX` (entry 10 rule 1); a latch is named for what it latched, as a past participle (`initDone`, `wired`; entry 5).
-10. **An event `detail` key** is camelCase whole words: the instance under the component's name (`detail.stepper`), a new value under `value`.
+10. **An event `detail` key** is camelCase whole words: the host element under the component's name (`detail.accordion`; its instance is `el.nds{Name}`), the instance under `instance` on a `ready` event, a new value under `value`. Every component has an element; not every one has an instance (owner, 2026-10-31).
 
 The underscore and private data:
 

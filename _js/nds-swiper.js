@@ -5,13 +5,13 @@
  *   NDS.Swiper.create(el)           instance one swiper
  *   NDS.Swiper.destroy(el)          tear one down — the NDS.init.destroy entry point
  *   instance.next() / .prev()       move by one page
- *   instance.goTo(index, animate = true)  move to a slide index, clamped to the
- *                                   last page (a loop has none); false = instant
+ *   instance.goTo(index, { instant })  move to a slide index, clamped to the
+ *                                   last page (a loop has none); instant: true skips the scroll
  *   instance.syncState()            sync buttons, bullets and classes to the current slide
  *   instance.wrapper / .currentIndex / .lastIndex / .slidesPerView   read-only state
  *   instance.realIndex              the current slide, clones not counted (currentIndex counts them)
  *   instance.toRealIndex(index)     a row index (clones counted) → its slide
- *   instance.goToFull(index, instant)   move to a row index; every move runs through it
+ *   instance.goToFull(index, { instant })   move to a row index; every move runs through it
  *   instance.destroy()
  * Events:
  *   nds:swiper:change (bubbles)     detail.index = the real slide now at rest, after every move
@@ -531,7 +531,7 @@
             this.wrapper.style.scrollBehavior = prevBehavior;
         }
 
-        goToFull(index, instant = NDS.prefersReducedMotion) {
+        goToFull(index, { instant = NDS.prefersReducedMotion } = {}) {
             this._ensureInit();
             // A move before the first resize callback lands the loop now; landing after
             // would cancel the move and strand _aim. No layout yet = leave it to remeasure.
@@ -991,12 +991,12 @@
         // PUBLIC API
         // ==============================================
 
-        goTo(index, animate = true) {
+        goTo(index, { instant = false } = {}) {
             this._ensureInit();
             // Real index in, clamped to the last real page. A loop has no last page, so
             // any slide goes — the index nds:swiper:change reports must restore.
             index = Math.max(0, Math.min(index, this._realCount - (this._loop ? 1 : this.slidesPerView)));
-            this.goToFull(this._getFullIndex(index), !animate || NDS.prefersReducedMotion);
+            this.goToFull(this._getFullIndex(index), { instant: instant || NDS.prefersReducedMotion });
         }
 
         // ==============================================

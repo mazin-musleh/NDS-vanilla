@@ -30,7 +30,7 @@
  *   instance.targetId / .items / .criteria / .filterInputs / .sort / .isFormMode / .isAjaxMode
  *                                      read-only state
  * Events (bubble from the filter surface element):
- *   nds:filter:ready       detail = the instance
+ *   nds:filter:ready       detail {instance}
  *   nds:filter:change      detail {filter, criteria, totalItems, visibleItems, hiddenItems}
  *   nds:filter:reset       detail {filter, totalItems}
  *   nds:filter:clear       detail {filter}
@@ -3006,7 +3006,7 @@
             const hasCount = arguments.length > 0;
             const event = new CustomEvent('nds:filter:change', {
                 detail: {
-                    filter: this,
+                    filter: this._filterContainer,
                     // getCriteria(), not a shallow spread: the spread handed out the
                     // live criteria.filters object, so a consumer holding an old
                     // detail.criteria saw it track later changes and every
@@ -3025,7 +3025,7 @@
         _dispatchResetEvent() {
             const event = new CustomEvent('nds:filter:reset', {
                 detail: {
-                    filter: this,
+                    filter: this._filterContainer,
                     totalItems: this.items.length
                 },
                 bubbles: true
@@ -3037,7 +3037,7 @@
         _dispatchClearEvent() {
             const event = new CustomEvent('nds:filter:clear', {
                 detail: {
-                    filter: this
+                    filter: this._filterContainer
                 },
                 bubbles: true
             });
@@ -3287,7 +3287,7 @@
             instancesByTarget.set(instance.targetId, instance);
         }
         representative.dispatchEvent(new CustomEvent('nds:filter:ready', {
-            detail: instance,
+            detail: { instance },
             bubbles: true
         }));
         return instance;
@@ -3433,15 +3433,15 @@
             const id = container.getAttribute('data-filter-target');
             if (id) {
                 const handleReady = (e) => {
-                    if (e.detail?.targetId !== id) return;
+                    if (e.detail?.instance?.targetId !== id) return;
                     document.removeEventListener('nds:filter:ready', handleReady);
-                    callback(e.detail);
+                    callback(e.detail.instance);
                 };
                 document.addEventListener('nds:filter:ready', handleReady);
                 return;
             }
             container.addEventListener('nds:filter:ready', (e) => {
-                callback(e.detail);
+                callback(e.detail.instance);
             }, { once: true });
         }
     };
