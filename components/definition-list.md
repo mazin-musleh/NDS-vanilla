@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 11:19 AM"
+last_edit: "31/10/2026 - 05:53 PM"
 ---
 
 <section id="dl-overview" class="nds-content-section nds-doc-overview">
@@ -70,7 +70,7 @@ Pick another component when:
       <span class="nds-label">Profile URL</span>
     </dt>
     <dd>
-      <div class="nds-item-action">
+      <div class="nds-definition-action">
         <span>https://example.gov.sa/profile</span>
         <button type="button" class="nds-btn nds-subtle nds-icon-only nds-sm">
           <i class="nds-icon nds-hgi-copy-01" aria-hidden="true"></i>
@@ -89,7 +89,7 @@ Pick another component when:
       <span class="nds-label">Email</span>
     </dt>
     <dd>
-      <div class="nds-item-action">
+      <div class="nds-definition-action">
         <span>user@example.gov.sa</span>
         <button type="button" class="nds-btn nds-subtle nds-icon-only nds-sm">
           <i class="nds-icon nds-hgi-copy-01" aria-hidden="true"></i>
@@ -116,7 +116,7 @@ The Layout, Style, Emphasis, Size and Loading rows go on the list. The two Cards
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Details (default) | — | — | `dl`, `dt` and `dd`, for data where each title names its value, such as a profile |
-| Structure | With actions | canon `#dl-actions` | — | Values with buttons after them, such as copy and share. `nds-item-action` holds the value and its buttons in one row |
+| Structure | With actions | canon `#dl-actions` | — | Values with buttons after them, such as copy and share. `nds-definition-action` holds the value and its buttons in one row |
 | Layout | Stacked (default) | — | — | Each value under its title, for long values |
 | Layout | Table | `.nds-table-view` | `.nds-definition-list` | Titles in one column and values in the next, aligned across every item |
 | Layout | Table on phones (hint: Below 600px only) | `.nds-table-view-sm` | `.nds-definition-list` | The table layout below 600px only. Stacked on wider screens |

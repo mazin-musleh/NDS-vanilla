@@ -82,7 +82,7 @@ const inModal = async (page, { rows = 8, row = 3 } = {}) => page.evaluate(async 
     input.scrollIntoView({ block: 'center' });
     await new Promise((r) => setTimeout(r, 100));
     // A field with a calendar button opens from the button only.
-    (field.querySelector('.date-picker-toggle') || input).click();
+    (field.querySelector('.nds-date-picker-toggle') || input).click();
     await new Promise((r) => setTimeout(r, 400));
 
     const control = field.querySelector('.nds-form-control');
@@ -168,7 +168,7 @@ const plain = await page.evaluate(async () => {
     input.scrollIntoView({ block: 'center' });
     await new Promise((r) => setTimeout(r, 100));
     // A field with a calendar button opens from the button only.
-    (field.querySelector('.date-picker-toggle') || input).click();
+    (field.querySelector('.nds-date-picker-toggle') || input).click();
     await new Promise((r) => setTimeout(r, 400));
     const control = field.querySelector('.nds-form-control');
     const menu = NDS.Dropmenu.getMenu(control);

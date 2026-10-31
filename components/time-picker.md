@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "22/10/2026 - 01:42 AM"
+last_edit: "31/10/2026 - 05:53 PM"
 ---
 
 <section id="time-picker-overview" class="nds-content-section nds-doc-overview">
@@ -47,7 +47,7 @@ Pick another component when:
   </div>
   <div class="nds-form-control">
     <div class="nds-form-action">
-      <button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle nds-icon-only" aria-label="Pick a time" data-i18n-aria-label="time-picker.toggle">
+      <button type="button" class="nds-btn nds-subtle nds-md nds-time-picker-toggle nds-icon-only" aria-label="Pick a time" data-i18n-aria-label="time-picker.toggle">
         <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
       </button>
     </div>
@@ -138,7 +138,7 @@ A Format or Seconds choice changes two elements: write `data-format` on `.nds-ti
 ### Panel
 {: .nds-block-title}
 
-The clock button, `.time-picker-toggle`, opens the panel. A click in the text box only places the cursor, so the user can type. Without the button, a click in the text box opens the panel.
+The clock button, `.nds-time-picker-toggle`, opens the panel. A click in the text box only places the cursor, so the user can type. Without the button, a click in the text box opens the panel.
 
 The field fills when every list has a value, and each later pick changes it at once. The panel has no Save button. Escape or a click outside the panel closes it.
 

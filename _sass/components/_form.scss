@@ -483,7 +483,7 @@ fieldset {
             aspect-ratio: 1;
         }
 
-        >*:not(.nds-dropmenu, .nds-dropmenu-menu, .nds-browse-btn) {
+        >*:not(.nds-dropmenu, .nds-dropmenu-menu, .nds-upload-browse) {
             --btn-height: 100%;
             // The field's inner height (1px border): 100% has no height to resolve on a wrapped row.
             --btn-height-min: calc(var(--_input-size) - 2px);
@@ -527,7 +527,7 @@ fieldset {
                 text-overflow: ellipsis;
             }
 
-            >*:not(.nds-dropmenu, .nds-dropmenu-menu, .nds-browse-btn) {
+            >*:not(.nds-dropmenu, .nds-dropmenu-menu, .nds-upload-browse) {
                 &:not(:first-child)::before {
                     display: none;
                 }

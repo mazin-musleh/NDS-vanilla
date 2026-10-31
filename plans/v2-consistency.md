@@ -64,6 +64,15 @@ Built: `aria-current` on Side Menu and Drawer page links (`page`, moved with the
 - `.nds-autocomplete` root class: once in a canon, the audit's `part-outside` rule would warn on every existing `nds-autocomplete-row` template. Cost over gain.
 - `data-toc-levels` keeps commas: its value is a selector list.
 
+## Batch 3, checked against the code (2026-10-31)
+
+Renamed, each with a migration row where it shipped: `date-picker-toggle` → `nds-date-picker-toggle` (and the unreleased time picker's), `nds-persona-desc` → `nds-persona-description` with its three `--persona-desc-*` knobs, `nds-item-action` → `nds-definition-action`, the five Upload parts → `nds-upload-*`, a status tag's `nds-inverted` → `nds-dark` (plus rows for the earlier, unrecorded `nds-ghost` / `nds-outline` tag removals), the section float action's `nds-minimal` removed for `data-hidden="sm sr"` on each button label (owner, 2026-10-31: one existing utility, not a new class), and any `.nds-btn` whose label `data-hidden` hides is now square in that range (`:has()`, `:where()`-weighted; nav links, `nds-full` and Show More exempt; audit rule `hidden-label-icon` for any such button with no icon), card actions `nds-stacked` → `nds-vertical` (unreleased there). Check: `scripts/check-v2-batch3.mjs`.
+
+**Kept after the check:**
+- `nds-max-width` (3.18): it pairs with `nds-full-width` on purpose (out to the max-width cap vs. out to the screen); `nds-bleed` loses that.
+- Main Nav's `nds-minimal` (3.16 nav half): a deliberate big-host mode class (`nds-main-nav.js` comment); a `data-state` swap fails `check-data-state-tails.py` on 5 selectors and joins the shared invalidation set.
+- `nds-highlight-value` (3.4): a modifier on the list, not a part; the name fits.
+
 ## How we stay safe
 
 1. **Baseline first, made stable.** Build today's `HEAD` into `tmp/ab/base/`. `scripts/ab-pages.mjs` diffs base against head, with the clock frozen, animations and swiper autoplay off, fonts loaded:

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 05:30 PM"
+last_edit: "31/10/2026 - 05:53 PM"
 ---
 
 <section id="date-picker-overview" class="nds-content-section nds-doc-overview">
@@ -44,7 +44,7 @@ Pick another component when:
   </div>
   <div class="nds-form-control">
     <div class="nds-form-action">
-      <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle nds-icon-only" aria-label="Open calendar" data-i18n-aria-label="date-picker.open_calendar">
+      <button type="button" class="nds-btn nds-subtle nds-md nds-date-picker-toggle nds-icon-only" aria-label="Open calendar" data-i18n-aria-label="date-picker.open_calendar">
         <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
       </button>
     </div>
@@ -106,7 +106,7 @@ A Picker choice changes two elements: write `data-format` on `.nds-date-picker` 
 ### Save and Close
 {: .nds-block-title}
 
-The calendar button, `.date-picker-toggle`, opens the calendar. A click in the text box only places the cursor, so the user can type.
+The calendar button, `.nds-date-picker-toggle`, opens the calendar. A click in the text box only places the cursor, so the user can type.
 
 A pick shows in the calendar, but the field does not change until the user presses Save. Save writes the date in the field and fires native `input` and `change` events on it. Close, Escape or a click outside the calendar closes it and drops the pick. When the calendar closes with focus inside it, focus goes back to the calendar button. Today moves the calendar to this month and picks today. In Range, Today only moves the calendar. The Today button is off when today is outside the bounds or unavailable.
 

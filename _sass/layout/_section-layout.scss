@@ -399,20 +399,6 @@
         --btn-width: unset;
         flex-direction: row;
     }
-
-    // .nds-minimal: hide trigger button labels (icon-only).
-    // Applies when placed on the section-action wrapper (covers bare .nds-btn
-    // and buttons wrapped in a .nds-dropmenu, e.g. share) or directly on a button.
-    :is(.nds-section-head > .nds-section-action.nds-minimal > .nds-btn,
-        .nds-section-head > .nds-section-action.nds-minimal > .nds-dropmenu > .nds-btn,
-        .nds-btn.nds-minimal)>.nds-label {
-        @include label-hidden;
-    }
-
-    // Icon-only: drop the button padding.
-    :is(.nds-section-action.nds-minimal > .nds-btn, .nds-section-action.nds-minimal > .nds-dropmenu > .nds-btn) {
-        --btn-padding: 0;
-    }
 }
 
 /* ── Status section (an outcome message: not found, submitted, failed) ──

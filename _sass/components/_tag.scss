@@ -99,7 +99,7 @@
 
   // ==============================================
   // COLOR VARIANTS — color and status set the light fill. .nds-outline (normal
-  // tags) and .nds-inverted (status tags) overlay only what differs.
+  // tags) and .nds-dark (status tags) overlay only what differs.
   // ==============================================
 
   // No neutral rung: the defaults above already resolve to the neutral tokens, so
@@ -144,8 +144,8 @@
     &.nds-red { --_tag-border-base: var(--tag-border-error); }
   }
 
-  // Inverted — status tags only; neutral solid bg, per-status below.
-  &[data-status].nds-inverted {
+  // Dark (solid) — status tags only; neutral solid bg, per-status below.
+  &[data-status].nds-dark {
     --_tag-bg-base: var(--tag-background-neutral);
     --_tag-text-base: var(--text-oncolor-primary);
     --_tag-border-base: transparent;

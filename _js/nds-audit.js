@@ -726,8 +726,12 @@
         const isScoped = (row, selector) => {
             // A class that only changed element (div.nds-modal, aside.nds-panel → <dialog>) is still right in CSS.
             if (row.kind === 'class' && /^&(?:[a-z]+|:not\([a-z]+\))$/.test(row.scope || '')) return false;
+            // A scope a selector cannot be judged against (status tag vs normal tag): markup only.
+            if (row.markup) return false;
             const classNames = row.scope && row.scope.match(/\.[\w-]+/g);
-            return !row.scope || (classNames ? classNames.some(className => selector.includes(className)) : /^(nds|data)-/.test(row.name));
+            // Whole class names: .nds-btn must not match .nds-btn-group.
+            const names = (className) => new RegExp('\\' + className + '(?![\\w-])').test(selector);   // className is .[\w-]+
+            return !row.scope || (classNames ? classNames.some(names) : /^(nds|data)-/.test(row.name));
         };
         for (const { sel: selector, style, where } of getSiteRules()) {
             for (const [, className] of selector.matchAll(/\.(-?[_a-zA-Z][\w-]*)/g)) (byKind.class?.get(className) || []).forEach(row => { if (isScoped(row, selector)) hit(row, where, selector); });
@@ -815,12 +819,12 @@
             'Add nds-icon-only to the button.', undefined, elements.length);
     } });
 
-    // On phones nds-minimal hides every label in the action (_section-layout.scss), so a button with no icon is an empty box.
-    addRule({ id: 'minimal-action-icon', severity: 'error', docs: 'ui-shell/hero.html', check(context) {
-        const elements = context.find(':is(.nds-section-head > .nds-section-action.nds-minimal, .nds-section-head > .nds-section-action.nds-minimal > .nds-dropmenu) > .nds-btn, .nds-btn.nds-minimal')
+    // A label data-hidden hides in a range leaves the button its icon alone (it goes square there), so a button with no icon is an empty box.
+    addRule({ id: 'hidden-label-icon', severity: 'error', docs: 'utilities/hidden.html', check(context) {
+        const elements = context.find('.nds-btn > .nds-label:is([data-hidden~="sm"], [data-hidden~="md"], [data-hidden~="lg"])').map(label => label.parentElement)
             .filter(button => !button.querySelector('i, svg, img'));
-        if (elements.length) context.report(elements[0], `a button with no icon in an nds-minimal action${elements.length > 1 ? ` (${elements.length} buttons; the first is shown)` : ''}: on phones its label hides and it shows an empty box.`,
-            'Give it a leading icon, as the hero canon does, or take nds-minimal off the action.', undefined, elements.length);
+        if (elements.length) context.report(elements[0], `a button whose label data-hidden hides has no icon${elements.length > 1 ? ` (${elements.length} buttons; the first is shown)` : ''}: where the label hides, it shows an empty box.`,
+            'Give it a leading icon, or take data-hidden off the label.', undefined, elements.length);
     } });
 
     // The icon styles key on <i> (_icons.scss), so the same classes on any other tag paint nothing.

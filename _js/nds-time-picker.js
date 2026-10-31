@@ -22,7 +22,7 @@
  *   on the .nds-form-container:  data-format (HH H hh h mm ss A a — sets the display AND
  *                                which unit pickers the panel holds) · data-step (minute
  *                                step)
- *   .time-picker-toggle:         the button that opens the panel (none: a click on the
+ *   .nds-time-picker-toggle:     the button that opens the panel (none: a click on the
  *                                input opens it)
  *   on the .nds-time-input:      data-min-time · data-max-time (24h HH:mm[:ss], always)
  *   box mode — .nds-time-fields: an hour box .nds-time-hour and a minute box
@@ -282,7 +282,7 @@
                 formControl: formControl,
                 container: container,
                 carrier: container.querySelector('.nds-time-value'),
-                toggleBtn: container.querySelector('.time-picker-toggle')
+                toggleBtn: container.querySelector('.nds-time-picker-toggle')
             };
 
             // Derived from the field, so the unit ids survive a panel rebuild

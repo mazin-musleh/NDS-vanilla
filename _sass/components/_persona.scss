@@ -14,9 +14,9 @@
     --_role-FS: var(--persona-role-FS, var(--typo-text-lg-FS));
     --_role-LH: var(--persona-role-LH, var(--typo-text-lg-LH));
     --_role-color: var(--persona-role-color, var(--text-primary-paragraph));
-    --_desc-FS: var(--persona-desc-FS, var(--typo-text-md-FS));
-    --_desc-LH: var(--persona-desc-LH, var(--typo-text-md-LH));
-    --_desc-color: var(--persona-desc-color, var(--text-secondary-paragraph));
+    --_desc-FS: var(--persona-description-FS, var(--typo-text-md-FS));
+    --_desc-LH: var(--persona-description-LH, var(--typo-text-md-LH));
+    --_desc-color: var(--persona-description-color, var(--text-secondary-paragraph));
 
     --_avatar-size-base: 80px;
 
@@ -45,7 +45,7 @@
         color: var(--_role-color);
     }
 
-    .nds-persona-desc {
+    .nds-persona-description {
         font-size: var(--_desc-FS);
         line-height: var(--_desc-LH);
         color: var(--_desc-color);
@@ -95,8 +95,8 @@
         --persona-name-LH: var(--typo-text-lg-LH);
         --persona-role-FS: var(--typo-text-md-FS);
         --persona-role-LH: var(--typo-text-md-LH);
-        --persona-desc-FS: var(--typo-text-sm-FS);
-        --persona-desc-LH: var(--typo-text-sm-LH);
+        --persona-description-FS: var(--typo-text-sm-FS);
+        --persona-description-LH: var(--typo-text-sm-LH);
     }
 
     &.nds-sm {
@@ -105,7 +105,7 @@
         --persona-name-LH: var(--typo-text-md-LH);
         --persona-role-FS: var(--typo-text-sm-FS);
         --persona-role-LH: var(--typo-text-sm-LH);
-        --persona-desc-FS: var(--typo-text-xs-FS);
-        --persona-desc-LH: var(--typo-text-xs-LH);
+        --persona-description-FS: var(--typo-text-xs-FS);
+        --persona-description-LH: var(--typo-text-xs-LH);
     }
 }

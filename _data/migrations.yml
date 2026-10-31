@@ -8,6 +8,20 @@
 #   use      today's name, when there is one
 #   since    the release that changed it
 #   inert    a property NDS never read: setting it never had an effect
+#   markup   checked in markup only: the site CSS check cannot judge its scope (a status tag vs a normal tag)
+- { kind: class, name: date-picker-toggle, scope: .nds-date-picker, status: renamed, use: nds-date-picker-toggle, since: "2.0.0", fix: "Use nds-date-picker-toggle." }
+- { kind: class, name: nds-browse-btn, status: renamed, use: nds-upload-browse, since: "2.0.0", fix: "Use nds-upload-browse." }
+- { kind: class, name: nds-drop-hint, status: renamed, use: nds-upload-drop-hint, since: "2.0.0", fix: "Use nds-upload-drop-hint." }
+- { kind: class, name: nds-error-message, status: renamed, use: nds-upload-error, since: "2.0.0", fix: "Use nds-upload-error, in your file row template too." }
+- { kind: class, name: nds-file-input, status: renamed, use: nds-upload-input, since: "2.0.0", fix: "Use nds-upload-input." }
+- { kind: class, name: nds-ghost, scope: "&.nds-tag:not([data-status])", status: removed, markup: true, since: "2.0.0", fix: "Ghost is a status tag look: add data-status, or use nds-outline on a normal tag." }
+- { kind: class, name: nds-inverted, scope: "&.nds-tag[data-status]", status: renamed, markup: true, use: nds-dark, since: "2.0.0", fix: "Use nds-dark." }
+- { kind: class, name: nds-inverted, scope: "&.nds-tag:not([data-status])", status: removed, markup: true, since: "2.0.0", fix: "The solid look is for status tags: add data-status and use nds-dark." }
+- { kind: class, name: nds-item-action, status: renamed, use: nds-definition-action, since: "2.0.0", fix: "Use nds-definition-action." }
+- { kind: class, name: nds-minimal, scope: "&:is(.nds-section-action, .nds-btn)", status: removed, markup: true, since: "2.0.0", fix: "Write data-hidden=\"sm sr\" on each button's label instead: on phones the button shows only its icon, square." }
+- { kind: class, name: nds-outline, scope: "&.nds-tag[data-status]", status: removed, markup: true, since: "2.0.0", fix: "Outline is a normal tag look: on a status tag use nds-ghost or nds-dark." }
+- { kind: class, name: nds-persona-desc, status: renamed, use: nds-persona-description, since: "2.0.0", fix: "Use nds-persona-description." }
+- { kind: class, name: nds-remove-file, status: renamed, use: nds-upload-remove, since: "2.0.0", fix: "Use nds-upload-remove, in your file row template too." }
 - { kind: class, name: center, scope: "&.nds-tab-list", status: removed, since: "2.0.0", fix: "Use nds-center." }
 - { kind: class, name: show, scope: "&.nds-toggle-password", status: renamed, use: "data-state~=\"shown\"", since: "2.0.0", fix: "NDS writes data-state=\"shown\" on the toggle while the password shows: key your CSS on [data-state~=\"shown\"]." }
 - { kind: class, name: actions-column, scope: .nds-table, status: renamed, use: nds-actions-column, since: "2.0.0", fix: "Use nds-actions-column." }
@@ -175,6 +189,9 @@
 - { kind: id, name: ndsMainNav, status: renamed, use: nds-main-nav, since: "2.0.0", fix: "Use id nds-main-nav (and the menu button's aria-controls)." }
 - { kind: id, name: ndsNavCollapse, status: renamed, use: nds-nav-collapse, since: "2.0.0", fix: "Use id nds-nav-collapse (and the menu button's aria-controls)." }
 - { kind: id, name: ndsThemeToggle, status: renamed, use: data-theme-toggle, since: "2.0.0", fix: "Use data-theme-toggle on the toggle." }
+- { kind: property, name: --persona-desc-FS, status: renamed, use: --persona-description-FS, since: "2.0.0", fix: "Use --persona-description-FS." }
+- { kind: property, name: --persona-desc-LH, status: renamed, use: --persona-description-LH, since: "2.0.0", fix: "Use --persona-description-LH." }
+- { kind: property, name: --persona-desc-color, status: renamed, use: --persona-description-color, since: "2.0.0", fix: "Use --persona-description-color." }
 - { kind: property, name: --backdrop-z-index, status: removed, since: "2.0.0", fix: "Remove it: it never applied; each component sets its own backdrop z-index.", inert: true }
 - { kind: property, name: --card-border, status: renamed, use: --card-border-color, since: "2.0.0", fix: "Use --card-border-color." }
 - { kind: property, name: --card-border-active, status: renamed, use: --card-border-color-active, since: "2.0.0", fix: "Use --card-border-color-active." }

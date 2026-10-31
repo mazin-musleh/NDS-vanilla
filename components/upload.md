@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 05:30 PM"
+last_edit: "31/10/2026 - 05:53 PM"
 ---
 
 <section id="upload-overview" class="nds-content-section nds-doc-overview">
@@ -43,16 +43,16 @@ Pick another component when:
     </label>
   </div>
   <div class="nds-form-control">
-    <input type="file" id="upload-files" multiple class="nds-file-input">
+    <input type="file" id="upload-files" multiple class="nds-upload-input">
     <div class="nds-upload-zone">
       <i class="hgi hgi-stroke hgi-file-upload nds-upload-icon" aria-hidden="true"></i>
       <div class="nds-upload-text">
-        <span class="nds-drop-hint" data-i18n="upload.drag_drop">Drag and drop files here to upload</span>
+        <span class="nds-upload-drop-hint" data-i18n="upload.drag_drop">Drag and drop files here to upload</span>
       </div>
       <div class="nds-upload-hint">Up to 2 MB each, in JPG, PNG or PDF</div>
     </div>
     <div class="nds-form-action">
-      <button type="button" class="nds-btn nds-neutral nds-md nds-browse-btn">
+      <button type="button" class="nds-btn nds-neutral nds-md nds-upload-browse">
         <i class="hgi hgi-stroke hgi-folder-01" aria-hidden="true"></i>
         <span class="nds-label" data-i18n="upload.browse_files">Browse Files</span>
       </button>
@@ -78,7 +78,7 @@ Button mode removes `.nds-upload-zone` and the `dropbox` token. Single adds the 
 |---|---|---|---|---|
 | Mode | Drop zone (default) | `[data-state~="dropbox"]` | `.nds-upload` | A large dashed area that takes dropped files. Use it when the upload is the main task of the page. See Drop Zone |
 | Mode | Button | `remove` | `.nds-upload-zone` | A Browse button only. Use it when the upload is one field in a longer form |
-| Files | Many (default) | `[multiple]` | `.nds-file-input` | The user can add many files |
+| Files | Many (default) | `[multiple]` | `.nds-upload-input` | The user can add many files |
 | Files | Single | `[data-state~="single"]` | `.nds-upload` | The list holds one file, and a new file replaces it. See Single File |
 | State (any) | Disabled | `[data-state~="disabled"]` | `.nds-upload` | The user cannot add or remove files. See Disabled |
 | State (any) | Required (hint: Press Validate with no file) | `[data-required]` | `.nds-upload` | The form needs at least one file that passed the checks. See File Checks |
@@ -141,9 +141,9 @@ Each file gets a row. A file the user just added is `ready`. During an upload, t
     </label>
   </div>
   <div class="nds-form-control">
-    <input type="file" id="upload-rows-input" multiple class="nds-file-input">
+    <input type="file" id="upload-rows-input" multiple class="nds-upload-input">
     <div class="nds-form-action">
-      <button type="button" class="nds-btn nds-neutral nds-md nds-browse-btn">
+      <button type="button" class="nds-btn nds-neutral nds-md nds-upload-browse">
         <i class="hgi hgi-stroke hgi-folder-01" aria-hidden="true"></i>
         <span class="nds-label" data-i18n="upload.browse_files">Browse Files</span>
       </button>
@@ -198,10 +198,10 @@ The script draws each row from the built-in row. To customize the row, put a hid
     <div class="nds-file-info">
       <div class="nds-file-name nds-truncate"></div>
       <div class="nds-file-size"></div>
-      <div class="nds-file-error"><span class="nds-error-message"></span></div>
+      <div class="nds-file-error"><span class="nds-upload-error"></span></div>
     </div>
     <div class="nds-file-actions">
-      <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-remove-file" aria-label="Remove file" data-i18n-aria-label="upload.remove_file">
+      <button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-upload-remove" aria-label="Remove file" data-i18n-aria-label="upload.remove_file">
         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
       </button>
     </div>
@@ -345,8 +345,8 @@ The token `disabled` in `data-state` on `.nds-upload` stops the user from adding
 | `data-upload-timeout` | `.nds-upload` | The time limit for each upload, in milliseconds (`30000` is 30 seconds). The default is `0`, no limit. See Upload as You Go |
 | `data-auto-upload` | `.nds-upload` | Sends each file as soon as it passes the checks. On when present; `false`, `0`, `no` or `off` keeps it off. Needs `data-upload-url` |
 | `data-state~="drag-over"` | `.nds-form-control` | The script sets it while a file is dragged over the drop zone. It removes it when the file leaves, on the drop, and on `destroy()` |
-| `accept` | `.nds-file-input` | The script writes it from `data-allowed-types`. Do not write it yourself |
-| `data-file-id` | `.nds-file-item` | The script writes the file's id when it draws the row. The row's `.nds-remove-file` gets the same id |
+| `accept` | `.nds-upload-input` | The script writes it from `data-allowed-types`. Do not write it yourself |
+| `data-file-id` | `.nds-file-item` | The script writes the file's id when it draws the row. The row's `.nds-upload-remove` gets the same id |
 | `data-state~="uploading"`, `data-state~="processing"` | `.nds-file-item` | The script sets the token that matches the file's status, and removes it when the status changes. Both show the progress ring |
 | `data-status="success"`, `data-status="error"` | `.nds-file-item` and its `.nds-feedback` | The script sets `success` when the file is complete and `error` when it fails. It removes it when the status changes. `error` also shows the reason |
 {: .nds-table .nds-responsive}

@@ -156,7 +156,7 @@ sidemenu_mode: false
                                 </div>
                                 <div class="nds-form-control">
                                     <div class="nds-form-action">
-                                        <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle nds-icon-only" aria-label="Open calendar" data-i18n-aria-label="date-picker.open_calendar">
+                                        <button type="button" class="nds-btn nds-subtle nds-md nds-date-picker-toggle nds-icon-only" aria-label="Open calendar" data-i18n-aria-label="date-picker.open_calendar">
                                             <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
                                         </button>
                                     </div>

@@ -273,9 +273,9 @@ sidemenu_mode: false
                         </label>
                     </div>
                     <div class="nds-form-control">
-                        <input type="file" id="compose-files" multiple class="nds-file-input">
+                        <input type="file" id="compose-files" multiple class="nds-upload-input">
                         <div class="nds-form-action">
-                            <button type="button" class="nds-btn nds-neutral nds-md nds-browse-btn">
+                            <button type="button" class="nds-btn nds-neutral nds-md nds-upload-browse">
                                 <i class="hgi hgi-stroke hgi-folder-01" aria-hidden="true"></i>
                                 <span class="nds-label" data-i18n="upload.browse_files">Browse Files</span>
                             </button>

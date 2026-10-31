@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "25/10/2026 - 09:11 PM"
+last_edit: "31/10/2026 - 05:53 PM"
 ---
 
 <section id="hero-overview" class="nds-content-section nds-doc-overview">
@@ -49,11 +49,11 @@ The hero is one region of the page. The other regions are on [Page Layout](../la
   </nav>
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
-      <div class="nds-section-action nds-minimal">
+      <div class="nds-section-action">
         <div class="nds-share nds-dropmenu">
           <button class="nds-btn nds-secondary-outline nds-dropmenu-trigger" aria-label="Share Page" data-i18n-aria-label="share.share_page">
             <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
-            <span class="nds-label" data-i18n="share.share_page">Share Page</span>
+            <span class="nds-label" data-hidden="sm sr" data-i18n="share.share_page">Share Page</span>
           </button>
           <div class="nds-dropmenu-menu" hidden>
             <button class="nds-btn nds-subtle nds-dropmenu-item nds-share-x" type="button" aria-label="Share on X" data-i18n-aria-label="share.share_on_x">
@@ -256,7 +256,7 @@ The sub hero is a section with a breadcrumb before its wrapper. Its head parts a
 | `.nds-section-wrapper` | The head, and the action row after it | Yes |
 | `.nds-section-image` | A 120px [Avatar](../components/avatar) before the head (80px on phones). For a page about one person or entity | No |
 | `.nds-section-head` | The head parts, in the order above | Yes |
-| `.nds-section-action` in the head | The title action: written first in the head, it floats on the end side of the title. With `nds-minimal`, its buttons show only their icons on phones, so each one needs an icon. With `nds-wrap`, it moves under the title on phones | No |
+| `.nds-section-action` in the head | The title action: written first in the head, it floats on the end side of the title. With `data-hidden="sm sr"` on their labels, its buttons show only their icons on phones, so each one needs an icon. With `nds-wrap`, it moves under the title on phones | No |
 | `h1.nds-section-title` | The page title. The sub hero holds the page's `h1` | Yes |
 | `.nds-section-brief` | One short line under the title, in semibold | No |
 | `.nds-section-meta` | Under the title: a `.nds-section-tags` of small [Tags](../components/tag), a [Meta](../components/meta) line such as an article's dates and author, or both | No |

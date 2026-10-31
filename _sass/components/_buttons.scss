@@ -9,6 +9,19 @@
 
 @use '../mixins' as *;
 
+// Icon only: a square of the button's height. A built-in icon is a second icon: widen to fit
+// both, inset like the square's one. Minus the 1px border, so an arrow-only button stays square.
+@mixin btn-icon-only {
+  justify-content: center;
+  width: var(--_btn-size);
+  --btn-padding: 0;
+
+  &:is(.nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down) {
+    width: fit-content;
+    --btn-padding: calc((var(--_btn-size) - var(--_btn-icon-size)) / 2 - 1px);
+  }
+}
+
 @mixin btn-base {
   --_btn-bg: var(--btn-bg, transparent);
   --_btn-bg-hover: var(--btn-bg-hover, var(--_btn-bg));
@@ -746,17 +759,21 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
 
   /* Icon-Only Button Configurations */
   &.nds-icon-only {
-    justify-content: center;
-    width: var(--_btn-size);
-    --btn-padding: 0;
+    @include btn-icon-only;
+  }
 
-    // A built-in icon is a second icon: widen to fit both, inset like the square's
-    // one. Minus the 1px border, so an arrow-only button stays square.
-    &:is(.nds-menu-btn, .nds-next, .nds-prev, .nds-up, .nds-down) {
-      width: fit-content;
-      --btn-padding: calc((var(--_btn-size) - var(--_btn-icon-size)) / 2 - 1px);
-    }
-
+  // A label data-hidden hides in a range (data-hidden="sm", "sm sr") leaves the icon alone: the
+  // button is icon only there. Not a nav link (the nav sizes it) or a full-width bar. :where() keeps
+  // .nds-btn's weight, so a size knob still wins. ponytail: :has(), so a browser without it keeps the
+  // padded button; the label still hides.
+  @include mobile {
+    &:where(:not(.nds-nav-link, .nds-full, .nds-show-more):has(> .nds-label[data-hidden~="sm"])) { @include btn-icon-only; }
+  }
+  @include tablet {
+    &:where(:not(.nds-nav-link, .nds-full, .nds-show-more):has(> .nds-label[data-hidden~="md"])) { @include btn-icon-only; }
+  }
+  @include desktop('min') {
+    &:where(:not(.nds-nav-link, .nds-full, .nds-show-more):has(> .nds-label[data-hidden~="lg"])) { @include btn-icon-only; }
   }
 
   &.nds-circle {

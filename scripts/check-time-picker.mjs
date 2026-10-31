@@ -54,7 +54,7 @@ const build = (id, attrs = {}, seed = '', typed = '') => page.evaluate(([id, att
     Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
     el.innerHTML = '<div class="nds-form-control">'
         + '<div class="nds-form-action">'
-        + '<button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle" aria-label="t">'
+        + '<button type="button" class="nds-btn nds-subtle nds-md nds-time-picker-toggle" aria-label="t">'
         + '<i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i></button></div>'
         + '<input type="text" class="nds-input nds-time-input"'
         + (attrs['data-min-time'] ? ' data-min-time="' + attrs['data-min-time'] + '"' : '')
@@ -87,7 +87,7 @@ await page.evaluate(() => {
 });
 
 const openPanel = async (id) => {
-    await page.evaluate((id) => document.querySelector('#' + id + ' .time-picker-toggle').click(), id);
+    await page.evaluate((id) => document.querySelector('#' + id + ' .nds-time-picker-toggle').click(), id);
     await page.waitForFunction((id) => !!window.__tp.panel(id), id, { timeout: 4000 });
 };
 

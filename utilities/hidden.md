@@ -158,7 +158,7 @@ The canon is a Share button, and every option goes on its label. The label start
 - Use `data-hidden` instead of your own media query. Its ranges match the NDS breakpoints.
 - `hidden` and `data-hidden` without `sr` also hide the element from screen readers. Add `sr` when the text must still be read.
 - To show only a button's icon on phones, write `data-hidden="sm sr"` on its label. Never hide the label without `sr`: the button loses its name.
-- A label hidden with `sr` does not change the button's shape. The button keeps its text padding and does not become a square icon button.
+- A button whose label `data-hidden` hides is a square icon button in that range, as `nds-icon-only` makes it.
 - Use `nds-sr-only` for text that only screen readers need at every width, such as a word that tells screen readers what a number badge counts.
 - Do not hide a main action on phones. Move it into a [Dropmenu](../components/dropmenu), so the user can still reach it.
 - A hidden element still loads its images and frames. Leave heavy content out of the markup instead of hiding it.

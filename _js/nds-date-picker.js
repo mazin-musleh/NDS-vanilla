@@ -30,7 +30,7 @@
  *                                its own data-date-format / data-calendar, else the picker's.
  *                                Range: the first takes the start, the second the end;
  *                                a single date fills every one
- *   .date-picker-toggle:         the button that opens the calendar (none: a click on the
+ *   .nds-date-picker-toggle:     the button that opens the calendar (none: a click on the
  *                                input opens it)
  *   on the .nds-date-input:      data-min-date · data-max-date (a date, `today`, or `today±N`
  *                                with d, m or y, counted in the field's calendar; a change
@@ -275,7 +275,7 @@
     var SELECTORS = Object.freeze({
         container: '.nds-form-container',
         dropdown: '.nds-date-picker-menu',
-        toggleButton: '.date-picker-toggle',
+        toggleButton: '.nds-date-picker-toggle',
         monthDropmenu: '.nds-month-dropmenu',
         yearDropmenu: '.nds-year-dropmenu',
         monthDropdownButton: '.nds-month-dropmenu .nds-dropmenu-trigger',

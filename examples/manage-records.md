@@ -15,10 +15,10 @@ hideFeedback: true
 <section id="requests" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <div class="nds-section-action nds-minimal">
+            <div class="nds-section-action">
                 <button class="nds-btn nds-primary nds-lead-icon" id="add-record" type="button">
                     <i class="hgi hgi-stroke hgi-add-01"></i>
-                    <span class="nds-label">New request</span>
+                    <span class="nds-label" data-hidden="sm sr">New request</span>
                 </button>
             </div>
             <h2 class="nds-section-title">Service Requests</h2>
@@ -887,7 +887,7 @@ hideFeedback: true
                     </div>
                     <div class="nds-form-control">
                         <div class="nds-form-action">
-                            <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle nds-icon-only" aria-label="Open calendar" data-i18n-aria-label="date-picker.open_calendar">
+                            <button type="button" class="nds-btn nds-subtle nds-md nds-date-picker-toggle nds-icon-only" aria-label="Open calendar" data-i18n-aria-label="date-picker.open_calendar">
                                 <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
                             </button>
                         </div>

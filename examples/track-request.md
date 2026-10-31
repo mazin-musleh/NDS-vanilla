@@ -15,7 +15,6 @@ feedback_type: rating
 # Demo only: the "State" select in the hero previews the four states, with the script at the end of the page.
 # Delete both in production; the server renders one state.
 hero_float_actions:
-  class: nds-minimal
   items:
     - html: >-
         <!-- Demo only: previews the four states. Delete in production, with the demo script at the end of the page. -->
@@ -121,16 +120,16 @@ last_edit: "25/10/2026 - 04:48 PM"
                             </label>
                         </div>
                         <div class="nds-form-control">
-                            <input type="file" id="request-id-copy" name="id-copy" class="nds-file-input">
+                            <input type="file" id="request-id-copy" name="id-copy" class="nds-upload-input">
                             <div class="nds-upload-zone">
                                 <i class="hgi hgi-stroke hgi-file-upload nds-upload-icon" aria-hidden="true"></i>
                                 <div class="nds-upload-text">
-                                    <span class="nds-drop-hint" data-i18n="upload.drag_drop">Drag and drop files here to upload</span>
+                                    <span class="nds-upload-drop-hint" data-i18n="upload.drag_drop">Drag and drop files here to upload</span>
                                 </div>
                                 <div class="nds-upload-hint">Up to 2 MB, in JPG, PNG or PDF</div>
                             </div>
                             <div class="nds-form-action">
-                                <button type="button" class="nds-btn nds-neutral nds-md nds-browse-btn">
+                                <button type="button" class="nds-btn nds-neutral nds-md nds-upload-browse">
                                     <i class="hgi hgi-stroke hgi-folder-01" aria-hidden="true"></i>
                                     <span class="nds-label" data-i18n="upload.browse_files">Browse Files</span>
                                 </button>

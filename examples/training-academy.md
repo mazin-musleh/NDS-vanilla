@@ -126,7 +126,7 @@ last_edit: "24/10/2026 - 11:27 PM"
                         <div class="nds-card-content">
                             <div class="nds-card-text">
                                 <div class="nds-card-corner">
-                                    <span class="nds-tag nds-xs nds-inverted" data-status="warning">
+                                    <span class="nds-tag nds-xs nds-dark" data-status="warning">
                                         <span class="nds-label">5 seats left</span>
                                     </span>
                                 </div>
@@ -320,7 +320,7 @@ last_edit: "24/10/2026 - 11:27 PM"
                         <div class="nds-card-content">
                             <div class="nds-card-text">
                                 <div class="nds-card-corner">
-                                    <span class="nds-tag nds-xs nds-inverted" data-status="info">
+                                    <span class="nds-tag nds-xs nds-dark" data-status="info">
                                         <span class="nds-label">New</span>
                                     </span>
                                 </div>

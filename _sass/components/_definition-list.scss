@@ -158,7 +158,7 @@
     // buttons (copy, edit, share…). Flex row so any number of buttons share one
     // gap and stay aligned with the value — keeps small tap targets spaced apart
     // without per-button margins.
-    .nds-item-action {
+    .nds-definition-action {
         display: flex;
         align-items: center;
         flex-wrap: wrap;

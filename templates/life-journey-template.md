@@ -12,7 +12,6 @@ sidemenu_mode: false
 # Demo only: the "First visit" switch in the hero previews both modes, with the script at the end of the page.
 # Delete both in production; the server renders one mode.
 hero_float_actions:
-  class: nds-minimal
   items:
     - html: >-
         <!-- Demo only: previews both modes. Delete in production, with the demo script at the end of the page. -->

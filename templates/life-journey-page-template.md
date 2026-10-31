@@ -16,7 +16,6 @@ feedback_type: rating
 # Demo only: the "Completed" switch in the hero previews both states, with the script at the end of the page.
 # Delete both in production; the server renders one state.
 hero_float_actions:
-  class: nds-minimal
   items:
     - html: >-
         <!-- Demo only: previews both states. Delete in production, with the demo script at the end of the page. -->

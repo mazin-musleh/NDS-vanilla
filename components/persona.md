@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "15/10/2026 - 11:40 AM"
+last_edit: "31/10/2026 - 05:53 PM"
 ---
 
 <section id="persona-overview" class="nds-content-section nds-doc-overview">
@@ -44,7 +44,7 @@ Pick another component when:
   <div class="nds-persona-info">
     <span class="nds-persona-name">Noura Al-Qahtani</span>
     <span class="nds-persona-role nds-truncate">System Administrator</span>
-    <span class="nds-persona-desc">noura@example.gov.sa</span>
+    <span class="nds-persona-description">noura@example.gov.sa</span>
   </div>
 </div>
 </script>
@@ -231,9 +231,9 @@ Set these knobs in the `style` attribute of `.nds-persona`. The MD and SM classe
 | `--persona-role-FS` | `var(--typo-text-lg-FS)` | Role font size |
 | `--persona-role-LH` | `var(--typo-text-lg-LH)` | Role line height |
 | `--persona-role-color` | `var(--text-primary-paragraph)` | Role color |
-| `--persona-desc-FS` | `var(--typo-text-md-FS)` | Description font size |
-| `--persona-desc-LH` | `var(--typo-text-md-LH)` | Description line height |
-| `--persona-desc-color` | `var(--text-secondary-paragraph)` | Description color |
+| `--persona-description-FS` | `var(--typo-text-md-FS)` | Description font size |
+| `--persona-description-LH` | `var(--typo-text-md-LH)` | Description line height |
+| `--persona-description-color` | `var(--text-secondary-paragraph)` | Description color |
 | `--avatar-size` | `80px` (MD `64px`, SM `48px`) | The avatar size. See [Avatar](../components/avatar) |
 {: .nds-table .nds-responsive}
 

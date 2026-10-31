@@ -153,7 +153,7 @@ breadcrumb: [["Examples", "/examples"]]
             </div>
 
             <!-- Actions sit outside .nds-card-content: that is the part that scrolls -->
-            <div class="nds-card-actions nds-stacked">
+            <div class="nds-card-actions nds-vertical">
               <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
                 <span class="nds-label">Create account</span>
               </button>
@@ -230,7 +230,7 @@ breadcrumb: [["Examples", "/examples"]]
               </div>
             </div>
 
-            <div class="nds-card-actions nds-stacked">
+            <div class="nds-card-actions nds-vertical">
               <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
                 <span class="nds-label">Verify</span>
               </button>
@@ -263,7 +263,7 @@ breadcrumb: [["Examples", "/examples"]]
             </div>
           </div>
 
-          <div class="nds-card-actions nds-stacked">
+          <div class="nds-card-actions nds-vertical">
             <a href="{{ '/examples/console-demo/' | relative_url }}" class="nds-btn nds-primary nds-lg nds-full">
               <span class="nds-label">Go to dashboard</span>
             </a>

@@ -43,7 +43,7 @@ breadcrumb: [["Examples", "/examples"]]
           </div>
 
           <!-- Actions sit outside .nds-card-content: that is the part that scrolls -->
-          <div class="nds-card-actions nds-stacked">
+          <div class="nds-card-actions nds-vertical">
             <button type="button" class="nds-btn nds-primary nds-lg nds-full" id="nafath-btn">
               <span class="nds-label">Continue with Nafath</span>
             </button>
@@ -51,7 +51,7 @@ breadcrumb: [["Examples", "/examples"]]
 
           <div class="nds-divider">or</div>
 
-          <div class="nds-card-actions nds-stacked">
+          <div class="nds-card-actions nds-vertical">
             <button type="button" class="nds-btn nds-secondary-outline nds-lg nds-full" id="credentials-btn">
               <span class="nds-label">Sign in with National ID</span>
             </button>
@@ -161,7 +161,7 @@ breadcrumb: [["Examples", "/examples"]]
               </div>
             </div>
 
-            <div class="nds-card-actions nds-stacked">
+            <div class="nds-card-actions nds-vertical">
               <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
                 <span class="nds-label">Sign in</span>
               </button>
@@ -210,7 +210,7 @@ breadcrumb: [["Examples", "/examples"]]
             </div>
           </div>
 
-          <div class="nds-card-actions nds-stacked">
+          <div class="nds-card-actions nds-vertical">
             <button type="button" class="nds-btn nds-subtle nds-lg nds-full back-to-start">
               <span class="nds-label">Cancel</span>
             </button>
@@ -284,7 +284,7 @@ breadcrumb: [["Examples", "/examples"]]
               </div>
             </div>
 
-            <div class="nds-card-actions nds-stacked">
+            <div class="nds-card-actions nds-vertical">
               <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
                 <span class="nds-label">Verify</span>
               </button>
@@ -318,7 +318,7 @@ breadcrumb: [["Examples", "/examples"]]
             </div>
           </div>
 
-          <div class="nds-card-actions nds-stacked">
+          <div class="nds-card-actions nds-vertical">
             <a href="{{ '/examples/console-demo/' | relative_url }}" class="nds-btn nds-primary nds-lg nds-full">
               <span class="nds-label">Go to dashboard</span>
             </a>
@@ -469,7 +469,7 @@ breadcrumb: [["Examples", "/examples"]]
               </div>
             </div>
 
-            <div class="nds-card-actions nds-stacked">
+            <div class="nds-card-actions nds-vertical">
               <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
                 <span class="nds-label">Update password</span>
               </button>
@@ -528,7 +528,7 @@ breadcrumb: [["Examples", "/examples"]]
               </div>
             </div>
 
-            <div class="nds-card-actions nds-stacked">
+            <div class="nds-card-actions nds-vertical">
               <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
                 <span class="nds-label">Send code</span>
               </button>
@@ -562,7 +562,7 @@ breadcrumb: [["Examples", "/examples"]]
             </div>
           </div>
 
-          <div class="nds-card-actions nds-stacked">
+          <div class="nds-card-actions nds-vertical">
             <button type="button" class="nds-btn nds-secondary-outline nds-lg nds-full back-to-start">
               <span class="nds-label">Sign in again</span>
             </button>

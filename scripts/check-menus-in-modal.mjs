@@ -76,8 +76,8 @@ ok('modal content scrolls (the inner scroll box case)', H.scrolls);
 const probe = () => page.evaluate(() => __probe());
 const opener = {
   'custom-select': () => page.locator('[data-case="custom-select"] .nds-select-input').click(),
-  'date-picker': () => page.locator('[data-case="date-picker"] .date-picker-toggle').click(),
-  'time-picker': () => page.locator('[data-case="time-picker"] .time-picker-toggle').click(),
+  'date-picker': () => page.locator('[data-case="date-picker"] .nds-date-picker-toggle').click(),
+  'time-picker': () => page.locator('[data-case="time-picker"] .nds-time-picker-toggle').click(),
   multiselect: () => page.locator('[data-case="multiselect"] .nds-dropmenu-trigger').first().click(),
   autocomplete: async () => { const i = page.locator('[data-case="autocomplete"] input.nds-input'); await i.click(); await i.fill(''); await i.type('vis', { delay: 40 }); },
   dropmenu: () => page.locator('[data-case="dropmenu"] .nds-dropmenu-trigger').click(),

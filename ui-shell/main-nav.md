@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "27/10/2026 - 12:19 AM"
+last_edit: "31/10/2026 - 05:53 PM"
 ---
 
 <section id="mainnav-overview" class="nds-content-section nds-doc-overview">
@@ -395,7 +395,7 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
           <div class="nds-persona-info">
             <span class="nds-persona-name">Ahmed Mohammed</span>
             <span class="nds-persona-role nds-truncate">Business owner</span>
-            <span class="nds-persona-desc">ahmed@example.sa</span>
+            <span class="nds-persona-description">ahmed@example.sa</span>
           </div>
           <hr class="nds-divider">
           <div class="nds-persona-action">

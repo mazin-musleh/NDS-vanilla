@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "25/10/2026 - 10:41 PM"
+last_edit: "31/10/2026 - 05:53 PM"
 ---
 
 <section id="quote-overview" class="nds-content-section nds-doc-overview">
@@ -48,7 +48,7 @@ Pick another component when:
       </div>
       <div class="nds-persona-info">
         <cite class="nds-persona-name">Fatima Al-Harbi</cite>
-        <span class="nds-persona-desc">Head of Design</span>
+        <span class="nds-persona-description">Head of Design</span>
       </div>
     </div>
   </figcaption>

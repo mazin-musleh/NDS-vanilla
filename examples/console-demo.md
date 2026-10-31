@@ -482,10 +482,10 @@ hideFeedback: true
 <section id="team-directory" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <div class="nds-section-action nds-minimal">
+            <div class="nds-section-action">
                 <button class="nds-btn nds-primary nds-lead-icon">
                     <i class="hgi hgi-stroke hgi-user-add-01"></i>
-                    <span class="nds-label">Add Member</span>
+                    <span class="nds-label" data-hidden="sm sr">Add Member</span>
                 </button>
             </div>
             <h2 class="nds-section-title">Team Directory</h2>

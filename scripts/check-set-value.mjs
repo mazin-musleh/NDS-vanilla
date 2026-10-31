@@ -355,10 +355,10 @@ for (const ver of VUE) {
                 + '<div class="nds-select-dropdown" hidden><div class="nds-select-options">' + opt('riyadh') + opt('makkah') + '</div></div>'
                 + '</div></div>'
                 + '<div class="nds-form-container nds-date-picker" id="v-dp"><div class="nds-form-control">'
-                + '<div class="nds-form-action"><button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle nds-icon-only" aria-label="d"><i class="nds-icon nds-hgi-calendar-03"></i></button></div>'
+                + '<div class="nds-form-action"><button type="button" class="nds-btn nds-subtle nds-md nds-date-picker-toggle nds-icon-only" aria-label="d"><i class="nds-icon nds-hgi-calendar-03"></i></button></div>'
                 + '<input type="text" class="nds-input nds-date-input" v-model="date"></div></div>'
                 + '<div class="nds-form-container nds-time-picker" id="v-tp"><div class="nds-form-control">'
-                + '<div class="nds-form-action"><button type="button" class="nds-btn nds-subtle nds-md time-picker-toggle nds-icon-only" aria-label="t"><i class="nds-icon nds-hgi-clock-01"></i></button></div>'
+                + '<div class="nds-form-action"><button type="button" class="nds-btn nds-subtle nds-md nds-time-picker-toggle nds-icon-only" aria-label="t"><i class="nds-icon nds-hgi-clock-01"></i></button></div>'
                 + '<input type="text" class="nds-input nds-time-input"><input type="hidden" class="nds-time-value" v-model="time"></div></div>'
                 + '<div class="nds-form-container nds-formatted" data-format="phone"><div class="nds-form-control"><input type="tel" id="v-phone" class="nds-input" v-model="phone"></div></div>'
                 + '<div class="nds-form-container"><div class="nds-form-control"><input type="text" id="v-text" class="nds-input" v-model="text"></div></div>'
@@ -573,9 +573,9 @@ const FIELDS = (p, bind) => {
         + '<input type="text" class="nds-input nds-select-input" readonly>'
         + `<input type="hidden" class="nds-select-value" ${bind('region')}>`
         + '<div class="nds-select-dropdown" hidden><div class="nds-select-options">' + opt('riyadh') + opt('makkah') + '</div></div></div></div>'
-        + `<div class="nds-form-container nds-date-picker" id="${p}-dp"><div class="nds-form-control">` + act('date-picker-toggle', 'nds-hgi-calendar-03')
+        + `<div class="nds-form-container nds-date-picker" id="${p}-dp"><div class="nds-form-control">` + act('nds-date-picker-toggle', 'nds-hgi-calendar-03')
         + `<input type="text" class="nds-input nds-date-input" ${bind('date')}></div></div>`
-        + `<div class="nds-form-container nds-time-picker" id="${p}-tp"><div class="nds-form-control">` + act('time-picker-toggle', 'nds-hgi-clock-01')
+        + `<div class="nds-form-container nds-time-picker" id="${p}-tp"><div class="nds-form-control">` + act('nds-time-picker-toggle', 'nds-hgi-clock-01')
         + `<input type="text" class="nds-input nds-time-input"><input type="hidden" class="nds-time-value" ${bind('time')}></div></div>`
         + `<div class="nds-form-container nds-formatted" data-format="phone"><div class="nds-form-control"><input type="tel" id="${p}-phone" class="nds-input" ${bind('phone')}></div></div>`
         + `<div class="nds-form-container"><div class="nds-form-control"><input type="text" id="${p}-text" class="nds-input" ${bind('text')}></div></div>`

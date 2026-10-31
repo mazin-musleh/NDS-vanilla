@@ -124,10 +124,10 @@
             '<div class="nds-file-info">' +
                 '<div class="nds-file-name nds-truncate"></div>' +
                 '<div class="nds-file-size"></div>' +
-                '<div class="nds-file-error"><span class="nds-error-message"></span></div>' +
+                '<div class="nds-file-error"><span class="nds-upload-error"></span></div>' +
             '</div>' +
             '<div class="nds-file-actions">' +
-                '<button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-remove-file">' +
+                '<button type="button" class="nds-btn nds-subtle nds-sm nds-icon-only nds-upload-remove">' +
                     '<i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>' +
                 '</button>' +
             '</div>' +
@@ -151,7 +151,7 @@
             this._dropZone = container.querySelector('.nds-form-control');
             this._fileList = container.querySelector('.nds-file-list');
             this._uploadZone = container.querySelector('.nds-upload-zone');
-            this._browseButton = container.querySelector('.nds-browse-btn');
+            this._browseButton = container.querySelector('.nds-upload-browse');
 
             if (!this._fileInput || !this._dropZone || !this._fileList) return;
 
@@ -670,9 +670,9 @@
 
             // Populate content
             const fileName = fileItem.querySelector('.nds-file-name');
-            const removeBtn = fileItem.querySelector('.nds-remove-file');
+            const removeBtn = fileItem.querySelector('.nds-upload-remove');
             if (removeBtn && !removeBtn.hasAttribute('aria-label')) strings.set(removeBtn, 'aria-label', 'remove_file');
-            const errorMessage = fileItem.querySelector('.nds-error-message');
+            const errorMessage = fileItem.querySelector('.nds-upload-error');
 
             if (fileName) {
                 // The base truncates and the extension stays; a hover tooltip shows the whole name.
@@ -721,7 +721,7 @@
             }
 
             // Update text content
-            const errorMessage = fileItem.querySelector('.nds-error-message');
+            const errorMessage = fileItem.querySelector('.nds-upload-error');
             if (errorMessage) errorMessage.textContent = fileData.error || '';
 
             // Update state/status attributes
@@ -784,7 +784,7 @@
         }
 
         _handleFileListClick(e) {
-            const removeBtn = e.target.closest('.nds-remove-file');
+            const removeBtn = e.target.closest('.nds-upload-remove');
             if (!removeBtn) return;
 
             e.preventDefault();
@@ -865,7 +865,7 @@
             empty: !pending && count === 0, count, pending };
     };
     NDS.validation.addRule('.nds-upload',
-        (up) => Object.assign(checkField(up), { focus: up.querySelector('.nds-browse-btn') || up.querySelector('input[type="file"]') }),
+        (up) => Object.assign(checkField(up), { focus: up.querySelector('.nds-upload-browse') || up.querySelector('input[type="file"]') }),
         { owns: (el) => el.classList.contains('nds-upload'), on: ['nds:upload:select', 'nds:upload:success', 'nds:upload:error', 'nds:upload:removed'] });
 
     NDS.Upload = {

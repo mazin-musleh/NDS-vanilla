@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/10/2026 - 11:33 PM"
+last_edit: "31/10/2026 - 05:53 PM"
 ---
 
 <section id="section-overview" class="nds-content-section nds-doc-overview">
@@ -238,7 +238,7 @@ The standard action goes right after the head. The float action goes first in th
 | Action | Float (not: horizontal, stacked, profile, breakout) (hint: In the end corner of the head, beside the title) | canon `#section-float-action` | `.nds-section-head` (start) | In the head, first. It sits in the end corner, and the title and the description wrap around it |
 | Action | Dual (not: horizontal, stacked, profile, breakout) (hint: A float action and a standard action together) | canon `#section-float-action` | `.nds-section-head` (start) | A float action and a standard action. The standard action then takes its own row |
 | Action | Dual (not: horizontal, stacked, profile, breakout) (hint: A float action and a standard action together) | canon `#section-action-secondary` | `.nds-section-head` (after) | A float action and a standard action. The standard action then takes its own row |
-| Float action (any) | Icon only on phones (not: horizontal, stacked, profile, breakout) | `.nds-minimal` | `.nds-section-action:first-child` | Hides the button labels below 600px. Each button needs an icon. The label stays as the accessible name |
+| Float action (any) | Icon only on phones (not: horizontal, stacked, profile, breakout) | `[data-hidden="sm sr"]` | `.nds-section-action:first-child .nds-btn > .nds-label` | Hides the button labels below 600px, and each button goes square. Each button needs an icon. The label stays as the accessible name |
 | Float action (any) | Own row on phones (not: horizontal, stacked, profile, breakout) | `.nds-wrap` | `.nds-section-action:first-child` | Moves the float action under the description below 600px |
 | Image | Image (not: horizontal, stacked, profile) | canon `#section-image` | `.nds-section-wrapper` (start) | A small image before the head. Set its size with `width` and `height`. The head centers on it. For a person, use an avatar: see Profile |
 | Layout | Center | `.nds-center` | `.nds-content-section:not(.nds-horizontal)` | Centers the head, the action and the body |
@@ -289,7 +289,7 @@ A `nds-section-action` after the head sits beside it on a desktop, at the top. B
 
 ### Float Action
 
-A `nds-section-action` that is the first child of the head floats to the end corner. The title and the description wrap around it, so it takes no row of its own. The buttons stack in a column and share one width. In a centered or horizontal section it does not float: it goes under the description. Add `nds-minimal` to show only the icons below 600px, or `nds-wrap` to move it under the description there.
+A `nds-section-action` that is the first child of the head floats to the end corner. The title and the description wrap around it, so it takes no row of its own. The buttons stack in a column and share one width. In a centered or horizontal section it does not float: it goes under the description. Write `data-hidden="sm sr"` on each button's label to show only the icons below 600px, where each button goes square, or add `nds-wrap` to move it under the description there.
 
 ### Dual Action
 
@@ -403,7 +403,7 @@ A `nds-section-image` before the head holds a small image or an [avatar](../comp
 - Striping counts sections, not wrappers. When you merge sections into one, check the stripes of the sections below it.
 - Use a float action for a secondary action when the head has room. Use a standard action for a main call to action.
 - Use a section action only for an action on that section's content. Put an action for the whole page, such as a link back to a list, in its own section. Put the section action in the head or right after it; put it in the body only when it acts on the content just above it.
-- Give each button in an `nds-minimal` float action an icon. Without one, the button is empty on a phone.
+- Give each button whose label has `data-hidden` an icon. Without one, the button is empty on a phone.
 - Use a background color on one section at a time. Two dark sections in a row read as one block.
 - Use a breakout body for a [swiper](../components/swiper) or a wide image, not for text.
 - Use `nds-full` on a title or a description only for short text. Long lines are hard to read.

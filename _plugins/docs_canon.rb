@@ -361,14 +361,13 @@ module DocsCanon
     %(<div class="nds-doc-view">#{%(<div class="nds-btn-group">#{sizes}</div>) if screens}<div class="nds-btn-group">#{view}</div></div>)
   end
 
-  # The Options button floats beside the section title (layout/section.md), icon-only on a phone,
-  # with Reset beside it, one button group. The group class sits on the action itself: nested, it
-  # would miss .nds-minimal's `> .nds-btn` rules.
+  # The Options button floats beside the section title (layout/section.md), icon only on a phone
+  # (its label's data-hidden="sm sr"), with Reset beside it, one button group on the action itself.
   def self.actions(id, panel)
     reset = %(<button type="button" class="nds-btn nds-secondary-outline nds-icon-only nds-md" data-builder-reset aria-label="Reset"><i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i></button>)
     toggle = panel ? %(data-panel-toggle="#{id}-options") : %(data-builder-toggle aria-controls="#{id}-options" aria-expanded="false")
-    options = %(<button type="button" class="nds-btn nds-secondary-outline nds-md" #{toggle}><i class="hgi hgi-stroke hgi-filter-horizontal" aria-hidden="true"></i><span class="nds-label">Options</span></button>)
-    %(<div class="nds-section-action nds-btn-group nds-horizontal nds-minimal" data-builder-for="#{id}">#{options}#{reset}</div>)
+    options = %(<button type="button" class="nds-btn nds-secondary-outline nds-md" #{toggle}><i class="hgi hgi-stroke hgi-filter-horizontal" aria-hidden="true"></i><span class="nds-label" data-hidden="sm sr">Options</span></button>)
+    %(<div class="nds-section-action nds-btn-group nds-horizontal" data-builder-for="#{id}">#{options}#{reset}</div>)
   end
 
   # The options: one labeled row of chips per group, single options last under "More". Up to 3

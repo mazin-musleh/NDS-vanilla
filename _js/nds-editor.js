@@ -808,8 +808,8 @@
             // only listens for nds:upload:select.
             + '<div class="nds-form-container nds-upload" data-state="single" data-allowed-types="jpg,jpeg,png,gif,webp,svg" data-max-file-size="2097152" data-editor-image-upload>'
             + '<div class="nds-form-control nds-center">'
-            + `<input type="file" id="${idBase}-image-file" class="nds-file-input" data-editor-image-file />`
-            + `<div class="nds-form-action"><button type="button" class="nds-btn nds-neutral nds-md nds-browse-btn"><i class="hgi hgi-stroke hgi-folder-01"></i><span class="nds-label">${getLabelHtml('upload')}</span></button></div>`
+            + `<input type="file" id="${idBase}-image-file" class="nds-upload-input" data-editor-image-file />`
+            + `<div class="nds-form-action"><button type="button" class="nds-btn nds-neutral nds-md nds-upload-browse"><i class="hgi hgi-stroke hgi-folder-01"></i><span class="nds-label">${getLabelHtml('upload')}</span></button></div>`
             + '</div>'
             + '<div class="nds-file-list"></div>'
             + '</div>'

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 02:00 PM"
+last_edit: "31/10/2026 - 05:53 PM"
 ---
 
 <section id="tag-overview" class="nds-content-section nds-doc-overview">
@@ -96,7 +96,7 @@ A row on `.nds-tag:not([data-status])` applies to a standard tag only, and a row
 | Status | Critical (hint: The same look as Error) | `[data-status="critical"]` | `.nds-tag[data-status]` | The same look as Error. Keep it for system-level alerts |
 | Style | Light (default) | — | — | A light fill in the tag's color |
 | Style | Outline | `.nds-outline` | `.nds-tag:not([data-status])` | No fill and a darker border, for a quieter standard tag |
-| Style | Inverted (hint: A solid fill with light text) | `.nds-inverted` | `.nds-tag[data-status]` | A solid fill in the status color and light text, for a status that must stand out |
+| Style | Dark (hint: A solid fill with light text) | `.nds-dark` | `.nds-tag[data-status]` | A solid fill in the status color and light text, for a status that must stand out |
 | Style | Ghost (hint: No fill and no border) | `.nds-ghost` | `.nds-tag[data-status]` | No fill, no border and neutral text beside the colored dot, for a quiet status |
 | Size | MD (default) | — | — | 32px high. It needs no class |
 | Size | SM | `.nds-sm` | `.nds-tag` | 24px high, for cards and table rows |
@@ -187,7 +187,7 @@ A row on `.nds-tag:not([data-status])` applies to a standard tag only, and a row
 - Use tags for labels that people read and do not click. For a label the user picks or removes, use [Chips](../components/chips).
 - Use a status tag for the state of an item. Write the state in the label: every status shows the same dot, so the color alone does not name it.
 - Pick the color by meaning, and give tags of the same kind the same color.
-- Pick the style by weight. A standard tag is light, or outline to stay quiet. A status tag is light, inverted to stand out, or ghost to stay quiet.
+- Pick the style by weight. A standard tag is light, or outline to stay quiet. A status tag is light, dark to stand out, or ghost to stay quiet.
 - Keep labels to one to three words. A label longer than 160px ends with an ellipsis.
 - Put related tags in one `nds-tags` group, so they share the gap and wrap together.
 - In a [List](../components/list), leave the size class off. The list makes a tag SM, a small list (`nds-sm`) XS, and a large list (`nds-lg`) MD. To keep one tag at 32px there, give it `nds-md`.

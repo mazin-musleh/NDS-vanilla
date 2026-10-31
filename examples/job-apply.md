@@ -145,7 +145,7 @@ last_edit: "25/10/2026 - 05:46 PM"
                                     </div>
                                     <div class="nds-form-control">
                                         <div class="nds-form-action">
-                                            <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle nds-icon-only" aria-label="Open calendar" data-i18n-aria-label="date-picker.open_calendar">
+                                            <button type="button" class="nds-btn nds-subtle nds-md nds-date-picker-toggle nds-icon-only" aria-label="Open calendar" data-i18n-aria-label="date-picker.open_calendar">
                                                 <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
                                             </button>
                                         </div>
@@ -366,16 +366,16 @@ last_edit: "25/10/2026 - 05:46 PM"
                                         </label>
                                     </div>
                                     <div class="nds-form-control">
-                                        <input type="file" id="job-cv" class="nds-file-input">
+                                        <input type="file" id="job-cv" class="nds-upload-input">
                                         <div class="nds-upload-zone">
                                             <i class="hgi hgi-stroke hgi-file-upload nds-upload-icon" aria-hidden="true"></i>
                                             <div class="nds-upload-text">
-                                                <span class="nds-drop-hint" data-i18n="upload.drag_drop">Drag and drop files here to upload</span>
+                                                <span class="nds-upload-drop-hint" data-i18n="upload.drag_drop">Drag and drop files here to upload</span>
                                             </div>
                                             <div class="nds-upload-hint">One PDF, up to 5 MB</div>
                                         </div>
                                         <div class="nds-form-action">
-                                            <button type="button" class="nds-btn nds-neutral nds-md nds-browse-btn">
+                                            <button type="button" class="nds-btn nds-neutral nds-md nds-upload-browse">
                                                 <i class="hgi hgi-stroke hgi-folder-01" aria-hidden="true"></i>
                                                 <span class="nds-label" data-i18n="upload.browse_files">Browse Files</span>
                                             </button>

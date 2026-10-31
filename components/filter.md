@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 11:14 AM"
+last_edit: "31/10/2026 - 05:53 PM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -69,7 +69,7 @@ Pick another component when:
           <div class="nds-form-container nds-date-picker nds-date-range">
             <div class="nds-form-control">
               <div class="nds-form-action">
-                <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle nds-icon-only" aria-label="Open calendar" data-i18n-aria-label="date-picker.open_calendar">
+                <button type="button" class="nds-btn nds-subtle nds-md nds-date-picker-toggle nds-icon-only" aria-label="Open calendar" data-i18n-aria-label="date-picker.open_calendar">
                   <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
                 </button>
               </div>
@@ -295,7 +295,7 @@ Pick another component when:
   <div class="nds-form-container nds-date-picker nds-date-range">
     <div class="nds-form-control">
       <div class="nds-form-action">
-        <button type="button" class="nds-btn nds-subtle nds-md date-picker-toggle nds-icon-only" aria-label="Open calendar" data-i18n-aria-label="date-picker.open_calendar">
+        <button type="button" class="nds-btn nds-subtle nds-md nds-date-picker-toggle nds-icon-only" aria-label="Open calendar" data-i18n-aria-label="date-picker.open_calendar">
           <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
         </button>
       </div>

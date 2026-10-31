@@ -260,9 +260,9 @@ sidemenu_mode: false
                             </label>
                         </div>
                         <div class="nds-form-control">
-                            <input type="file" id="contact-upload" name="attachments" multiple class="nds-file-input">
+                            <input type="file" id="contact-upload" name="attachments" multiple class="nds-upload-input">
                             <div class="nds-form-action">
-                                <button type="button" class="nds-btn nds-neutral nds-md nds-browse-btn">
+                                <button type="button" class="nds-btn nds-neutral nds-md nds-upload-browse">
                                     <i class="hgi hgi-stroke hgi-folder-01"></i>
                                     <span class="nds-label" data-i18n="upload.browse_files">Browse Files</span>
                                 </button>
@@ -295,11 +295,11 @@ sidemenu_mode: false
                                     <div class="nds-file-name nds-truncate"></div>
                                     <div class="nds-file-size"></div>
                                     <div class="nds-file-error">
-                                        <span class="nds-error-message"></span>
+                                        <span class="nds-upload-error"></span>
                                     </div>
                                 </div>
                                 <div class="nds-file-actions">
-                                    <button type="button" class="nds-btn nds-subtle nds-md nds-icon-only nds-remove-file" aria-label="Remove file" data-i18n-aria-label="upload.remove_file">
+                                    <button type="button" class="nds-btn nds-subtle nds-md nds-icon-only nds-upload-remove" aria-label="Remove file" data-i18n-aria-label="upload.remove_file">
                                         <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                                     </button>
                                 </div>
@@ -326,7 +326,7 @@ sidemenu_mode: false
                                 <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
                                 <span class="nds-label">Phone</span>
                             </dt>
-                            <dd class="nds-item-action">
+                            <dd class="nds-definition-action">
                                 <a href="tel:9200343222" class="nds-primary">
                                     <span class="nds-label">9200343222</span>
                                 </a>
@@ -341,7 +341,7 @@ sidemenu_mode: false
                                 <i class="hgi hgi-stroke hgi-message-01"></i>
                                 <span class="nds-label">SMS</span>
                             </dt>
-                            <dd class="nds-item-action">
+                            <dd class="nds-definition-action">
                                 <a href="sms:199099" class="nds-primary">
                                     <span class="nds-label">199099</span>
                                 </a>
@@ -356,7 +356,7 @@ sidemenu_mode: false
                                 <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
                                 <span class="nds-label">Email</span>
                             </dt>
-                            <dd class="nds-item-action">
+                            <dd class="nds-definition-action">
                                 <a href="mailto:help@company.sa" class="nds-primary">
                                     <span class="nds-label">help@company.sa</span>
                                 </a>
@@ -371,7 +371,7 @@ sidemenu_mode: false
                                 <i class="hgi hgi-stroke hgi-printer"></i>
                                 <span class="nds-label">FAX</span>
                             </dt>
-                            <dd class="nds-item-action">
+                            <dd class="nds-definition-action">
                                 <a href="tel:+966114346654" class="nds-primary">
                                     <span class="nds-label">00966-11-434-6654</span>
                                 </a>
@@ -420,7 +420,7 @@ sidemenu_mode: false
                                 <i class="hgi hgi-stroke hgi-fire-security"></i>
                                 <span class="nds-label">Civil defence</span>
                             </dt>
-                            <dd class="nds-item-action">
+                            <dd class="nds-definition-action">
                                 <a href="tel:998" class="nds-primary">
                                     <span class="nds-label">998</span>
                                 </a>
@@ -435,7 +435,7 @@ sidemenu_mode: false
                                 <i class="hgi hgi-stroke hgi-police-badge"></i>
                                 <span class="nds-label">Police</span>
                             </dt>
-                            <dd class="nds-item-action">
+                            <dd class="nds-definition-action">
                                 <a href="tel:999" class="nds-primary">
                                     <span class="nds-label">999</span>
                                 </a>
@@ -450,7 +450,7 @@ sidemenu_mode: false
                                 <i class="hgi hgi-stroke hgi-ambulance"></i>
                                 <span class="nds-label">Ambulance</span>
                             </dt>
-                            <dd class="nds-item-action">
+                            <dd class="nds-definition-action">
                                 <a href="tel:997" class="nds-primary">
                                     <span class="nds-label">997</span>
                                 </a>

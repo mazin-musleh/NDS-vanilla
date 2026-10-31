@@ -75,7 +75,7 @@ sidemenu_mode: false
                                     <div class="nds-definition-item">
                                         <dt>Email</dt>
                                         <dd>
-                                            <div class="nds-item-action">
+                                            <div class="nds-definition-action">
                                                 <span id="acc-email-value">sara.alotaibi@example.com</span>
                                                 <button type="button" class="nds-btn nds-subtle nds-md" data-modal-target="acc-email-modal" aria-label="Change email"><span class="nds-label">Change</span></button>
                                             </div>
@@ -84,7 +84,7 @@ sidemenu_mode: false
                                     <div class="nds-definition-item">
                                         <dt>Mobile</dt>
                                         <dd>
-                                            <div class="nds-item-action">
+                                            <div class="nds-definition-action">
                                                 <span id="acc-mobile-value">+966 51 234 5678</span>
                                                 <button type="button" class="nds-btn nds-subtle nds-md" data-modal-target="acc-mobile-modal" aria-label="Change mobile"><span class="nds-label">Change</span></button>
                                             </div>
@@ -93,7 +93,7 @@ sidemenu_mode: false
                                     <div class="nds-definition-item">
                                         <dt>Language of messages</dt>
                                         <dd>
-                                            <div class="nds-item-action">
+                                            <div class="nds-definition-action">
                                                 <span id="acc-language-value">Arabic</span>
                                                 <button type="button" class="nds-btn nds-subtle nds-md" data-modal-target="acc-language-modal" aria-label="Change language of messages"><span class="nds-label">Change</span></button>
                                             </div>
@@ -107,7 +107,7 @@ sidemenu_mode: false
                             <div class="nds-definition-item">
                                 <dt>Password</dt>
                                 <dd>
-                                    <div class="nds-item-action">
+                                    <div class="nds-definition-action">
                                         <span id="acc-password-value">Last changed 12 August 2026</span>
                                         <button type="button" class="nds-btn nds-subtle nds-md" data-modal-target="acc-password-modal" aria-label="Change password"><span class="nds-label">Change</span></button>
                                     </div>
@@ -124,7 +124,7 @@ sidemenu_mode: false
                             <div class="nds-definition-item">
                                 <dt>Request updates</dt>
                                 <dd>
-                                    <div class="nds-item-action">
+                                    <div class="nds-definition-action">
                                         <span id="acc-notify-value">Email and text message</span>
                                         <button type="button" class="nds-btn nds-subtle nds-md" data-modal-target="acc-notify-modal" aria-label="Change how you get request updates"><span class="nds-label">Change</span></button>
                                     </div>
@@ -141,7 +141,7 @@ sidemenu_mode: false
                             <div class="nds-definition-item">
                                 <dt>A copy of your data</dt>
                                 <dd>
-                                    <div class="nds-item-action">
+                                    <div class="nds-definition-action">
                                         <span>We email you a link within 24 hours</span>
                                         <button type="button" class="nds-btn nds-subtle nds-md" id="acc-export"><span class="nds-label">Ask for a copy</span></button>
                                     </div>
@@ -150,7 +150,7 @@ sidemenu_mode: false
                             <div class="nds-definition-item">
                                 <dt>Delete account</dt>
                                 <dd>
-                                    <div class="nds-item-action">
+                                    <div class="nds-definition-action">
                                         <span>Deleted 30 days after you ask</span>
                                         <button type="button" class="nds-btn nds-subtle nds-destructive nds-md" data-modal-target="acc-delete-modal"><span class="nds-label">Delete</span></button>
                                     </div>

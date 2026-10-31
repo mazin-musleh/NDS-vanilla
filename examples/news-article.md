@@ -72,7 +72,7 @@ sidemenu_mode: false
                             </div>
                             <div class="nds-persona-info">
                                 <cite class="nds-persona-name">Fatima Al-Harbi</cite>
-                                <span class="nds-persona-desc">Director of Service Centers</span>
+                                <span class="nds-persona-description">Director of Service Centers</span>
                             </div>
                         </div>
                     </figcaption>
