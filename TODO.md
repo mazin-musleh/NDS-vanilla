@@ -22,6 +22,9 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
     - [x] List step 2: 30 card sets on our pages are Lists, 11 of them Liquid loops; prose skips a List; `--min-width` in the style lifts the one-column default (the step 2 commit).
     - [ ] List step 3, next session: the list's size steps every card part (avatar, image, date tile, tags, buttons, rating, number). Start with an inventory of each part's sizes today; each part offers an SM and LG mixin beside `date-tile-sm`. Then step 4, the docs pass (`components/list.md` is renamed; its wording, Card's `nds-flat`, CHANGELOG), and step 5, the checks. Restart the dev server first if it still runs the old `docs_canon.rb` (changed in `3ba7717c`).
     - [ ] Not part of the break: the `#dl-actions` Copy button has no `nds-copy` + `data-copy-target` (see `utilities/copy.md`); "With actions" is an add-on to Details, not a Structure row.
+  - **Digital Stamp and top bar widgets, plan in `plans/stamp-and-widgets.md`** (2026-10-31, not built). The stamp's push-down becomes a top bar expander any top bar button can open (not Panel: it pushes the page down); widgets move from ids to hooks so many sit anywhere (multi-city weather); Date and Clock join `core/date.md`, Weather gets its own page, City is dropped.
+    - [ ] Owner: review the plan.
+    - [ ] Build, once the sessions on the same files are done: grep the dependents again first, then steps 1 to 8.
   - **Consistency pass, plan and status in `plans/v2-consistency.md`** (owner picked option B, 2026-10-31). Batch 1 built and verified, not committed yet.
     - [ ] Name to revisit before v2 ships: `nds-compact` on `.nds-content-layout` (the raised look: shadows, edges that hold the content). Kept on the owner's call: it feels smaller because the edges contain the content. Not yet released, so a better name costs no Migration row; it shares the word with the table's `nds-compact` (dense rows).
 
