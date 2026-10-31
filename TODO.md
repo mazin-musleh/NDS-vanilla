@@ -10,6 +10,7 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
 
 - **Autocomplete: one aborted request, once.** A screenshot run logged `docs-assets/data/appointment-services.json` as `ERR_ABORTED` on the first click. A trace showed one request that finishes, and two reruns were clean. Watch for it.
 - **Event pages: a link in muted text fails axe `link-in-text-block` (serious).** The Built-in Features description links on `events/hajj.md`, `foundation-day.md` and `national-day-96.md`, before and after the Feature List move (old build A/B, 2026-10-29). A plain `<a>` fails there too while the same link passes on doc pages, so the cause is shared by the event pages (likely their link styling), not the link class. Find it in the event pack CSS or the page.
+- **Section image does not match the card image (2026-10-31).** `.nds-section-image` (`_sass/layout/_section-layout.scss:191`) is only a centering box: a plain photo gets no radius, no crop or focal point, no skeleton, and stays 120px on a phone, where it squeezes the head to 192px (an avatar in it drops to 80px). `.nds-image` inside it measures 0×0: the box has no width. The card image uses `image-frame` (`_sass/_mixins.scss:565`). Options: A, give a non-avatar section image `image-frame` plus a width knob and a phone step (recommended); B, keep it plain and document both limits. Measured with `tmp/secimg.mjs` at 1280 and 360px.
 
 ### v2.0.0 release
 
