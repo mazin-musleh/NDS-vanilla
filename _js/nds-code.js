@@ -214,7 +214,7 @@
         return null;
     }
 
-    // Class wins (explicit override, back-compat); a class we don't lex renders
+    // Class wins (the author said it); a class we don't lex renders
     // plain rather than being guessed at; only a block with NO lang class at all
     // falls through to content sniffing. Returns null for "plain, don't lex".
     function detectLanguage(codeElement, source) {

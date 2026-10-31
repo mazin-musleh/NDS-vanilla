@@ -27,8 +27,8 @@
  *     those against icons.yml by hand.
  *   - The migration rows are _data/migrations.yml, baked in by js_processor.rb. A JS call or an
  *     event listener with an old name is invisible here: the release notes list those.
- *   - The CSS scan reads the site's own sheets only: NDS's sheets carry the deprecated aliases on
- *     purpose, and a cross-origin sheet throws on cssRules.
+ *   - The CSS scan reads the site's own sheets only: NDS's sheets use some migrated names in
+ *     another scope (nds-outline on a normal tag), and a cross-origin sheet throws on cssRules.
  */
 // Debug audits — silent-failure classes nothing else reports. Console-only;
 // every check warns and changes nothing.
@@ -542,7 +542,7 @@
     // A leading & tests the element itself; any other scope, the element or an ancestor.
     const isInScope = (el, scope) => !scope || (scope[0] === '&' ? el.matches(scope.slice(1)) : !!el.closest(scope));
 
-    // The site's own sheets: NDS's carry the deprecated aliases on purpose, and a cross-origin
+    // The site's own sheets: NDS's use some migrated names in another scope, and a cross-origin
     // sheet throws on cssRules.
     const OWN = /\/(nds[-.][\w.-]*|hgi-[\w-]*)\.css(\?|#|$)|\/docs-assets\//;
     // NDS's inline <style>s: an event pack's sheet, the docs site's, and the head's fold copy.

@@ -10,7 +10,7 @@
  *   JSP  01, 02, 03, 04 (a)(b), 05, 06 (a)(c), 07, 08, 09, 10, 11, 12
  *   JSS  01, 02, 04, 05, 06
  *   JSD  01, 02, 03, 04, 05 (a)(b), 06, 07, 08, 09, 10, 11, 12, 13, 14 (a)-(e), 15 (PERSONA entry 11), 16, 17, 18, 19, 20 (b) soft Rides
- *   JSA  01, 02, 03, 04, 05 (registry hygiene), 06, 07, 09, 11 (length + concerns), 13, 21 (a), 22, 23 (a)
+ *   JSA  01, 02, 03, 04, 05 (registry hygiene), 06, 07, 09, 11 (length + concerns), 13, 21 (a), 22, 23 (a), 25
  * Left to the reader whole: JSD-15's other PERSONA entries, the rest of JSD-20 (check-banners.mjs), and the JSA rules that are judgment only.
  * Two kinds of line: `finding` is decided; `verify` is a candidate whose one remaining carve-out
  * needs reading, named on the line. Never writes files. Exit 0 = no finding, 1 = findings.
@@ -41,12 +41,6 @@ const ALLOW = [
     { file: 'nds-dropmenu.js', near: '_getCurrentItem()' },
     // The nav's flag must hold through the close, and openDropdowns drops a menu when it STARTS closing.
     { file: 'nds-main-nav.js', near: 'function syncOpenFlags()' },
-];
-
-// JSA-22 skips the row's own carve-out: input tolerance that keeps no name alive.
-const COMPAT_OK = [
-    { file: 'nds-filter.js', near: 'Selectors with punctuation pass through' },
-    { file: 'nds-code.js', near: 'Class wins (explicit override' },
 ];
 
 // The index of the quote that closes the string opening at `i`. A template's `${…}` may hold
@@ -974,7 +968,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     for (const c of source.matchAll(/\/\/[^\n]*\b(back-?compat\w*|backward[s]? compatib\w*|deprecated (?:alias|name|spelling|class|attribute|API)\w*|legacy (?:alias|API|name|class|attribute|selector|spelling)\w*)[^\n]*/gi)) {
         const near = source.slice(c.index, source.indexOf('\n', source.indexOf('\n', c.index) + 1));
         const names = [...near.matchAll(/(?:\.|\b)(nds-[\w-]+|data-[\w-]+|[a-z]+[A-Z]\w+|--[\w-]+)/g)].map((n) => n[1]);
-        if (names.some((n) => DEPRECATIONS.includes(n)) || COMPAT_OK.some((a) => a.file === name && c[0].includes(a.near))) continue;
+        if (names.some((n) => DEPRECATIONS.includes(n))) continue;
         hit('JSA-22', c.index, c[0].trim().slice(0, 70), 'resolve the name it keeps alive, then look for its row');
     }
 
@@ -982,6 +976,12 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     for (const m of code.matchAll(/^\s{4}(?:const|let)\s+([\w$]+)\s*=\s*new\s+(Map|Set)\s*\(/gm)) {
         if (!new RegExp(`\\b${m[1]}\\s*\\.\\s*(?:set|add)\\s*\\([^)]*(?:this|instance|inst)\\b`).test(code)) continue;
         hit('JSA-23a', m.index, `${m[2]} ${m[1]} holds instances`, 'a page singleton released by a loader destroy hook is exempt');
+    }
+
+    // JSA-25 the backref lands after `new NdsX(el)` while an event's detail names the element.
+    for (const m of code.matchAll(/\b(?:const|let)\s+([\w$]+)\s*=\s*new\s+Nds(\w+)\s*\(\s*([\w$]+)[^\n]*\n(?:[^\n]*\n){0,3}?[^\n]*\b\3\.nds\w+\s*=\s*\1\b/g)) {
+        if (!new RegExp(`detail\\s*:\\s*\\{[^}]*\\b${m[2][0].toLowerCase()}${m[2].slice(1)}\\s*:`).test(code)) continue;
+        hit('JSA-25', m.index, `${m[3]}.nds${m[2]} is set after new Nds${m[2]}()`, 'a finding when the constructor can fire that event (URL or authored state at init)');
     }
 
     // ── security ────────────────────────────────────────────────────────────
@@ -1412,8 +1412,12 @@ if (args[0] === '--self-test') {
     bundled('nds-share.js', `/* NDS.Share\n * Rides: nds-copy (the copy action; soft)\n * Methods:\n */`, 'JSD-20', 'verify'); // same bundle
     bundled('nds-share.js', `/* NDS.Share\n * Rides: nds-dropmenu (a menu; soft — an inline row works too)\n * Methods:\n */`, 'JSD-20', ''); // the dash states why
     bundled('nds-editor.js', `/* NDS.Editor\n * Rides: nds-upload (embeds; soft)\n * Methods:\n */`, 'JSD-20', ''); // editor → extras: soft can be true
-    bundled('nds-code.js', `// Class wins (explicit override, back-compat); plain\n`, 'JSA-22', ''); // the row's carve-out
-    bundled('nds-tabs.js', `// Class wins (explicit override, back-compat); plain\n`, 'JSA-22', 'verify'); // only in its own file
+    bundled('nds-code.js', `// Class wins (explicit override, back-compat); plain\n`, 'JSA-22', 'verify'); // a tell with no ledger row
+    // JSA-25: the backref after an evented constructor; before init() it passes.
+    const evented = (body) => `(function(){ class NdsSort { constructor(root) { ${body} this.init(); } init() { this.root.dispatchEvent(new CustomEvent('nds:sort:change', { detail: { key: 1, sort: this.root } })); } }\n function create(root) {\n const instance = new NdsSort(root);\n root.ndsSort = instance;\n return instance; } })();`;
+    bundled('nds-sort.js', evented(''), 'JSA-25', 'verify');
+    bundled('nds-sort.js', evented('root.ndsSort = this;').replace('root.ndsSort = instance;\n', ''), 'JSA-25', '');
+    bundled('nds-sort.js', evented('').replace('sort: this.root', 'index: 1'), 'JSA-25', ''); // no element in the detail
     bundled('nds-chart.js', `(function(){ function f(el) { el = typeof el === 'string' ? document.querySelector(el) : el; } })();`, 'JSD-10', 'verify');
     // Naming: one file per case; then a `_` member another file declares.
     for (const [src, want] of NAME_CASES) {

@@ -145,8 +145,7 @@
         // usage policy forbids the per-visitor volume a topbar widget across
         // many sites generates (bulk use is IP-blocked). `data-city-en` gives
         // the English variant; `data-city` covers both when it's absent. Only
-        // falls through to the geocode when no city is authored — backward
-        // compatible with existing markup.
+        // falls through to the geocode when no city is authored.
         const authored = isArabic
             ? cityEl.dataset.city
             : (cityEl.dataset.cityEn || cityEl.dataset.city);

@@ -615,8 +615,8 @@
     }
 
     // The .nds-paged-content a nav controls. Explicit binding wins:
-    // data-auto-pagination="gridId" (the content's id). With no value, falls back
-    // to the legacy adjacency contract — the nav's immediately-preceding sibling.
+    // data-auto-pagination="gridId" (the content's id). With no value, the nav's
+    // immediately-preceding sibling.
     function findNavContent(paginationNav, quiet) {
         const ref = paginationNav.getAttribute('data-auto-pagination');
         if (ref) {
@@ -631,7 +631,7 @@
 
     // The auto nav controlling a given .nds-paged-content. Explicit binding wins:
     // a nav whose ref resolves to this element (only when it has an id). Else the
-    // legacy adjacency lookup — the first auto nav under the shared parent.
+    // first auto nav under the shared parent.
     function findContentNav(contentContainer) {
         if (contentContainer.id) {
             const navs = document.querySelectorAll('.nds-pagination[data-auto-pagination]');

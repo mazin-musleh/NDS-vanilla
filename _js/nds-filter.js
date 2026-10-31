@@ -306,7 +306,7 @@
             const ref = this._targetContainer?.getAttribute('data-filter-items');
             if (!ref) return '.nds-card';
             // Canonical form is a bare class (matches data-filter-target / data-auto-pagination
-            // style). Selectors with punctuation pass through unchanged for back-compat; bare
+            // style). A value with punctuation is a full selector and is used as written; bare
             // tokens resolve as a class first, then fall back to a tag selector (e.g. "tr").
             if (/[.#\[:\s>+~,*=]/.test(ref)) return ref;
             return this._targetContainer.querySelector(`.${ref}`) ? `.${ref}` : ref;
@@ -3297,10 +3297,10 @@
     function setupFilters(scope) {
         // One filter per unique data-filter-target. Group every linked surface
         // (search box, dropmenu, applied-chips, auto-fill, sort toolbar) by target,
-        // then build once per target. The representative is the .nds-filter surface
-        // when present — keeping events, backref, and the init guard on it preserves
-        // backward compatibility — otherwise the first surface (e.g. a lone search
-        // box), so a filter needs no .nds-filter element at all.
+        // then build once per target. The representative (events, backref, init guard)
+        // is the .nds-filter surface when present, where pages look for them; otherwise
+        // the first surface (e.g. a lone search box), so a filter needs no .nds-filter
+        // element at all.
         //
         // scope narrows the scan to a changed container (see refresh() below) — a
         // new [data-filter-target] can only appear inside it, per that method's
