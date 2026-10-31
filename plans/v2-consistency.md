@@ -105,6 +105,12 @@ Each change was checked against the component's shape first (owner, 2026-10-31: 
 - **3.14:** the instance names were added to their pages (Accessibility, Dropmenu, Filter, Sort, Swiper, Time Picker, Upload). Shared bases and core helpers (`NDS.Backdrop`, `dialog`, `popup`, `field`, `validation`, `typing`, about 40 core helpers) get one core reference page in batch 7 (owner, 2026-10-31), with an `NDS-INDEX.md` row.
 - Check: `scripts/check-v2-batch6c.mjs` (Chrome and WebKit).
 
+## Batch 7, checked against the code (2026-10-31)
+
+- **Docs sweep:** every 2.0.0 migration name was grepped across the doc, guide, example, template and include sources. Every hit is a kept use in another context (`nds-stacked` on avatars, `data-auto-pagination`, a Selection `getSelected`). Nothing to change.
+- **IQ draft:** `_includes/NDS-IQ-draft.md` names no old name. The published `_includes/NDS-IQ.md` still says to prefer `reinit()`. The draft has already dropped that line, so the next `publish-iq.py` run fixes it.
+- **3.14:** new page `core/helpers.md` (Helpers) for the shared functions page code calls: `NDS.state`, `NDS.aria`, the observers, timers, scroll and focus, text, and `NDS.validation.addRule`. It links the helpers that already have a page. Trimmed on the owner's call (2026-10-31): the internal bases (`NDS.Backdrop`, `dialog`, `popup`, `field`, `typing`) and the component-author helpers (`findOwnParts`, `markHome`, `setTopLayer`…) stay banner-only, since agents read the banners and a public page would lock them. It is registered in the side menu and the catalog, with an `NDS-INDEX.md` row.
+
 ## How we stay safe
 
 1. **Baseline first, made stable.** Build today's `HEAD` into `tmp/ab/base/`. `scripts/ab-pages.mjs` diffs base against head, with the clock frozen, animations and swiper autoplay off, fonts loaded:

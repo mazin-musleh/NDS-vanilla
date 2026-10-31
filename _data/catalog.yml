@@ -984,6 +984,14 @@
   url: "/core/date.html"
   js: _js/nds-date.js
 
+- title: "Helpers"
+  description: "The shared functions page code can call: states, ARIA, observers, timers, scroll, focus, text, and validation rules"
+  use_when: "Page code needs what the NDS components already do: write data-state or an ARIA attribute, watch an element's size or the DOM, debounce or wait for a paint, lock the page scroll, trap focus, or add a validation rule for a field NDS does not own. For a fetch use Request, for dates use Date, for words in the page language use Internationalization."
+  category: "Core"
+  tags: ["JS", "API"]
+  url: "/core/helpers.html"
+  js: _js/nds-core.js
+
 - title: "Init"
   description: "Starts every component at load, and the calls that tell them a container changed"
   use_when: "Page code must wait until the components on the page have started, or you added, removed, or replaced rows, cards, or list items with JavaScript and the filters, counters, or controls around them are now stale. One call updates every affected component instead of calling each one with its own argument. Reach for it on any CRUD screen, after an AJAX list swap, or whenever content arrives after page load. Server-driven lists are deliberately left alone."
