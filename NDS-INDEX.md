@@ -63,6 +63,7 @@ Each doc, example and template has a built page at the same path under `_site/`,
 
 - **Migration notes:** the `### Migrating from` sections in `CHANGELOG.md`.
 - **Migration check:** the audit's `migration` group, `NDS.audit.run({ group: 'migration' })`.
+- **Script calls:** the audit reads a page's markup and CSS, never your scripts. Search the project's scripts for the `name` of each `api` and `event` row in `_source/_data/migrations.yml` whose `since` is newer than your old version.
 
 ## Legacy libraries
 
