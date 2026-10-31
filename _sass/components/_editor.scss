@@ -29,7 +29,7 @@
     outline: none;
     overflow-wrap: break-word;
 
-    &.is-empty::before {
+    &[data-state~="empty"]::before {
       content: attr(data-placeholder);
       color: var(--form-field-text-placeholder);
       pointer-events: none;
@@ -114,7 +114,7 @@
 
   // Source textarea: clip-hidden in editor mode — NOT [hidden]/display:none, which
   // NDS.Form isFieldVisible treats as invisible (required validation would skip it).
-  &:not(.is-source) .nds-editor-source {
+  &:not([data-state~="source"]) .nds-editor-source {
     position: absolute;
     inline-size: 1px;
     block-size: 1px;
@@ -127,7 +127,7 @@
   }
 
   // Source view: swap the editable for the textarea; the script disables the formatting commands.
-  &.is-source .nds-editor-editable { display: none; }
+  &[data-state~="source"] .nds-editor-editable { display: none; }
 
   .nds-editor-source {
     // Code always reads LTR, even on an RTL page.

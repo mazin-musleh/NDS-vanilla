@@ -166,8 +166,7 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
   }
 
   // ---- Center alignment ----
-  // `:is(.nds-center, .center)` covers both the prefixed class and the legacy
-  // unprefixed one. `margin-inline: auto` horizontally centers the fit-content
+  // `margin-inline: auto` horizontally centers the fit-content
   // strip without touching block margins (owned by surrounding layout).
   // Center only while the tabs fit. Once scroll-more flags overflow, centering
   // would push the leading tabs past the scroll origin (scrollLeft can't go
@@ -181,8 +180,8 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
     --_tabs-fit-margin: auto;
   }
 
-  > .nds-tab-list-container > .nds-tab-list:is(.nds-center, .center),
-  > .nds-tab-list:is(.nds-center, .center) {
+  > .nds-tab-list-container > .nds-tab-list.nds-center,
+  > .nds-tab-list.nds-center {
     justify-content: var(--_tabs-fit-justify, normal);
     width: var(--_tabs-fit-width, auto);
     margin-inline: var(--_tabs-fit-margin, 0);

@@ -1082,7 +1082,7 @@
 
             // Forms' invalid-focus and label clicks land on the clipped textarea — redirect.
             this.source.addEventListener('focus', () => {
-                if (!this._root.classList.contains('is-source')) this._editable.focus();
+                if (!NDS.state.has(this._root, 'source')) this._editable.focus();
             }, { signal });
             this.source.addEventListener('keydown', this._handleSourceKeyDown.bind(this), { signal });
         }
@@ -1198,7 +1198,7 @@
             this.source.readOnly = readonly;
             if (this._toolbar) {
                 // Commands act on the visual view: off in source view too, as real disabled buttons.
-                const commandsEnabled = editable && !this._root.classList.contains('is-source');
+                const commandsEnabled = editable && !NDS.state.has(this._root, 'source');
                 this._toolbar.querySelectorAll('[data-cmd]').forEach(btn => { btn.disabled = !commandsEnabled; });
                 const srcBtn = this._toolbar.querySelector('[data-source-toggle]');
                 if (srcBtn) srcBtn.disabled = disabled; // readonly may still view source
@@ -1222,7 +1222,7 @@
             this._editable.remove();
             this.source.classList.remove('nds-editor-source');
             this.source.removeAttribute('tabindex');
-            this._root.classList.remove('is-source');
+            NDS.state.remove(this._root, 'source');
             this._history = [];
             this._historyIndex = -1;
             this._root.removeAttribute('data-nds-editor-initialized');
@@ -1282,7 +1282,7 @@
         _handleToolbarClick(e) {
             if (e.target.closest('[data-source-toggle]')) { this._toggleSourceView(); return; }
             const btn = e.target.closest('[data-cmd]');
-            if (!btn || this._root.classList.contains('is-source')) return;
+            if (!btn || NDS.state.has(this._root, 'source')) return;
             const command = btn.dataset.cmd;
             if (command === 'link' || command === 'image' || command === 'remove') return; // dropmenu-backed — handled via mousedown prep + menu clicks
             this._editable.focus();
@@ -1331,7 +1331,7 @@
 
         _toggleSourceView() {
             const btn = this._toolbar.querySelector('[data-source-toggle]');
-            const entering = !this._root.classList.contains('is-source');
+            const entering = !NDS.state.has(this._root, 'source');
             if (entering) {
                 // Sync BEFORE showing so the user sees the exact value that would submit.
                 this._syncSource();
@@ -1339,10 +1339,10 @@
                 // into the source so the user lands where they meant to edit.
                 const carry = this._computeSourceSelection();
                 // Match the source view to the rendered editable height (read
-                // before is-source hides it) — a long document would otherwise
+                // before the source state hides it) — a long document would otherwise
                 // switch into a min-height-sized textarea.
                 this.source.style.blockSize = `${this._editable.offsetHeight}px`;
-                this._root.classList.add('is-source');
+                NDS.state.add(this._root, 'source');
                 this._syncAccessState();
                 this.source.removeAttribute('tabindex');
                 btn?.setAttribute('aria-pressed', 'true');
@@ -1360,7 +1360,7 @@
                 this._normalizeLooseBlocks();
                 this._syncLinks();
                 this._syncColumnAlign();
-                this._root.classList.remove('is-source');
+                NDS.state.remove(this._root, 'source');
                 this._syncAccessState();
                 this.source.setAttribute('tabindex', '-1');
                 btn?.setAttribute('aria-pressed', 'false');
@@ -2072,7 +2072,7 @@
         _syncRemoveState() {
             const removeButton = this._toolbar?.querySelector('[data-cmd="remove"]');
             if (!removeButton) return;
-            const node = this._editable.getAttribute('contenteditable') === 'true' && !this._root.classList.contains('is-source')
+            const node = this._editable.getAttribute('contenteditable') === 'true' && !NDS.state.has(this._root, 'source')
                 ? this._getComponentCaretNode() : null;
             removeButton.disabled = !(node && this._findRegionRoot(node));
         }
@@ -2871,7 +2871,7 @@
         _syncSource(coalesce = false) {
             this._ensureTrailingParagraph();
             const empty = isEffectivelyEmpty(this._editable);
-            this._editable.classList.toggle('is-empty', empty);
+            if (empty) NDS.state.add(this._editable, 'empty'); else NDS.state.remove(this._editable, 'empty');
             const next = empty
                 ? ''
                 // ponytail: full sanitize+rebuild per input keeps the value canonical; debounce if profiling ever flags it.

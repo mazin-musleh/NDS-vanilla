@@ -197,6 +197,7 @@
             if (this.renderAbortController) { this.renderAbortController.abort(); this.renderAbortController = null; }
             if (this._offResize) { this._offResize(); this._offResize = null; }
             this._element.innerHTML = '';
+            NDS.state.remove(this._element, 'dots');
             if (this._heldMin != null) this._element.style.minHeight = this._heldMin;
             // Drop the init sentinel with the instance: leaving it on makes teardown
             // one-way — the init sweep skips a stamped element, so a view that unmounts
@@ -216,8 +217,7 @@
                 this._clearHover();
                 this._activeHover = { target: e.target, ...data };
                 this._showTooltip(e, data.html);
-                const el = data.activeEl || e.target;
-                if (data.activeClass) el.classList.add(data.activeClass);
+                if (data.active) NDS.state.add(data.activeEl || e.target, 'active');
             }, { signal });
 
             this._element.addEventListener('mousemove', (e) => {
@@ -233,14 +233,14 @@
 
         _clearHover() {
             if (!this._activeHover) return;
-            const { target, activeEl, activeClass } = this._activeHover;
-            if (activeClass) (activeEl || target).classList.remove(activeClass);
+            const { target, activeEl, active } = this._activeHover;
+            if (active) NDS.state.remove(activeEl || target, 'active');
             this._hideTooltip();
             this._activeHover = null;
         }
 
-        _addTipListeners(el, html, activeEl, activeClass) {
-            tipData.set(el, { html, activeEl, activeClass });
+        _addTipListeners(el, html, activeEl, active) {
+            tipData.set(el, { html, activeEl, active });
         }
 
         // ── ResizeObserver ────────────────────────────────────────
@@ -481,7 +481,8 @@
 
             const body = buildHtmlElement('div', 'nds-chart-body');
             if (hasAxes && yTitle) {
-                body.appendChild(buildHtmlElement('span', 'nds-chart-axis-title nds-chart-axis-title--y', yTitle));
+                const title = body.appendChild(buildHtmlElement('span', 'nds-chart-axis-title', yTitle));
+                title.setAttribute('data-chart-axis', 'y');
             }
 
             const canvasWrap = buildHtmlElement('div', 'nds-chart-canvas-wrap');
@@ -494,7 +495,7 @@
             canvasWrap.appendChild(canvas);
 
             if (hasAxes && xTitle) {
-                canvasWrap.appendChild(buildHtmlElement('div', 'nds-chart-axis-title nds-chart-axis-title--x', xTitle));
+                canvasWrap.appendChild(buildHtmlElement('div', 'nds-chart-axis-title', xTitle)).setAttribute('data-chart-axis', 'x');
             }
 
             if (this._options.legend?.show && this._options.legend.position === 'bottom') {
@@ -557,7 +558,7 @@
                 const percent = ((value / total) * 100).toFixed(1) + '%';
                 this._addTipListeners(slice,
                     `<strong>${NDS.escapeHtml(label)}</strong><br>${NDS.escapeHtml(formatNumber(value))} (${NDS.escapeHtml(percent)})`,
-                    null, 'nds-chart-slice--active');
+                    null, true);
                 svg.appendChild(slice);
 
                 if (this._options.dataLabels?.show && angle > 20) {
@@ -664,7 +665,7 @@
 
                     this._addTipListeners(rect,
                         `<strong>${NDS.escapeHtml(entry.name)}</strong><br>${NDS.escapeHtml(catLabels[category])}: ${NDS.escapeHtml(this._formatValue(value))}`,
-                        null, 'nds-chart-bar--active');
+                        null, true);
                     svg.appendChild(rect);
 
                     if (dataLabels?.show && (!stacked || seriesIndex === topIndex)) {
@@ -788,8 +789,8 @@
             });
 
             // Layer 2.5: Spotlight halo — persistent indicator, fixed at the configured
-            // index (e.g. 'last'). Only the inner dot at that index gets the --spotlight
-            // class to inflate via CSS; hover --active dots elsewhere on the line do NOT
+            // index (e.g. 'last'). Only the inner dot at that index gets the spotlight
+            // state to inflate via CSS; hover-active dots elsewhere on the line do NOT
             // get a halo (transient hover ≠ persistent marker).
             const spotlightOption = line?.spotlight;
             let spotlightHomeIndex = -1;
@@ -812,11 +813,11 @@
                 }
             }
 
-            // Layer 3: Dots (always rendered; CSS hides all but --active/--spotlight when
+            // Layer 3: Dots (always rendered; CSS hides all but active/spotlight when
             // showDots is false). Single rendering path covers both visible and sparkline modes.
             const enableCrosshair = line?.crosshair !== false;
             const dotsByIndex = catLabels.map(() => []);
-            this._element.classList.toggle('nds-chart--show-dots', showDots);
+            if (showDots) NDS.state.add(this._element, 'dots'); else NDS.state.remove(this._element, 'dots');
 
             computed.forEach(({ s: entry, pts: points, color }) => {
                 points.forEach(point => {
@@ -837,17 +838,17 @@
                         });
                         this._addTipListeners(hitArea,
                             `<strong>${NDS.escapeHtml(entry.name)}</strong><br>${NDS.escapeHtml(catLabels[point.idx])}: ${NDS.escapeHtml(this._formatValue(point.val))}`,
-                            dot, 'nds-chart-dot--active');
+                            dot, true);
                         svg.appendChild(hitArea);
                     }
                 });
             });
 
-            // Mark the spotlight home index (visible via --spotlight class). Stays put;
-            // hover only toggles --active on the nearest dot, leaving the spotlight alone.
+            // Mark the spotlight home index. Stays put; hover only toggles active on the
+            // nearest dot, leaving the spotlight alone.
             if (spotlightHomeIndex >= 0) {
                 (dotsByIndex[spotlightHomeIndex] || []).forEach(dot =>
-                    dot.classList.add('nds-chart-dot--spotlight'));
+                    NDS.state.add(dot, 'spotlight'));
             }
 
             // Layer 4: Crosshair line + plot-area overlay (snaps to nearest x-index on hover)
@@ -904,7 +905,7 @@
                 const dismiss = () => {
                     lastIndex = -1;
                     crosshair.style.display = 'none';
-                    dotsByIndex.forEach(dots => dots.forEach(dot => dot.classList.remove('nds-chart-dot--active')));
+                    dotsByIndex.forEach(dots => dots.forEach(dot => NDS.state.remove(dot, 'active')));
                     this._hideTooltip();
                 };
 
@@ -927,7 +928,7 @@
                         this._tooltip.appendChild(marker);
                         this._tooltip.appendChild(document.createTextNode(entry.name + ': ' + this._formatValue(value)));
                     }
-                    this._tooltip.classList.add('nds-chart-tooltip--visible');
+                    NDS.state.add(this._tooltip, 'visible');
                 };
 
                 // Snap the crosshair to the nearest x-index under the pointer.
@@ -950,7 +951,7 @@
 
                     for (let i = 0; i < dotsByIndex.length; i++) {
                         const action = i === nearest ? 'add' : 'remove';
-                        dotsByIndex[i].forEach(dot => dot.classList[action]('nds-chart-dot--active'));
+                        dotsByIndex[i].forEach(dot => NDS.state[action](dot, 'active'));
                     }
 
                     if (this._options.tooltip?.show !== false && this._tooltip) {
@@ -1048,7 +1049,7 @@
         _showTooltip(e, html) {
             if (!this._options.tooltip?.show || !this._tooltip) return;
             this._tooltip.innerHTML = html;
-            this._tooltip.classList.add('nds-chart-tooltip--visible');
+            NDS.state.add(this._tooltip, 'visible');
             this._moveTooltip(e);
         }
 
@@ -1068,7 +1069,7 @@
 
         _hideTooltip() {
             if (this._tooltip) {
-                this._tooltip.classList.remove('nds-chart-tooltip--visible');
+                NDS.state.remove(this._tooltip, 'visible');
             }
         }
     }

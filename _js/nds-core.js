@@ -988,7 +988,7 @@
     // / `.nds-form-control` rules, the table stripe's `of` list — key on their
     // class, whose set only they touch.
     // A class or aria-busy the author wrote stays theirs: mirrored holds only what this wrote.
-    const mirrors = { loading: 'nds-loading', hidden: 'nds-hidden', 'has-more': 'nds-has-more', 'always-open': 'nds-always-open', dropbox: 'nds-dropbox' };
+    const mirrors = { loading: 'nds-loading', hidden: 'nds-hidden', 'has-more': 'nds-has-more', 'always-open': 'nds-always-open', dropbox: 'nds-dropbox', shown: 'nds-shown' };
     const mirrored = new WeakMap();
     const getMirrorSet = (el) => mirrored.get(el) || mirrored.set(el, new Set()).get(el);
     for (const token in mirrors) {

@@ -38,7 +38,7 @@
  *   written by the component: --slides on the container, data-swiper-peek while peeking,
  *                             .nds-swiper-clone slides (aria-hidden, focusables dropped from
  *                             the tab order, data-swiper-clone = the real twin's index) when
- *                             looping; data-status on each spotlight slide: "active" on the
+ *                             looping; data-state on each spotlight slide: "active" on the
  *                             open one and every loop clone of it, "after" on those after it;
  *                             data-swiper-moving on the wrapper while it scrolls, inside
  *                             .nds-max-width (lifts the gutter mask)
@@ -811,8 +811,8 @@
 
             bullets.forEach((bullet, i) => {
                 const isActive = i === currentPage;
-                if (isActive) NDS.status.set(bullet, 'active');
-                else NDS.status.clear(bullet);
+                if (isActive) NDS.state.add(bullet, 'active');
+                else NDS.state.remove(bullet, 'active');
                 NDS.aria.current(bullet, isActive ? 'true' : null);
             });
         }
@@ -968,9 +968,9 @@
                 // same neighbours. Without a loop the row does not wrap.
                 let distance = this._loop ? (((this.toRealIndex(j) - open) % realCount) + realCount) % realCount : j - open;
                 if (this._loop && distance > realCount / 2) distance -= realCount;
-                if (distance === 0) NDS.status.set(slide, 'active');
-                else if (distance > 0) NDS.status.set(slide, 'after');
-                else NDS.status.clear(slide);
+                NDS.state.remove(slide, 'active', 'after');
+                if (distance === 0) NDS.state.add(slide, 'active');
+                else if (distance > 0) NDS.state.add(slide, 'after');
             });
         }
 
@@ -1026,7 +1026,7 @@
             this._container.removeAttribute('data-swiper-single');
             NDS.state.clear(this._container); // at-start/at-end are a documented consumer hook
             ['--total', '--slides'].forEach(property => this._container.style.removeProperty(property));
-            if (this._spotlight) this._slides.forEach(slide => NDS.status.clear(slide));
+            if (this._spotlight) this._slides.forEach(slide => NDS.state.remove(slide, 'active', 'after'));
             this.wrapper.style.removeProperty('overflow');
             this.wrapper.removeAttribute('data-swiper-moving');
             if (this._pagination) { this._pagination.style.removeProperty('display'); this._pagination.innerHTML = ''; }

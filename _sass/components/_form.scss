@@ -591,7 +591,8 @@ fieldset {
     animation: var(--_voice-animation, none);
 }
 
-.nds-toggle-password.show i {
+// The mirror class, not [data-state] (a tag tail there restyles every <i> on a state write).
+.nds-toggle-password.nds-shown i {
     --nds-icon: var(--nds-icon-eye);
 }
 

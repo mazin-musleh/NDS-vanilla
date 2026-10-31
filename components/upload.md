@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "25/10/2026 - 05:08 PM"
+last_edit: "31/10/2026 - 03:49 PM"
 ---
 
 <section id="upload-overview" class="nds-content-section nds-doc-overview">
@@ -126,7 +126,7 @@ With no `data-upload-url`, the files stay in the field until the form is sent. T
 
 The script sends no login or CSRF header. Set them on the `xhr` of `nds:upload:start`, and add extra fields to its `formData`. To send the file yourself, cancel that event.
 
-While a file uploads, the form does not submit, whether the field is required or not. `data-upload-timeout` sets a time limit in seconds for each upload. When it runs out, the file goes to `error` with the message "Upload timed out", and `retry()` can send it again. Without it, a dead connection leaves the file uploading until your code calls `abort()`.
+While a file uploads, the form does not submit, whether the field is required or not. `data-upload-timeout` sets a time limit in milliseconds for each upload. When it runs out, the file goes to `error` with the message "Upload timed out", and `retry()` can send it again. Without it, a dead connection leaves the file uploading until your code calls `abort()`.
 
 ### File Rows
 {: .nds-block-title}
@@ -342,7 +342,7 @@ The token `disabled` in `data-state` on `.nds-upload` stops the user from adding
 | `data-max-files` | `.nds-upload` | How many files the list holds. The default is no limit. Ignored with `single` |
 | `data-upload-url` | `.nds-upload` | The address each file is sent to, one POST request per file. See Upload as You Go |
 | `data-field-name` | `.nds-upload` | The name of the form field that holds the file in each upload request. The default is `file` |
-| `data-upload-timeout` | `.nds-upload` | The time limit for each upload, in seconds. The default is `0`, no limit. See Upload as You Go |
+| `data-upload-timeout` | `.nds-upload` | The time limit for each upload, in milliseconds (`30000` is 30 seconds). The default is `0`, no limit. See Upload as You Go |
 | `data-auto-upload="true"` | `.nds-upload` | Sends each file as soon as it passes the checks. Needs `data-upload-url` |
 | `data-state~="drag-over"` | `.nds-form-control` | The script sets it while a file is dragged over the drop zone. It removes it when the file leaves, on the drop, and on `destroy()` |
 | `accept` | `.nds-file-input` | The script writes it from `data-allowed-types`. Do not write it yourself |
@@ -410,7 +410,7 @@ The `create()` options override the attributes of the same name.
 | `allowedTypes` | `data-allowed-types` | An array of extensions, or a string with commas |
 | `allowedMimeTypes` | `data-allowed-mime-types` | An array of file types, or a string with commas |
 | `fieldName` | `data-field-name` | The name of the form field that holds the file |
-| `uploadTimeout` | `data-upload-timeout` | The time limit for each upload, in seconds |
+| `uploadTimeout` | `data-upload-timeout` | The time limit for each upload, in milliseconds |
 {: .nds-table .nds-responsive}
 
 Every event fires on `.nds-upload` and bubbles.

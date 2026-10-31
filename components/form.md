@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "29/10/2026 - 02:09 PM"
+last_edit: "31/10/2026 - 03:49 PM"
 lang: en
 direction: ltr
 ---
@@ -531,7 +531,7 @@ The eye button switches the field between hidden and plain text, and its label b
 | `nds-form-footer` | a `<div>` at the end of `.nds-form-container` | Holds the field's messages when it has `data-feedback-target`. It has no style of its own |
 | `nds-required` | `.nds-form-container` or `.nds-form-group` | The same as `data-required` |
 | `nds-clear` | a button in `.nds-form-action` | Empties the field. Write it with `hidden`: the script shows it while the field has a value |
-| `nds-toggle-password` | a button in `.nds-form-action` | Switches a password field between hidden and plain text. The script adds `show` to it while the text is plain |
+| `nds-toggle-password` | a button in `.nds-form-action` | Switches a password field between hidden and plain text. The script adds `shown` to its `data-state` while the text is plain |
 | `nds-number-decrement`, `nds-number-increment` | a button in `.nds-form-action` | Steps the value down or up by `step` |
 | `nds-form-group` | the `<fieldset>` around a set of checkboxes, radios or switches | See [Checkbox](../components/checkbox), [Radio](../components/radio) and [Switch](../components/switch) |
 {: .nds-table .nds-responsive}

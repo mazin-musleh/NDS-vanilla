@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 08:38 AM"
+last_edit: "31/10/2026 - 03:49 PM"
 ---
 
 <section id="voice-overview" class="nds-content-section nds-doc-overview">
@@ -287,7 +287,6 @@ A button inside `.nds-form-control` dictates into that field's input or text are
 | Attribute | Element | Effect |
 |---|---|---|
 | `data-voice-target` | `.nds-voice-input` | The `id`, `name` or `data-name` of the field to dictate into. With it, the button can sit anywhere on the page |
-| `data-target` | `.nds-voice-input` | The same as `data-voice-target`. The script reads it only when `data-voice-target` is absent |
 | `aria-pressed` | `.nds-voice-input` | Write `false` at page load. The script sets `true` when the mic opens, and `false` when it closes |
 | `aria-label` | `.nds-voice-input` | Write "Start voice input" at page load. The script sets "Stop voice input" when the mic opens. When it closes, the script sets "Start voice input" with the language name, such as "Start voice input (English)". Both labels are in the page language |
 | `data-name` | the target `input` or `textarea` | The script matches the `data-voice-target` value against it when no `id` or `name` matches |

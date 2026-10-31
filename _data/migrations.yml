@@ -8,6 +8,8 @@
 #   use      today's name, when there is one
 #   since    the release that changed it
 #   inert    a property NDS never read: setting it never had an effect
+- { kind: class, name: center, scope: "&.nds-tab-list", status: removed, since: "2.0.0", fix: "Use nds-center." }
+- { kind: class, name: show, scope: "&.nds-toggle-password", status: renamed, use: "data-state~=\"shown\"", since: "2.0.0", fix: "NDS writes data-state=\"shown\" on the toggle while the password shows: key your CSS on [data-state~=\"shown\"]." }
 - { kind: class, name: actions-column, scope: .nds-table, status: renamed, use: nds-actions-column, since: "2.0.0", fix: "Use nds-actions-column." }
 - { kind: class, name: checkbox-column, scope: .nds-table, status: renamed, use: nds-checkbox-column, since: "2.0.0", fix: "Use nds-checkbox-column." }
 - { kind: class, name: external, scope: ".nds-sidemenu li", status: removed, since: "2.0.0", fix: "Remove it: the side menu no longer styles li.redirect.external." }
@@ -119,6 +121,8 @@
 - { kind: class, name: showZoom, scope: .nds-card, status: renamed, use: nds-zoom-badge, since: "2.0.0", fix: "Use nds-zoom-badge." }
 - { kind: class, name: sr-only, scope: "[class*=\"nds-\"]", status: renamed, use: nds-sr-only, since: "2.0.0", fix: "Use nds-sr-only." }
 - { kind: class, name: table-actions, scope: .nds-table, status: renamed, use: nds-table-actions, since: "2.0.0", fix: "Use nds-table-actions." }
+- { kind: attribute, name: data-target, scope: "&.nds-voice-input", status: removed, since: "2.0.0", fix: "Use data-voice-target." }
+- { kind: attribute, name: data-status, scope: "&.nds-bullet", status: renamed, use: data-state, since: "2.0.0", fix: "NDS writes data-state=\"active\" on the current bullet: key your CSS on .nds-bullet[data-state~=\"active\"]." }
 - { kind: attribute, name: data-i18n-attr, status: renamed, use: data-i18n-aria-label, since: "2.0.0", fix: "Write one marker per attribute, with the section in the key: data-i18n-attr=\"aria-label:close_panel\" becomes data-i18n-aria-label=\"accessibility.close_panel\" (also -title, -alt, -placeholder, -label, -aria-description)." }
 - { kind: attribute, name: data-i18n-name, status: renamed, use: data-i18n, since: "2.0.0", fix: "Write data-i18n=\"accessibility.mode_{id}\", the mode id with underscores: data-i18n=\"accessibility.mode_epilepsy_safe\"." }
 - { kind: attribute, name: data-i18n-desc, status: renamed, use: data-i18n, since: "2.0.0", fix: "Write data-i18n=\"accessibility.mode_{id}_desc\", the mode id with underscores." }

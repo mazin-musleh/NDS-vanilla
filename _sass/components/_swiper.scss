@@ -256,7 +256,7 @@
         --_bullet-bg: var(--swiper-bullet-default-hovered, var(--swiper-bullet-background-hovered));
     }
 
-    &[data-status="active"] {
+    &[data-state~="active"] {
         --_bullet-bg: var(--swiper-bullet-active, var(--swiper-bullet-background-active));
         --_bullet-bcolor: var(--_bullet-bg);
 
@@ -530,12 +530,12 @@
         --_spot: translateX(var(--_shift)) scale(var(--_scale));
     }
 
-    .nds-swiper-slide[data-status~="after"] {
+    .nds-swiper-slide[data-state~="after"] {
         --_spot: translateX(calc(-1 * var(--_shift))) scale(var(--_scale));
     }
 
     // Before init the first slide is the open one, as JS then stamps it.
-    .nds-swiper-slide[data-status~="active"],
+    .nds-swiper-slide[data-state~="active"],
     &:not([data-nds-swiper-initialized]) .nds-swiper-slide:first-child {
         --_spot: none;
     }

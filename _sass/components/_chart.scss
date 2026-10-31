@@ -133,13 +133,13 @@
     font-family: inherit;
     white-space: nowrap;
 
-    &--y {
+    &[data-chart-axis="y"] {
         writing-mode: vertical-lr;
         transform: rotate(180deg);
         flex-shrink: 0;
     }
 
-    &--x {
+    &[data-chart-axis="x"] {
         text-align: center;
         padding-block-start: var(--spacing-xl);
     }
@@ -151,7 +151,7 @@
     transition: opacity 0.2s ease;
     cursor: pointer;
 
-    &--active {
+    &[data-state~="active"] {
         opacity: 0.8;
     }
 }
@@ -162,7 +162,7 @@
     transition: opacity 0.2s ease;
     cursor: pointer;
 
-    &--active {
+    &[data-state~="active"] {
         opacity: 0.85;
     }
 }
@@ -193,20 +193,19 @@
 }
 
 // Dots are hidden by default; only the active hover one, the persistent spotlight,
-// or charts that opted in via .nds-chart--show-dots render them.
+// or charts that opted in (show dots) render them.
 .nds-chart-dot {
     transition: r 0.15s ease;
     pointer-events: none;
     display: none;
 
-    &--active,
-    &--spotlight {
+    &:is([data-state~="active"], [data-state~="spotlight"]) {
         display: block;
         r: 6;
     }
 }
 
-.nds-chart--show-dots .nds-chart-dot {
+.nds-chart[data-state~="dots"] .nds-chart-dot {
     display: block;
 }
 
@@ -298,7 +297,7 @@
     transition: opacity 0.15s ease;
     white-space: nowrap;
 
-    &--visible {
+    &[data-state~="visible"] {
         opacity: 1;
         visibility: visible;
     }

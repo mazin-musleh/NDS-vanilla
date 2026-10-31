@@ -41,7 +41,7 @@
  *   nds:upload:removed           detail {fileData, fileId} — every way a file leaves: remove,
  *                                clear, form reset, Single replacing it
  * Hooks:
- *   data-upload-url · data-auto-upload · data-field-name (default 'file') · data-upload-timeout (seconds)
+ *   data-upload-url · data-auto-upload · data-field-name (default 'file') · data-upload-timeout (ms)
  *   data-max-file-size (bytes) · data-max-files
  *   data-allowed-types (extensions) · data-allowed-mime-types (image/* accepted)
  *   data-file-id (stamped on each rendered row and its remove button)
@@ -51,7 +51,7 @@
  *   - Status flow is ready → uploading → processing → complete, or error. retry() only
  *     accepts a file at 'error' after a failed upload, never one the checks rejected.
  *   - XHR, not NDS.request: only xhr.upload reports progress. data-upload-timeout ends an
- *     upload as an error after that many seconds; without it (the default, 0) a dead
+ *     upload as an error after that many milliseconds; without it (the default, 0) a dead
  *     connection leaves a file at 'uploading' and retry() refuses it — call abort(id).
  *   - With no upload URL the component only stages files (it warns once).
  *   - A row is cloned from .nds-file-item-template when you ship one; otherwise from the
@@ -633,7 +633,7 @@
             xhr.addEventListener('error', () => fail('network_error'));
             xhr.addEventListener('timeout', () => fail('timed_out'));
 
-            xhr.timeout = config.uploadTimeout * 1000;
+            xhr.timeout = config.uploadTimeout;
             xhr.send(formData);
         }
 

@@ -943,7 +943,7 @@
 
     addRule({ id: 'voice-secret', group: 'practice', severity: 'info', docs: 'components/voice-input.html', check(context) {
         context.find('.nds-voice-input').forEach(btn => {
-            const target = btn.getAttribute('data-voice-target') || btn.getAttribute('data-target');
+            const target = btn.getAttribute('data-voice-target');
             const input = target ? (document.getElementById(target) || document.querySelector(`[name="${CSS.escape(target)}"]`))
                 : btn.closest('.nds-form-control')?.querySelector(':scope > input, :scope > textarea, :scope > select');
             if (input && (input.matches('[type="password"], [readonly], select') || input.closest('.nds-otp-group'))) {

@@ -2,14 +2,14 @@
  * Rides: nds-forms (the `listening` state on the field container; soft — a bare input just
  *        gets its value set)
  * Requires:
- *   .nds-voice-input:not([data-voice-target]):not([data-target]) sits in .nds-form-control — there is no input to fill
+ *   .nds-voice-input:not([data-voice-target]) sits in .nds-form-control — there is no input to fill
  * Methods:
  *   NDS.VoiceInput.init() / .reinit()   install the delegated click handler (idempotent)
  *   NDS.VoiceInput.isSupported()        Web Speech API available? — gate your own UI on it
  * Events:
  *   (none — the transcript lands in the input, then `input` and `change` are dispatched)
  * Hooks:
- *   data-voice-target · data-target   id, name, or data-name of the input to dictate into.
+ *   data-voice-target   id, name, or data-name of the input to dictate into.
  *                                     With neither, the button's own .nds-form-control input.
  * Gotchas:
  *   - The button is never hidden on an unsupported browser; a click shows a message under
@@ -32,8 +32,7 @@
 //
 // The button can live ANYWHERE; it links to its input by, in order:
 //   1. data-voice-target="<id|name>"   explicit, button anywhere
-//   2. data-target="<id|name>"          explicit, shared NDS convention
-//   3. the nearest .nds-form-control's primary input   button inside the field
+//   2. the nearest .nds-form-control's primary input   button inside the field
 //
 // Field chrome (the `listening` state + transcription preview) derives from the
 // resolved input's `.nds-form-container` when it has one. A bare input just gets
@@ -165,7 +164,7 @@
     // Resolve the button's target input: explicit data attribute first (button
     // anywhere), then fall back to the surrounding form-control's primary input.
     function resolveInput(button) {
-        var target = button.getAttribute('data-voice-target') || button.getAttribute('data-target');
+        var target = button.getAttribute('data-voice-target');
         if (target) {
             return document.getElementById(target)
                 || document.querySelector('[name="' + target + '"]')

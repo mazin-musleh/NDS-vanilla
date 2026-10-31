@@ -28,10 +28,9 @@
  *   on <html>:             data-timezone · data-date-format · data-calendar · data-week-start (the site's)
  *   on any element:        data-date-format · data-calendar · data-week-start (sun … sat; the dates
  *                          inside it; nearest wins)
- *   on a <time datetime>:  data-date-calendar="hijri": show the date in Hijri, in the nearest
- *                          data-date-format (the element's own included)
- *                          data-date-format on the <time> itself, without data-date-calendar:
- *                          show the Gregorian date in that format
+ *   on a <time datetime>:  data-calendar or data-date-format on the <time> itself opts it in:
+ *                          fill() writes it in the nearest data-calendar and data-date-format
+ *                          (its own included); a bare data-calendar takes the ancestor's
  *                          data-date-era (optional, bare): a Hijri date ends in a span
  *                          that holds the pack's date.hijri_era word (AH in English)
  *   an empty time.nds-date-tile[datetime]: fill() writes its weekday, day and month parts, in the
@@ -330,7 +329,8 @@
     }
 
     // ── <time> text ──────────────────────────────────────────────────
-    const SELECTOR = 'time[datetime][data-date-calendar], time[datetime][data-date-format]';
+    // A tile may carry its own data-calendar: fillTile() writes it, never its whole text.
+    const SELECTOR = 'time[datetime]:not(.nds-date-tile):is([data-calendar], [data-date-format])';
     const TILE_SELECTOR = 'time.nds-date-tile[datetime]';
     // Tiles fill() wrote: written again when the pack lands, while a written tile stays as written.
     const filledTiles = new WeakSet();
@@ -345,7 +345,7 @@
         const elements = root.matches?.(SELECTOR) ? [root] : [];
         elements.push(...(root.querySelectorAll?.(SELECTOR) || []));
         for (const el of elements) {
-            const hijri = el.dataset.dateCalendar === 'hijri';
+            const hijri = NDS.Date.getCalendar(el) === 'hijri';
             // A Gregorian <time> is written only in a format of its own: else it already reads right.
             const date = (hijri || el.dataset.dateFormat) && NDS.Date.readDay(el.getAttribute('datetime'));
             if (!date) continue;

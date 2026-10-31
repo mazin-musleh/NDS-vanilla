@@ -261,7 +261,7 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
       border-end-end-radius: var(--btn-group-radius);
     }
 
-    &:is(:hover, :focus, .nds-active) {
+    &:is(:hover, :focus) {
       z-index: 2;
     }
   }

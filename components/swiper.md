@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "27/10/2026 - 09:35 PM"
+last_edit: "31/10/2026 - 03:49 PM"
 ---
 
 <section id="swiper-overview" class="nds-content-section nds-doc-overview">
@@ -451,7 +451,7 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 | `hidden` | `.nds-swiper-navigation`, hero slides after the first | Hides them until the script shows them |
 | `data-state` | `.nds-swiper` | The script writes `at-start` on the first page and `at-end` on the last, and both when there is one page. Use them to style the ends: `.nds-swiper[data-state~="at-end"]` |
 | `data-swiper-clone` | `.nds-swiper-clone` | The index of the real slide the copy repeats. Use it to update the copies of a slide you change at runtime |
-| `data-status` | `.nds-bullet`, spotlight `.nds-swiper-slide` | The script writes `active` on the current bullet. In a spotlight it also writes `active` on the open slide and its loop copies, and `after` on the slides after it |
+| `data-state` | `.nds-bullet`, spotlight `.nds-swiper-slide` | The script writes `active` on the current bullet. In a spotlight it also writes `active` on the open slide and its loop copies, and `after` on the slides after it |
 | `data-swiper-peek` | `.nds-swiper` | The script writes it while the peek shows |
 {: .nds-table .nds-responsive}
 

@@ -594,12 +594,12 @@
         var input = toggle.closest('.nds-form-control').querySelector(':scope > input[type="password"], :scope > input[type="text"]');
         if (!input) return;
         input.type = show ? 'text' : 'password';
-        toggle.classList.toggle('show', show);
+        if (show) NDS.state.add(toggle, 'shown'); else NDS.state.remove(toggle, 'shown');
         NDS.aria.label(toggle, strings.text(show ? 'hide_password' : 'show_password'));
     }
     var hideShown = function(e) {
         if ((e.type === 'reset' && e.defaultPrevented) || !e.target.querySelectorAll) return;
-        e.target.querySelectorAll('.nds-toggle-password.show').forEach(function(passwordToggle) { showPassword(passwordToggle, false); });
+        e.target.querySelectorAll('.nds-toggle-password').forEach(function(passwordToggle) { if (NDS.state.has(passwordToggle, 'shown')) showPassword(passwordToggle, false); });
     };
     NDS.field.addType('password', {
         // Remember the original type: the toggle swaps it.
@@ -609,7 +609,7 @@
                 var toggle = e.target.closest && e.target.closest('.nds-toggle-password');
                 if (!toggle || !toggle.closest('.nds-form-control .nds-form-action')) return;
                 e.preventDefault();
-                showPassword(toggle, !toggle.classList.contains('show'));
+                showPassword(toggle, !NDS.state.has(toggle, 'shown'));
             }
         },
         on: {

@@ -189,7 +189,7 @@
         {
             // Critical: it rewrites a <time>'s text, and a date that changes length after the reveal would shift the line.
             name: 'Date',
-            selector: 'time[datetime][data-date-calendar], time[datetime][data-date-format], time.nds-date-tile[datetime]',
+            selector: 'time[datetime][data-calendar], time[datetime][data-date-format], time.nds-date-tile[datetime]',
             critical: true,
             refresh: (root) => NDS.Date?.fill?.(root),
         },

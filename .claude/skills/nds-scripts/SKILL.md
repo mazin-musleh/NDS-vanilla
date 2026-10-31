@@ -19,6 +19,7 @@ node scripts/check-i18n.mjs [--build]           # every _i18n/ pack holds each E
 python scripts/check-docs.py [page.md]          # one-source doc pages vs the nds-doc rules (no build needed)
 python scripts/publish-iq.py [--apply]          # NDS IQ draft → the file installs download: dry run; --apply commits + tags IQvX.Y, never pushes
 python scripts/rig.py new|stage|reset|cost ...  # field rigs: a legacy app a fresh agent ports with the draft rules — guide in .claude/skills/nds-iq-eval/RIGS.md
+node scripts/ab-pages.mjs snap|diff|behave|serve # before/after proof for a wide change: every page's pixels, DOM and a11y tree, plus every page-driving check, base vs head in tmp/ab/ (usage in its header)
 node scripts/doc-check.mjs <page.md>            # clicks every builder option: findings + one contact sheet per theme in tmp/doc-check/ — owner's go-ahead first
 node scripts/check-menus-in-modal.mjs           # six menu components in a scrolling Modal: place, follow, close, pick; PHONE=1, ENGINE=webkit
 node scripts/check-ipv.mjs                      # Image Popup Viewer: NDS.Ipv methods, no window global, data-ipv-gallery grouping, rebuild after destroy
