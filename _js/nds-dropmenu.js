@@ -52,13 +52,6 @@
  *     that event's value), so a required picker re-checks on the next submit.
  */
 
-/**
- * NDS Dropmenu Component
- * Unified dropdown menu functionality with accessibility support
- * Handles click outside, keyboard navigation, ARIA attributes,
- * direction-aware positioning, and boundary detection
- */
-
 (function() {
     'use strict';
 
@@ -557,15 +550,11 @@
 
         // Also on open: rows built in nds:dropmenu:prepare came after init.
         _stampItemRoles() {
-            // Skip form controls and groups
-            this._getOwnItems().forEach(item => {
-                if (!item.hasAttribute('role')
-                    && !item.classList.contains('nds-form-control')
-                    && !item.classList.contains('nds-dropmenu-group')) {
-                    item.setAttribute('role', 'menuitem');
-                    // A WeakSet: menus rebuilt on every open would grow a list.
-                    (this._roleWritten ||= new WeakSet()).add(item);
-                }
+            // Form controls and groups take no role.
+            this._getOwnItems('.nds-dropmenu-item:not([role]):not(.nds-form-control):not(.nds-dropmenu-group)').forEach(item => {
+                item.setAttribute('role', 'menuitem');
+                // A WeakSet: menus rebuilt on every open would grow a list.
+                (this._roleWritten ||= new WeakSet()).add(item);
             });
         }
 
@@ -1041,8 +1030,8 @@
         /**
          * Compute placement in viewport coords; NDS.popup.setPosition writes them for the
          * absolute menu in the top layer. Vertical flips up when space below is tight;
-         * horizontal prefers trigger-edge alignment (RTL-aware) then clamps
-         * to the viewport.
+         * horizontal centres on the click or trigger (or pins an edge with data-anchor),
+         * then clamps to the viewport.
          */
         syncPosition() {
             const gap = 4, pad = 8;
@@ -1067,10 +1056,9 @@
             const width = Math.min(this._menu.offsetWidth, vw - edge * 2);
             this._menu.style.width = width + 'px';
 
-            // NDS.popup.getSpace returns raw space values + topEdge using the
-            // sticky mainnav as the top boundary. We clamp topEdge to `pad`
-            // for pages without the nav and subtract our own gap/pad from
-            // the raw space values.
+            // NDS.popup.getSpace returns raw space values + topEdge (the visible box top,
+            // or the sticky mainnav below it). We clamp topEdge to box.top + pad and the
+            // modal clip, and subtract our own gap/pad from the raw space values.
             // The sticky nav is a ceiling only for a menu that paints BELOW it.
             // In a modal the menu is over the nav, so reserving nav height there
             // is phantom margin — and it lands on ONE side: the up side loses
@@ -1085,9 +1073,8 @@
             const clip = this._menu.showPopover ? null : this._getModalClip();
             const topEdge = Math.max(placement.box.top + pad, placement.topEdge, clip ? clip.top + pad : -Infinity);
             const spaceBelow = (clip ? Math.min(placement.spaceBelow, clip.bottom - placement.triggerRect.bottom) : placement.spaceBelow) - gap - pad;
-            // Recompute spaceAbove from triggerRect rather than reusing
-            // placement.spaceAbove because it uses the unclamped placement.topEdge
-            // (which is 0 when no nav is present); we need the clamped value.
+            // Recompute spaceAbove from the clamped topEdge: placement.spaceAbove
+            // uses the unclamped one, with no pad and no modal clip.
             const spaceAbove = placement.triggerRect.top - gap - topEdge;
             // Flip up when the menu doesn't fit below AND above has more room
             // (real measured height, not a fixed threshold — a fits-below menu
@@ -1164,7 +1151,7 @@
         }
 
         // Anchored to the trigger where the browser can; after one miss, plain coords until close.
-        // height: the menu's height this top was set for (the resize watch in open() slides from it).
+        // height: the menu's height this top was set for (the resize watch in _watchWhileOpen() slides from it).
         _place(top, left, height) {
             this._menu.style.translate = '';
             this._placedHeight = height;
@@ -1185,9 +1172,7 @@
         /**
          * Horizontal placement in viewport coords, shared by syncPosition()
          * and _trackPosition() so an open menu can't re-place itself by a
-         * different rule on the first scroll frame than the one that opened
-         * it (the cursor anchor and the edge-flip used to live only in
-         * syncPosition, so a tracked menu jumped on first scroll).
+         * different rule on the first scroll frame than the one that opened it.
          *
          * Default anchors the menu on click x (so wide triggers open near
          * where the user clicked), falling back to trigger center for
