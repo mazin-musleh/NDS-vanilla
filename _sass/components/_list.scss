@@ -47,6 +47,7 @@
 
 // One column until the author sets --max-col: a list stacks, where a bare grid puts every item in one row.
 // A --min-width in the style fits columns like a grid. After Grid's sheet, so it wins the tie with Grid's reset.
+// ponytail: only the inline style is read; a --min-width set in a class is missed, so set --max-col there. Upgrade: a fit modifier class.
 :where(.nds-list:not([style*="--min-width"])) {
   --max-col: 1;
 }
