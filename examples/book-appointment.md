@@ -73,7 +73,7 @@ sidemenu_mode: false
                         <div class="nds-grid" style="--min-col: 1; --max-col: 2; --gap: var(--spacing-4xl);">
                             <!-- Autocomplete: data-min-chars="0" shows every service on a click or Down Arrow, and typing filters the list.
                                  The row template adds how long each takes under its name. data-strict accepts only a service picked from it -->
-                            <div class="nds-form-container" id="book-service-field" data-url="../docs-assets/data/appointment-services.json" data-name="Title" data-fetch="once" data-min-chars="0" data-strict data-required data-empty-message="No matching services">
+                            <div class="nds-form-container" id="book-service-field" data-url="../docs-assets/data/appointment-services.json" data-display-field="Title" data-fetch="once" data-min-chars="0" data-strict data-required data-empty-message="No matching services">
                                 <div class="nds-form-header">
                                     <label for="book-service">
                                         <span class="nds-label">Service</span>

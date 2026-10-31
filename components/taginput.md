@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 10:38 PM"
+last_edit: "31/10/2026 - 06:54 PM"
 ---
 
 <section id="taginput-overview" class="nds-content-section nds-doc-overview">
@@ -105,7 +105,7 @@ Prefilled tags inserts two hidden inputs right after the text box `#taginput-ski
 ### Suggestions
 {: .nds-block-title}
 
-`data-url` on `.nds-taginput` and `autocomplete="on"` on the text box add an [Autocomplete](../components/autocomplete) menu to the field. A picked suggestion becomes a tag, and typed text still becomes a tag on Enter or a comma. The menu opens only when a suggestion matches. When the user leaves the field while the menu is open, the typed text stays in the box. Set the fetch with the Autocomplete attributes, such as `data-fetch`, `data-min-chars` and `data-name`.
+`data-url` on `.nds-taginput` and `autocomplete="on"` on the text box add an [Autocomplete](../components/autocomplete) menu to the field. A picked suggestion becomes a tag, and typed text still becomes a tag on Enter or a comma. The menu opens only when a suggestion matches. When the user leaves the field while the menu is open, the typed text stays in the box. Set the fetch with the Autocomplete attributes, such as `data-fetch`, `data-min-chars` and `data-display-field`.
 
 ### Strict Mode
 {: .nds-block-title}

@@ -460,7 +460,7 @@ for (const ver of VUE) {
                 + '<fieldset class="nds-form-group nds-otp-group" id="v2-otp"><legend><span class="nds-label">Code</span></legend>'
                 + '<div class="nds-otp">' + digit + digit + digit + digit + '</div>'
                 + '<input type="hidden" class="nds-otp-value" v-model="otp"></fieldset>'
-                + '<div class="nds-form-container" id="v2-ac" data-url="../docs-assets/data/services-autocomplete.json" data-name="Title" data-fetch="once">'
+                + '<div class="nds-form-container" id="v2-ac" data-url="../docs-assets/data/services-autocomplete.json" data-display-field="Title" data-fetch="once">'
                 + '<div class="nds-form-control"><input type="text" id="v2-service" class="nds-input" autocomplete="on" v-model="service"></div></div>'
                 + '<div class="nds-dropmenu" id="v2-dm" data-select-name="country">'
                 + '<input type="hidden" data-nds-select-value v-model="country">'

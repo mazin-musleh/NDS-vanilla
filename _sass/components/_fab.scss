@@ -5,8 +5,8 @@
 // never restyles its children, so FABs of different sizes and shapes (56px
 // circle, 40px circle, an edge thumb) can share it.
 //
-// The dock is a static slot; the POSITION lives on each FAB (data-fab-pos)
-// and nds-fab.js routes the FAB into the slot whose data-fab-dock-pos matches.
+// The dock is a static slot; the POSITION lives on each FAB (data-fab-side)
+// and nds-fab.js routes the FAB into the slot whose data-fab-dock-side matches.
 // So this file only styles the slots — one per edge.
 
 @use '../mixins' as *;
@@ -190,7 +190,7 @@
 // corner clips a FAB at half a gutter: lift it to two. A bottom dock is
 // centered, clear of the corners, and a mouse-driven screen has none.
 @media (pointer: coarse) {
-    .nds-fab-dock:not([data-fab-dock-pos="bottom"]) {
+    .nds-fab-dock:not([data-fab-dock-side="bottom"]) {
         --_fab-dock-offset-y: calc(var(--_fab-dock-offset) * 2);
     }
 }
@@ -203,13 +203,13 @@
 
 // Right (also the attribute-less default) slides right; left slides left;
 // bottom has no side edge, so it drops straight down.
-[data-fab-tucked] .nds-fab-dock:is(:not([data-fab-dock-pos]), [data-fab-dock-pos="right"]) {
+[data-fab-tucked] .nds-fab-dock:is(:not([data-fab-dock-side]), [data-fab-dock-side="right"]) {
     transform: translateX(calc(100% + var(--_fab-dock-offset)));
 }
-[data-fab-tucked] .nds-fab-dock[data-fab-dock-pos="left"] {
+[data-fab-tucked] .nds-fab-dock[data-fab-dock-side="left"] {
     transform: translateX(calc(-100% - var(--_fab-dock-offset)));
 }
-[data-fab-tucked] .nds-fab-dock[data-fab-dock-pos="bottom"] {
+[data-fab-tucked] .nds-fab-dock[data-fab-dock-side="bottom"] {
     transform: translateY(calc(100% + var(--_fab-dock-offset-y)));
 }
 
@@ -226,13 +226,13 @@
 // physical (while a FAB's logical start/end resolves onto them in JS) means a
 // FAB can never land on two different dock elements at the same edge.
 // Attribute-less === right.
-.nds-fab-dock:is(:not([data-fab-dock-pos]), [data-fab-dock-pos="right"]) {
+.nds-fab-dock:is(:not([data-fab-dock-side]), [data-fab-dock-side="right"]) {
     right: var(--_fab-dock-offset);
     left: auto;
     align-items: flex-end;
 }
 
-.nds-fab-dock[data-fab-dock-pos="left"] {
+.nds-fab-dock[data-fab-dock-side="left"] {
     left: var(--_fab-dock-offset);
     right: auto;
     align-items: flex-start;
@@ -241,7 +241,7 @@
 // Centered horizontally with no transform, so the tuck's translateY is free.
 // Stacks as a ROW along the bottom edge — there's no side edge to stack up from —
 // so data-fab-order reads left-to-right; mixed-height FABs share the bottom line.
-.nds-fab-dock[data-fab-dock-pos="bottom"] {
+.nds-fab-dock[data-fab-dock-side="bottom"] {
     left: 0;
     right: 0;
     margin-inline: auto;
@@ -264,11 +264,11 @@
     &[data-fab-gap="lg"] { --_fab-gap: var(--fab-gap, var(--spacing-4xl)); }
 }
 
-.nds-fab-dock:not([data-fab-dock-pos="bottom"]) > [data-fab-gap] {
+.nds-fab-dock:not([data-fab-dock-side="bottom"]) > [data-fab-gap] {
     margin-block-end: var(--_fab-gap);
 }
 
-.nds-fab-dock[data-fab-dock-pos="bottom"] > [data-fab-gap] {
+.nds-fab-dock[data-fab-dock-side="bottom"] > [data-fab-gap] {
     margin-inline-start: var(--_fab-gap);
 }
 
@@ -288,7 +288,7 @@
 // A thumbed .nds-btn-group carries its corners on its first/last child, not on
 // itself, so those are squared too — blanket, not :first-child/:last-child,
 // since which child owns the edge corner flips with the group's orientation.
-.nds-fab-dock:is(:not([data-fab-dock-pos]), [data-fab-dock-pos="right"]) .nds-fab-thumb {
+.nds-fab-dock:is(:not([data-fab-dock-side]), [data-fab-dock-side="right"]) .nds-fab-thumb {
     margin-right: calc(var(--_fab-dock-offset) * -1);
 
     &, > .nds-btn {
@@ -304,7 +304,7 @@
     }
 }
 
-.nds-fab-dock[data-fab-dock-pos="left"] .nds-fab-thumb {
+.nds-fab-dock[data-fab-dock-side="left"] .nds-fab-thumb {
     margin-left: calc(var(--_fab-dock-offset) * -1);
 
     &, > .nds-btn {
@@ -314,7 +314,7 @@
     }
 }
 
-.nds-fab-dock[data-fab-dock-pos="bottom"] .nds-fab-thumb {
+.nds-fab-dock[data-fab-dock-side="bottom"] .nds-fab-thumb {
     margin-bottom: calc(var(--_fab-dock-offset-y) * -1);
 
     &, > .nds-btn {

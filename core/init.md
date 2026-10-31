@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "23/10/2026 - 09:47 PM"
+last_edit: "31/10/2026 - 06:54 PM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -156,7 +156,7 @@ A library or your own script that replaces or morphs server HTML in place, such 
 
 A framework that hydrates server HTML, such as Next.js or Nuxt, needs that HTML unchanged until hydration ends. When NDS starts first, it changes some of it: the clock writes the time, and Main Navigation sets classes. React then throws the server HTML away and renders it again, without what NDS wrote. When React renders `<html>` too, as the Next.js App Router does, it also removes `data-nds-loaded`, the mark that shows the page, so the page stays hidden. Which one starts first can change from one load to the next: Next.js loads its own scripts with `async`.
 
-Write `data-nds-auto-init="false"` on `<html>`. Once hydration ends, remove that attribute and call `window.NDS?.init.initialize()`: in React from an effect in the root component, in Vue from `onMounted` in the root component. When NDS has not loaded yet, the `?.` skips the call, and NDS starts when it loads, because the attribute is gone.
+Write `data-no-auto-init` on `<html>`. Once hydration ends, remove that attribute and call `window.NDS?.init.initialize()`: in React from an effect in the root component, in Vue from `onMounted` in the root component. When NDS has not loaded yet, the `?.` skips the call, and NDS starts when it loads, because the attribute is gone.
 
 When the framework renders `<html>` too, as the Next.js App Router does, put `suppressHydrationWarning` on `<html>`. The head inline script writes the saved theme to its `data-theme` before hydration, and React reports that in development. React 18 also reports the `data-nds-defer` that the script removes from each preload link, so put the same prop on those links.
 
@@ -357,8 +357,8 @@ NDS.init.ready.then(function () {
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-nds-auto-init="false"` | `<html>` | No component starts at load. Call `NDS.init.initialize()` yourself, or remove the attribute before NDS loads. `NDS.init.ready` waits for the start |
-| `data-nds-disable-all="true"` | `<html>` | `initialize()` starts no component. Call each one's `init()` yourself |
+| `data-no-auto-init` | `<html>` | No component starts at load. On when present; `false`, `0`, `no` or `off` keeps it off. Call `NDS.init.initialize()` yourself, or remove the attribute before NDS loads. `NDS.init.ready` waits for the start |
+| `data-no-init-all` | `<html>` | `initialize()` starts no component. On when present; `false`, `0`, `no` or `off` keeps it off. Call each one's `init()` yourself |
 | `data-nds-loaded` | `<html>` | The loader sets it once the main CSS has applied and the first components started. Do not set it yourself |
 {: .nds-table .nds-responsive}
 
@@ -369,8 +369,8 @@ Set these on `window` before the main bundle loads. A `window.NDS_INIT_CONFIG` k
 
 | Global | Default | Effect |
 |---|---|---|
-| `NDS_INIT_CONFIG.autoInitialize` | `true` | `false` is the same as `data-nds-auto-init="false"` |
-| `NDS_INIT_CONFIG.disableAll` | `false` | `true` is the same as `data-nds-disable-all="true"` |
+| `NDS_INIT_CONFIG.autoInitialize` | `true` | `false` is the same as `data-no-auto-init` |
+| `NDS_INIT_CONFIG.disableAll` | `false` | `true` is the same as `data-no-init-all` |
 | `NDS_INIT_CONFIG.enableLogging` | `false` | Logs each component as it starts, and runs `NDS.init.audit()` after load |
 | `NDS_INIT_CONFIG.enableTiming` | `false` | Logs the total init time. With `enableLogging`, it also logs the time of each component |
 | `NDS_INIT_CONFIG.initBudgetMs` | `5` | Milliseconds of init work before the loader yields to the browser |

@@ -15,7 +15,7 @@
 //   FAB       a FAB docks on <body>, out of the framework's tree. Unmount leaves none behind; in
 //             React a sibling added before a bare FAB crashes the app, a wrapper of its own does not.
 //   HYDRATION React and Vue hydrate server HTML from their own server renderers: NDS starting at
-//             load breaks it; data-nds-auto-init="false" + initialize() after hydration does not.
+//             load breaks it; data-no-auto-init + initialize() after hydration does not.
 //             React rendering <html> too (Next.js) drops the reveal stamp, so the page stays hidden.
 //   INFO rows print a class-binding result the doc does not claim yet; they never fail the run.
 //
@@ -308,7 +308,7 @@ for (const v of VUE) {
 // Server HTML from the framework's own server renderer, written into the page before NDS
 // starts, then hydrated: the Next.js / Nuxt shape without a server build. With NDS starting
 // at load the hydration must report a mismatch (the doc's warning); with
-// data-nds-auto-init="false" and START after hydration, none (its fix).
+// data-no-auto-init and START after hydration, none (its fix).
 // Markup → framework nodes, so the framework owns each element. `h(tag, props, ...kids)`.
 const TO_TREE = `(h, names) => function tree(html) {
     const conv = (node) => {
@@ -323,7 +323,7 @@ const TO_TREE = `(h, names) => function tree(html) {
         .map(conv).filter((k) => k !== null);
 }`;
 // core/init.md Hydration: drop the hold and start NDS, whichever loaded first.
-const START = "document.documentElement.removeAttribute('data-nds-auto-init'); window.NDS?.init.initialize();";
+const START = "document.documentElement.removeAttribute('data-no-auto-init'); window.NDS?.init.initialize();";
 const MISMATCH = /hydrat|did not match|did not expect|extra attributes|server html/i;
 
 async function hydrationRun(name, serverHtml, hydrate, manual) {
@@ -335,7 +335,7 @@ async function hydrationRun(name, serverHtml, hydrate, manual) {
         const res = await route.fetch();
         let body = await res.text();
         body = body.replace(/<body([^>]*)>/, `<body$1><div id="ssr-root">${serverHtml}</div>`);
-        if (manual) body = body.replace(/<html([^>]*)>/, '<html$1 data-nds-auto-init="false">');
+        if (manual) body = body.replace(/<html([^>]*)>/, '<html$1 data-no-auto-init>');
         await route.fulfill({ response: res, body });
     });
     await page.goto(`${BASE}/components/form.html`, { waitUntil: 'load' });
@@ -381,7 +381,7 @@ for (const v of REACT) {
     const auto = await hydrationRun(R, html, hydrate, false);
     ok(`${R} hydration: NDS starting at load breaks it (the doc's warning holds)`, auto.logs.length > 0, auto.logs[0] || 'no mismatch logged');
     const manual = await hydrationRun(R, html, hydrate, true);
-    ok(`${R} hydration: data-nds-auto-init="false" + initialize() after it: no mismatch`, manual.logs.length === 0, manual.logs.join(' | '));
+    ok(`${R} hydration: data-no-auto-init + initialize() after it: no mismatch`, manual.logs.length === 0, manual.logs.join(' | '));
     ok(`${R} hydration: NDS works after the late initialize()`, manual.works);
 }
 
@@ -398,7 +398,7 @@ const HEAD = {
 const DOC_APP = `(h, P, o) => {
     const view = h('main', null, h('div', { className: 'nds-content-layout' },
         h('p', { id: 'probe' }, 'hello'), h('span', { id: 'nds-real-time-clock' })));
-    const doc = () => h('html', { lang: 'en', dir: 'ltr', 'data-nds-auto-init': o.manual ? 'false' : undefined },
+    const doc = () => h('html', { lang: 'en', dir: 'ltr', 'data-no-auto-init': o.manual ? '' : undefined },
         h('head', null, h('meta', { charSet: 'UTF-8' }), h('title', null, 't'),
             h('style', { dangerouslySetInnerHTML: { __html: P.gate } }),
             ...P.css.map(([href, d]) => h('link', { key: href, rel: 'preload', href, as: 'style', 'data-nds-defer': d })),
@@ -457,7 +457,7 @@ for (const v of REACT) {
     let r = await docRun(v, { whole: true });
     ok(`${R} renders <html>: NDS starting at load leaves the page hidden (the doc's warning holds)`, r.renderedAgain && !r.shown, JSON.stringify(r));
     r = await docRun(v, { whole: true, manual: true });
-    ok(`${R} renders <html>: with data-nds-auto-init="false" the page shows after hydration`, !r.renderedAgain && r.shown && r.clock, JSON.stringify(r));
+    ok(`${R} renders <html>: with data-no-auto-init the page shows after hydration`, !r.renderedAgain && r.shown && r.clock, JSON.stringify(r));
     r = await docRun(v, { whole: true, manual: true, late: true });
     ok(`${R} renders <html>: NDS loading after hydration starts on its own and shows the page`, !r.ndsFirst && !r.renderedAgain && r.shown && r.clock, JSON.stringify(r));
     r = await docRun(v, { whole: false });
@@ -489,7 +489,7 @@ for (const v of VUE) {
     const auto = await hydrationRun(V, html, hydrate, false);
     ok(`${V} hydration: NDS starting at load breaks it (the doc's warning holds)`, auto.logs.length > 0, auto.logs[0] || 'no mismatch logged');
     const manual = await hydrationRun(V, html, hydrate, true);
-    ok(`${V} hydration: data-nds-auto-init="false" + initialize() after it: no mismatch`, manual.logs.length === 0, manual.logs.join(' | '));
+    ok(`${V} hydration: data-no-auto-init + initialize() after it: no mismatch`, manual.logs.length === 0, manual.logs.join(' | '));
     ok(`${V} hydration: NDS works after the late initialize()`, manual.works);
 }
 
@@ -696,7 +696,7 @@ const IDIOMORPH = 'idiomorph@0.7.3/dist/idiomorph.min.js';
 // NDS moves some nodes the app wrote: a FAB into its dock, an open menu to <body>, a pinned
 // nav item into the minimal bar. The framework still holds each one and may insert a
 // sibling before it or remove it. NDS.markHome keeps the node's old spot answering for it.
-const FAB = '<button type="button" class="nds-btn nds-fab nds-primary nds-circle nds-icon-only" id="f-fab" data-fab-pos="right" aria-label="Open" hidden><i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i></button>';
+const FAB = '<button type="button" class="nds-btn nds-fab nds-primary nds-circle nds-icon-only" id="f-fab" data-fab-side="right" aria-label="Open" hidden><i class="nds-icon nds-hgi-menu-01" aria-hidden="true"></i></button>';
 async function fabRun(page, name, errors) {
     const state = () => page.evaluate(() => {
         const fab = document.getElementById('f-fab');
@@ -878,10 +878,10 @@ for (const v of REACT) {
     const page = await browser.newPage();
     const errors = [];
     page.on('pageerror', (e) => { if (!/ResizeObserver loop/.test(e.message)) errors.push(e.message); });
-    // data-cookies="false": no built panel races the app's own; open() still loads the bundle.
+    // data-cookies-no-auto-open: no built panel races the app's own; open() still loads the bundle.
     await page.route(/components\/form\.html/, async (route) => {
         const res = await route.fetch();
-        await route.fulfill({ response: res, body: (await res.text()).replace(/<html([^>]*)>/, '<html$1 data-cookies="false">') });
+        await route.fulfill({ response: res, body: (await res.text()).replace(/<html([^>]*)>/, '<html$1 data-cookies-no-auto-open>') });
     });
     await page.goto(`${BASE}/components/form.html`, { waitUntil: 'load' });
     await page.waitForFunction(() => window.NDS?.init?.mount, null, { timeout: 15000 });
@@ -942,7 +942,7 @@ for (const v of REACT) {
             React.useEffect(() => { const el = ref.current; window.NDS?.init.mount(el); return () => window.__destroy(el); }, []);
             return h('div', { ref }, before ? h('i', { id: 'a11y-before' }) : null, fab ? h('button', {
                 className: 'nds-btn nds-primary nds-circle nds-icon-only nds-fab nds-accessibility-toggle', type: 'button', id: 'r-a11y',
-                'aria-label': 'Accessibility settings', 'aria-expanded': 'false', 'data-fab-pos': 'auto', 'data-panel-side': 'end',
+                'aria-label': 'Accessibility settings', 'aria-expanded': 'false', 'data-fab-side': 'auto', 'data-panel-side': 'end',
                 'data-panel-toggle': 'nds-accessibility-panel', 'data-accessibility-toggle': '', hidden: true
             }, h('i', { className: 'nds-icon nds-hgi-accessibility', 'aria-hidden': 'true' })) : null);
         }

@@ -73,6 +73,12 @@ Renamed, each with a migration row where it shipped: `date-picker-toggle` → `n
 - Main Nav's `nds-minimal` (3.16 nav half): a deliberate big-host mode class (`nds-main-nav.js` comment); a `data-state` swap fails `check-data-state-tails.py` on 5 selectors and joins the shared invalidation set.
 - `nds-highlight-value` (3.4): a modifier on the list, not a part; the name fits.
 
+## Batch 4, checked against the code (2026-10-31)
+
+Renamed, no aliases: Autocomplete `data-name` → `data-display-field` (voice and form keep `data-name` for a target field); `data-fab-pos` → `data-fab-side`, `data-fab-dock-pos` → `data-fab-dock-side`; `<html>` switches `data-nds-auto-init="false"` → `data-no-auto-init`, `data-nds-disable-all="true"` → `data-no-init-all`, `data-cookies="false"` → `data-cookies-no-auto-open` (new in v2: no migration row). One reader for every flag: `NDS.readFlag(el, name)` in core, Upload's `data-auto-upload` too. The loader warns once per old switch; the audit's migration scan now includes `:root`. Check: `scripts/check-v2-batch4.mjs`.
+
+**Seen in the A/B, not this batch:** a Console Demo menu button gets `role="menuitem"` only when Dropmenu stamps after Filter builds its menu (b3 had it, base/b1/b2/b4 not). A load-order race; the 390px doc thumb and Upload's progress number are timing noise too.
+
 ## How we stay safe
 
 1. **Baseline first, made stable.** Build today's `HEAD` into `tmp/ab/base/`. `scripts/ab-pages.mjs` diffs base against head, with the clock frozen, animations and swiper autoplay off, fonts loaded:

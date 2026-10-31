@@ -192,8 +192,7 @@
             const dataset = this.container.dataset;
             const attributeConfig = {
                 uploadUrl: dataset.uploadUrl || null,
-                // On when present (bare, as every flag); a template's printed false (false, False, 0, no, off) stays off.
-                autoUpload: dataset.autoUpload !== undefined && !/^(false|0|no|off)$/i.test(dataset.autoUpload.trim()),
+                autoUpload: NDS.readFlag(this.container, 'data-auto-upload'),
                 maxFileSize: parseInt(dataset.maxFileSize) || 10 * 1024 * 1024,
                 allowedTypes: dataset.allowedTypes ? NDS.splitList(dataset.allowedTypes.toLowerCase()) : null,
                 allowedMimeTypes: dataset.allowedMimeTypes ? NDS.splitList(dataset.allowedMimeTypes.toLowerCase()) : null,

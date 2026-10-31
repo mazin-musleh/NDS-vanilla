@@ -136,6 +136,11 @@
 - { kind: class, name: sr-only, scope: "[class*=\"nds-\"]", status: renamed, use: nds-sr-only, since: "2.0.0", fix: "Use nds-sr-only." }
 - { kind: class, name: table-actions, scope: .nds-table, status: renamed, use: nds-table-actions, since: "2.0.0", fix: "Use nds-table-actions." }
 - { kind: attribute, name: data-target, scope: "&.nds-voice-input", status: removed, since: "2.0.0", fix: "Use data-voice-target." }
+- { kind: attribute, name: data-name, scope: "&:is(.nds-form-container, .nds-taginput)[data-url]", status: renamed, use: data-display-field, since: "2.0.0", fix: "Use data-display-field: the result field each row shows." }
+- { kind: attribute, name: data-fab-pos, status: renamed, use: data-fab-side, since: "2.0.0", fix: "Use data-fab-side." }
+- { kind: attribute, name: data-fab-dock-pos, status: renamed, use: data-fab-dock-side, since: "2.0.0", fix: "Use data-fab-dock-side." }
+- { kind: attribute, name: data-nds-auto-init, status: renamed, use: data-no-auto-init, since: "2.0.0", fix: "Write data-no-auto-init, with no value. The old name is not read, so every component starts at load." }
+- { kind: attribute, name: data-nds-disable-all, status: renamed, use: data-no-init-all, since: "2.0.0", fix: "Write data-no-init-all, with no value. The old name is not read, so every component starts." }
 - { kind: attribute, name: data-status, scope: "&.nds-bullet", status: renamed, use: data-state, since: "2.0.0", fix: "NDS writes data-state=\"active\" on the current bullet: key your CSS on .nds-bullet[data-state~=\"active\"]." }
 - { kind: attribute, name: data-i18n-attr, status: renamed, use: data-i18n-aria-label, since: "2.0.0", fix: "Write one marker per attribute, with the section in the key: data-i18n-attr=\"aria-label:close_panel\" becomes data-i18n-aria-label=\"accessibility.close_panel\" (also -title, -alt, -placeholder, -label, -aria-description)." }
 - { kind: attribute, name: data-i18n-name, status: renamed, use: data-i18n, since: "2.0.0", fix: "Write data-i18n=\"accessibility.mode_{id}\", the mode id with underscores: data-i18n=\"accessibility.mode_epilepsy_safe\"." }
@@ -411,7 +416,7 @@
 - { kind: class, name: nds-accessibility-panel-header, scope: .nds-accessibility-panel, status: renamed, use: nds-panel-header, since: "1.5.0", fix: "Use the shared nds-panel-header class." }
 - { kind: class, name: nds-accessibility-panel-quick, scope: .nds-accessibility-panel, status: renamed, use: nds-accessibility-quick, since: "1.5.0", fix: "Rename the quick-toggle row to nds-accessibility-quick." }
 - { kind: class, name: nds-accessibility-panel-title, scope: .nds-accessibility-panel, status: renamed, use: nds-panel-title, since: "1.5.0", fix: "Use the shared nds-panel-title class." }
-- { kind: attribute, name: data-a11y-pos, scope: .nds-accessibility-toggle, status: renamed, use: data-fab-pos, since: "1.5.0", fix: "Use data-fab-pos on the toggle and data-panel-side on the panel." }
+- { kind: attribute, name: data-a11y-pos, scope: .nds-accessibility-toggle, status: renamed, use: data-fab-side, since: "1.5.0", fix: "Use data-fab-side on the toggle and data-panel-side on the panel." }
 - { kind: attribute, name: data-accessibility-close, scope: .nds-accessibility-panel, status: renamed, use: data-panel-close, since: "1.5.0", fix: "Use data-panel-close on the close button." }
 - { kind: property, name: --a11y-fab-offset, scope: .nds-a11y, status: removed, since: "1.5.0", fix: "The accessibility panel now takes its size from shared components." }
 - { kind: property, name: --a11y-panel-top, scope: .nds-a11y, status: removed, since: "1.5.0", fix: "The accessibility panel now takes its size from shared components." }

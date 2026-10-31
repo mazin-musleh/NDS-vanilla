@@ -948,7 +948,7 @@
     // Open / Close — NDS.Panel owns the lifecycle: the slide, the sticky-header
     // offset, scroll re-measurement, Escape, outside-click, and focus-in. What
     // stays here is only what Panel cannot know about:
-    //   • the lazy-arm boot gate: the FAB IS a [data-panel-toggle] (data-fab-pos
+    //   • the lazy-arm boot gate: the FAB IS a [data-panel-toggle] (data-fab-side
     //     "auto" needs it to find the panel's side), so the boot gate's capture
     //     listener has to pre-empt Panel's own delegated handler on the FAB's
     //     first click — see the Accessibility entry's lazy hook in nds-loader.js;
@@ -1050,7 +1050,7 @@
     // Panel markup — built here, not shipped in the page, so it exists only once
     // armed. The panel's words are data-i18n markers core translates. side comes off the
     // FAB's own data-panel-side (fallback 'end') so the FAB is the one place
-    // to reposition both itself (data-fab-pos="auto") and the panel it builds — no
+    // to reposition both itself (data-fab-side="auto") and the panel it builds — no
     // JS edit needed for the common case.
     function buildPanelMarkup(side) {
         return `<dialog id="nds-accessibility-panel"

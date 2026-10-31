@@ -15,7 +15,7 @@
  *   data-cookies-view              notice | manage | done — the views inside the panel
  *   data-cookies-action            accept | reject | save (then done) · manage · undo (back to notice)
  *   data-cookies-category          on a switch input in the manage view — the category it allows
- *   data-cookies="false"           on <html> — no auto-open on this page (a kiosk, a TV); the
+ *   data-cookies-no-auto-open      on <html> — no auto-open on this page (a kiosk, a TV); the
  *                                  toggle buttons still open it
  * Gotchas:
  *   - A lazy BUNDLE like Accessibility, on every page: fetched only for a visitor with no stored
@@ -213,7 +213,7 @@
 
     // No auto-open: a choice is stored, the visitor closed it lately, or the page opts out.
     const skipAuto = () => NDS.consent.get() || NDS.cookie.get(DISMISS_KEY)
-        || document.documentElement.getAttribute('data-cookies') === 'false';
+        || NDS.readFlag(document.documentElement, 'data-cookies-no-auto-open');
 
     // The panel is static: it waits for any open panel by itself.
     function openNotice() {

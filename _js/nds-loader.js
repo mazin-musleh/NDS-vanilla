@@ -252,8 +252,8 @@
                     NDS.Cookies.open(btn.dataset.cookiesToggle || undefined, btn);
                 });
             },
-            // A page with <html data-cookies="false"> (a kiosk, a TV) skips the bundle until a toggle press.
-            eager: () => document.documentElement.getAttribute('data-cookies') !== 'false'
+            // A page with <html data-cookies-no-auto-open> (a kiosk, a TV) skips the bundle until a toggle press.
+            eager: () => !NDS.readFlag(document.documentElement, 'data-cookies-no-auto-open')
                 && !NDS.consent.get() && !NDS.cookie.get('nds-cookies-dismissed'),
         },
         {
@@ -888,17 +888,19 @@
 
     // window.NDS_INIT_CONFIG wins over the <html> data-attributes.
     const rootEl = document.documentElement;
-    const attributeAutoInit = rootEl.getAttribute('data-nds-auto-init');
-    const attributeDisableAll = rootEl.getAttribute('data-nds-disable-all');
     const initConfig = window.NDS_INIT_CONFIG || {};
+    // v1's switches are ignored now, so a page that kept one starts everything: say so.
+    [['data-nds-auto-init', 'data-no-auto-init'], ['data-nds-disable-all', 'data-no-init-all']].forEach(([old, use]) => {
+        if (rootEl.hasAttribute(old)) console.warn(`[NDS:init] <html ${old}> is not read in v2: write ${use} instead.`);
+    });
 
     const config = {
         // Below ~40 keeps clear of TBT's 50ms long-task threshold on throttled CPUs.
         initBudgetMs: initConfig.initBudgetMs ?? 5,
         enableLogging: initConfig.enableLogging ?? false,
         enableTiming: initConfig.enableTiming ?? false,
-        autoInitialize: initConfig.autoInitialize ?? (attributeAutoInit != null ? attributeAutoInit !== 'false' : true),
-        disableAll: initConfig.disableAll ?? (attributeDisableAll != null ? attributeDisableAll === 'true' : false),
+        autoInitialize: initConfig.autoInitialize ?? !NDS.readFlag(rootEl, 'data-no-auto-init'),
+        disableAll: initConfig.disableAll ?? NDS.readFlag(rootEl, 'data-no-init-all'),
     };
 
     NDS.loadBundle = loadBundle;

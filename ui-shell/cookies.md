@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "21/10/2026 - 04:08 PM"
+last_edit: "31/10/2026 - 06:54 PM"
 ---
 
 <section id="cookies-overview" class="nds-content-section nds-doc-overview">
@@ -202,7 +202,7 @@ Both structures end with an optional trigger button. The Manual template holds t
 
 When no choice is stored, the panel opens on the Notice view after six seconds. It does not move focus, so a keyboard user keeps their place. If another panel is open, it waits until that panel closes. If the user opens a panel while the Notice shows, the Notice hides and comes back when that panel closes.
 
-`data-cookies="false"` on `<html>` turns the auto-open off for that page, and the page then loads no panel script until a trigger is pressed. A trigger still opens the panel.
+`data-cookies-no-auto-open` on `<html>` turns the auto-open off for that page, and the page then loads no panel script until a trigger is pressed. A trigger still opens the panel.
 
 ### Views
 
@@ -318,7 +318,7 @@ The close button stores no choice. The panel then does not open by itself for 30
 - Register each Google Analytics ID with `window.GA_TRACKING_ID` or `data-ga-tracking-id`, before the NDS scripts. Without it, a denial clears the cookies but Google Analytics keeps running.
 - Listen for `nds:cookies:consent` to start or stop a tool that NDS does not know, such as a vendor pixel.
 - Do not add a second cookie banner. The consent panel is already on every page.
-- On a page that nobody interacts with, such as a kiosk or a TV display, write `data-cookies="false"` on `<html>`. With no choice stored, NDS counts every optional category as declined there.
+- On a page that nobody interacts with, such as a kiosk or a TV display, write `data-cookies-no-auto-open` on `<html>`. With no choice stored, NDS counts every optional category as declined there.
 - To change the links or categories, use the Manual structure and edit the whole panel. Keep `data-cookies-view`, `data-cookies-action` and `data-cookies-category`.
 - To change only the text, set `window.NDS_I18N.cookies`. The built panel then keeps up with future releases.
 
@@ -347,7 +347,7 @@ The close button stores no choice. The panel then does not open by itself for 30
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-cookies="false"` | `<html>` | The panel does not open by itself on this page. A trigger still opens it |
+| `data-cookies-no-auto-open` | `<html>` | The panel does not open by itself on this page. On when present; `false`, `0`, `no` or `off` keeps it off. A trigger still opens it |
 | `data-cookies-toggle` | any button outside the panel | Opens the panel. `="manage"` opens it on the Manage view |
 | `data-cookies-view` | `.nds-cookies-view` | `notice`, `manage` or `done`. The script shows one view at a time |
 | `data-cookies-action` | a button in the panel | `accept`, `reject` and `save` store the choice and show the Done view. `manage` shows the Manage view. `undo` goes back to the Notice view |

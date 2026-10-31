@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "26/10/2026 - 09:45 AM"
+last_edit: "31/10/2026 - 06:54 PM"
 ---
 
 <section id="autocomplete-overview" class="nds-content-section nds-doc-overview">
@@ -37,7 +37,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body">
 <script type="text/html" id="autocomplete-field" data-canon data-variants="autocomplete-variants-table" data-harness="form" data-demo-width="300px">
-<div class="nds-form-container" data-url="../docs-assets/data/services-autocomplete.json" data-name="Title" data-fetch="once">
+<div class="nds-form-container" data-url="../docs-assets/data/services-autocomplete.json" data-display-field="Title" data-fetch="once">
   <div class="nds-form-header">
     <label for="service-search">
       <span class="nds-label">Service</span>
@@ -106,7 +106,7 @@ The canon carries `data-fetch="once"` because the demo data is a static file. Fo
 ### Fetch Modes
 {: .nds-block-title}
 
-With `data-fetch="each"`, the default, the script requests `data-url` with the typed text on each search, such as `services.json?q=visa`. The server filters the results. With `data-fetch="once"`, the script requests `data-url` once, with no query, and keeps the list. On each search, it shows the results whose `data-name` field holds the typed text, in any letter case.
+With `data-fetch="each"`, the default, the script requests `data-url` with the typed text on each search, such as `services.json?q=visa`. The server filters the results. With `data-fetch="once"`, the script requests `data-url` once, with no query, and keeps the list. On each search, it shows the results whose `data-display-field` field holds the typed text, in any letter case.
 
 ### Strict Mode
 {: .nds-block-title}
@@ -259,7 +259,7 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
 | Class | Element | Effect |
 |---|---|---|
 | `.nds-autocomplete-menu` | the menu | The script adds the menu, with `.nds-dropmenu-menu`, in the `.nds-form-control`. Style the menu through this class: it stays on the menu when the menu moves to `<body>` |
-| `.nds-autocomplete-row` | a `<template>` in the `.nds-form-container` | The parts of each row. The script copies it for each result and fills its `data-field` elements. Without it, a row shows the `data-name` field alone |
+| `.nds-autocomplete-row` | a `<template>` in the `.nds-form-container` | The parts of each row. The script copies it for each result and fills its `data-field` elements. Without it, a row shows the `data-display-field` field alone |
 | `.nds-option-text` | each row from the template | The script wraps the copied parts in it, so they stack under the name and the row grows to fit them |
 | `.nds-autocomplete-value` | a hidden `<input>` | The script adds it with `data-strict`. It holds the picked text, or the text already in the field when the field builds. It has no `name`, so the form data does not change |
 {: .nds-table .nds-responsive}
@@ -270,8 +270,8 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
 | Attribute | Element | Effect |
 |---|---|---|
 | `data-url` | `.nds-form-container` | The URL that returns the JSON results. Required. It may hold a query string: the script then adds the typed text after `&` |
-| `data-name` | `.nds-form-container` | The result field that each row shows and that a pick writes into the input. The default is `Title` |
-| `data-field` | an element in the `.nds-autocomplete-row` template | The result field the script writes into it, as text. In the `data-name` field, the match is marked. A field with no value removes its element, or the whole `.nds-meta-item` around it. `renderItem()`, when you pass it, replaces the template |
+| `data-display-field` | `.nds-form-container` | The result field that each row shows and that a pick writes into the input. The default is `Title` |
+| `data-field` | an element in the `.nds-autocomplete-row` template | The result field the script writes into it, as text. In the `data-display-field` field, the match is marked. A field with no value removes its element, or the whole `.nds-meta-item` around it. `renderItem()`, when you pass it, replaces the template |
 | `data-fetch` | `.nds-form-container` | `each` (the default) requests the URL on each search. `once` requests it once and filters in the browser |
 | `data-min-chars` | `.nds-form-container` | The fewest characters that start a search. The default is `3`. Shorter text closes the menu. `0` shows the whole list on a click or the Down Arrow, and again when the user deletes the text. On a field that holds a pick, the list shows every item, with the pick active |
 | `data-query-param` | `.nds-form-container` | The name of the query parameter that holds the typed text with `each`. The default is `q` |
@@ -296,7 +296,7 @@ Source: the `autocomplete` group in `_sass/tokens/_components.scss`.
 ### Response Format
 {: .nds-block-title}
 
-The response is a JSON array of objects, or an object that holds the array. Each object needs the `data-name` field. Other fields reach the `select` event in `item`.
+The response is a JSON array of objects, or an object that holds the array. Each object needs the `data-display-field` field. Other fields reach the `select` event in `item`.
 
 <script type="text/html" id="autocomplete-response" data-canon data-lang="js">
 // GET services.json?q=visa
@@ -321,14 +321,14 @@ The response is a JSON array of objects, or an object that holds the array. Each
 
 | Option | Default | Effect |
 |---|---|---|
-| `filter(items, query)` | a match in the `data-name` field | Returns the results to show. It runs in both fetch modes: with `each`, on the server's results |
-| `renderItem(item, query)` | the `data-name` field, with the match marked | Returns the HTML of one row. The script inserts it as HTML, so escape the text yourself. The match is not marked: add `<mark>` yourself if you need it |
+| `filter(items, query)` | a match in the `data-display-field` field | Returns the results to show. It runs in both fetch modes: with `each`, on the server's results |
+| `renderItem(item, query)` | the `data-display-field` field, with the match marked | Returns the HTML of one row. The script inserts it as HTML, so escape the text yourself. The match is not marked: add `<mark>` yourself if you need it |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |
 |---|---|---|
 | `nds:autocomplete:fetch` | `.nds-form-container`, and it bubbles | `{ query, results }`, after each list renders. `results` holds every match, not only the first 20 |
-| `nds:autocomplete:select` | `.nds-form-container`, and it bubbles | `{ item, text }`, after a pick. `item` is the whole result object. `text` is its `data-name` value, now in the input |
+| `nds:autocomplete:select` | `.nds-form-container`, and it bubbles | `{ item, text }`, after a pick. `item` is the whole result object. `text` is its `data-display-field` value, now in the input |
 | `nds:autocomplete:clear` | `.nds-form-container`, and it bubbles | `{}`, after the clear button empties the field |
 {: .nds-table .nds-responsive}
 

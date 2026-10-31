@@ -13,7 +13,7 @@
  *   nds:autocomplete:select   detail {item, text} — a suggestion was picked
  *   nds:autocomplete:clear    detail {} — the field's clear button was used
  * Hooks (all on the .nds-form-container):
- *   data-url · data-name (result field to display, default "Title") · data-min-chars (3; 0 = a click shows the whole list)
+ *   data-url · data-display-field (result field to display, default "Title") · data-min-chars (3; 0 = a click shows the whole list)
  *   <template class="nds-autocomplete-row"> in the container: each row's parts, [data-field] slots filled as text
  *   data-query-param (q) · data-results-path · data-fetch="each|once"
  *   data-empty-message · data-empty-icon · data-strict (typed text must match a pick)
@@ -89,7 +89,7 @@
 
             // Config from container attributes
             this._url = containerElement.getAttribute('data-url');
-            this._nameField = containerElement.getAttribute('data-name') || 'Title';
+            this._nameField = containerElement.getAttribute('data-display-field') || 'Title';
             // A row with more than the name (a second line, a Meta line): authored once, filled per result.
             this._rowTemplate = containerElement.querySelector(':scope > template.nds-autocomplete-row');
             // 0 is a real value: the whole list on a click, before any typing.
@@ -492,7 +492,7 @@
         }
 
         // One row from the field's <template class="nds-autocomplete-row">, in .nds-option-text so its
-        // parts stack and the row grows. Each [data-field] takes its value as text; the data-name one is
+        // parts stack and the row grows. Each [data-field] takes its value as text; the data-display-field one is
         // marked. A field with no value takes its .nds-meta-item with it, so no icon stands alone.
         _fillRow(item, highlightRegex) {
             const row = document.createElement('span');

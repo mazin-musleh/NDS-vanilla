@@ -13,10 +13,10 @@
  * Events:
  *   (none)
  * Hooks:
- *   data-fab-pos        left | right | bottom (physical) · start | end (logical, flips with
+ *   data-fab-side       left | right | bottom (physical) · start | end (logical, flips with
  *                       the page direction) · auto or absent (follow the toggled panel)
  *   data-fab-order      stacking order inside a dock, default 0
- *   data-fab-dock-pos   on a .nds-fab-dock you author yourself
+ *   data-fab-dock-side  on a .nds-fab-dock you author yourself
  *   written by the component: data-fab-riding on a thumb that moved aside for its panel,
  *                             data-fab-tucked on <html> near the page bottom, and while a
  *                             .nds-hero-section reaches into the viewport's bottom 15%
@@ -41,7 +41,7 @@
  *   .nds-fab           marks an element (button or container) as a FAB — the
  *                      routing marker, exactly like every other NDS component's
  *                      root class. init() scans for this.
- *   data-fab-pos       which edge (optional; absent === auto). The DOCKS are
+ *   data-fab-side      which edge (optional; absent === auto). The DOCKS are
  *                      static physical positions (left / right / bottom); a
  *                      FAB resolves to one — so the FAB is free to move while
  *                      the docks stay put and logical/physical never overlap:
@@ -75,7 +75,7 @@
     // A JS-made dock always stamps its position (below), but an authored bare
     // <div class="nds-fab-dock"> may omit it — treat that as 'right' so both
     // resolve to the same edge.
-    const getDockPosition = (el) => el.dataset.fabDockPos || DEFAULT_POSITION;
+    const getDockPosition = (el) => el.dataset.fabDockSide || DEFAULT_POSITION;
 
     // Map a side to one of the PHYSICAL docks. Physical left/right/bottom pass
     // through unchanged; logical start/end resolve by direction (so `end` lands
@@ -91,7 +91,7 @@
     // only 'auto' (or absent) follows the toggled panel's side, falling back to
     // the reading-end edge when there's no panel.
     function resolvePosition(fab, override) {
-        const side = override || fab.dataset.fabPos || 'auto';
+        const side = override || fab.dataset.fabSide || 'auto';
         if (side !== 'auto') return toEdge(side);
         // The toggle is the FAB itself, or — on a group — one of its buttons, so
         // `auto` has to descend to find it. ridePanel climbs the same boundary
@@ -111,7 +111,7 @@
         if (!el) {
             el = document.createElement('div');
             el.className = 'nds-fab-dock';
-            el.dataset.fabDockPos = want;   // always stamp (incl. 'right') so the DOM is unambiguous
+            el.dataset.fabDockSide = want;   // always stamp (incl. 'right') so the DOM is unambiguous
             createdDocks.add(el);           // ours to remove once it empties
             document.body.appendChild(el);
         }
@@ -120,7 +120,7 @@
 
     // Move a FAB into its resolved slot, keeping the slot ordered by
     // data-fab-order (default 0) so cross-source stacking is deterministic.
-    // `override` forces a position, ignoring the FAB's own data-fab-pos.
+    // `override` forces a position, ignoring the FAB's own data-fab-side.
     function register(fab, override) {
         if (!fab) return null;
         // Mark where the FAB was authored before the first move, so destroy() can put it back

@@ -699,7 +699,8 @@
         const look = (kind, name, el) => (byKind[kind]?.get(name) || []).forEach(row => { if (kind === 'property' || isInScope(el, row.scope)) hit(row, el); });
         // A <template>'s content too: a custom panel (Accessibility) waits there until it opens.
         const templateNodes = [...document.querySelectorAll('template')].flatMap(template => [...template.content.querySelectorAll('*')]);
-        for (const el of [...context.find('body *, body'), ...templateNodes]) {
+        // :root too: the page switches (data-no-auto-init) live on <html>.
+        for (const el of [...context.find(':root, body, body *'), ...templateNodes]) {
             for (const className of el.classList) if (!own.has(className)) look('class', className, el);
             for (const attribute of el.attributes) if (attribute.name !== 'class' && attribute.name !== 'style') look('attribute', attribute.name, el);
             if (el.id) look('id', el.id, el);

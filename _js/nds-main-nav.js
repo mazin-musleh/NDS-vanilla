@@ -103,7 +103,7 @@
     // Auto-init off (the loader reads the same switch): nothing changes before
     // initialize(), so a framework hydrates the markup it rendered.
     const autoInit = (window.NDS_INIT_CONFIG || {}).autoInitialize
-        ?? document.documentElement.getAttribute('data-nds-auto-init') !== 'false';
+        ?? !NDS.readFlag(document.documentElement, 'data-no-auto-init');
     if (autoInit && dom.nav && dom.collapse) {
         dom.nav.classList.toggle('nds-minimal', minimalMediaQuery.matches);
         dom.minimal?.toggleAttribute('hidden', !minimalMediaQuery.matches);

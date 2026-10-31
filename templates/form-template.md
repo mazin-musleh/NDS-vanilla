@@ -210,7 +210,7 @@ sidemenu_mode: false
 
                         <div class="nds-form-container" data-required
                             data-url="{{ '/docs-assets/data/saudi-cities.json' | relative_url }}"
-                            data-name="Name" data-fetch="once" data-min-chars="1">
+                            data-display-field="Name" data-fetch="once" data-min-chars="1">
                             <div class="nds-form-header">
                                 <label for="ft-city"><span class="nds-label">City</span></label>
                             </div>

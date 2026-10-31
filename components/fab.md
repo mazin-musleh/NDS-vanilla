@@ -6,7 +6,7 @@ hero_description: A floating action button (FAB) stays at an edge of the screen 
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "27/10/2026 - 12:19 AM"
+last_edit: "31/10/2026 - 06:54 PM"
 lang: en
 direction: ltr
 ---
@@ -104,7 +104,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-Variant and Size have two rows. On a single FAB, the class goes on the FAB button. On a group, it goes on each button in the group. Edge sets the side of the panel. The FAB has no `data-fab-pos`, so it docks on the panel's edge.
+Variant and Size have two rows. On a single FAB, the class goes on the FAB button. On a group, it goes on each button in the group. Edge sets the side of the panel. The FAB has no `data-fab-side`, so it docks on the panel's edge.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
@@ -157,12 +157,12 @@ Variant and Size have two rows. On a single FAB, the class goes on the FAB butto
 ### Edge
 {: .nds-block-title}
 
-The Edge options set the side of the panel, and the FAB follows it. To place a FAB on an edge of its own, write `data-fab-pos`. `start` and `end` follow the reading direction. `left`, `right` and `bottom` stay on that edge in every language. If its panel is not on the page yet, the FAB reads `data-panel-side` from its toggle button. A FAB with no `data-fab-pos` and no side, or with a top sheet, docks on the end edge.
+The Edge options set the side of the panel, and the FAB follows it. To place a FAB on an edge of its own, write `data-fab-side`. `start` and `end` follow the reading direction. `left`, `right` and `bottom` stay on that edge in every language. If its panel is not on the page yet, the FAB reads `data-panel-side` from its toggle button. A FAB with no `data-fab-side` and no side, or with a top sheet, docks on the end edge.
 
 ### Thumb
 {: .nds-block-title}
 
-`nds-fab-thumb` puts the FAB against the screen edge. The corners on that side turn square and the border there goes away, so it looks like a tab. When its panel slides in from the same edge, the thumb moves aside with the panel and comes back when the panel closes. On the bottom edge, it sits on the bottom of the screen and rises with the sheet. A thumb with an explicit `data-fab-pos` moves only when that edge is the panel's edge.
+`nds-fab-thumb` puts the FAB against the screen edge. The corners on that side turn square and the border there goes away, so it looks like a tab. When its panel slides in from the same edge, the thumb moves aside with the panel and comes back when the panel closes. On the bottom edge, it sits on the bottom of the screen and rises with the sheet. A thumb with an explicit `data-fab-side` moves only when that edge is the panel's edge.
 
 ### Group
 {: .nds-block-title}
@@ -233,7 +233,7 @@ A button group with `nds-fab` docks as one item, with one shadow around the whol
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Panel Following</span>
-              <p class="nds-card-description">A FAB with no <code class="nds-inline-code lang-html">data-fab-pos</code> docks on the edge of the panel it opens. Change the panel's side and the FAB follows.</p>
+              <p class="nds-card-description">A FAB with no <code class="nds-inline-code lang-html">data-fab-side</code> docks on the edge of the panel it opens. Change the panel's side and the FAB follows.</p>
             </div>
           </div>
         </li>
@@ -316,7 +316,7 @@ A button group with `nds-fab` docks as one item, with one shadow around the whol
 
 - Keep FABs few: one for the main action, such as add, compose, filters or chat. Put more actions in a [Panel](../components/panel) that the FAB opens.
 - Write the `hidden` attribute on every FAB. The script removes it once the FAB is in its dock, so the FAB never shows at the place you wrote it.
-- Leave out `data-fab-pos` on a FAB that opens a panel, so the FAB stays on the panel's edge.
+- Leave out `data-fab-side` on a FAB that opens a panel, so the FAB stays on the panel's edge.
 - Use `start` and `end` so the edge follows the reading direction. Use `left` or `right` only for an action that must stay on one side in every language.
 - Give the main action the lowest `data-fab-order`, so it sits nearest the edge.
 - Give an icon-only FAB an `aria-label` that names the action.
@@ -340,7 +340,7 @@ A button group with `nds-fab` docks as one item, with one shadow around the whol
 | Class | Element | Effect |
 |---|---|---|
 | `nds-fab` | `.nds-btn` or `.nds-btn-group` | Makes it a FAB: the script moves it to its dock |
-| `nds-fab-dock` | `div` | A dock. The script makes one for each edge in use, at the end of `<body>`. To place a plain button at an edge, write a dock yourself with `data-fab-dock-pos` and put the button in it. The script moves only buttons with `nds-fab` |
+| `nds-fab-dock` | `div` | A dock. The script makes one for each edge in use, at the end of `<body>`. To place a plain button at an edge, write a dock yourself with `data-fab-dock-side` and put the button in it. The script moves only buttons with `nds-fab` |
 {: .nds-table .nds-responsive}
 
 ### Data Attributes
@@ -348,11 +348,11 @@ A button group with `nds-fab` docks as one item, with one shadow around the whol
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-fab-pos` | `.nds-fab` | The edge: `auto` (the default), `start`, `end`, `left`, `right` or `bottom`. See Edge under Behavior |
+| `data-fab-side` | `.nds-fab` | The edge: `auto` (the default), `start`, `end`, `left`, `right` or `bottom`. See Edge under Behavior |
 | `data-fab-order` | `.nds-fab` | The place in the stack. A lower number sits nearer the edge. The default is `0` |
 | `data-fab-gap` | `.nds-fab` | Extra space between the FAB and the one before it: `sm` (8px), `md` (16px) or `lg` (32px). See Gap under Behavior |
 | `data-panel-toggle` | `.nds-fab`, or a button in a group | The `id` of the [Panel](../components/panel) it opens. The FAB docks on that panel's edge |
-| `data-fab-dock-pos` | `.nds-fab-dock` | The edge of a dock you write yourself: `left`, `right` (the default) or `bottom` |
+| `data-fab-dock-side` | `.nds-fab-dock` | The edge of a dock you write yourself: `left`, `right` (the default) or `bottom` |
 | `data-fab-riding` | `.nds-fab-thumb` | The script writes it while the thumb moves aside for its panel |
 | `data-fab-tucked` | `<html>` | The script writes it while the docks slide out, near the page end or over a hero |
 {: .nds-table .nds-responsive}
@@ -378,7 +378,7 @@ A FAB in the page docks by itself. Call the API for a FAB that a script makes af
 | Method | Effect |
 |---|---|
 | `NDS.Fab.init()` | Docks every `nds-fab` that is not docked yet. `reinit()` is the same |
-| `NDS.Fab.register(fab, edge)` | Docks one FAB now and returns its dock. `edge` is optional and replaces the FAB's `data-fab-pos` |
+| `NDS.Fab.register(fab, edge)` | Docks one FAB now and returns its dock. `edge` is optional and replaces the FAB's `data-fab-side` |
 | `NDS.Fab.destroy(fab)` | Puts a FAB back where it was written, hidden again. Pass a container to do this for every FAB written inside it. Returns the count |
 | `NDS.Fab.getDock(edge)` | Returns the dock at `left`, `right` or `bottom`, and makes it if it is missing |
 | `NDS.Fab.resolvePosition(fab)` | Returns the edge the FAB docks on: `left`, `right` or `bottom` |
