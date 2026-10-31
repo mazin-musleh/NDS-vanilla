@@ -231,7 +231,8 @@
     }
 
     setValue(value) {
-      const n = parseFloat(value);
+      // Number, not parseFloat: '3abc' is refused, as in 1.12; '' and null are no score.
+      const n = typeof value === 'number' || (typeof value === 'string' && value.trim()) ? Number(value) : NaN;
       if (!(n >= 0 && n <= this._stars.length)) return false;
       this._setRating(n);
       return true;

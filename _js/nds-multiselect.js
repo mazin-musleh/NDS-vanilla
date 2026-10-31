@@ -288,6 +288,7 @@
                 // Staged in apply mode — the native checkbox state change is
                 // what the user perceives; commit happens on Apply.
                 if (this._applyMode) return;
+                this._applied = this.getValues();
                 this._renderChips();
                 this._announceToggle(e.target);
                 this._dispatchChange();
@@ -401,6 +402,9 @@
             const wanted = values.map(String);
             if (!wanted.every(value => this._checkboxes.some(checkbox => checkbox.value === value))) return false;
             this._checkboxes.forEach(checkbox => { checkbox.checked = wanted.includes(checkbox.value); });
+            // The committed set already: no change event, no announcement, as Taginput.
+            const now = this.getValues();
+            if (now.length === this._applied.length && now.every((value, i) => value === this._applied[i])) return true;
             this.apply();
             return true;
         }

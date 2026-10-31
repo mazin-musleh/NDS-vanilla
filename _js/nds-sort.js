@@ -180,6 +180,8 @@
             this._state = { key: null, order: null };
             this._originalOrder = null;
 
+            // Before init(): a URL sort fires its change event from there, and a listener reads detail.sort.ndsSort.
+            root.ndsSort = this;
             this.init();
         }
 
@@ -555,7 +557,6 @@
             if (!root) return null;
             if (root.ndsSort) return root.ndsSort;
             const instance = new NdsSort(root, options);
-            root.ndsSort = instance;
             root.setAttribute('data-nds-sort-initialized', 'true');
             return instance;
         },

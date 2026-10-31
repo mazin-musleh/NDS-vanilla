@@ -283,6 +283,8 @@
             // static-values, and URL-active filters build eagerly during init.
             this._deferredFilters = [];
 
+            // Before init(): a URL-active filter fires its change event from there, and a listener reads detail.filter.ndsFilter.
+            filterContainer.ndsFilter = this;
             this.init();
         }
 
@@ -3270,7 +3272,6 @@
     // register it by target id.
     function createInstance(representative, surfaces) {
         const instance = new NdsFilter(representative, surfaces);
-        representative.ndsFilter = instance;
         // Stamp every linked surface + the target container: the constructor's
         // init has applied URL params by now, so this releases the crit holds
         // (items region, auto-fill row) — including holds keyed on ancestor

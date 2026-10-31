@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 10:45 PM"
+last_edit: "31/10/2026 - 11:09 PM"
 ---
 
 <section id="helpers-overview" class="nds-content-section nds-doc-overview">
@@ -186,7 +186,7 @@ One observer of each kind serves the whole page. Each call returns an `off()` fu
 
 | Method | Effect |
 |---|---|
-| `NDS.resolveElement(ref)` | Returns the element for an element, an `id` or a selector, or `null` |
+| `NDS.resolveElement(ref)` | Returns the element for an `id` or a selector, or `null` when none matches. Anything that is not a string comes back as is, so an element stays an element and a missing argument stays `undefined` |
 | `NDS.getStickyHeaderBottom()` | The bottom edge of the sticky header, in px |
 | `NDS.getVisibleBox()` | The part of the screen the visitor sees: `{ top, left, right, bottom }`. A zoom or an on-screen keyboard makes it smaller |
 | `NDS.scrollBelowNav(el, { offsetVar, offsetEl })` | Scrolls `el` into view below the sticky header, when the header covers it. The gap comes from the custom property `offsetVar`, 120px without one |
