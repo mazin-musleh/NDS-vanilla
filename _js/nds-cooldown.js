@@ -73,7 +73,7 @@
  *   nds:cooldown:end        — cooldown finished or reset(); button restored
  *
  * Attributes:
- *   data-cooldown           seconds (required to opt in)
+ *   data-cooldown           seconds (required, unless start() passes opts.seconds)
  *   data-cooldown-label     countdown text; every {s} → remaining seconds (default "{s}")
  *   data-resend-label       label to restore AFTER the first completed cycle
  *                           (e.g. initial "Send" becomes "Resend" from cycle 2 on).
@@ -108,11 +108,11 @@
     // mutations are already handled by those long-lived subscribers.
     let subscribed = false;
 
-    // Per-button runtime: { tickTimer, labelEl, originalLabel }
+    // Per-button runtime: { tickTimer, labelEl, originalLabel, wasDisabled, hadFocus }
     const active = new WeakMap();
 
-    // Per-button frozen config: { cooldown, label }. Populated on wire(),
-    // read on start(). Prevents DevTools attribute edits from shortening
+    // Per-button frozen config: { cooldown, label }. Populated by setupButton(),
+    // or by the first start() on a button driven from JS. Prevents DevTools attribute edits from shortening
     // the cooldown mid-session.
     const config = new WeakMap();
 
@@ -206,11 +206,14 @@
         // state — the countdown then ticks underneath the spinner and is already
         // at the right number when the request resolves and the state comes off.
         if (!opts.silent) fire(btn, 'nds:cooldown:start');
+        // A listener may reset() before the timer exists; going on would arm one nothing stops.
+        if (active.get(btn) !== cycle) return;
 
         const template = getLabelTemplate(btn);
         let remaining = total;
         render(cycle, template, remaining);
         fire(btn, 'nds:cooldown:tick', { remaining });
+        if (active.get(btn) !== cycle) return;
 
         // Count against the clock, not the ticks: a hidden tab pauses or throttles
         // timers (the user switching to the SMS app), and the server's limit keeps running.
