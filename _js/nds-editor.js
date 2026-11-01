@@ -1291,8 +1291,7 @@
             if (command === 'link' || command === 'image' || command === 'remove') return; // dropmenu-backed — handled via mousedown prep + menu clicks
             this._editable.focus();
             this._runCommand(command);
-            this._syncSource();
-            this._syncToolbarState();
+            this._commit();
         }
 
         _runCommand(command) {
@@ -1368,8 +1367,7 @@
                 this._syncAccessState();
                 this.source.setAttribute('tabindex', '-1');
                 btn?.setAttribute('aria-pressed', 'false');
-                this._syncSource();
-                this._syncToolbarState();
+                this._commit();
                 this._editable.focus();
             }
         }
@@ -1477,8 +1475,7 @@
                 if (command) {
                     e.preventDefault();
                     this._runCommand(command);
-                    this._syncSource();
-                    this._syncToolbarState();
+                    this._commit();
                 }
                 return;
             }
@@ -1489,8 +1486,7 @@
                 if (block && block.tagName === 'LI') {
                     e.preventDefault();
                     document.execCommand(e.shiftKey ? 'outdent' : 'indent');
-                    this._syncSource();
-                    this._syncToolbarState();
+                    this._commit();
                 }
             }
         }
@@ -1514,8 +1510,7 @@
             e.clipboardData.setData('text/html', sanitizeHtml(whole.outerHTML));
             e.clipboardData.setData('text/plain', whole.textContent.replace(/\s+/g, ' ').trim());
             this._removeRegion(whole);
-            this._syncSource();
-            this._syncToolbarState();
+            this._commit();
         }
 
         _handlePaste(e) {
@@ -1599,6 +1594,7 @@
                 const probe = new DOMParser().parseFromString(insert, 'text/html').body;
                 const inlineOnly = [...probe.children].every(child => inlineTags.has(child.tagName));
                 this._editable.innerHTML = inlineOnly ? `<p>${insert}</p>` : insert;
+                this._normalizeLooseBlocks();
                 const range = document.createRange();
                 range.selectNodeContents(this._editable);
                 range.collapse(false);
@@ -1607,15 +1603,13 @@
                 selection.addRange(range);
                 this._syncLinks();
                 this._syncColumnAlign();
-                this._syncSource();
-                this._syncToolbarState();
+                this._commit();
                 return;
             }
             if (!this._insertPasted(insert)) return;
             this._syncLinks();
             this._syncColumnAlign();
-            this._syncSource();
-            this._syncToolbarState();
+            this._commit();
         }
 
         // Anything else dropped goes in like a paste, sanitized, at the drop point.
@@ -2051,8 +2045,7 @@
             this._restoreSelection();
             const target = this._removeChain?.[levelIndex];
             if (target?.isConnected) this._removeRegion(target);
-            this._syncSource();
-            this._syncToolbarState();
+            this._commit();
         }
 
         _cancelRemove() {
@@ -2140,8 +2133,7 @@
                     caretRange.collapse(true);
                     selection.removeAllRanges();
                     selection.addRange(caretRange);
-                    this._syncSource();
-                    this._syncToolbarState();
+                    this._commit();
                     return true;
                 }
             }
@@ -2150,8 +2142,7 @@
             // ponytail: insertLineBreak over a hand-rolled <br> + caret move;
             // Shift+Enter lands here too and behaves identically.
             document.execCommand('insertLineBreak');
-            this._syncSource();
-            this._syncToolbarState();
+            this._commit();
             return true;
         }
 
@@ -2196,8 +2187,7 @@
                 if (whole) {
                     e.preventDefault();
                     this._removeRegion(whole);
-                    this._syncSource();
-                    this._syncToolbarState();
+                    this._commit();
                     return true;
                 }
                 return false;
@@ -2490,8 +2480,7 @@
                     `<a class="nds-link${colored ? ' nds-primary' : ''}" href="${escapeHtml(url)}"${external ? ' target="_blank"' : ''}${noExternal ? ' data-no-external=""' : ''} rel="noopener noreferrer">${escapeHtml(text || url)}</a>`);
             }
             this._syncLinks();
-            this._syncSource();
-            this._syncToolbarState();
+            this._commit();
         }
 
         _unlink() {
@@ -2509,8 +2498,7 @@
                 const el = convertTag(existing, tag, ['href', 'target', 'rel']);
                 el.classList.remove('nds-external'); // link-only stamp
                 if (tag === 'button') el.setAttribute('type', 'button');
-                this._syncSource();
-                this._syncToolbarState();
+                this._commit();
                 return;
             }
             // execCommand('unlink') needs a selection that intersects the
@@ -2524,8 +2512,7 @@
                 selection.addRange(range);
             }
             document.execCommand('unlink');
-            this._syncSource();
-            this._syncToolbarState();
+            this._commit();
         }
 
         // Close without touching the document; hand focus and selection back.
@@ -2692,8 +2679,7 @@
                 existing.setAttribute('alt', alt);
                 width > 0 ? existing.setAttribute('width', width) : existing.removeAttribute('width');
                 height > 0 ? existing.setAttribute('height', height) : existing.removeAttribute('height');
-                this._syncSource();
-                this._syncToolbarState();
+                this._commit();
             } else {
                 this._insertImage(url, alt, width, height);
             }
@@ -2712,8 +2698,7 @@
             document.execCommand('insertHTML', false,
                 `<img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}"`
                 + `${width > 0 ? ` width="${width}"` : ''}${height > 0 ? ` height="${height}"` : ''}>`);
-            this._syncSource();
-            this._syncToolbarState();
+            this._commit();
         }
 
         // A fresh line at the end (or the existing trailing empty paragraph),
@@ -2884,6 +2869,12 @@
             const paragraph = document.createElement('p');
             paragraph.innerHTML = '<br>';
             this._editable.appendChild(paragraph);
+        }
+
+        // An edit landed: the value, then the toolbar that reflects it.
+        _commit() {
+            this._syncSource();
+            this._syncToolbarState();
         }
 
         _syncSource(coalesce = false) {
