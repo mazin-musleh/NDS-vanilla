@@ -379,6 +379,8 @@
             var shown = {};
             Object.keys(result).forEach(function(key) { if (key !== 'empty' && key !== 'focus') shown[key] = result[key]; });
             if (options.showMessage) {
+                // A direct call on a page that had no field at load still re-checks after the fix.
+                addRecheckListeners();
                 if (!shown.valid) statusManager.set({ element: el, status: 'error', message: shown.message });
                 else statusManager.clear(el);
             }
@@ -397,6 +399,7 @@
             if (validationResult.pending) NDS.init.mount(form);
 
             if (options.showMessages) {
+                addRecheckListeners();
                 validationResult.errors.forEach(function(e) { statusManager.set({ element: e.field, status: 'error', message: e.message }); });
                 // A rule's field that passed drops the error it showed.
                 validationResult.passed.forEach(function(el) { statusManager.clear(el); });
