@@ -21,6 +21,7 @@
  *   - A click outside the open expander and its toggles closes it, which is also what closes it
  *     when the nav opens: the two need no cross-component call.
  *   - A click during the close slide re-opens it rather than doing nothing.
+ *   - Closing with focus inside moves focus to its toggle.
  *   - The listeners are delegated: once init() ran, an expander or toggle added later needs none.
  *     The loader runs it for a toggle on the page at load, or on mount().
  */
@@ -86,6 +87,10 @@
         // "open closing" holds display:grid while rows slide to 0fr; hidden once it settles.
         addState(expander, 'closing');
         syncToggles(expander, false);
+        // Focus inside would drop to <body> once it hides: hand it to the toggle that shows.
+        if (expander.contains(document.activeElement)) {
+            [...findToggles(expander)].find((btn) => btn.checkVisibility?.() ?? true)?.focus();
+        }
         closeCancels.set(expander, NDS.onTransitionEnd(expander, () => {
             closeCancels.delete(expander);
             clearState(expander);
