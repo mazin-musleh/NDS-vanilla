@@ -2,7 +2,7 @@
  * Rides: nds-sort (the sort engine — column cycling, reordering, aria-sort)
  *      · nds-dropmenu (column-visibility menu; a sub-row toggle authored inside a menu item)
  *      · nds-selection (the header select-all)
- *      · nds-pagination (refreshed after a sort re-orders a paged table; soft)
+ *      · nds-pagination (refreshed after a sort re-orders a paged table; soft — a table with no paged content works)
  * Methods:
  *   NDS.Table.init() / .reinit()               scan .nds-table and [data-columns-target] menus
  *   NDS.Table.refresh()                        re-measure every table's responsive scroll state

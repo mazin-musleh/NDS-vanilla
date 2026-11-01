@@ -391,7 +391,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     const mine = BUNDLE[name];
     if (mine && mine !== 'main') {
         const seenNs = new Set();
-        for (const m of code.matchAll(/\bNDS\.([A-Z]\w*)\b/g)) {
+        for (const m of bare.matchAll(/\bNDS\.([A-Z]\w*)\b/g)) { // bare: a message naming a call is no call
             const theirs = BUNDLE[HOME[m[1]]];
             if (!theirs || theirs === 'main' || theirs === mine || seenNs.has(m[1])) continue;
             seenNs.add(m[1]);
@@ -1400,6 +1400,7 @@ if (args[0] === '--self-test') {
         if (got.join() !== want) { failed++; console.log(`FAIL  entry 11 in ${file}: want [${want}] got [${got}]`); }
     };
     layer('nds-export.js', `(function(){ function f() { NDS.Panel.open(p); } })();`, 'verify'); // extras → delegated
+    layer('nds-export.js', `(function(){ function f() { warn('call NDS.Panel.open() first'); } })();`, ''); // string text, not a call
     layer('nds-export.js', `(function(){ function f() { NDS.Form.validate(p); } })();`, ''); // extras → main
     layer('nds-dialog.js', `(function(){ function f() { NDS.Modal.close(); } })();`, 'finding'); // a base names a component
     // A sibling in this file's own bundle needs no guard; one in another injected bundle may.

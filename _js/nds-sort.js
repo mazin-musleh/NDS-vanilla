@@ -1,5 +1,5 @@
 /* NDS.Sort — public surface
- * Rides: nds-dropmenu (triggers may sit inside a menu; soft), nds-pagination (a markup-wired paged list repages after a sort; soft)
+ * Rides: nds-dropmenu (triggers may sit inside a menu; soft — a trigger outside one works), nds-pagination (a markup-wired paged list repages after a sort; soft — an unpaged list skips it)
  * Methods:
  *   NDS.Sort.init()                     wire every list a [data-sort-target] button names
  *   NDS.Sort.refresh(root)              wire new lists, re-sort the wired ones inside root

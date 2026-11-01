@@ -1,5 +1,5 @@
 /* NDS.Selection — public surface
- * Rides: nds-forms (the indeterminate select-all box) · nds-filter (data-filtered; soft)
+ * Rides: nds-forms (the indeterminate select-all box) · nds-filter (data-filtered; soft — a list with no filter works)
  * Methods:
  *   NDS.Selection.init() / .reinit()        wire the document listeners (the loader calls this)
  *   NDS.Selection.refresh(list?)            resync one list (its id or the element); with no
