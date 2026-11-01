@@ -222,9 +222,8 @@
     // OVERFLOW DETECTION
     // ==============================================
     // Stays eager: the overflow affordance (has-more edge-mask + sticky show-more
-    // button) is applied on the first init pass and the collapse drawer is revealed
-    // here (removeCollapseHidden on the first settled check) — deferring it would
-    // pop the affordance / hold the drawer hidden post-reveal (CLS).
+    // button) settles on the first init pass — deferring it would pop the
+    // affordance in after the reveal (CLS).
     const overflow = {
         schedule(priority = 'normal') {
             if (state.pendingOverflowCheck) clearTimeout(state.pendingOverflowCheck);
@@ -249,6 +248,9 @@
                 removeState(dom.primary, 'has-more', 'at-start', 'at-end');
                 return;
             }
+            // Destroyed, removed or hidden by the page: nothing to measure, and the 0 retry below would never end.
+            // The resize watcher on primary schedules a check once it is drawn again.
+            if (!initDone || !dom.primary.getClientRects().length) return;
 
             const wasOverflowing = hasState(dom.primary, 'has-more');
             let hasOverflow = false;
@@ -270,8 +272,7 @@
                 hasOverflow = scrollWidth > clientWidth;
             }
 
-            // Reveal the collapse once the overflow calc has settled for this
-            // pass — first check only.
+            // init() strips [hidden] itself; the first check only repeats it.
             const revealOnce = () => {
                 if (this._initialCheckDone) return;
                 this._initialCheckDone = true;
@@ -839,6 +840,8 @@
     // EVENT HANDLERS
     // ==============================================
     const scheduleUpdate = NDS.throttleToFrame(() => {
+        // A debounce or the rotate timer can land after destroy(): a dead nav takes no update.
+        if (!initDone) return;
         const modeChanged = syncMode();
 
         // A mode flip with something open: close the menus and the drawer, and drop
@@ -958,6 +961,7 @@
         offDomWatches.push(
             NDS.onDomAdd('.nds-nav-item, .nds-has-menu', navChanged),
             NDS.onDomRemove('.nds-nav-item, .nds-has-menu', navChanged),
+            navChanged.cancel,
         );
 
         // Steady-state resize: coalesce storms before the recompute.
@@ -987,6 +991,7 @@
             onNavResize();
         };
 
+        offElementResizes.push(onNavResize.cancel);
         if (dom.primary) {
             offElementResizes.push(NDS.onElementResize(dom.primary, handleNavResize));
         }
@@ -1034,9 +1039,11 @@
         // Entry guard: a repeat init() on the nav it wired is a no-op. A different nav, or a kept
         // root whose collapse was swapped out or re-hidden, re-resolves dom and wires again.
         const live = document.querySelector('.nds-main-nav');
+        // No nav in the page: never re-wire the one a destroy() left detached.
+        if (!live) return;
         // [hidden] counts only after a first init: the markup ships the collapse hidden.
-        if (live && (dom.nav !== live || !dom.collapse?.isConnected
-            || (initDone && dom.collapse.hasAttribute('hidden')))) {
+        if (dom.nav !== live || !dom.collapse?.isConnected
+            || (initDone && dom.collapse.hasAttribute('hidden'))) {
             if (!captureDom()) return;
             initDone = false;
         }
@@ -1103,6 +1110,9 @@
         if (!initDone) return;
         initDone = false;
         cancelToggleAction();
+        clearTimeout(state.pendingOverflowCheck);
+        state.pendingOverflowCheck = null;
+        state.pendingAction = null; // a queued second tap would re-dim the page on a dead nav
         eventsAbortController?.abort();
         eventsAbortController = null;
         interactionsAbortController?.abort();

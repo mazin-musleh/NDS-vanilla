@@ -244,6 +244,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Top Bar** — The date, clock, city and weather widgets are [Meta](https://mazin-musleh.github.io/NDS-vanilla/components/meta.html) lines, at Meta's LG size: 16px at every width (the text shrank to 12–14px on tablets). `nds-md` or `nds-sm` on a widget picks a smaller one.
 
 ### Fixed
+- **Main Navigation** — A navigation that a page removes or hides no longer runs its overflow check about ten times a second for as long as the page stays open. The check now waits until the navigation shows again.
 - **Alert** — A `.nds-alert-placeholder` you place yourself stays in the page when its last toast closes, so the next toast for that position lands in it again. The script removed it, and later toasts went to a new placeholder at the end of the page.
 - **Alert** — A toast's timer stays paused while the keyboard focus is in the toast, also after the pointer moves over the toast and leaves. The timer started again, and the toast could close while the user was still in it.
 - **Main Navigation** — A second close while the drawer slides shut no longer opens it again. A double tap on the dim layer, a second `NDS.MainNav.close()`, a Modal that opens, or a same-page link reopened it. `nds:main-nav:closed` fires once when the toggler is tapped twice with a menu open in the drawer.
