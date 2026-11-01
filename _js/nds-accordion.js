@@ -28,11 +28,6 @@
  *   - An opened item whose heading ends above the sticky nav scrolls back below it
  *     (--accordion-scroll-offset on the root, 120px default).
  */
-/**
- * NDS Accordion Component
- * Collapsible accordion functionality with accessibility support
- * Based on WAI-ARIA Authoring Practices Guide
- */
 
 (function() {
     'use strict';
@@ -49,7 +44,7 @@
             this._buttons = findOwnParts(accordionContainer, '.nds-accordion-btn');
             this._collapses = findOwnParts(accordionContainer, '.nds-accordion-collapse');
             this._isAnimating = false; // Simple flag to prevent clicks during animation
-            this._pendingEnds = new Map(); // collapse → cancel of its running transition end
+            this._pendingEnds = new WeakMap(); // collapse → cancel of its running transition end
 
             if (this._buttons.length === 0) {
                 console.warn('NDS Accordion: No accordion buttons found');
@@ -191,7 +186,6 @@
             
             if (!button || !collapse) return;
             
-            // Prevent toggling while animation is in progress
             if (this._isAnimating) return;
 
             const isCurrentlyExpanded = button.ariaExpanded === 'true';
@@ -209,20 +203,11 @@
 
             if (!button || !collapse) return;
 
-            // If not always-open mode, hide other panels first
             if (!keepOthers && !this._isAlwaysOpen) {
                 this._hideAll(index);
             }
 
-            // Set animation flag — skip lock when reduced motion is active
-            if (NDS.prefersReducedMotion) {
-                this._isAnimating = false;
-            } else {
-                this._isAnimating = true;
-                setTimeout(() => {
-                    this._isAnimating = false;
-                }, NDS.transitionSpeed() + 50);
-            }
+            this._lock();
 
             // Update button state immediately
             NDS.aria.expanded(button, true);
@@ -231,7 +216,6 @@
             // Set collapse to opening, then open after animation
             NDS.state.set(collapse, 'opening');
 
-            // Animate and dispatch event after
             this._animate(collapse, () => {
                 NDS.state.set(collapse, 'open');
                 // A long item closing above this one pulls its heading up past the nav.
@@ -239,7 +223,6 @@
                     offsetVar: '--accordion-scroll-offset',
                     offsetEl: this._accordionContainer,
                 });
-                // Dispatch custom event
                 this._dispatchToggleEvent(index, button, collapse, true);
             });
         }
@@ -250,15 +233,7 @@
 
             if (!button || !collapse) return;
 
-            // Set animation flag — skip lock when reduced motion is active
-            if (NDS.prefersReducedMotion) {
-                this._isAnimating = false;
-            } else {
-                this._isAnimating = true;
-                setTimeout(() => {
-                    this._isAnimating = false;
-                }, NDS.transitionSpeed() + 50);
-            }
+            this._lock();
 
             // Update button state immediately
             NDS.aria.expanded(button, false);
@@ -269,10 +244,15 @@
 
             this._animate(collapse, () => {
                 NDS.state.clear(collapse);
-
-                // Dispatch custom event
                 this._dispatchToggleEvent(index, button, collapse, false);
             });
+        }
+
+        // Clicks wait out the slide. One timer: a script's openItem()/closeItem() mid-slide re-arms it, so an older one can't free the lock early.
+        _lock() {
+            clearTimeout(this._lockTimer);
+            this._isAnimating = !NDS.prefersReducedMotion;
+            if (this._isAnimating) this._lockTimer = setTimeout(() => { this._isAnimating = false; }, NDS.transitionSpeed() + 50);
         }
 
         _hideAll(excludeIndex = -1) {
@@ -358,7 +338,6 @@
         }
     }
 
-    // Auto-initialize accordions on page load
     function setupAccordions() {
         const accordionContainers = document.querySelectorAll('.nds-accordion');
         
