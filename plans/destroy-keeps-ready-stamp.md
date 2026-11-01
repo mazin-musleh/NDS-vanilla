@@ -50,5 +50,15 @@ the docs' destroy rows say the stamp stays.
 ## Order
 
 One component per commit, Accordion first (its doc already promises the right
-behavior). Per commit: browser check — destroy on a live element shows content, not
+behavior).
+
+Done 2026-11-01, in one commit (owner's call: same fix):
+- Accordion, Breadcrumb, Stepper: destroy keeps the stamp; the init sweep tests the backref.
+- Filter: destroy keeps every surface's stamp; liveness was already the registry.
+- Pagination: destroy keeps `data-nds-pagination-initialized` (the skeleton gate) and drops
+  only the auto stamp; a `destroyedNavs` WeakSet lets the init sweep take the nav again
+  unless a `create()` made it live (`setupNav` clears the entry), because a 0/1-page
+  data-driven nav is stamped with no instance, so the backref alone can't decide.
+- Swiper: excluded. Its destroy restores the pre-init DOM on purpose, and its
+  `:not([…initialized])` rules only lay out that pre-init state (no skeleton). Per commit: browser check — destroy on a live element shows content, not
 the skeleton; destroy → create → click works; reinit after destroy rebuilds.

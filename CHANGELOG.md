@@ -244,6 +244,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Top Bar** — The date, clock, city and weather widgets are [Meta](https://mazin-musleh.github.io/NDS-vanilla/components/meta.html) lines, at Meta's LG size: 16px at every width (the text shrank to 12–14px on tablets). `nds-md` or `nds-sm` on a widget picks a smaller one.
 
 ### Fixed
+- **Accordion, Breadcrumb, Filter, Pagination and Stepper** — `destroy()` on a component that stays in the page leaves it as it is. Before, the loading bars came back over it, or over a filter's items. A later `init()` or `create()` sets it up again, as before.
 - **Main Navigation** — A navigation that a page removes or hides no longer runs its overflow check about ten times a second for as long as the page stays open. The check now waits until the navigation shows again.
 - **Alert** — A `.nds-alert-placeholder` you place yourself stays in the page when its last toast closes, so the next toast for that position lands in it again. The script removed it, and later toasts went to a new placeholder at the end of the page.
 - **Alert** — A toast's timer stays paused while the keyboard focus is in the toast, also after the pointer moves over the toast and leaves. The timer started again, and the toast could close while the user was still in it.
@@ -265,7 +266,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Accessibility** — `NDS.Accessibility.init()` called again while the reset button asks to confirm, or shows "Settings reset", gives the button its own label back. It kept "Click again to confirm", and the next press saved that text as the label.
 - **Accordion** — The loading bar stays next to a leading icon.
 - **Accordion** — In a tab opened in the background, an accordion shows when the page loads. Before, it waited until the visitor opened the tab.
-- **Accordion** — `openItem()` then `closeItem()` on one item before it finishes opening runs only the close: no `nds:accordion:opened` event and no scroll to the item.
+- **Accordion** — `openItem()` then `closeItem()` on one item before it finishes opening runs only the close: no `nds:accordion:opened` event and no scroll to the item. The same holds when the accordion is destroyed and created again in between.
 - **Accordion** — When a long open item above closes, the page scrolls back to the heading of the item that opened; before, the heading could end up above the screen or under the main navigation. `--accordion-scroll-offset` sets the space under the navigation (120px).
 - **Alert** — A toast's long title no longer runs under the close button. An alert created with the id of one already in the page replaces it, so a repeated toast no longer stacks copies with one id. The ring around a toast's close button stops again while the pointer or the focus is on the toast, with the timer: in v1.12.0 the ring kept going.
 - **Alert, Feedback Icons and File Upload** — A method that takes an element also takes its bare id, such as `'save-alert'`, as other components do.

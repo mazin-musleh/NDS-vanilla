@@ -119,10 +119,8 @@
             const menu = this._breadcrumb.querySelector('.nds-breadcrumb-ellipsis .nds-dropmenu');
             menu?.ndsDropmenu?.destroy?.();
             this._breadcrumb.replaceChildren(...this._items);
-            // Releasing the stamp is what keeps destroy two-way: without it the same
-            // markup stays marked as claimed, so no later init() or NDS.init.refresh()
-            // can ever collapse it again.
-            this._breadcrumbNav.removeAttribute('data-nds-breadcrumb-initialized');
+            // The stamp stays: it is the CSS skeleton gate. Dropping the backref is what
+            // lets a later init() or NDS.init.refresh() collapse it again.
             delete this._breadcrumbNav.ndsBreadcrumb;
         }
     }
@@ -137,8 +135,9 @@
                 return;
             }
 
-            // Only a valid construction stamps, so an empty breadcrumb rendered late stays eligible.
-            if (!nav.hasAttribute('data-nds-breadcrumb-initialized')) new NdsBreadcrumb(nav);
+            // Live is the backref, not the stamp: a destroyed breadcrumb keeps its stamp. Only a
+            // valid construction sets the backref, so an empty one rendered late stays eligible.
+            if (!nav.ndsBreadcrumb) new NdsBreadcrumb(nav);
         });
     }
 

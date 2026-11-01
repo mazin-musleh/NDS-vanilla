@@ -100,6 +100,7 @@
     const scrollWiredMenus = new WeakSet(); // scroll containers with the window scroll listener
     const offResizes = new WeakMap(); // paged content → onElementResize unsubscribe
     const clickAbortControllers = new WeakMap(); // manual nav → click listener AbortController
+    const destroyedNavs = new WeakSet(); // destroyed navs keep their stamp; the init sweep takes them again
 
     // Read --per-page for a paged-content container. Prefers the inline style —
     // the common case is a consumer setting style="--per-page:N", and an inline
@@ -384,10 +385,11 @@
         // make a re-create skip its collapse.
         destroyEllipsisMenu(nav);
         collapseSignatures.delete(nav);
-        // data-paged-initialized stays on the content: it releases the crit hold, so
-        // removing it would hide the items.
+        // data-paged-initialized stays on the content, and data-nds-pagination-initialized
+        // on the nav: they release the crit hold and the nav's skeleton. The init sweep
+        // takes a destroyed nav again through destroyedNavs.
         delete nav.ndsPagination;
-        nav.removeAttribute('data-nds-pagination-initialized');
+        destroyedNavs.add(nav);
         nav.removeAttribute('data-nds-auto-pagination-initialized');
     }
 
@@ -421,12 +423,14 @@
                 return;
             }
 
-            if (!container.hasAttribute('data-nds-pagination-initialized')) setupNav(container);
+            if (!container.hasAttribute('data-nds-pagination-initialized')
+                || (destroyedNavs.has(container) && !container.ndsPagination)) setupNav(container);
         });
     }
 
     // One nav's full init path, shared by the init sweep and create().
     function setupNav(container) {
+        destroyedNavs.delete(container); // set up again, by the sweep or a create() after destroy()
         // Check if auto-generation is requested via data-total-pages
         const totalPages = parseInt(container.dataset.totalPages);
         const activePage = parseInt(container.dataset.activePage) || 1;

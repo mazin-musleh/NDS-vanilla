@@ -3239,12 +3239,10 @@
             // Only release shared registry/backref state when THIS instance owns it.
             // A stale reference — destroyed, then re-inited on the same element —
             // shares the representative and targetId with the live instance, so its
-            // destroy must not clobber that one's backref, stamps, or map entry.
+            // destroy must not clobber that one's backref or map entry. The stamps stay on
+            // every surface: they release the crit hold, so removing them would hide the
+            // items destroy just showed. Liveness is the registry, not the stamp.
             if (this._filterContainer.ndsFilter === this) {
-                // _targetRoots covers every stamped surface (incl. the
-                // representative); the target container is stamped separately.
-                this._targetRoots.forEach(root => root.removeAttribute('data-nds-filter-initialized'));
-                this._targetContainer?.removeAttribute('data-nds-filter-initialized');
                 delete this._filterContainer.ndsFilter;
             }
             if (this.targetId && instancesByTarget.get(this.targetId) === this) {

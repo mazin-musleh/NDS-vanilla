@@ -330,14 +330,13 @@
 
         destroy() {
             if (this.abortController) this.abortController.abort();
-            // Release the container backref + init stamp so create()/init() can
-            // rebuild — without this, create() returns the dead controller and
-            // init() calls refresh() on it. Identity-guard the delete: a later
-            // controller may already own the root.
+            // Release the backref so create()/init() can rebuild — without this, create()
+            // returns the dead controller and init() calls refresh() on it. Identity-guard
+            // the delete: a later controller may already own the root. The init stamp
+            // stays: it is the CSS skeleton gate, and the markup stays as it is.
             if (this._accordionContainer.ndsAccordion === this) {
                 delete this._accordionContainer.ndsAccordion;
             }
-            this._accordionContainer.removeAttribute('data-nds-accordion-initialized');
         }
     }
 
@@ -359,15 +358,9 @@
                 return;
             }
 
-            // The init flag is stamped in a rAF (below) to preserve the CSS
-            // gate. If a caller runs reinit() synchronously between two
-            // wraps, an already-inited root looks un-stamped and would be
-            // double-constructed — a second click listener toggles the
-            // panel back closed on the first click. Guard on the instance
-            // property above, which lands synchronously.
-            if (!container.hasAttribute('data-nds-accordion-initialized')) {
-                activate(container, new NdsAccordion(container));
-            }
+            // Live is the backref above, never the stamp: the stamp lands a rAF late, and
+            // it outlives destroy(), which leaves the markup (and the skeleton gate) as it is.
+            activate(container, new NdsAccordion(container));
         });
     }
 

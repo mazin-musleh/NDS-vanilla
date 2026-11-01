@@ -138,7 +138,7 @@
         destroy() {
             const el = this._element;
             delete el.ndsStepper;
-            el.removeAttribute('data-nds-stepper-initialized');
+            // The stamp stays: it is the CSS skeleton gate, and create() checks the backref.
             // The shared control listener and data-current observer stay — they serve every stepper.
         }
 
@@ -252,7 +252,8 @@
 
     function init() {
         addGlobalListeners();
-        document.querySelectorAll('.nds-stepper:not([data-nds-stepper-initialized])').forEach(el => {
+        // Every stepper, not the unstamped ones: a destroyed stepper keeps its stamp. create() skips a live one.
+        document.querySelectorAll('.nds-stepper').forEach(el => {
             if (!el.closest('code')) create(el);
         });
     }
