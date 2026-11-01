@@ -244,6 +244,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Top Bar** — The date, clock, city and weather widgets are [Meta](https://mazin-musleh.github.io/NDS-vanilla/components/meta.html) lines, at Meta's LG size: 16px at every width (the text shrank to 12–14px on tablets). `nds-md` or `nds-sm` on a widget picks a smaller one.
 
 ### Fixed
+- **Alert** — A `.nds-alert-placeholder` you place yourself stays in the page when its last toast closes, so the next toast for that position lands in it again. The script removed it, and later toasts went to a new placeholder at the end of the page.
+- **Alert** — A toast's timer stays paused while the keyboard focus is in the toast, also after the pointer moves over the toast and leaves. The timer started again, and the toast could close while the user was still in it.
 - **Main Navigation** — A second close while the drawer slides shut no longer opens it again. A double tap on the dim layer, a second `NDS.MainNav.close()`, a Modal that opens, or a same-page link reopened it. `nds:main-nav:closed` fires once when the toggler is tapped twice with a menu open in the drawer.
 - **File Upload** — A file that an `nds:upload:start` listener removes is not sent. It was sent anyway, and `nds:upload:success` fired for a file no longer in the list.
 - **Editor** — Text pasted into an empty editor from the middle of a paragraph lands in a paragraph, so align, direction and heading reach its first line. It landed as bare text those commands skipped.

@@ -56,6 +56,7 @@
     });
 
     const abortControllers = new WeakMap();   // placeholder → its scroll-sync AbortController
+    const autoPlaceholders = new WeakSet();   // placeholders this script made; a page's own stays when empty
 
     const api = {
         /**
@@ -125,7 +126,6 @@
             `;
 
             if (closable || duration > 0) {
-                // Add progress class and SVG if toast has auto-dismiss
                 const progressClass = (display === 'toast' && duration > 0) ? ' nds-progress' : '';
                 const progressSvg = (display === 'toast' && duration > 0) ? `
                     <div class="nds-progress-circle">
@@ -150,7 +150,7 @@
 
             // Knob via CSSOM, never a style attribute — a strict style-src blocks the attribute form.
             if (display === 'toast' && duration > 0) {
-                alert.querySelector('.nds-alert-close').style.setProperty('--progress-duration', `${Number(duration)}ms`);
+                closeBtn.style.setProperty('--progress-duration', `${Number(duration)}ms`);
             }
 
             // Build actions via DOM so caller-supplied href/class/target/label never reach the HTML parser,
@@ -189,6 +189,12 @@
                         el.prepend(icon);
                     }
                     el.setAttribute('data-action-index', index);
+                    if (action.onClick || action.dismiss) {
+                        el.addEventListener('click', () => {
+                            if (action.onClick) action.onClick(alert);
+                            if (action.dismiss) this.dismiss(alert); // auto dismiss; default false
+                        });
+                    }
                     actionsWrap.appendChild(el);
                 });
                 alert.querySelector('.nds-alert-content').appendChild(actionsWrap);
@@ -197,22 +203,7 @@
                 if (actions.some(actionItem => actionItem.copy || actionItem.copyTarget)) NDS.Copy.init();
             }
 
-            // Close button handler
-            if (closable || duration > 0) {
-                alert.querySelector('.nds-alert-close').addEventListener('click', () => {
-                    this.dismiss(alert);
-                });
-            }
-
-            // Action button handlers
-            (actions || []).forEach((action, index) => {
-                const btn = alert.querySelector(`[data-action-index="${index}"]`);
-                if (!btn || !(action.onClick || action.dismiss)) return;
-                btn.addEventListener('click', () => {
-                    if (action.onClick) action.onClick(alert);
-                    if (action.dismiss) this.dismiss(alert); // auto dismiss; default false
-                });
-            });
+            if (closeBtn) closeBtn.addEventListener('click', () => this.dismiss(alert));
 
             // One alert per id: a repeat (Saved, Saved…) replaces the last one.
             // ponytail: a toast moved to another position leaves its old placeholder empty until the next dismiss there.
@@ -231,7 +222,6 @@
                     placeholder.prepend(alert);
                 }
 
-                // Add entrance animation
                 NDS.onNextPaint(() => NDS.state.add(alert, 'toast-show'));
 
                 // Auto-dismiss with duration; hover pauses, click pins the pause
@@ -260,10 +250,11 @@
                         pinned = true;
                         pause();
                         // Countdown cancelled for good — dropping nds-progress hides the whole ring
-                        alert.querySelector('.nds-alert-close').classList.remove('nds-progress');
+                        closeBtn.classList.remove('nds-progress');
                     });
-                    alert.addEventListener('mouseleave', resume);
-                    alert.addEventListener('focusout', resume);
+                    // Pointer and focus each hold the pause: one leaving must not resume under the other.
+                    alert.addEventListener('mouseleave', () => { if (!alert.matches(':focus-within')) resume(); });
+                    alert.addEventListener('focusout', (e) => { if (!alert.contains(e.relatedTarget) && !alert.matches(':hover')) resume(); });
                     run();
                 }
             } else if (target) {
@@ -287,14 +278,13 @@
             // Check for an existing placeholder (user-placed or auto-created)
             let placeholder = document.querySelector(`.nds-alert-placeholder[data-position="${position}"]`);
             if (placeholder) {
-                // Ensure it's visible
                 placeholder.removeAttribute('hidden');
             } else {
-                // Create one automatically
                 placeholder = document.createElement('div');
                 placeholder.className = 'nds-alert-placeholder';
                 placeholder.setAttribute('data-position', position);
                 document.body.appendChild(placeholder);
+                autoPlaceholders.add(placeholder);
             }
             // The top layer, above an open Modal or Panel and live while it is open (data-nds-above,
             // nds-dialog.js). Raised again for each toast: a dialog opened since sits above it.
@@ -333,7 +323,6 @@
             if (el) {
                 const placeholder = el.closest('.nds-alert-placeholder');
 
-                // Add exit animation for toasts
                 if (el.classList.contains('nds-toast')) {
                     NDS.state.set(el, 'toast-hide');
                     // Removal tracks the CSS fade via the token-sourced duration
@@ -343,7 +332,8 @@
                         if (placeholder && !placeholder.children.length) {
                             abortControllers.get(placeholder)?.abort();
                             abortControllers.delete(placeholder);
-                            placeholder.remove();
+                            if (autoPlaceholders.has(placeholder)) placeholder.remove();
+                            else NDS.setTopLayer(placeholder, false);
                         }
                     });
                 } else {
@@ -353,7 +343,7 @@
         },
 
         /**
-         * Dismiss all alerts in a container or by ID pattern
+         * Dismiss every alert inside a container
          */
         dismissAll(container) {
             const el = NDS.resolveElement(container);
@@ -362,7 +352,6 @@
             }
         },
 
-        // Initialize existing alerts
         init() {
             document.querySelectorAll('.nds-alert').forEach(alert => {
                 if (alert.hasAttribute('data-nds-alert-initialized') || alert.closest('code')) return;
