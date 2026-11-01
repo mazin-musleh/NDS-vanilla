@@ -5,7 +5,7 @@
  *   .nds-user-feedback needs .nds-user-feedback-answer-btn .nds-btn[data-answer] — the details step never opens
  *   .nds-user-feedback needs .nds-user-feedback-submit-btn — nothing is sent
  * Methods:
- *   NDS.UserFeedback.init() / .reinit()   scan + initialize .nds-user-feedback
+ *   NDS.UserFeedback.init()              scan + initialize .nds-user-feedback
  *   NDS.UserFeedback.create(el)           initialize one widget (idempotent)
  *   NDS.UserFeedback.destroy(el)          release one widget's listeners + init marker
  *   NDS.UserFeedback.setStatus(el, status)  end a send a submit listener took over:
@@ -252,7 +252,7 @@ NDS.UserFeedback = (() => {
             if (recapScore) recapScore.textContent = '(0.0)';
         }
 
-        // Scope all listeners to an AbortController so a future destroy/reinit can detach atomically
+        // Scope all listeners to an AbortController so a future destroy/re-init can detach atomically
         const abortController = new AbortController();
         abortControllers.set(feedbackComponent, abortController);
         const feedbackSignal = abortController.signal;
@@ -336,5 +336,5 @@ NDS.UserFeedback = (() => {
         finishers.get(feedbackComponent)?.(status);
     }
 
-    return { init, reinit: init, create, destroy, setStatus };
+    return { init, create, destroy, setStatus };
 })();

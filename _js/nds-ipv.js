@@ -1,7 +1,7 @@
 /* NDS.Ipv — public surface
  * Rides: nds-backdrop (dims the page behind the overlay)
  * Methods:
- *   NDS.Ipv.init() / .reinit()   wire the thumbnails (the overlay builds on first open);
+ *   NDS.Ipv.init()              wire the thumbnails (the overlay builds on first open);
  *                                a repeat call gives later thumbnails tabindex + role
  *   NDS.Ipv.open(thumb)          open the viewer on a thumbnail element
  *   NDS.Ipv.close()
@@ -449,7 +449,7 @@
         // ── Event attachment ─────────────────────────────────────────────
         // Thumbnails on the page now, minus any inside code examples; with a thumb,
         // only its gallery. Read at open, so a thumbnail added after init joins
-        // the gallery with no reinit.
+        // the gallery with no re-init.
         _collectThumbnails(thumb) {
             const all = Array.from(document.querySelectorAll('.nds-ipv-thumbnail'))
                 .filter(thumbnail => !thumbnail.closest('code'));
@@ -601,7 +601,6 @@
 
     NDS.Ipv = {
         init: setupIpv,
-        reinit: setupIpv,
         open: (thumb) => { thumb = NDS.resolveElement(thumb); if (!thumb) return; if (!viewer) setupIpv(); viewer.open(thumb); },
         close: () => viewer?.close(),
         next: () => viewer?._showNext(),

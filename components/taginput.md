@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 09:20 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="taginput-overview" class="nds-content-section nds-doc-overview">
@@ -301,7 +301,6 @@ A form that edits saved data shows the tags the user saved before. For each tag,
 | Method | Effect |
 |---|---|
 | `NDS.Taginput.init()` | Starts every `.nds-taginput` that has not started. The loader calls it on load. Call it again after you add a field to the page |
-| `NDS.Taginput.reinit()` | The same as `init()` |
 | `NDS.Taginput.create(el)` | Starts one field, and returns its instance. On a field that has started, it returns the same instance. It returns `null` when the field has no `.nds-form-control` or no text box in it |
 | `NDS.Taginput.destroy(el)` | Removes the listeners and the chips. The hidden inputs stay, and `init()` builds the chips from them to start the field again. Call it before you remove the field from the page |
 | `NDS.Taginput.validate(el, options)` | Checks the field and returns `{ valid, message, count }`: a required field needs a tag, and `data-max-tags` caps the count. Pass `{ showMessage: false }` to check without a message |

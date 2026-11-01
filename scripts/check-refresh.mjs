@@ -326,8 +326,8 @@ report.push(...await recordsPage.evaluate(async () => {
     const viaEntry = fullState();
 
     tbody.appendChild(makeRow('REQ-TEST-004', 'pending', 'Pending', 500));
-    NDS.Dropmenu.reinit();
-    NDS.Numbers.reinit();
+    NDS.Dropmenu.init();
+    NDS.Numbers.init();
     NDS.Pagination.refresh(tbody, { keepPage: true });
     NDS.Selection.refresh();
     NDS.Filter.getByTarget('requests-table-body')?.refresh();

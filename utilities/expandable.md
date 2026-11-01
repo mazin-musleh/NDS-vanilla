@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="expandable-overview" class="nds-content-section nds-doc-overview">
@@ -232,7 +232,7 @@ Put `nds-expand-all` on the parent of several expandable boxes. Show More on one
 - Write `--max-height` in px. The script cannot read other units, such as `rem`, and shows the button on content that fits.
 - Set a max height that shows enough text for the user to decide whether to read more. Below 80px, the first paragraph can be hidden.
 - Use a group for related items that the user compares, such as a comparison grid or a set of policy summaries.
-- After you add expandable boxes to the page, call `NDS.Expandable.reinit()`.
+- After you add expandable boxes to the page, call `NDS.Expandable.init()`.
 - After your script changes `--max-height`, call `NDS.Expandable.refresh()`. A hidden box measures itself again when it is shown.
 
 </div>
@@ -282,8 +282,7 @@ The instance is on the box as `el.ndsExpandable`. It is there once the component
 
 | Method | Effect |
 |---|---|
-| `NDS.Expandable.init()` | Starts every `.nds-expandable` on the page that has no instance. The loader calls it |
-| `NDS.Expandable.reinit()` | The same as `init()`. Call it after you add boxes to the page |
+| `NDS.Expandable.init()` | Starts every `.nds-expandable` on the page that has no instance. The loader calls it. Call it after you add boxes to the page |
 | `NDS.Expandable.refresh()` | Measures every box again. Call it after you change `--max-height` |
 | `NDS.Expandable.create(el)` | Starts one box and returns its instance. Returns the running one when the box already has one, and `null` when it has no `.nds-expandable-content` |
 | `NDS.Expandable.destroy(el)` | The same as `instance.destroy()` |

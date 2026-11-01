@@ -195,7 +195,7 @@ function keysFromBlock(lines, start) {
         }
         if (depth <= 0) break;
         if (depthAtStart !== 1) continue;
-        // Every key on the line, one or several: `reset,` · `init, reinit: x, refresh: () => {…},`.
+        // Every key on the line, one or several: `reset,` · `init, refresh: x, create: () => {…},`.
         // Inner (…) and {…}, nested ones too, become ¤ first so their commas don't split a value.
         let flat = line, prev;
         do { prev = flat; flat = flat.replace(/\([^()]*\)/g, '¤').replace(/\{[^{}]*\}/g, '¤'); } while (flat !== prev);
@@ -340,7 +340,7 @@ function verifyFile(file, ns, source) {
             } else {
                 const listed = new Set();
                 for (const m of methods.text.matchAll(new RegExp(`NDS\\.${ns}\\.([A-Za-z_$][\\w$]*)`, 'g'))) listed.add(m[1]);
-                // "NDS.X.init() / .reinit()" shorthand — only on a line that names the
+                // "NDS.X.init() / .refresh()" shorthand — only on a line that names the
                 // namespace, so an instance line ("instance.open() / .close()") stays out.
                 for (const line of methods.text.split('\n')) {
                     if (!line.includes(`NDS.${ns}.`)) continue;

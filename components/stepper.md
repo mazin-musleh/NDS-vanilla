@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="stepper-overview" class="nds-content-section nds-doc-overview">
@@ -483,7 +483,7 @@ A stepper in the page starts by itself. The instance is on the element as `el.nd
 
 | Method | Effect |
 |---|---|
-| `NDS.Stepper.init()` | Starts every `.nds-stepper` that has not started. `reinit()` is the same |
+| `NDS.Stepper.init()` | Starts every `.nds-stepper` that has not started |
 | `NDS.Stepper.create(el)` | Starts one stepper, such as one added after load, and returns its instance |
 | `NDS.Stepper.destroy(idOrEl)` | The same as `instance.destroy()` |
 | `NDS.Stepper.getInstance(idOrEl)` | Returns the instance of the stepper with that id, or on that element. `null` when there is none |

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 09:20 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="custom-select-overview" class="nds-content-section nds-doc-overview">
@@ -326,7 +326,6 @@ To show a saved value, write it in the `value` of `.nds-select-value`, and leave
 | Method | Effect |
 |---|---|
 | `NDS.CustomSelect.init()` | Writes the label of every saved value. The first call also starts to watch the page for focus and picks. The loader calls it on load. Call it again after you add a field with a saved value |
-| `NDS.CustomSelect.reinit()` | The same as `init()` |
 | `NDS.CustomSelect.create(el)` | Builds the list of one field now, instead of at its first focus. A built field is left as it is. Call it, or focus the field, before a script opens it with `click()`: a click with no focus does not open an unbuilt field |
 | `NDS.CustomSelect.getValue(el)` | Returns the `data-value` of the picked option, or `''` when none is picked or the field is not found |
 | `NDS.CustomSelect.setValue(el, 'makkah')` | Picks the option with that `data-value`, the same as a click, and returns `true`. It returns `false`, and changes nothing, when no option has the value. It works before the list is built |

@@ -7,7 +7,7 @@
  *   .nds-has-menu needs :scope > .nds-nav-link — the menu has no trigger
  *   .nds-has-menu needs .nds-nav-menu — the trigger opens nothing
  * Methods:
- *   NDS.MainNav.init() / .reinit()   wire the one nav on the page. A nav that mounted after the
+ *   NDS.MainNav.init()              wire the one nav on the page. A nav that mounted after the
  *                                    bundle ran, or was replaced by a route change, is wired
  *                                    again; a live one is left as is. NDS.init.refresh() calls it
  *   NDS.MainNav.destroy()            release every listener, observer and the backdrop; the
@@ -1115,7 +1115,6 @@
 
     NDS.MainNav = {
         init,
-        reinit: init,
         destroy,
         open: () => { if (!isDrawerOpen()) toggleNavbar(); },
         close: () => { if (isDrawerOpen()) toggleNavbar(); },

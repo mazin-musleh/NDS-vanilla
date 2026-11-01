@@ -103,7 +103,7 @@ const report = await page.evaluate(async () => {
     // so give the container that id too — mirrors a real page.
     host.querySelector('#srvTarget').id = 'srv';
 
-    NDS.Dropmenu.reinit();
+    NDS.Dropmenu.init();
     NDS.Filter.init();
     const f = NDS.Filter.getByTarget('srv');
     if (!f) return { fatal: 'no instance created for target "srv"', findings };

@@ -3,7 +3,7 @@
  *      · nds-forms (loading chrome via data-state="loading", the field's clear button)
  *      · nds-empty (the "no results" placeholder)
  * Methods:
- *   NDS.Autocomplete.init() / .reinit()      arm the delegated focusin builder
+ *   NDS.Autocomplete.init()                 arm the delegated focusin builder
  *   NDS.Autocomplete.create(el, options)     build one field now; options {filter, renderItem}.
  *                                            Null when the markup is incomplete; the live one if started
  *   NDS.Autocomplete.validate(el, opts)  a data-strict field's check → {valid, message, picked}; opts {showMessage}
@@ -821,7 +821,6 @@
             return instance ? instance.clear() : NDS.Autocomplete.setValue(el, '');
         },
         init: setupAutocompletes,
-        reinit: setupAutocompletes,
         validate: (el, opts) => NDS.Form.validateField(NDS.resolveElement(el)?.closest('.nds-form-container') || el, checkField, opts),
         destroy: (element) => NDS.resolveElement(element)?.ndsAutocomplete?.destroy(),
         // Programmatic construction. Pass { filter, renderItem } to override

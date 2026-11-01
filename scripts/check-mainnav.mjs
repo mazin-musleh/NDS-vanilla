@@ -105,7 +105,7 @@ async function timedClick(page, sel, label) {
   ok('desktop: destroy() with a menu open leaves nothing in the top layer', await page.evaluate(() => {
     NDS.MainNav.destroy();
     const left = document.querySelectorAll('.nds-main-nav :popover-open').length;
-    NDS.MainNav.reinit();
+    NDS.MainNav.init();
     return left === 0;
   }));
   ok('desktop: no page errors', !errors.length, errors.join(' | '));

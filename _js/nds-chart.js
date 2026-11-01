@@ -1,7 +1,7 @@
 /* NDS.Chart — public surface
  * Rides: (none — base component)
  * Methods:
- *   NDS.Chart.init() / .reinit()      scan .nds-chart and build the ones that declare a
+ *   NDS.Chart.init()                 scan .nds-chart and build the ones that declare a
  *                                     type or a series
  *   NDS.Chart.create(elOrSel, opts)   build one chart — a live chart is returned unchanged
  *                                     (change it with setOptions). Returns the instance. No opts:
@@ -1140,7 +1140,6 @@
 
     NDS.Chart = {
         init: setupCharts,
-        reinit: setupCharts,
         create: createChart,
         destroy: (el) => NDS.resolveElement(el)?.ndsChart?.destroy(),
     };

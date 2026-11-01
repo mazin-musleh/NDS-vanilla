@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 01:21 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="upload-overview" class="nds-content-section nds-doc-overview">
@@ -378,7 +378,6 @@ A file is an object `{ file, id, status, progress, error, response }`. `file` is
 | Method | Effect |
 |---|---|
 | `NDS.Upload.init()` | Starts every `.nds-upload` that has not started. The loader calls it on load |
-| `NDS.Upload.reinit()` | The same as `init()` |
 | `NDS.Upload.create(el, options)` | Starts one field and returns its instance. `el` is the element or a selector. On a field that has started, it returns the same instance unchanged: use `instance.setOptions(options)` to change it. It returns `null` when the field has no file input, `.nds-form-control` or `.nds-file-list` |
 | `NDS.Upload.destroy(el)` | The same as `instance.destroy()`. `el` is the element or a selector |
 | `NDS.Upload.validate(el, options)` | Checks the field and returns `{ valid, message, count, pending }`. `pending` is true while a file uploads or processes. Pass `{ showMessage: false }` to check without a message |

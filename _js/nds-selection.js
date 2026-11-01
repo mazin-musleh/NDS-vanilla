@@ -1,7 +1,7 @@
 /* NDS.Selection — public surface
  * Rides: nds-forms (the indeterminate select-all box) · nds-filter (data-filtered; soft — a list with no filter works)
  * Methods:
- *   NDS.Selection.init() / .reinit()        wire the document listeners (the loader calls this)
+ *   NDS.Selection.init()                   wire the document listeners (the loader calls this)
  *   NDS.Selection.refresh(list?)            resync one list (its id or the element); with no
  *                                           list, every list — the NDS.init.refresh hook
  *   NDS.Selection.selectAll(list, on=true, { scope })  check or clear every item a filter shows,
@@ -260,7 +260,7 @@
     // refresh, selectAll and clear call init() first: the loader starts Selection only when a
     // list is on the page at load, so a list added later gets the listeners from its first call.
     NDS.Selection = {
-        init, reinit: init, refresh: (list) => { init(); if (list) return recount(list); recountAll(); },
+        init, refresh: (list) => { init(); if (list) return recount(list); recountAll(); },
         selectAll, clear, getSelected, isSelected, destroy
     };
 })();

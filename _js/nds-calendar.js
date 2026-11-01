@@ -3,7 +3,7 @@
  * Requires:
  *   .nds-calendar needs .nds-calendar-events — there are no events
  * Methods:
- *   NDS.Calendar.init() / .reinit()     instance every .nds-calendar
+ *   NDS.Calendar.init()                instance every .nds-calendar
  *   NDS.Calendar.create(el)             instance one calendar (the live one if it has one)
  *   NDS.Calendar.destroy(idOrEl)        undo create()
  *   NDS.Calendar.getInstance(idOrEl)    the calendar's instance, or null
@@ -582,7 +582,6 @@
 
     NDS.Calendar = {
         init,
-        reinit: init,
         create,
         destroy: (target) => getInstance(target)?.destroy(),
         getInstance,

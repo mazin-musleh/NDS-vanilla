@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 09:20 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="autocomplete-overview" class="nds-content-section nds-doc-overview">
@@ -314,7 +314,6 @@ The `NDS.Autocomplete` script loads after the page shows. Until it loads, each c
 | Method | Effect |
 |---|---|
 | `NDS.Autocomplete.init()` | Starts the page listener, once. The loader calls it |
-| `NDS.Autocomplete.reinit()` | The same as `init()` |
 | `NDS.Autocomplete.create(container, options)` | Starts one field now: pass its `.nds-form-container`. Use it to pass options, or for a field that code searches before the user focuses it. Returns the running instance when the field has already started, and `null` when it has no input. Call it before the first focus: a started field ignores the options |
 | `NDS.Autocomplete.validate(el, options)` | Checks a `data-strict` field and returns `{ valid, message, picked }`. Pass `{ showMessage: false }` to check without a message |
 | `NDS.Autocomplete.getValue(el)` | Returns the text in the input, or `''` when the field is not found. `el` is the `.nds-form-container`, its input, its `id` or a selector |

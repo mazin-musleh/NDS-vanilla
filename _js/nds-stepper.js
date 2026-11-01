@@ -3,7 +3,7 @@
  * Requires:
  *   .nds-stepper needs .nds-stepper-step — there are no steps
  * Methods:
- *   NDS.Stepper.init() / .reinit()        instance every stepper, wire the delegated control listener
+ *   NDS.Stepper.init()                   instance every stepper, wire the delegated control listener
  *   NDS.Stepper.create(el)                instance one stepper
  *   NDS.Stepper.destroy(el)               undo create(); an id works too
  *   NDS.Stepper.getInstance(idOrEl)       the stepper's instance, or null
@@ -261,7 +261,6 @@
     NDS.Stepper = {
         init,
         // init is idempotent (the sweep skips started steppers, addGlobalListeners runs once).
-        reinit:      init,
         create,
         destroy: (target) => getInstance(target)?.destroy(),
         getInstance,

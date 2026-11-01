@@ -17,7 +17,7 @@
  *   - Block content inside the link (`<a><p>…</p></a>`, editor markup) moves the
  *     badge to the deepest last block: the link gets .nds-external-block and
  *     that block gets .nds-external-badge.
- *   - There is no reinit(): call init() again after you inject links.
+ *   - Call init() again after you inject links.
  */
 (function () {
     'use strict';

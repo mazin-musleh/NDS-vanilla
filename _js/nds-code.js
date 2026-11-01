@@ -16,8 +16,7 @@
  *   - It lexes HTML, CSS, JavaScript (including CSS and JS embedded in an HTML block) and
  *     Markdown. A language class it does not know renders as plain text.
  *   - Only a block with NO language class at all is sniffed.
- *   - There is no reinit(): a block is highlighted once. Call highlight() after
- *     you change its content.
+ *   - A block is highlighted once. Call highlight() after you change its content.
  *   - data-nds-code-highlighted marks a highlighted block. It stays through
  *     NDS.init.destroy(): the markup stays highlighted, so a re-mount skips it.
  *   - The copy button in the action bar belongs to nds-copy (.nds-copy), not to this file.

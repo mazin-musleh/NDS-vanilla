@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 09:20 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="date-picker-overview" class="nds-content-section nds-doc-overview">
@@ -371,7 +371,6 @@ The `NDS.DatePicker` script loads after the page shows. Until it loads, each cal
 | Method | Effect |
 |---|---|
 | `NDS.DatePicker.init()` | Starts every `.nds-date-input` that has not started. The loader calls it on load. Call it again after you add a field to the page |
-| `NDS.DatePicker.reinit()` | The same as `init()` |
 | `NDS.DatePicker.create(input, formControl)` | Starts one field, and returns its instance. `formControl` is optional: the default is the input's `.nds-form-control`. On a field that has started, it returns the same instance. It returns `null` when the input has no `.nds-form-control` or no `.nds-form-container` |
 | `NDS.DatePicker.destroy(input)` | Runs `instance.destroy()` on the field's picker. `NDS.init.destroy()` calls it |
 | `NDS.DatePicker.getValue(el)` | Single field. Returns the day as an ISO `YYYY-MM-DD` date, in any calendar and in any format the field shows. It returns `''` when the field is empty, holds text that is not a date, is a range, or is not found. `el` is the `.nds-form-container`, the `.nds-date-input`, a part in it, its `id` or a selector |

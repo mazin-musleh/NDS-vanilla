@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 10:30 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="swiper-overview" class="nds-content-section nds-doc-overview">
@@ -496,7 +496,7 @@ A swiper far down the page sets up when its section is about to show, so the pag
 
 | Method | Effect |
 |---|---|
-| `NDS.Swiper.init()` | Starts every `.nds-swiper` that has not started. `reinit()` is the same |
+| `NDS.Swiper.init()` | Starts every `.nds-swiper` that has not started |
 | `NDS.Swiper.create(el)` | Starts one swiper and returns its instance, or the instance it already has. Returns `null` when the swiper has no wrapper or no slides |
 | `NDS.Swiper.destroy(el)` | Stops one swiper and puts its markup back as written. `NDS.init.destroy()` calls it |
 | `instance.next()`, `instance.prev()` | Moves one page |

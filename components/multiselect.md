@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 09:20 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="multiselect-overview" class="nds-content-section nds-doc-overview">
@@ -446,7 +446,6 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
 | Method | Effect |
 |---|---|
 | `NDS.Multiselect.init()` | Starts every `.nds-multiselect` that has not started. The loader calls it on load. Call it again after you add a field to the page |
-| `NDS.Multiselect.reinit()` | The same as `init()` |
 | `NDS.Multiselect.create(el)` | Starts one field, and returns its instance. On a field that has started, it returns the same instance. It returns `null` when the field lacks a required part |
 | `NDS.Multiselect.destroy(el)` | Removes the listeners, the chips and the dropmenu it started, and closes an open menu. The checked options stay. A dropmenu that the page started before `create()` stays. Call it before you remove the field from the page |
 | `NDS.Multiselect.validate(el, options)` | Checks the field and returns `{ valid, message, checked, min, max }`. Pass `{ showMessage: false }` to check without a message |

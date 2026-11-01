@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 10:30 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="dropmenu-overview" class="nds-content-section nds-doc-overview">
@@ -318,7 +318,7 @@ A lazy menu keeps its items in a `<template>`, so they are not in the page until
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Auto-initialization</span>
-              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">.nds-dropmenu</code> on the page starts by itself. Call <code class="nds-inline-code lang-js">NDS.Dropmenu.reinit()</code> after you add new ones.</p>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">.nds-dropmenu</code> on the page starts by itself. Call <code class="nds-inline-code lang-js">NDS.Dropmenu.init()</code> after you add new ones.</p>
             </div>
           </div>
         </li>
@@ -489,7 +489,7 @@ Set these on the `.nds-dropmenu` wrapper. The menu inherits them.
 
 | Method | Effect |
 |---|---|
-| `NDS.Dropmenu.init()` | Starts every `.nds-dropmenu` on the page that has not started yet. `reinit()` is the same |
+| `NDS.Dropmenu.init()` | Starts every `.nds-dropmenu` on the page that has not started yet |
 | `NDS.Dropmenu.create(wrapper, options)` | Starts one wrapper and returns its instance, or `null` when it has no menu. `options` is for a field that another component owns: `menu`, `menuClass`, `click: false`, `keys: false` and `anchor`. The script skips a class or flag you wrote |
 | `NDS.Dropmenu.destroy(wrapper)` | Removes its listeners, and takes back what the script wrote: the class and flags from the `create()` `options`, and the ARIA attributes (the ones you wrote stay). On a picker it also removes the hidden field the script built and puts the trigger text back; the pick stays on its item. Call it before you remove the wrapper from the page: otherwise a listener on the document (while the menu is open) or on the form (a picker) keeps the removed wrapper in memory |
 | `NDS.Dropmenu.from(el)` | Returns the wrapper of any element in the dropmenu |

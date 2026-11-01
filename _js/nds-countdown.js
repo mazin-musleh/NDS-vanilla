@@ -1,7 +1,7 @@
 /* NDS.Countdown — public surface
  * Rides: (none — base component)
  * Methods:
- *   NDS.Countdown.init() / .reinit()     wire every .nds-countdown not yet wired
+ *   NDS.Countdown.init()                wire every .nds-countdown not yet wired
  *   NDS.Countdown.setTarget(el, target)  a new target: ISO text, a Date, or seconds from now (number)
  * Events:
  *   nds:countdown:tick   detail {remaining} — every second, from the element
@@ -242,7 +242,7 @@
     // What a countdown needs before its first run, from init() or from a setTarget() that came first:
     // the server clock, the default units and the direction. Each step runs once.
     function prepare(el) {
-        // Once: a waiter is re-wired by every reinit(), and the server time in the markup does not move.
+        // Once: a waiter is re-wired by every init(), and the server time in the markup does not move.
         const src = !offsets.has(el) && el.closest('[data-countdown-now]');
         if (src) {
             const serverNow = parseIso(src.getAttribute('data-countdown-now'));
@@ -261,7 +261,7 @@
         prepare(el);
         const seconds = el.getAttribute('data-countdown-seconds');
         if (seconds === null && el.getAttribute('data-countdown') === '') return; // waits for setTarget()
-        // Stamped only on success, so reinit() retries a target filled in later.
+        // Stamped only on success, so init() retries a target filled in later.
         if (track(el, seconds !== null ? parseInt(seconds, 10) : el.getAttribute('data-countdown'))) el.setAttribute(WIRED_ATTRIBUTE, '');
     }
 
@@ -279,7 +279,6 @@
 
     NDS.Countdown = {
         init,
-        reinit: init,
         setTarget(el, target) { el = NDS.resolveElement(el); if (el) { addVisibilityListeners(); prepare(el); track(el, target); } }
     };
 })();

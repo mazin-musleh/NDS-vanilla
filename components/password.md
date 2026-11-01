@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 09:20 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="password-overview" class="nds-content-section nds-doc-overview">
@@ -410,7 +410,6 @@ The instance is on the field's `.nds-form-container` as `ndsPassword`. It is the
 | Method | Effect |
 |---|---|
 | `NDS.Password.init()` | Starts every password field on the page that has not started. Call it after you add a field |
-| `NDS.Password.reinit()` | The same as `init()` |
 | `NDS.Password.create(container)` | Starts one field: pass its `.nds-form-container`. Returns the instance, or `null` when the field has no password input, or no chips and no match |
 | `NDS.Password.destroy(container)` | Stops one field, removes its submit block and sets its chips back to neutral |
 | `NDS.Password.check(container)` | Checks the value now, fires `nds:password:change` and returns `{ strength, allPass, rules }` |

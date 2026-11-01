@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 10:45 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -805,7 +805,7 @@ Sort is not a filter value. Decide by what the server returns. All matching item
 
 | Method | Effect |
 |---|---|
-| `NDS.Filter.init()` | Starts a filter for each `data-filter-target` value that has none. `reinit()` is the same |
+| `NDS.Filter.init()` | Starts a filter for each `data-filter-target` value that has none |
 | `NDS.Filter.create(element)` | Starts the filter of one surface and returns it. On a started filter, it returns that one |
 | `NDS.Filter.destroy(element)` | The same as `destroy()`. Any element of the filter's surfaces works |
 | `NDS.Filter.getInstance(element)` | The filter of any surface, by element or selector |

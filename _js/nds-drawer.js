@@ -3,7 +3,7 @@
  * Requires:
  *   .nds-drawer-list li:has(> ul) needs :scope > .nds-btn — the item never opens
  * Methods:
- *   NDS.Drawer.init() / .reinit()   scan + initialize .nds-drawer
+ *   NDS.Drawer.init()              scan + initialize .nds-drawer
  *   NDS.Drawer.create(drawer)       initialize one drawer
  *   NDS.Drawer.destroy(drawer)      detach its listeners and clear the init stamp
  *   NDS.Drawer.toggle(button)       open or close the submenu that BUTTON owns
@@ -415,7 +415,6 @@
 
     NDS.Drawer = {
         init: setupAllDrawers,
-        reinit: setupAllDrawers,
         create: setupDrawer,
         destroy: destroyDrawer,
         toggle: toggle

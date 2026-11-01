@@ -7,7 +7,7 @@
  *   .nds-sidemenu needs .nds-drawer — the first open throws
  * Methods:
  *   NDS.Sidemenu.init()      wire the one sidemenu on the page (destroys the previous
- *                            instance first, so it doubles as reinit)
+ *                            instance first, so calling it again re-wires)
  *   NDS.Sidemenu.destroy()   close it and release every listener
  * Events:
  *   (none)
@@ -17,7 +17,6 @@
  *    let it retract until the pointer comes near)
  * Gotchas:
  *   - One sidemenu per page: init() takes the FIRST .nds-sidemenu it finds.
- *   - There is no reinit(): call init() again and it re-wires from scratch.
  *   - init() does not start the drawer: new markup needs NDS.init.refresh().
  *   - .nds-top scrolls its bar to the top and locks the page before it opens.
  *   - A width change closes it.

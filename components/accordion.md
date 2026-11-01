@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="accordion-overview" class="nds-content-section nds-doc-overview">
@@ -318,7 +318,7 @@ When a long item above closes, the page moves up. If the heading of the item tha
 - Do not add `role="region"`, `aria-label` or `aria-labelledby` to `nds-accordion-collapse`. On a long list, every panel becomes a landmark. On a plain `div`, the two labels are not allowed, so an accessibility audit fails.
 - Use `nds-minimal` for one or two items inside other content, such as the requirements of a step. On a page section, keep the full-width headings: they are easier to find and to tap.
 - Do not hide content that people must see to finish a task, such as a required step or a warning.
-- After you add items to a live accordion, call `NDS.Accordion.reinit()`. The new items start working, and the open items stay open.
+- After you add items to a live accordion, call `NDS.Accordion.init()`. The new items start working, and the open items stay open.
 
 </div>
   </div>
@@ -363,7 +363,7 @@ The instance lives on `.nds-accordion` as `ndsAccordion`. It is there once the c
 
 | Method | Effect |
 |---|---|
-| `NDS.Accordion.init()` | Starts every accordion on the page that has not started yet. On an accordion that already started, it picks up the new items. `reinit()` is the same |
+| `NDS.Accordion.init()` | Starts every accordion on the page that has not started yet. On an accordion that already started, it picks up the new items |
 | `NDS.Accordion.create(element)` | Starts one accordion and returns its instance, or the instance it already has. Returns `null` when it has no buttons |
 | `NDS.Accordion.destroy(container)` | The same as `instance.destroy()`. The open items stay open |
 | `instance.openItem(index)`, `instance.closeItem(index)`, `instance.toggleItem(index)` | Open, close or toggle an item by its position |

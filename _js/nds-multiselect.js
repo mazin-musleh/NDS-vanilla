@@ -2,7 +2,7 @@
  * Rides: nds-dropmenu (top layer, positioning, search, auto-close knobs)
  *      · nds-forms (required + min/max validation, disabled state)
  * Methods:
- *   NDS.Multiselect.init() / .reinit()   scan + initialize .nds-multiselect fields
+ *   NDS.Multiselect.init()              scan + initialize .nds-multiselect fields
  *   NDS.Multiselect.create(el)           instance one field (reuses an existing instance)
  *   NDS.Multiselect.validate(el, opts)   its check → {valid, message, checked, min, max}; opts {showMessage}
  *   NDS.Multiselect.destroy(el)          tear one field down
@@ -528,7 +528,6 @@
 
     NDS.Multiselect = {
         init: setupMultiselects,
-        reinit: setupMultiselects,
         validate: (el, opts) => NDS.Form.validateField(NDS.resolveElement(el)?.closest('.nds-multiselect') || el, checkField, opts),
         create: (element) => {
             element = NDS.resolveElement(element);

@@ -2,7 +2,7 @@
  * Rides: nds-panels (an `auto` FAB docks at its toggled panel's edge, and a thumb slides
  *        aside while that panel is open; soft — a FAB with no panel just docks)
  * Methods:
- *   NDS.Fab.init() / .reinit()          route every .nds-fab into its dock
+ *   NDS.Fab.init()                     route every .nds-fab into its dock
  *   NDS.Fab.register(fab, override)     route one FAB now — for a FAB another component
  *                                       injected; override forces an edge
  *   NDS.Fab.destroy(fabOrContainer)     un-route a FAB back to where it was authored, or
@@ -302,7 +302,7 @@
 
     // Route every .nds-fab. Idempotent: a FAB stamped on a prior pass (or by an
     // explicit register call) is skipped, so a button placed by hand inside an
-    // authored dock (not marked .nds-fab) is never touched, and reinit only
+    // authored dock (not marked .nds-fab) is never touched, and init only
     // picks up newcomers.
     //
     // A nested .nds-fab is skipped so the OUTERMOST one wins. Without this the
@@ -320,7 +320,6 @@
 
     NDS.Fab = {
         init,
-        reinit: init,
         register,
         destroy,
         getDock,

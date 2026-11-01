@@ -73,7 +73,7 @@ const inModal = async (page, { rows = 8, row = 3 } = {}) => page.evaluate(async 
         content.appendChild(clone);
     }
     document.body.appendChild(modal);
-    NDS.DatePicker.reinit();
+    NDS.DatePicker.init();
     NDS.Modal.open('probe-modal');
     await new Promise((r) => setTimeout(r, 400));
 

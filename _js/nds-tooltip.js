@@ -1,7 +1,7 @@
 /* NDS.Tooltip — public surface
  * Rides: nds-popup (where it fits beside the trigger, and putting it there)
  * Methods:
- *   NDS.Tooltip.init() / .reinit()   scan + initialize .nds-tooltip
+ *   NDS.Tooltip.init()              scan + initialize .nds-tooltip
  *   NDS.Tooltip.create(el)           instance one tooltip
  *   NDS.Tooltip.destroy(el)          undo create(): the markup it built and the attributes it wrote go
  *   instance.open() / .close()       show or hide the balloon
@@ -484,7 +484,6 @@
 
     NDS.Tooltip = {
         init: setupTooltips,
-        reinit: setupTooltips,
         // The constructor publishes el.ndsTooltip only on success → null on a bail.
         create: (el) => {
             el = NDS.resolveElement(el);

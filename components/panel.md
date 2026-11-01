@@ -6,7 +6,7 @@ hero_description: A panel is a surface that slides in from an edge of the screen
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 08:56 AM"
+last_edit: "01/11/2026 - 05:15 PM"
 lang: en
 direction: ltr
 ---
@@ -377,7 +377,7 @@ Each method takes the panel element or its `id`.
 | `NDS.Panel.close(panel)` | Closes the panel |
 | `NDS.Panel.toggle(panel)` | Opens or closes the panel |
 | `NDS.Panel.isOpen(panel)` | Returns `true` while the panel is open and not closing |
-| `NDS.Panel.init()` | Starts every `.nds-panel` on the page that has not started yet. `reinit()` is the same |
+| `NDS.Panel.init()` | Starts every `.nds-panel` on the page that has not started yet |
 | `NDS.Panel.create(panel)` | Starts one panel element |
 | `NDS.Panel.destroy(panel)` | Closes the panel at once and removes its listeners |
 {: .nds-table .nds-responsive}

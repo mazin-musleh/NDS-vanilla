@@ -1,7 +1,7 @@
 /* NDS.Numbers — public surface
  * Rides: (none — base component)
  * Methods:
- *   NDS.Numbers.init() / .reinit()        format every number and arm every counter
+ *   NDS.Numbers.init()                   format every number and arm every counter
  *   NDS.Numbers.format(el)                format one .nds-number-format element
  *   NDS.Numbers.formatAll()               format all of them
  *   NDS.Numbers.initCounters()            re-arm the counters only
@@ -23,7 +23,7 @@
  *   - It rewrites the TEXT NODE holding the number, so icons and other children survive.
  *   - format() skips a counter: the counter owns its text.
  *   - A counter runs when it scrolls into view, once. Reduced motion jumps to the target.
- *     To run it again, remove data-animated and call reinit().
+ *     To run it again, remove data-animated and call init().
  */
 (() => {
     'use strict';
@@ -37,7 +37,7 @@
     // our own output, which other locales group with "." ("3.240.000").
     const written = new WeakMap();
 
-    // Counters mid-animation; a reinit() leaves them alone.
+    // Counters mid-animation; an init() leaves them alone.
     const countingElements = new WeakSet();
 
     function getSourceText(node) {
@@ -113,7 +113,7 @@
 
     function initCounters() {
         document.querySelectorAll(COUNTER).forEach(el => {
-            // reinit() re-arms: release a subscription that has not fired yet.
+            // init() re-arms: release a subscription that has not fired yet.
             el.ndsCounter?.destroy();
             if (el.closest('code') || el.hasAttribute('data-animated') || countingElements.has(el)) return;
             // A backref, so NDS.init.destroy(view) releases a counter that never scrolled into view.
@@ -136,7 +136,6 @@
         format,
         formatAll: formatAll,
         initCounters,
-        init,
-        reinit: init
+        init
     };
 })();

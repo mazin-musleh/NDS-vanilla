@@ -5,7 +5,7 @@
  * Requires:
  *   .nds-date-input sits in .nds-form-control — the picker is not built
  * Methods:
- *   NDS.DatePicker.init() / .reinit()          attach a calendar to every .nds-date-input
+ *   NDS.DatePicker.init()                     attach a calendar to every .nds-date-input
  *   NDS.DatePicker.create(input, formControl)  build/return one instance — idempotent, null on
  *                                              bad markup; formControl is optional
  *   NDS.DatePicker.destroy(input)              tear one down — the NDS.init.destroy entry point
@@ -304,7 +304,7 @@
     // Calendar Instance Class
     function NdsDatePickerCalendar(dateInput, formControl) {
         // Success signal — createInstance gates the init-guard expando on it,
-        // so a bailed construction stays eligible for a later reinit() sweep.
+        // so a bailed construction stays eligible for a later init() sweep.
         this._valid = false;
         var container = formControl.closest(SELECTORS.container);
         if (!container) {
@@ -1971,7 +1971,7 @@
             // so it needs them still attached. Then drop the dropdown subtree the
             // instance built. NDS.Dropmenu.destroy() un-stamps the month/year
             // wrappers, so leaving them behind would let a later
-            // NDS.Dropmenu.reinit() adopt them as bare menus wired to no calendar.
+            // NDS.Dropmenu.init() adopt them as bare menus wired to no calendar.
             // isDropdownCreated resets so a re-created picker rebuilds from scratch.
             this._cleanup();
             this._removeDropdown();
@@ -2008,7 +2008,7 @@
     }
 
     // Self-driven: sweep every .nds-date-input and attach a calendar. create()
-    // is idempotent (skips inputs already wired) so this is reinit-safe.
+    // is idempotent (skips inputs already wired) so this is re-init-safe.
     function setupCalendar() {
         document.querySelectorAll('.nds-date-input').forEach((input) => createInstance(input));
     }
@@ -2035,7 +2035,6 @@
         Calendar: NdsDatePickerCalendar,
         CalendarConfig: calendarConfig,
         init: setupCalendar,
-        reinit: setupCalendar,
         create: createInstance,
         destroy: (input) => {
             const instance = NDS.resolveElement(input)?.ndsDatePicker;

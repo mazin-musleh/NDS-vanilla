@@ -4,7 +4,7 @@
  * Requires:
  *   .nds-voice-input:not([data-voice-target]) sits in .nds-form-control — there is no input to fill
  * Methods:
- *   NDS.VoiceInput.init() / .reinit()   install the delegated click handler (idempotent)
+ *   NDS.VoiceInput.init()              install the delegated click handler (idempotent)
  *   NDS.VoiceInput.isSupported()        Web Speech API available? — gate your own UI on it
  * Events:
  *   (none — the transcript lands in the input, then `input` and `change` are dispatched)
@@ -45,7 +45,7 @@
 // NDS.VoiceInput.isSupported().
 //
 // Public API: NDS.VoiceInput
-//   .init() / .reinit()   — install the delegated click handler (idempotent)
+//   .init()   — install the delegated click handler (idempotent)
 //   .isSupported()        — Web Speech API available?  (gate consumer UI)
 (function() {
     'use strict';
@@ -348,7 +348,6 @@
 
     NDS.VoiceInput = {
         init: init,
-        reinit: init,
         isSupported: isSupported
     };
 

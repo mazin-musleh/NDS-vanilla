@@ -3,7 +3,7 @@
  * Requires:
  *   .nds-rating needs .nds-rating-star — there is nothing to show
  * Methods:
- *   NDS.Rating.init() / .reinit()   scan + initialize .nds-rating
+ *   NDS.Rating.init()              scan + initialize .nds-rating
  *   NDS.Rating.create(el)           instance one rating (returns the live one if there is
  *                                   already one)
  *   NDS.Rating.validate(el, opts)   the rating group's check → {valid, message, rating}; opts {showMessage}
@@ -310,7 +310,6 @@
 
   NDS.Rating = {
     init: setupRatings,
-    reinit: setupRatings,
     validate: (el, opts) => NDS.Form.validateField(NDS.resolveElement(el)?.closest('.nds-form-group') || el, checkField, opts),
     create,
     destroy: (element) => NDS.resolveElement(element)?.ndsRating?.destroy(),

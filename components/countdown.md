@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="countdown-overview" class="nds-content-section nds-doc-overview">
@@ -405,7 +405,7 @@ The `NDS.Countdown` script loads after the page shows. Until it loads, each call
 
 | Method | Effect |
 |---|---|
-| `NDS.Countdown.init()` | Starts every `.nds-countdown` on the page that has not started yet. Runs at load. `reinit()` does the same |
+| `NDS.Countdown.init()` | Starts every `.nds-countdown` on the page that has not started yet. Runs at load |
 | `NDS.Countdown.setTarget(el, target)` | Starts the countdown again with a new target: a date string, a `Date`, or a number of seconds from now |
 {: .nds-table .nds-responsive}
 

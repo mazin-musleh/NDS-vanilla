@@ -42,7 +42,7 @@
  *     placement (a permanent position — footer below, header above); the container may instead
  *     carry data-feedback-target="<selector>" to pick the target. Hidden targets unhide while
  *     a message shows and re-hide when the last one clears.
- *   - Singleton shape: init() and create(el) only — no reinit().
+ *   - Singleton shape: init() and create(el) only.
  *   - A required custom select is validated through its hidden .nds-select-value carrier:
  *     author data-required on the .nds-select container. The readonly display input is
  *     never constraint-validated, so required on it does nothing.

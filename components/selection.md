@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 12:30 AM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="selection-overview" class="nds-content-section nds-doc-overview">
@@ -421,12 +421,11 @@ The script starts on its own. Call `refresh(list)` after a change that fires no 
 
 | Method | Effect |
 |---|---|
-| `NDS.Selection.init()` | Adds the document listeners. The loader calls it |
+| `NDS.Selection.init()` | Adds the document listeners if they are missing. The loader calls it |
 | `NDS.Selection.selectAll(list, on, { scope })` | Selects every item the filter shows, or clears them when `on` is `false`. `on` defaults to `true`. With `scope: 'page'`, it acts only on the items on the current page |
 | `NDS.Selection.clear(list)` | Clears every item, including items a filter hides and items with no checkbox. An item with a disabled checkbox keeps its state. Call it after a bulk action |
 | `NDS.Selection.getSelected(list)` | Returns the selected items, in page order |
 | `NDS.Selection.isSelected(item)` | Returns `true` when the item is selected. [Export](../components/export) uses it to pick the selected rows |
-| `NDS.Selection.reinit()` | The same as `init()`: adds the listeners if they are missing |
 | `NDS.Selection.refresh(list)` | Updates one list's states, select-all and counters, and adds the listeners if they are missing, so a list added after the page loads works. With no list, it updates every list. `NDS.init.refresh()` calls it that way |
 | `NDS.Selection.destroy()` | Removes the listeners. Use it when a single-page app tears the view down |
 {: .nds-table .nds-responsive}

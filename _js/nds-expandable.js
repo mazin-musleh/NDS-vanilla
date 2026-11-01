@@ -1,7 +1,7 @@
 /* NDS.Expandable — public surface
  * Rides: (none — base component)
  * Methods:
- *   NDS.Expandable.init() / .reinit()   scan + initialize .nds-expandable
+ *   NDS.Expandable.init()              scan + initialize .nds-expandable
  *   NDS.Expandable.refresh()            re-measure every initialized container — call this
  *                                       after changing --max-height at runtime
  *   NDS.Expandable.create(container)    instance one container — null when the markup is
@@ -60,7 +60,7 @@
 
             this._valid = true;
             // Registered here, not in the sweep, so every construction path —
-            // sweep, reinit() and programmatic create() — is reachable and stamped.
+            // sweep, init() and programmatic create() — is reachable and stamped.
             expandableContainer.ndsExpandable = this;
             this.init();
             expandableContainer.setAttribute('data-nds-expandable-initialized', 'true');
@@ -307,7 +307,6 @@
     // Assigned at module eval so the loader's lazy stub resolves.
     NDS.Expandable = {
         init: setupExpandableContent,
-        reinit: setupExpandableContent,
         refresh: syncAllHeights,
         create: (container) => {
             container = NDS.resolveElement(container);
@@ -356,7 +355,7 @@
  * });
  *
  * // Reinitialize after dynamic content changes
- * NDS.Expandable.reinit();
+ * NDS.Expandable.init();
  *
  * // CSS Custom Properties:
  * // --max-height: Set custom height limit (default: 300px)

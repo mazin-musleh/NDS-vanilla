@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.2.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 12:30 AM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="slider-overview" class="nds-content-section nds-doc-overview">
@@ -290,7 +290,6 @@ The `NDS.Slider` script loads after the page shows. Until it loads, each call lo
 |---|---|
 | `NDS.Slider.init()` | Starts every slider on the page. It runs once at page load, and a slider added later starts on its own. The first slider on a page that had none needs `NDS.init.mount()` on the new content |
 | `NDS.Slider.refresh(container)` | Measures one container again, or every container with no argument |
-| `NDS.Slider.reinit()` | The same as `init()` |
 | `NDS.Slider.create(container)` | Starts one container and returns it |
 | `NDS.Slider.destroy(container)` | Stops one container, or every container with no argument |
 | `NDS.Slider.getValue(el)` | Single slider. Returns its value as a number, or `''` for a range or when the slider is not found. `el` is the container, an input in it, its `id` or a selector |

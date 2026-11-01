@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="table-overview" class="nds-content-section nds-doc-overview">
@@ -813,8 +813,7 @@ The `NDS.Table` script loads after the page shows. Until it loads, each call loa
 
 | Method | Effect |
 |---|---|
-| `NDS.Table.init()` | Starts every table and column menu that has not started yet |
-| `NDS.Table.reinit()` | The same as `init()`. Call it after you add a new table. When only the rows change, call `NDS.init.refresh(tbody)`: see [Init](../core/init) |
+| `NDS.Table.init()` | Starts every table and column menu that has not started yet. Call it after you add a new table. When only the rows change, call `NDS.init.refresh(tbody)`: see [Init](../core/init) |
 | `NDS.Table.refresh()` | Measures every scroll box again, after a change the script cannot see |
 | `NDS.Table.create(table)` | Starts one table: the scroll box, column alignment, sub-rows, sorting and selection. Use it for a table added after the page loads. It returns its instance, or the instance it already has. Returns `null` when the table has no `<thead>` or `<tbody>` |
 | `NDS.Table.createResponsive(table)` | Adds the scroll box to one table and returns its instance |

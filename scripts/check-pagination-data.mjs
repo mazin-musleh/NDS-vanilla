@@ -35,7 +35,7 @@ await page.evaluate(() => {
   const nav = document.getElementById('t-focus');
   // The doc's sample pattern: the reply carries the count, so every change resets it.
   nav.addEventListener('nds:pagination:change', () => NDS.Pagination.setTotalPages(nav, 12));
-  NDS.Pagination.reinit();
+  NDS.Pagination.init();
 });
 
 const shown = (id) => page.evaluate((id) => {

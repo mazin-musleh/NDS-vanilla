@@ -1,7 +1,7 @@
 /* NDS.Swiper — public surface
  * Rides: (none — base component)
  * Methods:
- *   NDS.Swiper.init() / .reinit()   scan + initialize .nds-swiper
+ *   NDS.Swiper.init()              scan + initialize .nds-swiper
  *   NDS.Swiper.create(el)           instance one swiper
  *   NDS.Swiper.destroy(el)          tear one down — the NDS.init.destroy entry point
  *   instance.next() / .prev()       move by one page
@@ -1052,7 +1052,7 @@
     function setupSwipers() {
         const swipers = document.querySelectorAll('.nds-swiper');
         swipers.forEach(swiper => {
-            // A loop clone's nested swiper is a dead copy — reinit must not wire it.
+            // A loop clone's nested swiper is a dead copy — init must not wire it.
             if (swiper.closest('code, .nds-swiper-clone')) return;
             // A swiper waiting for its section to draw has its instance but no stamp yet.
             if (swiper.hasAttribute('data-nds-swiper-initialized') || swiper.ndsSwiper) return;
@@ -1065,7 +1065,6 @@
 
     NDS.Swiper = {
         init: setupSwipers,
-        reinit: setupSwipers,
         create: (element) => {
             element = NDS.resolveElement(element);
             if (!element) return null;

@@ -5,7 +5,7 @@
  *   .nds-toc:not([data-toc-source]) needs li a[href^="#"] — the TOC has no entries
  *   .nds-toc[data-toc-source] needs .nds-drawer-list — the list is not built
  * Methods:
- *   NDS.Toc.init() / .reinit()   scan + initialize .nds-toc
+ *   NDS.Toc.init()              scan + initialize .nds-toc
  *   NDS.Toc.create(el)           instance one table of contents — null when no link has a
  *                                target; the live one if started
  *   NDS.Toc.destroy(el)          tear one down — the NDS.init.destroy entry point
@@ -279,7 +279,6 @@
 
     NDS.Toc = {
         init: setupComponents,
-        reinit: setupComponents,
         create: (el) => {
             el = NDS.resolveElement(el);
             if (!el) return null;

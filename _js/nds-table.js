@@ -4,7 +4,7 @@
  *      · nds-selection (the header select-all)
  *      · nds-pagination (refreshed after a sort re-orders a paged table; soft — a table with no paged content works)
  * Methods:
- *   NDS.Table.init() / .reinit()               scan .nds-table and [data-columns-target] menus
+ *   NDS.Table.init()                          scan .nds-table and [data-columns-target] menus
  *   NDS.Table.refresh()                        re-measure every table's responsive scroll state
  *   NDS.Table.create(table)                    start one table (scroll box, alignment, sort controls)
  *   NDS.Table.createResponsive(table)          the scroll wrapper only
@@ -184,7 +184,7 @@
             this.abortController = new AbortController();
 
             // Registered here, not in the sweep, so every construction path —
-            // sweep, reinit() and programmatic createResponsive() — is reachable and stamped.
+            // sweep, init() and programmatic createResponsive() — is reachable and stamped.
             tableElement.ndsTableResponsive = this;
             this.init();
             tableElement.setAttribute('data-nds-table-initialized', 'true');
@@ -891,7 +891,7 @@
     function linkAuthoredSubs(table) {
         table.querySelectorAll(':scope > tbody > tr.nds-sub').forEach(sub => {
             // Backref first, same as closeOtherSubs: re-deriving from adjacency
-            // would rewrite subRows with the wrong row whenever a reinit lands
+            // would rewrite subRows with the wrong row whenever an init lands
             // while a sort has the sub detached from its parent.
             const parent = subRows.get(sub) || sub.previousElementSibling;
             if (parent && !parent.classList.contains('nds-sub')) linkSub(parent, sub);
@@ -933,7 +933,7 @@
 
     // What every table gets, sortable or not — shared by the sweep and create().
     function setupTable(table) {
-        // Guarded by the scope stamp: reinit() must not append the rules twice.
+        // Guarded by the scope stamp: init() must not append the rules twice.
         if (!table.hasAttribute('data-nds-align')) syncColumnAlign(table);
 
         linkAuthoredSubs(table);
@@ -948,7 +948,7 @@
 
     // Starts every table and column menu not started yet.
     // The init sentinel is stamped only on a construction that succeeded — a table
-    // whose <tbody> arrives later must stay eligible for the next reinit().
+    // whose <tbody> arrives later must stay eligible for the next init().
     // A root narrows the sweep to new content (a sub-row's).
     function setupTables(root = document) {
         root.querySelectorAll('.nds-table').forEach(table => {
@@ -963,7 +963,7 @@
             const hasCheckboxes = table.querySelector(':scope > thead input[type="checkbox"].nds-checkbox-input') !== null;
 
             // Sorting / selection is opt-in by markup and guarded by the instance,
-            // so a table whose <tbody> arrives later stays eligible for reinit().
+            // so a table whose <tbody> arrives later stays eligible for init().
             if ((hasSortButtons || hasCheckboxes) && !table.ndsTableControls) {
                 new NdsTable(table); // constructor self-registers table.ndsTableControls when valid
             }
@@ -990,7 +990,6 @@
     NDS.Table = {
         // Wrapped: a caller's argument must never become the sweep's root.
         init: () => setupTables(),
-        reinit: () => setupTables(),
         refresh: syncAllWidths,
         // The constructors publish their expando only on success → null on a bail.
         create: (table) => {

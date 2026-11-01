@@ -4,7 +4,7 @@
  *      · nds-upload (the image popover's file field) · nds-tooltip (toolbar button labels)
  *      · nds-link (link chrome refresh after an edit)
  * Methods:
- *   NDS.Editor.init() / .reinit()   scan + initialize .nds-editor
+ *   NDS.Editor.init()              scan + initialize .nds-editor
  *   NDS.Editor.create(el)           instance one editor — null when the markup is
  *                                   incomplete; returns the live one if there is already one
  *   NDS.Editor.destroy(el)          tear one down
@@ -2910,7 +2910,6 @@
 
     NDS.Editor = {
         init: setupEditors,
-        reinit: setupEditors,
         // Construction fails (missing required elements) → null, never a
         // dud instance whose every method throws.
         create: (element) => {

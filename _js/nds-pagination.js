@@ -1,7 +1,7 @@
 /* NDS.Pagination — public surface
  * Rides: nds-dropmenu (ellipsis menu + per-page picker)
  * Methods:
- *   NDS.Pagination.init() / .reinit()          scan + initialize navs, auto-pagination included
+ *   NDS.Pagination.init()                     scan + initialize navs, auto-pagination included
  *   NDS.Pagination.initAuto()                  initialize auto-pagination containers only
  *   NDS.Pagination.create(nav)                 instance one .nds-pagination nav
  *   NDS.Pagination.refresh(contentContainer)   recompute an auto-pagination after its items
@@ -1655,7 +1655,6 @@
     // Expose global API for unified init system
     NDS.Pagination = {
         init,
-        reinit: init,
         initAuto,
         create: (container) => {
             container = NDS.resolveElement(container);

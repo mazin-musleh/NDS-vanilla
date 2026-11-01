@@ -5,7 +5,7 @@
  *   .nds-slider-container.nds-slider-range needs .nds-slider-min — the thumbs are not clamped and the fill never paints
  *   .nds-slider-container.nds-slider-range needs .nds-slider-max — the thumbs are not clamped and the fill never paints
  * Methods:
- *   NDS.Slider.init() / .reinit()   wire the delegated input listener; initialize every
+ *   NDS.Slider.init()              wire the delegated input listener; initialize every
  *                              .nds-slider-container
  *   NDS.Slider.refresh(el)     measure one container again, or all of them with no argument,
  *                              after its min or max changed
@@ -243,7 +243,6 @@
 
     NDS.Slider = {
         init: init,
-        reinit: init,
         refresh: refresh,
         destroy: function (el) {
             if (typeof el === 'string' && !(el = NDS.resolveElement(el))) return; // a missed ref is not "every slider"

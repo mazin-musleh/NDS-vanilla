@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="tabs-overview" class="nds-content-section nds-doc-overview">
@@ -459,7 +459,7 @@ The instance lives on the element as `ndsTabs`. It is there once the component s
 
 | Method | Effect |
 |---|---|
-| `NDS.Tabs.init()` | Starts every `.nds-tabs` on the page that has not started yet. `reinit()` is the same |
+| `NDS.Tabs.init()` | Starts every `.nds-tabs` on the page that has not started yet |
 | `NDS.Tabs.create(element)` | Starts one tab set and returns its instance, or the instance it already has. Returns `null` when the tab set has no tab list, tabs or panels |
 | `NDS.Tabs.destroy(element)` | The same as `instance.destroy()` |
 | `instance.goTo(index)` | Opens a tab by its position, from 0 |

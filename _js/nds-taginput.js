@@ -3,7 +3,7 @@
  *        as a tag; soft — typing alone works without it)
  *      · nds-forms (field status feedback for duplicate / max / strict rejections; soft)
  * Methods:
- *   NDS.Taginput.init() / .reinit()   scan + initialize .nds-taginput fields
+ *   NDS.Taginput.init()              scan + initialize .nds-taginput fields
  *   NDS.Taginput.create(el)           instance one field — null when the markup is incomplete
  *   NDS.Taginput.validate(el, opts)   its check → {valid, message, count}; opts {showMessage}
  *   NDS.Taginput.destroy(el)          tear one field down
@@ -365,7 +365,6 @@
 
     NDS.Taginput = {
         init: setupTagInputs,
-        reinit: setupTagInputs,
         validate: (el, opts) => NDS.Form.validateField(NDS.resolveElement(el)?.closest('.nds-taginput') || el, checkField, opts),
         // Construction fails (missing required elements, or the root is already
         // initialized) → null, never a dud instance whose every method throws.

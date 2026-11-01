@@ -16,7 +16,7 @@
  *   - In a table only non-placeholder rows inside a tbody count as content — thead, tfoot
  *     and caption do not.
  *   - init() runs once. Added and removed children, and changes to the two attributes, are
- *     picked up by the shared observers, so there is no reinit().
+ *     picked up by the shared observers, so there is no need to call init() again.
  */
 /**
  * NDS Empty Component

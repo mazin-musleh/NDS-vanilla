@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "27/10/2026 - 01:55 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="calendar-overview" class="nds-content-section nds-doc-overview">
@@ -694,7 +694,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 
 | Method | Effect |
 |---|---|
-| `NDS.Calendar.init()` | Starts every `.nds-calendar` that has not started. `reinit()` is the same |
+| `NDS.Calendar.init()` | Starts every `.nds-calendar` that has not started |
 | `NDS.Calendar.create(element)` | Starts one calendar and returns it. On a started calendar, it returns that one |
 | `NDS.Calendar.destroy(element)` | The same as `destroy()`. An `id` works too |
 | `NDS.Calendar.getInstance(element)` | The calendar's instance, or `null`. An `id` works too. The instance is also `element.ndsCalendar` |

@@ -4,7 +4,7 @@
  *      · nds-typing (shaped typing and paste in the input)
  *      · nds-forms (invalid-value status message under the field; soft)
  * Methods:
- *   NDS.TimePicker.init() / .reinit()           attach a picker to every .nds-time-input
+ *   NDS.TimePicker.init()                      attach a picker to every .nds-time-input
  *                                               and every .nds-time-fields group
  *   NDS.TimePicker.create(input, formControl)   build/return one instance — idempotent,
  *                                               null on bad markup; formControl is optional
@@ -269,7 +269,7 @@
     class NdsTimePicker {
         constructor(input, formControl) {
             // Success signal — create() gates the expando on it, so a bailed
-            // construction stays eligible for a later reinit() sweep.
+            // construction stays eligible for a later init() sweep.
             this._valid = false;
             const container = formControl.closest('.nds-form-container');
             if (!container) {
@@ -1000,7 +1000,6 @@
 
     NDS.TimePicker = {
         init: init,
-        reinit: init,
         validate: (el, opts) => NDS.Form.validateField(NDS.resolveElement(el)?.closest('.nds-time-fields') || el, checkField, opts),
         create: create,
         destroy: (el) => {

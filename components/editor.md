@@ -11,7 +11,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 09:20 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="editor-overview" class="nds-content-section nds-doc-overview">
@@ -383,7 +383,7 @@ The `NDS.Editor` script loads after the page shows. Until it loads, each call lo
 
 | Method | Effect |
 |---|---|
-| `NDS.Editor.init()` | Starts every `.nds-editor` on the page that has not started. `reinit()` does the same |
+| `NDS.Editor.init()` | Starts every `.nds-editor` on the page that has not started |
 | `NDS.Editor.create(el)` | Starts one editor and returns it. Returns the running editor when `el` already has one, and `null` when the field has no textarea |
 | `NDS.Editor.destroy(el)` | Removes the toolbar and the editing surface. The plain textarea field stays, with its value |
 | `NDS.Editor.getValue(el)` | Returns the sanitized HTML, or `''` when the editor is not found. `el` is the `.nds-editor`, its textarea, its `id` or a selector |

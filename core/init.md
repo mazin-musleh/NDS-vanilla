@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 12:30 AM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -303,7 +303,7 @@ Keep the `<style>` gate and the inline script out of your bundler. A minifier ch
 - Call `refresh()` once after the page settles, not once per row. A bulk insert of 50 rows needs one call at the end.
 - Call it after your response is written into the page, not when the request resolves. It reads the page, so the rows must be in place.
 - Pass the container whose children changed, such as the `<tbody>` or the grid wrapper. A distant ancestor holds more components, so more of them run.
-- Use it instead of one component's `reinit()` when a list changed. A component you forget gives no warning.
+- Use it instead of one component's `init()` when a list changed. A component you forget gives no warning.
 - Use it instead of `NDS.init.initialize()`, which starts every component on the page again. Use `initialize()` only when you replaced the whole page body.
 - Skip it for content that was in the HTML at load, and after a filter, sort or page change. NDS already keeps those in step.
 - Do not call it from a handler for an event it can fire, such as `nds:filter:change`. That starts a loop.

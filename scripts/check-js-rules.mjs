@@ -1106,7 +1106,7 @@ function checkLoader() {
 
 // ── across files ────────────────────────────────────────────────────────────
 
-const GENERIC = new Set(['init', 'reinit', 'create', 'destroy', 'render', 'update', 'refresh', 'open', 'close', 'toggle', 'show', 'hide', 'setup', 'cleanup', 'reset', 'clear', 'getValue', 'setValue', 'apply', 'handle', 'onClick', 'onKeydown', 'tick', 'stamp', 'wire', 'paint', 'run', 'go', 'next', 'prev']);
+const GENERIC = new Set(['init', 'create', 'destroy', 'render', 'update', 'refresh', 'open', 'close', 'toggle', 'show', 'hide', 'setup', 'cleanup', 'reset', 'clear', 'getValue', 'setValue', 'apply', 'handle', 'onClick', 'onKeydown', 'tick', 'stamp', 'wire', 'paint', 'run', 'go', 'next', 'prev']);
 const tokens = (body) => new Set(body.replace(/\s+/g, ' ').match(/[\w$]+|[^\s\w$]/g) || []);
 const overlap = (a, b) => { let n = 0; for (const t of a) if (b.has(t)) n++; return n / Math.max(a.size, b.size, 1); };
 
@@ -1144,7 +1144,7 @@ async function checkTree(files, read = (f) => readFileSync(f, 'utf8')) {
     const escapers = sources.filter((x) => /\.replace\(\s*\/&\/g[\s\S]{0,200}\.replace\(\s*\/</.test(x.code) && !/NDS\.escapeHtml\s*=/.test(x.code));
     if (escapers.length >= 3) add('JSD-05b', escapers[0], 0, `HTML escape inline in ${escapers.map((x) => x.file).join(', ')}`, 'use NDS.escapeHtml');
 
-    // JSD-07 the loader's contract: a registered component exposes init(); a factory (create(el)) also reinit().
+    // JSD-07 the loader's contract: a registered component exposes init().
     const { SCOPE, extractKeys } = await import('./check-banners.mjs');
     for (const [file, ns] of SCOPE) {
         if (!ns || !REGISTERED.has(ns)) continue;
@@ -1152,9 +1152,6 @@ async function checkTree(files, read = (f) => readFileSync(f, 'utf8')) {
         const keys = x && extractKeys(x.source, ns);
         if (!keys) continue;
         if (!keys.has('init')) add('JSD-07', x, 0, `NDS.${ns} has no init()`);
-        const transient = /\bcreate\s*(?::\s*(?:function\s*)?\(|\()\s*(?:options|opts|config|cfg|\{)/.test(x.code); // create({…}) builds a surface
-        const singleton = /^\s*\*.*\bsingleton\b/im.test(x.source.slice(0, x.source.indexOf('*/'))); // the banner declares the shape
-        if (keys.has('create') && !transient && !singleton && !keys.has('reinit')) add('JSD-07', x, 0, `NDS.${ns} has create(el) but no reinit()`, 'the loader calls init(), never reinit(): confirm the factory needs one');
     }
 
     // JSD-11 an unregistered namespace whose init() walks the DOM, which no file ever calls.
@@ -1437,7 +1434,7 @@ if (args[0] === '--self-test') {
         // A block may be a method or a statement run: try it bare, then as a class body.
         let got;
         // Each runs under a banner that lists only the loader hooks, so rule 11 sees a component file.
-        const head = `/* NDS.Case — public surface\n * Methods:\n *   NDS.Case.init() / .reinit() / .refresh() / .destroy(el)\n */\n`;
+        const head = `/* NDS.Case — public surface\n * Methods:\n *   NDS.Case.init() / .refresh() / .destroy(el)\n */\n`;
         for (const src of [head + block, `${head}class NdsCase {\n${block}\n}`]) {
             try { (await import('acorn')).parse(src, { ecmaVersion: 'latest' }); } catch { continue; }
             got = checkNames(['persona.js'], () => src).filter((f) => !f.verify);

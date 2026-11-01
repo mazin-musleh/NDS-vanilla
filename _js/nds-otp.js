@@ -23,7 +23,7 @@
  *     group; a label that is not that English stays.
  *   - setValue() fires no nds:otp event; the hidden carrier gets one input and change when its value changes.
  *   - A multi-digit paste spreads across the boxes from the focused one.
- *   - There is no reinit(): every init() sweeps, and later groups and boxes are picked up
+ *   - Every init() sweeps, and later groups and boxes are picked up
  *     by the shared DOM bus. NDS.init.destroy(view) releases a group (group.ndsOtp).
  */
 (function () {

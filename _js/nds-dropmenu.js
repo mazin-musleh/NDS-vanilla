@@ -3,7 +3,7 @@
  * Requires:
  *   .nds-dropmenu-footer sits outside .nds-dropmenu-scroll — the footer scrolls away with the list, and search hides its buttons
  * Methods:
- *   NDS.Dropmenu.init() / .reinit()      scan + initialize dropmenu wrappers
+ *   NDS.Dropmenu.init()                 scan + initialize dropmenu wrappers
  *   NDS.Dropmenu.create(el, opts?)       instance one .nds-dropmenu wrapper; null when it has no menu.
  *                                        opts adopt a field: {menu, menuClass, click, keys, anchor}
  *   NDS.Dropmenu.validate(el, opts)  a select-mode picker's check → {valid, message, value}; opts {showMessage}
@@ -33,7 +33,7 @@
  * Gotchas:
  *   - An open instance listens on the document, and a picker on its form at all times, so dropping
  *     its wrapper from the DOM (replacing a table row, closing a view) leaks it and the detached subtree.
- *     Call destroy(el) first. reinit() covers the other side: wrappers you ADD.
+ *     Call destroy(el) first. init() covers the other side: wrappers you ADD.
  *   - nds:dropmenu:prepare is the lazy-content hook; opened fires after placement.
  *     waitUntil(promise) keeps the spinner until it settles; call it in the listener, not
  *     after an await. Cancelled meanwhile (click away, Escape), the next open waits on it again.
@@ -999,7 +999,7 @@
         /** Post-transition close cleanup. Split out of close() so destroy()
          *  can run it synchronously instead of leaving it queued: a queued
          *  run lands after teardown and would strip the state of whatever
-         *  instance owns the wrapper by then (a reinit sweep in that window
+         *  instance owns the wrapper by then (an init sweep in that window
          *  builds a new one). */
         _finishClose() {
             removeState(this.dropmenu, 'open', 'opening', 'closing');
@@ -1253,7 +1253,7 @@
             // A constructor bail (missing menu, or a wrapper someone else already
             // initialized) never runs init(), so this instance owns nothing. Bail
             // before the deletes below — they'd strip the REAL instance's stamp and
-            // expando while its listeners stayed live, and the next reinit() sweep
+            // expando while its listeners stayed live, and the next init() sweep
             // would then attach a second instance on top.
             if (!this.abortController) return;
             // Cancel a pending delayed-open timer so it can't fire after teardown.
@@ -1415,7 +1415,6 @@
     // Expose global API (called by nds-loader.js unified system)
     NDS.Dropmenu = {
         init: setupDropmenus,
-        reinit: setupDropmenus,
         validate: (el, opts) => NDS.Form.validateField(NDS.resolveElement(el)?.closest('.nds-dropmenu') || el, checkField, opts),
         create: (element, opts) => {
             element = NDS.resolveElement(element);

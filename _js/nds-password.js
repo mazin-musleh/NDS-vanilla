@@ -4,7 +4,7 @@
  * Requires:
  *   .nds-password needs [data-rule], [data-password-match] — no rule is checked
  * Methods:
- *   NDS.Password.init() / .reinit()   scan + wire every .nds-password container
+ *   NDS.Password.init()              scan + wire every .nds-password container
  *   NDS.Password.create(el)           wire one — pass the .nds-form-container
  *   NDS.Password.destroy(el)          tear one down
  *   NDS.Password.check(el)            recompute rules/match now
@@ -62,7 +62,7 @@
  *     inert: stays neutral, not counted, no gate. Rules resolve per keystroke, so a
  *     late addRule() activates its chips on the next input — no rewire needed.
  *   - Match mode resolves data-password-match at init. A source input that hydrates
- *     later needs destroy() then create() on the confirm container — reinit() and
+ *     later needs destroy() then create() on the confirm container — init() and
  *     create() skip a container that already started.
  *   - allPass is false on an empty field and on a mismatch, chips or not.
  *   - A failing chip blocks the submit with a blank customValidity, so Forms outlines the
@@ -291,7 +291,6 @@
 
     NDS.Password = {
         init: setupPasswords,
-        reinit: setupPasswords,
         create: function (element) {
             element = NDS.resolveElement(element);
             if (!element) return null;

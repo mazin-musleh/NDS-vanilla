@@ -3,7 +3,7 @@
  *      · nds-pagination · nds-sort · nds-slider · nds-date-picker · nds-accordion
  *        (soft — driven only when present on the filter surface)
  * Methods:
- *   NDS.Filter.init() / .reinit()      scan + initialize filter surfaces
+ *   NDS.Filter.init()                 scan + initialize filter surfaces
  *   NDS.Filter.create(container)       instance one surface — idempotent, registers the instance
  *   NDS.Filter.destroy(container)      undo create(); any surface element of the filter works
  *   NDS.Filter.getInstance(elOrSel)    resolve the instance from any surface element
@@ -2470,12 +2470,12 @@
         // stamps data-nds-accordion-initialized (clears the skeleton), and sets
         // .ndsAccordion on the container.
         //
-        // Once per build pass, never per group: NDS.Accordion.reinit() scans every
+        // Once per build pass, never per group: NDS.Accordion.init() scans every
         // .nds-accordion on the page, and a live root adopts the groups added since.
         _flushAccordionInit() {
             if (!this._accordionInitPending) return;
             this._accordionInitPending = false;
-            NDS.Accordion.reinit();
+            NDS.Accordion.init();
         }
 
         // Sync applied-count tags on filter-accordion headers with the current
@@ -3338,7 +3338,6 @@
 
     NDS.Filter = {
         init: setupFilters,
-        reinit: setupFilters,
         // Idempotent, and registers exactly like the loader path — matching
         // NDS.Sort.create / NDS.DatePicker.create. Constructing bare skipped the
         // init stamp (the crit hold then kept the target hidden), the backref,

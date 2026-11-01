@@ -3,7 +3,7 @@
  * Requires:
  *   .nds-scroll-more needs .nds-scroll-more-content — no overflow state
  * Methods:
- *   NDS.ScrollMore.init() / .reinit()      scan + initialize .nds-scroll-more
+ *   NDS.ScrollMore.init()                 scan + initialize .nds-scroll-more
  *   NDS.ScrollMore.create(wrapper)         initialize one wrapper
  *   NDS.ScrollMore.refresh(wrapper)        re-measure it now
  *   NDS.ScrollMore.destroy(wrapper)        detach and un-stamp
@@ -233,7 +233,6 @@
 
     NDS.ScrollMore = {
         init: setupAll,
-        reinit: setupAll,
         create: setupElement,
         refresh: checkOverflow,
         destroy

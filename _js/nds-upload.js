@@ -5,7 +5,7 @@
  *   .nds-upload needs .nds-form-control — the upload is not built
  *   .nds-upload needs .nds-file-list — the upload is not built
  * Methods:
- *   NDS.Upload.init() / .reinit()                scan + initialize .nds-upload
+ *   NDS.Upload.init()                           scan + initialize .nds-upload
  *   NDS.Upload.create(el, options)               instance one uploader; options override the
  *                                                data-* config. A started one is returned
  *                                                unchanged (setOptions changes it).
@@ -882,7 +882,6 @@
 
     NDS.Upload = {
         init: setupUploads,
-        reinit: setupUploads,
         validate: (el, opts) => NDS.Form.validateField(NDS.resolveElement(el)?.closest('.nds-upload') || el, checkField, opts),
         create: (container, options) => {
             container = NDS.resolveElement(container);

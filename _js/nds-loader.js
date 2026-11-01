@@ -925,7 +925,7 @@
     // Empty self-heal through their own observers, so they scan.
     // Server-driven lists are untouched: manual navs carry no auto stamp and AJAX filters
     // skip their refresh. Registry order holds: Selection recounts before Filter.
-    // ponytail: scanners re-scan the whole document, the same cost as reinit(); give
+    // ponytail: scanners re-scan the whole document, the same cost as init(); give
     // them a scope argument only if a large page measures slow.
     function syncContainer(container) {
         const root = container || document;

@@ -1,7 +1,7 @@
 /* NDS.Breadcrumb — public surface
  * Rides: nds-dropmenu (the overflow menu)
  * Methods:
- *   NDS.Breadcrumb.init() / .reinit()   scan + initialize .nds-breadcrumb-nav
+ *   NDS.Breadcrumb.init()              scan + initialize .nds-breadcrumb-nav
  *   NDS.Breadcrumb.create(nav)          instance one breadcrumb — null when it has no items;
  *                                       the live one if started
  *   NDS.Breadcrumb.destroy(nav)         undo create()
@@ -144,7 +144,6 @@
     // Assigned at module eval so the loader's lazy stub resolves.
     NDS.Breadcrumb = {
         init: setupBreadcrumbs,
-        reinit: setupBreadcrumbs,
         create: (nav) => {
             nav = NDS.resolveElement(nav);
             if (!nav) return null;

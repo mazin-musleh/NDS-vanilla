@@ -2,7 +2,7 @@
  * Rides: <dialog> — show() for a plain or static panel (it stays under the main nav),
  *        NDS.dialog for a modal one (the top layer, the dim layer, an inert page)
  * Methods:
- *   NDS.Panel.init() / .reinit()   bind the delegated toggles; prepare every .nds-panel
+ *   NDS.Panel.init()              bind the delegated toggles; prepare every .nds-panel
  *   NDS.Panel.create(panel)        prepare one panel
  *   NDS.Panel.destroy(panel)       tear one down (closes it and releases the scroll lock)
  *   NDS.Panel.open(idOrEl, opts?)  open it, by the stacking rules below. { focus: false }
@@ -501,7 +501,6 @@
 
     NDS.Panel = {
         init,
-        reinit: init,
         create: createPanel,
         destroy: destroyPanel,
         open,

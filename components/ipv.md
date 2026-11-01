@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="ipv-overview" class="nds-content-section nds-doc-overview">
@@ -95,7 +95,7 @@ The zoom badge goes on every `.nds-ipv-image-card` in the markup.
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Auto-initialization</span>
-              <p class="nds-card-description">The viewer starts on any page that has an <code class="nds-inline-code lang-html">nds-ipv-thumbnail</code>. A thumbnail added later opens on a click with no call, and <code class="nds-inline-code lang-js">NDS.Ipv.reinit()</code> lets Tab reach it. The viewer itself is built on the first open, so a page where nobody opens an image carries none of it.</p>
+              <p class="nds-card-description">The viewer starts on any page that has an <code class="nds-inline-code lang-html">nds-ipv-thumbnail</code>. A thumbnail added later opens on a click with no call, and <code class="nds-inline-code lang-js">NDS.Ipv.init()</code> lets Tab reach it. The viewer itself is built on the first open, so a page where nobody opens an image carries none of it.</p>
             </div>
           </div>
         </li>
@@ -293,8 +293,7 @@ One viewer serves the whole page. The methods below drive it. The viewer fires n
 
 | Method | Effect |
 |---|---|
-| `NDS.Ipv.init()` | Starts the viewer. The loader calls it when the page has a thumbnail |
-| `NDS.Ipv.reinit()` | Gives thumbnails added since the last call `tabindex` and `role`. Call it after you add thumbnails |
+| `NDS.Ipv.init()` | Starts the viewer and gives thumbnails added since the last call `tabindex` and `role`. The loader calls it when the page has a thumbnail. Call it after you add thumbnails |
 | `NDS.Ipv.open(img)` | Opens the viewer on that thumbnail |
 | `NDS.Ipv.close()` | Closes the viewer and returns focus to the thumbnail |
 | `NDS.Ipv.prev()`, `NDS.Ipv.next()` | Moves to the previous or the next thumbnail in its gallery |
@@ -309,7 +308,7 @@ The full API is in the banner of `_js/nds-ipv.js`.
 NDS.Ipv.open(document.querySelector('.nds-ipv-thumbnail'));
 
 // After you add thumbnails to the page
-NDS.Ipv.reinit();
+NDS.Ipv.init();
 </script>
 
 </div>

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="numbers-overview" class="nds-content-section nds-doc-overview">
@@ -86,7 +86,7 @@ Every option goes on the number, `.nds-number-format`. Counter makes it count up
 
 A counter counts from `data-counter-start` to the `data-counter` value when half of it is in view. It runs once, and then the script sets `data-animated` on it. A user who asks the system for reduced motion sees the end value at once. The counter adds separators itself, so it needs `nds-number-format` only for a currency or a unit.
 
-The counter reads `data-counter` when the count starts, not when the page loads. A value from a server works: set `data-counter` when the reply arrives, and a counter not yet in view counts to it with no other call. A counter that already ran keeps its old value: remove `data-animated`, then call `NDS.Numbers.reinit()`.
+The counter reads `data-counter` when the count starts, not when the page loads. A value from a server works: set `data-counter` when the reply arrives, and a counter not yet in view counts to it with no other call. A counter that already ran keeps its old value: remove `data-animated`, then call `NDS.Numbers.init()`.
 
 ### Currency Symbol
 {: #currency-format}
@@ -218,7 +218,7 @@ The counter reads `data-counter` when the count starts, not when the page loads.
 | `data-counter` | any element | Makes the element a counter. Its value is the end value. Text before and after the number stays: `$75,000`, `98.6%`, `1.5M`. Empty, the counter counts to the number in its own text |
 | `data-counter-start` | `[data-counter]` | The start value. Default `0` |
 | `data-counter-duration` | `[data-counter]` | The length of the count in milliseconds. Default `1000` |
-| `data-animated` | `[data-counter]` | The script sets it to `true` when the count ends, and never removes it. A counter with it does not run. To run a counter again, remove it, then call `NDS.Numbers.reinit()`. The counter starts from `data-counter-start` again |
+| `data-animated` | `[data-counter]` | The script sets it to `true` when the count ends, and never removes it. A counter with it does not run. To run a counter again, remove it, then call `NDS.Numbers.init()`. The counter starts from `data-counter-start` again |
 {: .nds-table .nds-responsive}
 
 ### CSS Custom Properties
@@ -236,8 +236,7 @@ The `NDS.Numbers` script loads after the page shows. Until it loads, each call l
 
 | Method | Effect |
 |---|---|
-| `NDS.Numbers.init()` | Formats every number and gets every counter ready to count when it scrolls into view. The loader calls it |
-| `NDS.Numbers.reinit()` | The same as `init()`. Call it after you add numbers or counters to the page |
+| `NDS.Numbers.init()` | Formats every number and gets every counter ready to count when it scrolls into view. The loader calls it. Call it after you add numbers or counters to the page |
 | `NDS.Numbers.format(el)` | Formats one `.nds-number-format` element |
 | `NDS.Numbers.formatAll()` | Formats every `.nds-number-format` on the page |
 | `NDS.Numbers.initCounters()` | Gets every counter ready to count when it scrolls into view. It skips a counter with `data-animated` |
@@ -251,7 +250,7 @@ total.textContent = '18450';
 NDS.Numbers.format(total);
 
 // After you add counters to the page
-NDS.Numbers.reinit();
+NDS.Numbers.init();
 </script>
 
 </div>

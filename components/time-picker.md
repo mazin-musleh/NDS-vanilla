@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 10:30 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="time-picker-overview" class="nds-content-section nds-doc-overview">
@@ -350,7 +350,6 @@ The `NDS.TimePicker` script loads after the page shows. Until it loads, each cal
 | Method | Effect |
 |---|---|
 | `NDS.TimePicker.init()` | Starts every `.nds-time-input` and `.nds-time-fields` that has not started. The loader calls it on load. Call it again after you add a field to the page |
-| `NDS.TimePicker.reinit()` | The same as `init()` |
 | `NDS.TimePicker.create(input, formControl)` | Starts one field, and returns its instance. `formControl` is optional: the default is the input's `.nds-form-control`. On a field that has started, it returns the same instance. It returns `null` when the input has no `.nds-form-control` or no `.nds-form-container`. In Boxes, pass the `.nds-time-fields` or a box: `formControl` is not used, and it returns `null` when a box is missing |
 | `NDS.TimePicker.getValue(el)` | Returns the time in 24-hour form, such as `'14:30'`, with seconds when the format has them. It returns `''` until every list has a value. In Boxes, it returns `''` until both boxes hold a time inside the bounds |
 | `NDS.TimePicker.setValue(el, '14:30')` | Writes a 24-hour time, and returns `true`. It returns `false`, and changes nothing, when it cannot read the time or the time is outside the bounds |

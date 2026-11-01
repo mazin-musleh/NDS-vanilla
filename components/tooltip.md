@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="tooltip-overview" class="nds-content-section nds-doc-overview">
@@ -152,7 +152,7 @@ With no `data-tooltip-message`, the root's `title` is the message. Until the scr
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Auto-initialization</span>
-              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">.nds-tooltip</code> on the page starts by itself, after the page first shows. Call <code class="nds-inline-code lang-js">NDS.Tooltip.reinit()</code> after you add new ones.</p>
+              <p class="nds-card-description">Every <code class="nds-inline-code lang-html">.nds-tooltip</code> on the page starts by itself, after the page first shows. Call <code class="nds-inline-code lang-js">NDS.Tooltip.init()</code> after you add new ones.</p>
             </div>
           </div>
         </li>
@@ -308,7 +308,7 @@ The instance is on the element as `el.ndsTooltip`. It is there once the componen
 
 | Method | Effect |
 |---|---|
-| `NDS.Tooltip.init()` | Starts every `.nds-tooltip` on the page that has not started yet. `reinit()` is the same |
+| `NDS.Tooltip.init()` | Starts every `.nds-tooltip` on the page that has not started yet |
 | `NDS.Tooltip.create(el)` | Starts one tooltip and returns its instance, or the instance it already has. Returns `null` when it has no balloon and no `data-tooltip-title` or `data-tooltip-message` to build one |
 | `NDS.Tooltip.destroy(el)` | The same as `el.ndsTooltip.destroy()` |
 | `el.ndsTooltip.open()`, `.close()` | Opens or closes the balloon |

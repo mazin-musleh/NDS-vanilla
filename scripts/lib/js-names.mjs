@@ -21,7 +21,7 @@ const BANNED = {
 const BANNED_PREFIX = { init: 'setupX', refresh: 'syncX (refresh() is the loader hook)' };
 const BANNED_SUFFIX = { Handler: 'handleX', Exists: 'isX / hasX' };
 // Rule 9's read half skips these keys: a loader hook names its own setup function, a reserved word cannot be a local.
-const LOADER_HOOKS = new Set(['init', 'reinit', 'refresh', 'destroy', 'create', 'mount']);
+const LOADER_HOOKS = new Set(['init', 'refresh', 'destroy', 'create', 'mount']);
 const RESERVED = new Set(['export', 'delete', 'default', 'import', 'new', 'in', 'do', 'if', 'for', 'switch', 'case', 'with']);
 
 // camelCase words, an acronym run kept as one word: toCSVFile → to CSV File.

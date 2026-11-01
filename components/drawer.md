@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 05:30 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="drawer-overview" class="nds-content-section nds-doc-overview">
@@ -538,7 +538,7 @@ A [Scroll More](../components/scroll-more) wrapper around the list holds the dra
 - Use Divided when rows have two lines. Leave it off a list of short links, where the lines only add noise.
 - For rows in columns, put `nds-grid` on the list and set the columns as on a [Grid](../layout/grid). Keep `nds-divided` on the drawer: the last row draws no line.
 - Make a row a `<button>` when it opens a panel or a modal on the page, and an `<a>` when it opens a page.
-- After you add a drawer to the page, call `NDS.Drawer.reinit()`. After you change the items of a drawer that started, call `NDS.Drawer.destroy(drawer)`, then `NDS.Drawer.create(drawer)`.
+- After you add a drawer to the page, call `NDS.Drawer.init()`. After you change the items of a drawer that started, call `NDS.Drawer.destroy(drawer)`, then `NDS.Drawer.create(drawer)`.
 
 </div>
   </div>
@@ -606,7 +606,7 @@ Set them on `.nds-drawer`, in its `style` attribute.
 
 | Method | Effect |
 |---|---|
-| `NDS.Drawer.init()` | Starts every drawer on the page that has not started yet. `reinit()` is the same |
+| `NDS.Drawer.init()` | Starts every drawer on the page that has not started yet |
 | `NDS.Drawer.create(drawer)` | Starts one drawer. It does nothing on a drawer that has started |
 | `NDS.Drawer.toggle(button)` | Opens or closes the submenu of this toggle button. Pass the button, not the `<li>` |
 | `NDS.Drawer.destroy(drawer)` | Removes the listeners. The markup and the open submenus stay as they are |

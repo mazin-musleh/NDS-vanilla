@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="voice-overview" class="nds-content-section nds-doc-overview">
@@ -301,7 +301,6 @@ The `NDS.VoiceInput` script loads after the page shows. Until it loads, each cal
 | Method | Effect |
 |---|---|
 | `NDS.VoiceInput.init()` | Adds one click listener to the document for every voice button. The loader calls it on load. A second call does nothing |
-| `NDS.VoiceInput.reinit()` | The same as `init()` |
 | `NDS.VoiceInput.isSupported()` | Returns `true` when the browser has speech recognition |
 {: .nds-table .nds-responsive}
 

@@ -4,7 +4,7 @@
  *   .nds-select-option needs [data-value] — a pick writes an empty value
  *   form .nds-form-control:has(> .nds-select-input) needs .nds-select-value — the form never gets the picked value
  * Methods:
- *   NDS.CustomSelect.init() / .reinit()    arm the delegated listeners; paint pre-selected labels
+ *   NDS.CustomSelect.init()               arm the delegated listeners; paint pre-selected labels
  *   NDS.CustomSelect.create(el)            build one select now — pass the input or its form-control
  *   NDS.CustomSelect.validate(el, opts)    its check → {valid, message, value}; opts {showMessage}
  *   NDS.CustomSelect.destroy(el)           undo create() before you discard the field
@@ -88,7 +88,7 @@
         var options = formControl.querySelectorAll('.nds-select-option');
         if (!dropdown || !options.length) return;
 
-        // Cover a dynamically-added pre-filled select focused before a reinit.
+        // Cover a dynamically-added pre-filled select focused before an init.
         restoreDisplay(selectInput);
 
         var hiddenInput = formControl.querySelector('.nds-select-value');
@@ -246,7 +246,7 @@
 
     function init() {
         // Restore pre-selected labels (idempotent — no-ops once a label is
-        // present). Runs on every init/reinit so late content is covered; the
+        // present). Runs on every init so late content is covered; the
         // listeners install once. Cosmetic only: the submit value is already in
         // the hidden input from markup — this just paints the derived label.
         document.querySelectorAll('.nds-select-input').forEach(restoreDisplay);
@@ -291,7 +291,6 @@
 
     NDS.CustomSelect = {
         init: init,
-        reinit: init,
         validate: function (el, opts) { return NDS.Form.validateField(NDS.resolveElement(el)?.closest('.nds-select') || el, checkField, opts); },
         // Programmatic build for a select input (or its form-control).
         create: function (el) {

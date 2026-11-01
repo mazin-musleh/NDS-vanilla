@@ -4,7 +4,7 @@
  * Requires:
  *   .nds-tabs needs one .nds-tab-panel per .nds-tab:not(.nds-show-more) — a tab without its panel switches nothing
  * Methods:
- *   NDS.Tabs.init() / .reinit()      scan + initialize .nds-tabs
+ *   NDS.Tabs.init()                 scan + initialize .nds-tabs
  *   NDS.Tabs.create(container)       instance one tab set
  *   NDS.Tabs.destroy(container)      undo create()
  *   instance.goTo(index)             activate a tab by index
@@ -75,7 +75,7 @@
             this._currentTabIndex = this._findActiveTabIndex();
             this._valid = true;
             // Registered here, not in the sweep, so every construction path —
-            // sweep, reinit() and programmatic create() — publishes el.ndsTabs and
+            // sweep, init() and programmatic create() — publishes el.ndsTabs and
             // the stamp that ends the skeleton and stops a second sweep.
             tabsContainer.ndsTabs = this;
             this.init();
@@ -303,7 +303,6 @@
 
     NDS.Tabs = {
         init: setupTabs,
-        reinit: setupTabs,
         // The constructor publishes el.ndsTabs only on success → null on a bail.
         create: (container) => {
             container = NDS.resolveElement(container);

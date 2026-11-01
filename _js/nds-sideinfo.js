@@ -1,7 +1,7 @@
 /* NDS.Sideinfo — public surface
  * Rides: (none — base component)
  * Methods:
- *   NDS.Sideinfo.init() / .reinit()   scan + initialize .nds-sideinfo
+ *   NDS.Sideinfo.init()              scan + initialize .nds-sideinfo
  *   NDS.Sideinfo.create(el)           instance one card
  *   NDS.Sideinfo.destroy(el)          tear one down — the NDS.init.destroy entry point
  *   instance.destroy()
@@ -189,7 +189,6 @@
     // Export to window
     NDS.Sideinfo = {
         init: setupSideinfos,
-        reinit: setupSideinfos,
         create: (element) => {
             element = NDS.resolveElement(element);
             if (!element) return null;

@@ -334,10 +334,10 @@
 - { kind: api, name: el.ndsSort.apply, status: renamed, use: el.ndsSort.setSort, since: "2.0.0", fix: "Use setSort(key, order): it takes the same arguments." }
 - { kind: api, name: NDS.Pagination.updateRecords, status: renamed, use: NDS.Pagination.setRecords, since: "2.0.0", fix: "Use setRecords(listOrId, { from, to, count }): it takes the same arguments." }
 - { kind: api, name: NDS.Tables.row, status: renamed, use: NDS.Table.getRow, since: "2.0.0", fix: "Use NDS.Table.getRow." }
-- { kind: api, name: NDS.Tables, status: renamed, use: NDS.Table, since: "2.0.0", fix: "Use NDS.Table. init, reinit, create, createResponsive, createColumnToggle and setColumnHidden keep their names." }
+- { kind: api, name: NDS.Tables, status: renamed, use: NDS.Table, since: "2.0.0", fix: "Use NDS.Table. init, create, createResponsive, createColumnToggle and setColumnHidden keep their names." }
 - { kind: api, name: NDS.Tables.recheckWidths, status: renamed, use: NDS.Table.refresh, since: "2.0.0", fix: "Use NDS.Table.refresh." }
 - { kind: api, name: NDS.Tables.getCellText, status: renamed, use: NDS.getCellText, since: "2.0.0", fix: "Use NDS.getCellText(cell)." }
-- { kind: api, name: NDS.Mainnav, status: renamed, use: NDS.MainNav, since: "2.0.0", fix: "Use NDS.MainNav. init and reinit keep their names." }
+- { kind: api, name: NDS.Mainnav, status: renamed, use: NDS.MainNav, since: "2.0.0", fix: "Use NDS.MainNav. init keeps its name." }
 - { kind: api, name: NDS.Mainnav.toggleNavbar, status: renamed, use: NDS.MainNav.toggle, since: "2.0.0", fix: "Use NDS.MainNav.toggle(); open() and close() set the state." }
 - { kind: api, name: NDS.Mainnav.toggleDropdown, status: renamed, use: NDS.MainNav.openMenu, since: "2.0.0", fix: "Use NDS.MainNav.openMenu(trigger): it takes the trigger element, not the click event. closeMenus() closes every open menu." }
 - { kind: api, name: NDS.CooldownButton, status: renamed, use: NDS.Cooldown, since: "2.0.0", fix: "Use NDS.Cooldown. init, start and reset keep their names." }
@@ -393,8 +393,9 @@
 - { kind: api, name: NDS.isRowSelected, status: renamed, use: NDS.Selection.isSelected, since: "2.0.0", fix: "Use NDS.Selection.isSelected(item): it works for any list, not only table rows." }
 - { kind: api, name: NDS.FontLoading, status: removed, since: "2.0.0", fix: "Remove the call: NDS no longer tracks fonts. To wait for a font, use the browser's document.fonts.load() or document.fonts.ready." }
 - { kind: api, name: "NDS.Alert.create({ variant })", status: renamed, use: "NDS.Alert.create({ status })", since: "2.0.0", fix: "Use the status option: with variant, the alert shows the default info status. An action's variant is unchanged." }
-- { kind: api, name: NDS.Slider.reinit(el), status: renamed, use: NDS.Slider.refresh, since: "2.0.0", fix: "Use NDS.Slider.refresh(el): reinit() is now init()." }
-- { kind: api, name: NDS.Selection.reinit, status: renamed, use: NDS.Selection.refresh, since: "2.0.0", fix: "Use NDS.Selection.refresh(): reinit() is now init() and does not count the lists again." }
+- { kind: api, name: NDS.Slider.reinit(el), status: renamed, use: NDS.Slider.refresh, since: "2.0.0", fix: "Use NDS.Slider.refresh(el): reinit() is removed." }
+- { kind: api, name: NDS.Selection.reinit, status: renamed, use: NDS.Selection.refresh, since: "2.0.0", fix: "Use NDS.Selection.refresh(): reinit() is removed, and init() does not count the lists again." }
+- { kind: api, name: "NDS.*.reinit()", status: removed, use: "NDS.*.init()", since: "2.0.0", fix: "Call init(): reinit() was the same function." }
 - { kind: global, name: NDSInitConfig, status: renamed, use: NDS_INIT_CONFIG, since: "2.0.0", fix: "Use window.NDS_INIT_CONFIG, with the same value." }
 - { kind: storage, name: cookieConsent, status: renamed, use: nds-consent, since: "2.0.0", fix: "The consent cookie is named nds-consent. A script that reads cookieConsent (the Google Analytics snippet, for one) reads nds-consent: copy the snippet again from the Cookies page. Visitors see the consent notice once more." }
 - { kind: storage, name: cookieConsentDismissed, status: renamed, use: nds-cookies-dismissed, since: "2.0.0", fix: "NDS stores the dismissed notice under nds-cookies-dismissed. Read that key if your code reads it." }

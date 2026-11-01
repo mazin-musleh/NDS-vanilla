@@ -3,7 +3,7 @@
  * Requires:
  *   .nds-accordion needs one .nds-accordion-collapse per .nds-accordion-btn — a button without its collapse toggles nothing
  * Methods:
- *   NDS.Accordion.init() / .reinit()   scan .nds-accordion; a live root adopts new items
+ *   NDS.Accordion.init()              scan .nds-accordion; a live root adopts new items
  *   NDS.Accordion.create(container)    instance one accordion — returns the live controller
  *                                      when there already is one, null when it has no buttons
  *   NDS.Accordion.destroy(container)   undo create()
@@ -366,7 +366,7 @@
 
     // Register a freshly constructed instance on its root. Stamps only successful
     // constructions — buttons that render late stay eligible for the next
-    // reinit(). The backref lands synchronously so a reinit in the same tick sees
+    // init(). The backref lands synchronously so an init in the same tick sees
     // it; the marker is deferred by one rAF so the browser commits
     // _setupInitialState's state change in a paint where the CSS gate
     // (.nds-accordion:not([data-nds-accordion-initialized])) still applies,
@@ -390,11 +390,10 @@
     // Assigned at module eval so the loader's lazy stub resolves.
     NDS.Accordion = {
         init: setupAccordions,
-        reinit: setupAccordions,
         // Reuse a live controller rather than building a second one on the same
         // root: both would bind a click listener to every button, so one click
         // toggles twice — open then straight back closed. Registering here also
-        // lets a later reinit() find the instance instead of duplicating it.
+        // lets a later init() find the instance instead of duplicating it.
         create: (container) => {
             container = NDS.resolveElement(container);
             if (!container) return null;
