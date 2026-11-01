@@ -1336,6 +1336,8 @@
     // Respects prefers-reduced-motion (jumps instead of smooth-scrolling).
     // Usage: NDS.scrollBelowNav(grid, { offsetVar: '--pagination-scroll-offset', offsetEl: nav });
     NDS.scrollBelowNav = (target, opts = {}) => {
+        // A removed target measures top 0, which would scroll the page up for nothing.
+        if (!target.isConnected) return;
         const nav = document.querySelector('.nds-main-nav');
         const navHeight = nav ? nav.offsetHeight : 72;
         const targetTop = target.getBoundingClientRect().top;

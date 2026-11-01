@@ -38,13 +38,16 @@
     // and index-pairs nodes the nested controller already drives.
     const findOwnParts = (container, selector) => NDS.findOwnParts(container, selector, '.nds-accordion');
 
+    // collapse → cancel of its running transition end. Module-wide: a controller
+    // rebuilt on the same root mid-slide must cancel the destroyed one's end.
+    const pendingEnds = new WeakMap();
+
     class NdsAccordion {
         constructor(accordionContainer) {
             this._accordionContainer = accordionContainer;
             this._buttons = findOwnParts(accordionContainer, '.nds-accordion-btn');
             this._collapses = findOwnParts(accordionContainer, '.nds-accordion-collapse');
             this._isAnimating = false; // Simple flag to prevent clicks during animation
-            this._pendingEnds = new WeakMap(); // collapse → cancel of its running transition end
 
             if (this._buttons.length === 0) {
                 console.warn('NDS Accordion: No accordion buttons found');
@@ -265,9 +268,9 @@
 
         _animate(collapse, callback) {
             // openItem() then closeItem() mid-transition: only the last one's end runs.
-            this._pendingEnds.get(collapse)?.();
+            pendingEnds.get(collapse)?.();
             if (NDS.prefersReducedMotion) { callback(); return; }
-            this._pendingEnds.set(collapse, NDS.onTransitionEnd(collapse, callback));
+            pendingEnds.set(collapse, NDS.onTransitionEnd(collapse, callback));
         }
 
         _dispatchToggleEvent(index, button, collapse, isShown) {
@@ -409,7 +412,5 @@
         },
         destroy: (container) => NDS.resolveElement(container)?.ndsAccordion?.destroy(),
     };
-
-    // Note: Initialization now handled by nds-loader.js unified system
 })();
 
