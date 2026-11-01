@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 08:07 PM"
+last_edit: "01/11/2026 - 09:44 PM"
 ---
 
 <section id="topbar-overview" class="nds-content-section nds-doc-overview">
@@ -164,7 +164,8 @@ The main navigation belongs in the [Header](../ui-shell/header), and the links a
 <script type="text/html" id="topbar-weather" data-canon>
 <span class="nds-meta" data-hidden="sm">
   <span class="nds-meta-item nds-weather" data-latitude="24.7136" data-longitude="46.6753">
-    <span class="nds-weather-city">Riyadh</span>
+    <i class="nds-icon nds-weather-icon" aria-hidden="true"></i>
+    <span><span class="nds-weather-city">Riyadh</span> · <span class="nds-weather-condition">--</span>, <span class="nds-weather-temp">--</span>°C</span>
   </span>
 </span>
 </script>

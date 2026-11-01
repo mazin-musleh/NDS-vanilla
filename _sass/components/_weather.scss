@@ -1,9 +1,0 @@
-@use '../mixins' as *;
-
-// The script writes an icon and a separator beside the name, so it spaces them itself.
-// Zero specificity: Meta, or the author's own style, wins.
-:where(.nds-weather) {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-}

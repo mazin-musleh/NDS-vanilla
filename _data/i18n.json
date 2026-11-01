@@ -2318,14 +2318,26 @@
  {
   "section": "weather",
   "key": "weather",
-  "en": "{desc}, {temp}°C",
-  "ar": "{desc}، {temp}°C"
+  "en": "{desc}, {temp}{unit}",
+  "ar": "{desc}، {temp}{unit}"
  },
  {
   "section": "weather",
   "key": "weather_city",
-  "en": "· {desc}, {temp}°C",
-  "ar": "· {desc}، {temp}°C"
+  "en": "· {desc}, {temp}{unit}",
+  "ar": "· {desc}، {temp}{unit}"
+ },
+ {
+  "section": "weather",
+  "key": "celsius",
+  "en": "°C",
+  "ar": "°م"
+ },
+ {
+  "section": "weather",
+  "key": "fahrenheit",
+  "en": "°F",
+  "ar": "°ف"
  },
  {
   "section": "weather",

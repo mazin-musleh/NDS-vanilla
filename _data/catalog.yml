@@ -533,7 +533,6 @@
   tags: ["JS", "API"]
   url: "/components/weather.html"
   js: _js/nds-weather.js
-  scss: _sass/components/_weather.scss
 
 - title: "Definition List"
   description: "Structured key-value pairs in grid or list layouts"

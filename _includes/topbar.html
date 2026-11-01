@@ -11,7 +11,8 @@
         <span class="nds-meta" data-hidden="sm"><span class="nds-meta-item"><i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i><time class="nds-clock"></time></span></span>
         {%- comment %} Weather: DGA allows two of these items, so it replaces one of the above.
         <span class="nds-meta" data-hidden="sm"><span class="nds-meta-item nds-weather" data-latitude="{{ site.city_latitude | default: '24.7136' }}"
-            data-longitude="{{ site.city_longitude | default: '46.6753' }}"><span class="nds-weather-city">{% if page.lang == 'ar' %}{{ site.city_name_ar | default: 'الرياض' }}{% else %}{{ site.city_name | default: 'Riyadh' }}{% endif %}</span></span></span>
+            data-longitude="{{ site.city_longitude | default: '46.6753' }}"><i class="nds-icon nds-weather-icon" aria-hidden="true"></i>
+            {% if page.lang == 'ar' %}<span><span class="nds-weather-city">{{ site.city_name_ar | default: 'الرياض' }}</span> · <span class="nds-weather-condition">--</span>، <span class="nds-weather-temp">--</span>°م</span>{% else %}<span><span class="nds-weather-city">{{ site.city_name | default: 'Riyadh' }}</span> · <span class="nds-weather-condition">--</span>, <span class="nds-weather-temp">--</span>°C</span>{% endif %}</span></span>
         {% endcomment %}
         {% if site.brand_switcher %}
         {%- comment %} Theme switcher (demo). Predefined themes toggle a data-theme token (seeds in

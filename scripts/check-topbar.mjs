@@ -156,10 +156,11 @@ const settle = (page) => page.waitForTimeout(600);
     const requests = [];
     const page = await open('components/button.html', 1280, (route) => {
         const url = new URL(route.request().url());
-        requests.push(url.searchParams.get('latitude'));
+        const isFahrenheit = url.searchParams.get('temperature_unit') === 'fahrenheit';
+        requests.push(url.searchParams.get('latitude') + (isFahrenheit ? 'F' : ''));
         if (url.searchParams.get('latitude') === '1') return route.fulfill({ status: 500, body: '' });
         const night = url.searchParams.get('latitude') === '21.4858';
-        return route.fulfill({ contentType: 'application/json', body: JSON.stringify({ current_weather: { temperature: 30.4, weathercode: 0, is_day: night ? 0 : 1 } }) });
+        return route.fulfill({ contentType: 'application/json', body: JSON.stringify({ current_weather: { temperature: isFahrenheit ? 86.7 : 30.4, weathercode: 0, is_day: night ? 0 : 1 } }) });
     });
     await page.evaluate(() => {
         Object.keys(localStorage).filter((k) => k.includes('weather')).forEach((k) => localStorage.removeItem(k));
@@ -169,19 +170,31 @@ const settle = (page) => page.waitForTimeout(600);
             <span class="nds-meta-item nds-weather" data-latitude="24.7136" data-longitude="46.6753"><span class="nds-weather-city">Riyadh</span></span>
             <span class="nds-meta-item nds-weather" data-latitude="24.7136" data-longitude="46.6753"></span>
             <span class="nds-meta-item nds-weather" data-latitude="21.4858" data-longitude="39.1925"><span class="nds-weather-city">Jeddah</span></span>
-            <span class="nds-meta-item nds-weather" data-latitude="1" data-longitude="1"></span>`;
+            <span class="nds-meta-item nds-weather" data-latitude="1" data-longitude="1"></span>
+            <span class="nds-weather" data-latitude="24.7136" data-longitude="46.6753"><b class="mine">Now:</b> <i class="nds-icon nds-weather-icon" aria-hidden="true"></i> <span class="nds-weather-temp">--</span>° <em class="nds-weather-condition">--</em></span>
+            <span class="nds-weather" data-latitude="24.7136" data-longitude="46.6753" data-weather-unit="f"></span>`;
         document.querySelector('main').prepend(box);
         return NDS.init.mount(box);
     });
     await page.waitForTimeout(3000);
     const items = await page.evaluate(() => [...document.querySelectorAll('#check-weather .nds-weather')].map((el) => ({
-        text: el.textContent, icon: el.querySelector('.nds-icon')?.className || '', hidden: el.hidden,
+        text: el.textContent.replace(/\s+/g, ' ').trim(), icon: el.querySelector('.nds-icon')?.className || '', hidden: el.hidden, mine: !!el.querySelector('.mine'),
     })));
     check(requests.filter((lat) => lat === '24.7136').length === 1, `weather: two items on one place, one request (${requests.join(', ')})`);
-    check(/^Riyadh· /.test(items[0].text) && /30/.test(items[0].text), `weather: the city kept, then the weather ("${items[0].text}")`);
-    check(/^Clear, 30/.test(items[1].text), `weather: no city, no name ("${items[1].text}")`);
+    check(/^Riyadh · Clear, 30°C$/.test(items[0].text), `weather: no slots, the auto line with the city ("${items[0].text}")`);
+    check(/^Clear, 30°C$/.test(items[1].text), `weather: no city, no name ("${items[1].text}")`);
     check(items[0].icon.includes('sun') && items[2].icon.includes('moon'), 'weather: day and night icons from is_day');
     check(items[3].hidden, 'weather: a failed request hides the item');
+    check(items[5].text === 'Clear, 87°F' && requests.includes('24.7136F'), `weather: data-weather-unit="f" asks for Fahrenheit ("${items[5].text}")`);
+    check(items[4].text === 'Now: 30° Clear' && items[4].mine && items[4].icon.includes('sun'),
+        `weather: slots filled, the author's markup kept ("${items[4].text}")`);
+
+    // An in-place switch to Arabic: the auto line takes the pack's comma, a slot the Arabic word.
+    await page.evaluate(() => document.documentElement.setAttribute('lang', 'ar'));
+    await page.waitForTimeout(1500);
+    const ar = await page.evaluate(() => [...document.querySelectorAll('#check-weather .nds-weather')].map((el) => el.textContent.replace(/\s+/g, ' ').trim()));
+    check(ar[1].includes('،') && ar[1].endsWith('°م') && ar[5].endsWith('°ف') && !ar[4].includes('Clear') && ar[4].startsWith('Now:'),
+        `weather: a language switch re-words both ("${ar[1]}" / "${ar[5]}" / "${ar[4]}")`);
     await page.context().close();
 }
 

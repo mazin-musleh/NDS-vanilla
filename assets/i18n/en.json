@@ -518,8 +518,10 @@
   "start_voice_input": "Start voice input"
  },
  "weather": {
-  "weather": "{desc}, {temp}°C",
-  "weather_city": "· {desc}, {temp}°C",
+  "weather": "{desc}, {temp}{unit}",
+  "weather_city": "· {desc}, {temp}{unit}",
+  "celsius": "°C",
+  "fahrenheit": "°F",
   "clear": "Clear",
   "partly_cloudy": "Partly Cloudy",
   "overcast": "Overcast",

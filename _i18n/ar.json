@@ -505,8 +505,10 @@
         "start_voice_input": "بدء الإدخال الصوتي"
     },
     "weather": {
-        "weather": "{desc}، {temp}°C",
-        "weather_city": "· {desc}، {temp}°C",
+        "weather": "{desc}، {temp}{unit}",
+        "weather_city": "· {desc}، {temp}{unit}",
+        "celsius": "°م",
+        "fahrenheit": "°ف",
         "clear": "صافي",
         "partly_cloudy": "غائم جزئيًا",
         "overcast": "غائم",
