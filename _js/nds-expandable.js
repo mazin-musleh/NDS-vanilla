@@ -101,8 +101,7 @@
                 this._expandButton.style.display = 'none';
                 this._isExpanded = false; // Reset expanded state
                 // Content that grows past the clamp again shows a collapsed button.
-                NDS.aria.expanded(this._expandButton, false);
-                strings.set(this._expandButton.querySelector('.nds-label'), 'text', 'show_more');
+                this._syncButton();
                 // Remove max-height constraint when content fits
                 this._contentElement.style.maxHeight = 'none';
             }
@@ -125,10 +124,8 @@
             // Create the expand button
             this._expandButton = document.createElement('button');
             this._expandButton.className = 'nds-btn nds-subtle nds-expand-btn nds-menu-btn nds-md';
-            NDS.aria.expanded(this._expandButton, false);
-
             this._expandButton.innerHTML = '<span class="nds-label"></span>';
-            strings.set(this._expandButton.firstChild, 'text', 'show_more');
+            this._syncButton();
 
             // Add button to the parent container (not the content element)
             this._expandableContainer.appendChild(this._expandButton);
@@ -138,6 +135,13 @@
                 e.preventDefault();
                 this.toggle();
             });
+        }
+
+        // From the state, not a fixed label: an expand() before the first measure built the button still reads Show less.
+        _syncButton() {
+            if (!this._expandButton) return;
+            NDS.aria.expanded(this._expandButton, this._isExpanded);
+            strings.set(this._expandButton.querySelector('.nds-label'), 'text', this._isExpanded ? 'show_less' : 'show_more');
         }
 
         toggle() {
@@ -155,11 +159,7 @@
             // Add expanded state to container
             NDS.state.add(this._expandableContainer, 'expanded');
 
-            // Update button state
-            if (this._expandButton) {
-                NDS.aria.expanded(this._expandButton, true);
-                strings.set(this._expandButton.querySelector('.nds-label'), 'text', 'show_less');
-            }
+            this._syncButton();
 
             // Sync siblings if parent has nds-expand-all
             if (syncSiblings) {
@@ -177,11 +177,7 @@
             // Remove expanded state from container
             NDS.state.remove(this._expandableContainer, 'expanded');
 
-            // Update button state
-            if (this._expandButton) {
-                NDS.aria.expanded(this._expandButton, false);
-                strings.set(this._expandButton.querySelector('.nds-label'), 'text', 'show_more');
-            }
+            this._syncButton();
 
             // Sync siblings if parent has nds-expand-all
             if (syncSiblings) {
@@ -206,13 +202,9 @@
             const siblings = parent.querySelectorAll('.nds-expandable[data-nds-expandable-initialized]');
             siblings.forEach(sibling => {
                 if (sibling === this._expandableContainer || !isMember(sibling)) return;
-                if (sibling.ndsExpandable) {
-                    if (expand && !sibling.ndsExpandable._isExpanded) {
-                        sibling.ndsExpandable.expand(false);
-                    } else if (!expand && sibling.ndsExpandable._isExpanded) {
-                        sibling.ndsExpandable.collapse(false);
-                    }
-                }
+                // expand() and collapse() return early when already there.
+                const instance = sibling.ndsExpandable;
+                if (instance) expand ? instance.expand(false) : instance.collapse(false);
             });
         }
 
@@ -327,7 +319,6 @@
         destroy: (container) => NDS.resolveElement(container)?.ndsExpandable?.destroy(),
     };
 
-    // Note: Initialization now handled by nds-loader.js unified system
 })();
 
 /**
