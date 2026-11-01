@@ -278,7 +278,7 @@ Every in-scope file opens with a banner comment — the first lines of the file,
 /* NDS.Stepper — public surface
  * Rides: (none — base component)
  * Methods:
- *   NDS.Stepper.init() / .reinit()   scan + initialize steppers
+ *   NDS.Stepper.init()               scan + initialize steppers
  * Events:
  *   nds:stepper:change   detail {step, stepper}
  * Hooks:
@@ -429,7 +429,7 @@ A name a reader or an agent can guess from another component, or from the DOM an
 
 - `Print.print` and `Export.export`: the verb is the module.
 - `Filter.getByTarget(id)` takes a different key from `getInstance`; `Dropmenu.from(el)` returns an element, not an instance.
-- A loader-hook name (`init`, `reinit`, `refresh`, `destroy`) keeps the loader's meaning.
+- A loader-hook name (`init`, `refresh`, `destroy`) keeps the loader's meaning.
 - A markup value is not a method: `data-stepper-control="previous"` stays.
 - `NDS.init` is the loader's namespace (entry 9), not the `init()` verb; its methods keep the loader-hook meanings (`mount`, `refresh`, `destroy`). Its `initialize()` runs the full pass: `init.init()` would repeat the namespace (rule 2).
 - `NDS.validation.check(el)`: `validation.validate` would repeat the namespace (rule 2).
