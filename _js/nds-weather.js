@@ -19,7 +19,7 @@
  *   - A slot's own text, such as a "--" placeholder, stays until the script writes it.
  *   - Weather comes from the public open-meteo API: no key, no account. A failed request
  *     hides the item ([hidden]).
- *   - Items on the same place and unit share one request and one cache entry (15 minutes), and the
+ *   - Items on the same place and unit share one request and one cache entry (14 minutes), and the
  *     cache serves every language, so a language switch needs no request.
  *   - Day or night is the place's, from the API, not the visitor's clock.
  *   - The cache holds primitives and the DOM is rebuilt from them: nothing stored reaches
@@ -77,7 +77,8 @@
                 const match = current && conditions.find(([max]) => current.weathercode <= max);
                 if (!match) throw new Error('NDS Weather: no current weather');
                 const payload = { condition: match[1], temperature: Math.round(current.temperature), isDay: current.is_day === 1 };
-                NDS.cache.set(key, payload, 15);
+                // 14, not 15: the cache is stamped after the 15-minute tick starts, so that tick must find it expired.
+                NDS.cache.set(key, payload, 14);
                 return payload;
             }).finally(() => requests.delete(key)));
         }
@@ -109,6 +110,8 @@
 
     // Fills the slots only: every value flows through className and text, never the HTML parser.
     function setWeather(el, { condition, temperature, isDay }) {
+        // A language switch whose pack is still loading: the sync queued for it writes this item.
+        if (!strings.ready()) return;
         if (autoItems.has(el) || !el.querySelector(SLOTS)) renderAutoLine(el, readUnit(el));
         const [, , dayIcon, nightIcon = dayIcon] = findCondition(condition);
         el.querySelectorAll('.nds-weather-icon').forEach((icon) => {

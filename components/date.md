@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 08:07 PM"
+last_edit: "01/11/2026 - 10:48 PM"
 ---
 
 <section id="date-overview" class="nds-content-section nds-doc-overview">
@@ -175,7 +175,7 @@ When a page changes `lang` on `<html>` in place, the script writes every markup 
 ### Today
 {: #date-today}
 
-A `<time data-date-today>` holds today, in the site's timezone. The script writes its `datetime` and its text before the page shows, and writes them again at the site's midnight. The script reads the nearest calendar and format, as for any markup date. While `data-hidden` hides the date, the script writes nothing. It writes the date when the width changes into a band where the date shows. See [Hidden](../utilities/hidden).
+A `<time data-date-today>` holds today, in the site's timezone. The script writes its `datetime` and its text before the page shows. It writes them again at the site's midnight, and when the tab shows again. The script reads the nearest calendar and format, as for any markup date. While `data-hidden` hides the date, the script writes nothing. It writes the date when the width changes into a band where the date shows. See [Hidden](../utilities/hidden).
 
 </div>
   </div>

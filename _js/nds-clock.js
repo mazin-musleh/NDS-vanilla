@@ -11,7 +11,8 @@
  *   - One tick for every clock, at the turn of the minute. It stops while the tab is hidden
  *     or no clock shows, and catches up when one does.
  *   - A clock hidden by a data-hidden band is not written.
- *   - A clock added later shows on the next tick, or at once after init().
+ *   - A clock added later shows at once after init() (the loader runs it on mount()), else on the
+ *     next tick while one runs.
  */
 (() => {
     'use strict';

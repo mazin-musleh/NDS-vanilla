@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 10:16 PM"
+last_edit: "01/11/2026 - 10:48 PM"
 ---
 
 <section id="weather-overview" class="nds-content-section nds-doc-overview">
@@ -145,7 +145,7 @@ Pick another component when:
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">One Request per Place</span>
-              <p class="nds-card-description">Elements on the same place and unit share one request. The browser keeps each result for 15 minutes, so a page load or a language switch in that time sends no request.</p>
+              <p class="nds-card-description">Elements on the same place and unit share one request. The browser keeps each result for 14 minutes, so a page load or a language switch in that time sends no request.</p>
             </div>
           </div>
         </li>
@@ -167,7 +167,7 @@ Pick another component when:
 - Write the unit after `.nds-weather-temp`, to match `data-weather-unit`: the script writes the number only.
 - Your own words around the slots stay in one language. Where one markup serves every language, use the auto line, or mark your words with `data-i18n`.
 - Where one markup serves every language, mark the name with `data-i18n`. Give its other languages in `window.NDS_I18N_LANGS`, as for any word of your own. See [Internationalization](../core/i18n). A page per language needs neither: write the name in that page's language.
-- Show a few places at most. Each place is one request from each visitor, at most once every 15 minutes.
+- Show a few places at most. Each place is one request from each visitor, at most once every 14 minutes.
 - In the [top bar](../ui-shell/topbar), the weather is one of the two items DGA allows.
 
 </div>

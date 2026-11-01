@@ -343,23 +343,31 @@
 
     const fillToday = () => document.querySelectorAll(TODAY_SELECTOR).forEach((el) => fill(el));
 
-    // Today changes at the site's midnight; a sleeping laptop fires the timer on wake.
+    // Today changes at the site's midnight, on the same turn as the Clock's minute.
     let midnightTimer = null;
     let todayWired = false;
     function scheduleMidnight() {
         if (midnightTimer) return;
-        const [hours, minutes, seconds] = NDS.Date.format(new Date(), {
+        const now = new Date();
+        const [hours, minutes, seconds] = NDS.Date.format(now, {
             locale: 'en', timeZone: NDS.Date.site.timeZone,
             hour: 'numeric', minute: 'numeric', second: 'numeric', hourCycle: 'h23',
         }).split(':').map(Number);
         midnightTimer = setTimeout(() => {
             midnightTimer = null;
             fillToday();
-        }, 864e5 - (hours * 3600 + minutes * 60 + seconds) * 1000 + 1000);
+        }, 864e5 - (hours * 3600 + minutes * 60 + seconds) * 1000 - now.getMilliseconds());
         if (todayWired) return;
         todayWired = true;
         // A date hidden on a phone shows on a wider screen.
         NDS.onResize(fillToday);
+        // A sleeping laptop or a throttled tab holds the timer back: catch up when the page shows.
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) return;
+            clearTimeout(midnightTimer);
+            midnightTimer = null;
+            fillToday();
+        });
     }
     // Tiles fill() wrote: written again when the pack lands, while a written tile stays as written.
     const filledTiles = new WeakSet();
@@ -379,9 +387,7 @@
                 scheduleMidnight();
                 // A phone skips the formatter for a top bar date it hides.
                 if (NDS.isBandHidden(el)) continue;
-                const today = NDS.Date.getToday();
-                const pad = (n) => String(n).padStart(2, '0');
-                el.setAttribute('datetime', `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`);
+                el.setAttribute('datetime', NDS.Date.format(NDS.Date.getToday(), { format: 'YYYY-MM-DD' }));
             }
             const hijri = NDS.Date.getCalendar(el) === 'hijri';
             // A Gregorian <time> is written only in a format of its own: else it already reads right.
@@ -394,13 +400,18 @@
                 el.append(' ', era);
             }
         }
+        // Here, not in init(): the loader's refresh calls fill() alone for a view mounted later.
+        if (tiles.length || elements.length) addLangListeners();
     }
 
-    let initDone = false;
     function init() {
         fill();
-        if (initDone) return;
-        initDone = true;
+    }
+
+    let langListening = false;
+    function addLangListeners() {
+        if (langListening) return;
+        langListening = true;
         // Hijri month names come from the pack: write a month-name format again once it lands.
         if (!strings.ready()) strings.load().then(() => fill());
         // A host that switches the language in place: every <time> follows it.

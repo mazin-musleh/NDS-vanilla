@@ -17,8 +17,6 @@
 (function () {
     'use strict';
 
-    const { add: addState, remove: removeState, has: hasState, clear: clearState } = NDS.state;
-
     // DGA's wording, in English; the assets/i18n/{lang}.json pack overrides it. The markup carries
     // the same words as markers: this is their baseline.
     NDS.i18n.getStrings('digital-stamp', {

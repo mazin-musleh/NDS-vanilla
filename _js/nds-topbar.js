@@ -115,7 +115,8 @@
     }
 
     function handleKeydown(e) {
-        if (e.key !== 'Escape') return;
+        // defaultPrevented: a Modal's own Escape closed it, and the expander behind it stays open.
+        if (e.key !== 'Escape' || e.defaultPrevented) return;
         queued = null;
         const expander = findOpen();
         if (expander) close(expander);

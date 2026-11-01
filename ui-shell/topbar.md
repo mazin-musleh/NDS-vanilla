@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 09:44 PM"
+last_edit: "01/11/2026 - 10:48 PM"
 ---
 
 <section id="topbar-overview" class="nds-content-section nds-doc-overview">
@@ -247,7 +247,7 @@ Each expander changes two places, so write both of its rows. Digital stamp adds 
 ### Expanders
 {: .nds-block-title #topbar-expanders}
 
-A toggle opens its expander, which slides open below the bar and pushes the page down. A second press, Escape, or a click outside closes it. Only one expander is open at a time. If a visitor opens another, the open one slides closed first. If a visitor presses several toggles meanwhile, the last one opens.
+A toggle opens its expander, which slides open below the bar and pushes the page down. A second press, Escape, or a click outside closes it. An Escape that closes a Modal leaves it open. Only one expander is open at a time. If a visitor opens another, the open one slides closed first. If a visitor presses several toggles meanwhile, the last one opens.
 
 A click that opens the main navigation closes an open expander, and a click on a toggle closes the navigation.
 
