@@ -39,7 +39,7 @@
  *                                detail.xhr, or preventDefault() to send it yourself
  *   nds:upload:progress          detail {fileData, progress}
  *   nds:upload:success           detail {fileData, response}
- *   nds:upload:error             detail {fileData, error, status, response}
+ *   nds:upload:error             detail {fileData, error, status, response} — abort(id) too
  *   nds:upload:removed           detail {fileData, fileId} — every way a file leaves: remove,
  *                                clear, form reset, Single replacing it
  * Hooks:
@@ -59,8 +59,6 @@
  *   - A row is cloned from .nds-file-item-template when you ship one; otherwise from the
  *     component's own canonical markup.
  */
-// NDS File Upload Component
-// File: nds-upload.js
 
 (function () {
     'use strict';
@@ -358,6 +356,8 @@
             fileData.status = 'error';
             fileData.error = strings.text('cancelled');
             this._syncFileItem(fileId);
+            // As every other way into error: the field's check reruns on it, so a "wait" message clears.
+            this._dispatchEvent('nds:upload:error', { fileData: this._toPublic(fileData), error: fileData.error });
             return true;
         }
 
@@ -568,7 +568,8 @@
                 xhr: xhr
             }, true);
 
-            if (!allowed) return;
+            // A start listener may have removed it: sending it would report a file the list dropped.
+            if (!allowed || !this._files.includes(fileData)) return;
 
             // Update status
             fileData.status = 'uploading';
@@ -595,11 +596,13 @@
                 }
             });
 
+            // The row before the event, as setFileStatus does: the field's check reruns on it and reads the row.
             xhr.addEventListener('load', () => {
                 fileData._xhr = null;
                 fileData.response = xhr.response;
                 if (xhr.status >= 200 && xhr.status < 300) {
                     fileData.status = 'complete';
+                    this._syncFileItem(fileData.id);
                     this._dispatchEvent('nds:upload:success', {
                         fileData: this._toPublic(fileData),
                         response: xhr.response
@@ -611,6 +614,7 @@
                     let serverMessage = '';
                     try { serverMessage = JSON.parse(xhr.response)?.error || ''; } catch { /* non-JSON body */ }
                     fileData.error = serverMessage || xhr.statusText || strings.text('failed');
+                    this._syncFileItem(fileData.id);
                     this._dispatchEvent('nds:upload:error', {
                         fileData: this._toPublic(fileData),
                         error: fileData.error,
@@ -618,7 +622,6 @@
                         response: xhr.response
                     });
                 }
-                this._syncFileItem(fileData.id);
             });
 
             // No HTTP answer: a network failure, or the opt-in time limit ran out.
@@ -626,11 +629,11 @@
                 fileData._xhr = null;
                 fileData.status = 'error';
                 fileData.error = strings.text(key);
+                this._syncFileItem(fileData.id);
                 this._dispatchEvent('nds:upload:error', {
                     fileData: this._toPublic(fileData),
                     error: fileData.error
                 });
-                this._syncFileItem(fileData.id);
             };
             xhr.addEventListener('error', () => fail('network_error'));
             xhr.addEventListener('timeout', () => fail('timed_out'));

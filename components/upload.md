@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 12:30 AM"
+last_edit: "01/11/2026 - 01:21 PM"
 ---
 
 <section id="upload-overview" class="nds-content-section nds-doc-overview">
@@ -391,7 +391,7 @@ A file is an object `{ file, id, status, progress, error, response }`. `file` is
 | `instance.getFilesByStatus(status)` | Returns an array of the files at that status |
 | `instance.startUpload(id)` | Uploads one `ready` file. With no id, it uploads every `ready` file |
 | `instance.retry(id)` | Sends a file again after its upload failed. It returns `false` for a file the checks rejected |
-| `instance.abort(id)` | Stops an upload. The file goes to `error`, with the message "Upload cancelled" |
+| `instance.abort(id)` | Stops an upload. The file goes to `error`, with the message "Upload cancelled", and `nds:upload:error` fires |
 | `instance.setFileStatus(id, status, options)` | Sets the status of a file. Options: `progress` and `error`. A move to `complete` fires `nds:upload:success`, and a move to `error` fires `nds:upload:error`, as an upload the script sends does. The field's check runs again, so a "wait for the upload" message clears |
 | `instance.setFileProgress(id, percent)` | Sets the progress ring. At `100`, an uploading file goes to `processing` |
 | `instance.validateFile(file)` | Runs the checks on a `File` without adding it. Returns `[]` when it passes, or an array of messages |
@@ -428,7 +428,7 @@ Every event fires on `.nds-upload` and bubbles.
 | `nds:upload:start` | before each upload. Cancelable | `{ fileData, formData, xhr }`. Set headers on `xhr`, add fields to `formData`, or call `preventDefault()` and send the file yourself |
 | `nds:upload:progress` | during an upload | `{ fileData, progress }` |
 | `nds:upload:success` | the server answers with a 2xx status | `{ fileData, response }` |
-| `nds:upload:error` | the upload fails | `{ fileData, error, status, response }`. A network error or a timeout has no `status` and no `response` |
+| `nds:upload:error` | the upload fails, or `abort()` stops it | `{ fileData, error, status, response }`. A network error, a timeout or `abort()` has no `status` and no `response` |
 | `nds:upload:removed` | a file leaves the list: `removeFile()`, `clearAllFiles()`, a form reset, or a new file in Single | `{ fileData, fileId }` |
 {: .nds-table .nds-responsive}
 
