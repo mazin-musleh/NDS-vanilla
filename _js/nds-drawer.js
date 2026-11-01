@@ -181,8 +181,8 @@
     function setupOpenState(drawer) {
         drawer.querySelectorAll('.nds-drawer-list li').forEach(item => {
             if (!item.querySelector(':scope > ul') || !item.querySelector(':scope > .nds-btn')) return;
-            // Open where the markup says so
-            setBranch(item, hasState(item, 'open'));
+            // Open where the markup says so, or a slide in flight when destroy() + create() re-run this
+            setBranch(item, isOpen(item));
         });
     }
 
