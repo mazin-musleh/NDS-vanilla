@@ -219,19 +219,24 @@
         }
 
         _toggleUi() {
-            this._setUiHidden(!this._state.isUIHidden);
+            if (this._isOpen) this._setUiHidden(!this._state.isUIHidden);
+        }
+
+        // The public calls check it: the backdrop is a stack, so a second show() or hide() hits another owner.
+        get _isOpen() {
+            return !!this._elements.overlay?.classList.contains('nds-ipv-active');
         }
 
         // ── Navigation ───────────────────────────────────────────────────
         _showPrev() {
-            if (this._state.currentIndex > 0) {
+            if (this._isOpen && this._state.currentIndex > 0) {
                 this._state.currentIndex--;
                 this.open(this._state.thumbnails[this._state.currentIndex], true);
             }
         }
 
         _showNext() {
-            if (this._state.currentIndex < this._state.thumbnails.length - 1) {
+            if (this._isOpen && this._state.currentIndex < this._state.thumbnails.length - 1) {
                 this._state.currentIndex++;
                 this.open(this._state.thumbnails[this._state.currentIndex], true);
             }
@@ -366,7 +371,7 @@
         }
 
         _handleKeyDown(e) {
-            if (!this._elements.overlay || !this._elements.overlay.classList.contains('nds-ipv-active')) return;
+            if (!this._isOpen) return;
 
             const actions = {
                 'Escape': () => this.close(),
@@ -391,6 +396,7 @@
         // ── Open / close ─────────────────────────────────────────────────
         open(thumb, skipIndexUpdate = false) {
             this._ensureOverlay();
+            const wasOpen = this._isOpen;
 
             // Prefer the lazy-load / full-resolution source, fall back to the src.
             const src = thumb.dataset.ipvFull || thumb.dataset.src || thumb.src;
@@ -399,12 +405,15 @@
                 this._elements.overlay.classList.add('nds-ipv-active');
             }
 
-            // First open (not gallery prev/next): start a fresh modal session.
+            // Not gallery prev/next: this thumbnail's gallery.
             if (!skipIndexUpdate) {
                 this._state.thumbnails = this._collectThumbnails(thumb);
                 this._state.currentIndex = this._state.thumbnails.indexOf(thumb);
                 this._containerRect = null; // recompute against the now-visible overlay
+            }
 
+            // Already open (a script's open() on another image): keep the one backdrop and trap.
+            if (!skipIndexUpdate && !wasOpen) {
                 NDS.Backdrop.show({ zIndex: 999, clickToClose: false, escapeClose: false });
 
                 // Move focus into the dialog, trap Tab, and remember where to return.
@@ -422,10 +431,9 @@
         }
 
         close() {
-            if (this._elements.overlay) {
-                this._elements.overlay.classList.remove('nds-ipv-active');
-                NDS.Backdrop.hide();
-            }
+            if (!this._isOpen) return;
+            this._elements.overlay.classList.remove('nds-ipv-active');
+            NDS.Backdrop.hide();
 
             // Release the trap and return focus to the triggering thumbnail.
             this.openAbortController?.abort();
@@ -436,8 +444,6 @@
 
             this._removeImage();
             this._hideSpinner();
-            // Reset the transform after the fade-out so the next open starts clean.
-            setTimeout(() => this._resetTransform(), NDS.transitionSpeed());
         }
 
         // ── Event attachment ─────────────────────────────────────────────
@@ -519,7 +525,7 @@
         }
 
         destroy() {
-            if (this._elements.overlay && this._elements.overlay.classList.contains('nds-ipv-active')) this.close();
+            this.close();
             this.abortController.abort();
             this._offResize();
             this.openAbortController?.abort();
