@@ -1395,6 +1395,8 @@
         // shared .nds-paged-content removal listener release the pooled
         // ResizeObserver entry when this container leaves the DOM.
         // perPageSizes is the baseline: the picker writes it too, so a pick never reads as a resize change.
+        // Release first: a sibling-bound nav removed alone can't find its content in destroy, so its watcher is still here.
+        offResizes.get(contentContainer)?.();
         offResizes.set(contentContainer, NDS.onElementResize(contentContainer, NDS.debounce(() => {
             const currentPerPage = readPerPage(contentContainer);
             if (currentPerPage === perPageSizes.get(contentContainer)) return;

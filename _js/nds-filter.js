@@ -267,6 +267,7 @@
             // newer Apply click aborts the prior request before it can replace
             // fresh results with stale ones.
             this.fetchAbortController = null;
+            this._directSearchAbortControllers = new Map(); // direct search input → its listener controller
 
             // Per-item match cache (itemCaches) is
             // built lazily on the first syncFilters() pass that has criteria
@@ -1692,7 +1693,11 @@
         }
 
         _setupDirectSearch(searchInput, clearBtn) {
-            const signal = this.abortController.signal;
+            // Per box, not the instance signal: refresh() drops a replaced box's listeners, which the instance signal would hold until destroy().
+            this._directSearchAbortControllers.get(searchInput)?.abort();
+            const searchController = new AbortController();
+            this._directSearchAbortControllers.set(searchInput, searchController);
+            const signal = searchController.signal;
             // Both entry paths land here — the explicit data-filter="search"
             // element and _detectDirectSearch — so the form association is
             // set once. The dropmenu search is deliberately left out: its value
@@ -3101,6 +3106,11 @@
             // A replaced search box leaves the cached ref (and its listeners) on a
             // detached node; drop it so detection rebinds to the live one.
             if (this._searchInputs.direct && !this._searchInputs.direct.input.isConnected) this._searchInputs.direct = null;
+            this._directSearchAbortControllers.forEach((controller, input) => {
+                if (input.isConnected) return;
+                controller.abort();
+                this._directSearchAbortControllers.delete(input);
+            });
             this._detectDirectSearch();
 
             // Update items list
@@ -3204,6 +3214,8 @@
 
         destroy() {
             this.abortController.abort();
+            this._directSearchAbortControllers.forEach(controller => controller.abort());
+            this._directSearchAbortControllers.clear();
             if (this.fetchAbortController) this.fetchAbortController.abort();
             // The aborted request skips its own release: its loading marks would stay on the page.
             if (this._filterContainer.ndsFilter === this && NDS.state.has(this._filterContainer, 'submitting')) this._releaseSubmitUi();
