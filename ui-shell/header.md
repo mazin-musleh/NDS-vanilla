@@ -38,10 +38,10 @@ The code shows the outer element of each part. Copy each part whole from its own
 <script type="text/html" id="header-canon" data-canon data-preview="none">
 <header>
   <div class="nds-topbar nds-content-wrapper" role="region" aria-label="Top bar utilities" data-i18n-aria-label="topbar.top_bar_utilities">
-    <!-- The stamp tab, the widgets and the dark mode button: ../ui-shell/topbar -->
+    <!-- The stamp tab, today's date, the time or the weather, and the dark mode button: ../ui-shell/topbar -->
   </div>
-  <div id="nds-digital-stamp" role="region" aria-label="Digital government stamp" data-i18n-aria-label="digital-stamp.label" hidden>
-    <!-- The stamp panel: ../ui-shell/topbar -->
+  <div id="nds-digital-stamp" class="nds-topbar-expander" role="region" aria-label="Digital government stamp" data-i18n-aria-label="digital-stamp.label" hidden>
+    <!-- The stamp: ../ui-shell/digital-stamp -->
   </div>
   <nav class="nds-main-nav nds-content-wrapper" id="nds-main-nav" aria-label="Primary navigation" data-i18n-aria-label="main-nav.primary_navigation">
     <!-- The brand, the links and the actions: ../ui-shell/main-nav -->
@@ -63,8 +63,8 @@ The code shows the outer element of each part. Copy each part whole from its own
 | Part | Holds | Required |
 |---|---|---|
 | `header` | The three parts below | Yes |
-| `.nds-topbar` | The top bar: the stamp tab, the widgets and the dark mode button. See [Top Bar](../ui-shell/topbar) | Yes, on a government site |
-| `#nds-digital-stamp` | The stamp panel, right after the top bar. The stamp tab opens it. See [Top Bar](../ui-shell/topbar#digital-stamp) | Yes, with the stamp tab |
+| `.nds-topbar` | The top bar: the stamp tab, today's date, the time or the weather, and the dark mode button. See [Top Bar](../ui-shell/topbar) | Yes, on a government site |
+| `#nds-digital-stamp` | The stamp, a top bar expander right after the top bar. The stamp tab opens it. See [Digital Stamp](../ui-shell/digital-stamp) | Yes, with the stamp tab |
 | `nav.nds-main-nav` | The main navigation: the brand, the links, the dropdowns and the actions. See [Main Navigation](../ui-shell/main-nav) | Yes |
 {: .nds-table .nds-responsive}
 

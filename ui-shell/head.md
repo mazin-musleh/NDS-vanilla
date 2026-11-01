@@ -308,8 +308,8 @@ The inline script runs once, at page load. The stylesheet links it adds and the 
 | `data-nds-defer` | a `<link rel="preload" as="style">` | The inline script adds a stylesheet link for it, with the same attributes, and removes the mark from the preload |
 | `data-nds-defer="main"` | the main CSS preload | The same, and it marks the main CSS. The loader waits for that sheet to apply before it shows the page, and finds the folder of the other NDS sheets from its URL |
 | `data-theme` | `<html>` | The inline script adds the theme saved under `nds-theme` in `localStorage` to it, before the first paint. The theme switcher writes that key |
-| `data-timezone` | `<html>` | Write it yourself: the site's timezone, as an IANA name such as `Asia/Riyadh`. Without it, NDS uses the visitor's timezone. See [Date](../core/date) |
-| `data-date-format` | `<html>` | Write it yourself: the site's date format, such as `DD/MM/YYYY`. Any element can carry its own for the content inside it. See [Date](../core/date) |
+| `data-timezone` | `<html>` | Write it yourself: the site's timezone, as an IANA name such as `Asia/Riyadh`. Without it, NDS uses the visitor's timezone. See [Date](../components/date) |
+| `data-date-format` | `<html>` | Write it yourself: the site's date format, such as `DD/MM/YYYY`. Any element can carry its own for the content inside it. See [Date](../components/date) |
 | `data-nds-loaded` | `<html>` | The loader sets it once the main CSS has applied, and the page shows. Do not set it yourself |
 {: .nds-table .nds-responsive}
 

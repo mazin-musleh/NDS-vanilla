@@ -23,7 +23,7 @@ The helpers are functions on `NDS` that your page code can call. They write stat
 Pick another page when:
 
 - you need to load data from a server: [Request](../core/request)
-- you need dates in Gregorian or Hijri: [Date](../core/date)
+- you need dates in Gregorian or Hijri: [Date](../components/date)
 - you need words in the page language, or a screen reader message: [i18n](../core/i18n)
 - you need to start components on new content: [Init](../core/init)
 
@@ -149,6 +149,7 @@ Each one is read when you ask, so it follows a change of language or setting.
 | `NDS.isArabic`, `NDS.isRtl` | `true` on an Arabic page, or a right-to-left one |
 | `NDS.prefersReducedMotion` | `true` when the visitor asked for less motion |
 | `NDS.breakpoints` | The media queries the components share, such as `NDS.breakpoints.desktop` |
+| `NDS.isBandHidden(el)` | Returns `true` when the nearest `data-hidden` hides `el` at the current screen width. It reads the width bands from the media queries, with no layout read. `sr` counts as shown |
 {: .nds-table .nds-responsive}
 
 ### Observers
@@ -223,7 +224,7 @@ One observer of each kind serves the whole page. Each call returns an `off()` fu
 
 
 - `NDS.request`: [Request](../core/request)
-- `NDS.Date`: [Date](../core/date)
+- `NDS.Date`: [Date](../components/date)
 - `NDS.i18n`, `NDS.announce`: [i18n](../core/i18n)
 - `NDS.setValue`: [Init](../core/init)
 - `NDS.cookie`, `NDS.consent`: [Cookies](../ui-shell/cookies)

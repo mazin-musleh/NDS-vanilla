@@ -145,15 +145,6 @@
   js: _js/nds-accessibility.js
   scss: _sass/components/_accessibility.scss
 
-- title: "Clock"
-  description: "Real-time clock with Hijri/Gregorian date"
-  use_when: "A live clock with Hijri and Gregorian date. One of the top bar widgets."
-  category: "UI Shell"
-  tags: ["JS", "API"]
-  url: "/ui-shell/topbar.html#topbar-widgets"
-  js: _js/nds-time-date.js
-  scss: _sass/components/_topbar.scss
-
 - title: "Cookies"
   description: "A consent panel that stores the visitor's cookie choice by category"
   use_when: "A cookie consent notice, or a place for visitors to change their cookie choice."
@@ -168,7 +159,7 @@
   use_when: "The government authority verification panel for the top bar. Government sites only; remove it on any site that does not hold that verification."
   category: "UI Shell"
   tags: ["JS", "CSS"]
-  url: "/ui-shell/topbar.html#digital-stamp"
+  url: "/ui-shell/digital-stamp.html"
   js: _js/nds-digital-stamp.js
   scss: _sass/components/_digital-stamp.scss
 
@@ -237,20 +228,12 @@
   scss: _sass/components/_sidemenu.scss
 
 - title: "Top Bar"
-  description: "Government branding bar with date, weather, and dark mode toggle"
-  use_when: "The government branding bar above the header, carrying the date, weather, and the dark mode toggle."
+  description: "The bar above the header: the digital stamp, strips that slide open below it, today's date, the time or the weather, and the dark mode button"
+  use_when: "The bar above the header, carrying the digital stamp, up to two of today's date, the time and the weather, the dark mode button, and strips that slide open below it."
   category: "UI Shell"
   tags: ["JS", "CSS"]
   url: "/ui-shell/topbar.html"
-  scss: _sass/components/_topbar.scss
-
-- title: "Weather Widget"
-  description: "Live weather display from GPS coordinates"
-  use_when: "Live weather from GPS coordinates. One of the top bar widgets."
-  category: "UI Shell"
-  tags: ["JS", "CSS", "API"]
-  url: "/ui-shell/topbar.html#topbar-widgets"
-  js: _js/nds-city-weather.js
+  js: _js/nds-topbar.js
   scss: _sass/components/_topbar.scss
 
 # ── Components — everything else, by job ──────────────────────────────────
@@ -519,6 +502,22 @@
   url: "/components/content-placeholder.html"
   scss: _sass/_utilities.scss
 
+- title: "Clock"
+  description: "The current time, in the site's timezone, that changes on the minute"
+  use_when: "The current time for a time-bound service: appointments, deadlines, submissions. The top bar can show it, and it works anywhere on a page. For today's date use Date."
+  category: "Content"
+  tags: ["JS", "API"]
+  url: "/components/clock.html"
+  js: _js/nds-clock.js
+
+- title: "Date"
+  description: "Show, parse, print and convert dates in Gregorian and Hijri (Umm al-Qura), in the site's timezone and date format"
+  use_when: "Read a date from text, print a date, convert between Gregorian and Hijri, or get today's date in the site's timezone. Use it for any date handled in JavaScript, to show a <time> in Hijri with data-calendar (an issue or expiry date in both calendars), and to set the site's timezone and date format on <html>. For a date field the user fills in use Date Picker; to sort a list by date use Sort."
+  category: "Content"
+  tags: ["JS", "API"]
+  url: "/components/date.html"
+  js: _js/nds-date.js
+
 - title: "Date Tile"
   description: "One date in a small box, with the weekday, the day number and the month"
   use_when: "A date shown as a small calendar box beside its text: at the start of a list row, in a card header, or on a timeline event. Exam dates, deadlines, events, appointments, an academic calendar. For picking a date use Date Picker; for time left use Countdown."
@@ -526,6 +525,15 @@
   tags: ["CSS"]
   url: "/components/date-tile.html"
   scss: _sass/components/_date-tile.scss
+
+- title: "Weather"
+  description: "The current weather for one or more places, from their coordinates"
+  use_when: "The current weather for one or more places, such as the cities a service covers. The top bar can show it, and it works anywhere on a page."
+  category: "Content"
+  tags: ["JS", "API"]
+  url: "/components/weather.html"
+  js: _js/nds-weather.js
+  scss: _sass/components/_weather.scss
 
 - title: "Definition List"
   description: "Structured key-value pairs in grid or list layouts"
@@ -975,14 +983,6 @@
   tags: ["JS", "API"]
   url: "/core/audit.html"
   js: _js/nds-audit.js
-
-- title: "Date"
-  description: "Show, parse, print and convert dates in Gregorian and Hijri (Umm al-Qura), in the site's timezone and date format"
-  use_when: "Read a date from text, print a date, convert between Gregorian and Hijri, or get today's date in the site's timezone. Use it for any date handled in JavaScript, to show a <time> in Hijri with data-calendar (an issue or expiry date in both calendars), and to set the site's timezone and date format on <html>. For a date field the user fills in use Date Picker; to sort a list by date use Sort."
-  category: "Core"
-  tags: ["JS", "API"]
-  url: "/core/date.html"
-  js: _js/nds-date.js
 
 - title: "Helpers"
   description: "The shared functions page code can call: states, ARIA, observers, timers, scroll, focus, text, and validation rules"

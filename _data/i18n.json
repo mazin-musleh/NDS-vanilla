@@ -510,54 +510,6 @@
   "ar": "رسم بياني خطي"
  },
  {
-  "section": "city-weather",
-  "key": "weather",
-  "en": "{desc}, {temp}°C",
-  "ar": "{desc}، {temp}°C"
- },
- {
-  "section": "city-weather",
-  "key": "clear",
-  "en": "Clear",
-  "ar": "صافي"
- },
- {
-  "section": "city-weather",
-  "key": "partly_cloudy",
-  "en": "Partly Cloudy",
-  "ar": "غائم جزئيًا"
- },
- {
-  "section": "city-weather",
-  "key": "overcast",
-  "en": "Overcast",
-  "ar": "غائم"
- },
- {
-  "section": "city-weather",
-  "key": "fog",
-  "en": "Fog",
-  "ar": "ضباب"
- },
- {
-  "section": "city-weather",
-  "key": "rain",
-  "en": "Rain",
-  "ar": "أمطار"
- },
- {
-  "section": "city-weather",
-  "key": "snow",
-  "en": "Snow",
-  "ar": "ثلوج"
- },
- {
-  "section": "city-weather",
-  "key": "storm",
-  "en": "Storm",
-  "ar": "عاصفة"
- },
- {
   "section": "code",
   "key": "code_language",
   "en": "Code language",
@@ -718,6 +670,12 @@
   "key": "hijri_era",
   "en": "AH",
   "ar": "هـ"
+ },
+ {
+  "section": "date",
+  "key": "long_format",
+  "en": "MMMM D, YYYY",
+  "ar": "D MMMM YYYY"
  },
  {
   "section": "date-picker",
@@ -2004,12 +1962,6 @@
   "ar": "يرجى إضافة وسم واحد على الأقل"
  },
  {
-  "section": "time-date",
-  "key": "hijri_format",
-  "en": "MMMM D, YYYY",
-  "ar": "D MMMM YYYY"
- },
- {
   "section": "time-picker",
   "key": "hour",
   "en": "Hour",
@@ -2362,5 +2314,59 @@
   "key": "start_voice_input",
   "en": "Start voice input",
   "ar": "بدء الإدخال الصوتي"
+ },
+ {
+  "section": "weather",
+  "key": "weather",
+  "en": "{desc}, {temp}°C",
+  "ar": "{desc}، {temp}°C"
+ },
+ {
+  "section": "weather",
+  "key": "weather_city",
+  "en": "· {desc}, {temp}°C",
+  "ar": "· {desc}، {temp}°C"
+ },
+ {
+  "section": "weather",
+  "key": "clear",
+  "en": "Clear",
+  "ar": "صافي"
+ },
+ {
+  "section": "weather",
+  "key": "partly_cloudy",
+  "en": "Partly Cloudy",
+  "ar": "غائم جزئيًا"
+ },
+ {
+  "section": "weather",
+  "key": "overcast",
+  "en": "Overcast",
+  "ar": "غائم"
+ },
+ {
+  "section": "weather",
+  "key": "fog",
+  "en": "Fog",
+  "ar": "ضباب"
+ },
+ {
+  "section": "weather",
+  "key": "rain",
+  "en": "Rain",
+  "ar": "أمطار"
+ },
+ {
+  "section": "weather",
+  "key": "snow",
+  "en": "Snow",
+  "ar": "ثلوج"
+ },
+ {
+  "section": "weather",
+  "key": "storm",
+  "en": "Storm",
+  "ar": "عاصفة"
  }
 ]

@@ -450,7 +450,7 @@ The day buttons are one Tab stop, as the Date Picker's days: the picked day, els
 ### Week Start and Hijri
 {: .nds-block-title}
 
-`data-week-start` sets the first day of the week, and `data-calendar="hijri"` shows Hijri dates. The nearest one wins, on the calendar or on any element around it, such as `<html>`. The [Date Picker](../components/date-picker) reads the same two attributes. On a Hijri calendar, an event's `datetime` stays in Gregorian. See [Date](../core/date).
+`data-week-start` sets the first day of the week, and `data-calendar="hijri"` shows Hijri dates. The nearest one wins, on the calendar or on any element around it, such as `<html>`. The [Date Picker](../components/date-picker) reads the same two attributes. On a Hijri calendar, an event's `datetime` stays in Gregorian. See [Date](../components/date).
 
 The script writes each event's Date Tile from its `datetime`: the weekday, the day and the month, in the calendar's calendar and language. The text in your markup is the copy a page without the script shows. A long month name, such as Jumada al-Akhirah, is cut short with an ellipsis, as any text too long for its tile.
 
@@ -749,7 +749,7 @@ The full API is in the banner of `_js/nds-calendar.js`.
 
 - [Drawer](../components/drawer), [Date Tile](../components/date-tile) and [Meta](../components/meta): the row of each event, its date and its time and place.
 - [Filter](../components/filter): the filter by event type in the With Filter structure.
-- [Date](../core/date): the Hijri dates and the first day of the week.
+- [Date](../components/date): the Hijri dates and the first day of the week.
 - [Date Picker](../components/date-picker): a field to pick a date, with the same week start.
 - [Loading](../components/loading): the spinner while a server loads a week or a month.
 

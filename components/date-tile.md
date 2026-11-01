@@ -303,7 +303,7 @@ The Drawer row, Card header and Timeline structures show the tile beside the tex
 |---|---|---|
 | `datetime` | `.nds-date-tile` | The full date, such as `2026-12-13`. For a range, the first day. The script writes an empty tile's parts from it. Write it in Gregorian, on a Hijri page too |
 | `data-date-end` | `.nds-date-tile` | The last day of a range, such as `2026-12-17`. The day part shows both days, and the month part both months when they differ. The tile is wider: 80px, 64px with `nds-sm`, 96px with `nds-lg`. A day that is not after `datetime` shows one day, with a warning in the console |
-| `data-calendar` | `.nds-date-tile` or any parent | `hijri` writes an empty tile in Hijri. The nearest one wins. See [Date](../core/date) |
+| `data-calendar` | `.nds-date-tile` or any parent | `hijri` writes an empty tile in Hijri. The nearest one wins. See [Date](../components/date) |
 | `data-status` | `.nds-date-tile` or any parent | `success`, `info`, `warning`, `error` or `neutral` gives the matching color. `critical` gives the error color |
 {: .nds-table .nds-responsive}
 

@@ -716,7 +716,7 @@ Keep Selection only when the page has a bulk action that acts on the selected ro
 - Write `data-align="center"` on the header of a column of short values, such as a status tag or a count, and `data-align="end"` on a column of amounts. The actions column is centered already.
 - Add sort buttons only to columns that users compare, such as dates, amounts and status.
 - Set `--min-width` no wider than the room the page gives the table. Below it the box scrolls, so a larger value hides the last columns, such as the actions, on every desktop. The audit's `table-min-width` check finds one.
-- Write `data-sort-value` on a cell whose text sorts wrong: a date that is not in the table's date format (one with a month name, or a Hijri date), an amount with a currency, a status that has an order. Write a date there as `YYYY-MM-DD`. A table whose dates use another order carries its own `data-date-format`: see [Date](../core/date).
+- Write `data-sort-value` on a cell whose text sorts wrong: a date that is not in the table's date format (one with a month name, or a Hijri date), an amount with a currency, a status that has an order. Write a date there as `YYYY-MM-DD`. A table whose dates use another order carries its own `data-date-format`: see [Date](../components/date).
 - Put a total in a `<tfoot>`, never as the last body row: sorting would move it, and Export would add it to the data.
 - Use selection only with a bulk action that acts on the selected rows.
 - Give each row checkbox an `aria-label` that names the row: "Select REQ-2026-118".

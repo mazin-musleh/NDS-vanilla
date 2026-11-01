@@ -1,5 +1,5 @@
 <div class="nds-topbar nds-content-wrapper" role="region" aria-label="Top bar utilities" data-i18n-aria-label="topbar.top_bar_utilities">
-    <button class="nds-btn nds-menu-btn nds-digital-stamp-tab" role="button" aria-expanded="false" aria-controls="nds-digital-stamp">
+    <button type="button" class="nds-btn nds-menu-btn nds-digital-stamp-tab" aria-expanded="false" aria-controls="nds-digital-stamp" data-topbar-toggle>
         <img class="nds-flag" src="{{ 'assets/icon/SAflag.min.svg' | relative_url }}" width="20" height="14"
             loading="lazy" alt="Saudi Arabia flag" data-i18n-alt="digital-stamp.flag">
         <span class="nds-digital-stamp-lg-text nds-truncate" data-i18n="digital-stamp.tab">A government website registered with the Digital Government Authority.</span>
@@ -7,13 +7,11 @@
         <span id="nds-digital-stamp-verify-text" class="nds-link nds-primary" data-i18n="digital-stamp.verify">How you know?</span>
     </button>
     <div class="nds-topbar-info">
-        <span id="nds-date" class="nds-meta" data-calendar="hijri" data-hidden="sm md"></span>
-        <span id="nds-real-time-clock" class="nds-meta" data-hidden="sm"></span>
-        {%- comment %}
-        <span id="nds-city-name" class="nds-meta" data-hidden="sm md" data-city="{{ site.city_name_ar | default: 'الرياض' }}"
-            data-city-en="{{ site.city_name | default: 'Riyadh' }}"></span>
-        <span id="nds-weather-info" class="nds-meta" data-hidden="sm" data-latitude="{{ site.city_latitude | default: '24.7136' }}"
-            data-longitude="{{ site.city_longitude | default: '46.6753' }}"></span>
+        <span class="nds-meta" data-hidden="sm md"><span class="nds-meta-item"><i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i><time data-date-today data-calendar="hijri" data-date-format="long" data-date-era></time></span></span>
+        <span class="nds-meta" data-hidden="sm"><span class="nds-meta-item"><i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i><time class="nds-clock"></time></span></span>
+        {%- comment %} Weather: DGA allows two of these items, so it replaces one of the above.
+        <span class="nds-meta" data-hidden="sm"><span class="nds-meta-item nds-weather" data-latitude="{{ site.city_latitude | default: '24.7136' }}"
+            data-longitude="{{ site.city_longitude | default: '46.6753' }}"><span class="nds-weather-city">{% if page.lang == 'ar' %}{{ site.city_name_ar | default: 'الرياض' }}{% else %}{{ site.city_name | default: 'Riyadh' }}{% endif %}</span></span></span>
         {% endcomment %}
         {% if site.brand_switcher %}
         {%- comment %} Theme switcher (demo). Predefined themes toggle a data-theme token (seeds in
@@ -48,35 +46,37 @@
         {% endif %}
     </div>
 </div>
-<div id="nds-digital-stamp" role="region" aria-label="Digital government stamp" data-i18n-aria-label="digital-stamp.label" hidden>
+<div id="nds-digital-stamp" class="nds-topbar-expander" role="region" aria-label="Digital government stamp" data-i18n-aria-label="digital-stamp.label" hidden>
     <div class="nds-content-wrapper">
-        <div class="nds-digital-stamp-notices">
-            <div class="nds-digital-stamp-card">
-                <div class="nds-digital-stamp-icon">
-                    <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
+        <div class="nds-topbar-expander-content">
+            <div class="nds-digital-stamp-notices">
+                <div class="nds-digital-stamp-card">
+                    <div class="nds-digital-stamp-icon">
+                        <i class="nds-icon nds-hgi-link-04" aria-hidden="true"></i>
+                    </div>
+                    <div class="nds-digital-stamp-content">
+                        <div class="nds-digital-stamp-heading"><span data-i18n="digital-stamp.gov_title">Official Saudi Government websites URL ends with</span> <span class="nds-digital-stamp-highlight" data-i18n="digital-stamp.gov_mark">.gov.sa</span></div>
+                        <div class="nds-digital-stamp-description" data-i18n="digital-stamp.gov_desc">Website belongs to an official government organization in the Kingdom of Saudi Arabia always ends with .gov.sa .</div>
+                    </div>
                 </div>
-                <div class="nds-digital-stamp-content">
-                    <div class="nds-digital-stamp-heading"><span data-i18n="digital-stamp.gov_title">Official Saudi Government websites URL ends with</span> <span class="nds-digital-stamp-highlight" data-i18n="digital-stamp.gov_mark">.gov.sa</span></div>
-                    <div class="nds-digital-stamp-description" data-i18n="digital-stamp.gov_desc">Website belongs to an official government organization in the Kingdom of Saudi Arabia always ends with .gov.sa .</div>
+                <div class="nds-digital-stamp-card">
+                    <div class="nds-digital-stamp-icon">
+                        <i class="nds-icon nds-hgi-square-lock-01" aria-hidden="true"></i>
+                    </div>
+                    <div class="nds-digital-stamp-content">
+                        <div class="nds-digital-stamp-heading"><span data-i18n="digital-stamp.https_title">Official Reliable websites use</span> <span class="nds-digital-stamp-highlight">HTTPS</span></div>
+                        <div class="nds-digital-stamp-description" data-i18n="digital-stamp.https_desc">Ensure the website is using the HTTPS protocol.</div>
+                    </div>
                 </div>
             </div>
-            <div class="nds-digital-stamp-card">
-                <div class="nds-digital-stamp-icon">
-                    <i class="nds-icon nds-hgi-square-lock-01" aria-hidden="true"></i>
+            <div class="nds-digital-stamp-register">
+                <img src="{{ 'assets/img/dga-logo-icon.svg' | relative_url }}" width="21" height="31" alt="Digital Government Authority" data-i18n-alt="digital-stamp.dga" loading="lazy">
+                <div>
+                    <span class="nds-digital-stamp-register-text" data-i18n="digital-stamp.register">Registered on Digital Government Authority:</span>
+                    <a class="nds-digital-stamp-registration nds-primary nds-underline"
+                        href="{{ page.dga_registration_url | default: site.dga_registration_url }}"
+                        target="_blank">{{ page.dga_registration_number | default: site.dga_registration_number }}</a>
                 </div>
-                <div class="nds-digital-stamp-content">
-                    <div class="nds-digital-stamp-heading"><span data-i18n="digital-stamp.https_title">Official Reliable websites use</span> <span class="nds-digital-stamp-highlight">HTTPS</span></div>
-                    <div class="nds-digital-stamp-description" data-i18n="digital-stamp.https_desc">Ensure the website is using the HTTPS protocol.</div>
-                </div>
-            </div>
-        </div>
-        <div class="nds-digital-stamp-register">
-            <img src="{{ 'assets/img/dga-logo-icon.svg' | relative_url }}" width="21" height="31" alt="Digital Government Authority" data-i18n-alt="digital-stamp.dga" loading="lazy">
-            <div>
-                <span class="nds-digital-stamp-register-text" data-i18n="digital-stamp.register">Registered on Digital Government Authority:</span>
-                <a class="nds-digital-stamp-registration nds-primary nds-underline"
-                    href="{{ page.dga_registration_url | default: site.dga_registration_url }}"
-                    target="_blank">{{ page.dga_registration_number | default: site.dga_registration_number }}</a>
             </div>
         </div>
     </div>

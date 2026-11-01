@@ -24,7 +24,7 @@
         gap: var(--spacing-xl);
         margin-inline-start: auto;
         align-items: center;
-        // The widgets are Meta lines; the bar keeps them in the body text color, on one line.
+        // Today, the clock and the weather are Meta lines: the body text color, on one line.
         --meta-color: var(--text-default);
 
         > .nds-meta {
@@ -38,6 +38,38 @@
     }
 }
 
+/* Expander: a strip under the top bar that pushes the page down (not Panel, which floats). */
+.nds-topbar-expander {
+    background-color: var(--background-topbar);
+    position: relative;
+    transition: grid-template-rows var(--nds-transition);
+    grid-template-rows: 0fr;
+    overflow: clip;
+    z-index: 1000;
+
+    &[data-state~="open"] {
+        display: grid;
+        grid-template-rows: 1fr;
+    }
+
+    &:is([data-state~="opening"], [data-state~="closing"]) {
+        grid-template-rows: 0fr;
+    }
+
+    > * {
+        grid-row: 1 / span 2;
+    }
+
+    @include reduced-motion {
+        transition: none;
+    }
+}
+
+// Inside the wrapper, never on it: padding on the sliding grid item stops the slide short of 0.
+.nds-topbar-expander-content {
+    padding-block: var(--topbar-expander-padding, var(--spacing-2xl));
+}
+
 /* Brand switcher — active brand. The menu portals to <body>, so scope by the
    menu's own class (.nds-theme-menu), not the .nds-theme-switcher wrapper. */
 .nds-theme-menu .nds-dropmenu-item[aria-current="true"] {
@@ -45,7 +77,7 @@
     background-color: var(--background-neutral-light);
 }
 
-/* Widget hiding: stamp data-hidden on any widget (band-exact utility, _utilities.scss) */
+/* data-hidden on an item hides it per width band (_utilities.scss) */
 @include mobile {
     .nds-topbar .nds-topbar-info {
         gap: var(--spacing-sm);

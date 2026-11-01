@@ -103,16 +103,6 @@
   "bar": "Bar chart",
   "line": "Line chart"
  },
- "city-weather": {
-  "weather": "{desc}, {temp}°C",
-  "clear": "Clear",
-  "partly_cloudy": "Partly Cloudy",
-  "overcast": "Overcast",
-  "fog": "Fog",
-  "rain": "Rain",
-  "snow": "Snow",
-  "storm": "Storm"
- },
  "code": {
   "code_language": "Code language"
  },
@@ -161,7 +151,8 @@
    "Dhu al-Qadah",
    "Dhu al-Hijjah"
   ],
-  "hijri_era": "AH"
+  "hijri_era": "AH",
+  "long_format": "MMMM D, YYYY"
  },
  "date-picker": {
   "select_month": "Select month",
@@ -445,9 +436,6 @@
   "strict": "Choose from the suggestions",
   "tag_required": "Please add at least one tag"
  },
- "time-date": {
-  "hijri_format": "MMMM D, YYYY"
- },
  "time-picker": {
   "hour": "Hour",
   "minute": "Minute",
@@ -528,5 +516,16 @@
   "unsupported": "Voice input is not supported in this browser",
   "voice_input": "Voice input",
   "start_voice_input": "Start voice input"
+ },
+ "weather": {
+  "weather": "{desc}, {temp}°C",
+  "weather_city": "· {desc}, {temp}°C",
+  "clear": "Clear",
+  "partly_cloudy": "Partly Cloudy",
+  "overcast": "Overcast",
+  "fog": "Fog",
+  "rain": "Rain",
+  "snow": "Snow",
+  "storm": "Storm"
  }
 }

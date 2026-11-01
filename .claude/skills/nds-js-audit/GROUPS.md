@@ -92,11 +92,11 @@ Seams:
 
 ## @dates
 
-Files: nds-date.js, nds-date-picker.js, nds-time-date.js, nds-calendar.js
+Files: nds-date.js, nds-date-picker.js, nds-clock.js, nds-calendar.js
 
 Seams:
 - date → date-picker: `NDS.Date.format` / `parse` / `getToday` / `getCalendar` / `getFormat` / `getMonthNames` / `getWeekdayNames` / `getWeekStart` / `toParts` / `fromParts` / `getMonthLength`; the grid offset and weekday header follow `getWeekStart(container)`; `data-calendar` and `data-date-format` read through `getFormat` / `getCalendar`. Date is main ("right after core"), the picker extras: it reads `NDS.Date` synchronously.
-- date → time-date: `NDS.Date.format` / `getToday` / `getCalendar` / `getMonthNames` / `toParts`, and `NDS.Date.site.timeZone` (`<html data-timezone>`).
+- date → clock: `NDS.Date.format` (the zone's hour and minute) and `NDS.Date.site.timeZone` (`<html data-timezone>`); both skip a band-hidden element through core's `NDS.isBandHidden`. Today is in date itself: `time[data-date-today]` gets its `datetime` in `fill`, and one midnight timer re-fills it.
 - date → calendar: `NDS.Date.readDay` (each event's first `time[datetime]`), `getWeekStart` / `getStartOfWeek` (the week, and the month's first row), `toParts` / `fromParts` / `getMonthLength` (the month, in the calendar's calendar), `format` / `getWeekdayNames` / `getCalendar` / `getToday` (title, day buttons, spoken labels). Both are main, date listed first; the calendar's `data-date` / `data-day` round-trip through `format(…, {format:'YYYY-MM-DD'})` and `readDay`.
 - date → every caller: `getCalendar` returns the raw `data-calendar`; `toIntlCalendar` turns a name Intl throws on (1.x's `gregorian`) into gregory with a warning, so no caller passes a calendar name to `Intl` itself. Calendar names its day buttons from the shown grid's first day (`getDay()`), never a live `getWeekStart`.
 - calendar → filter (in @lists): a Filter on the same list writes `data-filtered`; calendar's `onAttributeChange('.nds-calendar-events > li', ['data-filtered'])` re-runs `_sync`, and the empty state and the announced count skip filtered events; the day buttons' dots and counts include them (owner call 2026-10-27: the dot marks a day that has events). Filter is delegated, so the first sync counts every event.
@@ -104,7 +104,7 @@ Seams:
 - date ↔ calendar, the Date Tile: `NDS.Date.fill` sets the `textContent` of a `<time data-calendar|data-date-format>` that is not a `.nds-date-tile`; calendar's `_fillTiles` writes the `.nds-date-tile-*` spans inside an event's tile, and `fill` skips a tile's whole text, so a tile may carry its own `data-calendar`.
 - loader: the `Date` entry is `critical:true` with `refresh: root => NDS.Date.fill(root)`; `Calendar` is `critical:true` (it stamps the grid columns before the reveal).
 - date-picker, calendar → `NDS.Date` names, the language: each resolves its own. The picker's `getLanguage` reads `data-lang`, then the input's own `lang`, then the page (`NDS.i18n.resolveLang`, documented); calendar's `getLang` reads the nearest `[lang]`. They differ inside a `lang` wrapper.
-- time-date → date, the pack: `syncDate` waits on `strings.ready()` of section `time-date`, which also covers Date's Hijri month names (section `date`): core loads one file per language.
+- date, the pack: `format: 'long'` reads `long_format` from section `date`; `init` re-fills every `<time>` on a change of `<html lang>`, after `strings.load()` when the pack is not ready.
 - date-picker → filter (in @lists): `_syncValueInputs` writes each `.nds-date-value` through `NDS.Date.format` in that input's own `data-date-format` and `data-calendar`; Filter's date group reads `YYYY-MM-DD` Gregorian from it.
 
 ## @lists

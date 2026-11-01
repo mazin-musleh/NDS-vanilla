@@ -397,7 +397,7 @@ const HEAD = {
 };
 const DOC_APP = `(h, P, o) => {
     const view = h('main', null, h('div', { className: 'nds-content-layout' },
-        h('p', { id: 'probe' }, 'hello'), h('span', { id: 'nds-real-time-clock' })));
+        h('p', { id: 'probe' }, 'hello'), h('time', { className: 'nds-clock' })));
     const doc = () => h('html', { lang: 'en', dir: 'ltr', 'data-no-auto-init': o.manual ? '' : undefined },
         h('head', null, h('meta', { charSet: 'UTF-8' }), h('title', null, 't'),
             h('style', { dangerouslySetInnerHTML: { __html: P.gate } }),
@@ -447,7 +447,7 @@ async function docRun(v, o) {
     }
     const r = await page.evaluate(() => ({ shown: getComputedStyle(document.querySelector('.nds-content-layout')).visibility === 'visible',
         renderedAgain: !document.getElementById('probe').__server,
-        clock: !!document.getElementById('nds-real-time-clock').textContent.trim() }));
+        clock: !!document.querySelector('time.nds-clock').textContent.trim() }));
     await page.close();
     return { ndsFirst, ...r };
 }

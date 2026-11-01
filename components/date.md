@@ -3,12 +3,12 @@ layout: page
 title: Date
 hero_title: Date - National Design System
 hero_description: Shows, reads and writes dates in the two calendars of Saudi Arabia, Gregorian and Hijri (Umm al-Qura)
-breadcrumb: [["Core", "/components/?shelf=Core"]]
+breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 03:49 PM"
+last_edit: "01/11/2026 - 08:07 PM"
 ---
 
 <section id="date-overview" class="nds-content-section nds-doc-overview">
@@ -20,12 +20,15 @@ last_edit: "31/10/2026 - 03:49 PM"
 
 NDS works with dates in two ways. In markup, a `<time>` with `data-calendar="hijri"` shows its date in Hijri, and one with its own `data-date-format` shows it in that format. You write no script. In JavaScript, `NDS.Date` reads, writes and converts dates. It is in the main bundle, so every page has it, with no init call.
 
+A `<time data-date-today>` shows today's date, in the top bar or anywhere on a page.
+
 Four attributes on `<html>` set the site's dates: `data-timezone` sets its timezone, `data-date-format` its date format, `data-calendar` its calendar, and `data-week-start` the first day of its week.
 
 Pick another component when:
 
 - the user picks a date: [Date Picker](../components/date-picker)
 - a list sorts by date: [Sort](../components/sort)
+- the page shows the time: [Clock](../components/clock)
 
 </div>
   </div>
@@ -58,6 +61,17 @@ Pick another component when:
     </dd>
   </div>
 </dl>
+</script>
+
+### Today
+{: #date-today-markup}
+
+The script writes the date. The icon and the [Meta](../components/meta) line are yours, as in the top bar.
+
+<script type="text/html" id="date-today-canon" data-canon>
+<span class="nds-meta">
+  <span class="nds-meta-item"><i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i><time data-date-today data-calendar="hijri" data-date-format="long" data-date-era></time></span>
+</span>
 </script>
 
 ### Site Setup
@@ -156,6 +170,13 @@ The script reads the date from `datetime`, never from the text, and writes the t
 
 `datetime` holds `YYYY-MM-DD`, with or without a time. A time with a zone, such as `Z` or `+03:00`, counts in the site's timezone. A value that is not a full date is left as written, and without JavaScript the text you wrote stays. With `data-date-era`, a Hijri date ends in «هـ» on an Arabic page and AH on an English one.
 
+When a page changes `lang` on `<html>` in place, the script writes every markup date again in the new language.
+
+### Today
+{: #date-today}
+
+A `<time data-date-today>` holds today, in the site's timezone. The script writes its `datetime` and its text before the page shows, and writes them again at the site's midnight. The script reads the nearest calendar and format, as for any markup date. While `data-hidden` hides the date, the script writes nothing. It writes the date when the width changes into a band where the date shows. See [Hidden](../utilities/hidden).
+
 </div>
   </div>
 </section>
@@ -176,7 +197,7 @@ The script reads the date from `datetime`, never from the text, and writes the t
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Umm al-Qura Hijri</span>
-              <p class="nds-card-description"><code class="nds-inline-code lang-js">calendar: 'hijri'</code> is Umm al-Qura, the official calendar of Saudi Arabia, for the years 1300 to 1600 AH. Outside them, the browser uses the civil Hijri calendar, which can differ by a day.</p>
+              <p class="nds-card-description"><code class="nds-inline-code lang-js">calendar: 'hijri'</code> is Umm al-Qura, the official calendar of Saudi Arabia, for the years 1300 to 1600 AH, computed in the browser with no network call. Outside them, the browser uses the civil Hijri calendar, which can differ by a day.</p>
             </div>
           </div>
         </li>
@@ -232,6 +253,19 @@ The script reads the date from `datetime`, never from the text, and writes the t
             </div>
           </div>
         </li>
+        <li class="nds-card">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-calendar-03" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Live Today</span>
+              <p class="nds-card-description">One timer serves every Today date on the page.</p>
+            </div>
+          </div>
+        </li>
       </ul>
     </div>
   </div>
@@ -247,7 +281,8 @@ The script reads the date from `datetime`, never from the text, and writes the t
 - Name the format when the text comes from a server or another site. `03/04/2026` is 3 April or 4 March, and `parse` never guesses.
 - Check the result of `parse` for `null` before you use it.
 - Send a date to a server as `YYYY-MM-DD`. Show the user any format or calendar.
-- Write a readable date as the text of a `<time>`, not an empty tag. It shows before the script runs, without JavaScript, and to search engines.
+- Write a readable date as the text of a `<time>`, not an empty tag. It shows before the script runs, without JavaScript, and to search engines. A Today date is the exception: write it empty.
+- Write `data-date-format="long"` on a Today date that people read. A numeric date such as `21/05/1448` is harder to read at a glance.
 - Use `getToday()` for today's date, not `new Date()`. `new Date()` is the visitor's clock and ignores `data-timezone`.
 - Set `data-timezone` when today must be the same day for every visitor, such as a deadline in Riyadh.
 - Do not pass `timeZone` to `format` for a parsed date. It moves the day for a visitor in another timezone. Pass it only for a moment in time, such as `new Date()` in a clock.
@@ -270,13 +305,14 @@ The script reads the date from `datetime`, never from the text, and writes the t
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-timezone` | `<html>` | The site's timezone, as an IANA name such as `Asia/Riyadh`. It sets today in `getToday()`, Date Picker, the top bar date and clock, and the date in an Export file name. Without it, the visitor's timezone applies |
+| `data-timezone` | `<html>` | The site's timezone, as an IANA name such as `Asia/Riyadh`. It sets today in `getToday()`, Date Picker, Today, [Clock](../components/clock), and the date in an Export file name. Without it, the visitor's timezone applies |
 | `data-date-format` | `<html>` | The site's date format, in the tokens below. `parse` and `format` use it when you name no format. The default is `DD/MM/YYYY` |
 | `data-date-format` | any element | The date format of the content inside it. The nearest one wins over the one on `<html>`. A Date Picker without its own `data-format`, and Sort when it reads a date from text, use it |
-| `data-calendar` | `<html>`, or any element | `hijri` or `gregory`, the calendar of the dates inside it. The nearest one wins. Date Picker, the top bar date and Sort read it. The default is Gregorian, and the top bar date follows the page language |
+| `data-calendar` | `<html>`, or any element | `hijri` or `gregory`, the calendar of the dates inside it. The nearest one wins. Date Picker, markup dates and Sort read it. The default is Gregorian |
 | `data-week-start` | `<html>`, or any element | `sun`, `mon`, `tue`, `wed`, `thu`, `fri` or `sat`: the first day of the week inside it. The nearest one wins. The Date Picker's grid starts on it. The default is Sunday, and any other value warns in the console and uses Sunday |
 | `data-calendar` | a `<time>` with `datetime` | On the `<time>` itself it opts the date in: `hijri` shows it in Hijri, `gregory` in Gregorian, and an empty value takes the nearest ancestor's calendar. It shows in the nearest `data-date-format`, its own included. See [Markup Dates](#date-markup-dates) |
 | `data-date-format` | a `<time>` with `datetime` | Written on the `<time>` itself: the script writes the date from `datetime` in this format, in the nearest `data-calendar`. A `<time>` with neither attribute is left as written |
+| `data-date-today` | a `<time>` | Written bare. The script writes the `<time>`'s `datetime` and text, and writes them again at the site's midnight. Write no `datetime`. See [today](#date-today) |
 | `data-date-era` | a `<time>` shown in Hijri | Written bare. Adds the era word after the Hijri date: «هـ» on an Arabic page, AH on an English one, from the `date` section of the [string pack](../core/i18n) |
 {: .nds-table .nds-responsive}
 
@@ -295,6 +331,8 @@ The script reads the date from `datetime`, never from the text, and writes the t
 | `D` | The day, 1 or 2 digits |
 | `dddd` | The weekday's name, such as `Tuesday`, in `locale` or the page language. Only for `format`, as `MMMM` |
 {: .nds-table .nds-responsive}
+
+`long` in place of the tokens is the month's name in the word order of the page language: `MMMM D, YYYY` in English and `D MMMM YYYY` in Arabic, from `long_format` in the `date` section of the [string pack](../core/i18n). `data-date-format="long"` and `format: 'long'` both take it.
 
 Any other character is literal. A format with no day, such as `MM/YYYY`, parses as the first day of the month. A format with no month parses as the first month. `parse` returns `null` for a format with no year.
 
@@ -333,8 +371,9 @@ Any other character is literal. A format with no day, such as `MM/YYYY`, parses 
 | `NDS.Date.getWeekStart(element)` | Returns the nearest `data-week-start` around `element`, the element's own included, as 0 (Sunday) to 6 (Saturday). Returns 0 when there is none. Pass it as `weekStart` |
 | `NDS.Date.readWeekdays(text)` | Returns the weekdays in `text`, words from `sun` to `sat` with spaces or commas between them, as numbers from 0 (Sunday) to 6 (Saturday): `'fri sat'` gives `[5, 6]`. A word that is not a weekday is skipped, with a warning in the console. The Date Picker reads `data-disabled-weekdays` with it |
 | `NDS.Date.getStartOfWeek(date, weekStart)` | Returns the first day of the week that holds `date`, as a `Date` at local midnight. `weekStart` is 0 (Sunday) by default |
-| `NDS.Date.fill(root)` | Writes the text of every `<time>` in `root`, and of `root` itself, that has its own `data-calendar` or `data-date-format`, and of every empty [Date Tile](../components/date-tile). The loader runs it at load, and `NDS.init.mount()` on markup added later |
+| `NDS.Date.fill(root)` | Writes the text of every `<time>` in `root`, and of `root` itself, that has its own `data-calendar`, `data-date-format` or `data-date-today`, and of every empty [Date Tile](../components/date-tile). The loader runs it at load, and `NDS.init.mount()` on markup added later |
 | `NDS.Date.fillTile(tile, options)` | Writes a Date Tile's parts from its `datetime` and `data-date-end`, and adds them to an empty tile. `calendar` and `locale` default to the nearest `data-calendar` and `lang`. A Calendar calls it for each event |
+| `NDS.Date.init()` | Writes every markup date on the page, and follows a change of `lang` on `<html>`. The loader runs it |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="date-api-js" data-canon data-lang="js">
@@ -358,7 +397,8 @@ The full API is in the banner of `_js/nds-date.js`.
     <div class="nds-section-body nds-prose" markdown="1">
 
 - [Date Picker](../components/date-picker): parses and writes the field's value with `NDS.Date`, and marks today with `getToday()`.
-- [Top Bar](../ui-shell/topbar): the date and the clock follow `data-timezone`.
+- [Top Bar](../ui-shell/topbar): shows Today.
+- [Clock](../components/clock): the time, in the same site timezone.
 - [Export](../components/export): the date in a file name is `getToday()`.
 - [Head](../ui-shell/head): the other attributes that go on `<html>`.
 

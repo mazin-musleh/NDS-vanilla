@@ -108,16 +108,6 @@
         "bar": "رسم بياني بالأعمدة",
         "line": "رسم بياني خطي"
     },
-    "city-weather": {
-        "weather": "{desc}، {temp}°C",
-        "clear": "صافي",
-        "partly_cloudy": "غائم جزئيًا",
-        "overcast": "غائم",
-        "fog": "ضباب",
-        "rain": "أمطار",
-        "snow": "ثلوج",
-        "storm": "عاصفة"
-    },
     "code": {
         "code_language": "لغة الشيفرة"
     },
@@ -163,7 +153,8 @@
             "ذو القعدة",
             "ذو الحجة"
         ],
-        "hijri_era": "هـ"
+        "hijri_era": "هـ",
+        "long_format": "D MMMM YYYY"
     },
     "date-picker": {
         "select_month": "اختيار الشهر",
@@ -452,9 +443,6 @@
         "strict": "اختر من الاقتراحات",
         "tag_required": "يرجى إضافة وسم واحد على الأقل"
     },
-    "time-date": {
-        "hijri_format": "D MMMM YYYY"
-    },
     "time-picker": {
         "hour": "ساعة",
         "minute": "دقيقة",
@@ -515,6 +503,17 @@
         "unsupported": "الإدخال الصوتي غير مدعوم في هذا المتصفح",
         "voice_input": "الإدخال الصوتي",
         "start_voice_input": "بدء الإدخال الصوتي"
+    },
+    "weather": {
+        "weather": "{desc}، {temp}°C",
+        "weather_city": "· {desc}، {temp}°C",
+        "clear": "صافي",
+        "partly_cloudy": "غائم جزئيًا",
+        "overcast": "غائم",
+        "fog": "ضباب",
+        "rain": "أمطار",
+        "snow": "ثلوج",
+        "storm": "عاصفة"
     },
     "validation": {
         "required": "هذا الحقل مطلوب",

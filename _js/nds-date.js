@@ -33,6 +33,9 @@
  *                          (its own included); a bare data-calendar takes the ancestor's
  *                          data-date-era (optional, bare): a Hijri date ends in a span
  *                          that holds the pack's date.hijri_era word (AH in English)
+ *                          data-date-format="long": the pack's date.long_format, per language
+ *   a <time data-date-today>: today, in the site's timezone; fill() writes its datetime and text,
+ *                          again at the site's midnight. Skipped while a data-hidden band hides it
  *   an empty time.nds-date-tile[datetime]: fill() writes its weekday, day and month parts, in the
  *                          nearest data-calendar and lang. A tile written with its parts stays as written
  *                          data-date-end (optional): the range's last day, YYYY-MM-DD: the day and
@@ -47,6 +50,7 @@
  *   - Critical: the text changes length ("18/10/2026" → "07/05/1448 AH"), so fill() runs
  *     before the reveal. A month-name format is written again once the page's pack lands.
  *   - fill() is idempotent: it always works from datetime.
+ *   - A change of <html lang> writes every <time> again.
  */
 (() => {
     'use strict';
@@ -60,6 +64,8 @@
     const strings = NDS.i18n.getStrings('date', {
         hijri_months: ['Muharram', 'Safar', 'Rabi al-Awwal', 'Rabi al-Thani', 'Jumada al-Ula', 'Jumada al-Akhirah', 'Rajab', 'Shaban', 'Ramadan', 'Shawwal', 'Dhu al-Qadah', 'Dhu al-Hijjah'],
         hijri_era: 'AH',
+        // data-date-format="long": a word order per language (Arabic puts the day first).
+        long_format: 'MMMM D, YYYY',
     });
 
     NDS.Date = (() => {
@@ -235,7 +241,8 @@
             // print the day in the page language; neither → the site format.
             format(date, opts = {}) {
                 if (!(date instanceof Date) || isNaN(date)) return '';
-                const { format, calendar, locale, numerals, era, ...intl } = opts;
+                const { format: formatName, calendar, locale, numerals, era, ...intl } = opts;
+                const format = formatName === 'long' ? strings.text('long_format', null, locale) : formatName;
                 const intlCalendar = toIntlCalendar(calendar);
                 if (format || !Object.keys(intl).length) {
                     const { year, month, day } = toCalendarParts(date, intlCalendar);
@@ -330,8 +337,30 @@
 
     // ── <time> text ──────────────────────────────────────────────────
     // A tile may carry its own data-calendar: fillTile() writes it, never its whole text.
-    const SELECTOR = 'time[datetime]:not(.nds-date-tile):is([data-calendar], [data-date-format])';
+    const SELECTOR = 'time:not(.nds-date-tile):is([datetime][data-calendar], [datetime][data-date-format], [data-date-today])';
     const TILE_SELECTOR = 'time.nds-date-tile[datetime]';
+    const TODAY_SELECTOR = 'time[data-date-today]';
+
+    const fillToday = () => document.querySelectorAll(TODAY_SELECTOR).forEach((el) => fill(el));
+
+    // Today changes at the site's midnight; a sleeping laptop fires the timer on wake.
+    let midnightTimer = null;
+    let todayWired = false;
+    function scheduleMidnight() {
+        if (midnightTimer) return;
+        const [hours, minutes, seconds] = NDS.Date.format(new Date(), {
+            locale: 'en', timeZone: NDS.Date.site.timeZone,
+            hour: 'numeric', minute: 'numeric', second: 'numeric', hourCycle: 'h23',
+        }).split(':').map(Number);
+        midnightTimer = setTimeout(() => {
+            midnightTimer = null;
+            fillToday();
+        }, 864e5 - (hours * 3600 + minutes * 60 + seconds) * 1000 + 1000);
+        if (todayWired) return;
+        todayWired = true;
+        // A date hidden on a phone shows on a wider screen.
+        NDS.onResize(fillToday);
+    }
     // Tiles fill() wrote: written again when the pack lands, while a written tile stays as written.
     const filledTiles = new WeakSet();
     function fill(root = document) {
@@ -345,9 +374,18 @@
         const elements = root.matches?.(SELECTOR) ? [root] : [];
         elements.push(...(root.querySelectorAll?.(SELECTOR) || []));
         for (const el of elements) {
+            const isToday = el.hasAttribute('data-date-today');
+            if (isToday) {
+                scheduleMidnight();
+                // A phone skips the formatter for a top bar date it hides.
+                if (NDS.isBandHidden(el)) continue;
+                const today = NDS.Date.getToday();
+                const pad = (n) => String(n).padStart(2, '0');
+                el.setAttribute('datetime', `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`);
+            }
             const hijri = NDS.Date.getCalendar(el) === 'hijri';
             // A Gregorian <time> is written only in a format of its own: else it already reads right.
-            const date = (hijri || el.dataset.dateFormat) && NDS.Date.readDay(el.getAttribute('datetime'));
+            const date = (hijri || el.dataset.dateFormat || isToday) && NDS.Date.readDay(el.getAttribute('datetime'));
             if (!date) continue;
             el.textContent = NDS.Date.format(date, { calendar: hijri ? 'hijri' : 'gregory', format: NDS.Date.getFormat(el) });
             if (hijri && el.hasAttribute('data-date-era')) {
@@ -365,6 +403,8 @@
         initDone = true;
         // Hijri month names come from the pack: write a month-name format again once it lands.
         if (!strings.ready()) strings.load().then(() => fill());
+        // A host that switches the language in place: every <time> follows it.
+        NDS.onAttributeChange('html', ['lang'], () => strings.ready() ? fill() : strings.load().then(() => fill()));
     }
 
     NDS.Date.init = init;

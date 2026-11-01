@@ -30,7 +30,7 @@ const SIG = (el) => { const s = getComputedStyle(el); return [s.backgroundColor,
 
 // 1.1 Date: a <time> opted into Hijri renders a Hijri year.
 {
-    const page = await open('core/date.html');
+    const page = await open('components/date.html');
     const opt = NEW ? 'data-calendar="hijri"' : 'data-date-calendar="hijri"';
     const text = await page.evaluate(async (opt) => {
         const box = document.createElement('div');

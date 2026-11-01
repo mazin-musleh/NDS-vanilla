@@ -14,6 +14,7 @@
  *   page facts (live getters, not snapshots)
  *     NDS.lang · NDS.isArabic · NDS.isRtl · NDS.prefersReducedMotion
  *     NDS.breakpoints                  the media-query strings the components share
+ *     NDS.isBandHidden(el)             a data-hidden band (sm · md · lg) hides el at this width
  *   pooled observers — each returns an off() function, and you must call it
  *     NDS.onResize(fn) · NDS.onIntersect(el, fn, opts) · NDS.onElementResize(el, fn)
  *     NDS.onDomAdd(sel, fn) · NDS.onDomRemove(sel, fn) · NDS.onChildrenChange(sel, fn)
@@ -121,6 +122,15 @@
         desktop:         '(width >= 960px)',
         'desktop-max':   '(width < 1280px)',
         'large-desktop': '(width >= 1280px)'
+    };
+
+    // The nearest data-hidden band (_utilities.scss) hides el at this width: matchMedia, no layout read,
+    // so text nobody sees skips its work. `sr` keeps the text for screen readers.
+    NDS.isBandHidden = (el) => {
+        const tokens = NDS.splitList(el.closest('[data-hidden]')?.dataset.hidden);
+        if (tokens.includes('sr')) return false;
+        const matches = (query) => window.matchMedia(NDS.breakpoints[query]).matches;
+        return tokens.includes(matches('mobile') ? 'sm' : matches('tablet-max') ? 'md' : 'lg');
     };
 
     // ── Language & Direction (live) ──────────────────────────────────
@@ -1546,7 +1556,7 @@
     // Cache safety: callers are responsible for treating cached values as
     // potentially-untrusted (any same-origin script can write to
     // localStorage). Store primitive values, not pre-rendered HTML; render
-    // imperatively at the consumer. See `_js/nds-city-weather.js` for the
+    // imperatively at the consumer. See `_js/nds-weather.js` for the
     // canonical pattern.
     //
     // Usage:

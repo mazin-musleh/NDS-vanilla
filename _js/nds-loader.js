@@ -188,7 +188,7 @@
         {
             // Critical: it rewrites a <time>'s text, and a date that changes length after the reveal would shift the line.
             name: 'Date',
-            selector: 'time[datetime][data-calendar], time[datetime][data-date-format], time.nds-date-tile[datetime]',
+            selector: 'time[datetime][data-calendar], time[datetime][data-date-format], time.nds-date-tile[datetime], time[data-date-today]',
             critical: true,
             refresh: (root) => NDS.Date?.fill?.(root),
         },
@@ -412,19 +412,23 @@
             // Docked FABs left root for <body>, so only the component knows which belong to the view.
             destroy: (root) => NDS.Fab?.destroy?.(root),
         },
-        // Topbar widgets last: non-critical chrome, network- or interaction-bound.
+        // Top bar parts last: non-critical chrome, network- or interaction-bound.
         {
-            // Delegated: the panel ships [hidden]; CSS owns the expand.
+            // Delegated: an expander ships [hidden]; CSS owns the slide.
+            name: 'Topbar',
+            selector: '[data-topbar-toggle]',
+        },
+        {
             name: 'DigitalStamp',
-            selector: '.nds-digital-stamp-tab',
+            selector: '#nds-digital-stamp',
         },
         {
-            name: 'CityWeather',
-            selector: '#nds-weather-info, #nds-city-name',
+            name: 'Weather',
+            selector: '.nds-weather',
         },
         {
-            name: 'TimeDate',
-            selector: '#nds-date, #nds-real-time-clock',
+            name: 'Clock',
+            selector: 'time.nds-clock',
         },
         {
             // Lazy: the FAB is on every page but most visitors never open the panel.

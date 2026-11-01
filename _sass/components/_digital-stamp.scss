@@ -40,31 +40,13 @@
 }
 
 
-#nds-digital-stamp {
-    background-color: var(--background-topbar);
-    position: relative;
-    transition: grid-template-rows var(--nds-transition);
-    grid-template-rows: 0fr;
-    overflow: clip;
-    z-index: 1000;
-    &[data-state~="open"] {
-        display: grid;
-        grid-template-rows: 1fr;
-    }
-
-    &:is([data-state~="opening"], [data-state~="closing"]) {
-        grid-template-rows: 0fr;
-    }
-
-    >* {
-        grid-row: 1 / span 2;
-    }
-
-
+// The stamp's spacing, larger than an expander's; the knob still wins.
+#nds-digital-stamp .nds-topbar-expander-content {
+    padding-block: var(--topbar-expander-padding, var(--spacing-5xl));
 }
 
 .nds-digital-stamp-notices {
-    margin-block: var(--spacing-5xl);
+    margin-block-end: var(--spacing-5xl);
     display: flex;
     gap: var(--spacing-xl);
     flex-wrap: wrap;
@@ -84,7 +66,6 @@
     background-color: var(--background-card);
     border-radius: var(--radius-md);
     padding: var(--spacing-xl) var(--spacing-3xl);
-    margin-block: var(--spacing-5xl);
     line-height: 24px;
     text-align: start;
     display: flex;
@@ -171,12 +152,6 @@
     // --text-primary measured 4.32:1 on the stamp in light mode.
     color: var(--text-primary-strong);
     font-weight: var(--font-weight-bold);
-}
-
-@include reduced-motion {
-    #nds-digital-stamp {
-        transition: none;
-    }
 }
 
 

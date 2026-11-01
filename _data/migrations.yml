@@ -125,7 +125,7 @@
 - { kind: class, name: nds-tableView-lg, status: renamed, use: nds-table-view-lg, since: "2.0.0", fix: "Use nds-table-view-lg." }
 - { kind: class, name: nds-tableView-md, status: renamed, use: nds-table-view-md, since: "2.0.0", fix: "Use nds-table-view-md." }
 - { kind: class, name: nds-tableView-sm, status: renamed, use: nds-table-view-sm, since: "2.0.0", fix: "Use nds-table-view-sm." }
-- { kind: class, name: nds-text-icon, status: renamed, use: nds-meta, since: "2.0.0", fix: "Use class=\"nds-meta\" on the top bar widget; the script writes the Meta fact inside." }
+- { kind: class, name: nds-text-icon, status: renamed, use: nds-meta, since: "2.0.0", fix: "Use class=\"nds-meta\" around a .nds-meta-item that holds its own icon and the <time> or .nds-weather: copy it from the Top Bar page." }
 - { kind: class, name: nds-user, scope: .nds-card, status: removed, since: "2.0.0", fix: "Remove it: user cards no longer have a special class." }
 - { kind: class, name: nds-vertical-lg, scope: .nds-stepper, status: removed, since: "2.0.0", fix: "Remove it: the plain layout class is the desktop layout; -sm and -md set phones and tablets." }
 - { kind: class, name: nds-wSideInfo, status: renamed, use: nds-has-sideinfo, since: "2.0.0", fix: "Use nds-has-sideinfo." }
@@ -169,11 +169,12 @@
 - { kind: id, name: a11yModesCollapse, status: renamed, use: a11y-modes-collapse, since: "2.0.0", fix: "Use id a11y-modes-collapse (and its button's aria-controls)." }
 - { kind: id, name: a11yReadableCollapse, status: renamed, use: a11y-readable-collapse, since: "2.0.0", fix: "Use id a11y-readable-collapse (and its button's aria-controls)." }
 - { kind: id, name: a11yVisualCollapse, status: renamed, use: a11y-visual-collapse, since: "2.0.0", fix: "Use id a11y-visual-collapse (and its button's aria-controls)." }
-- { kind: id, name: nds-cityName, status: renamed, use: nds-city-name, since: "2.0.0", fix: "Use id nds-city-name." }
+- { kind: id, name: nds-cityName, status: removed, since: "2.0.0", fix: "Write the city's name as text in a .nds-weather-city span inside the .nds-weather item." }
+- { kind: id, name: nds-date, status: removed, use: "time[data-date-today]", since: "2.0.0", fix: "Write <time data-date-today data-calendar=\"hijri\" data-date-format=\"long\" data-date-era> in a .nds-meta-item with its own icon." }
 - { kind: id, name: nds-digitalStamp, status: renamed, use: nds-digital-stamp, since: "2.0.0", fix: "Use id nds-digital-stamp (and the button's aria-controls)." }
 - { kind: id, name: nds-digitalStamp-verify-text, status: renamed, use: nds-digital-stamp-verify-text, since: "2.0.0", fix: "Use id nds-digital-stamp-verify-text." }
-- { kind: id, name: nds-realTimeClock, status: renamed, use: nds-real-time-clock, since: "2.0.0", fix: "Use id nds-real-time-clock." }
-- { kind: id, name: nds-weatherInfo, status: renamed, use: nds-weather-info, since: "2.0.0", fix: "Use id nds-weather-info." }
+- { kind: id, name: nds-realTimeClock, status: renamed, use: time.nds-clock, since: "2.0.0", fix: "Write <time class=\"nds-clock\"> in a .nds-meta-item with its own icon." }
+- { kind: id, name: nds-weatherInfo, status: renamed, use: .nds-weather, since: "2.0.0", fix: "Use class nds-weather on a .nds-meta-item, with data-latitude and data-longitude, and the city's name in a .nds-weather-city span inside it." }
 - { kind: id, name: ndsAccessibilityPanel, status: renamed, use: nds-accessibility-panel, since: "2.0.0", fix: "Use id nds-accessibility-panel (and data-panel-toggle on its button)." }
 - { kind: id, name: ndsCookies-functional, status: renamed, use: nds-cookies-functional, since: "2.0.0", fix: "Use id nds-cookies-functional (and the label's for)." }
 - { kind: id, name: ndsCookies-necessary, status: renamed, use: nds-cookies-necessary, since: "2.0.0", fix: "Use id nds-cookies-necessary (and the label's for)." }
@@ -231,8 +232,8 @@
 - { kind: property, name: --toggle-transform, scope: .nds-sidemenu, status: removed, since: "2.0.0", fix: "Remove it: the component sets the side menu toggle position." }
 - { kind: global, name: NDS_ASSETS_BASE, status: renamed, use: NDS_ASSETS_PATH, since: "2.0.0", fix: "Use NDS_ASSETS_PATH, with the same value." }
 - { kind: global, name: NDSAssetBase, status: renamed, use: NDS_ASSETS_PATH, since: "2.0.0", fix: "Set NDS_ASSETS_PATH to the assets/ folder, one level above the js/ folder NDSAssetBase named." }
-- { kind: event, name: nds:digitalStamp:closed, status: renamed, use: nds:digital-stamp:closed, since: "2.0.0", fix: "Listen for nds:digital-stamp:closed." }
-- { kind: event, name: nds:digitalStamp:opened, status: renamed, use: nds:digital-stamp:opened, since: "2.0.0", fix: "Listen for nds:digital-stamp:opened." }
+- { kind: event, name: nds:digitalStamp:closed, status: renamed, use: nds:topbar:closed, since: "2.0.0", fix: "Listen for nds:topbar:closed: detail.expander is the stamp." }
+- { kind: event, name: nds:digitalStamp:opened, status: renamed, use: nds:topbar:opened, since: "2.0.0", fix: "Listen for nds:topbar:opened: detail.expander is the stamp." }
 - { kind: event, name: nds:table:selection, status: renamed, use: nds:selection:change, since: "2.0.0", fix: "Listen for nds:selection:change on the list." }
 - { kind: event, name: nds:table:sort, status: renamed, use: nds:sort:change, since: "2.0.0", fix: "Listen for nds:sort:change; detail.key is the column index and detail.order the order." }
 - { kind: event, name: nds:accordion:hidden, status: renamed, use: nds:accordion:closed, since: "2.0.0", fix: "Listen for nds:accordion:closed." }
@@ -321,10 +322,13 @@
 - { kind: api, name: NDS.Fab.dock, status: renamed, use: NDS.Fab.getDock, since: "2.0.0", fix: "Use NDS.Fab.getDock." }
 - { kind: api, name: NDS.Fab.resolvePos, status: renamed, use: NDS.Fab.resolvePosition, since: "2.0.0", fix: "Use NDS.Fab.resolvePosition." }
 - { kind: api, name: NDS.Copy.bind, status: renamed, use: NDS.Copy.addListeners, since: "2.0.0", fix: "Use NDS.Copy.addListeners." }
-- { kind: api, name: NDS.CityWeather.updateWeather, status: renamed, use: NDS.CityWeather.loadWeather, since: "2.0.0", fix: "Use NDS.CityWeather.loadWeather." }
-- { kind: api, name: NDS.CityWeather.updateCity, status: renamed, use: NDS.CityWeather.syncCity, since: "2.0.0", fix: "Use NDS.CityWeather.syncCity." }
-- { kind: api, name: NDS.TimeDate.updateDate, status: renamed, use: NDS.TimeDate.syncDate, since: "2.0.0", fix: "Use NDS.TimeDate.syncDate." }
-- { kind: api, name: NDS.TimeDate.updateClock, status: renamed, use: NDS.TimeDate.syncClock, since: "2.0.0", fix: "Use NDS.TimeDate.syncClock." }
+- { kind: api, name: NDS.CityWeather, status: renamed, use: NDS.Weather, since: "2.0.0", fix: "Use NDS.Weather.init(): it writes every .nds-weather item." }
+- { kind: api, name: NDS.CityWeather.updateWeather, status: renamed, use: NDS.Weather.init, since: "2.0.0", fix: "Use NDS.Weather.init()." }
+- { kind: api, name: NDS.CityWeather.updateCity, status: removed, since: "2.0.0", fix: "Remove the call: the city's name is text in a .nds-weather-city span inside the .nds-weather item." }
+- { kind: api, name: NDS.TimeDate, status: removed, since: "2.0.0", fix: "The loader starts Today and the clock. NDS.Date.fill() writes Today again, and NDS.Clock.init() the clocks." }
+- { kind: api, name: NDS.TimeDate.updateDate, status: renamed, use: NDS.Date.fill, since: "2.0.0", fix: "Use NDS.Date.fill()." }
+- { kind: api, name: NDS.TimeDate.updateClock, status: renamed, use: NDS.Clock.init, since: "2.0.0", fix: "Use NDS.Clock.init()." }
+- { kind: api, name: "NDS.DigitalStamp.open/close/toggle/isOpen", status: renamed, use: "NDS.Topbar.open/close/toggle/isOpen", since: "2.0.0", fix: "Use NDS.Topbar.open('nds-digital-stamp') and the others: the top bar opens and closes the stamp." }
 - { kind: api, name: NDS.Dropmenu.menuOf, status: renamed, use: NDS.Dropmenu.getMenu, since: "2.0.0", fix: "Use NDS.Dropmenu.getMenu." }
 - { kind: api, name: el.ndsFilter.applyFilters, status: renamed, use: el.ndsFilter.syncFilters, since: "2.0.0", fix: "Use el.ndsFilter.syncFilters." }
 - { kind: api, name: el.ndsFilter.populateFilter, status: renamed, use: el.ndsFilter.renderFilter, since: "2.0.0", fix: "Use renderFilter(name, values, type): it takes the same arguments." }
@@ -415,8 +419,8 @@
 - { kind: class, name: nds-center-md, status: removed, since: "1.7.0", fix: "Write the media query in your own stylesheet; nds-center itself is unchanged." }
 - { kind: class, name: nds-center-sm, status: removed, since: "1.7.0", fix: "Write the media query in your own stylesheet; nds-center itself is unchanged." }
 - { kind: class, name: nds-center-xl, status: removed, since: "1.7.0", fix: "Write the media query in your own stylesheet; nds-center itself is unchanged." }
-- { kind: class, name: nds-digitalStamp-closed, status: renamed, use: nds:digital-stamp:closed, since: "1.7.0", fix: "Listen for the event nds:digital-stamp:closed (it is an event name, not a class)." }
-- { kind: class, name: nds-digitalStamp-opened, status: renamed, use: nds:digital-stamp:opened, since: "1.7.0", fix: "Listen for the event nds:digital-stamp:opened (it is an event name, not a class)." }
+- { kind: class, name: nds-digitalStamp-closed, status: renamed, use: nds:topbar:closed, since: "1.7.0", fix: "Listen for the event nds:topbar:closed (it is an event name, not a class)." }
+- { kind: class, name: nds-digitalStamp-opened, status: renamed, use: nds:topbar:opened, since: "1.7.0", fix: "Listen for the event nds:topbar:opened (it is an event name, not a class)." }
 - { kind: class, name: nds-modal-closed, status: renamed, use: nds:modal:closed, since: "1.7.0", fix: "Listen for the event nds:modal:closed (it is an event name, not a class)." }
 - { kind: class, name: nds-modal-opened, status: renamed, use: nds:modal:opened, since: "1.7.0", fix: "Listen for the event nds:modal:opened (it is an event name, not a class)." }
 - { kind: attribute, name: data-filter-name, scope: .nds-filter, status: removed, since: "1.7.0", fix: "Delete it. Applied filter chips show the raw value." }

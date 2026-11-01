@@ -35,7 +35,7 @@ const SCOPE = [
     ['nds-breadcrumb.js', 'Breadcrumb'],
     ['nds-calendar.js', 'Calendar'],
     ['nds-chart.js', 'Chart'],
-    ['nds-city-weather.js', 'CityWeather'],
+    ['nds-clock.js', 'Clock'],
     ['nds-code.js', 'Code'],
     ['nds-consent.js', 'consent'],
     ['nds-cookies.js', 'Cookies'],
@@ -96,12 +96,13 @@ const SCOPE = [
     ['nds-taginput.js', 'Taginput'],
     ['nds-theme.js', 'Theme'],
     ['nds-time-picker.js', 'TimePicker'],
-    ['nds-time-date.js', 'TimeDate'],
     ['nds-toc.js', 'Toc'],
     ['nds-tooltip.js', 'Tooltip'],
+    ['nds-topbar.js', 'Topbar'],
     ['nds-upload.js', 'Upload'],
     ['nds-user-feedback.js', 'UserFeedback'],
     ['nds-voice-input.js', 'VoiceInput'],
+    ['nds-weather.js', 'Weather'],
 ];
 
 // Deliberately bannerless: the docs builder (docs-site wiring, no public surface).
