@@ -104,7 +104,8 @@ Seams:
 - date ↔ calendar, the Date Tile: `NDS.Date.fill` sets the `textContent` of a `<time data-calendar|data-date-format>` that is not a `.nds-date-tile`; calendar's `_fillTiles` writes the `.nds-date-tile-*` spans inside an event's tile, and `fill` skips a tile's whole text, so a tile may carry its own `data-calendar`.
 - loader: the `Date` entry is `critical:true` with `refresh: root => NDS.Date.fill(root)`; `Calendar` is `critical:true` (it stamps the grid columns before the reveal).
 - date-picker, calendar → `NDS.Date` names, the language: each resolves its own. The picker's `getLanguage` reads `data-lang`, then the input's own `lang`, then the page (`NDS.i18n.resolveLang`, documented); calendar's `getLang` reads the nearest `[lang]`. They differ inside a `lang` wrapper.
-- date, the pack: `format: 'long'` reads `long_format` from section `date`; `init` re-fills every `<time>` on a change of `<html lang>`, after `strings.load()` when the pack is not ready.
+- date, the pack: `format: 'long'` reads `long_format` from section `date`; `addLangListeners` (armed from `fill()`, so a view the loader's `refresh` mounts gets it) re-fills every `<time>` on a change of `<html lang>`, after `strings.load()` when the pack is not ready.
+- clock ↔ date, the turn: Clock's `scheduleTick` and Date's `scheduleMidnight` read the site's wall time the same way (`NDS.Date.format` with `timeZone: NDS.Date.site.timeZone`, `hourCycle: 'h23'`) and fire on the exact boundary (`- now.getMilliseconds()`), so Today and the clock turn over together; both catch up on `visibilitychange`.
 - date-picker → filter (in @lists): `_syncValueInputs` writes each `.nds-date-value` through `NDS.Date.format` in that input's own `data-date-format` and `data-calendar`; Filter's date group reads `YYYY-MM-DD` Gregorian from it.
 
 ## @lists
