@@ -10,6 +10,8 @@
  *   NDS.validation.isRequired(el)     data-required or .nds-required on el
  *   NDS.validation.checkCount(field, boxes)   the checked-count check (data-min-checked /
  *                                     data-max-checked; required means at least one)
+ *   NDS.validation.answerGroup(group, sel, fn)   a group rule's answer: fn(group) with focus on the first
+ *                                     enabled sel input, else the first one; null when the group has none
  *   NDS.validation.checkAll(form, opts)   every field in form → {invalidFields, errors: [{field, input, message}],
  *                                     passed: the rule fields that passed}; opts.extra(container, input) → a
  *                                     message the native pass adds
@@ -120,6 +122,13 @@
             empty: checked === 0, checked, min, max };
     }
 
+    // Focus goes to an enabled input: NDS.validation.check() passes a field whose focus is
+    // disabled, so one disabled option would pass the whole group. sel is one selector, not a list.
+    function answerGroup(group, sel, fn) {
+        const input = group.querySelector(`${sel}:not(:disabled)`) || group.querySelector(sel);
+        return input ? Object.assign(fn(group), { focus: input }) : null;
+    }
+
     function check(el, fn) {
         let result = null;
         if (fn) result = finish(el, fn(el));
@@ -190,5 +199,5 @@
         return validationResult;
     }
 
-    NDS.validation = { addRule, onRule, isOwned, check, checkAll, getMessage, isRequired, checkCount, rules };
+    NDS.validation = { addRule, onRule, isOwned, check, checkAll, getMessage, isRequired, checkCount, answerGroup, rules };
 })();

@@ -30,11 +30,8 @@
         return { valid, message: valid ? '' : strings.text('select_option'), empty: !picked, selected: picked };
     };
 
-    // An enabled radio: a disabled focus would pass the whole group (see Checkbox). validate(el) answers the same way.
-    const answer = (group) => {
-        const radio = group.querySelector('input[type="radio"]:not(:disabled)') || group.querySelector('input[type="radio"]');
-        return radio ? Object.assign(check(group), { focus: radio }) : null;
-    };
+    // validate(el) answers the same way.
+    const answer = (group) => NDS.validation.answerGroup(group, 'input[type="radio"]', check);
     NDS.validation.addRule(
         '.nds-form-group[data-min-checked], .nds-form-group[data-max-checked], .nds-form-group[data-required], .nds-form-group.nds-required',
         answer,
