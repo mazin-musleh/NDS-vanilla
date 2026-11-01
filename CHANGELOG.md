@@ -325,6 +325,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Definition list** — `nds-md` and `nds-sm` titles keep 16px and 14px on phones instead of shrinking.
 - **Digital Stamp** — The panel opens and closes with no animation when the visitor asks for reduced motion. The highlight text reaches 4.5:1 contrast in light mode.
 - **Digital Stamp** — `NDS.DigitalStamp.open()` and `toggle()` open the panel when its markup was added after the page loaded. They did nothing until `init()` ran.
+- **Digital Stamp** — `open()` called from a click on your own button opens the stamp. Before, the same click closed it again at once. It is now `NDS.Topbar.open('nds-digital-stamp')`.
 - **Divider** — A labelled divider's text lines up with its lines, and a vertical divider spaces sideways.
 - **Drawer** — In fit mode, a rich row fills its share of the height, so a shorter list in a grid leaves no gap under each row.
 - **Drawer** — A second click while a branch opens or closes no longer leaves it stuck open over a closed submenu.

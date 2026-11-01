@@ -125,7 +125,8 @@
     function init() {
         if (initDone) return;
         initDone = true;
-        document.addEventListener('click', handleClick);
+        // Capture: the outside-click close runs before a button's own NDS.Topbar.open(), not after it.
+        document.addEventListener('click', handleClick, true);
         document.addEventListener('keydown', handleKeydown);
     }
 

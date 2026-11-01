@@ -98,6 +98,25 @@ const settle = (page) => page.waitForTimeout(600);
     const events = await page.evaluate(() => __events);
     check(events.includes('nds:topbar:opened:check-expander') && events.includes('nds:topbar:closed:nds-digital-stamp'),
         `events: opened and closed name their expander (${events.length} fired)`);
+
+    // A page button of its own that calls open(): the same click must not close it again.
+    await page.evaluate(() => {
+        const btn = Object.assign(document.createElement('button'), { type: 'button', id: 'check-opener', textContent: 'Open' });
+        btn.style.cssText = 'position:fixed;bottom:10px;left:10px;z-index:99999';
+        btn.addEventListener('click', () => NDS.Topbar.open(btn.dataset.target));
+        document.body.append(btn);
+    });
+    const clickOpen = async (id) => {
+        await page.evaluate((target) => { document.getElementById('check-opener').dataset.target = target; }, id);
+        await page.click('#check-opener');
+        await settle(page);
+        await settle(page);
+        return page.evaluate((target) => NDS.Topbar.isOpen(target), id);
+    };
+    check(await clickOpen('check-expander'), 'api from a click: open() swaps from the stamp');
+    await page.keyboard.press('Escape');
+    await settle(page);
+    check(await clickOpen('nds-digital-stamp'), 'api from a click: open() opens with none open');
     await page.context().close();
 }
 
