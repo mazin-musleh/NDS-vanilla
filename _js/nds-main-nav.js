@@ -161,6 +161,9 @@
         if (toggleTimer) { clearTimeout(toggleTimer); toggleTimer = null; }
     };
 
+    // A closing drawer keeps 'open' until its slide ends: a close then is queued as a toggle, which re-opens it.
+    const isDrawerOpen = () => hasState(dom.collapse, 'open') && !hasState(dom.collapse, 'closing');
+
     // Resolve the animation target for a dropdown element. needsHeight + animTarget
     // derive from state.isMinimal, which changes at runtime.
     const getDropdownAnimationTarget = (dropdownItem) => {
@@ -208,10 +211,8 @@
     // ==============================================
     // DROPDOWN OPEN SET
     // ==============================================
-    // Set of currently-open dropdown elements (in any of open/opening/closing
-    // state). Replaces ~10 `querySelectorAll('.nds-has-menu[data-state~="open"]')`
-    // scans across this file with O(1) Set membership + O(open-count) iteration.
-    // Maintained inside dropdown.toggle when state actually flips, and read by
+    // Set of open or opening dropdown elements; a menu leaves it when its close
+    // starts. Maintained inside dropdown.toggle when state actually flips, and read by
     // scheduleUpdate's mode-flip cleanup + the same-page anchor handler as the
     // "is anything open" signal (`.size` / iteration). The open-marker
     // equivalent of membership is `.nds-has-menu[data-state~="open"]`.
@@ -304,8 +305,10 @@
             let atStart, atEnd;
             if (state.isMinimal) {
                 const { scrollTop, scrollHeight, clientHeight } = dom.primary;
-                atStart = scrollTop <= 1;
-                atEnd = scrollTop + clientHeight >= scrollHeight - 1;
+                // 2px, as the bar below: scrollHeight and clientHeight round, so a fractional-DPR
+                // phone can stop over 1px short of the end.
+                atStart = scrollTop <= 2;
+                atEnd = scrollTop + clientHeight >= scrollHeight - 2;
             } else {
                 const { scrollLeft, scrollWidth, clientWidth } = dom.primary;
                 const max = scrollWidth - clientWidth;
@@ -330,7 +333,7 @@
         const wantsHidden = !should;
         // Markup ships the nav without `nds-minimal` (desktop-first default;
         // .nds-nav-minimal is gated by [hidden] in markup so no FOUC). On
-        // init the body class state can already match `should` while
+        // init the nav class state can already match `should` while
         // .nds-nav-minimal[hidden] hasn't been toggled yet. Compare both
         // states so the first sync still fires when only the hidden attr
         // is out of step.
@@ -612,7 +615,7 @@
 
                 if (state.isMinimal) {
                     showNavBackdrop('navbar', () => {
-                        if (hasState(dom.collapse, 'open')) toggleNavbar();
+                        if (isDrawerOpen()) toggleNavbar();
                     });
                 }
 
@@ -626,8 +629,9 @@
                 NDS.aria.expanded(toggleButton, false);
                 const closeDelay = dropdown.closeAll();
 
+                // A queued toggle may have closed it in the wait: a second run fires 'closed' twice.
                 runAfterDelay(closeDelay, () => {
-                    animate.run(dom.collapse, false, {
+                    if (isDrawerOpen()) animate.run(dom.collapse, false, {
                         getMenu: () => state.isMinimal ? (collapseContent || dom.collapse) : null,
                         // Defer hideNavBackdrop until the drawer finishes closing —
                         // Backdrop.hide()'s synchronous scrollLock.unlock() reflow would
@@ -644,7 +648,7 @@
     // ==============================================
     // The drawer's links may overflow once it settles: re-check then (minimal only).
     function syncDrawerOverflow() {
-        if (!state.isMinimal || !hasState(dom.collapse, 'open') || hasState(dom.collapse, 'closing')) return;
+        if (!state.isMinimal || !isDrawerOpen()) return;
         runAfterDelay(state.getDuration(dom.collapseContent || dom.collapse) + 50, () => overflow.schedule());
     }
 
@@ -708,7 +712,7 @@
                 const duration = state.getDuration(collapseContent || dom.collapse);
 
                 showNavBackdrop('navbar', () => {
-                    if (hasState(dom.collapse, 'open')) toggleNavbar();
+                    if (isDrawerOpen()) toggleNavbar();
                 });
 
                 minimalDropdowns.forEach(dropdownItem => dropdown.toggle(dropdownItem, false));
@@ -750,7 +754,6 @@
 
         // Close dropdowns if click outside
         openDropdowns.forEach(dropdownItem => {
-            if (hasState(dropdownItem, 'closing')) return;
             const menu = dropdownItem.querySelector('.nds-nav-menu');
             if (![dropdownItem, menu].some(el => el?.contains(target))) {
                 const needsRecalc = (dropdownItem.closest('.nds-nav-primary') || dropdownItem.closest('.nds-nav-actions')) &&
@@ -843,7 +846,7 @@
         if (modeChanged && isAnyOpen()) {
             dropdown.closeAll();
 
-            if (hasState(dom.collapse, 'open')) {
+            if (isDrawerOpen()) {
                 navBackdropOwner = 'navbar';
                 cancelToggleAction();
                 toggleNavbar();
@@ -857,7 +860,7 @@
             }
         }
 
-        if (hasState(dom.collapse, 'open') && !hasState(dom.collapse, 'closing')) {
+        if (isDrawerOpen()) {
             syncDrawerOverflow();
         }
 
@@ -902,7 +905,7 @@
         // modal sits on a clean overlay. Closing the drawer cascades to
         // close any dropdowns inside it via navbar.toggle().
         document.addEventListener('nds:modal:opened', () => {
-            if (hasState(dom.collapse, 'open')) toggleNavbar();
+            if (isDrawerOpen()) toggleNavbar();
             else dropdown.closeAll();
         }, { signal });
 
@@ -927,10 +930,11 @@
 
             e.preventDefault();
 
+            // A closing drawer still delays the scroll, but is not closed again.
             const wasNavOpen = hasState(dom.collapse, 'open');
             const openCount = openDropdowns.size;
 
-            if (wasNavOpen) toggleNavbar();
+            if (isDrawerOpen()) toggleNavbar();
             else dropdown.closeAll();
 
             const delay = wasNavOpen || openCount ? NDS.transitionSpeed() + 100 : 0;
@@ -1109,8 +1113,6 @@
         openDropdowns.clear();
         if (navBackdropOwner) hideNavBackdrop(navBackdropOwner);
     }
-
-    const isDrawerOpen = () => hasState(dom.collapse, 'open');
 
     NDS.MainNav = {
         init,
