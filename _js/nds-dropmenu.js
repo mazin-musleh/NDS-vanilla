@@ -103,6 +103,8 @@
             // month/year, multiselect). Without this, manually-created
             // dropmenus stayed open when another one was opened.
             dropmenuElement.ndsDropmenu = this;
+            // A lazy menu's one-shot arm would toggle a second time on the first click.
+            dropmenuElement.ndsDropmenuArm?.destroy();
 
             this.init();
         }
@@ -1433,7 +1435,12 @@
             else if (unstamp) unstamp();
             return instance;
         },
-        destroy: (element) => NDS.resolveElement(element)?.ndsDropmenu?.destroy(),
+        destroy: (element) => {
+            element = NDS.resolveElement(element);
+            // An armed menu never opened has no instance yet: the arm would build one on the next click.
+            element?.ndsDropmenuArm?.destroy();
+            return element?.ndsDropmenu?.destroy();
+        },
         from: (el) => el?.closest('.nds-dropmenu') || null,
         // First match is the wrapper's own menu: a nested one sits inside it.
         getMenu: (dropmenu) => dropmenu?.querySelector('.nds-dropmenu-menu') || null,
