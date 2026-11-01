@@ -452,9 +452,16 @@
                 syncOpenFlags();
                 dispatchNavEvent(element, 'opened');
                 onStart?.();
-                NDS.onNextPaint(() => removeState(element, 'opening'));
-                // A close may start mid-open (Escape, outside click): an 'opened' stamped then outlives it.
-                runAfterDelay(duration, () => { if (!hasState(element, 'closing')) addState(element, 'opened'); finish(); });
+                // The slide starts when 'opening' drops, not at the tap: timed from the tap, a slow first
+                // frame ends the open mid-slide and a queued switch cuts it short.
+                NDS.onNextPaint(() => {
+                    removeState(element, 'opening');
+                    // A close may start mid-open (Escape, outside click): an 'opened' stamped then outlives it.
+                    runAfterDelay(duration, () => {
+                        if (hasState(element, 'open') && !hasState(element, 'closing')) addState(element, 'opened');
+                        finish();
+                    });
+                });
             } else {
                 addState(element, 'closing');
                 removeState(element, 'opened');
