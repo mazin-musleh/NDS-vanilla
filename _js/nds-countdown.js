@@ -280,6 +280,6 @@
     NDS.Countdown = {
         init,
         reinit: init,
-        setTarget(el, target) { if (el) { addVisibilityListeners(); prepare(el); track(el, target); } }
+        setTarget(el, target) { el = NDS.resolveElement(el); if (el) { addVisibilityListeners(); prepare(el); track(el, target); } }
     };
 })();

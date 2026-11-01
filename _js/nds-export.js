@@ -389,9 +389,7 @@
         // Safari needs the URL alive until after the click navigates; revoking on the
         // next tick is safe across engines.
         setTimeout(() => URL.revokeObjectURL(url), 0);
-        if (typeof rowCount === 'number') {
-            NDS.announce(strings.text('exported', { n: rowCount }));
-        }
+        NDS.announce(strings.text('exported', { n: rowCount }));
     }
 
     // Strip path separators, control chars, and the cross-platform reserved set

@@ -18,7 +18,7 @@
  */
 /**
  * NDS Breadcrumb Component
- * Automatically collapses breadcrumbs with 5+ levels into a dropdown menu
+ * Automatically collapses breadcrumbs with more than 5 levels into a dropdown menu
  * Shows: Home > ... > [last 2 items]
  * Hidden items accessible via dropdown menu
  */

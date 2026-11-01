@@ -175,6 +175,7 @@
     //               elsewhere. tick and end still fire: a resumed cooldown still has to
     //               render its seconds and re-enable the button.
     function start(btn, opts) {
+        btn = NDS.resolveElement(btn);
         if (!btn || active.has(btn)) return;
 
         const buttonConfig = getConfig(btn);
@@ -251,6 +252,7 @@
     }
 
     function reset(btn) {
+        btn = NDS.resolveElement(btn);
         if (btn && active.has(btn)) finish(btn);
     }
 

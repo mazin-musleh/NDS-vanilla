@@ -300,7 +300,7 @@
             return instance._valid ? instance : null;
         },
         destroy: function (element) { element = NDS.resolveElement(element); if (element && element.ndsPassword) element.ndsPassword.destroy(); },
-        check: function (element) { return element.ndsPassword ? element.ndsPassword.check() : null; },
+        check: function (element) { element = NDS.resolveElement(element); return element && element.ndsPassword ? element.ndsPassword.check() : null; },
         addRule: function (name, test) { RULES[name] = test; },
         getValue: function (element) { var input = findInput(element); return input ? input.value : ''; },
         setValue: function (element, value) { var input = findInput(element); return input ? writeInput(input, value) : false; },

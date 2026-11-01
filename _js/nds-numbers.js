@@ -112,7 +112,6 @@
     }
 
     function initCounters() {
-        const reduced = NDS.prefersReducedMotion;
         document.querySelectorAll(COUNTER).forEach(el => {
             // reinit() re-arms: release a subscription that has not fired yet.
             el.ndsCounter?.destroy();
@@ -121,7 +120,7 @@
             const off = NDS.onIntersect(el, (entry) => {
                 if (!entry.isIntersecting) return;
                 el.ndsCounter.destroy();
-                count(el, reduced);
+                count(el, NDS.prefersReducedMotion);
             }, { threshold: 0.5 });
             el.ndsCounter = { destroy() { off(); delete el.ndsCounter; } };
         });

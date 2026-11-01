@@ -19,7 +19,7 @@
  *   - Creating a message REPLACES the existing feedback in the same target, except a nested field's.
  *   - position is 'before' | 'after' | 'prepend' | 'append' (default 'append'); the first
  *     two insert as siblings of the target, the last two inside it.
- *   - role and aria-live are derived from status — error and warning announce assertively.
+ *   - role and aria-live are derived from status — error and warning are role="alert"; only error is assertive.
  *   - A message has a .nds-feedback-message or a role; dismissAll() and a new message leave a bare
  *     status icon (an upload row's) alone.
  */
@@ -87,7 +87,7 @@
          * @param {boolean} options.showIcon - Show/hide icon (default: true)
          * @param {string} options.id - Custom ID (optional)
          * @param {string} options.className - Additional CSS classes (optional)
-         * @param {string} options.ariaLive - 'polite' or 'assertive' (default: 'polite')
+         * @param {string} options.ariaLive - 'polite' or 'assertive' (default: 'assertive' for error, else 'polite')
          * @param {boolean} options.permanent - Persist across status changes (default: false)
          * @param {Function} options.onDismiss - Callback when dismissed (optional)
          * @param {Function} options.onCreate - Callback after creation (optional)

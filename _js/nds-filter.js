@@ -2771,8 +2771,6 @@
             const alertId = `nds-filter-no-results-${this.targetId}`;
             if (document.getElementById(alertId)) return;
 
-            const self = this;
-
             // If the target container is a <table>/<tbody>, wrap the alert in a
             // full-width <tr><td colspan=N> so it spans the table instead of
             // collapsing into a single cell.
@@ -2807,7 +2805,7 @@
                         label: strings.text('clear'),
                         variant: 'neutral',
                         onClick: () => {
-                            self.reset();
+                            this.reset();
                         }
                     }
                 ]

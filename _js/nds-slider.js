@@ -232,6 +232,7 @@
     }
 
     function refresh(el) {
+        if (el && !(el = NDS.resolveElement(el))) return; // a missed ref is not "every slider"
         addDocumentListeners();
         var list = el ? [el] : document.querySelectorAll('.nds-slider-container');
         list.forEach(function (container) {

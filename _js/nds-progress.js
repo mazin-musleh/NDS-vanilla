@@ -99,8 +99,8 @@
     }
 
     // Public API
-    function setValue(el, value) { watch(); el.dataset.value = value; }
-    function setOutOf(el, current, max) { watch(); el.dataset.num = current; el.dataset.max = max; }
+    function setValue(el, value) { el = NDS.resolveElement(el); if (!el) return; watch(); el.dataset.value = value; }
+    function setOutOf(el, current, max) { el = NDS.resolveElement(el); if (!el) return; watch(); el.dataset.num = current; el.dataset.max = max; }
 
     function init() {
         const reduced = NDS.prefersReducedMotion;

@@ -217,7 +217,7 @@
                 this._clearHover();
                 this._activeHover = { target: e.target, ...data };
                 this._showTooltip(e, data.html);
-                if (data.active) NDS.state.add(data.activeEl || e.target, 'active');
+                NDS.state.add(data.activeEl || e.target, 'active');
             }, { signal });
 
             this._element.addEventListener('mousemove', (e) => {
@@ -233,14 +233,14 @@
 
         _clearHover() {
             if (!this._activeHover) return;
-            const { target, activeEl, active } = this._activeHover;
-            if (active) NDS.state.remove(activeEl || target, 'active');
+            const { target, activeEl } = this._activeHover;
+            NDS.state.remove(activeEl || target, 'active');
             this._hideTooltip();
             this._activeHover = null;
         }
 
-        _addTipListeners(el, html, activeEl, active) {
-            tipData.set(el, { html, activeEl, active });
+        _addTipListeners(el, html, activeEl) {
+            tipData.set(el, { html, activeEl });
         }
 
         // ── ResizeObserver ────────────────────────────────────────
@@ -558,7 +558,7 @@
                 const percent = ((value / total) * 100).toFixed(1) + '%';
                 this._addTipListeners(slice,
                     `<strong>${NDS.escapeHtml(label)}</strong><br>${NDS.escapeHtml(formatNumber(value))} (${NDS.escapeHtml(percent)})`,
-                    null, true);
+                    null);
                 svg.appendChild(slice);
 
                 if (this._options.dataLabels?.show && angle > 20) {
@@ -665,7 +665,7 @@
 
                     this._addTipListeners(rect,
                         `<strong>${NDS.escapeHtml(entry.name)}</strong><br>${NDS.escapeHtml(catLabels[category])}: ${NDS.escapeHtml(this._formatValue(value))}`,
-                        null, true);
+                        null);
                     svg.appendChild(rect);
 
                     if (dataLabels?.show && (!stacked || seriesIndex === topIndex)) {
@@ -838,7 +838,7 @@
                         });
                         this._addTipListeners(hitArea,
                             `<strong>${NDS.escapeHtml(entry.name)}</strong><br>${NDS.escapeHtml(catLabels[point.idx])}: ${NDS.escapeHtml(this._formatValue(point.val))}`,
-                            dot, true);
+                            dot);
                         svg.appendChild(hitArea);
                     }
                 });

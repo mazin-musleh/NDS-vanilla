@@ -607,7 +607,7 @@
     // getEffectiveTokens (so bundle-supplied primitives also light up).
     function isModeActive(name, tokens) {
         if (modeBundles[name]) return state.bundles.includes(name);
-        return (tokens || getEffectiveTokens()).has(name);
+        return tokens.has(name);
     }
 
     function syncUi() {
@@ -635,7 +635,7 @@
         // level), so render (cycle.length - 1) bars and light up `idx` of them.
         panel.querySelectorAll('button[data-a11y-setting]').forEach(btn => {
             const key = btn.dataset.a11ySetting;
-            const cycle = (btn.dataset.a11yCycle || '').split(',').map(text => text.trim());
+            const cycle = NDS.splitList(btn.dataset.a11yCycle);
             const current = String(state.settings[key]);
             const index = Math.max(0, cycle.indexOf(current));
             setPressed(btn, index > 0);
@@ -672,7 +672,7 @@
 
     // Render (cycle.length - 1) bars in [data-a11y-bars]. Idempotent.
     function renderSettingBars(btn) {
-        const cycle = (btn.dataset.a11yCycle || '').split(',').map(text => text.trim());
+        const cycle = NDS.splitList(btn.dataset.a11yCycle);
         const barsEl = btn.querySelector('[data-a11y-bars]');
         if (!barsEl || barsEl.children.length) return;
         const levels = Math.max(0, cycle.length - 1);
@@ -1402,7 +1402,6 @@
             document.body.appendChild(template);
         }
         const injected = NDS.fromTemplate(id);
-        if (injected) syncInjectedTheme(injected);
         // Accordion/Panel/Fab live in an injected bundle (delegated, low-priority,
         // never gated on the reveal) that may still be a lazy stub the instant
         // fromTemplate's refresh runs — nds-loader.js skips a stub on purpose,
@@ -1411,22 +1410,6 @@
         // mount() loads the bundles this panel's own markup needs and nothing else.
         if (injected) NDS.init.mount(injected);
         return injected;
-    }
-
-    // fromTemplate's NDS.init.refresh already armed Panel/Theme/Accordion/ScrollMore
-    // (their inits are run-once / per-element guarded). What's left is the mode
-    // mirror a Theme init that ran BEFORE the panel existed can't know about.
-    function syncInjectedTheme(panelEl) {
-        const themeBtn = panelEl.querySelector('[data-theme-toggle]');
-        if (themeBtn) {
-            const isDark = (root.getAttribute('data-theme') || '').split(/\s+/).includes('dark');
-            NDS.aria.pressed(themeBtn, isDark);
-            const icon = themeBtn.querySelector('.nds-icon');
-            if (icon) {
-                icon.classList.toggle('nds-hgi-sun-03', isDark);
-                icon.classList.toggle('nds-hgi-moon-02', !isDark);
-            }
-        }
     }
 
     // triggerEl: the element that caused this arm (a click on it, if any) —

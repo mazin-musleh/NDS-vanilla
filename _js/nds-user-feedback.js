@@ -40,10 +40,7 @@
  * - nds-cookies.js (for persisting feedback submission status)
  * - nds-form.js (required when the component lives inside a form; provides NDS.Form.validate)
  *
- * Language Detection:
- * Automatically detects page language from <html lang="..."> or <body lang="..."> attribute
- * - Arabic (default): 'تم استلام ملاحظتك!' / 'حدث خطأ، يرجى المحاولة مرة أخرى'
- * - English: 'Your feedback is submitted!' / 'An error occurred, please try again'
+ * Default messages come from the `user-feedback` i18n pack.
  *
  * Cookie Persistence:
  * Saves feedback submission status to cookies (365 days) based on page path
@@ -177,8 +174,8 @@ NDS.UserFeedback = (() => {
 
                 statusEl.removeAttribute('hidden');
             } else {
-                // Fallback if NDS.Feedback is not available
-                console.warn('NDS UserFeedback: NDS.Feedback API not available');
+                // No .nds-user-feedback-status to show the message in: stamp the state only.
+                console.warn('NDS UserFeedback: .nds-user-feedback-status element not found');
                 NDS.status.set(feedbackComponent, status);
             }
             if (!ok) return;

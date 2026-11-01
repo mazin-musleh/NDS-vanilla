@@ -58,10 +58,6 @@
     // The shared cell-text reader lives in core: Export (extras) reads it before Table loads.
     const getCellText = NDS.getCellText;
 
-    // Sort keys are <th> cell indexes, never positions in the sort-button array:
-    // a checkbox or actions column has no button, so the two index spaces diverge.
-    const getHeaderIndex = (th) => th.cellIndex;
-
     const ownedExportSkips = new WeakSet();       // th whose data-export-skip we set (an authored one stays)
     const revealTimers = new WeakMap();           // row → pending sub reveal timeout
     const loadStarts = new WeakMap();             // row → performance.now() when its sub-request began
@@ -139,7 +135,8 @@
                     const override = cell.getAttribute('data-sort-value');
                     return override !== null ? override : getCellText(cell);
                 },
-                keyFrom: (btn) => getHeaderIndex(btn.closest('th')),
+                // cellIndex, not the sort-button position: a checkbox or actions column has no button.
+                keyFrom: (btn) => btn.closest('th').cellIndex,
                 onChange: () => {
                     // Runs after NDS.Sort has already re-appended the parent rows.
                     repairSubPairing(this._tbody);
@@ -352,7 +349,7 @@
     // own thead/tbody whose cells share no column index with this one. Sub rows
     // are skipped as well — their single colspan <td> isn't a column either.
     // The first header row's cells, not ':scope > thead th': array position has to
-    // equal cellIndex — the one space getHeaderIndex, syncColumnAlign and the tr.cells
+    // equal cellIndex — the one space cellIndex, syncColumnAlign and the tr.cells
     // writes below all address. A <td> in the header row or a second thead row
     // shifts a th-filtered, thead-wide list out of it, and .cells (not .children)
     // is what skips the <script>/<template> a <tr> may legally carry.
@@ -683,9 +680,6 @@
         return next && next.matches('tr.nds-sub') ? next : null;
     };
 
-    // A toggle may live in a dropmenu item rather than on a chevron of its own.
-    const findRow = (btn) => btn.closest('tr');
-
     // Toggles belonging to a row, a dropmenu item among them.
     const getRowToggles = (tr) => Array.from(tr.querySelectorAll(SUB_TOGGLE));
 
@@ -911,7 +905,7 @@
         const btn = e.target.closest(SUB_TOGGLE);
         if (!btn || btn.closest('code')) return;
 
-        const handle = getRow(findRow(btn));
+        const handle = getRow(btn.closest('tr'));    // a toggle may sit in a dropmenu item, not a chevron
         if (!handle) return;
 
         // Second click while a sub-request is outstanding cancels it rather

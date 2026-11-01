@@ -304,8 +304,7 @@
                 },
                 onError: function(error) {
                     stop();
-                    var errorType = typeof error === 'string' ? error : (error && error.error);
-                    showMessage(input, strings.text(strings.has(errorType) ? errorType : 'default'));
+                    showMessage(input, strings.text(strings.has(error) ? error : 'default'));
                 },
                 onEnd: stop
             });

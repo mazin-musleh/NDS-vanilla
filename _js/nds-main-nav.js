@@ -272,18 +272,8 @@
                 hasOverflow = scrollWidth > clientWidth;
             }
 
-            // init() strips [hidden] itself; the first check only repeats it.
-            const revealOnce = () => {
-                if (this._initialCheckDone) return;
-                this._initialCheckDone = true;
-                removeCollapseHidden();
-            };
-
-            if (hasOverflow === wasOverflowing) {
-                // Overflow state stable — the nav layout is already final.
-                revealOnce();
-                return;
-            }
+            // Overflow state stable — the nav layout is already final.
+            if (hasOverflow === wasOverflowing) return;
 
             if (hasOverflow) addState(dom.primary, 'has-more'); else removeState(dom.primary, 'has-more');
 
@@ -291,7 +281,6 @@
             // out automatically when the show-more sibling flips between
             // display:none and display:flex on the has-more state change above.
             // No JS width recompute needed here.
-            revealOnce();
 
             if (!hasOverflow) {
                 removeState(dom.primary, 'at-start', 'at-end');

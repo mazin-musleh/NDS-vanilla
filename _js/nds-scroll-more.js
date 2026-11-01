@@ -147,9 +147,7 @@
 
         // Clamp target to the absolute scroll bounds so the last click lands
         // exactly at the end (browsers never settle there via momentum alone).
-        const maxScroll = isVertical
-            ? content.scrollHeight - content.clientHeight
-            : content.scrollWidth - content.clientWidth;
+        const maxScroll = getMaxScroll(content, axis);
 
         let target;
         if (atEnd) {

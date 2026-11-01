@@ -731,8 +731,6 @@
         }
 
         destroy() {
-            // An incomplete field's constructor bails before it wires anything.
-            if (!this.abortController) return;
             this.abortController.abort();
             this.fetchAbortController?.abort();
             this._debouncedFetch?.cancel(); // a keystroke inside the 300ms window would still fetch
@@ -751,7 +749,7 @@
 
             // Restore the markup the focusin builder matches, so the field can build again.
             this._input.setAttribute('autocomplete', 'on');
-            ariaAttributes.filter((attribute) => !this._authoredAria?.includes(attribute))
+            ariaAttributes.filter((attribute) => !this._authoredAria.includes(attribute))
                 .forEach((attribute) => this._input.removeAttribute(attribute));
             this._container.removeAttribute('data-nds-autocomplete-initialized');
             if (this._container.ndsAutocomplete === this) delete this._container.ndsAutocomplete;
