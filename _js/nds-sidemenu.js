@@ -112,7 +112,10 @@
 
         addState(animationTarget, 'closing');
 
-        NDS.onTransitionEnd(animationTarget, () => {
+        // Kept for destroy(): a second reset() pops another owner's backdrop and scroll lock.
+        menuState.cancelClose?.();
+        menuState.cancelClose = NDS.onTransitionEnd(animationTarget, () => {
+            menuState.cancelClose = null;
             reset(menuState);
             // Stay above the backdrop while it fades out.
             setTimeout(() => { if (closeEpoch === menuEpoch) sidemenu.style.removeProperty('z-index'); }, 300);
@@ -176,6 +179,7 @@
         if (currentInstance) {
             const { abortController, accMenu: sidemenu, animTarget: animationTarget, toggleBtn } = currentInstance;
 
+            currentInstance.cancelClose?.();
             if (hasState(animationTarget, 'open')) {
                 reset(currentInstance);
                 sidemenu.style.removeProperty('z-index');
