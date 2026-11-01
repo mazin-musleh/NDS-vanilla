@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 03:49 PM"
+last_edit: "01/11/2026 - 11:34 PM"
 lang: en
 direction: ltr
 ---
@@ -527,7 +527,7 @@ The eye button switches the field between hidden and plain text, and its label b
 | Class | Element | Effect |
 |---|---|---|
 | `nds-form` | `<form>` | Turns on submit validation. It draws no box. On another element it is a marker only, and checks nothing |
-| `nds-form-actions` | a `<div>` after the fields | The row of form buttons, with a top margin. The margin is 0 when the row is the first child |
+| `nds-form-actions` | a `<div>` after the fields | The row of form buttons, with a top margin. The margin is 0 when the row is the first child. A button that does not fit moves to the next line. It takes the same classes as [card actions](../components/card): `nds-end`, `nds-reverse`, `nds-col`, and `nds-col-sm` to stack the buttons below 600px |
 | `nds-form-footer` | a `<div>` at the end of `.nds-form-container` | Holds the field's messages when it has `data-feedback-target`. It has no style of its own |
 | `nds-required` | `.nds-form-container` or `.nds-form-group` | The same as `data-required` |
 | `nds-clear` | a button in `.nds-form-action` | Empties the field. Write it with `hidden`: the script shows it while the field has a value |

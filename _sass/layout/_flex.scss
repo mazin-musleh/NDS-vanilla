@@ -51,6 +51,14 @@
   flex-direction: column-reverse !important;
 }
 
+// A column below 600px. After the reverse rule, which it must beat: a phone stack keeps markup order.
+@include mobile {
+  .nds-col-sm,
+  :is(.nds-flex, .nds-row).nds-reverse.nds-col-sm {
+    flex-direction: column !important;
+  }
+}
+
 // Wrap utilities
 .nds-wrap {
   flex-wrap: wrap !important;

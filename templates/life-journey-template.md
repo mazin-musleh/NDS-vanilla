@@ -347,7 +347,7 @@ completed:
             <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
         </button>
     </div>
-    <div class="nds-card-actions nds-reverse">
+    <div class="nds-card-actions nds-col-sm nds-reverse">
         <button type="button" class="nds-btn nds-primary nds-lg nds-full" data-journeys-slide-to="next">
             <span class="nds-label">Next</span>
         </button>

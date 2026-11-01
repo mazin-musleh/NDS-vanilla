@@ -197,7 +197,7 @@ sidemenu_mode: false
                 </div>
             </div>
         </div>
-        <div class="nds-card-actions">
+        <div class="nds-card-actions nds-col-sm">
             <button type="submit" class="nds-btn nds-primary nds-lg">
                 <span class="nds-label">Send code</span>
             </button>
@@ -245,7 +245,7 @@ sidemenu_mode: false
                 </div>
             </div>
         </div>
-        <div class="nds-card-actions">
+        <div class="nds-card-actions nds-col-sm">
             <button type="submit" class="nds-btn nds-primary nds-lg">
                 <span class="nds-label">Send code</span>
             </button>
@@ -307,7 +307,7 @@ sidemenu_mode: false
                 </button>
             </div>
         </div>
-        <div class="nds-card-actions">
+        <div class="nds-card-actions nds-col-sm">
             <button type="submit" class="nds-btn nds-primary nds-lg">
                 <span class="nds-label">Confirm</span>
             </button>
@@ -355,7 +355,7 @@ sidemenu_mode: false
                 </div>
             </fieldset>
         </div>
-        <div class="nds-card-actions">
+        <div class="nds-card-actions nds-col-sm">
             <button type="submit" class="nds-btn nds-primary nds-lg">
                 <span class="nds-label">Save</span>
             </button>
@@ -465,7 +465,7 @@ sidemenu_mode: false
                 </div>
             </div>
         </div>
-        <div class="nds-card-actions">
+        <div class="nds-card-actions nds-col-sm">
             <button type="submit" class="nds-btn nds-primary nds-lg">
                 <span class="nds-label">Change password</span>
             </button>
@@ -521,7 +521,7 @@ sidemenu_mode: false
                 </div>
             </fieldset>
         </div>
-        <div class="nds-card-actions">
+        <div class="nds-card-actions nds-col-sm">
             <button type="submit" class="nds-btn nds-primary nds-lg">
                 <span class="nds-label">Save</span>
             </button>
@@ -550,7 +550,7 @@ sidemenu_mode: false
             <p class="nds-card-description">We sign you out now and delete the account in 30 days. Sign in before then to keep it.</p>
         </div>
     </div>
-    <div class="nds-card-actions">
+    <div class="nds-card-actions nds-col-sm">
         <button type="button" id="acc-delete-confirm" class="nds-btn nds-primary nds-destructive nds-lg" data-modal-close>
             <span class="nds-label">Delete account</span>
         </button>

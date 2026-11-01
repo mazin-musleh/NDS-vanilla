@@ -310,15 +310,10 @@
 }
 
 .nds-panel-footer {
+    @include action-row;
     flex-shrink: 0;
-    display: flex;
-    gap: var(--spacing-xl);
     padding: var(--_panel-padding);
     border-block-start: 1px solid var(--divider-color);
-
-    @include mobile {
-        gap: var(--spacing-lg);
-    }
 }
 
 // A .nds-scroll-more used in place of the body claims the same remaining height.

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 08:56 AM"
+last_edit: "01/11/2026 - 11:34 PM"
 ---
 
 <section id="cookies-overview" class="nds-content-section nds-doc-overview">
@@ -65,7 +65,7 @@ Pick another component when:
           <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
         </button>
       </div>
-      <div class="nds-panel-footer nds-wrap">
+      <div class="nds-panel-footer nds-col">
         <button type="button" class="nds-btn nds-primary" data-cookies-action="accept"><span class="nds-label">Accept</span></button>
         <button type="button" class="nds-btn nds-secondary-outline" data-cookies-action="reject"><span class="nds-label">Reject</span></button>
         <button type="button" class="nds-btn nds-subtle" data-cookies-action="manage"><span class="nds-label">Manage Cookies</span></button>
@@ -135,7 +135,7 @@ Pick another component when:
           <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
         </button>
       </div>
-      <div class="nds-panel-footer nds-wrap">
+      <div class="nds-panel-footer nds-col">
         <button type="button" class="nds-btn nds-primary" data-cookies-action="save"><span class="nds-label">Confirm My Choices</span></button>
         <button type="button" class="nds-btn nds-secondary-outline" data-cookies-action="reject"><span class="nds-label">Reject All</span></button>
       </div>
@@ -158,7 +158,7 @@ Pick another component when:
           <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
         </button>
       </div>
-      <div class="nds-panel-footer nds-wrap">
+      <div class="nds-panel-footer nds-col">
         <button type="button" class="nds-btn nds-subtle" data-cookies-action="undo"><span class="nds-label">Undo</span></button>
       </div>
     </div>

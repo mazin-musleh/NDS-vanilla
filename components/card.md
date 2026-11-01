@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 05:53 PM"
+last_edit: "01/11/2026 - 11:34 PM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -323,14 +323,16 @@ Pick another component when:
 | Corner | Status (hint: A status tag in the top end corner) | `.nds-dark` | `.nds-card-header:has(.nds-card-image) ~ * .nds-card-corner .nds-tag` | Over an image, give the tag `.nds-dark`: its solid background keeps it readable |
 | Corner | Checkbox (hint: A select checkbox in the top end corner) (not: statistic, progress) | canon `#card-corner-checkbox` | `.nds-card-text:not(a.nds-card *)` (start) | A select checkbox in `.nds-card-corner`. Placed the same way as Action. With a status tag, put both in one `.nds-card-corner`, the checkbox last, so it sits in the corner |
 | Actions | None (default) | — | — | No actions |
-| Actions | Start (hint: Aligned to the start of the row) | canon `#card-actions` | `div.nds-card` | Buttons after the content, never inside it. Not on a link card, which holds no links or buttons |
+| Actions | Start (hint: Aligned to the start of the row) | canon `#card-actions` | `div.nds-card` | Buttons after the content, never inside it. A button that does not fit moves to the next line. Not on a link card, which holds no links or buttons |
 | Actions | End (hint: Aligned to the end of the row) | canon `#card-actions` | `div.nds-card` | The same, aligned to the end of the row |
 | Actions | End (hint: Aligned to the end of the row) | `.nds-end` | `.nds-card-actions` | The same, aligned to the end of the row |
-| Actions | Full (hint: The buttons share the width) | canon `#card-actions` | `div.nds-card` | The same, with each button filling the width |
-| Actions | Full (hint: The buttons share the width) | `.nds-full` | `.nds-card-actions .nds-btn` | The same, with each button filling the width |
+| Actions | Full (hint: The buttons share the width) | canon `#card-actions` | `div.nds-card` | The same, with the buttons sharing the width. A button that moves to the next line fills it |
+| Actions | Full (hint: The buttons share the width) | `.nds-full` | `.nds-card-actions .nds-btn` | The same, with the buttons sharing the width. A button that moves to the next line fills it |
 | Actions | Stacked (hint: One above the other, full width) | canon `#card-actions` | `div.nds-card` | The same, with the buttons one above the other, each filling the width |
-| Actions | Stacked (hint: One above the other, full width) | `.nds-vertical` | `.nds-card-actions` | The same, with the buttons one above the other, each filling the width. `.nds-col` works too |
-| Actions order | Main last (hint: The first button shows last. Not stacked) | `.nds-reverse` | `.nds-card-actions:not(.nds-vertical):not(.nds-col)` | Write the main action first, and it shows last in the row, as in a dialog's Back and Next. The row stays at its side, with or without End. Stacked buttons keep the markup order, so the main action stays on top |
+| Actions | Stacked (hint: One above the other, full width) | `.nds-col` | `.nds-card-actions` | The same, with the buttons one above the other, each filling the width |
+| Actions | Stacked on phones (hint: Stacked below 600px, a row above) | canon `#card-actions` | `div.nds-card` | The same as Start on a large screen. Below 600px the buttons stack, each filling the width. A modal's actions use it |
+| Actions | Stacked on phones (hint: Stacked below 600px, a row above) | `.nds-col-sm` | `.nds-card-actions` | The same as Start on a large screen. Below 600px the buttons stack, each filling the width. A modal's actions use it |
+| Actions order | Main last (hint: The first button shows last. Not stacked) | `.nds-reverse` | `.nds-card-actions:not(.nds-col)` | Write the main action first, and it shows last in the row, as in a dialog's Back and Next. The row stays at its side, with or without End. With Stacked on phones, the stacked buttons keep the markup order, so the main action stays on top |
 | Stroke | Stroke (default) | `.nds-stroke` | `.nds-card` | A 1px border. For flat and content-heavy layouts. Leave out both stroke and shadow for a plain card |
 | Shadow | Shadow | `.nds-shadow` | `.nds-card` | An elevation shadow. For floating or modal-adjacent cards. It combines with the stroke |
 | Flat | Flat (hint: No fill and no padding) | `.nds-flat` | `.nds-card:not(.nds-stroke, .nds-shadow)` | No fill and no padding, and a muted description: the card reads as text on its section. Not with Stroke or Shadow |

@@ -299,6 +299,58 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 }
 
 // ==============================================
+// ACTION ROW
+// ==============================================
+
+// A row of buttons that wraps by their size: panel, card and form footers, dropmenu actions.
+// No width point: a layout change is a class the author writes (nds-col, nds-col-sm).
+@mixin action-row($gap: var(--spacing-xl)) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $gap;
+
+  > * {
+    flex: 0 1 auto;
+  }
+
+  // nds-full's 100% width would put each button on its own line; here it shares the row.
+  > .nds-full {
+    flex: 1 0 fit-content;
+  }
+
+  .nds-btn {
+    justify-content: center;
+    text-align: center;
+  }
+
+  &.nds-end {
+    justify-content: flex-end;
+  }
+
+  // The row stays at its side: row-reverse swaps the edges, so the packing swaps back.
+  &.nds-reverse {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+
+    &.nds-end {
+      justify-content: flex-start;
+    }
+  }
+
+  &.nds-col {
+    align-items: stretch;
+    --btn-width: 100%;
+  }
+
+  @include mobile {
+    &.nds-col-sm {
+      align-items: stretch;
+      --btn-width: 100%;
+    }
+  }
+}
+
+// ==============================================
 // PROGRESS CIRCLE MIXINS
 // ==============================================
 

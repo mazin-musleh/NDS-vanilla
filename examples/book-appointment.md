@@ -388,7 +388,7 @@ sidemenu_mode: false
             <p class="nds-card-description">The time goes back on the list for others. You can book again at any time.</p>
         </div>
     </div>
-    <div class="nds-card-actions">
+    <div class="nds-card-actions nds-col-sm">
         <button type="button" id="cancel-confirm" class="nds-btn nds-primary nds-destructive nds-lg" data-modal-close>
             <span class="nds-label">Cancel appointment</span>
         </button>

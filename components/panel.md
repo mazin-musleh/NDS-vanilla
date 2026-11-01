@@ -6,7 +6,7 @@ hero_description: A panel is a surface that slides in from an edge of the screen
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "01/11/2026 - 11:34 PM"
 lang: en
 direction: ltr
 ---
@@ -325,7 +325,7 @@ A lazy panel keeps its markup in a `<template class="nds-panel-template">`, so i
 | `nds-panel-description` | `p` in `.nds-panel-text` | A short line below the title |
 | `nds-panel-action` | `div` in `.nds-panel-header` | Holds the header buttons: the close button, and any beside it, such as a Reset button or the resize group. They sit closer together than the header items |
 | `nds-panel-body` | `div` in `.nds-panel` | The content. It scrolls when the content is taller than the panel |
-| `nds-panel-footer` | `div` in `.nds-panel` | A row of buttons at the bottom, with a divider above |
+| `nds-panel-footer` | `div` in `.nds-panel` | A row of buttons at the bottom, with a divider above. A button that does not fit moves to the next line. It takes the same classes as [card actions](../components/card): `nds-end`, `nds-reverse`, `nds-col`, and `nds-col-sm` to stack the buttons below 600px |
 | `nds-scroll-more` | `div` in `.nds-panel` in place of `.nds-panel-body`, or on `.nds-panel-body` itself | A [Scroll More](../components/scroll-more) area fills the same space as the body |
 | `nds-panel-template` | `<template>` | Holds a lazy panel |
 {: .nds-table .nds-responsive}

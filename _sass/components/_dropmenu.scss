@@ -145,19 +145,13 @@
     width: 100%;
   }
 
-  // Action bar (footer): side-by-side buttons (Clear / Apply). Previously
-  // paired with `nds-grid` in markup — flex is lighter and shares the
-  // spacing token. Buttons split the row equally and center their labels.
+  // Action bar (footer): the buttons fill the row. fit-content, not the item's full
+  // menu width, so two share a line.
   .nds-dropmenu-action {
-    display: flex;
-    gap: var(--spacing-md);
+    @include action-row(var(--spacing-md));
 
     > * {
       flex: 1 0 fit-content;
-    }
-
-    .nds-btn {
-      justify-content: center;
     }
   }
 

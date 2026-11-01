@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 04:23 PM"
+last_edit: "01/11/2026 - 11:34 PM"
 ---
 
 <section id="flex-overview" class="nds-content-section nds-doc-overview">
@@ -68,6 +68,7 @@ Each Justify, Align and Gap option sets one custom property in the `style` of `.
 |---|---|---|---|---|
 | Direction | Row (default) | — | — | The children sit side by side at their own widths, such as a set of buttons |
 | Direction | Column | `.nds-col` | `.nds-flex` | The children stack, such as cards or form steps. A child with no width of its own, such as a card, fills the column |
+| Direction | Column on phones (hint: A row above 600px, a column below) | `.nds-col-sm` | `.nds-flex` | A row on a large screen. Below 600px the children stack, such as two buttons. With `nds-reverse`, the stack keeps the markup order |
 | Justify | Start (default) | — | — | The children sit at the start edge |
 | Justify | Center | `--justify: center` | `.nds-flex:not(.nds-col)` | The children sit in the middle of the row. In a column, use Align: Center |
 | Justify | End | `--justify: flex-end` | `.nds-flex:not(.nds-col)` | The children sit at the end edge, such as the actions under a form |
@@ -187,7 +188,7 @@ Each Justify, Align and Gap option sets one custom property in the `style` of `.
 
 - For a set of cards whose rows fill, use a [List](../components/list) with `nds-flex`. On a list, `nds-center`, `nds-middle` and `nds-reverse` change the items, and `--justify` and `--align` move the rows.
 - Use flex to lay out a few elements in one line, such as buttons, tags or icons. Use [Grid](../layout/grid) for columns of content, and [Section](../layout/section) for page regions.
-- For a row that becomes a column on phones, use a grid with `--max-col: 2; --min-col: 1;`. Flex has no values for each screen size.
+- For a row that becomes a column on phones, add `nds-col-sm`. For columns whose count changes with the screen size, use a [Grid](../layout/grid) with `--max-col: 2; --min-col: 1;`.
 - Set `--gap` with a spacing token, such as `var(--spacing-sm)`.
 - Add `--align: center` when a row mixes children of different heights, such as a heading and a button.
 - Add `nds-row` or `nds-col` alone to a component that is already a flex container, such as `nds-card-actions nds-row`. Do not add `nds-flex` to it as well.
@@ -214,6 +215,7 @@ Each Justify, Align and Gap option sets one custom property in the `style` of `.
 | `nds-flex` | The element that holds the children | Makes it a flex container, in a row |
 | `nds-row` | Any flex container, with or without `nds-flex` | Lays the children out in a row |
 | `nds-col` | Any flex container, with or without `nds-flex` | Lays the children out in a column |
+| `nds-col-sm` | Any flex container, with or without `nds-flex` | Lays the children out in a column below 600px, and leaves the row above it |
 | `nds-reverse` | `.nds-flex`, `.nds-row` or `.nds-col` | Shows the children in the opposite order. It also swaps the start and end edges, so `--justify: flex-start` puts them at the end |
 | `nds-center` | `.nds-flex` | Centers the children along the row, the same as `--justify: center`. With `nds-col` it also centers them across. It centers the text inside too |
 | `nds-middle` | `.nds-flex` or `.nds-row` | Lines the children up on their middles, top to bottom, the same as `--align: center`. `nds-center` centers them along the row instead |

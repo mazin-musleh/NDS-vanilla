@@ -93,24 +93,6 @@
       transform: translateY(100%);
       opacity: 1;
 
-      .nds-card-actions {
-        flex-direction: column;
-        gap: var(--spacing-lg, 12px);
-
-        // A reversed footer still stacks, in markup order: the main action on top.
-        &.nds-reverse {
-          flex-direction: column;
-        }
-
-        .nds-btn {
-          width: 100%;
-
-          .nds-label {
-            text-align: center;
-          }
-        }
-      }
-
       // When modal is shown - slide up
       &[data-state="open"] {
         transform: translateY(0);

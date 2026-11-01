@@ -1248,7 +1248,7 @@ hideFeedback: true
             </div>
         </dl>
     </div>
-    <div class="nds-card-actions">
+    <div class="nds-card-actions nds-col-sm">
         <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close>
             <span class="nds-label">Done</span>
         </button>
@@ -1297,7 +1297,7 @@ hideFeedback: true
             </div>
         </div>
     </div>
-    <div class="nds-card-actions">
+    <div class="nds-card-actions nds-col-sm">
         <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close>
             <span class="nds-label">Done</span>
         </button>
@@ -1364,7 +1364,7 @@ hideFeedback: true
             </tbody>
         </table>
     </div>
-    <div class="nds-card-actions">
+    <div class="nds-card-actions nds-col-sm">
         <a href="#" class="nds-btn nds-primary nds-lg">
             <span class="nds-label">Pay 4,500 SAR</span>
         </a>
@@ -1428,7 +1428,7 @@ hideFeedback: true
             </div>
         </fieldset>
     </div>
-    <div class="nds-card-actions">
+    <div class="nds-card-actions nds-col-sm">
         <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close>
             <span class="nds-label">Send request</span>
         </button>

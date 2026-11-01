@@ -71,7 +71,7 @@
       <span class="nds-card-number"><span class="nds-countdown" id="${WARN_ID}-countdown" data-countdown=""><span class="nds-countdown-value" data-unit="m">--</span>:<span class="nds-countdown-value" data-unit="s">--</span></span></span>
     </div>
   </div>
-  <div class="nds-card-actions">
+  <div class="nds-card-actions nds-col-sm">
     <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close><span class="nds-label">${getEscapedText('stay')}</span></button>${logoutUrl ? `
     <a class="nds-btn nds-secondary-outline nds-lg" href="${NDS.escapeHtml(logoutUrl)}"><span class="nds-label">${getEscapedText('sign_out')}</span></a>` : ''}
   </div>
@@ -85,7 +85,7 @@
       <p class="nds-card-description" id="${ENDED_ID}-desc">${getEscapedText('ended_description')}</p>
     </div>
   </div>
-  <div class="nds-card-actions">
+  <div class="nds-card-actions nds-col-sm">
     <a class="nds-btn nds-primary nds-lg" href="${NDS.escapeHtml(signinUrl || location.href)}"><span class="nds-label">${getEscapedText('sign_in')}</span></a>
   </div>
 </dialog>`;

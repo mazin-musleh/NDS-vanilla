@@ -98,7 +98,7 @@
     </div>
     ${scrollBody(`
       <p>${getEscapedText('description')}</p>`)}
-    <div class="nds-panel-footer nds-wrap">
+    <div class="nds-panel-footer nds-col">
       <button type="button" class="nds-btn nds-primary" data-cookies-action="accept"><span class="nds-label">${getEscapedText('accept')}</span></button>
       <button type="button" class="nds-btn nds-secondary-outline" data-cookies-action="reject"><span class="nds-label">${getEscapedText('reject')}</span></button>
       <button type="button" class="nds-btn nds-subtle" data-cookies-action="manage"><span class="nds-label">${getEscapedText('manage')}</span></button>
@@ -116,7 +116,7 @@
         ${buildCategory('necessary', true)}
         ${categories.map(categoryName => buildCategory(categoryName)).join('')}
       </fieldset>`)}
-    <div class="nds-panel-footer nds-wrap">
+    <div class="nds-panel-footer nds-col">
       <button type="button" class="nds-btn nds-primary" data-cookies-action="save"><span class="nds-label">${getEscapedText('confirm')}</span></button>
       <button type="button" class="nds-btn nds-secondary-outline" data-cookies-action="reject"><span class="nds-label">${getEscapedText('reject_all')}</span></button>
     </div>
@@ -129,7 +129,7 @@
     </div>
     ${scrollBody(`
       <p role="status">${getEscapedText('done')}</p>`)}
-    <div class="nds-panel-footer nds-wrap">
+    <div class="nds-panel-footer nds-col">
       <button type="button" class="nds-btn nds-subtle" data-cookies-action="undo"><span class="nds-label">${getEscapedText('undo')}</span></button>
     </div>
   </div>

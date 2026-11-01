@@ -940,7 +940,7 @@ hideFeedback: true
         </div>
         <!-- Actions sit OUTSIDE .nds-card-content: that is the part that
              scrolls, so anything inside it scrolls away with a long form -->
-        <div class="nds-card-actions">
+        <div class="nds-card-actions nds-col-sm">
             <button class="nds-btn nds-primary nds-lg" type="submit">
                 <span class="nds-label">Save</span>
             </button>
@@ -967,7 +967,7 @@ hideFeedback: true
             <p class="nds-card-description" id="delete-modal-text">This cannot be undone.</p>
         </div>
     </div>
-    <div class="nds-card-actions">
+    <div class="nds-card-actions nds-col-sm">
         <button class="nds-btn nds-primary nds-destructive nds-lg" id="delete-confirm" type="button">
             <span class="nds-label">Delete</span>
         </button>

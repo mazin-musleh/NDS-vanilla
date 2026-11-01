@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "01/11/2026 - 11:34 PM"
 ---
 
 <section id="modal-overview" class="nds-content-section nds-doc-overview">
@@ -57,7 +57,7 @@ Pick another component when:
       <p class="nds-card-description">The application leaves the review queue. You can submit it again later.</p>
     </div>
   </div>
-  <div class="nds-card-actions">
+  <div class="nds-card-actions nds-col-sm">
     <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close>
       <span class="nds-label">Withdraw</span>
     </button>
@@ -90,7 +90,7 @@ Pick another component when:
     <p>The service reviews a request within five working days. It may ask you for more documents during the review.</p>
     <p>A request that stays incomplete for 30 days closes. You can submit it again at any time.</p>
   </div>
-  <div class="nds-card-actions">
+  <div class="nds-card-actions nds-col-sm">
     <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close>
       <span class="nds-label">I agree</span>
     </button>
@@ -118,7 +118,7 @@ Pick another component when:
       <p class="nds-card-description">Your request reached the service. You get a message when the review is done.</p>
     </div>
   </div>
-  <div class="nds-card-actions">
+  <div class="nds-card-actions nds-col-sm">
     <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close>
       <span class="nds-label">Done</span>
     </button>
@@ -147,7 +147,7 @@ Pick another component when:
         <p class="nds-card-description">This modal joins the page on the first click.</p>
       </div>
     </div>
-    <div class="nds-card-actions">
+    <div class="nds-card-actions nds-col-sm">
       <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close>
         <span class="nds-label">Accept</span>
       </button>
@@ -395,6 +395,7 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
 - Use `role="alertdialog"` instead for an urgent message the user did not ask for, such as a session that is about to end.
 - Give every button `type="button"`. In a form, a button without it submits the form.
 - Put `.nds-card-actions` after `.nds-card-content`, not inside it.
+- Keep `nds-col-sm` on `.nds-card-actions`. On a phone the modal is a bottom sheet, and the buttons stack in it, each filling the width.
 - For a form, wrap `.nds-card-content` and `.nds-card-actions` in one `<form class="nds-form">`. A form without `nds-form` breaks the layout: the content runs out of the modal and the actions leave the screen. It also gets no submit validation. `NDS.init.audit()` flags it.
 - A [Dropmenu](../components/dropmenu), a select, a [Multiselect](../components/multiselect), an [Autocomplete](../components/autocomplete) or a [Filter](../components/filter) works in a modal with no extra attribute. Its menu opens in the browser's top layer, so the modal's edge does not cut it off.
 - Do not look up a lazy modal when the page loads: it is not in the page yet. Listen on `document` for `nds:template:ready`, which fires on the modal after it joins the page and its components start.

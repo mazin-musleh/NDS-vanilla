@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "01/11/2026 - 11:34 PM"
 ---
 
 <section id="dropmenu-overview" class="nds-content-section nds-doc-overview">
@@ -428,7 +428,7 @@ A lazy menu keeps its items in a `<template>`, so they are not in the page until
 | `nds-menu-btn` | `.nds-dropmenu-trigger` | A chevron after the label. It turns while the menu is open |
 | `nds-dropmenu-group` | a `fieldset` or `div` in the menu | Groups related controls, with a bold legend and the same spacing as items |
 | `nds-dropmenu-footer` | `div` in `.nds-dropmenu-menu`, after `.nds-dropmenu-scroll` | Holds the footer buttons. It sits outside the scroll area, so it stays in view |
-| `nds-dropmenu-action` | `div` in `.nds-dropmenu-footer` | Puts its buttons side by side, each the same width |
+| `nds-dropmenu-action` | `div` in `.nds-dropmenu-footer` | Puts its buttons side by side, sharing the width. A button that does not fit moves to the next line |
 {: .nds-table .nds-responsive}
 
 ### Data Attributes
