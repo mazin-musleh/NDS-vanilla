@@ -12,9 +12,4 @@
     display: flex;
     flex-direction: column;
     gap: inherit;
-
-    // Panel's own rule reaches only its direct child.
-    > .nds-scroll-more {
-        flex: 1 1 auto;
-    }
 }

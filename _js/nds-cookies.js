@@ -40,14 +40,14 @@
     const strings = NDS.i18n.getStrings('cookies', {
         panel_label: 'Cookie settings',
         title: 'Cookies',
-        description: 'Use of Cookies by this site is just to guarantee Ease of Access and better user experience while browsing. Continuation of your browsing acknowledges your approval for Terms and Conditions of this site and its use of Cookies.',
+        description: 'This site uses cookies to make it easy to use and to improve your experience. If you continue to browse, you accept the Terms and Conditions of this site and its use of cookies.',
         accept: 'Accept',
         reject: 'Reject',
         manage: 'Manage Cookies',
         close: 'Close',
         scroll_panel: 'Scroll panel',
         manage_title: 'Manage Cookies',
-        manage_description: 'When you visit any website, it may store or retrieve information on your browser, mostly in the form of cookies. This information might be about you, your preferences or your device, and is mostly used to make the site work as you expect it to. The information does not usually identify you directly, but it can give you a more personalized web experience. Because we respect your right to privacy, you can choose not to allow some types of cookies. However, blocking some types of cookies may affect your experience of the site and the services we are able to offer.',
+        manage_description: 'This site stores cookies on your browser. They are mostly used to make the site work as you expect. They do not usually identify you. You can turn off some types below, but parts of the site and its services may then not work.',
         types: 'Cookie types',
         necessary: 'Necessary Cookies',
         necessary_info: 'Always active',
@@ -57,7 +57,7 @@
         confirm: 'Confirm My Choices',
         reject_all: 'Reject All',
         done_title: 'Thank you!',
-        done: 'Your response has been successfully recorded. If you wish to modify or change your answer, you can go back by clicking the Undo button.',
+        done: 'Your choice is saved. To change it, select Undo.',
         undo: 'Undo',
     });
 
@@ -69,8 +69,8 @@
           </button>
         </div>`;
     // Scroll More, as in the a11y panel: a long view scrolls, and a button brings the rest up.
-    const scrollBody = (inner) => `<div class="nds-scroll-more">
-      <div class="nds-scroll-more-content nds-panel-body nds-flex nds-col">${inner}
+    const scrollBody = (inner) => `<div class="nds-panel-body nds-scroll-more">
+      <div class="nds-scroll-more-content nds-flex nds-col">${inner}
       </div>
       <button type="button" class="nds-btn nds-subtle nds-show-more" aria-label="${getEscapedText('scroll_panel')}">
         <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
@@ -97,12 +97,12 @@
       ${buildCloseButton()}
     </div>
     ${scrollBody(`
-      <p>${getEscapedText('description')}</p>
-      <div class="nds-flex nds-col">
-        <button type="button" class="nds-btn nds-primary nds-full" data-cookies-action="accept"><span class="nds-label">${getEscapedText('accept')}</span></button>
-        <button type="button" class="nds-btn nds-secondary-outline nds-full" data-cookies-action="reject"><span class="nds-label">${getEscapedText('reject')}</span></button>
-        <button type="button" class="nds-btn nds-subtle nds-full" data-cookies-action="manage"><span class="nds-label">${getEscapedText('manage')}</span></button>
-      </div>`)}
+      <p>${getEscapedText('description')}</p>`)}
+    <div class="nds-panel-footer nds-wrap">
+      <button type="button" class="nds-btn nds-primary" data-cookies-action="accept"><span class="nds-label">${getEscapedText('accept')}</span></button>
+      <button type="button" class="nds-btn nds-secondary-outline" data-cookies-action="reject"><span class="nds-label">${getEscapedText('reject')}</span></button>
+      <button type="button" class="nds-btn nds-subtle" data-cookies-action="manage"><span class="nds-label">${getEscapedText('manage')}</span></button>
+    </div>
   </div>
   <div class="nds-cookies-view" data-cookies-view="manage" hidden>
     <div class="nds-panel-header">
@@ -115,11 +115,11 @@
       <fieldset class="nds-form-group nds-switch-group" aria-label="${getEscapedText('types')}">
         ${buildCategory('necessary', true)}
         ${categories.map(categoryName => buildCategory(categoryName)).join('')}
-      </fieldset>
-      <div class="nds-flex nds-col">
-        <button type="button" class="nds-btn nds-primary nds-full" data-cookies-action="save"><span class="nds-label">${getEscapedText('confirm')}</span></button>
-        <button type="button" class="nds-btn nds-secondary-outline nds-full" data-cookies-action="reject"><span class="nds-label">${getEscapedText('reject_all')}</span></button>
-      </div>`)}
+      </fieldset>`)}
+    <div class="nds-panel-footer nds-wrap">
+      <button type="button" class="nds-btn nds-primary" data-cookies-action="save"><span class="nds-label">${getEscapedText('confirm')}</span></button>
+      <button type="button" class="nds-btn nds-secondary-outline" data-cookies-action="reject"><span class="nds-label">${getEscapedText('reject_all')}</span></button>
+    </div>
   </div>
   <div class="nds-cookies-view" data-cookies-view="done" hidden>
     <div class="nds-panel-header">
@@ -128,8 +128,10 @@
       ${buildCloseButton()}
     </div>
     ${scrollBody(`
-      <p role="status">${getEscapedText('done')}</p>
-      <button type="button" class="nds-btn nds-subtle nds-full" data-cookies-action="undo"><span class="nds-label">${getEscapedText('undo')}</span></button>`)}
+      <p role="status">${getEscapedText('done')}</p>`)}
+    <div class="nds-panel-footer nds-wrap">
+      <button type="button" class="nds-btn nds-subtle" data-cookies-action="undo"><span class="nds-label">${getEscapedText('undo')}</span></button>
+    </div>
   </div>
 </dialog>`;
     }

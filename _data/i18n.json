@@ -578,8 +578,8 @@
  {
   "section": "cookies",
   "key": "description",
-  "en": "Use of Cookies by this site is just to guarantee Ease of Access and better user experience while browsing. Continuation of your browsing acknowledges your approval for Terms and Conditions of this site and its use of Cookies.",
-  "ar": "هذا الموقع يستخدم ملفات تعريف الارتباط الخاصة للتأكد من سهولة الاستخدام وضمان تحسين تجربتك أثناء التصفح. من خلال الاستمرار في تصفح هذا الموقع، فإنك تقر بقبول استخدام ملفات تعريف الارتباط."
+  "en": "This site uses cookies to make it easy to use and to improve your experience. If you continue to browse, you accept the Terms and Conditions of this site and its use of cookies.",
+  "ar": "يستخدم هذا الموقع ملفات تعريف الارتباط لتسهيل استخدامه وتحسين تجربتك. باستمرارك في التصفح، فإنك توافق على استخدامها."
  },
  {
   "section": "cookies",
@@ -620,8 +620,8 @@
  {
   "section": "cookies",
   "key": "manage_description",
-  "en": "When you visit any website, it may store or retrieve information on your browser, mostly in the form of cookies. This information might be about you, your preferences or your device, and is mostly used to make the site work as you expect it to. The information does not usually identify you directly, but it can give you a more personalized web experience. Because we respect your right to privacy, you can choose not to allow some types of cookies. However, blocking some types of cookies may affect your experience of the site and the services we are able to offer.",
-  "ar": "عند زيارة أي موقع على الويب، قد يخزّن هذا الأخير المعلومات على المستعرض أو يستردها على شكل ملفات تعريف ارتباط على الأغلب. وقد تكون هذه المعلومات عنك أو عن تفضيلاتك أو عن جهازك أو قد يتم استخدامها ليعمل الموقع كما تتوقع. لا تعرّف المعلومات عنك عادةً مباشرةً، ولكنها قد تمنحك تجربة ويب أكثر تخصيصًا. يمكنك اختيار عدم السماح ببعض أنواع ملفات تعريف الارتباط. ومع ذلك، يجب أن تعرف أن حظر بعض أنواع ملفات تعريف الارتباط قد يؤثر في تجربتك على الموقع وفي الخدمات التي يمكننا تقديمها."
+  "en": "This site stores cookies on your browser. They are mostly used to make the site work as you expect. They do not usually identify you. You can turn off some types below, but parts of the site and its services may then not work.",
+  "ar": "يخزّن هذا الموقع ملفات تعريف الارتباط على متصفحك، وتستخدم غالبًا ليعمل الموقع كما تتوقع. لا تعرّف هذه الملفات بك عادةً. يمكنك إيقاف بعض أنواعها أدناه، لكن قد لا تعمل بعض أجزاء الموقع أو خدماته بعدها."
  },
  {
   "section": "cookies",
@@ -680,8 +680,8 @@
  {
   "section": "cookies",
   "key": "done",
-  "en": "Your response has been successfully recorded. If you wish to modify or change your answer, you can go back by clicking the Undo button.",
-  "ar": "تم تسجيل ردك بنجاح. إذا كنت ترغب في تعديل إجابتك أو تغييرها، يمكنك الرجوع بالنقر على زر التراجع."
+  "en": "Your choice is saved. To change it, select Undo.",
+  "ar": "تم حفظ اختيارك. لتغييره، اختر «تراجع»."
  },
  {
   "section": "cookies",

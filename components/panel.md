@@ -6,7 +6,7 @@ hero_description: A panel is a surface that slides in from an edge of the screen
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "01/11/2026 - 08:56 AM"
 lang: en
 direction: ltr
 ---
@@ -326,7 +326,7 @@ A lazy panel keeps its markup in a `<template class="nds-panel-template">`, so i
 | `nds-panel-action` | `div` in `.nds-panel-header` | Holds the header buttons: the close button, and any beside it, such as a Reset button or the resize group. They sit closer together than the header items |
 | `nds-panel-body` | `div` in `.nds-panel` | The content. It scrolls when the content is taller than the panel |
 | `nds-panel-footer` | `div` in `.nds-panel` | A row of buttons at the bottom, with a divider above |
-| `nds-scroll-more` | `div` in `.nds-panel`, in place of `.nds-panel-body` | A [Scroll More](../components/scroll-more) area fills the same space as the body |
+| `nds-scroll-more` | `div` in `.nds-panel` in place of `.nds-panel-body`, or on `.nds-panel-body` itself | A [Scroll More](../components/scroll-more) area fills the same space as the body |
 | `nds-panel-template` | `<template>` | Holds a lazy panel |
 {: .nds-table .nds-responsive}
 

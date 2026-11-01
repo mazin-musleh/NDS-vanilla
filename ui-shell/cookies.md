@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "01/11/2026 - 08:56 AM"
 ---
 
 <section id="cookies-overview" class="nds-content-section nds-doc-overview">
@@ -57,18 +57,18 @@ Pick another component when:
           </button>
         </div>
       </div>
-      <div class="nds-scroll-more">
-        <div class="nds-scroll-more-content nds-panel-body nds-flex nds-col">
-          <p>Use of Cookies by this site is just to guarantee Ease of Access and better user experience while browsing. Continuation of your browsing acknowledges your approval for Terms and Conditions of this site and its use of Cookies.</p>
-          <div class="nds-flex nds-col">
-            <button type="button" class="nds-btn nds-primary nds-full" data-cookies-action="accept"><span class="nds-label">Accept</span></button>
-            <button type="button" class="nds-btn nds-secondary-outline nds-full" data-cookies-action="reject"><span class="nds-label">Reject</span></button>
-            <button type="button" class="nds-btn nds-subtle nds-full" data-cookies-action="manage"><span class="nds-label">Manage Cookies</span></button>
-          </div>
+      <div class="nds-panel-body nds-scroll-more">
+        <div class="nds-scroll-more-content nds-flex nds-col">
+          <p>This site uses cookies to make it easy to use and to improve your experience. If you continue to browse, you accept the Terms and Conditions of this site and its use of cookies.</p>
         </div>
         <button type="button" class="nds-btn nds-subtle nds-show-more" aria-label="Scroll panel">
           <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
         </button>
+      </div>
+      <div class="nds-panel-footer nds-wrap">
+        <button type="button" class="nds-btn nds-primary" data-cookies-action="accept"><span class="nds-label">Accept</span></button>
+        <button type="button" class="nds-btn nds-secondary-outline" data-cookies-action="reject"><span class="nds-label">Reject</span></button>
+        <button type="button" class="nds-btn nds-subtle" data-cookies-action="manage"><span class="nds-label">Manage Cookies</span></button>
       </div>
     </div>
     <div class="nds-cookies-view" data-cookies-view="manage" hidden>
@@ -81,9 +81,9 @@ Pick another component when:
           </button>
         </div>
       </div>
-      <div class="nds-scroll-more">
-        <div class="nds-scroll-more-content nds-panel-body nds-flex nds-col">
-          <p>When you visit any website, it may store or retrieve information on your browser, mostly in the form of cookies. This information might be about you, your preferences or your device, and is mostly used to make the site work as you expect it to. The information does not usually identify you directly, but it can give you a more personalized web experience. Because we respect your right to privacy, you can choose not to allow some types of cookies. However, blocking some types of cookies may affect your experience of the site and the services we are able to offer.</p>
+      <div class="nds-panel-body nds-scroll-more">
+        <div class="nds-scroll-more-content nds-flex nds-col">
+          <p>This site stores cookies on your browser. They are mostly used to make the site work as you expect. They do not usually identify you. You can turn off some types below, but parts of the site and its services may then not work.</p>
           <fieldset class="nds-form-group nds-switch-group" aria-label="Cookie types">
             <div class="nds-form-container nds-switch">
               <div class="nds-form-header">
@@ -130,14 +130,14 @@ Pick another component when:
               </div>
             </div>
           </fieldset>
-          <div class="nds-flex nds-col">
-            <button type="button" class="nds-btn nds-primary nds-full" data-cookies-action="save"><span class="nds-label">Confirm My Choices</span></button>
-            <button type="button" class="nds-btn nds-secondary-outline nds-full" data-cookies-action="reject"><span class="nds-label">Reject All</span></button>
-          </div>
         </div>
         <button type="button" class="nds-btn nds-subtle nds-show-more" aria-label="Scroll panel">
           <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
         </button>
+      </div>
+      <div class="nds-panel-footer nds-wrap">
+        <button type="button" class="nds-btn nds-primary" data-cookies-action="save"><span class="nds-label">Confirm My Choices</span></button>
+        <button type="button" class="nds-btn nds-secondary-outline" data-cookies-action="reject"><span class="nds-label">Reject All</span></button>
       </div>
     </div>
     <div class="nds-cookies-view" data-cookies-view="done" hidden>
@@ -150,14 +150,16 @@ Pick another component when:
           </button>
         </div>
       </div>
-      <div class="nds-scroll-more">
-        <div class="nds-scroll-more-content nds-panel-body nds-flex nds-col">
-          <p role="status">Your response has been successfully recorded. If you wish to modify or change your answer, you can go back by clicking the Undo button.</p>
-          <button type="button" class="nds-btn nds-subtle nds-full" data-cookies-action="undo"><span class="nds-label">Undo</span></button>
+      <div class="nds-panel-body nds-scroll-more">
+        <div class="nds-scroll-more-content nds-flex nds-col">
+          <p role="status">Your choice is saved. To change it, select Undo.</p>
         </div>
         <button type="button" class="nds-btn nds-subtle nds-show-more" aria-label="Scroll panel">
           <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
         </button>
+      </div>
+      <div class="nds-panel-footer nds-wrap">
+        <button type="button" class="nds-btn nds-subtle" data-cookies-action="undo"><span class="nds-label">Undo</span></button>
       </div>
     </div>
   </dialog>
