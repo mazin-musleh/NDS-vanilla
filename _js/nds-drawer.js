@@ -226,11 +226,18 @@
             if (!isOpen(parent)) closed.unshift(parent);
             parent = parent.closest('ul')?.closest('li');
         }
+        const sliding = [];
         closed.forEach(item => {
             const btn = item.querySelector(':scope > .nds-btn');
+            const submenu = item.querySelector(':scope > ul');
             if (!animate) return setBranch(item, true);
-            if (btn && item.querySelector(':scope > ul')) toggle(btn);
+            if (btn && submenu) { toggle(btn); sliding.push(submenu); }
         });
+        // Each level measured the ones below it still shut: grow it by them, or the inner slide is cut and pops in at the end.
+        for (let i = sliding.length - 1; i > 0; i--) {
+            const outer = sliding[i - 1];
+            outer.style.height = (parseFloat(outer.style.height) + parseFloat(sliding[i].style.height)) + 'px';
+        }
     }
 
     // The marked page link tells a screen reader too. A TOC's mark is its scroll-spy, not a page: Toc owns
