@@ -1174,9 +1174,9 @@
          * and _trackPosition() so an open menu can't re-place itself by a
          * different rule on the first scroll frame than the one that opened it.
          *
-         * Default anchors the menu on click x (so wide triggers open near
-         * where the user clicked), falling back to trigger center for
-         * keyboard / programmatic opens. Opt-in `data-anchor="start|end"` on
+         * Default centres the menu on the trigger; with `data-anchor-cursor`
+         * a click anchors it on the click x (`_lastClickX`), so wide triggers
+         * open near the pointer. Opt-in `data-anchor="start|end"` on
          * the wrapper pins the menu's matching edge to the trigger's edge
          * instead — RTL-aware via the trigger's computed direction (useful
          * for multiselect, where the menu should line up with the field's
