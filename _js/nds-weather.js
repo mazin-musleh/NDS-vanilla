@@ -75,7 +75,7 @@
             ).then(({ data }) => {
                 const current = data?.current_weather;
                 const match = current && conditions.find(([max]) => current.weathercode <= max);
-                if (!match) throw new Error('NDS Weather: no current weather');
+                if (!match || !Number.isFinite(current.temperature)) throw new Error('NDS Weather: no current weather');
                 const payload = { condition: match[1], temperature: Math.round(current.temperature), isDay: current.is_day === 1 };
                 // 14, not 15: the cache is stamped after the 15-minute tick starts, so that tick must find it expired.
                 NDS.cache.set(key, payload, 14);
