@@ -10,6 +10,6 @@
   - MUST: keep the form action and `useActionState` as the one submit path; show `state.errors` on each field through the field's NDS status (the Form doc's status API), from an effect on `state`; read the Init doc's Field Values and the Form doc first.
   - MUST NOT: replace the action with `data-ajax` and an `nds:form:valid` listener; run a second submit path beside the action.
   - cite: Port row: "keep requirements and project contracts"; Init doc Field Values (React 19 form action)
-- grading note: HOLD. The rubric assumes NDS submit validation composes with a React form action. No doc says how, and it is untested (TODO). Run this scenario only once the Init or Form doc states it; until then a FAIL is a source finding, not a rules one.
+- grading note: tested 2026-11-02 (React 19.3.1, StrictMode, no `data-ajax`): NDS blocks an invalid submit before the action, the action runs once per valid submit, `setStatus` shows its errors. The Init doc's Field Values now says so.
 - floor: not run
-- baseline: UNMEASURED (new, held)
+- baseline: PASS 2026-11-02 scoped (Sonnet 5.5): keeps `<form action>`, no `data-ajax`, `setStatus` from an effect on `state`, cites the new Init doc line. WATCH field ×2 (rig 8 runs 5 and 6).
