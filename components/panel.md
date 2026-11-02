@@ -6,7 +6,7 @@ hero_description: A panel is a surface that slides in from an edge of the screen
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 11:34 PM"
+last_edit: "02/11/2026 - 10:52 PM"
 lang: en
 direction: ltr
 ---
@@ -237,7 +237,7 @@ A lazy panel keeps its markup in a `<template class="nds-panel-template">`, so i
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Focus Management</span>
-              <p class="nds-card-description">Focus moves to the first close button when the panel opens, or to the panel when it has none, and back to the toggle when it closes. Escape and a click outside close the top panel.</p>
+              <p class="nds-card-description">Focus moves to the first close button when the panel opens, or to the panel when it has none, and back when it closes: to the toggle, or to what had focus when a script opened it. A panel destroyed while open, as a framework unmount or React's StrictMode does, sends it back too. Escape and a click outside close the top panel.</p>
             </div>
           </div>
         </li>

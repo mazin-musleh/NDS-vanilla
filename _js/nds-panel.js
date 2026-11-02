@@ -441,6 +441,9 @@
         const pending = pendingOpen !== panel ? pendingOpen : null;
         pendingOpen = null;
 
+        const opener = openers.get(panel);
+        const hadFocus = hasState(panel, 'open') && panel.contains(document.activeElement);
+
         animationCancels.get(panel)?.();
         animationCancels.delete(panel);
         resizeCancels.get(panel)?.();
@@ -459,6 +462,9 @@
         drop(stack, panel);
         drop(waiting, panel);
         openers.delete(panel);
+        // Destroyed while open (a framework unmount, StrictMode's mount, destroy, mount): focus goes
+        // back as a close sends it, so it never drops to the body, and a re-open records the opener again.
+        if (hadFocus && opener && document.contains(opener)) opener.focus({ preventScroll: true });
         silentPanels.delete(panel);
         noFocusPanels.delete(panel);
         panel.removeAttribute(INIT_ATTRIBUTE);
