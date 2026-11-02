@@ -16,12 +16,18 @@
 
 @function stepper-is($layout, $bp) {
     @if $bp == lg {
-        @return if($layout == horizontal, ':not(.nds-vertical, .nds-radial)', '.nds-#{$layout}');
+        @if $layout == horizontal {
+            @return ':not(.nds-vertical, .nds-radial)';
+        }
+        @return '.nds-#{$layout}';
     }
     @if $layout == horizontal {
         @return ':is(:not(.nds-vertical, .nds-radial, .nds-vertical-#{$bp}, .nds-radial-#{$bp}), .nds-horizontal-#{$bp})';
     }
-    $other: if($layout == vertical, radial, vertical);
+    $other: vertical;
+    @if $layout == vertical {
+        $other: radial;
+    }
     // :where() keeps the exclusion weightless, so a phone rule weighs what the desktop one does.
     @return ':is(.nds-#{$layout}:where(:not(.nds-horizontal-#{$bp}, .nds-#{$other}-#{$bp})), .nds-#{$layout}-#{$bp})';
 }

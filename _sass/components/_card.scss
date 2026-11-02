@@ -532,10 +532,10 @@
   // ==============================================
 
   .nds-card-actions {
-    @include action-row;
     align-items: flex-start;
     width: 100%;
     margin-top: auto;
+    @include action-row;
   }
 }
 

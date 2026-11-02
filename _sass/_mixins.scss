@@ -157,7 +157,10 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 // collapsed to icon-only, so it keeps its accessible name (display:none drops it).
 // $important: for a utility that must beat a component's own rule on the same element.
 @mixin label-hidden($important: false) {
-  $i: if($important, !important, null);
+  $i: null;
+  @if $important {
+    $i: !important;
+  }
   position: absolute $i;
   width: 1px $i;
   height: 1px $i;

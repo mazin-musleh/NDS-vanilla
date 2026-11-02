@@ -40,7 +40,10 @@ $inline: false !default;
 
 // var() with a literal fallback for the inline; bare var() for crit.
 @function v($token, $fallback) {
-    @return if($inline, var(#{$token}, $fallback), var(#{$token}));
+    @if $inline {
+        @return var(#{$token}, $fallback);
+    }
+    @return var(#{$token});
 }
 
 // ── Pre-crit skeleton colors ──────────────────────────────────────────────
