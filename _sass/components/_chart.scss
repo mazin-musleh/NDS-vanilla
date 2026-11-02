@@ -21,6 +21,7 @@
 
     @include dark {
         --_chart-grid-color: var(--chart-grid-color, var(--colors-neutral-700));
+        --_chart-band-color: var(--chart-band-color, var(--colors-alpha-white-10));
         --_chart-color-1: var(--chart-color-1, var(--_chart-type-color-1, var(--colors-primary-600)));
         --_chart-color-2: var(--chart-color-2, var(--_chart-type-color-2, var(--colors-primary-400)));
         --_chart-color-3: var(--chart-color-3, var(--_chart-type-color-3, var(--colors-neutral-200)));
@@ -29,6 +30,8 @@
         --_chart-color-6: var(--chart-color-6, var(--_chart-type-color-6, var(--colors-primary-300)));
     }
     --_chart-text: var(--chart-text, var(--text-primary-paragraph));
+    --_chart-band-color: var(--chart-band-color, var(--colors-alpha-black-10));
+    --_chart-band-edge-color: var(--chart-band-edge-color, var(--border-neutral-primary));
     --_chart-label: var(--chart-label, var(--text-default));
     --_chart-radius: var(--chart-radius, var(--radius-md));
     --_chart-tooltip-bg: var(--chart-tooltip-bg, var(--background-menu));
@@ -118,6 +121,22 @@
 .nds-chart-gridline {
     stroke: var(--_chart-grid-color);
     stroke-width: 1;
+}
+
+// yaxis.band: the range strip behind the series, such as a normal range.
+.nds-chart-band {
+    fill: var(--_chart-band-color);
+}
+
+// Drawn over the series, so a bar never hides the limit; clicks pass through to the chart.
+.nds-chart-band-edges {
+    pointer-events: none;
+}
+
+.nds-chart-band-edge {
+    stroke: var(--_chart-band-edge-color);
+    stroke-width: 1.5;
+    stroke-dasharray: 6 4;
 }
 
 .nds-chart-axis-label {
@@ -269,6 +288,13 @@
     height: 10px;
     border-radius: 50%;
     flex-shrink: 0;
+}
+
+// The band's swatch: its own fill, squared like the strip it names.
+.nds-chart-legend-band {
+    border-radius: var(--radius-xs);
+    background-color: var(--_chart-band-color);
+    border: 1.5px dashed var(--_chart-band-edge-color);
 }
 
 .nds-chart-legend-label {

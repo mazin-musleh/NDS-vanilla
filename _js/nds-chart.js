@@ -25,6 +25,7 @@
  *   - Colours come from --chart-color-1…6 on the element and repeat past six. Pass
  *     opts.colors to override.
  *   - The instance lives on the element as el.ndsChart.
+ *   - A point is a number: null or a missing one draws as 0, with no gap in the line.
  */
 /**
  * NDS Chart Component — Vanilla SVG Charts
@@ -370,13 +371,20 @@
             const xStrategy = this._getXAxisStrategy(catLabels, provisional.plotW);
             const layout = this._computeLayout(wrap, height, xStrategy.extraPad, xStrategy.startReach);
 
-            const scale = computeScale(seriesList, catCount);
+            let scale = computeScale(seriesList, catCount);
+            // The scale reaches the band's ends, so its edges show.
+            const band = this._options.yaxis?.band;
+            const bandEnds = [band?.from, band?.to].filter(Number.isFinite);
+            if (bandEnds.some(value => value > scale.max || value < scale.min)) {
+                scale = getNiceScale(Math.min(scale.min, ...bandEnds), Math.max(scale.max, ...bandEnds), 5);
+            }
             const svg = this._buildSvg(layout, ariaLabel);
 
             if (this._options.grid?.show) this._renderGrid(svg, scale, layout);
+            const bandEdges = bandEnds.length ? this._renderBand(svg, band, scale, layout) : null;
             if (this._options.yaxis?.show) this._renderYAxis(svg, scale, layout);
 
-            return { seriesArr: seriesList, catCount, catLabels, L: layout, scale, svg, xStrategy };
+            return { seriesArr: seriesList, catCount, catLabels, L: layout, scale, svg, xStrategy, bandEdges };
         }
 
         _renderGrid(svg, scale, layout) {
@@ -388,6 +396,29 @@
                     class: 'nds-chart-gridline',
                 }));
             });
+        }
+
+        // A strip from band.from to band.to behind the series; a missing end runs to the plot's edge.
+        // Returns the dashed edges, which the caller draws last, over the bars and lines.
+        _renderBand(svg, band, scale, layout) {
+            const clamp = value => Math.min(Math.max(value, scale.min), scale.max);
+            const top = this._getValueY(clamp(band.to ?? scale.max), scale, layout);
+            const bottom = this._getValueY(clamp(band.from ?? scale.min), scale, layout);
+            if (bottom - top < 1) return null;
+            svg.appendChild(buildSvgElement('rect', {
+                x: layout.padLeft, y: top, width: layout.plotW, height: bottom - top, class: 'nds-chart-band',
+            }));
+            const edges = buildSvgElement('g', { class: 'nds-chart-band-edges' });
+            [band.from, band.to].filter(value => Number.isFinite(value) && value >= scale.min && value <= scale.max).forEach(value => {
+                const y = this._getValueY(value, scale, layout);
+                edges.appendChild(buildSvgElement('line', { x1: layout.padLeft, y1: y, x2: layout.padLeft + layout.plotW, y2: y, class: 'nds-chart-band-edge' }));
+            });
+            const range = band.from == null ? `≤ ${this._formatValue(band.to)}`
+                : band.to == null ? `≥ ${this._formatValue(band.from)}`
+                : `${this._formatValue(band.from)} – ${this._formatValue(band.to)}`;
+            // The label goes in the legend, where no point can cover it; the range is said to a screen reader.
+            svg.setAttribute('aria-label', `${svg.getAttribute('aria-label')}. ${band.label || ''} ${range}`.replace(/\s+/g, ' ').trim());
+            return edges;
         }
 
         _renderYAxis(svg, scale, layout) {
@@ -629,7 +660,7 @@
             });
             if (!context) return;
 
-            const { seriesArr: seriesList, catCount, catLabels, L: layout, scale, svg, xStrategy } = context;
+            const { seriesArr: seriesList, catCount, catLabels, L: layout, scale, svg, xStrategy, bandEdges } = context;
             const groupW = layout.plotW / catCount;
             const gapOffset = (groupW * (bar?.gap ?? 0.3)) / 2;
             const usableW = groupW - gapOffset * 2;
@@ -690,6 +721,7 @@
                 this._renderXLabels(svg, catLabels, xPositions, layout, xStrategy);
             }
 
+            if (bandEdges) svg.appendChild(bandEdges);
             wrap.appendChild(svg);
         }
 
@@ -728,7 +760,7 @@
             });
             if (!context) return;
 
-            const { seriesArr: seriesList, catCount, catLabels, L: layout, scale, svg, xStrategy } = context;
+            const { seriesArr: seriesList, catCount, catLabels, L: layout, scale, svg, xStrategy, bandEdges } = context;
 
             // Pre-compute x-positions (shared by points and x-labels)
             const xPositions = catLabels.map((_, category) => {
@@ -996,6 +1028,7 @@
                 this._renderXLabels(svg, catLabels, xPositions, layout, xStrategy, true);
             }
 
+            if (bandEdges) svg.appendChild(bandEdges);
             wrap.appendChild(svg);
         }
 
@@ -1040,6 +1073,13 @@
                 item.appendChild(buildHtmlElement('span', 'nds-chart-legend-label', name));
                 legend.appendChild(item);
             });
+            const band = this._options.yaxis?.band;
+            if (!isPie && band?.label && [band.from, band.to].some(Number.isFinite)) {
+                const item = buildHtmlElement('div', 'nds-chart-legend-item');
+                item.appendChild(buildHtmlElement('span', 'nds-chart-legend-marker nds-chart-legend-band'));
+                item.appendChild(buildHtmlElement('span', 'nds-chart-legend-label', band.label));
+                legend.appendChild(item);
+            }
 
             return legend;
         }

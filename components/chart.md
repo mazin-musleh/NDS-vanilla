@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "02/11/2026 - 10:16 PM"
 ---
 
 <section id="chart-overview" class="nds-content-section nds-doc-overview">
@@ -87,6 +87,10 @@ NDS.Chart.create('#chart-root', {
 | Axes (any) | Titles (hint: A title on the y axis and on the x axis) | `xaxis: { title: 'Month' }` | `create({ type: 'line' })` | The same choice: the x axis title, on a line chart |
 | Axes (any) | No y axis | `yaxis: { show: false }` | `create({ type: 'bar' })` | Hides the value labels. Use it with Values, so the numbers still show |
 | Axes (any) | No y axis | `yaxis: { show: false }` | `create({ type: 'line' })` | Hides the value labels. A line chart then shows its values only in the tooltip |
+| Band | Range (hint: A shaded range behind the series, such as a target) | `yaxis.band: { from: 100, to: 200, label: 'Target' }` | `create({ type: 'bar' })` | Shades the range from 100 to 200 behind the bars, and names it in the legend |
+| Band | Range (hint: A shaded range behind the series, such as a target) | `yaxis.band: { from: 100, to: 200, label: 'Target' }` | `create({ type: 'line' })` | The same, on a line chart |
+| Band | Up to (hint: An open range with only a top, such as a normal range) | `yaxis.band: { to: 200, label: 'Normal' }` | `create({ type: 'bar' })` | Shades everything up to 200. Leave out `to` instead for a range with only a bottom |
+| Band | Up to (hint: An open range with only a top, such as a normal range) | `yaxis.band: { to: 200, label: 'Normal' }` | `create({ type: 'line' })` | The same, on a line chart |
 | Stacked | Stacked (hint: One bar per category, series on top of each other) | `bar: { stacked: true }` | `create({ type: 'bar' })` | Stacks the series in one bar per category. Use it when the total matters as much as each part |
 | Values | Values (hint: The value above each bar) | `dataLabels: { show: true }` | `create({ type: 'bar' })` | Writes the value above each bar. A stacked bar shows its total |
 | No percentages | No percentages | `dataLabels: { show: false }` | `create({ type: 'pie' })` | Hides the percentage on each slice. The tooltip still shows it |
@@ -262,6 +266,7 @@ NDS.Chart.create('#chart-days-root', {
 - Use a bar chart instead of a pie when the slices are close in size. Bars make small differences easier to see.
 - Set axis titles that name what the numbers count. Without them, only the legend explains the chart.
 - Set `dataLabels.format` when the values have a unit, such as `%` or SAR.
+- Mark a normal range or a target with `yaxis.band`, not with two flat series: a band shows an open range, and it does not join the tooltip.
 - Put a heading above the chart, and the key numbers in text or a [table](../components/table) near it. Put an `aria-label` on the chart element that says what it shows, such as `aria-label="Visitors by month, 2026"`. Without one, the SVG label says only "Bar chart", "Line chart" or "Chart". The chart has no keyboard access.
 - Call `destroy()` before you remove a chart in a single-page app. It removes the chart's observers and listeners.
 
@@ -298,6 +303,8 @@ Set them on the chart or on any parent.
 |---|---|---|
 | `--chart-color-1` to `--chart-color-6` | shades of the primary color, in an order for each type | The series or slice colors. The seventh series uses color 1 again. The `colors` option wins over them. |
 | `--chart-grid-color` | `--colors-neutral-100`, `--colors-neutral-700` in dark mode | The grid lines. |
+| `--chart-band-color` | `--colors-alpha-black-10`, `--colors-alpha-white-10` in dark mode | The `yaxis.band` fill and its legend swatch. Set a status color, such as `--background-success-light`, when the range means good or bad, or `transparent` for the dashes alone. |
+| `--chart-band-edge-color` | `--border-neutral-primary` | The dashed line at each end of the `yaxis.band`, drawn over the series. |
 | `--chart-text` | `--text-primary-paragraph` | The axis labels and titles, and the crosshair. |
 | `--chart-label` | `--text-default` | The values above the bars, the legend and the tooltip text. |
 | `--chart-pie-label-1` to `--chart-pie-label-6` | `--text-oncolor-primary`, black on slices 3 and 4 | The percentage on each slice. Change it when you change its slice color. |
@@ -314,7 +321,7 @@ Set them on the chart or on any parent.
 | Option | Default | Effect |
 |---|---|---|
 | `type` | `'bar'` | `'bar'`, `'line'`, `'pie'` or `'donut'`. |
-| `series` | required | Bar and line: an array of `{ name, data }`, one per series. Pie and donut: an array of numbers, one per slice. |
+| `series` | required | Bar and line: an array of `{ name, data }`, one per series. Pie and donut: an array of numbers, one per slice. A point is a number: `null` or a missing point draws as 0, with no gap in the line. |
 | `labels` | `1`, `2`, …, pie and donut `Item 1`, `Item 2`, … | Bar and line: the x axis categories. Pie and donut: the slice names. |
 | `height` | `350`, pie and donut `300` | The height in pixels. A pie or donut is at most this tall. |
 | `colors` | the `--chart-color-*` properties | An array of colors, used in order and repeated. |
@@ -328,6 +335,7 @@ Set them on the chart or on any parent.
 | `grid.show` | `true` | Bar and line: the horizontal grid lines. |
 | `yaxis.show` | `true` | Bar and line: the value labels. |
 | `yaxis.title` | `''` | Bar and line: the title beside the y axis. |
+| `yaxis.band` | none | Bar and line: a strip behind the series, such as a normal range, with a dashed line at each end it has: `{ from, to, label }`. Leave out `from` or `to` for an open range, such as `{ to: 200 }`. The scale grows to show both ends. The `label` names the strip in the legend, and the chart's name tells a screen reader its range. |
 | `xaxis.show` | `true` | Bar and line: the category labels. |
 | `xaxis.title` | `''` | Bar and line: the title under the x axis. |
 | `xaxis.labelRotate` | `'auto'` | `'auto'` turns the labels 45 degrees when they do not fit. A number sets a fixed angle. The angle is mirrored right to left. |
