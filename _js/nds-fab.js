@@ -123,6 +123,8 @@
     // `override` forces a position, ignoring the FAB's own data-fab-side.
     function register(fab, override) {
         if (!fab) return null;
+        // Before the dock exists: its first style must already carry the tuck, or it slides out.
+        setupRuntime();
         // Mark where the FAB was authored before the first move, so destroy() can put it back
         // and a framework holding it still finds its spot. A re-register (a direction flip
         // re-routes every FAB) keeps the first mark: markHome() skips a node already moved.
@@ -132,7 +134,6 @@
         [...slot.children].sort((left, right) => order(left) - order(right)).forEach(child => slot.appendChild(child));
         fab.removeAttribute('hidden');   // reveal now that it's docked (it ships `hidden` to avoid a pre-route flash)
         fab.setAttribute(INIT_ATTRIBUTE, 'true');
-        setupRuntime();
         return slot;
     }
 
@@ -213,18 +214,23 @@
         // Two reasons to tuck, one attribute: the page bottom nearing, or a hero
         // reaching into the bottom band the docks occupy (a tall stacked hero on
         // a phone). Either alone keeps the docks out.
-        let bottomNear = false, heroUnder = false;
+        // Skip on a short page (sentinel always in view) so the FAB isn't
+        // hidden permanently — only tuck when there's room to scroll.
+        const scrollable = () => document.documentElement.scrollHeight - window.innerHeight > 4;
+        const hero = document.querySelector('.nds-hero-section');
+        // Seeded from rects now: the observers report a frame late, and the FAB
+        // is revealed this task, so it would paint, then slide out.
+        const vh = window.innerHeight, heroRect = hero?.getBoundingClientRect();
+        let bottomNear = scrollable() && sentinel.getBoundingClientRect().top <= vh + 120;
+        let heroUnder = !!heroRect && heroRect.top < vh && heroRect.bottom > vh * 0.85;
         const syncTucked = () => document.documentElement.toggleAttribute('data-fab-tucked', bottomNear || heroUnder);
+        syncTucked();
         runtimeOffs.push(NDS.onIntersect(sentinel, (entry) => {
-            // Skip on a short page (sentinel always in view) so the FAB isn't
-            // hidden permanently — only tuck when there's room to scroll.
-            const scrollable = document.documentElement.scrollHeight - window.innerHeight > 4;
-            bottomNear = entry.isIntersecting && scrollable;
+            bottomNear = entry.isIntersecting && scrollable();
             syncTucked();
         }, { rootMargin: '0px 0px 120px 0px' }));
         // Root shrunk to the viewport's bottom 15%: the hero counts only while it
         // actually sits under the docks, not merely while it is on screen.
-        const hero = document.querySelector('.nds-hero-section');
         if (hero) runtimeOffs.push(NDS.onIntersect(hero, (entry) => {
             heroUnder = entry.isIntersecting;
             syncTucked();
