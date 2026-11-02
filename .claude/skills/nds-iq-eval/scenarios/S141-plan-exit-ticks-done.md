@@ -11,4 +11,4 @@
   - MUST NOT: leave a resolved box open; delete a box; keep two open boxes for one decision.
   - cite: "resolved as `- [x]`, never deleted"
 - floor: not run
-- baseline: PASS 2026-11-02 scoped (Sonnet 5.5): ticks all three with where, keeps the one dev box open, reads back.
+- baseline: PASS 2026-11-02 scoped (Sonnet 5.5): ticks all three with where, keeps the one dev box open, reads back. WATCH field ×1 more (2026-11-02, rig 4 run 3: the Chrome row says it stays In Progress, with the mini cart box open, under an `Awaiting Verification` status).
