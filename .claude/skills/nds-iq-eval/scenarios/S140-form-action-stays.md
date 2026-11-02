@@ -12,4 +12,4 @@
   - cite: Port row: "keep requirements and project contracts"; Init doc Field Values (React 19 form action)
 - grading note: tested 2026-11-02 (React 19.3.1, StrictMode, no `data-ajax`): NDS blocks an invalid submit before the action, the action runs once per valid submit, `setStatus` shows its errors. The Init doc's Field Values now says so.
 - floor: not run
-- baseline: PASS 2026-11-02 scoped (Sonnet 5.5): keeps `<form action>`, no `data-ajax`, `setStatus` from an effect on `state`, cites the new Init doc line. WATCH field ×3 (rig 8 runs 5, 6 and 7); run 7 ran on the Init doc line and still swapped the action for onSubmit.
+- baseline: PASS 2026-11-02 scoped (Sonnet 5.5): keeps `<form action>`, no `data-ajax`, `setStatus` from an effect on `state`, cites the new Init doc line. WATCH field ×4 (rig 8 runs 5–8); runs 7 and 8 ran on the Init doc line and still swapped the action for onSubmit, run 8 blaming the reset. The Init doc gained a tested code example after run 8.

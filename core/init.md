@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 08:50 PM"
+last_edit: "02/11/2026 - 11:56 PM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -181,6 +181,50 @@ React runs no `onChange` for a hidden input, such as Custom Select's `.nds-selec
 A React 19 form action works with NDS validation: keep `<form action>` and `useActionState`, and leave `data-ajax` off. NDS checks the fields when the form submits, and a form with a field that fails never reaches the action. Show the errors the action returns with `NDS.Form.setStatus()`, from an effect on its state.
 
 React resets the form each time the action returns, also when it returns errors. The NDS fields go back to their starting values with it, as on any form reset. To keep what the user typed, return it in the state and write it back.
+
+<script type="text/html" id="init-form-action-js" data-canon data-lang="js">
+async function createTicket(previous, formData) {
+  const values = Object.fromEntries(formData);
+  const response = await fetch('/api/tickets', { method: 'POST', body: formData });
+  if (response.status === 422) return { values, errors: (await response.json()).errors };
+  return { values: {} };
+}
+
+function NewTicket() {
+  const [state, formAction, pending] = useActionState(createTicket, { values: {} });
+  const form = useRef(null);
+
+  useEffect(() => {
+    const el = form.current;
+    window.NDS?.init.mount(el);
+    return () => window.NDS?.init.destroy(el);
+  }, []);
+
+  // React has reset the form: write back what the user typed, then show each error on its field.
+  useEffect(() => {
+    const el = form.current;
+    for (const [name, value] of Object.entries(state.values)) {
+      const input = el.elements.namedItem(name);
+      if (input) window.NDS?.setValue(input, value);
+    }
+    for (const [name, message] of Object.entries(state.errors || {})) {
+      const field = el.elements.namedItem(name)?.closest('.nds-form-container');
+      if (field) window.NDS?.Form.setStatus(field, 'error', { message });
+    }
+  }, [state]);
+
+  return (
+    <form ref={form} className="nds-form" action={formAction}>
+      {/* the NDS fields, each with a name */}
+      <button type="submit" className="nds-btn nds-primary" disabled={pending}>
+        <span className="nds-label">Create</span>
+      </button>
+    </form>
+  );
+}
+</script>
+
+React 18 and other frameworks have no form actions: submit with `data-ajax` and the `nds:form:valid` event, as [Forms](../components/form) shows.
 
 ### Events
 {: .nds-block-title}
