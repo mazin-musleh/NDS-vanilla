@@ -251,6 +251,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Top Bar** — Today, the clock and the weather are [Meta](https://mazin-musleh.github.io/NDS-vanilla/components/meta.html) lines, at Meta's LG size: 16px at every width (the text shrank to 12–14px on tablets). `nds-md` or `nds-sm` on the item's `.nds-meta` picks a smaller one.
 
 ### Fixed
+- **Section** — An image in `nds-section-image` moves above the head when it leaves the head less than 13rem, and a wide image shrinks to fit the section. On a phone, a 120px image squeezed the title into a narrow column, and a wide image was cut off.
 - **Accordion, Breadcrumb, Filter, Pagination and Stepper** — `destroy()` on a component that stays in the page leaves it as it is. Before, the loading bars came back over it, or over a filter's items. A later `init()` or `create()` sets it up again, as before.
 - **Main Navigation** — A navigation that a page removes or hides no longer runs its overflow check about ten times a second for as long as the page stays open. The check now waits until the navigation shows again.
 - **Alert** — A `.nds-alert-placeholder` you place yourself stays in the page when its last toast closes, so the next toast for that position lands in it again. The script removed it, and later toasts went to a new placeholder at the end of the page.

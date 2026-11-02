@@ -52,6 +52,9 @@
     .nds-section-image~& {
         text-align: start;
         align-self: center;
+        // A reading-width floor: an image that leaves less wraps above the
+        // head instead of squeezing the text.
+        min-width: 13rem;
     }
 }
 
@@ -193,6 +196,7 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    max-width: 100%;
     margin-bottom: 0;
 }
 

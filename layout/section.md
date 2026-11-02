@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 05:53 PM"
+last_edit: "02/11/2026 - 12:11 PM"
 ---
 
 <section id="section-overview" class="nds-content-section nds-doc-overview">
@@ -297,7 +297,7 @@ A section can hold a float action and a standard action. The standard action the
 
 ### Image
 
-A `nds-section-image` before the head holds a small image or an [avatar](../components/avatar). It sits beside the head, and the head centers on it. An avatar in it is 120px, and 80px below 600px.
+A `nds-section-image` before the head holds a small image, a logo, an illustration or an [avatar](../components/avatar). It sits beside the head, and the head centers on it. When the head would get narrower than 13rem, the image moves above it, and a wide image shrinks to fit the section. An avatar in it is 120px, and 80px below 600px.
 
 ### Center
 
@@ -400,6 +400,8 @@ A `nds-section-image` before the head holds a small image or an [avatar](../comp
 - Stack wrappers only in card view or on a striped page, where the parts must share one surface.
 - Leave a stacked section without `nds-flex` and `--gap`. The section already spaces its wrappers, so a gap doubles every break. Set `--section-wrapper-gap` to change the space.
 - Use a horizontal section where a short text and an image sit side by side, such as a feature or a call to action.
+- Put a picture in `nds-section-image`, before the head: a photo, an avatar, a logo, a cover or an illustration. A picture never goes in the title.
+- Put an icon that marks the title in the title: a featured icon with `nds-section-icon`, before the text. Only a [status section](status-section) puts an icon before the head.
 - Striping counts sections, not wrappers. When you merge sections into one, check the stripes of the sections below it.
 - Use a float action for a secondary action when the head has room. Use a standard action for a main call to action.
 - Use a section action only for an action on that section's content. Put an action for the whole page, such as a link back to a list, in its own section. Put the section action in the head or right after it; put it in the body only when it acts on the content just above it.
@@ -432,7 +434,7 @@ A `nds-section-image` before the head holds a small image or an [avatar](../comp
 | `nds-section-meta` | A `<div>` in `.nds-section-head` | A row that holds a `nds-section-tags` and a `nds-section-rating`. The [hero](../ui-shell/hero) uses it |
 | `nds-full` | `.nds-section-title`, `.nds-section-subtitle` or `.nds-section-description` | Removes the 720px width limit |
 | `nds-full-width` | Any element in a section | Runs to the edges of the screen, past the section padding |
-| `nds-section-icon` | An element beside `.nds-section-head` | Centers its content, as `nds-section-image` does. In the title, it is the title icon |
+| `nds-section-icon` | A featured icon in `.nds-section-title`, before the text. In a [status section](status-section), an element before `.nds-section-head` | In the title, an icon that grows with the title. In a status section, the box that holds the feedback chip |
 {: .nds-table .nds-responsive}
 
 ### CSS Custom Properties

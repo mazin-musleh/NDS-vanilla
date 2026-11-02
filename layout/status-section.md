@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.10.0"
 updated: "1.12.x"
-last_edit: "23/10/2026 - 03:54 PM"
+last_edit: "02/11/2026 - 12:11 PM"
 ---
 
 <section id="status-overview" class="nds-content-section nds-doc-overview">
@@ -174,6 +174,7 @@ Pick another component when:
 - Write the outcome in the title and what happens next in the description. Keep both short.
 - Pick the status by meaning, not by color: `success` for work that completed, `error` for work that failed, `critical` for a failure the user must act on now, `warning` for work that needs attention, `info` for a plain notice.
 - Use an illustration only on a page with its own artwork, and a chip everywhere else. Never use both.
+- Put the feedback chip in `nds-section-icon` and an illustration in `nds-section-image`, both before the head.
 - Give an illustration an empty `alt` when the title says the same thing.
 - Give the user a way out in the action row: back to the home page, back to the service, or try again. Never ship a status page with no link.
 - Make one action primary. A second action takes a secondary style.
