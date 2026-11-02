@@ -11,4 +11,4 @@
   - MUST NOT: leave items 1 and 2 only in the plan; file item 3 as a bug.
   - cite: "`NDS-REPORT.md` holds NDS findings only … a reproducible bug"
 - floor: not run
-- baseline: PASS 2026-11-02 scoped (Sonnet 5.5): creates `NDS-REPORT.md`, files items 1 and 2 with version, instruction version and a generic repro, keeps item 3 out until it reproduces. WATCH field ×3 (rig 4 run 3, rig 8 run 6, rig 3 run 3).
+- baseline: PASS 2026-11-02 scoped (Sonnet 5.5): creates `NDS-REPORT.md`, files items 1 and 2 with version, instruction version and a generic repro, keeps item 3 out until it reproduces. WATCH field ×4 (rig 4 run 3, rig 8 runs 6 and 7, rig 3 run 3); run 7 had the verify tool from before its reminder.

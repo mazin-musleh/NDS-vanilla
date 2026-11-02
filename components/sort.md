@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 10:45 PM"
+last_edit: "02/11/2026 - 10:54 PM"
 ---
 
 <section id="sort-overview" class="nds-content-section nds-doc-overview">
@@ -270,7 +270,7 @@ One trigger holds the state for one key: the first click sorts ascending, the se
 ### Initial State
 {: .nds-block-title}
 
-When the server sends the items already sorted, write `data-state="sorted-asc"` or `"sorted-desc"` on the trigger of that order. Sort records the state without moving the items, and the next click goes on from that state. In `create()`, `initialState: { key, order }` does the same, and wins over the markup. A sort in the URL (`urlSync`) wins over both: Sort applies it and moves the state to its trigger, so a shared link opens in its own order.
+When the server sends the items already sorted, write `data-state="sorted-asc"` or `"sorted-desc"` on the trigger of that order. In a table, write it on the header cell (`th`) that holds the trigger, never on the button: Sort moves it from that cell on the next sort. Sort records the state without moving the items, and the next click goes on from that state. In `create()`, `initialState: { key, order }` does the same, and wins over the markup. A sort in the URL (`urlSync`) wins over both: Sort applies it and moves the state to its trigger, so a shared link opens in its own order.
 
 ### URL Persistence
 {: .nds-block-title}
