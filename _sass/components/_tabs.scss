@@ -422,9 +422,9 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
 // FULL-WIDTH RESPONSIVE OVERRIDES
 // ==============================================
 
-:is(.nds-content-layout.nds-card-view .nds-ghost, section > .nds-max-width) .nds-tabs:not(.nds-card) {
+:is(.nds-content-layout.nds-card-view .nds-ghost, :is(.nds-content-wrapper, .nds-hero-section, .nds-content-section) > .nds-breakout) .nds-tabs:not(.nds-card) {
   @include tablet(max) {
-    .nds-tab-content:not(.nds-card, :has(.nds-max-width)) {
+    .nds-tab-content:not(.nds-card) {
       padding-inline: var(--nds-viewport-padding);
     }
 

@@ -263,7 +263,7 @@ sidemenu_mode: false
             <h2 class="nds-section-title">More news</h2>
         </div>
     </div>
-    <div class="nds-section-body nds-max-width">
+    <div class="nds-section-body nds-breakout">
         <div class="nds-swiper" style="--max-slides: 3; --mid-slides: 2; --min-slides: 1; --peek: 40px">
             <div class="nds-swiper-wrapper">
                 <div class="nds-swiper-slide">

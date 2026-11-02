@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "02/11/2026 - 12:18 PM"
 ---
 
 <section id="swiper-overview" class="nds-content-section nds-doc-overview">
@@ -411,7 +411,7 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 - Give the slides in one swiper the same height. The tallest slide sets the height of the row.
 - Load the images of later slides with `data-src` and `data-srcset`, not `src`. Give the first image `fetchpriority="high"`.
 - Give a lazy image a width and a height, or an `aspect-ratio`. Before it loads it has no size of its own, so its skeleton does not show.
-- In a section, put the swiper in a breakout body: a section body with `nds-max-width`, after the wrapper. The row then runs to the edges of the page. See [Section](../layout/section#section-breakout-behavior).
+- In a section, put the swiper in a breakout body: a section body with `nds-breakout`, after the wrapper. The row then runs to the edges of the page. See [Section](../layout/section#section-breakout-behavior).
 - Add `--peek` when the slides do not fit on one page, so the user sees there is more.
 - Keep a hero to four slides or fewer. Few users reach the later ones.
 - Put one element in each spotlight slide, such as an image or a card. The spotlight shrinks and grows that one element.
@@ -467,7 +467,7 @@ Set these in the `style` of `.nds-swiper`. Set the bullet colors on the swiper o
 | `--min-slides` | `1` | Slides per view on a phone: narrower than 600px |
 | `--peek` | unset | Length of the next slide left showing, such as `40px`. `0px` is no peek |
 | `--gap` | `var(--spacing-xl)` | Space between slides |
-| `--padding` | `0px` | Space at each end of the row. Inside `.nds-max-width` it is the page padding, so the row runs to the screen edge and its first slide lines up with the content above it |
+| `--padding` | `0px` | Space at each end of the row. In a breakout body it is the page padding, so the row runs to the screen edge and its first slide lines up with the content above it |
 | `--total` | `1` | Number of slides. The script writes it |
 | `--swiper-bullet-default` | `var(--swiper-bullet-background-default)` | Bullet color |
 | `--swiper-bullet-default-hovered` | `var(--swiper-bullet-background-hovered)` | Bullet color on hover |

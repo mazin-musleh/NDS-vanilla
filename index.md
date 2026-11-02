@@ -147,7 +147,7 @@ bundle_sizes:
             <p class="nds-section-description">Components follow the DGA design tokens, typography, spacing, and interaction patterns. The templates below cover common government service screens. Copy one, add your content, and adapt it to your project.</p>
         </div>
     </div>
-    <div class="nds-section-body nds-max-width">
+    <div class="nds-section-body nds-breakout">
         <div class="nds-block">
             <div class="nds-swiper" data-swiper-loop style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:0px">
                 <div class="nds-swiper-wrapper">
@@ -206,7 +206,7 @@ bundle_sizes:
             <p class="nds-section-description">{{ examples | size }} full pages that show NDS components working together in government services.</p>
         </div>
     </div>
-    <div class="nds-section-body  nds-max-width">
+    <div class="nds-section-body nds-breakout">
         <div class="nds-block">
             <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:40px">
                 <div class="nds-swiper-wrapper">
@@ -275,7 +275,7 @@ bundle_sizes:
             <p class="nds-section-description">Theme packs for national occasions. One script tag applies a theme to the whole site. Remove the tag to restore the default.</p>
         </div>
     </div>
-    <div class="nds-section-body  nds-max-width">
+    <div class="nds-section-body nds-breakout">
         <div class="nds-block">
             <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:20px">
                 <div class="nds-swiper-wrapper">

@@ -113,7 +113,7 @@ last_edit: "24/10/2026 - 11:27 PM"
             <p class="nds-section-description">The courses with the most seats booked this term.</p>
         </div>
     </div>
-    <div class="nds-section-body nds-max-width">
+    <div class="nds-section-body nds-breakout">
         <div class="nds-swiper" style="--max-slides: 3; --mid-slides: 2; --min-slides: 1; --peek: 40px">
             <div class="nds-swiper-wrapper">
                 <div class="nds-swiper-slide">

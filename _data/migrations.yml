@@ -18,6 +18,7 @@
 - { kind: class, name: nds-inverted, scope: "&.nds-tag[data-status]", status: renamed, markup: true, use: nds-dark, since: "2.0.0", fix: "Use nds-dark." }
 - { kind: class, name: nds-inverted, scope: "&.nds-tag:not([data-status])", status: removed, markup: true, since: "2.0.0", fix: "The solid look is for status tags: add data-status and use nds-dark." }
 - { kind: class, name: nds-item-action, status: renamed, use: nds-definition-action, since: "2.0.0", fix: "Use nds-definition-action." }
+- { kind: class, name: nds-max-width, status: renamed, use: nds-breakout, since: "2.0.0", fix: "Use nds-breakout on the section body." }
 - { kind: class, name: nds-minimal, scope: "&:is(.nds-section-action, .nds-btn)", status: removed, markup: true, since: "2.0.0", fix: "Write data-hidden=\"sm sr\" on each button's label instead: on phones the button shows only its icon, square." }
 - { kind: class, name: nds-outline, scope: "&.nds-tag[data-status]", status: removed, markup: true, since: "2.0.0", fix: "Outline is a normal tag look: on a status tag use nds-ghost or nds-dark." }
 - { kind: class, name: nds-persona-desc, status: renamed, use: nds-persona-description, since: "2.0.0", fix: "Use nds-persona-description." }

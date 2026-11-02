@@ -171,7 +171,7 @@ sidemenu_mode: false
         <h2 class="nds-section-title">Related Services</h2>
         <p class="nds-section-description">Explore other government digital services that may be relevant to you.</p>
     </div>
-    <div class="nds-section-body nds-max-width">
+    <div class="nds-section-body nds-breakout">
         <div class="nds-block">
             <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:40px">
                 <div class="nds-swiper-wrapper">

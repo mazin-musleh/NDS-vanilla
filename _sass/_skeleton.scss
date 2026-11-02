@@ -324,15 +324,15 @@ tbody[data-filter-items]:not([data-nds-filter-initialized], .nds-paged-content) 
    Every section (hero, content, content-wrapper) gets the same horizontal
    viewport gutter — clamps to the outer viewport-padding, with a max-width
    stop. .nds-full-width children break out to the full viewport;
-   .nds-max-width children pull back to the gutter edge.
+   a .nds-breakout child pulls back to the gutter edge.
    :is() (not :where()) — keeps class-level specificity (0,1,0) so the
-   .nds-full-width / .nds-max-width descendants inherit (0,2,0), matching
+   .nds-full-width / .nds-breakout descendants inherit (0,2,0), matching
    the specificity main-CSS rules expect when adjusting these knobs. */
 :is(.nds-content-wrapper, .nds-hero-section, .nds-content-section) {
     --_wrapper-padding: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-max-width)) / 2));
     width: 100%;
     padding-inline: var(--_wrapper-padding);
-    // 100cqi = the content box: a .nds-max-width child's Swiper reads its pull-back from it.
+    // 100cqi = the content box: a .nds-breakout child's Swiper reads its pull-back from it.
     container-type: inline-size;
 
     .nds-full-width {
@@ -342,13 +342,14 @@ tbody[data-filter-items]:not([data-nds-filter-initialized], .nds-paged-content) 
 
     // Full gutter while the section is narrower than the max width (runs to the
     // screen edge); eases to half a gutter past it, so it never exceeds max width + one gutter.
-    .nds-max-width {
+    // Direct child only: a card's own .nds-breakout sits deeper.
+    > .nds-breakout {
         margin-inline: calc(min(var(--_wrapper-padding), (var(--nds-content-max-width) + var(--_wrapper-padding) - 100%) / 2) * -1);
     }
 }
 
 // MaxWidth 100% re-resolves against the body itself, so the cap never applies here.
-:is(.nds-content-layout.nds-full-width, body:has(.nds-content-layout.nds-full-width)) :is(.nds-content-wrapper, .nds-hero-section, .nds-content-section) .nds-max-width {
+:is(.nds-content-layout.nds-full-width, body:has(.nds-content-layout.nds-full-width)) :is(.nds-content-wrapper, .nds-hero-section, .nds-content-section) > .nds-breakout {
     margin-inline: calc(var(--_wrapper-padding) * -1);
 }
 

@@ -186,7 +186,7 @@ direction: ltr
                         followed by a call to action button and an image or an illustration on the left hand side.</p>
                 </div>
             </div>
-            <div class="nds-section-body nds-max-width">
+            <div class="nds-section-body nds-breakout">
                 <div class="nds-block">
                     <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:40px">
                         <div class="nds-swiper-wrapper">
@@ -397,7 +397,7 @@ direction: ltr
                     <p class="nds-section-description">Here you can add a brief description about the purpose of the portal.</p>
                 </div>
             </div>
-            <div class="nds-section-body nds-max-width">
+            <div class="nds-section-body nds-breakout">
                 <div class="nds-block">
                     <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1">
                         <div class="nds-swiper-wrapper">
@@ -590,7 +590,7 @@ direction: ltr
                     <h2 class="nds-section-title">Partner Section</h2>
                 </div>
             </div>
-            <div class="nds-section-body nds-max-width">
+            <div class="nds-section-body nds-breakout">
                 <div class="nds-block">
                     <div class="nds-swiper nds-middle" style="--max-slides:8; --mid-slides:4; --min-slides:2">
                         <div class="nds-swiper-wrapper">

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 12:11 PM"
+last_edit: "02/11/2026 - 12:18 PM"
 ---
 
 <section id="section-overview" class="nds-content-section nds-doc-overview">
@@ -128,7 +128,7 @@ Pick another component when:
       </a>
     </div>
   </div>
-  <div class="nds-section-body nds-max-width">
+  <div class="nds-section-body nds-breakout">
     <img src="../assets/img/riyadhcenter.webp" alt="The service center in Riyadh">
   </div>
 </section>
@@ -232,7 +232,7 @@ The standard action goes right after the head. The float action goes first in th
 | Structure | Horizontal (id: horizontal) | canon `#section-horizontal` | — | The head beside the body on a desktop. The action goes in the head, after the description |
 | Structure | Stacked (id: stacked) (hint: Several titled parts in one section) | canon `#section-stacked` | — | Several wrappers in one section, on one background |
 | Structure | Profile (id: profile) | canon `#section-profile` | — | A person: a photo in `nds-section-image`, the name as the title, the role, a contact action and the details in a [definition list](../components/definition-list) |
-| Structure | Breakout (id: breakout) (hint: A body that runs to the section edges) | canon `#section-breakout` | — | A body after the wrapper, with `nds-max-width`, that runs to the section edges. For a swiper or a wide image |
+| Structure | Breakout (id: breakout) (hint: A body that runs to the section edges) | canon `#section-breakout` | — | A body after the wrapper, with `nds-breakout`, that runs to the section edges. For a swiper or a wide image |
 | Action | None (default) | — | — | No action |
 | Action | Standard (not: horizontal, stacked, profile, breakout) | canon `#section-action` | `.nds-section-head` (after) | Beside the head on a desktop. On a phone it takes its own row, and each button is full width |
 | Action | Float (not: horizontal, stacked, profile, breakout) (hint: In the end corner of the head, beside the title) | canon `#section-float-action` | `.nds-section-head` (start) | In the head, first. It sits in the end corner, and the title and the description wrap around it |
@@ -281,7 +281,7 @@ Each `nds-section-wrapper` after the first starts a new titled block, with `--se
 ### Breakout
 {: #section-breakout-behavior}
 
-A body with `nds-max-width` cancels the section's side padding, so its content runs to the section edges. Put it after the wrapper, not inside it. `nds-full-width` on an element in a section goes further, to the edges of the screen. The two differ where the section is narrower than the screen, such as beside a side menu.
+A body with `nds-breakout` cancels the section's side padding, so its content runs to the section edges. Put it after the wrapper, as a direct child of the section, not inside the wrapper. `nds-full-width` on an element in a section goes further, to the edges of the screen. The two differ where the section is narrower than the screen, such as beside a side menu.
 
 ### Standard Action
 
