@@ -23,7 +23,7 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
   - **One footer actions pattern for Panel, Modal and Dropmenu (2026-11-01).** Three names, three behaviors today: Panel's `.nds-panel-footer` is a row that never stacks, so three `nds-full` buttons cut a long label on a phone (the cookie panel works around it with `nds-wrap` and natural-width buttons); Modal's footer is `.nds-card-actions`, which stacks full width on a phone with the main action on top (`_modal.scss:96`); Dropmenu's is `.nds-dropmenu-footer > hr.nds-divider + .nds-dropmenu-action`. Find one standard: the class name, when the row wraps or stacks (by the container's width, per `_sass/sass.md`), full or natural width, the main action's place, and a knob for each. Check how major libraries do footer actions first, then the parts that copy a footer today (cookies, accessibility, editor and table menus).
     - [x] Built 2026-11-01: rows wrap by button size; `nds-col` / new `nds-col-sm` stack. Form's `.nds-form-actions` joined. See `plans/action-row.md`.
   - **Consistency pass, plan and status in `plans/v2-consistency.md`**: all batches committed (batch 7 = `dca722a0`).
-    - [ ] Name to revisit before v2 ships: `nds-compact` on `.nds-content-layout` (the raised look: shadows, edges that hold the content). Kept on the owner's call: it feels smaller because the edges contain the content. Not yet released, so a better name costs no Migration row; it shares the word with the table's `nds-compact` (dense rows).
+    - [x] `nds-compact` on `.nds-content-layout` stays (owner, 2026-11-02): it feels smaller because the edges contain the content.
 
 ### Parked features (owner calls; after v2.0.0 unless noted)
 
