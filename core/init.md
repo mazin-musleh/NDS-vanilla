@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "02/11/2026 - 07:56 PM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -141,6 +141,8 @@ NDS is plain HTML, CSS and JS, so any stack can host it: a framework such as Rea
 Call `window.NDS?.init.mount(view)` after a view mounts, and `window.NDS?.init.destroy(view)` before it unmounts. Do not wait for `NDS.init.ready`, poll or retry before these calls. A view that mounts before NDS loads is found by NDS's own startup scan, and the `?.` skips each call while `NDS` does not exist yet.
 
 `destroy()` also works on a view the framework has already removed, so a cleanup that runs after the removal, such as React's `useEffect` cleanup, is in time. Keep the view's element in a variable when the effect runs: React has emptied the ref by the time the cleanup runs.
+
+In development, React's StrictMode runs each effect twice: mount, destroy, mount. NDS starts the view again after the destroy, so keep StrictMode on.
 
 Build rows with the framework, not with the `<template>` pattern in [Usage](#init-markup). The framework owns every node it renders.
 

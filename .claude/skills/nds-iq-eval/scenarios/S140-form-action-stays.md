@@ -1,0 +1,15 @@
+# S140 form-action-stays
+
+
+- mode: comprehension
+- rules: §Work modes, Port ("keep requirements and project contracts"); source: Init doc, Framework Views → Field Values (React 19 form actions); Form doc
+- provenance: 2026-11-02 rig 8 run 5 (Sonnet 5.5): the legacy New ticket form submits through a React 19 form action with `useActionState` (one submit, server 422 errors in state); the port replaced it with `data-ajax` and an `nds:form:valid` listener. Authored blind, before any sentence or doc line.
+- setup: Legacy port of a one-page React 19 dashboard, `whole plan`. Legacy `NewTicketModal.jsx`: `const [state, formAction, pending] = useActionState(createTicketAction, initial)`, `<form action={formAction} noValidate>`. The action validates, calls the API, and returns `{ errors: { title: '…' } }` on a 422. You are building the NDS modal's form.
+- prompt: Write the NDS form's opening tag and its submit wiring, and how a 422 error on the title reaches the field. Sketch the code.
+- rubric:
+  - MUST: keep the form action and `useActionState` as the one submit path; show `state.errors` on each field through the field's NDS status (the Form doc's status API), from an effect on `state`; read the Init doc's Field Values and the Form doc first.
+  - MUST NOT: replace the action with `data-ajax` and an `nds:form:valid` listener; run a second submit path beside the action.
+  - cite: Port row: "keep requirements and project contracts"; Init doc Field Values (React 19 form action)
+- grading note: HOLD. The rubric assumes NDS submit validation composes with a React form action. No doc says how, and it is untested (TODO). Run this scenario only once the Init or Form doc states it; until then a FAIL is a source finding, not a rules one.
+- floor: not run
+- baseline: UNMEASURED (new, held)
