@@ -16,7 +16,7 @@
  *                                      not: the server owns their result set. Prefer
  *                                      NDS.init.refresh(root),
  *                                      which calls this and every other affected component
- *   instance.setFilterValues(name, values) / .setSearchValue(text)   pick, and apply (a slider: one 'lo-hi')
+ *   instance.setFilterValues(name, values) / .setSearchValue(text)   pick, and apply (a slider: one 'lo-hi'; a date group: one 'from..to')
  *   instance.removeFilterValue(name, value) / .removeSearchFilter() / .resetRangeFilter(name)
  *   instance.renderFilter(name, values, type)     build a group's options from values
  *   instance.getCriteria()             a copy: {search, filters: {name: [values]}}
@@ -3187,7 +3187,8 @@
                 this._syncAllRadio(filterData);
             }
 
-            this._syncFilterCriteria(filterName);
+            // A date group sets its criteria itself: the picker holds no range with only an end day, so a read-back drops it.
+            if (!filterData.date) this._syncFilterCriteria(filterName);
             this._syncApplyButtonLabel();
             // See setSearchValue — commit, don't just repaint, so AJAX mode
             // re-fetches instead of showing chips for an unrequested filter.

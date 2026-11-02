@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 07:56 PM"
+last_edit: "02/11/2026 - 08:50 PM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -144,6 +144,8 @@ Call `window.NDS?.init.mount(view)` after a view mounts, and `window.NDS?.init.d
 
 In development, React's StrictMode runs each effect twice: mount, destroy, mount. NDS starts the view again after the destroy, so keep StrictMode on.
 
+A view the framework loads later, such as a `React.lazy` one or a route's code split, is a view of its own: call `mount` in its own effect when it mounts. A mount of the page at load runs before it exists. Keep the late load: NDS needs no view in the first bundle.
+
 Build rows with the framework, not with the `<template>` pattern in [Usage](#init-markup). The framework owns every node it renders.
 
 For the same reason, do not let a [Filter](../components/filter) `data-ajax` request swap in HTML: it replaces the results container. Answer with JSON, or stop the request in `nds:filter:request` and send your own. Then render the results with the framework.
@@ -176,7 +178,9 @@ A controlled React field sees each value that NDS writes, a checkbox and a switc
 
 React runs no `onChange` for a hidden input, such as Custom Select's `.nds-select-value` or a Date Picker's `.nds-date-value`: listen for its `change` event with `addEventListener`, through a ref. Do not give it a `value` or `defaultValue` prop either. React writes the prop again on a later render, over the value that NDS wrote. To start it with a value, write the value once after mount with `NDS.setValue`.
 
-React 19 resets a `<form>` after its form action succeeds. The NDS fields in it go back to their starting values with it, as on any form reset.
+A React 19 form action works with NDS validation: keep `<form action>` and `useActionState`, and leave `data-ajax` off. NDS checks the fields when the form submits, and a form with a field that fails never reaches the action. Show the errors the action returns with `NDS.Form.setStatus()`, from an effect on its state.
+
+React resets the form each time the action returns, also when it returns errors. The NDS fields go back to their starting values with it, as on any form reset. To keep what the user typed, return it in the state and write it back.
 
 ### Events
 {: .nds-block-title}

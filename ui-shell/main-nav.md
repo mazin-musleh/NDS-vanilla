@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "02/11/2026 - 08:44 PM"
 ---
 
 <section id="mainnav-overview" class="nds-content-section nds-doc-overview">
@@ -589,7 +589,7 @@ Below 960px, the actions move into the drawer, in one row at its bottom. An acti
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Same-Page Links</span>
-              <p class="nds-card-description">A link to a section of the same page closes the open menus, then scrolls to the section.</p>
+              <p class="nds-card-description">A link to a section of the same page closes the open menus, then scrolls to the section. A modal or a panel that opens, such as one a menu item opens, closes them too.</p>
             </div>
           </div>
         </li>
@@ -686,7 +686,7 @@ Below 960px, the actions move into the drawer, in one row at its bottom. An acti
 | `aria-expanded` | A dropdown's trigger | Write `false` in the markup. The script writes it when it is missing, sets `true` when the menu opens, and `false` when it closes |
 | `data-state="open"` | A dropdown's trigger | The script sets it when the menu opens, and removes it when the menu closes. Never write it: the current page is `current` |
 | `hidden` | `.nds-nav-menu` | Write it in the markup. The script removes it when the menu opens, and sets it again after the menu closes |
-| `data-modal-target` | A nav link | Opens the [Modal](../components/modal) with that id. Any modal that opens closes the open menus and the drawer |
+| `data-modal-target` | A nav link | Opens the [Modal](../components/modal) with that id. Any modal or panel that opens closes the open menus and the drawer |
 | `data-nav-actions-open` | `.nds-nav-collapse-content` | The script sets it while an action's menu is open in the drawer. The drawer's corners square off, and the links shrink to make room |
 | `data-nav-actions-empty` | `.nds-nav-collapse-content` | The script sets it while the actions row is empty or missing, and the show more arrow moves down to the drawer's bottom edge |
 | `data-nav-empty` | `ul.nds-nav-actions` | The script sets it while the row holds no action, such as below 960px when every action is pinned. The row is hidden while it is set |

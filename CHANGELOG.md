@@ -439,6 +439,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Loading** — A text bar hides its pseudo-elements, such as a required star or a divider line.
 - **Main Navigation** — a row-list menu stacks its links in a column below 960px; the brand gives way below 960px so the menu button stays on screen; the brand name and slogan have default colors; the drawer's show more arrow no longer covers the last link when every action is pinned; an avatar with initials in an icon-only item shows its initials; with auto-init off, the nav no longer switches to its phone layout before `initialize()`, so a framework hydrates the markup it rendered; Escape in an open menu or the phone drawer returns focus to its button.
 - **Main Navigation** — A drag on the link row no longer opens the link under the pointer.
+- **Main Navigation** — A panel that opens closes the open menus and the drawer, as a modal does. A menu item that opened a panel left the menu over it, with the page still locked.
 - **Main Navigation** — At a window exactly 960px wide, the nav shows its desktop layout, as the rest of the page does. It showed the phone layout.
 - **Main Navigation** — A menu closed during its open animation, such as with Escape, no longer keeps `opened` in its `data-state` after it has closed.
 - **Main Navigation** — With reduced motion, closing the drawer also closes the menu open inside it. The menu stayed open, with `aria-expanded="true"`, and showed open the next time the drawer opened.

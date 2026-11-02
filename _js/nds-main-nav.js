@@ -893,13 +893,15 @@
             if (e.target.closest('.nds-nav-toggler')) { e.preventDefault(); toggleNavbar(); }
         }, { signal });
 
-        // When a modal opens, dismiss any open nav drawer/dropdowns so the
-        // modal sits on a clean overlay. Closing the drawer cascades to
-        // close any dropdowns inside it via navbar.toggle().
-        document.addEventListener('nds:modal:opened', () => {
+        // When a modal or a panel opens, dismiss any open nav drawer/dropdowns so it
+        // sits on a clean overlay (a menu item that opens a panel left the menu over it).
+        // Closing the drawer cascades to close any dropdowns inside it via navbar.toggle().
+        const closeForOverlay = () => {
             if (isDrawerOpen()) toggleNavbar();
             else dropdown.closeAll();
-        }, { signal });
+        };
+        document.addEventListener('nds:modal:opened', closeForOverlay, { signal });
+        document.addEventListener('nds:panel:opened', closeForOverlay, { signal });
 
         // Same-page anchor navigation — close nav and scroll to target
         dom.nav?.addEventListener('click', (e) => {

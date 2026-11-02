@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "02/11/2026 - 08:44 PM"
 ---
 
 <section id="tabs-overview" class="nds-content-section nds-doc-overview">
@@ -410,6 +410,7 @@ The first tab is open in the markup: its `aria-selected` is `true`, and every ot
 - Pick Vertical when the labels must show at every width. Pick Rail when icons people know can stand in for the labels on a phone.
 - To show a count on a tab with an icon, such as new messages, call `NDS.setBadge(tab, count)`. It draws the count on the icon and adds it to the tab's name ("Inbox (2)").
 - Keep the tabs and the panels in the same order and the same number: tab one opens panel one.
+- To keep the open tab in the address, as a hash route does, set `location.hash` on `nds:tabs:change`, and on `hashchange` open the matching tab with `el.ndsTabs.goTo(index)`. Each switch is then a history entry, so Back opens the tab before it. `history.replaceState` drops the entry, and Back leaves the page.
 - Give the tab list an `aria-label`, and pair each tab and panel with `aria-controls` and `aria-labelledby`.
 - Build a long panel from `nds-block` parts with `nds-block-title` headings, so it reads in sections.
 - When one panel cannot show its content (not found, a failed load), put an [Alert](../components/alert) or [Empty](../components/empty) in it, never a [Status Section](../layout/status-section). The other tabs stay open to the user.

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "02/11/2026 - 08:47 PM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -812,7 +812,7 @@ Sort is not a filter value. Decide by what the server returns. All matching item
 | `NDS.Filter.getByTarget(id)` | The filter of an item container `id` |
 | `NDS.Filter.whenReady(element, callback)` | Runs `callback` with the filter, now or once it starts |
 | `NDS.Filter.refresh(container)` | Runs `refresh()` on each filter whose item container is `container`, is inside it, or holds it. Starts the filters of new surfaces in it first. Skips form-mode filters. `NDS.init.refresh(container)` calls it for you |
-| `setFilterValues(name, values)` | Picks these values in the group, and applies them. An empty array clears the group. On a slider group, pass one `lo-hi` string, for example `['200-1500']` |
+| `setFilterValues(name, values)` | Picks these values in the group, and applies them. An empty array clears the group. On a slider group, pass one `lo-hi` string, for example `['200-1500']`. On a date group, pass one `from..to` string of `YYYY-MM-DD` days, either end left out for an open range: `['2026-10-01..2026-10-15']`, `['..2026-10-15']` |
 | `setSearchValue(text)` | Sets the search term, and applies it |
 | `removeFilterValue(name, value)` | Removes one value, and applies the rest |
 | `removeSearchFilter()` | Clears the search term, and applies |
