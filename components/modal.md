@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 07:40 PM"
+last_edit: "02/11/2026 - 11:52 PM"
 ---
 
 <section id="modal-overview" class="nds-content-section nds-doc-overview">
@@ -89,6 +89,69 @@ Pick another component when:
   <div class="nds-card-content">
     <p>The service reviews a request within five working days. It may ask you for more documents during the review.</p>
     <p>A request that stays incomplete for 30 days closes. You can submit it again at any time.</p>
+  </div>
+  <div class="nds-card-actions nds-col-sm">
+    <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close>
+      <span class="nds-label">I agree</span>
+    </button>
+    <button type="button" class="nds-btn nds-secondary-outline nds-lg" data-modal-close>
+      <span class="nds-label">Cancel</span>
+    </button>
+  </div>
+</dialog>
+</script>
+<script type="text/html" id="modal-scroll-more" data-canon>
+<button type="button" class="nds-btn nds-primary nds-lg" data-modal-target="terms-modal">
+  <span class="nds-label">Open Modal</span>
+</button>
+<dialog id="terms-modal" class="nds-modal nds-card nds-stroke" aria-labelledby="terms-modal-title">
+  <div class="nds-card-header">
+    <div class="nds-card-featured-icon">
+      <span class="nds-featured-icon nds-circle nds-sm">
+        <i class="nds-icon nds-hgi-file-01" aria-hidden="true"></i>
+      </span>
+    </div>
+    <div class="nds-card-text">
+      <span class="nds-card-title" id="terms-modal-title">Terms of service</span>
+      <p class="nds-card-description">Read them to the end before you agree.</p>
+    </div>
+    <button type="button" class="nds-close nds-modal-close nds-btn nds-subtle nds-icon-only" aria-label="Close" data-i18n-aria-label="modal.close">
+      <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+    </button>
+  </div>
+  <div class="nds-card-content nds-scroll-more">
+    <div class="nds-scroll-more-content nds-prose">
+      <p>These terms apply to every request you submit through this service. By using the service, you agree to them.</p>
+      <h3>Your information</h3>
+      <p>You must give true and complete information, and keep it up to date while your request is open.</p>
+      <ul>
+        <li>A request with false information is closed, and the entity may take legal action.</li>
+        <li>Upload documents that are clear and complete, in PDF, JPG or PNG, up to 5 MB each.</li>
+        <li>A document in a language other than Arabic or English needs a certified translation.</li>
+      </ul>
+      <h3>How a request is reviewed</h3>
+      <p>The service reviews a request within five working days. It may ask you for more documents during the review.</p>
+      <ul>
+        <li>You get a text message and an email at each step of the review.</li>
+        <li>You have 10 working days to answer a request for more documents.</li>
+        <li>A request that stays incomplete for 30 days closes. You can submit it again at any time.</li>
+      </ul>
+      <h3>Fees and refunds</h3>
+      <p>The service fee is shown before you pay, and is charged when you submit the request.</p>
+      <ul>
+        <li>A request you cancel before the review starts is refunded in full within 14 days.</li>
+        <li>A request that is rejected is not refunded, except where the law says otherwise.</li>
+      </ul>
+      <h3>Your data</h3>
+      <p>The entity keeps your data for as long as the law requires, and uses it only to handle your request. It shares your data only with the government entities your request needs.</p>
+      <p>You can ask to see the data the entity holds about you, and to correct it, through the Contact Us page.</p>
+      <h3>Changes to these terms</h3>
+      <p>The entity may change these terms. A change applies to requests submitted after it is published, and the date of the last change is shown at the top of this page.</p>
+    </div>
+    <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+      <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
+      <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+    </button>
   </div>
   <div class="nds-card-actions nds-col-sm">
     <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close>
@@ -184,6 +247,7 @@ Every option goes on the `nds-modal` element. On a lazy modal, write it on the `
 |---|---|---|---|---|
 | Structure | Dialog (default) | — | — | A question or a short task, with a close button and two actions |
 | Structure | Header title (hint: The title beside the icon, over a form, a list or longer text) | canon `#modal-header-title` | — | A modal whose content is more than its message, such as a form, a list or terms to read. The title and description sit in the header beside the icon, as in a [Card](../components/card)'s header title, and the content holds the rest. A one-line title centers on the icon |
+| Structure | Scroll more (hint: Long content that fades at its edge, with a Show more button) | canon `#modal-scroll-more` | — | A modal whose content runs longer than the screen, such as terms to read. The content scrolls in a [Scroll More](../components/scroll-more): its edge fades while more is below, and Show more scrolls on. The header and the actions stay in view |
 | Structure | Status (demo: + size-sm) | canon `#modal-status` | — | The result of an action, centered, with a large icon and one action. It has no close button |
 | Structure | Lazy modal | canon `#modal-lazy` | — | The modal sits in a `<template>` and joins the page on the first click. For a large modal that most users never open |
 | Size | MD (default) | — | — | 600px wide. For a message with a short form |
@@ -387,6 +451,7 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
 - Do not open a modal from a modal. Change the flow so one modal holds the decision.
 - Write a title that names the action, and keep the content to one message or one task.
 - Put the title and description in the header, beside the icon, when the modal holds a form, a list, a table or longer text. Keep them in the content when they are the whole message, such as a confirm or a status.
+- For content longer than the screen, such as terms to read, use the Scroll more structure. Its edge fades while more is below, and Show more scrolls on, so the user sees there is more before reaching the actions.
 - With the title in the header, the icon is optional. Leave it out when the title is long, so the title gets the full width of the header.
 - Give the modal a clear primary action and a way out, such as Confirm and Cancel.
 - Give every modal an `id`, and give its trigger that `id` in `data-modal-target`.
@@ -489,6 +554,8 @@ The full API is in the banner of `_js/nds-modal.js`.
     <div class="nds-section-body nds-prose" markdown="1">
 
 - [Manage Records](../examples/manage-records): a large modal with a form to edit a record, and a small modal to confirm a delete.
+- [Scroll More](../components/scroll-more): the scrolling content of the Scroll more structure.
+- [Life Journey Template](../templates/life-journey-template): an intro modal whose slides scroll in a Scroll More.
 
 </div>
   </div>

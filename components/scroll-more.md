@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 03:47 PM"
+last_edit: "02/11/2026 - 11:52 PM"
 ---
 
 <section id="scroll-more-overview" class="nds-content-section nds-doc-overview">
@@ -473,6 +473,7 @@ The full API is in the banner of `_js/nds-scroll-more.js`.
     <div class="nds-section-body nds-prose" markdown="1">
 
 - [Tabs](../components/tabs): the tab row scrolls through Scroll More.
+- [Modal](../components/modal): the Scroll more structure scrolls long content, such as terms, in a Scroll More.
 - Every code block on this site: its row of language tabs is a Scroll More.
 
 </div>

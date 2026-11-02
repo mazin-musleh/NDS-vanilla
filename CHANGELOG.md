@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ## [Unreleased]
 
 ### Added
+- **Modal** — A Scroll more structure: long content, such as terms, scrolls in a [Scroll More](https://mazin-musleh.github.io/NDS-vanilla/components/scroll-more.html), with a fading edge and a Show more button, while the header and the actions stay in view. See the [Modal](https://mazin-musleh.github.io/NDS-vanilla/components/modal.html) page.
 - **Top Bar** — Expanders: a top bar button with `data-topbar-toggle` opens the `.nds-topbar-expander` that its `aria-controls` names. The expander is a strip that slides open below the bar and pushes the page down. One opens at a time: the open one slides closed first, then the new one opens. `NDS.Topbar` opens and closes them. The content goes in `.nds-topbar-expander-content`, and `--topbar-expander-padding` sets its spacing. The digital stamp is one. See the [Top Bar](https://mazin-musleh.github.io/NDS-vanilla/ui-shell/topbar.html) page.
 - **Clock** — `<time class="nds-clock">` shows the current time in the site's timezone, and writes it again at each new minute. A page can show any number of clocks. See the [Clock](https://mazin-musleh.github.io/NDS-vanilla/components/clock.html) page.
 - **Date** — `<time data-date-today>` shows today, and writes it again at the site's midnight. `data-date-format="long"` (or `format: 'long'`) writes the month's name in the word order of the page language. A change of `lang` on `<html>` writes every markup date again. See the [Date](https://mazin-musleh.github.io/NDS-vanilla/components/date.html) page.
@@ -449,6 +450,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Metric** — The metric's own width picks its layout, so charts and spacing match across cards of one size. From 400px wide, the value and the chart take half the row each; below that, the chart sits under the value. A trend text that does not fit beside its number goes to its own line, where it ran into the chart.
 - **Modal** — Focus moves into the modal when it opens and back to its trigger when it closes.
 - **Modal** — A modal closed, opened and closed again during its fade fires `nds:modal:closed` once, and the second fade runs to the end.
+- **Modal** — The scrolling content no longer cuts off a field's focus ring, or a radio's or checkbox's hover halo, at its edges.
 - **Multiselect** — a multiselect written with `data-state="disabled"` disables its menu button too.
 - **Multiselect** — A read-only multiselect's chips and Reset cannot change it. `destroy()` removes the chips and the menu it built, and closes an open menu. A field started again opens its menu. An icon-only menu button takes its name from `aria-label`.
 - **Multiselect** — In a narrow field, the menu button and the chips stay inside the border. A menu button that wraps to its own row fills the row, with corners that match the field.

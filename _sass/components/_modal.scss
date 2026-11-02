@@ -55,6 +55,24 @@
       // The card's flex:1 is a zero basis. Safari sizes this fit-content column
       // from the bases, so the content area collapsed to 0 there.
       flex-basis: auto;
+      // A gutter inside the scroll box, pulled back out by a margin so nothing moves: the box
+      // clipped a control's halo (half its size, 12px at most) and a focus ring at its edges.
+      --_modal-gutter-inline: min(var(--spacing-lg), var(--_card-padding-inline));
+      --_modal-gutter-block: min(var(--spacing-lg), var(--_card-gap));
+      margin: calc(-1 * var(--_modal-gutter-block)) calc(-1 * var(--_modal-gutter-inline));
+      padding: var(--_modal-gutter-block) var(--_modal-gutter-inline);
+
+      // With Scroll More, its inner box is the one that scrolls: the side gutter moves there.
+      &.nds-scroll-more {
+        overflow: visible;
+        margin-inline: 0;
+        padding-inline: 0;
+
+        > .nds-scroll-more-content {
+          margin-inline: calc(-1 * var(--_modal-gutter-inline));
+          padding-inline: var(--_modal-gutter-inline);
+        }
+      }
     }
 
     // Canonical markup keeps .nds-card-actions a SIBLING of .nds-card-content.
