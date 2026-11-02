@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 09:20 PM"
+last_edit: "02/11/2026 - 07:40 PM"
 ---
 
 <section id="switch-overview" class="nds-content-section nds-doc-overview">
@@ -229,7 +229,7 @@ Checked goes on one switch: the builder uses `#switch-1` or `#switch1`, but on a
 - Apply the change as soon as the switch moves. Do not add a Save button for a switch.
 - Use `nds-sm` in dense forms and tables, and `nds-lg` on touch-first screens.
 - Use `nds-neutral` when the setting is not a brand action.
-- Use `nds-reverse` for a switch at the end of a line, such as a section action, so the switch stays in place when its label changes.
+- Use `nds-reverse` for a switch at the end of a line, such as a section action, so the switch stays in place when its label changes. `NDS.init.audit()` flags one without it.
 - For the label, info text, feedback and the required mark, see [Forms](../components/form). They work the same on every field.
 - If the change fails, turn the switch back and show feedback on the field.
 

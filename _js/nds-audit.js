@@ -319,13 +319,16 @@
     // Fields side by side start their inputs level. Only what sits above an input moves it; a message under it does not.
     // An upload has no input box to line up, only a button or a drop zone.
     addRule({ id: 'form-row-align', group: 'structure', docs: 'components/form.html', check(context) {
-        const rows = new Set(context.find('.nds-form-container:not(.nds-checkbox, .nds-radio, .nds-switch, .nds-upload)').map(field => field.parentElement));
+        const fieldSelector = '.nds-form-container:not(.nds-checkbox, .nds-radio, .nds-switch, .nds-upload)';
+        // A wrapper that stacks fields (a date over a time) takes its row slot as its top field.
+        const topField = cell => cell.matches(fieldSelector) ? cell : cell.firstElementChild?.matches(fieldSelector) ? cell.firstElementChild : null;
+        const rows = new Set(context.find(fieldSelector).flatMap(field => [field.parentElement, topField(field.parentElement) === field ? field.parentElement.parentElement : null]).filter(Boolean));
         rows.forEach(parent => {
-            const inputTops = new Map(); // a field's top → the tops of the inputs of the fields that start there
-            [...parent.children].forEach(field => {
-                const control = field.matches('.nds-form-container:not(.nds-checkbox, .nds-radio, .nds-switch, .nds-upload)') ? field.querySelector(':scope > .nds-form-control') : null;
+            const inputTops = new Map(); // a slot's top → the tops of the inputs of the slots that start there
+            [...parent.children].forEach(cell => {
+                const control = topField(cell)?.querySelector(':scope > .nds-form-control');
                 if (!control?.getClientRects().length) return;
-                const top = Math.round(field.getBoundingClientRect().top);
+                const top = Math.round(cell.getBoundingClientRect().top);
                 inputTops.set(top, [...(inputTops.get(top) || []), control.getBoundingClientRect().top]);
             });
             inputTops.forEach(tops => {
@@ -823,7 +826,7 @@
     // A label data-hidden hides in a range leaves the button its icon alone (it goes square there), so a button with no icon is an empty box.
     addRule({ id: 'hidden-label-icon', severity: 'error', docs: 'utilities/hidden.html', check(context) {
         const elements = context.find('.nds-btn > .nds-label:is([data-hidden~="sm"], [data-hidden~="md"], [data-hidden~="lg"])').map(label => label.parentElement)
-            .filter(button => !button.querySelector('i, svg, img'));
+            .filter(button => !button.querySelector('i, svg, img, .nds-avatar'));
         if (elements.length) context.report(elements[0], `a button whose label data-hidden hides has no icon${elements.length > 1 ? ` (${elements.length} buttons; the first is shown)` : ''}: where the label hides, it shows an empty box.`,
             'Give it a leading icon, or take data-hidden off the label.', undefined, elements.length);
     } });
@@ -933,8 +936,10 @@
         'a link or a button inside a clickable card', 'Keep one control: make the card a plain .nds-card, or drop the inner link.');
     addPractice('section-nested', 'layout/section.html', '.nds-content-section .nds-content-section',
         'a section inside a section', 'Divide the section body with .nds-block instead.');
-    addPractice('card-actions-place', 'components/card.html', '.nds-card-content .nds-card-actions',
-        '.nds-card-actions inside .nds-card-content: in a modal, only the content scrolls', 'Put .nds-card-actions after .nds-card-content.');
+    addPractice('card-actions-place', 'components/card.html', '.nds-card-content .nds-card-actions, .nds-modal .nds-card-content .nds-form-actions',
+        'action buttons inside .nds-card-content: in a modal, only the content scrolls', 'Put the buttons in a .nds-card-actions after .nds-card-content. For a form, one form.nds-form wraps both.');
+    addPractice('switch-reverse-end', 'components/switch.html', ':is(.nds-section-action, .nds-toolbar-end) > .nds-switch:not(.nds-reverse, .nds-stacked)',
+        'a switch at the end of a line without nds-reverse: its label pushes it along as the text changes', 'Add nds-reverse, so the label goes first and the switch stays in place.');
     addPractice('dark-nested', 'foundations/themes.html', '[data-theme~="dark"]:not(html) [data-theme~="dark"]',
         'data-theme="dark" inside a dark area, which is already dark', 'Write data-theme="dark" once, on the surface.');
     addPractice('prose-nested', 'layout/prose.html', '.nds-prose .nds-prose',

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 05:53 PM"
+last_edit: "02/11/2026 - 07:46 PM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -262,7 +262,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `toolbar-applied` | structure | warn | Applied filters (`.nds-filter-applied`) outside a toolbar, above the search or filter they show, or in the same row as them |
 | `toolbar-sizes` | structure | warn | Items on one toolbar line with different heights, such as a 32px `nds-md` button beside a 40px one. It skips hidden items |
 | `table-min-width` | structure | warn | On a desktop, a table with an actions column whose `--min-width` is wider than its box, so users scroll sideways to reach a row's actions. Content that widens a table does not count. Phones and tablets are skipped |
-| `form-row-align` | structure | warn | Fields side by side whose inputs do not start level, because something above one input pushes it down, such as an Info line under its label or a label on two lines. A message under an input does not count. It skips checkboxes, radios, switches and uploads |
+| `form-row-align` | structure | warn | Fields side by side whose inputs do not start level, because something above one input pushes it down, such as an Info line under its label or a label on two lines. A message under an input does not count. A stack of fields in one row slot, such as a date over a time, counts as its top field. It skips checkboxes, radios, switches and uploads |
 | `i18n-pack` | i18n | error | The language file of the page did not load. A language NDS does not ship is a `warn`, and only when `window.NDS_I18N_LANGS` has no words for it |
 | `i18n-override` | i18n | warn | A section or key in `window.NDS_I18N` or `window.NDS_I18N_LANGS` that no NDS component or `getStrings()` call has, so it changes nothing |
 | `filter-unclaimed` | structure | error | `data-filter-items` that no filter claimed, so it stays in its skeleton |
@@ -272,7 +272,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `font-icon-unknown` | structure | error | A font icon (`hgi hgi-stroke hgi-*`) whose name the HGI stroke rounded set lacks, so it shows nothing. It runs once the HGI style sheet has loaded |
 | `icon-tag` | structure | error | A UI icon (`nds-icon nds-hgi-*`) on a tag other than `<i>`. The icon styles apply to `<i>` only, so it shows nothing |
 | `icon-only-btn` | structure | warn | A button in a field's `.nds-form-action` with an icon, no text and no `nds-icon-only`: it keeps its text padding and renders wider than tall |
-| `hidden-label-icon` | structure | error | A button whose label `data-hidden` hides has no icon: where the label hides, it shows an empty box |
+| `hidden-label-icon` | structure | error | A button whose label `data-hidden` hides has no icon or avatar: where the label hides, it shows an empty box |
 | `prose-section-title` | structure | warn | A heading inside `nds-prose` with `nds-section-title`: it renders at the page title's size, not the text's. Prose already styles a bare `h2` to `h6` |
 | `name-on-display` | structure | error | `name` on the text box of a Custom Select or Time Picker, or on an OTP digit box. The form then sends the text it shows, not the value |
 | `button-name` | structure | error | A button or link with no name: no text, `aria-label`, `aria-labelledby`, `title` or image `alt`, such as an icon-only button. A screen reader announces it with no words. It skips what a screen reader never reaches, such as an `aria-hidden` loop clone |
@@ -296,7 +296,8 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `part-outside` | structure | warn | A component part outside its component, such as `.nds-card-title` with no `.nds-card` around it. It skips a part that NDS also styles on its own |
 | `card-link-nested` | practice | info | A link or a button inside a clickable card (`a.nds-card`, `button.nds-card`) |
 | `section-nested` | practice | info | A section inside a section. Divide a section body with `.nds-block` |
-| `card-actions-place` | practice | info | `.nds-card-actions` inside `.nds-card-content`, not after it |
+| `card-actions-place` | practice | info | `.nds-card-actions` inside `.nds-card-content`, not after it, or a form's `.nds-form-actions` inside a modal's `.nds-card-content`, where the buttons scroll with the content |
+| `switch-reverse-end` | practice | info | A switch at the end of a line, in a section action or a toolbar end, without `nds-reverse`. It skips a stacked switch |
 | `tag-kind-mix` | practice | info | A table column whose one-tag cells mix status tags (`data-status`) and standard tags. A state takes a status tag on every row |
 | `dark-nested` | practice | info | `data-theme="dark"` inside a dark area, which is already dark |
 | `prose-nested` | practice | info | `.nds-prose` inside `.nds-prose` |

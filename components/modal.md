@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 11:34 PM"
+last_edit: "02/11/2026 - 07:40 PM"
 ---
 
 <section id="modal-overview" class="nds-content-section nds-doc-overview">
@@ -394,7 +394,7 @@ A lazy modal keeps its markup in a `<template class="nds-modal-template">`, so i
 - Give the modal an `aria-labelledby` that points to its title. Give the close button an `aria-label`.
 - Use `role="alertdialog"` instead for an urgent message the user did not ask for, such as a session that is about to end.
 - Give every button `type="button"`. In a form, a button without it submits the form.
-- Put `.nds-card-actions` after `.nds-card-content`, not inside it.
+- Put `.nds-card-actions` after `.nds-card-content`, not inside it. A form's buttons go there too, never in a `.nds-form-actions` inside the content, where they scroll away. `NDS.init.audit()` flags both.
 - Keep `nds-col-sm` on `.nds-card-actions`. On a phone the modal is a bottom sheet, and the buttons stack in it, each filling the width.
 - For a form, wrap `.nds-card-content` and `.nds-card-actions` in one `<form class="nds-form">`. A form without `nds-form` breaks the layout: the content runs out of the modal and the actions leave the screen. It also gets no submit validation. `NDS.init.audit()` flags it.
 - A [Dropmenu](../components/dropmenu), a select, a [Multiselect](../components/multiselect), an [Autocomplete](../components/autocomplete) or a [Filter](../components/filter) works in a modal with no extra attribute. Its menu opens in the browser's top layer, so the modal's edge does not cut it off.
