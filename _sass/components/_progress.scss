@@ -91,7 +91,7 @@
 // ==============================================
 
 .nds-progress-circle {
-  --_progress-size: var(--progress-size, var(--_progress-size-base, 64px));
+  --_progress-size: var(--progress-size, var(--_progress-size-base, var(--_progress-size-default, 64px)));
   --_progress-value: var(--progress-value, 0);
   --_progress-circumference: var(--progress-circumference, 62.83); // 2πr where r=10
 
@@ -152,7 +152,7 @@
   }
 
   &.nds-lg {
-    --_progress-size-base: 120px;
+    @include progress-circle-lg;
   }
 
   &.nds-xl {

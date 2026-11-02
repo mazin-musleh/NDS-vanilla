@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 09:39 AM"
+last_edit: "02/11/2026 - 01:31 PM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -115,7 +115,7 @@ Pick another component when:
 <div class="nds-card nds-stroke nds-center">
   <div class="nds-card-header">
     <div class="nds-card-featured-icon">
-      <span class="nds-featured-icon nds-circle nds-xl">
+      <span class="nds-featured-icon nds-circle">
         <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
       </span>
     </div>
@@ -131,7 +131,7 @@ Pick another component when:
 <script type="text/html" id="card-progress" data-canon>
 <div class="nds-card nds-stroke">
   <div class="nds-card-header">
-    <div class="nds-progress-circle nds-md" data-num="2" data-max="5" role="progressbar" aria-labelledby="card-progress-title">
+    <div class="nds-progress-circle" data-num="2" data-max="5" role="progressbar" aria-labelledby="card-progress-title">
       <svg width="120" height="120" viewBox="0 0 24 24">
         <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
         <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
@@ -306,9 +306,10 @@ Pick another component when:
 | Structure | Statistic (hint: One headline number) (id: statistic) | canon `#card-statistic` | — | One headline number with a label, in a centered card. The number is `.nds-card-number`, which works in any card. With `data-counter`, it counts up from 0 when it scrolls into view. See [Numbers](../utilities/numbers#counter-animation) |
 | Structure | Progress (hint: A progress ring beside a short title. Turns on Row, Reverse and Middle) (id: progress) (demo: + row) (demo: + reverse) (demo: + middle) | canon `#card-progress` | — | A [progress ring](../components/progress) beside a short title, as on a life journey page. Write Row, Reverse and Middle too: the ring closes the row, and the title sits level with its middle |
 | Structure | Header title (hint: The title in the header, over a list) (id: header-title) (demo: + text-md) (demo: + breakout) | canon `#card-header-title` | — | A panel card: the title sits in the header, beside an icon when the content has none of its own, and the content holds a list, a table or a chart. Wrap the title in `.nds-card-text`, as in the content. A one-line title centers on the icon. A taller text starts level with the icon's top |
-| Layout | Stacked (default) | — | — | Header above content |
-| Layout | Row (hint: Header beside the content) (id: row) (not: header-title) | `.nds-horizontal` | `.nds-card` | Header beside content. The header goes on top when it no longer fits beside 13rem of text: an image then fills the width. A card narrower than 324px always stacks |
-| Layout | Center (not: statistic, header-title, link) | `.nds-center` | `.nds-card` | Centers every part. Put it on the card root only: the featured icon reads it there, so on an inner part it centers nothing. It does not move the card: its container places it |
+| Layout (any) | Row (limit: 1 layout) (hint: Header beside the content, instead of above it) (id: row) (not: header-title) | `.nds-horizontal` | `.nds-card` | Header beside content. The header goes on top when it no longer fits beside 13rem of text: an image then fills the width. A card narrower than 324px always stacks |
+| Layout (any) | Center (limit: 1 layout) (not: statistic, header-title, link) | `.nds-center` | `.nds-card` | Centers every part. Put it on the card root only: the featured icon reads it there, so on an inner part it centers nothing. It does not move the card: its container places it |
+| Layout (any) | Reverse (hint: Header at the end side. Row only) (id: reverse) | `.nds-reverse` | `.nds-card.nds-horizontal` | Puts the header at the end side of the row, after the content. For a figure that closes the row, such as a progress ring. Row only |
+| Layout (any) | Middle (hint: Short content in the middle, top to bottom) (id: middle) | `.nds-middle` | `.nds-card` | Puts short content in the middle of the card's height, instead of at the top. For a row card whose header is taller than its text, or a card stretched to its row in a grid. The text keeps its side: to center it across too, add Center |
 | Meta | None (default) | — | — | No tags or rating |
 | Meta | Tags | canon `#card-tags` | `.nds-card-content:not(a.nds-card > *)` | Tags alone go straight in the content |
 | Meta | Rating | canon `#card-rating` | `.nds-card-content:not(a.nds-card > *)` | A star rating with a count |
@@ -333,9 +334,9 @@ Pick another component when:
 | Actions | Stacked on phones (hint: Stacked below 600px, a row above) | canon `#card-actions` | `div.nds-card` | The same as Start on a large screen. Below 600px the buttons stack, each filling the width. A modal's actions use it |
 | Actions | Stacked on phones (hint: Stacked below 600px, a row above) | `.nds-col-sm` | `.nds-card-actions` | The same as Start on a large screen. Below 600px the buttons stack, each filling the width. A modal's actions use it |
 | Actions order | Main last (hint: The first button shows last. Not stacked) | `.nds-reverse` | `.nds-card-actions:not(.nds-col)` | Write the main action first, and it shows last in the row, as in a dialog's Back and Next. The row stays at its side, with or without End. With Stacked on phones, the stacked buttons keep the markup order, so the main action stays on top |
-| Stroke | Stroke (default) | `.nds-stroke` | `.nds-card` | A 1px border. For flat and content-heavy layouts. Leave out both stroke and shadow for a plain card |
-| Shadow | Shadow | `.nds-shadow` | `.nds-card` | An elevation shadow. For floating or modal-adjacent cards. It combines with the stroke |
-| Flat | Flat (hint: No fill and no padding) | `.nds-flat` | `.nds-card:not(.nds-stroke, .nds-shadow)` | No fill and no padding, and a muted description: the card reads as text on its section. Not with Stroke or Shadow |
+| Box (any) | Stroke (default) | `.nds-stroke` | `.nds-card:not(.nds-flat)` | A 1px border. For flat and content-heavy layouts. Leave out both stroke and shadow for a plain card. Not with Flat |
+| Box (any) | Shadow | `.nds-shadow` | `.nds-card:not(.nds-flat)` | An elevation shadow. For floating or modal-adjacent cards. It combines with the stroke. Not with Flat |
+| Box (any) | Flat (hint: No fill and no padding) | `.nds-flat` | `.nds-card:not(.nds-stroke, .nds-shadow)` | No fill and no padding, and a muted description: the card reads as text on its section. Not with Stroke or Shadow |
 | Color | None (default) | — | — | The default colors |
 | Color | Neutral | `.nds-neutral` | `.nds-card` | Also `.nds-gray` |
 | Color | Green | `.nds-green` | `.nds-card` | Tints the title, the icon and the hover border |
@@ -346,16 +347,16 @@ Pick another component when:
 | Color | On color (hint: For a dark or photo background) | `.nds-oncolor` | `.nds-card-actions .nds-btn` | Buttons do not follow the card. Give each action button `.nds-oncolor` too |
 | Color | On color (hint: For a dark or photo background) | `.nds-oncolor` | `.nds-tag:not([data-status])` | Tags do not follow the card either. Give each standard tag `.nds-oncolor`. A status tag keeps its colors |
 | Tinted | Tinted (hint: A light tint of the card color) | `.nds-color` | `.nds-card:not(.nds-oncolor)` | Fills the card with a light tint of its color. With no color class, the tint is the brand primary |
-| Reverse | Reverse (hint: Header at the end side. Row only) (id: reverse) | `.nds-reverse` | `.nds-card.nds-horizontal` | Puts the header at the end side of the row, after the content. For a figure that closes the row, such as a progress ring. Row only |
-| Middle | Middle (hint: Short content in the middle, top to bottom) (id: middle) | `.nds-middle` | `.nds-card` | Puts short content in the middle of the card's height, instead of at the top. For a row card whose header is taller than its text, or a card stretched to its row in a grid. The text keeps its side: to center it across too, add Center |
-| Full width | Full width | `.nds-full` | `.nds-card` | Fills its container, instead of stopping at 360px. Do not use `.nds-full-width` on a card: inside a section, that class breaks out to the full screen width |
-| Size | SM (hint: Every part one size smaller) | `.nds-sm` | `.nds-card` | Every part one size smaller: the icon, avatar, date tile, tags, rating, buttons, chips, price, number, text and gap. A part with its own size class keeps it. For a card in a side column or a dense grid |
-| Size | MD (default) | — | — | The card's own sizes: a 48px icon, a 64px avatar, 24px tags and stars, an 18px title, and a 24px gap (16px on phones). In a sized [List](../components/list), `.nds-md` on one card brings it back to these sizes |
-| Size | LG (hint: Every part one size larger) | `.nds-lg` | `.nds-card` | Every part one size larger, for a card that leads a page. Buttons keep their size. A part with its own size class keeps it |
-| Number size | LG (default) | — | `.nds-card-number` | The display size |
+| Size (any) | SM (limit: 1 size) (hint: Every part one size smaller) | `.nds-sm` | `.nds-card` | Every part one size smaller: the icon, avatar, date tile, tags, rating, buttons, chips, price, number, text and gap. A part with its own size class keeps it. For a card in a side column or a dense grid |
+| Size (any) | MD (default) (limit: 1 size) | `.nds-md` | `.nds-card` | The card's own sizes, with no class: a 48px icon, a 64px avatar, an 80px progress ring, 24px tags and stars, an 18px title, and a 24px gap (16px on phones). In a sized [List](../components/list), `.nds-md` on one card brings it back to these sizes |
+| Size (any) | LG (limit: 1 size) (hint: Every part one size larger) | `.nds-lg` | `.nds-card` | Every part one size larger, for a card that leads a page. Buttons keep their size. A part with its own size class keeps it |
+| Size (any) | Full width | `.nds-full` | `.nds-card` | Fills its container, instead of stopping at 360px. Do not use `.nds-full-width` on a card: inside a section, that class breaks out to the full screen width |
+| Number size | Auto (default) (hint: Follows the card size) | — | — | The display size, one size smaller or larger with the card's size |
+| Number size | LG | `.nds-lg` | `.nds-card-number` | The display size, at any card size |
 | Number size | MD | `.nds-md` | `.nds-card-number` | A smaller headline number |
 | Number size | SM | `.nds-sm` | `.nds-card-number` | The smallest headline number |
-| Text size | LG (default) | — | `.nds-card-text` | An 18px title, with a 16px subtitle and description |
+| Text size | Auto (default) (hint: Follows the card size) | — | — | An 18px title, with a 16px subtitle and description, one size smaller or larger with the card's size |
+| Text size | LG (id: text-lg) | `.nds-lg` | `.nds-card-text` | An 18px title, with a 16px subtitle and description, at any card size |
 | Text size | MD (id: text-md) | `.nds-md` | `.nds-card-text` | A 16px title, with a 14px subtitle and description. The text only: the icon and the content keep their size. For a header title. For a whole smaller card, use Size SM |
 | Text size | SM | `.nds-sm` | `.nds-card-text` | A 14px title, with a 12px subtitle and description. The text only: the icon and the content keep their size |
 | Breakout | Breakout (hint: The part runs to the card's edges) (id: breakout) | `.nds-breakout` | `.nds-drawer` | Runs the part to the card's sides. It also meets the top or bottom edge when it is the first or last thing in the card or in its content. A drawer moves the card padding into its rows, so the hover and the dividers meet the border. A definition list does the same for its items, at the sides only |
@@ -475,7 +476,7 @@ Pick another component when:
 - Put `.nds-card-actions` after `.nds-card-content`, not inside it. In a [modal](../components/modal), only the content scrolls. Actions inside the content still work there, because the modal pins them to the bottom.
 - To make a whole card smaller or larger, put `nds-sm` or `nds-lg` on the card, not a size class on each part. The card changes every part together.
 - On a [Modal](../components/modal), a [Definition List](../components/definition-list) or a [Stepper](../components/stepper), `nds-sm` and `nds-lg` set that component's own size, not the card's.
-- Leave the size class off an icon, an avatar, a tag or a rating: the card's size sets it. Size the featured icon up with `nds-xl` only on a statistic card, where the icon carries the meaning.
+- Leave the size class off an icon, an avatar, a progress ring, a tag or a rating: the card's size sets it.
 - Show a price with `.nds-card-value`, not with a tag.
 - Keep the description to one or two lines. For longer text, [truncate](../utilities/truncate-text) it or link to a detail page.
 - Do not put a card inside a card. Use `.nds-card-meta` or a [definition list](../components/definition-list) inside the content.
@@ -523,29 +524,30 @@ Set these on `.nds-card`, or on a parent to set every card inside it. The image 
 |---|---|---|
 | `--card-bg` | `var(--background-card)` | Background |
 | `--card-bg-hover` | `var(--background-card-hovered)` | Background of a hovered link or button card |
-| `--card-bg-active` | the hover fill, a step darker | Background of a pressed link or button card |
+| `--card-bg-active` | the hover fill, a step deeper | Background of a pressed link or button card |
 | `--card-border-color` | `var(--border-neutral-primary)` | Border color of a stroke card |
 | `--card-border-color-hover` | `var(--border-primary)` | Border color on hover |
 | `--card-border-color-active` | `var(--border-neutral-primary)` | Border color on press |
-| `--card-padding` | `var(--spacing-xl)` | Padding on both axes |
+| `--card-padding` | `var(--spacing-xl)` | Padding on both axes. Write `0px`, not `0`: the corner and a breakout part do math with it, and a bare `0` breaks that |
 | `--card-padding-block` | `var(--card-padding)` | Top and bottom padding |
 | `--card-padding-inline` | `var(--card-padding)` | Start and end padding. Card-style tab panels read it too |
-| `--card-gap` | `var(--spacing-3xl)`, `var(--spacing-xl)` on phones | Gap between header, content and actions, and between the rows in `.nds-card-meta` |
+| `--card-gap` | `var(--spacing-3xl)`, `var(--spacing-xl)` on phones | Gap between header, content and actions, and between the rows in `.nds-card-meta`. Size SM and LG change it |
 | `--card-radius` | `var(--radius-lg)` | Corner radius |
 | `--card-width` | `100%` | Width |
 | `--card-width-min` | `0` | Minimum width |
-| `--card-width-max` | `360px` | Maximum width |
+| `--card-width-max` | `var(--card-width)`, else `360px` | Maximum width |
 | `--card-title-color` | `var(--text-display)` | Title color |
 | `--card-subtitle-color` | `var(--text-secondary)` | Subtitle color |
 | `--card-text-color` | `var(--text-primary-paragraph)` | Description color |
 | `--card-number-color` | `var(--text-primary-strong)` | Color of the headline number, `.nds-card-number` |
 | `--card-rating-color` | `var(--text-secondary-paragraph)` | Rating count color |
-| `--card-title-FS`, `--card-title-LH` | `var(--typo-text-lg-FS)`, `var(--typo-text-lg-LH)` | Title font size and line height |
-| `--card-subtitle-FS`, `--card-subtitle-LH` | `var(--typo-text-md-FS)`, `var(--typo-text-md-LH)` | Subtitle font size and line height |
-| `--card-description-FS`, `--card-description-LH` | `var(--typo-text-md-FS)`, `var(--typo-text-md-LH)` | Description font size and line height |
+| `--card-title-FS`, `--card-title-LH` | `var(--typo-text-lg-FS)`, `var(--typo-text-lg-LH)` | Title font size and line height. Size and Text size change it |
+| `--card-subtitle-FS`, `--card-subtitle-LH` | `var(--typo-text-md-FS)`, `var(--typo-text-md-LH)` | Subtitle font size and line height. Size and Text size change it |
+| `--card-description-FS`, `--card-description-LH` | `var(--typo-text-md-FS)`, `var(--typo-text-md-LH)` | Description font size and line height. Size and Text size change it |
+| `--featuredicon-size` | `48px` | Featured icon size. Size SM and LG change it |
 | `--featuredicon-color` | `var(--featuredicons-icon-primary)` | Featured icon and avatar color. Color classes change it |
 | `--featuredicon-bg` | `var(--featuredicons-background-primary-light)` | Featured icon background |
-| `--card-image-width` | `160px` | Image width in a row card. A wider image stacks the card sooner. No effect on a stacked card, where the image fills the width |
+| `--card-image-width` | `160px` | Image width in a row card. A wider image stacks the card sooner. No effect on a stacked card, where the image fills the width. Size SM and LG change it |
 | `--image-ratio` | `2 / 1` | Image aspect ratio. The image header shares these properties with [Image](../components/image) |
 | `--image-pos-x` | `50%` | Horizontal focal point of the image |
 | `--image-pos-y` | `50%` | Vertical focal point of the image |

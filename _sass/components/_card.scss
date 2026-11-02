@@ -407,6 +407,16 @@
   }
 
   // Text sizes, like .nds-card-number's: each step drops title, subtitle and description one rung.
+  // LG is the default, as a class so the text keeps it in a sized card.
+  .nds-card-text.nds-lg {
+    --_card-title-FS-base: var(--typo-text-lg-FS);
+    --_card-title-LH-base: var(--typo-text-lg-LH);
+    --_card-subtitle-FS-base: var(--typo-text-md-FS);
+    --_card-subtitle-LH-base: var(--typo-text-md-LH);
+    --_card-description-FS-base: var(--typo-text-md-FS);
+    --_card-description-LH-base: var(--typo-text-md-LH);
+  }
+
   .nds-card-text.nds-md {
     --_card-title-FS-base: var(--typo-text-md-FS);
     --_card-title-LH-base: var(--typo-text-md-LH);
@@ -565,6 +575,10 @@
   display: flex; // a number format inside keeps its gap, symbol order and icon centering
   width: 100%;
   --nds-skeleton-width: 100%; // the loading bar spans the row the number does
+
+  &.nds-lg {
+    font-size: var(--typo-display-clamp-lg-FS);
+  }
 
   &.nds-md {
     font-size: var(--typo-display-clamp-md-FS);
@@ -897,11 +911,12 @@ html:not([data-nds-loaded]) .nds-card {
   @include loading-skeleton-host;
 }
 
-// The parts' card sizes, as the canon writes them: an LG icon, an XL avatar, SM tags and stars.
+// The parts' card sizes, as the canon writes them: an LG icon, an XL avatar, an MD ring, SM tags and stars.
 // On the header and content only, so a part a card merely wraps keeps its own size; a step or a part's class wins.
 .nds-card:not(.nds-modal, .nds-definition-list, .nds-stepper) > :is(.nds-card-header, .nds-card-content) {
   --_featuredicon-size-default: 48px;
   --_avatar-size-default: 64px;
+  --_progress-size-default: 80px;
   --_star-size-default: 24px;
   --_tag-height-default: 24px;
   --_tag-fs-default: var(--typo-text-sm-FS);

@@ -401,7 +401,9 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 @mixin avatar-lg { --_avatar-size-base: 48px; }
 @mixin avatar-xl { --_avatar-size-base: 64px; }
 @mixin avatar-2xl { --_avatar-size-base: 80px; }
+@mixin progress-circle-sm { --_progress-size-base: 64px; } // the default, which has no class
 @mixin progress-circle-md { --_progress-size-base: 80px; }
+@mixin progress-circle-lg { --_progress-size-base: 120px; }
 @mixin rating-xs { --_star-size-base: 16px; }
 @mixin rating-sm { --_star-size-base: 24px; }
 @mixin rating-md { --_star-size-base: 32px; } // the default, which has no class
@@ -491,11 +493,12 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 // (a list's size classes; its narrow rule takes the box half). Every step is an inherited -base
 // value, so the nearest wins: a card's own class beats a container's, and a --card-* knob beats both.
 // Each part steps one rung from the card's default, and only when it has no size class.
-// The card's defaults are its canon's: an LG icon, an XL avatar, SM tags and stars (_card.scss).
-// A button already at its largest size has no LG step; a ring has no SM.
+// The card's defaults are its canon's: an LG icon, an XL avatar, an MD ring, SM tags and stars (_card.scss).
+// A button already at its largest size has no LG step.
 @mixin card-sm-box {
     @include featured-icon-md;
     @include avatar-lg;
+    @include progress-circle-sm;
     @include date-tile-sm;
     --_card-gap-base: var(--spacing-lg);
 }
@@ -529,7 +532,7 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     @include featured-icon-xl;
     @include avatar-2xl;
     @include tag-md;
-    @include progress-circle-md;
+    @include progress-circle-lg;
     @include rating-md;
     --_card-gap-base: var(--spacing-4xl);
     --_card-title-FS-base: var(--typo-text-xl-FS);
