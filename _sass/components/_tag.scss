@@ -15,9 +15,9 @@
   --_text: var(--tag-text, var(--_tag-text-base, var(--tag-text-neutral)));
   --_border: var(--tag-border, var(--_tag-border-base, var(--tag-border-neutral-light)));
   --_icon: var(--tag-icon, var(--_tag-icon-base, var(--tag-icon-neutral)));
-  --_tag-height: var(--tag-height, var(--_tag-height-base, 32px));
-  --_tag-fs: var(--tag-fs, var(--_tag-fs-base, var(--typo-text-md-FS)));
-  --_tag-padding-inline: var(--tag-padding-inline, var(--_tag-padding-inline-base, var(--spacing-lg)));
+  --_tag-height: var(--tag-height, var(--_tag-height-base, var(--_tag-height-default, 32px)));
+  --_tag-fs: var(--tag-fs, var(--_tag-fs-base, var(--_tag-fs-default, var(--typo-text-md-FS))));
+  --_tag-padding-inline: var(--tag-padding-inline, var(--_tag-padding-inline-base, var(--_tag-padding-inline-default, var(--spacing-lg))));
   --_tag-dot-size: var(--tag-dot-size, 10px);
   --_tag-label-max: var(--tag-label-max, 160px);
 

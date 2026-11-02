@@ -13,8 +13,10 @@
 // a section) reaches every card within. :where() keeps the reset at zero specificity,
 // so a consumer's single-class knob rule on the nested card still wins.
 // A list item skips it: a list in a card stops the outer card's knobs itself, and passes its own.
-:where(.nds-card .nds-card:not(.nds-list > *)) {
+// An outer size step stops at both.
+:where(.nds-card .nds-card:not(.nds-list > *), .nds-card .nds-list) {
   @include card-knobs(initial);
+  @include card-md;
 }
 
 // A color or status card keeps its tint over a knob a parent sets; a knob on the card itself still wins.
@@ -56,8 +58,10 @@
   --_card-padding-inline-base: var(--_card-padding);
   --_card-padding-block: var(--card-padding-block, var(--_card-padding-block-base));
   --_card-padding-inline: var(--card-padding-inline, var(--_card-padding-inline-base));
-  --_card-gap-base: var(--spacing-3xl);
-  --_card-gap: var(--card-gap, var(--_card-gap-base));
+  // The size steps (gap, text, number, image width) keep their default in the fallback slot, as a
+  // part does, so a step a container sets reaches the card. The phone step retunes the default only.
+  --_card-gap-default: var(--spacing-3xl);
+  --_card-gap: var(--card-gap, var(--_card-gap-base, var(--_card-gap-default)));
   --_card-corner-inset: 0px; // set here, so a nested card does not inherit an image card's inset
 
   --_card-radius-base: var(--radius-lg);
@@ -72,15 +76,6 @@
   --_card-number-color: var(--card-number-color, var(--_card-number-color-base));
   --_card-rating-color-base: var(--text-secondary-paragraph);
   --_card-rating-color: var(--card-rating-color, var(--_card-rating-color-base));
-  // Text sizes: the size classes on .nds-card-text retune these; the --card-*-FS/LH knobs win over both.
-  --_card-title-FS-base: var(--typo-text-lg-FS);
-  --_card-title-LH-base: var(--typo-text-lg-LH);
-  --_card-subtitle-FS-base: var(--typo-text-md-FS);
-  --_card-subtitle-LH-base: var(--typo-text-md-LH);
-  --_card-description-FS-base: var(--typo-text-md-FS);
-  --_card-description-LH-base: var(--typo-text-md-LH);
-  --_card-number-FS-base: var(--typo-display-clamp-lg-FS);
-  --_card-image-width-base: 160px;
   // The width family stays on the public knob: --_card-width-max chains through
   // --card-width, so a variant that retuned a -base value would drop out of that
   // fallback and cap a full-width card at 360px.
@@ -113,7 +108,7 @@
 
   // Phones: a tighter gap leaves a narrow card, or a modal sheet, more room for its content.
   @include mobile {
-    --_card-gap-base: var(--spacing-xl);
+    --_card-gap-default: var(--spacing-xl);
   }
 
   // Shadow variant
@@ -164,7 +159,7 @@
       align-content: flex-start;
 
       .nds-card-image {
-        width: var(--card-image-width, var(--_card-image-width-base));
+        width: var(--card-image-width, var(--_card-image-width-base, 160px));
         min-width: 100%;
         max-width: 100%;
       }
@@ -368,7 +363,7 @@
       align-items: center;
       gap: var(--spacing-md);
       // One title line tall: a taller item (a 32px button) centers on the line and overflows evenly.
-      height: var(--card-title-LH, var(--_card-title-LH-base));
+      height: var(--card-title-LH, var(--_card-title-LH-base, var(--typo-text-lg-LH)));
       --form-width: auto; // a bare checkbox keeps its own size beside a tag
     }
 
@@ -383,8 +378,8 @@
   }
 
   .nds-card-title {
-    font-size: var(--card-title-FS, var(--_card-title-FS-base));
-    line-height: var(--card-title-LH, var(--_card-title-LH-base));
+    font-size: var(--card-title-FS, var(--_card-title-FS-base, var(--typo-text-lg-FS)));
+    line-height: var(--card-title-LH, var(--_card-title-LH-base, var(--typo-text-lg-LH)));
     font-weight: var(--font-weight-bold);
     color: var(--_card-title-color);
     margin: 0;
@@ -393,8 +388,8 @@
 
   .nds-card-subtitle {
     display: block;
-    font-size: var(--card-subtitle-FS, var(--_card-subtitle-FS-base));
-    line-height: var(--card-subtitle-LH, var(--_card-subtitle-LH-base));
+    font-size: var(--card-subtitle-FS, var(--_card-subtitle-FS-base, var(--typo-text-md-FS)));
+    line-height: var(--card-subtitle-LH, var(--_card-subtitle-LH-base, var(--typo-text-md-LH)));
     font-weight: var(--font-weight-semibold);
     color: var(--_card-subtitle-color);
     margin: 0;
@@ -403,8 +398,8 @@
 
 
   .nds-card-description {
-    font-size: var(--card-description-FS, var(--_card-description-FS-base));
-    line-height: var(--card-description-LH, var(--_card-description-LH-base));
+    font-size: var(--card-description-FS, var(--_card-description-FS-base, var(--typo-text-md-FS)));
+    line-height: var(--card-description-LH, var(--_card-description-LH-base, var(--typo-text-md-LH)));
     font-weight: var(--font-weight-regular);
     color: var(--_card-text-color);
     margin: 0;
@@ -563,7 +558,7 @@
 // The card's big number, in any card; a centered card centers it.
 .nds-card .nds-card-number {
   color: var(--_card-number-color);
-  font-size: var(--_card-number-FS-base);
+  font-size: var(--_card-number-FS-base, var(--typo-display-clamp-lg-FS));
   line-height: 1;
   letter-spacing: -0.96px;
   direction: ltr;
@@ -900,4 +895,33 @@ html:not([data-nds-loaded]) .nds-card {
 // Loading shows the skeleton above, not the spinner.
 :is(.nds-grid, .nds-paged-content, .nds-card).nds-loading {
   @include loading-skeleton-host;
+}
+
+// The parts' card sizes, as the canon writes them: an LG icon, an XL avatar, SM tags and stars.
+// On the header and content only, so a part a card merely wraps keeps its own size; a step or a part's class wins.
+.nds-card:not(.nds-modal, .nds-definition-list, .nds-stepper) > :is(.nds-card-header, .nds-card-content) {
+  --_featuredicon-size-default: 48px;
+  --_avatar-size-default: 64px;
+  --_star-size-default: 24px;
+  --_tag-height-default: 24px;
+  --_tag-fs-default: var(--typo-text-sm-FS);
+  --_tag-padding-inline-default: var(--spacing-md);
+}
+
+// Size: every part one step. A container passes a step with the same mixin on itself (a list here);
+// the card's own class wins. Modal, Definition List and Stepper keep their size classes for their own sizes.
+// ponytail: a skip list; a new component built on a card with its own sizes joins it.
+.nds-card:not(.nds-modal, .nds-definition-list, .nds-stepper),
+.nds-list {
+  &.nds-sm {
+    @include card-sm;
+  }
+
+  &.nds-lg {
+    @include card-lg;
+  }
+}
+
+.nds-card:not(.nds-modal, .nds-definition-list, .nds-stepper).nds-md {
+  @include card-md;
 }

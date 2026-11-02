@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 11:34 PM"
+last_edit: "02/11/2026 - 09:39 AM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -40,7 +40,7 @@ Pick another component when:
 <div class="nds-card nds-stroke">
   <div class="nds-card-header">
     <div class="nds-card-featured-icon">
-      <span class="nds-featured-icon nds-circle nds-lg">
+      <span class="nds-featured-icon nds-circle">
         <i class="hgi hgi-stroke hgi-stars"></i>
       </span>
     </div>
@@ -73,7 +73,7 @@ Pick another component when:
 <script type="text/html" id="card-avatar" data-canon>
 <div class="nds-card nds-stroke">
   <div class="nds-card-header">
-    <div class="nds-avatar nds-xl">
+    <div class="nds-avatar">
       <i class="nds-icon nds-icon-avatar" aria-hidden="true"></i>
     </div>
   </div>
@@ -101,7 +101,7 @@ Pick another component when:
 <a href="#" class="nds-card nds-stroke nds-center">
   <div class="nds-card-header">
     <div class="nds-card-featured-icon">
-      <span class="nds-featured-icon nds-circle nds-dark nds-lg">
+      <span class="nds-featured-icon nds-circle nds-dark">
         <i class="hgi hgi-stroke hgi-library" aria-hidden="true"></i>
       </span>
     </div>
@@ -191,17 +191,17 @@ Pick another component when:
 </script>
 <script type="text/html" id="card-tags" data-canon>
 <div class="nds-card-tags">
-  <span class="nds-tag nds-blue nds-sm">
+  <span class="nds-tag nds-blue">
     <span class="nds-label">Category</span>
   </span>
-  <span class="nds-tag nds-gray nds-sm">
+  <span class="nds-tag nds-gray">
     <span class="nds-label">Topic</span>
   </span>
 </div>
 </script>
 <script type="text/html" id="card-rating" data-canon>
 <div class="nds-card-rating">
-  <div class="nds-rating nds-sm" data-rating="4.5">
+  <div class="nds-rating" data-rating="4.5">
     <span class="nds-rating-star"></span>
     <span class="nds-rating-star"></span>
     <span class="nds-rating-star"></span>
@@ -214,15 +214,15 @@ Pick another component when:
 <script type="text/html" id="card-meta" data-canon>
 <div class="nds-card-meta">
   <div class="nds-card-tags">
-    <span class="nds-tag nds-blue nds-sm">
+    <span class="nds-tag nds-blue">
       <span class="nds-label">Category</span>
     </span>
-    <span class="nds-tag nds-gray nds-sm">
+    <span class="nds-tag nds-gray">
       <span class="nds-label">Topic</span>
     </span>
   </div>
   <div class="nds-card-rating">
-    <div class="nds-rating nds-sm" data-rating="4.5">
+    <div class="nds-rating" data-rating="4.5">
       <span class="nds-rating-star"></span>
       <span class="nds-rating-star"></span>
       <span class="nds-rating-star"></span>
@@ -276,10 +276,10 @@ Pick another component when:
 </script>
 <script type="text/html" id="card-actions" data-canon>
 <div class="nds-card-actions">
-  <a href="#" class="nds-btn nds-primary nds-lg">
+  <a href="#" class="nds-btn nds-primary">
     <span class="nds-label">Get Started</span>
   </a>
-  <a href="#" class="nds-btn nds-secondary-outline nds-lg nds-trail-icon">
+  <a href="#" class="nds-btn nds-secondary-outline nds-trail-icon">
     <i class="nds-icon nds-hgi-link-square-02" aria-hidden="true"></i>
     <span class="nds-label">Learn More</span>
   </a>
@@ -349,12 +349,15 @@ Pick another component when:
 | Reverse | Reverse (hint: Header at the end side. Row only) (id: reverse) | `.nds-reverse` | `.nds-card.nds-horizontal` | Puts the header at the end side of the row, after the content. For a figure that closes the row, such as a progress ring. Row only |
 | Middle | Middle (hint: Short content in the middle, top to bottom) (id: middle) | `.nds-middle` | `.nds-card` | Puts short content in the middle of the card's height, instead of at the top. For a row card whose header is taller than its text, or a card stretched to its row in a grid. The text keeps its side: to center it across too, add Center |
 | Full width | Full width | `.nds-full` | `.nds-card` | Fills its container, instead of stopping at 360px. Do not use `.nds-full-width` on a card: inside a section, that class breaks out to the full screen width |
+| Size | SM (hint: Every part one size smaller) | `.nds-sm` | `.nds-card` | Every part one size smaller: the icon, avatar, date tile, tags, rating, buttons, chips, price, number, text and gap. A part with its own size class keeps it. For a card in a side column or a dense grid |
+| Size | MD (default) | — | — | The card's own sizes: a 48px icon, a 64px avatar, 24px tags and stars, an 18px title, and a 24px gap (16px on phones). In a sized [List](../components/list), `.nds-md` on one card brings it back to these sizes |
+| Size | LG (hint: Every part one size larger) | `.nds-lg` | `.nds-card` | Every part one size larger, for a card that leads a page. Buttons keep their size. A part with its own size class keeps it |
 | Number size | LG (default) | — | `.nds-card-number` | The display size |
 | Number size | MD | `.nds-md` | `.nds-card-number` | A smaller headline number |
 | Number size | SM | `.nds-sm` | `.nds-card-number` | The smallest headline number |
 | Text size | LG (default) | — | `.nds-card-text` | An 18px title, with a 16px subtitle and description |
-| Text size | MD (id: text-md) | `.nds-md` | `.nds-card-text` | A 16px title, with a 14px subtitle and description. For a header title, or for small cards in a dense grid |
-| Text size | SM | `.nds-sm` | `.nds-card-text` | A 14px title, with a 12px subtitle and description |
+| Text size | MD (id: text-md) | `.nds-md` | `.nds-card-text` | A 16px title, with a 14px subtitle and description. The text only: the icon and the content keep their size. For a header title. For a whole smaller card, use Size SM |
+| Text size | SM | `.nds-sm` | `.nds-card-text` | A 14px title, with a 12px subtitle and description. The text only: the icon and the content keep their size |
 | Breakout | Breakout (hint: The part runs to the card's edges) (id: breakout) | `.nds-breakout` | `.nds-drawer` | Runs the part to the card's sides. It also meets the top or bottom edge when it is the first or last thing in the card or in its content. A drawer moves the card padding into its rows, so the hover and the dividers meet the border. A definition list does the same for its items, at the sides only |
 | Disabled | Disabled | `.nds-disabled` | `.nds-card` | Mutes the card and blocks clicks. `[disabled]` works on a `<button>` card |
 | Disabled | Disabled | `[inert]` | `.nds-card` | Write both: `inert` takes the card out of the keyboard order, so Tab skips its links and buttons |
@@ -470,7 +473,9 @@ Pick another component when:
 - `nds-center` centers the card's content, not the card. To center the card itself, center it with its container: `nds-center` on an `nds-grid`, or on an `nds-flex` wrapper for a single card.
 - To fill the container, use `nds-full` on a card, not `nds-full-width`. Inside a section, `nds-full-width` breaks out to the full screen width.
 - Put `.nds-card-actions` after `.nds-card-content`, not inside it. In a [modal](../components/modal), only the content scrolls. Actions inside the content still work there, because the modal pins them to the bottom.
-- Size the featured icon or avatar up (`nds-lg`, `nds-xl`) on a statistic card, where the icon carries the meaning. In a [List](../components/list), leave the size class off: the list's size sets it.
+- To make a whole card smaller or larger, put `nds-sm` or `nds-lg` on the card, not a size class on each part. The card changes every part together.
+- On a [Modal](../components/modal), a [Definition List](../components/definition-list) or a [Stepper](../components/stepper), `nds-sm` and `nds-lg` set that component's own size, not the card's.
+- Leave the size class off an icon, an avatar, a tag or a rating: the card's size sets it. Size the featured icon up with `nds-xl` only on a statistic card, where the icon carries the meaning.
 - Show a price with `.nds-card-value`, not with a tag.
 - Keep the description to one or two lines. For longer text, [truncate](../utilities/truncate-text) it or link to a detail page.
 - Do not put a card inside a card. Use `.nds-card-meta` or a [definition list](../components/definition-list) inside the content.
@@ -512,7 +517,7 @@ Pick another component when:
 ### CSS Custom Properties
 {: .nds-block-title}
 
-Set these on `.nds-card`, or on a parent to set every card inside it. The image properties go on `.nds-card-image`. A card inside a card does not take the outer card's values.
+Set these on `.nds-card`, or on a parent to set every card inside it. The image properties go on `.nds-card-image`. A card inside a card does not take the outer card's values or size. A property wins over the size classes.
 
 | Property | Default | Controls |
 |---|---|---|
@@ -535,7 +540,7 @@ Set these on `.nds-card`, or on a parent to set every card inside it. The image 
 | `--card-text-color` | `var(--text-primary-paragraph)` | Description color |
 | `--card-number-color` | `var(--text-primary-strong)` | Color of the headline number, `.nds-card-number` |
 | `--card-rating-color` | `var(--text-secondary-paragraph)` | Rating count color |
-| `--card-title-FS`, `--card-title-LH` | `var(--typo-text-lg-FS)`, `var(--typo-text-lg-LH)` | Title font size and line height. They win over the text size classes |
+| `--card-title-FS`, `--card-title-LH` | `var(--typo-text-lg-FS)`, `var(--typo-text-lg-LH)` | Title font size and line height |
 | `--card-subtitle-FS`, `--card-subtitle-LH` | `var(--typo-text-md-FS)`, `var(--typo-text-md-LH)` | Subtitle font size and line height |
 | `--card-description-FS`, `--card-description-LH` | `var(--typo-text-md-FS)`, `var(--typo-text-md-LH)` | Description font size and line height |
 | `--featuredicon-color` | `var(--featuredicons-icon-primary)` | Featured icon and avatar color. Color classes change it |

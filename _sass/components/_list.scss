@@ -22,21 +22,8 @@
   }
 }
 
-// MD is the card's own size, but an avatar is XL, as in a single card's canon, and a tag and stars SM.
-// SM and LG step every item one rung.
-:where(.nds-list) > .nds-card {
-  @include avatar-xl;
-  @include tag-sm;
-  @include rating-sm;
-}
-
-.nds-list.nds-sm > .nds-card {
-  @include card-sm;
-}
-
-.nds-list.nds-lg > .nds-card {
-  @include card-lg;
-}
+// The list passes its size to its items as a container does; an item's own class wins.
+// MD is the card's own size; the SM and LG rules are the card's (_card.scss), one rule for a card and a list.
 
 // Only a list with no size class steps; the text keeps its size and wraps.
 @container nds-list (width < 400px) {
@@ -64,9 +51,7 @@
   }
 }
 
-// In a card, the list is a fresh start: the outer card's knobs and an outer list's size stop here, and the list's own reach its items.
+// In a card, the list is a fresh start: the card's sheet stops the outer knobs and size here; the list's own reach its items.
 :where(.nds-card .nds-list) {
-  @include card-knobs(initial);
-  @include card-steps-reset;
   --grow: initial;
 }

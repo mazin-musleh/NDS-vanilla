@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 10:18 PM"
+last_edit: "02/11/2026 - 09:39 AM"
 ---
 
 <section id="list-overview" class="nds-content-section nds-doc-overview">
@@ -438,13 +438,13 @@ Most options go on the list. Items puts its parts in every item. Icons and Icon 
 | Layout | Row (hint: The header beside the text) | `.nds-horizontal` | `.nds-list` | The header beside the text. Use it for a long list. An item under 324px wide puts its header back on top, and an image drops under the text when it does not fit beside it. On a flex list, write a wider `--card-width` too, such as `360px` |
 | Layout | Row (hint: The header beside the text) | `--card-width: 360px` | `.nds-list.nds-flex` | The header beside the text. Use it for a long list. An item under 324px wide puts its header back on top, and an image drops under the text when it does not fit beside it. On a flex list, write a wider `--card-width` too, such as `360px` |
 | Layout | Centered | `.nds-center` | `.nds-list` | The icon and the text centered. Use it for a short list of three or four items |
-| Size | SM | `.nds-sm` | `.nds-list` | Smaller icons, text and gaps, for a list in a card or a side column |
-| Size | MD (default) | — | — | The card's own sizes: a 40px icon |
-| Size | LG | `.nds-lg` | `.nds-list` | Larger icons, text and gaps, for a list that leads a page |
+| Size | SM | `.nds-sm` | `.nds-list` | Every item takes the [card](../components/card)'s SM size: smaller icons, text and gaps. For a list in a card or a side column. A size class on one item wins over the list's |
+| Size | MD (default) | — | — | The card's own sizes: a 48px icon |
+| Size | LG | `.nds-lg` | `.nds-list` | Every item takes the card's LG size: larger icons, text and gaps. For a list that leads a page. A size class on one item wins over the list's |
 | Icons (any) | Default (default) (hint: A light fill in the icon's color) | — | — | The icon as the canon writes it: a light fill in its color, with square corners |
 | Icons (any) | Outline (limit: 1 icon style) | `.nds-outline` | `.nds-list .nds-featured-icon` | No fill and a border in the icon's color. Not with Dark or Subtle |
 | Icons (any) | Dark (limit: 1 icon style) (hint: A solid fill and a white icon) | `.nds-dark` | `.nds-list .nds-featured-icon` | A solid fill and a white icon. Not with Outline or Subtle |
-| Icons (any) | Subtle (limit: 1 icon style) (hint: The icon alone, with no container) | `.nds-subtle` | `.nds-list .nds-featured-icon` | The icon alone, one size smaller. Use it where the list sits beside other content and must read lighter. Not with Outline, Dark or Circle |
+| Icons (any) | Subtle (limit: 1 icon style) (hint: The icon alone, with no container) | `.nds-subtle` | `.nds-list .nds-featured-icon` | The icon alone, two sizes smaller. Use it where the list sits beside other content and must read lighter. Not with Outline, Dark or Circle |
 | Icons (any) | Circle (hint: Round icons) | `.nds-circle` | `.nds-list .nds-featured-icon:not(.nds-subtle)` | Round icons. It combines with Outline and Dark |
 | Icons (any) | None (hint: A title and a description only) | remove | `.nds-list > .nds-card > .nds-card-header:has(> .nds-card-featured-icon)` | Items with no header: a title and a description only |
 | Icon color | Brand (default) | — | `.nds-list .nds-featured-icon` | The brand color on the icons |
@@ -582,7 +582,7 @@ Most options go on the list. Items puts its parts in every item. Icons and Icon 
 - A row list (`nds-horizontal`) needs wide items. An item under 324px wide puts its header back on top of the text, and an image drops under the text when it does not fit beside it. Give a row list fewer columns, or on a flex list a `--card-width` of about `360px`, never `auto`.
 - On a flex list, `nds-center`, `nds-middle` and `nds-reverse` change the items only. To move the rows, set `--justify` and `--align`.
 - A list fills its parent's width. In a box that sizes to its content (an inline block, a table cell), give the list a width: it measures itself to step down when narrow, so it cannot size the box.
-- Set the size, the item layout and the box on the list, never on one item, so the items line up. A box class on one item mixes with the list's: a stroke on a flat list's item draws a border with no padding.
+- Set the size, the item layout and the box on the list, so the items line up. A box class on one item mixes with the list's: a stroke on a flat list's item draws a border with no padding.
 - Give each icon its own look and color classes (`nds-subtle`, `nds-green`, …), so one icon can differ. An item may hold an avatar or an image instead of an icon.
 - Leave the size class off an icon, an avatar, a tag, a rating or a button: the list sizes it. An avatar is XL, LG in a small list (`nds-sm`) and 2XL in a large one (`nds-lg`). A tag or a rating is SM, XS in a small list and MD in a large one. A status tag in `.nds-card-corner` is the exception: it keeps `nds-xs`, as in a single card, so it stays small at every list size.
 - Hide every icon from screen readers with `aria-hidden="true"`. The title names the item.
@@ -612,7 +612,7 @@ These card and icon knobs set on the list reach every item. Set one on one card 
 | `--card-title-FS`, `--card-title-LH` | the card's: `--typo-text-lg-*` | Title size. `nds-sm` sets `--typo-text-md-*`, `nds-lg` sets `--typo-text-xl-*` |
 | `--card-description-FS`, `--card-description-LH` | the card's: `--typo-text-md-*` | Description size. `nds-sm` sets `--typo-text-sm-*`, `nds-lg` sets `--typo-text-lg-*` |
 | `--card-gap` | the card's: `var(--spacing-3xl)`, `var(--spacing-xl)` on phones | Space between the icon and the text. `nds-sm` and a list under 400px wide set `var(--spacing-lg)`, `nds-lg` sets `var(--spacing-4xl)` |
-| `--featuredicon-size` | `40px` | Icon size. `nds-sm` and a list under 400px wide set `32px`, `nds-lg` sets `48px` |
+| `--featuredicon-size` | the card's: `48px` | Icon size. `nds-sm` and a list under 400px wide set `40px`, `nds-lg` sets `56px` |
 {: .nds-table .nds-responsive}
 
 ### Grid List

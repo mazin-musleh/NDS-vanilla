@@ -391,11 +391,13 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 }
 
 // Part steps a parent shares with the part's own size class. A size knob always wins:
-// NDS writes only the -base, the part reads var(--x, var(--_x-base, default)), and MD resets it.
-@mixin featured-icon-md { --_featuredicon-size-base: initial; }
+// NDS writes only the -base; the part reads var(--x, var(--_x-base, var(--_x-default, size))), where a
+// card fills -default with its canon size. MD is explicit: initial would fall to that card default.
+@mixin featured-icon-md { --_featuredicon-size-base: 40px; }
 @mixin featured-icon-sm { --_featuredicon-size-base: 32px; }
 @mixin featured-icon-lg { --_featuredicon-size-base: 48px; }
-@mixin avatar-md { --_avatar-size-base: initial; }
+@mixin featured-icon-xl { --_featuredicon-size-base: 56px; }
+@mixin avatar-md { --_avatar-size-base: 40px; }
 @mixin avatar-lg { --_avatar-size-base: 48px; }
 @mixin avatar-xl { --_avatar-size-base: 64px; }
 @mixin avatar-2xl { --_avatar-size-base: 80px; }
@@ -420,11 +422,10 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 }
 
 // -base values: a parent's step reaches a tag with no size class, and a --tag-* knob still wins.
-// MD resets them: the tag's own fallbacks are its MD size.
 @mixin tag-md {
-    --_tag-height-base: initial;
-    --_tag-fs-base: initial;
-    --_tag-padding-inline-base: initial;
+    --_tag-height-base: 32px;
+    --_tag-fs-base: var(--typo-text-md-FS);
+    --_tag-padding-inline-base: var(--spacing-lg);
 }
 
 @mixin tag-sm {
@@ -486,15 +487,14 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     --card-width-max: #{$value};
 }
 
-// Card SM and LG steps: a list's size classes apply them, and its narrow rule the box half.
-// Not card classes: on a modal card, .nds-sm is the modal's width.
-// Each part steps one rung from its default, and only when it has no size class.
+// Card SM, MD and LG steps: the card's size classes, and any container that includes one on itself
+// (a list's size classes; its narrow rule takes the box half). Every step is an inherited -base
+// value, so the nearest wins: a card's own class beats a container's, and a --card-* knob beats both.
+// Each part steps one rung from the card's default, and only when it has no size class.
+// The card's defaults are its canon's: an LG icon, an XL avatar, SM tags and stars (_card.scss).
 // A button already at its largest size has no LG step; a ring has no SM.
-// The list sets an avatar to XL, and a tag and stars to SM, as the card canon writes them:
-// they step to LG and 2XL, XS and MD.
-// Every step is inherited (-base values), so the nearest list's wins.
 @mixin card-sm-box {
-    @include featured-icon-sm;
+    @include featured-icon-md;
     @include avatar-lg;
     @include date-tile-sm;
     --_card-gap-base: var(--spacing-lg);
@@ -526,7 +526,7 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 }
 
 @mixin card-lg {
-    @include featured-icon-lg;
+    @include featured-icon-xl;
     @include avatar-2xl;
     @include tag-md;
     @include progress-circle-md;
@@ -554,16 +554,18 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     @include meta-lg;
 }
 
-// The steps a nested list must not take from its outer list; keep in step with card-sm and card-lg.
-// Avatar, tag and stars are left out: every list item sets its own.
-@mixin card-steps-reset {
+// MD: every step back to the card's defaults. The card's MD class, and the stop at a nested card or list.
+// Keep in step with card-sm and card-lg.
+@mixin card-md {
     @include date-tile-md;
     @include meta-md;
-    @each $name in (featuredicon-size, progress-size, chip-size, chip-padding, chip-FS,
+    @each $name in (card-gap, card-image-width, card-number-FS, featuredicon-size, avatar-size, star-size,
+        tag-height, tag-fs, tag-padding-inline, progress-size, chip-size, chip-padding, chip-FS,
         btn-size, btn-gap, btn-indicator-size) {
         --_#{$name}-base: initial;
     }
-    @each $name in (card-value, card-value-unit, card-value-was, card-rating-text, metric-value, metric-trend) {
+    @each $name in (card-title, card-subtitle, card-description, card-value, card-value-unit, card-value-was,
+        card-rating-text, metric-value, metric-trend) {
         --_#{$name}-FS-base: initial;
         --_#{$name}-LH-base: initial;
     }

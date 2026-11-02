@@ -21,9 +21,9 @@ SCSS source, because the file a declaration came from is gone after compiling.
                 browser drops the whole rule without a word (v1.12.0 shipped one)
   7. size-knob  NDS writing a part's public size knob (--avatar-size, --btn-size, …): the knob
                 is the author's, NDS writes the --_x-base under it (plans/part-sizes.md)
-  8. list-step  a property a List's size step writes that a nested list does not clear, the
-                card does not set on itself, and every list item does not set: a list
-                nested in an SM list would take the outer size (card-steps-reset)
+  8. list-step  a property a card or List size step writes that the nested card/list reset
+                does not clear and a list does not set on itself: a list nested in an SM
+                list would take the outer size (card-md)
 
 The [data-state] tail check stays in check-data-state-tails.py (mkrelease runs it).
 """
@@ -47,9 +47,10 @@ IMPORTANT_OK = {
 # Size knobs NDS never writes; `initial` only stops one inheriting (the button's own reset).
 SIZE_KNOBS = re.compile(r'--(featuredicon-size|avatar-size|progress-size|star-size|chip-size|date-tile-width'
                         r'|tag-height|tag-fs|tag-padding-inline|btn-size|btn-gap|btn-indicator-size|btn-FS|btn-LH)$')
-# A List's size steps, the rule every item takes, a nested list's reset, the card itself (built selectors).
-LIST_STEPS = ('.nds-list.nds-sm>.nds-card', '.nds-list.nds-lg>.nds-card', ':where(.nds-list:not(.nds-sm,.nds-lg))>.nds-card')
-LIST_KEEP = (':where(.nds-list)>.nds-card', ':where(.nds-card .nds-list)', '.nds-card')
+# The card and List size steps, the narrow list's, and the nested reset (built selectors).
+_CARD = '.nds-card:not(.nds-modal,.nds-definition-list,.nds-stepper)'
+LIST_STEPS = (f'{_CARD}.nds-sm,.nds-list.nds-sm', f'{_CARD}.nds-lg,.nds-list.nds-lg', ':where(.nds-list:not(.nds-sm,.nds-lg))>.nds-card')
+LIST_KEEP = (':where(.nds-card .nds-card:not(.nds-list>*),.nds-card .nds-list)',)
 # A pseudo-element (legacy one-colon forms too) followed by anything that is not a pseudo-class run.
 AFTER_PSEUDO_ELEMENT = re.compile(r'(?:::[\w-]+|:(?:before|after|first-line|first-letter))(?![\w-])(?!(?:\(\))?(?::[\w-]+(?:\(\))?)*$)')
 
@@ -245,7 +246,7 @@ def main():
 
     main_css = os.path.join(ROOT, '_site', 'assets', 'css', 'nds-main.min.css')
     for name in list_step_drift(read(main_css)) if os.path.exists(main_css) else ():
-        problems.append(('list-step', 'nds-main.min.css', name, 'a List step a nested list keeps from its outer list: add it to card-steps-reset'))
+        problems.append(('list-step', 'nds-main.min.css', name, 'a List step a nested list keeps from its outer list: add it to card-md'))
 
     js_only, outside = set_outside_css()
     for name, sites in sorted(used.items()):
