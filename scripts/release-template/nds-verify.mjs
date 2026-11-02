@@ -35,7 +35,8 @@
 // page compares with a right-to-left reference in Arabic. Prints the audit findings, console errors (a CSP one names its
 // source), failed loads, sideways scroll and a wrong window.innerWidth; exits 1 when there is
 // any. Prints each state's sheet and only what went wrong. Inspect every sheet: the script cannot
-// judge the look. With an NDS-PLAN.md paced `whole plan` (in the working folder, or the folder above this script), it ends with the rows left.
+// judge the look. With an NDS-PLAN.md (in the working folder, or the folder above this script), it ends with the rows
+// left under `whole plan` pacing, or, once every row awaits the dev, a reminder to file NDS findings in NDS-REPORT.md.
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
@@ -374,14 +375,15 @@ console.log(report.join('\n'));
 console.log(`\n${problems.length ? `${problems.length} problem(s):\n${problems.join('\n')}` : 'No problems found by script.'}`);
 console.log(`\nOutput: ${OUT}\nNow open every sheet-*.png and compare the state with the reference row above it.\n` +
     `A sheet shrinks each shot: for detail, open the state's own <state>-<width>-<theme>.png beside its reference-…-<width>-<theme>.png, never another browser.`);
-// Agents stop a `whole plan` run after its first page (rigs 4 and 5): say what is left where they stop.
+// Agents stop a `whole plan` run after its first page (rigs 4 and 5), and keep NDS findings in the
+// plan instead of the report (rigs 4, 8 and 3): say both where they stop.
 const planPath = [process.cwd(), dirname(HERE)].map((d) => join(d, 'NDS-PLAN.md')).find(existsSync);
 const plan = planPath ? readFileSync(planPath, 'utf8') : '';
-if (/pacing[^\n]*whole plan/i.test(plan)) {
-    const open = plan.split('\n').filter((l) => l.startsWith('|'))
-        .map((l) => l.split('|').map((c) => c.replace(/[*`]/g, '').trim()))
-        .filter((cells) => cells.includes('Planned') || cells.includes('In Progress'));
-    if (open.length) console.log(`\nPacing is whole plan, and ${open.length} plan row(s) are still Planned or In Progress (next: ${open[0][1]}). ` +
-        'Unless the dev told you to stop, finish this page, then build the next row in this same turn: whole plan stops only when every row is Awaiting Verification or blocked.');
-}
+const rows = plan.split('\n').filter((l) => l.startsWith('|')).map((l) => l.split('|').map((c) => c.replace(/[*`]/g, '').trim()));
+const open = rows.filter((cells) => cells.includes('Planned') || cells.includes('In Progress'));
+const done = rows.filter((cells) => cells.includes('Awaiting Verification') || cells.includes('Built and Verified'));
+if (open.length && /pacing[^\n]*whole plan/i.test(plan)) console.log(`\nPacing is whole plan, and ${open.length} plan row(s) are still Planned or In Progress (next: ${open[0][1]}). ` +
+    'Unless the dev told you to stop, finish this page, then build the next row in this same turn: whole plan stops only when every row is Awaiting Verification or blocked.');
+if (!open.length && done.length) console.log('\nEvery plan row is Awaiting Verification. Before you end the run, file each NDS finding ' +
+    '(a missing API or event, a doc or canon contradiction, a reproducible bug, a rule gap) in NDS-REPORT.md, not only in the plan.');
 process.exit(problems.length ? 1 : 0);
