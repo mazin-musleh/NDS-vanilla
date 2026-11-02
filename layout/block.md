@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "25/10/2026 - 10:10 PM"
+last_edit: "02/11/2026 - 09:34 PM"
 ---
 
 <section id="block-overview" class="nds-content-section nds-doc-overview">
@@ -159,6 +159,7 @@ Pick another component when:
 
 - Use blocks to split one [section](../layout/section) into parts. Start a new section for a new topic.
 - Put each group in its own block. Two groups in one block get no block gap between them.
+- A tab panel or a panel body spaces nothing between its children. Put each part there in a block, and fields in one `form.nds-form`. The audit's `parts-touch` check finds parts that touch.
 - Put `nds-block` straight on a grid, a tab set or a table. A wrapper around one component adds nothing.
 - Add `nds-prose` to a block of bare paragraphs and lists, so they get space between them.
 - Do not nest blocks. If a part needs its own heading level, it may belong in a new section.

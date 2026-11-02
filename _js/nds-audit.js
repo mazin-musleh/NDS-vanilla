@@ -110,8 +110,9 @@
     } });
 
     // The component token tier ships in the main sheet only, so an empty value means it never applied.
+    const isMainSheetApplied = () => !!getComputedStyle(document.documentElement).getPropertyValue('--avatar-background').trim();
     addRule({ id: 'css-missing', group: 'page', severity: 'error', docs: 'ui-shell/head.html', check(context) {
-        if (!getComputedStyle(document.documentElement).getPropertyValue('--avatar-background').trim()) {
+        if (!isMainSheetApplied()) {
             context.report(null, 'the NDS main stylesheet is not applied — components render without their styles.', 'Check the nds-main.min.css link in <head>, and NDS_ASSETS_PATH when the files sit elsewhere.');
         }
     } });
@@ -293,6 +294,7 @@
 
     // One line, one control height: a 32px button beside a 40px one reads as a mistake. Hidden items are skipped.
     addRule({ id: 'toolbar-sizes', group: 'structure', docs: 'components/toolbar.html', check(context) {
+        if (!isMainSheetApplied()) return; // measured before the gaps exist; css-missing reports it
         context.find('.nds-toolbar-row, .nds-toolbar:not(:has(> .nds-toolbar-row))').forEach(line => {
             const heights = new Set([...line.children]
                 .flatMap(el => el.matches('.nds-toolbar-start, .nds-toolbar-end') ? [...el.children] : [el])
@@ -319,6 +321,7 @@
     // Fields side by side start their inputs level. Only what sits above an input moves it; a message under it does not.
     // An upload has no input box to line up, only a button or a drop zone.
     addRule({ id: 'form-row-align', group: 'structure', docs: 'components/form.html', check(context) {
+        if (!isMainSheetApplied()) return; // measured before the gaps exist; css-missing reports it
         const fieldSelector = '.nds-form-container:not(.nds-checkbox, .nds-radio, .nds-switch, .nds-upload)';
         // A wrapper that stacks fields (a date over a time) takes its row slot as its top field.
         const topField = cell => cell.matches(fieldSelector) ? cell : cell.firstElementChild?.matches(fieldSelector) ? cell.firstElementChild : null;
@@ -337,6 +340,24 @@
                     'Put help text in a Hint under the field or a Help tooltip beside the label, or give every field in the row an Info line. Keep the labels short enough for one line.');
             });
         });
+    } });
+
+    // Parts dropped straight into a box that spaces nothing (a tab panel, a panel body) touch (rig 8).
+    addRule({ id: 'parts-touch', group: 'structure', docs: 'layout/block.html', check(context) {
+        if (!isMainSheetApplied()) return; // measured before the gaps exist; css-missing reports it
+        // A table counts by the wrapper its script adds: before that, bare tables in prose touch for a moment.
+        const partSelector = ':is(.nds-form-container, .nds-form-group, .nds-definition-list, .nds-table-wrapper, .nds-alert, .nds-stepper, .nds-list, .nds-tabs, .nds-block, .nds-flex, .nds-grid, .nds-empty, .nds-chart, form)';
+        const isPart = el => el?.matches(partSelector) && el.getClientRects().length && getComputedStyle(el).position !== 'absolute';
+        const touching = context.find(partSelector).filter(below => {
+            const above = below.previousElementSibling;
+            // A section content-visibility skips has no layout yet, and a style read would lay it out.
+            if (!above || (below.checkVisibility && !below.checkVisibility({ contentVisibilityAuto: true })) || !isPart(above) || !isPart(below)) return false;
+            const top = above.getBoundingClientRect(), bottom = below.getBoundingClientRect();
+            // Stacked, not side by side, with no space between.
+            return top.height && bottom.height && bottom.top >= top.bottom - 1 && bottom.top - top.bottom < 1;
+        });
+        if (touching.length) context.report(touching[0], `two NDS parts stack with no space between them${touching.length > 1 ? ` (${touching.length} places; the first is shown)` : ''}: their container spaces nothing.`,
+            'Stack the parts with the layout the docs give: fields in one form.nds-form, other parts each in an .nds-block.', undefined, touching.length);
     } });
 
     // ── i18n ─────────────────────────────────────────────────────────
