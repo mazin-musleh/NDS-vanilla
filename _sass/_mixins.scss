@@ -207,6 +207,15 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
   --_btn-LH-base: var(--typo-text-sm-LH);
 }
 
+// Button SM step: the .nds-sm class and a parent's default (a card corner, a definition action) share it.
+@mixin btn-sm {
+  --_btn-size-base: 24px;
+  --_btn-gap-base: var(--spacing-xs);
+  --_btn-indicator-size-base: 2px;
+  --_btn-FS-base: var(--typo-text-xs-FS);
+  --_btn-LH-base: var(--typo-text-xs-LH);
+}
+
 // ==============================================
 // BUTTON STATE MIXINS
 // ==============================================
@@ -434,6 +443,25 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     --_tag-height-base: 24px;
     --_tag-fs-base: var(--typo-text-sm-FS);
     --_tag-padding-inline-base: var(--spacing-md);
+}
+
+// Feedback steps, as -base values: a size class and a host (a form footer) share them; --feedback-size still wins.
+@mixin feedback-sm {
+    --_feedback-size-base: 16px;
+    --_feedback-FS-base: var(--typo-text-sm-FS);
+    --_feedback-LH-base: var(--typo-text-sm-LH);
+}
+
+@mixin feedback-md {
+    --_feedback-size-base: 24px;
+    --_feedback-FS-base: var(--typo-text-md-FS);
+    --_feedback-LH-base: var(--typo-text-md-LH);
+}
+
+@mixin feedback-lg {
+    --_feedback-size-base: 32px;
+    --_feedback-FS-base: var(--typo-text-lg-FS);
+    --_feedback-LH-base: var(--typo-text-lg-LH);
 }
 
 @mixin tag-xs {

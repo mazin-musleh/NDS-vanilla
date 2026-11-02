@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "02/11/2026 - 03:47 PM"
 ---
 
 <section id="copy-overview" class="nds-content-section nds-doc-overview">
@@ -65,7 +65,7 @@ Pick another component when:
     </div>
   </div>
   <div class="nds-card-actions">
-    <button type="button" class="nds-btn nds-secondary-outline nds-sm nds-copy" data-copy-target="#copy-target-ref">
+    <button type="button" class="nds-btn nds-secondary-outline nds-copy" data-copy-target="#copy-target-ref">
       <i class="nds-icon nds-hgi-copy-01"></i>
       <span class="nds-label">Copy reference</span>
     </button>

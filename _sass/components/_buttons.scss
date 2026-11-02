@@ -243,11 +243,7 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
   }
 
   &.nds-sm {
-    --_btn-size-base: 24px;
-    --_btn-gap-base: var(--spacing-xs);
-    --_btn-indicator-size-base: 2px;
-    --_btn-FS-base: var(--typo-text-xs-FS);
-    --_btn-LH-base: var(--typo-text-xs-LH);
+    @include btn-sm;
   }
 
   // Stacked button (.nds-col from the flex utilities): the icon sits above the

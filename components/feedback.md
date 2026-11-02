@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 12:30 AM"
+last_edit: "02/11/2026 - 04:07 PM"
 ---
 
 <section id="feedback-overview" class="nds-content-section nds-doc-overview">
@@ -37,7 +37,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body">
 <script type="text/html" id="fb-message" data-canon data-variants="fb-variants-table" data-js="fb-js">
-<span class="nds-feedback nds-sm nds-outline" data-status="error">
+<span class="nds-feedback nds-outline" data-status="error">
   <span class="nds-feedback-icon">
     <i class="nds-icon" aria-hidden="true"></i>
   </span>
@@ -45,7 +45,7 @@ Pick another component when:
 </span>
 </script>
 <script type="text/html" id="fb-icon" data-canon>
-<span class="nds-feedback nds-sm nds-outline" data-status="error">
+<span class="nds-feedback nds-outline" data-status="error">
   <span class="nds-feedback-icon">
     <i class="nds-icon" aria-hidden="true"></i>
   </span>
@@ -69,7 +69,7 @@ NDS.Feedback.create({
     </div>
     <div class="nds-section-body" markdown="1">
 
-`#fb-js` is the same message as one `NDS.Feedback.create()` call (`data-js` on the base canon). A row whose On element is `create()` sets an option of that call. The call's defaults match the canon: `size: 'sm'` and `style: 'outline'`.
+`#fb-js` is the same message as one `NDS.Feedback.create()` call (`data-js` on the base canon). A row whose On element is `create()` sets an option of that call. The call's defaults match the canon: no size class, so SM, and `style: 'outline'`.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
@@ -90,7 +90,7 @@ NDS.Feedback.create({
 | Status | Neutral | `status: 'neutral'` | `create()` | The same, in JavaScript |
 | Status | Help | `[data-status="help"]` | `.nds-feedback` | Help text. Gray, with a question mark |
 | Status | Help | `status: 'help'` | `create()` | The same, in JavaScript |
-| Size | SM (default) | `.nds-sm` | `.nds-feedback` | A 16px icon, for a message in a form or in text |
+| Size | SM (default) | — | — | A 16px icon, for a message in a form or in text |
 | Size | MD | `.nds-md` | `.nds-feedback` | A 24px icon and larger text, for a status that stands alone |
 | Size | MD | `size: 'md'` | `create()` | The same, in JavaScript |
 | Size | LG | `.nds-lg` | `.nds-feedback` | A 32px icon and large text, for the main status of a page or a panel |
@@ -227,7 +227,7 @@ Set these on the `.nds-feedback-icon`, on the `.nds-feedback`, or on a parent. E
 
 | Property | Default | Controls |
 |---|---|---|
-| `--feedback-size` | `24px`, `16px` with `nds-sm`, `32px` with `nds-lg` | Size of the icon. `nds-sm`, `nds-md` and `nds-lg` set it on the `.nds-feedback`, so set yours on the `.nds-feedback-icon` to change a sized icon |
+| `--feedback-size` | `16px`, `24px` with `nds-md`, `32px` with `nds-lg` | Size of the icon. It wins over a size class wherever you set it. A message with no size class takes its parent's size, such as 20px in a tooltip |
 | `--feedback-color` | `var(--icon-neutral)` | Color of the outline icon. It changes in dark mode |
 | `--feedback-icon-color` | `var(--feedback-icon-fill-neutral)` | Fill of the solid disc. It stays the same in dark mode, so the white symbol keeps its contrast |
 | `--feedback-ring` | `var(--icon-neutral-ring)` | Color of the ring halo |
@@ -265,7 +265,7 @@ There is no `init()`: nothing scans the page for feedback. The script only build
 | `status` | `'neutral'` | The status, as in `data-status` |
 | `target` | `null` | The element or selector the message goes to |
 | `position` | `'append'` | `'append'` or `'prepend'` puts it inside the target, `'before'` or `'after'` beside it. This is where the message goes in the page, unlike Alert's `position`, which is the toast's screen corner |
-| `size` | `'sm'` | `'sm'`, `'md'` or `'lg'` |
+| `size` | none | `'sm'`, `'md'` or `'lg'`. With none, the message takes no class: SM, or its parent's size |
 | `style` | `'outline'` | `'outline'`, `''` for solid, or `'ring'` |
 | `showIcon` | `true` | `false` leaves out the icon |
 | `permanent` | `false` | Makes the message permanent |

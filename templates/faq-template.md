@@ -211,7 +211,7 @@ sidemenu_mode: false
                 <div class="nds-card nds-stroke" style="--card-width: 100%;">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-mail-01"></i>
                             </span>
                         </div>

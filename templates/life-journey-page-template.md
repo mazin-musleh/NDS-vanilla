@@ -92,12 +92,12 @@ related:
                                 <!-- In progress only: the action and the requirements -->
                                 {%- if forloop.first %}
                                 <div class="nds-stepper-action nds-end" data-journey-progress>
-                                    <a href="{{ '/templates/journey-service-template' | relative_url }}" class="nds-btn nds-primary nds-md">
+                                    <a href="{{ '/templates/journey-service-template' | relative_url }}" class="nds-btn nds-primary">
                                         <span class="nds-label">Start service</span>
                                     </a>
                                 </div>
                                 {%- endif %}
-                                <div class="nds-accordion nds-md nds-minimal" data-journey-progress>
+                                <div class="nds-accordion nds-minimal" data-journey-progress>
                                     <div class="nds-accordion-item">
                                         <h3 class="nds-accordion-header">
                                             <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" aria-expanded="false" aria-controls="step-{{ forloop.index }}-requirements">
@@ -128,7 +128,7 @@ related:
             <!-- In progress -->
             <div class="nds-card nds-stroke nds-shadow nds-horizontal nds-reverse nds-middle" data-journey-progress>
                 <div class="nds-card-header">
-                    <div class="nds-progress-circle nds-md" data-num="1" data-max="{{ page.steps.size }}" role="progressbar" aria-labelledby="journey-progress-title">
+                    <div class="nds-progress-circle" data-num="1" data-max="{{ page.steps.size }}" role="progressbar" aria-labelledby="journey-progress-title">
                         <svg width="120" height="120" viewBox="0 0 24 24">
                             <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
                             <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
@@ -148,7 +148,7 @@ related:
             <!-- Completed -->
             <div class="nds-card nds-stroke nds-shadow nds-horizontal nds-reverse nds-middle" data-journey-done hidden>
                 <div class="nds-card-header">
-                    <div class="nds-progress-circle nds-md" data-num="{{ page.steps.size }}" data-max="{{ page.steps.size }}" role="progressbar" aria-labelledby="journey-done-title">
+                    <div class="nds-progress-circle" data-num="{{ page.steps.size }}" data-max="{{ page.steps.size }}" role="progressbar" aria-labelledby="journey-done-title">
                         <svg width="120" height="120" viewBox="0 0 24 24">
                             <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
                             <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
@@ -241,7 +241,7 @@ related:
             <li class="nds-card">
                 <div class="nds-card-header">
                     <div class="nds-card-featured-icon">
-                        <span class="nds-featured-icon nds-circle nds-lg">
+                        <span class="nds-featured-icon nds-circle">
                             <i class="hgi hgi-stroke {{ journey.icon }}" aria-hidden="true"></i>
                         </span>
                     </div>
@@ -271,7 +271,7 @@ related:
         <div class="nds-card nds-stroke nds-full">
             <div class="nds-card-header">
                 <div class="nds-card-featured-icon">
-                    <span class="nds-featured-icon nds-circle nds-lg">
+                    <span class="nds-featured-icon nds-circle">
                         <i class="hgi hgi-stroke hgi-comment-01" aria-hidden="true"></i>
                     </span>
                 </div>
@@ -283,7 +283,7 @@ related:
                 </div>
             </div>
             <div class="nds-card-actions">
-                <a href="#" class="nds-btn nds-primary nds-lg">
+                <a href="#" class="nds-btn nds-primary">
                     <span class="nds-label">Contact us</span>
                 </a>
             </div>

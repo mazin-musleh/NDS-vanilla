@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.2"
 updated: "1.12.x"
-last_edit: "23/10/2026 - 03:59 PM"
+last_edit: "02/11/2026 - 03:47 PM"
 ---
 
 <section id="metric-overview" class="nds-content-section nds-doc-overview">
@@ -39,13 +39,13 @@ Pick another component when:
 <div class="nds-card nds-stroke nds-full" data-status="positive">
   <div class="nds-card-header">
     <div class="nds-card-featured-icon">
-      <span class="nds-featured-icon nds-circle nds-sm">
+      <span class="nds-featured-icon nds-circle">
         <i class="nds-icon nds-hgi-trade-up" aria-hidden="true"></i>
       </span>
     </div>
     <div class="nds-card-text">
       <div class="nds-card-corner">
-        <button type="button" class="nds-btn nds-subtle nds-md nds-ellipsis nds-vertical nds-icon-only">
+        <button type="button" class="nds-btn nds-subtle nds-ellipsis nds-vertical nds-icon-only">
           <span class="nds-label">More options</span>
         </button>
       </div>
@@ -73,10 +73,10 @@ Pick another component when:
     </div>
   </div>
   <div class="nds-card-actions">
-    <button type="button" class="nds-btn nds-subtle nds-md nds-icon-only" aria-label="Settings">
+    <button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Settings">
       <i class="hgi hgi-stroke hgi-settings-02" aria-hidden="true"></i>
     </button>
-    <a href="#" class="nds-btn nds-secondary-outline nds-md">View Report</a>
+    <a href="#" class="nds-btn nds-secondary-outline">View Report</a>
   </div>
 </div>
 </script>
@@ -84,13 +84,13 @@ Pick another component when:
 <div class="nds-card nds-stroke nds-full" data-status="negative">
   <div class="nds-card-header">
     <div class="nds-card-featured-icon">
-      <span class="nds-featured-icon nds-circle nds-sm">
+      <span class="nds-featured-icon nds-circle">
         <i class="nds-icon nds-hgi-trade-down" aria-hidden="true"></i>
       </span>
     </div>
     <div class="nds-card-text">
       <div class="nds-card-corner">
-        <button type="button" class="nds-btn nds-subtle nds-md nds-ellipsis nds-vertical nds-icon-only">
+        <button type="button" class="nds-btn nds-subtle nds-ellipsis nds-vertical nds-icon-only">
           <span class="nds-label">More options</span>
         </button>
       </div>
@@ -118,10 +118,10 @@ Pick another component when:
     </div>
   </div>
   <div class="nds-card-actions">
-    <button type="button" class="nds-btn nds-subtle nds-md nds-icon-only" aria-label="Settings">
+    <button type="button" class="nds-btn nds-subtle nds-icon-only" aria-label="Settings">
       <i class="hgi hgi-stroke hgi-settings-02" aria-hidden="true"></i>
     </button>
-    <a href="#" class="nds-btn nds-secondary-outline nds-md">View Report</a>
+    <a href="#" class="nds-btn nds-secondary-outline">View Report</a>
   </div>
 </div>
 </script>
@@ -206,7 +206,7 @@ Pick another component when:
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Dashboard Header</span>
-              <p class="nds-card-description">In a metric card, the title is smaller and a divider sits above the actions. A menu button goes in the header's <code class="nds-inline-code lang-css">.nds-card-corner</code>, as in any card.</p>
+              <p class="nds-card-description">In a metric card, the title is smaller, the featured icon is SM, the buttons are MD (a corner button stays SM), and a divider sits above the actions. A menu button goes in the header's <code class="nds-inline-code lang-css">.nds-card-corner</code>, as in any card.</p>
             </div>
           </div>
         </li>

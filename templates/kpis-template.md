@@ -28,14 +28,14 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-user-multiple-02" aria-hidden="true"></i>
                             </span>
                         </div>
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-card-number nds-md" data-counter="543210">0</span>
+                            <span class="nds-card-number" data-counter="543210">0</span>
                             <p class="nds-card-description">Users</p>
                         </div>
                     </div>
@@ -43,14 +43,14 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-eye" aria-hidden="true"></i>
                             </span>
                         </div>
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-card-number nds-md" data-counter="876543">0</span>
+                            <span class="nds-card-number" data-counter="876543">0</span>
                             <p class="nds-card-description">Visits</p>
                         </div>
                     </div>
@@ -58,14 +58,14 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>
                             </span>
                         </div>
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-card-number nds-md" data-counter="1234567">0</span>
+                            <span class="nds-card-number" data-counter="1234567">0</span>
                             <p class="nds-card-description">Page Views Count</p>
                         </div>
                     </div>
@@ -73,14 +73,14 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-arrow-turn-backward" aria-hidden="true"></i>
                             </span>
                         </div>
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-card-number nds-md">42%</span>
+                            <span class="nds-card-number">42%</span>
                             <p class="nds-card-description">Bounce Rate</p>
                         </div>
                     </div>
@@ -327,14 +327,14 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-user-account" aria-hidden="true"></i>
                             </span>
                         </div>
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-card-number nds-md">87%</span>
+                            <span class="nds-card-number">87%</span>
                             <p class="nds-card-description">User Satisfaction</p>
                         </div>
                     </div>
@@ -342,14 +342,14 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-star" aria-hidden="true"></i>
                             </span>
                         </div>
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-card-number nds-md">92%</span>
+                            <span class="nds-card-number">92%</span>
                             <p class="nds-card-description">Completion Rate</p>
                         </div>
                     </div>
@@ -357,14 +357,14 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-percent-square" aria-hidden="true"></i>
                             </span>
                         </div>
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-card-number nds-md">78%</span>
+                            <span class="nds-card-number">78%</span>
                             <p class="nds-card-description">Digital Percentage</p>
                         </div>
                     </div>
@@ -372,14 +372,14 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-file-edit" aria-hidden="true"></i>
                             </span>
                         </div>
                     </div>
                     <div class="nds-card-content">
                         <div class="nds-card-text">
-                            <span class="nds-card-number nds-md" data-counter="458200">0</span>
+                            <span class="nds-card-number" data-counter="458200">0</span>
                             <p class="nds-card-description">Total Transactions</p>
                         </div>
                     </div>

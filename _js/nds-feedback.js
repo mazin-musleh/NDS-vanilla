@@ -35,7 +35,6 @@
  *     status: 'error',
  *     target: '#email',
  *     position: 'after',
- *     size: 'sm',
  *     style: 'outline'
  * });
  *
@@ -99,7 +98,7 @@
                 status = 'neutral',
                 target = null,
                 position = 'append',
-                size = 'sm',
+                size = '',
                 style = 'outline',
                 showIcon = true,
                 id = null,
@@ -110,8 +109,8 @@
                 onCreate = null
             } = options;
 
-            // Map simple size/style to CSS classes
-            const sizeClass = size ? `nds-${size}` : 'nds-sm';
+            // No size: no class, so the message takes its parent's size (SM by default)
+            const sizeClass = size ? `nds-${size}` : '';
             const styleClass = style ? `nds-${style}` : '';
 
             // Create feedback element with size and style classes on parent

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 01:31 PM"
+last_edit: "02/11/2026 - 03:47 PM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -162,7 +162,7 @@ Pick another component when:
       <ul class="nds-drawer-list">
         <li>
           <a href="#" class="nds-btn nds-subtle">
-            <span class="nds-featured-icon nds-sm">
+            <span class="nds-featured-icon">
               <i class="hgi hgi-stroke hgi-file-validation" aria-hidden="true"></i>
             </span>
             <span class="nds-label">Enrollment certificate</span>
@@ -170,7 +170,7 @@ Pick another component when:
         </li>
         <li>
           <a href="#" class="nds-btn nds-subtle">
-            <span class="nds-featured-icon nds-sm">
+            <span class="nds-featured-icon">
               <i class="hgi hgi-stroke hgi-task-edit-01" aria-hidden="true"></i>
             </span>
             <span class="nds-label">Course withdrawal</span>
@@ -178,7 +178,7 @@ Pick another component when:
         </li>
         <li>
           <a href="#" class="nds-btn nds-subtle">
-            <span class="nds-featured-icon nds-sm">
+            <span class="nds-featured-icon">
               <i class="hgi hgi-stroke hgi-mail-account-01" aria-hidden="true"></i>
             </span>
             <span class="nds-label">Change of email</span>
@@ -252,7 +252,7 @@ Pick another component when:
 </script>
 <script type="text/html" id="card-corner" data-canon>
 <div class="nds-card-corner">
-  <a href="#" class="nds-btn nds-subtle nds-sm">
+  <a href="#" class="nds-btn nds-subtle">
     <span class="nds-label">View all</span>
     <i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i>
   </a>
@@ -260,7 +260,7 @@ Pick another component when:
 </script>
 <script type="text/html" id="card-corner-status" data-canon>
 <div class="nds-card-corner">
-  <span class="nds-tag nds-xs" data-status="success">
+  <span class="nds-tag" data-status="success">
     <span class="nds-label">Active</span>
   </span>
 </div>
@@ -319,8 +319,8 @@ Pick another component when:
 | Value | Sale price | canon `#card-value-sale` | `.nds-card-text:not(.nds-card-header > *):not(a.nds-card *)` (after) | A price with the original crossed out in `<s>` |
 | Value | Unit price | canon `#card-value-unit` | `.nds-card-text:not(.nds-card-header > *):not(a.nds-card *)` (after) | A price with a plain-text unit after it |
 | Corner | None (default) | — | — | Nothing in the top end corner |
-| Corner | Action (hint: A small button in the top end corner) (not: image) | canon `#card-corner` | `.nds-card-text:not(a.nds-card *)` (start) | A small button, such as View all, in `.nds-card-corner`. Write the corner first in the card text. Below a header, it shows in the card's top end corner. In a row card, a Header title card or a card with no header, it floats at the end of the title's first line, and the title wraps around it. Not on a link card, which holds no links or buttons |
-| Corner | Status (hint: A status tag in the top end corner) | canon `#card-corner-status` | `.nds-card-text:not(a.nds-card *)` (start) | A status tag in `.nds-card-corner`, placed the same way as Action. `data-status` sets its color |
+| Corner | Action (hint: A small button in the top end corner) (not: image) | canon `#card-corner` | `.nds-card-text:not(a.nds-card *)` (start) | A small button, such as View all, in `.nds-card-corner`. The corner makes the button SM, and MD in an `nds-lg` card. Write the corner first in the card text. Below a header, it shows in the card's top end corner. In a row card, a Header title card or a card with no header, it floats at the end of the title's first line, and the title wraps around it. Not on a link card, which holds no links or buttons |
+| Corner | Status (hint: A status tag in the top end corner) | canon `#card-corner-status` | `.nds-card-text:not(a.nds-card *)` (start) | A status tag in `.nds-card-corner`, placed the same way as Action. The corner makes the tag XS, and SM in an `nds-lg` card. `data-status` sets its color |
 | Corner | Status (hint: A status tag in the top end corner) | `.nds-dark` | `.nds-card-header:has(.nds-card-image) ~ * .nds-card-corner .nds-tag` | Over an image, give the tag `.nds-dark`: its solid background keeps it readable |
 | Corner | Checkbox (hint: A select checkbox in the top end corner) (not: statistic, progress) | canon `#card-corner-checkbox` | `.nds-card-text:not(a.nds-card *)` (start) | A select checkbox in `.nds-card-corner`. Placed the same way as Action. With a status tag, put both in one `.nds-card-corner`, the checkbox last, so it sits in the corner |
 | Actions | None (default) | — | — | No actions |
@@ -476,7 +476,7 @@ Pick another component when:
 - Put `.nds-card-actions` after `.nds-card-content`, not inside it. In a [modal](../components/modal), only the content scrolls. Actions inside the content still work there, because the modal pins them to the bottom.
 - To make a whole card smaller or larger, put `nds-sm` or `nds-lg` on the card, not a size class on each part. The card changes every part together.
 - On a [Modal](../components/modal), a [Definition List](../components/definition-list) or a [Stepper](../components/stepper), `nds-sm` and `nds-lg` set that component's own size, not the card's.
-- Leave the size class off an icon, an avatar, a progress ring, a tag or a rating: the card's size sets it.
+- Leave the size class off an icon, an avatar, a progress ring, a tag, a rating or a corner button: the card's size sets it. Write a size class on a part only for a custom size.
 - Show a price with `.nds-card-value`, not with a tag.
 - Keep the description to one or two lines. For longer text, [truncate](../utilities/truncate-text) it or link to a detail page.
 - Do not put a card inside a card. Use `.nds-card-meta` or a [definition list](../components/definition-list) inside the content.
@@ -485,7 +485,7 @@ Pick another component when:
 - For a set of cards, use a [List](../components/list): each card is a list item, and the list sets the look they share. A set of link cards stays a [Grid](../layout/grid).
 - To show a card's content with no box, add `nds-flush`. It drops the padding, the border, the fill and the shadow.
 - Put a card's small extras in `.nds-card-corner`, first in `.nds-card-text`: a status tag, a menu or "View all" button, or a select checkbox. A bare button in the header shrinks when the title is long, and its label spills out.
-- Keep the corner to one or two small items: an `nds-xs` tag, an `nds-sm` subtle button, an icon-only button, or a checkbox. A wide corner meets the header icon on a narrow card.
+- Keep the corner to one or two small items: a tag, a subtle or icon-only button, or a checkbox. The corner makes a tag XS and a button SM, one step bigger in an `nds-lg` card, and a size class on the part still wins. A wide corner meets the header icon on a narrow card.
 - Write the tag first and the checkbox last, so the checkbox sits in the corner.
 - A card the user selects holds no buttons in its corner. Picking it and opening it are two different actions.
 - Over an image, give the status tag `.nds-dark`.

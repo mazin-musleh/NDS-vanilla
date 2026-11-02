@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "02/11/2026 - 03:47 PM"
 ---
 
 <section id="export-overview" class="nds-content-section nds-doc-overview">
@@ -167,7 +167,7 @@ Pick another component when:
       </div>
       <div class="nds-card-meta">
         <div class="nds-card-tags">
-          <span class="nds-tag nds-yellow nds-sm" data-export-field="status" data-export-label="Status"><span class="nds-label">In Progress</span></span>
+          <span class="nds-tag nds-yellow" data-export-field="status" data-export-label="Status"><span class="nds-label">In Progress</span></span>
         </div>
       </div>
     </div>
@@ -187,7 +187,7 @@ Pick another component when:
       </div>
       <div class="nds-card-meta">
         <div class="nds-card-tags">
-          <span class="nds-tag nds-green nds-sm" data-export-field="status"><span class="nds-label">Completed</span></span>
+          <span class="nds-tag nds-green" data-export-field="status"><span class="nds-label">Completed</span></span>
         </div>
       </div>
     </div>
@@ -207,7 +207,7 @@ Pick another component when:
       </div>
       <div class="nds-card-meta">
         <div class="nds-card-tags">
-          <span class="nds-tag nds-gray nds-sm" data-export-field="status"><span class="nds-label">Pending</span></span>
+          <span class="nds-tag nds-gray" data-export-field="status"><span class="nds-label">Pending</span></span>
         </div>
       </div>
     </div>

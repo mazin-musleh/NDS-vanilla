@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "02/11/2026 - 03:50 PM"
 ---
 
 <section id="password-overview" class="nds-content-section nds-doc-overview">
@@ -56,7 +56,7 @@ Pick another component when:
   </div>
   <div class="nds-form-footer" data-feedback-target>
     <div class="nds-password-rules" id="new-password-rules">
-      <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="length">
+      <span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="length">
         <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
         <span class="nds-feedback-message">At least 8 characters</span>
       </span>
@@ -86,7 +86,7 @@ Pick another component when:
   </div>
   <div class="nds-form-footer" data-feedback-target>
     <div class="nds-password-rules" id="first-password-rules">
-      <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="length">
+      <span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="length">
         <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
         <span class="nds-feedback-message">At least 8 characters</span>
       </span>
@@ -114,7 +114,7 @@ Pick another component when:
   </div>
   <div class="nds-form-footer" data-feedback-target>
     <div class="nds-password-rules" id="retype-password-rules">
-      <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="match">
+      <span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="match">
         <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
         <span class="nds-feedback-message">Matches the new password</span>
       </span>
@@ -124,49 +124,49 @@ Pick another component when:
 </div>
 </script>
 <script type="text/html" id="password-length-10" data-canon>
-<span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="length">
+<span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="length">
   <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
   <span class="nds-feedback-message">At least 10 characters</span>
 </span>
 </script>
 <script type="text/html" id="password-length-6" data-canon>
-<span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="length">
+<span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="length">
   <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
   <span class="nds-feedback-message">At least 6 characters</span>
 </span>
 </script>
 <script type="text/html" id="password-length-4" data-canon>
-<span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="length">
+<span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="length">
   <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
   <span class="nds-feedback-message">At least 4 characters</span>
 </span>
 </script>
 <script type="text/html" id="password-rule-upper" data-canon>
-<span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="upper">
+<span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="upper">
   <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
   <span class="nds-feedback-message">One capital letter (A-Z)</span>
 </span>
 </script>
 <script type="text/html" id="password-rule-lower" data-canon>
-<span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="lower">
+<span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="lower">
   <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
   <span class="nds-feedback-message">One small letter (a-z)</span>
 </span>
 </script>
 <script type="text/html" id="password-rule-digit" data-canon>
-<span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="digit">
+<span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="digit">
   <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
   <span class="nds-feedback-message">One number (0-9)</span>
 </span>
 </script>
 <script type="text/html" id="password-rule-special" data-canon>
-<span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="special">
+<span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="special">
   <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
   <span class="nds-feedback-message">One symbol (! @ # $ %)</span>
 </span>
 </script>
 <script type="text/html" id="password-rule-space" data-canon>
-<span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="nospace" data-rule-pattern="^\S+$">
+<span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="nospace" data-rule-pattern="^\S+$">
   <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
   <span class="nds-feedback-message">No spaces</span>
 </span>

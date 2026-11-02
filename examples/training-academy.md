@@ -31,7 +31,7 @@ last_edit: "24/10/2026 - 11:27 PM"
                 <a href="#" class="nds-card nds-stroke nds-center">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-dark nds-lg">
+                            <span class="nds-featured-icon nds-circle nds-dark">
                                 <i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>
                             </span>
                         </div>
@@ -43,7 +43,7 @@ last_edit: "24/10/2026 - 11:27 PM"
                 <a href="#" class="nds-card nds-stroke nds-center">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-dark nds-lg">
+                            <span class="nds-featured-icon nds-circle nds-dark">
                                 <i class="hgi hgi-stroke hgi-computer" aria-hidden="true"></i>
                             </span>
                         </div>
@@ -55,7 +55,7 @@ last_edit: "24/10/2026 - 11:27 PM"
                 <a href="#" class="nds-card nds-stroke nds-center">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-dark nds-lg">
+                            <span class="nds-featured-icon nds-circle nds-dark">
                                 <i class="hgi hgi-stroke hgi-money-bag-02" aria-hidden="true"></i>
                             </span>
                         </div>
@@ -67,7 +67,7 @@ last_edit: "24/10/2026 - 11:27 PM"
                 <a href="#" class="nds-card nds-stroke nds-center">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-dark nds-lg">
+                            <span class="nds-featured-icon nds-circle nds-dark">
                                 <i class="hgi hgi-stroke hgi-megaphone-01" aria-hidden="true"></i>
                             </span>
                         </div>
@@ -79,7 +79,7 @@ last_edit: "24/10/2026 - 11:27 PM"
                 <a href="#" class="nds-card nds-stroke nds-center">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-dark nds-lg">
+                            <span class="nds-featured-icon nds-circle nds-dark">
                                 <i class="hgi hgi-stroke hgi-book-open-01" aria-hidden="true"></i>
                             </span>
                         </div>
@@ -91,7 +91,7 @@ last_edit: "24/10/2026 - 11:27 PM"
                 <a href="#" class="nds-card nds-stroke nds-center">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-dark nds-lg">
+                            <span class="nds-featured-icon nds-circle nds-dark">
                                 <i class="hgi hgi-stroke hgi-award-01" aria-hidden="true"></i>
                             </span>
                         </div>
@@ -126,7 +126,7 @@ last_edit: "24/10/2026 - 11:27 PM"
                         <div class="nds-card-content">
                             <div class="nds-card-text">
                                 <div class="nds-card-corner">
-                                    <span class="nds-tag nds-xs nds-dark" data-status="warning">
+                                    <span class="nds-tag nds-dark" data-status="warning">
                                         <span class="nds-label">5 seats left</span>
                                     </span>
                                 </div>
@@ -139,15 +139,15 @@ last_edit: "24/10/2026 - 11:27 PM"
                             </div>
                             <div class="nds-card-meta">
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-blue nds-sm">
+                                    <span class="nds-tag nds-blue">
                                         <span class="nds-label">Data</span>
                                     </span>
-                                    <span class="nds-tag nds-gray nds-sm">
+                                    <span class="nds-tag nds-gray">
                                         <span class="nds-label">Intermediate</span>
                                     </span>
                                 </div>
                                 <div class="nds-card-rating">
-                                    <div class="nds-rating nds-sm" data-rating="4.7">
+                                    <div class="nds-rating" data-rating="4.7">
                                         <span class="nds-rating-star"></span>
                                         <span class="nds-rating-star"></span>
                                         <span class="nds-rating-star"></span>
@@ -159,10 +159,10 @@ last_edit: "24/10/2026 - 11:27 PM"
                             </div>
                         </div>
                         <div class="nds-card-actions">
-                            <a href="#" class="nds-btn nds-primary nds-lg">
+                            <a href="#" class="nds-btn nds-primary">
                                 <span class="nds-label">Enroll</span>
                             </a>
-                            <a href="#" class="nds-btn nds-secondary-outline nds-lg">
+                            <a href="#" class="nds-btn nds-secondary-outline">
                                 <span class="nds-label">Details</span>
                             </a>
                         </div>
@@ -187,15 +187,15 @@ last_edit: "24/10/2026 - 11:27 PM"
                             </div>
                             <div class="nds-card-meta">
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-blue nds-sm">
+                                    <span class="nds-tag nds-blue">
                                         <span class="nds-label">Management</span>
                                     </span>
-                                    <span class="nds-tag nds-gray nds-sm">
+                                    <span class="nds-tag nds-gray">
                                         <span class="nds-label">Beginner</span>
                                     </span>
                                 </div>
                                 <div class="nds-card-rating">
-                                    <div class="nds-rating nds-sm" data-rating="4.4">
+                                    <div class="nds-rating" data-rating="4.4">
                                         <span class="nds-rating-star"></span>
                                         <span class="nds-rating-star"></span>
                                         <span class="nds-rating-star"></span>
@@ -207,10 +207,10 @@ last_edit: "24/10/2026 - 11:27 PM"
                             </div>
                         </div>
                         <div class="nds-card-actions">
-                            <a href="#" class="nds-btn nds-primary nds-lg">
+                            <a href="#" class="nds-btn nds-primary">
                                 <span class="nds-label">Enroll</span>
                             </a>
-                            <a href="#" class="nds-btn nds-secondary-outline nds-lg">
+                            <a href="#" class="nds-btn nds-secondary-outline">
                                 <span class="nds-label">Details</span>
                             </a>
                         </div>
@@ -234,15 +234,15 @@ last_edit: "24/10/2026 - 11:27 PM"
                             </div>
                             <div class="nds-card-meta">
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-blue nds-sm">
+                                    <span class="nds-tag nds-blue">
                                         <span class="nds-label">Digital</span>
                                     </span>
-                                    <span class="nds-tag nds-gray nds-sm">
+                                    <span class="nds-tag nds-gray">
                                         <span class="nds-label">All levels</span>
                                     </span>
                                 </div>
                                 <div class="nds-card-rating">
-                                    <div class="nds-rating nds-sm" data-rating="4.9">
+                                    <div class="nds-rating" data-rating="4.9">
                                         <span class="nds-rating-star"></span>
                                         <span class="nds-rating-star"></span>
                                         <span class="nds-rating-star"></span>
@@ -254,10 +254,10 @@ last_edit: "24/10/2026 - 11:27 PM"
                             </div>
                         </div>
                         <div class="nds-card-actions">
-                            <a href="#" class="nds-btn nds-primary nds-lg">
+                            <a href="#" class="nds-btn nds-primary">
                                 <span class="nds-label">Enroll</span>
                             </a>
-                            <a href="#" class="nds-btn nds-secondary-outline nds-lg">
+                            <a href="#" class="nds-btn nds-secondary-outline">
                                 <span class="nds-label">Details</span>
                             </a>
                         </div>
@@ -281,15 +281,15 @@ last_edit: "24/10/2026 - 11:27 PM"
                             </div>
                             <div class="nds-card-meta">
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-blue nds-sm">
+                                    <span class="nds-tag nds-blue">
                                         <span class="nds-label">Communication</span>
                                     </span>
-                                    <span class="nds-tag nds-gray nds-sm">
+                                    <span class="nds-tag nds-gray">
                                         <span class="nds-label">All levels</span>
                                     </span>
                                 </div>
                                 <div class="nds-card-rating">
-                                    <div class="nds-rating nds-sm" data-rating="4.6">
+                                    <div class="nds-rating" data-rating="4.6">
                                         <span class="nds-rating-star"></span>
                                         <span class="nds-rating-star"></span>
                                         <span class="nds-rating-star"></span>
@@ -301,10 +301,10 @@ last_edit: "24/10/2026 - 11:27 PM"
                             </div>
                         </div>
                         <div class="nds-card-actions">
-                            <a href="#" class="nds-btn nds-primary nds-lg">
+                            <a href="#" class="nds-btn nds-primary">
                                 <span class="nds-label">Enroll</span>
                             </a>
-                            <a href="#" class="nds-btn nds-secondary-outline nds-lg">
+                            <a href="#" class="nds-btn nds-secondary-outline">
                                 <span class="nds-label">Details</span>
                             </a>
                         </div>
@@ -320,7 +320,7 @@ last_edit: "24/10/2026 - 11:27 PM"
                         <div class="nds-card-content">
                             <div class="nds-card-text">
                                 <div class="nds-card-corner">
-                                    <span class="nds-tag nds-xs nds-dark" data-status="info">
+                                    <span class="nds-tag nds-dark" data-status="info">
                                         <span class="nds-label">New</span>
                                     </span>
                                 </div>
@@ -333,15 +333,15 @@ last_edit: "24/10/2026 - 11:27 PM"
                             </div>
                             <div class="nds-card-meta">
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-blue nds-sm">
+                                    <span class="nds-tag nds-blue">
                                         <span class="nds-label">Finance</span>
                                     </span>
-                                    <span class="nds-tag nds-gray nds-sm">
+                                    <span class="nds-tag nds-gray">
                                         <span class="nds-label">Intermediate</span>
                                     </span>
                                 </div>
                                 <div class="nds-card-rating">
-                                    <div class="nds-rating nds-sm" data-rating="4.5">
+                                    <div class="nds-rating" data-rating="4.5">
                                         <span class="nds-rating-star"></span>
                                         <span class="nds-rating-star"></span>
                                         <span class="nds-rating-star"></span>
@@ -353,10 +353,10 @@ last_edit: "24/10/2026 - 11:27 PM"
                             </div>
                         </div>
                         <div class="nds-card-actions">
-                            <a href="#" class="nds-btn nds-primary nds-lg">
+                            <a href="#" class="nds-btn nds-primary">
                                 <span class="nds-label">Enroll</span>
                             </a>
-                            <a href="#" class="nds-btn nds-secondary-outline nds-lg">
+                            <a href="#" class="nds-btn nds-secondary-outline">
                                 <span class="nds-label">Details</span>
                             </a>
                         </div>

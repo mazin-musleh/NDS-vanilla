@@ -190,6 +190,11 @@
     justify-content: center;
   }
 
+  // The status icon is MD by default; :where() lets a size class on it win.
+  :where(.nds-feedback) {
+    --_feedback-size-base: 24px;
+  }
+
   .nds-feedback-icon {
     display: var(--_progress-icon-display, none);
     justify-content: center;

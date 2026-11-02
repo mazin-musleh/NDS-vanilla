@@ -73,7 +73,7 @@ sidemenu_mode: false
                 <li class="nds-page-item nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 {{ ex.icon }}
                             </span>
                         </div>
@@ -82,7 +82,7 @@ sidemenu_mode: false
                         <div class="nds-card-text">
                             {%- if ex.new %}
                             <div class="nds-card-corner">
-                                <span class="nds-tag nds-xs" data-status="info">
+                                <span class="nds-tag" data-status="info">
                                     <span class="nds-label">New</span>
                                 </span>
                             </div>

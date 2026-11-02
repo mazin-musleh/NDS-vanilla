@@ -365,6 +365,9 @@
       // One title line tall: a taller item (a 32px button) centers on the line and overflows evenly.
       height: var(--card-title-LH, var(--_card-title-LH-base, var(--typo-text-lg-LH)));
       --form-width: auto; // a bare checkbox keeps its own size beside a tag
+      // Small extras: a step below the card's parts. A part's class still wins.
+      @include tag-xs;
+      @include btn-sm;
     }
 
     > .nds-card-corner + * {
@@ -934,6 +937,12 @@ html:not([data-nds-loaded]) .nds-card {
 
   &.nds-lg {
     @include card-lg;
+
+    // ponytail: reaches a nested card's corner too; scope it if a nested card in an LG card needs a small corner.
+    .nds-card-corner {
+      @include tag-sm;
+      @include btn-md;
+    }
   }
 }
 

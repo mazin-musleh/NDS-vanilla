@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "02/11/2026 - 03:47 PM"
 ---
 
 <section id="countdown-overview" class="nds-content-section nds-doc-overview">
@@ -39,7 +39,7 @@ Pick another component when:
 <div class="nds-card nds-stroke nds-horizontal nds-full">
   <div class="nds-card-header">
     <div class="nds-card-featured-icon">
-      <span class="nds-featured-icon nds-circle nds-lg">
+      <span class="nds-featured-icon nds-circle">
         <i class="hgi hgi-stroke hgi-flash"></i>
       </span>
     </div>

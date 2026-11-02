@@ -185,7 +185,7 @@
         if (!input) return;
         var container = input.closest('.nds-form-container');
         if (!container) {
-            var el = NDS.Feedback.create({ message: message, status: 'neutral', target: input, position: 'after', size: 'sm', style: 'outline' });
+            var el = NDS.Feedback.create({ message: message, status: 'neutral', target: input, position: 'after', style: 'outline' });
             setTimeout(function() { NDS.Feedback.dismiss(el); }, 4000);
             return;
         }

@@ -357,11 +357,11 @@ sidemenu_mode: false
                     </button>
                 </div>
                 <div class="nds-card-actions" id="book-manage" hidden>
-                    <button type="button" id="book-change" class="nds-btn nds-secondary-outline nds-md">
+                    <button type="button" id="book-change" class="nds-btn nds-secondary-outline">
                         <i class="nds-icon nds-hgi-edit-02" aria-hidden="true"></i>
                         <span class="nds-label">Change</span>
                     </button>
-                    <button type="button" class="nds-btn nds-subtle nds-md" data-modal-target="cancel-modal">
+                    <button type="button" class="nds-btn nds-subtle" data-modal-target="cancel-modal">
                         <span class="nds-label">Cancel appointment</span>
                     </button>
                 </div>

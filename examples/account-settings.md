@@ -424,11 +424,11 @@ sidemenu_mode: false
                 </div>
                 <div class="nds-form-footer" data-feedback-target>
                     <div class="nds-password-rules" id="acc-new-password-rules">
-                        <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="length">
+                        <span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="length">
                             <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
                             <span class="nds-feedback-message">At least 8 characters</span>
                         </span>
-                        <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="digit">
+                        <span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="digit">
                             <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
                             <span class="nds-feedback-message">One number (0-9)</span>
                         </span>
@@ -456,7 +456,7 @@ sidemenu_mode: false
                 </div>
                 <div class="nds-form-footer" data-feedback-target>
                     <div class="nds-password-rules" id="acc-retype-password-rules">
-                        <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="match">
+                        <span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="match">
                             <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
                             <span class="nds-feedback-message">Matches the new password</span>
                         </span>

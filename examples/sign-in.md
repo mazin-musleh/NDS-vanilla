@@ -44,7 +44,7 @@ breadcrumb: [["Examples", "/examples"]]
 
           <!-- Actions sit outside .nds-card-content: that is the part that scrolls -->
           <div class="nds-card-actions nds-col">
-            <button type="button" class="nds-btn nds-primary nds-lg nds-full" id="nafath-btn">
+            <button type="button" class="nds-btn nds-primary nds-full" id="nafath-btn">
               <span class="nds-label">Continue with Nafath</span>
             </button>
           </div>
@@ -52,7 +52,7 @@ breadcrumb: [["Examples", "/examples"]]
           <div class="nds-divider">or</div>
 
           <div class="nds-card-actions nds-col">
-            <button type="button" class="nds-btn nds-secondary-outline nds-lg nds-full" id="credentials-btn">
+            <button type="button" class="nds-btn nds-secondary-outline nds-full" id="credentials-btn">
               <span class="nds-label">Sign in with National ID</span>
             </button>
           </div>
@@ -162,10 +162,10 @@ breadcrumb: [["Examples", "/examples"]]
             </div>
 
             <div class="nds-card-actions nds-col">
-              <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
+              <button type="submit" class="nds-btn nds-primary nds-full">
                 <span class="nds-label">Sign in</span>
               </button>
-              <button type="button" class="nds-btn nds-subtle nds-lg nds-full back-to-start">
+              <button type="button" class="nds-btn nds-subtle nds-full back-to-start">
                 <span class="nds-label">Cancel</span>
               </button>
             </div>
@@ -211,7 +211,7 @@ breadcrumb: [["Examples", "/examples"]]
           </div>
 
           <div class="nds-card-actions nds-col">
-            <button type="button" class="nds-btn nds-subtle nds-lg nds-full back-to-start">
+            <button type="button" class="nds-btn nds-subtle nds-full back-to-start">
               <span class="nds-label">Cancel</span>
             </button>
           </div>
@@ -236,7 +236,7 @@ breadcrumb: [["Examples", "/examples"]]
                 <p class="nds-card-description">We sent a 4-digit code to <strong id="otp-destination">your mobile app</strong>.</p>
               </div>
 
-              <fieldset class="nds-form-group nds-otp-group nds-md nds-center" data-required>
+              <fieldset class="nds-form-group nds-otp-group nds-center" data-required>
                 <legend><span class="nds-label">Verification code</span></legend>
                 <div class="nds-otp">
                   <div class="nds-form-container nds-otp-container">
@@ -266,7 +266,7 @@ breadcrumb: [["Examples", "/examples"]]
                   <!-- Permanent feedback survives validation cycles: it hides while an error
                        shows and comes back when the error clears. A real page never prints
                        the code — this stands in for the message you would receive. -->
-                  <span class="nds-feedback nds-outline nds-sm" data-status="info" data-permanent>
+                  <span class="nds-feedback nds-outline" data-status="info" data-permanent>
                     <span class="nds-feedback-icon">
                       <i class="nds-icon" aria-hidden="true"></i>
                     </span>
@@ -285,11 +285,11 @@ breadcrumb: [["Examples", "/examples"]]
             </div>
 
             <div class="nds-card-actions nds-col">
-              <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
+              <button type="submit" class="nds-btn nds-primary nds-full">
                 <span class="nds-label">Verify</span>
               </button>
               <!-- Cancel returns to whichever card sent the code, so no fixed target -->
-              <button type="button" class="nds-btn nds-subtle nds-lg nds-full" id="otp-cancel">
+              <button type="button" class="nds-btn nds-subtle nds-full" id="otp-cancel">
                 <span class="nds-label">Cancel</span>
               </button>
             </div>
@@ -310,7 +310,7 @@ breadcrumb: [["Examples", "/examples"]]
           </div>
           <div class="nds-card-content">
             <div class="nds-card-text nds-center">
-              <span class="nds-featured-icon nds-xl nds-circle nds-center" data-status="success">
+              <span class="nds-featured-icon nds-circle nds-center" data-status="success">
                 <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
               </span>
               <h1 class="nds-card-title">You are signed in</h1>
@@ -319,18 +319,18 @@ breadcrumb: [["Examples", "/examples"]]
           </div>
 
           <div class="nds-card-actions nds-col">
-            <a href="{{ '/examples/console-demo/' | relative_url }}" class="nds-btn nds-primary nds-lg nds-full">
+            <a href="{{ '/examples/console-demo/' | relative_url }}" class="nds-btn nds-primary nds-full">
               <span class="nds-label">Go to dashboard</span>
             </a>
-            <button type="button" class="nds-btn nds-secondary-outline nds-lg nds-full" data-goto="password">
+            <button type="button" class="nds-btn nds-secondary-outline nds-full" data-goto="password">
               <i class="nds-icon nds-hgi-square-lock-01" aria-hidden="true"></i>
               <span class="nds-label">Change password</span>
             </button>
-            <button type="button" class="nds-btn nds-secondary-outline nds-lg nds-full" data-goto="mobile">
+            <button type="button" class="nds-btn nds-secondary-outline nds-full" data-goto="mobile">
               <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
               <span class="nds-label">Update mobile number</span>
             </button>
-            <button type="button" class="nds-btn nds-subtle nds-lg nds-full" data-goto="out">
+            <button type="button" class="nds-btn nds-subtle nds-full" data-goto="out">
               <i class="nds-icon nds-hgi-door-01" aria-hidden="true"></i>
               <span class="nds-label">Sign out</span>
             </button>
@@ -400,31 +400,31 @@ breadcrumb: [["Examples", "/examples"]]
                 </div>
                 <div class="nds-form-footer" data-feedback-target>
                   <div class="nds-password-rules" id="new-password-rules">
-                    <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="length">
+                    <span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="length">
                       <span class="nds-feedback-icon">
                         <i class="nds-icon" aria-hidden="true"></i>
                       </span>
                       <span class="nds-feedback-message">At least 10 characters</span>
                     </span>
-                    <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="upper">
+                    <span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="upper">
                       <span class="nds-feedback-icon">
                         <i class="nds-icon" aria-hidden="true"></i>
                       </span>
                       <span class="nds-feedback-message">One capital letter (A-Z)</span>
                     </span>
-                    <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="lower">
+                    <span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="lower">
                       <span class="nds-feedback-icon">
                         <i class="nds-icon" aria-hidden="true"></i>
                       </span>
                       <span class="nds-feedback-message">One small letter (a-z)</span>
                     </span>
-                    <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="digit">
+                    <span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="digit">
                       <span class="nds-feedback-icon">
                         <i class="nds-icon" aria-hidden="true"></i>
                       </span>
                       <span class="nds-feedback-message">One number (0-9)</span>
                     </span>
-                    <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="special">
+                    <span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="special">
                       <span class="nds-feedback-icon">
                         <i class="nds-icon" aria-hidden="true"></i>
                       </span>
@@ -457,7 +457,7 @@ breadcrumb: [["Examples", "/examples"]]
                 </div>
                 <div class="nds-form-footer" data-feedback-target>
                   <div class="nds-password-rules" id="retype-password-rules">
-                    <span class="nds-feedback nds-outline nds-sm" data-permanent data-status="neutral" data-rule="match">
+                    <span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="match">
                       <span class="nds-feedback-icon">
                         <i class="nds-icon" aria-hidden="true"></i>
                       </span>
@@ -470,10 +470,10 @@ breadcrumb: [["Examples", "/examples"]]
             </div>
 
             <div class="nds-card-actions nds-col">
-              <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
+              <button type="submit" class="nds-btn nds-primary nds-full">
                 <span class="nds-label">Update password</span>
               </button>
-              <button type="button" class="nds-btn nds-subtle nds-lg nds-full" data-goto="account">
+              <button type="button" class="nds-btn nds-subtle nds-full" data-goto="account">
                 <span class="nds-label">Cancel</span>
               </button>
             </div>
@@ -518,7 +518,7 @@ breadcrumb: [["Examples", "/examples"]]
                   </div>
                 </div>
                 <div class="nds-form-footer" data-feedback-target>
-                  <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
+                  <span class="nds-feedback nds-outline" data-status="neutral" data-permanent>
                     <span class="nds-feedback-icon">
                       <i class="nds-icon" aria-hidden="true"></i>
                     </span>
@@ -529,10 +529,10 @@ breadcrumb: [["Examples", "/examples"]]
             </div>
 
             <div class="nds-card-actions nds-col">
-              <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
+              <button type="submit" class="nds-btn nds-primary nds-full">
                 <span class="nds-label">Send code</span>
               </button>
-              <button type="button" class="nds-btn nds-subtle nds-lg nds-full" data-goto="account">
+              <button type="button" class="nds-btn nds-subtle nds-full" data-goto="account">
                 <span class="nds-label">Cancel</span>
               </button>
             </div>
@@ -553,7 +553,7 @@ breadcrumb: [["Examples", "/examples"]]
           </div>
           <div class="nds-card-content">
             <div class="nds-card-text nds-center">
-              <span class="nds-featured-icon nds-xl nds-circle nds-center" data-status="success">
+              <span class="nds-featured-icon nds-circle nds-center" data-status="success">
                 <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
               </span>
               <h1 class="nds-card-title">You signed out safely</h1>
@@ -563,7 +563,7 @@ breadcrumb: [["Examples", "/examples"]]
           </div>
 
           <div class="nds-card-actions nds-col">
-            <button type="button" class="nds-btn nds-secondary-outline nds-lg nds-full back-to-start">
+            <button type="button" class="nds-btn nds-secondary-outline nds-full back-to-start">
               <span class="nds-label">Sign in again</span>
             </button>
           </div>

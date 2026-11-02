@@ -275,7 +275,6 @@
 
                     var defaults = {
                         position: position,
-                        size: 'sm',
                         style: 'outline'
                     };
                     var feedbackOptions = Object.assign({}, defaults, options, {

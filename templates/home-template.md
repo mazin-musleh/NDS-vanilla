@@ -110,7 +110,7 @@ direction: ltr
                             <li class="nds-card">
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
-                                        <span class="nds-featured-icon nds-circle nds-xl">
+                                        <span class="nds-featured-icon nds-circle">
                                             <i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>
                                         </span>
                                     </div>
@@ -125,7 +125,7 @@ direction: ltr
                             <li class="nds-card">
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
-                                        <span class="nds-featured-icon nds-circle nds-xl">
+                                        <span class="nds-featured-icon nds-circle">
                                             <i class="hgi hgi-stroke hgi-plus-sign" aria-hidden="true"></i>
                                         </span>
                                     </div>
@@ -140,7 +140,7 @@ direction: ltr
                             <li class="nds-card">
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
-                                        <span class="nds-featured-icon nds-circle nds-xl">
+                                        <span class="nds-featured-icon nds-circle">
                                             <i class="hgi hgi-stroke hgi-star" aria-hidden="true"></i>
                                         </span>
                                     </div>
@@ -155,7 +155,7 @@ direction: ltr
                             <li class="nds-card">
                                 <div class="nds-card-header">
                                     <div class="nds-card-featured-icon">
-                                        <span class="nds-featured-icon nds-circle nds-xl">
+                                        <span class="nds-featured-icon nds-circle">
                                             <i class="hgi hgi-stroke hgi-leaf-01" aria-hidden="true"></i>
                                         </span>
                                     </div>
@@ -194,7 +194,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-header">
                                         <div class="nds-card-featured-icon">
-                                            <span class="nds-featured-icon nds-circle nds-lg">
+                                            <span class="nds-featured-icon nds-circle">
                                                 <i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i>
                                             </span>
                                         </div>
@@ -205,9 +205,9 @@ direction: ltr
                                             <p class="nds-card-description">Card content placeholder text goes here</p>
                                         </div>
                                         <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 1</span></span>
-                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 2</span></span>
-                                            <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Tag 3</span></span>
+                                            <span class="nds-tag nds-blue"><span class="nds-label">Tag 1</span></span>
+                                            <span class="nds-tag nds-blue"><span class="nds-label">Tag 2</span></span>
+                                            <span class="nds-tag nds-gray"><span class="nds-label">Tag 3</span></span>
                                         </div>
                                     </div>
                                     <div class="nds-card-actions">
@@ -224,7 +224,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-header">
                                         <div class="nds-card-featured-icon">
-                                            <span class="nds-featured-icon nds-circle nds-lg">
+                                            <span class="nds-featured-icon nds-circle">
                                                 <i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i>
                                             </span>
                                         </div>
@@ -235,9 +235,9 @@ direction: ltr
                                             <p class="nds-card-description">Card content placeholder text goes here</p>
                                         </div>
                                         <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 1</span></span>
-                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 2</span></span>
-                                            <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Tag 3</span></span>
+                                            <span class="nds-tag nds-blue"><span class="nds-label">Tag 1</span></span>
+                                            <span class="nds-tag nds-blue"><span class="nds-label">Tag 2</span></span>
+                                            <span class="nds-tag nds-gray"><span class="nds-label">Tag 3</span></span>
                                         </div>
                                     </div>
                                     <div class="nds-card-actions">
@@ -254,7 +254,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-header">
                                         <div class="nds-card-featured-icon">
-                                            <span class="nds-featured-icon nds-circle nds-lg">
+                                            <span class="nds-featured-icon nds-circle">
                                                 <i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i>
                                             </span>
                                         </div>
@@ -265,9 +265,9 @@ direction: ltr
                                             <p class="nds-card-description">Card content placeholder text goes here</p>
                                         </div>
                                         <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 1</span></span>
-                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 2</span></span>
-                                            <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Tag 3</span></span>
+                                            <span class="nds-tag nds-blue"><span class="nds-label">Tag 1</span></span>
+                                            <span class="nds-tag nds-blue"><span class="nds-label">Tag 2</span></span>
+                                            <span class="nds-tag nds-gray"><span class="nds-label">Tag 3</span></span>
                                         </div>
                                     </div>
                                     <div class="nds-card-actions">
@@ -284,7 +284,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-header">
                                         <div class="nds-card-featured-icon">
-                                            <span class="nds-featured-icon nds-circle nds-lg">
+                                            <span class="nds-featured-icon nds-circle">
                                                 <i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i>
                                             </span>
                                         </div>
@@ -295,9 +295,9 @@ direction: ltr
                                             <p class="nds-card-description">Card content placeholder text goes here</p>
                                         </div>
                                         <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 1</span></span>
-                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 2</span></span>
-                                            <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Tag 3</span></span>
+                                            <span class="nds-tag nds-blue"><span class="nds-label">Tag 1</span></span>
+                                            <span class="nds-tag nds-blue"><span class="nds-label">Tag 2</span></span>
+                                            <span class="nds-tag nds-gray"><span class="nds-label">Tag 3</span></span>
                                         </div>
                                     </div>
                                     <div class="nds-card-actions">
@@ -314,7 +314,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-header">
                                         <div class="nds-card-featured-icon">
-                                            <span class="nds-featured-icon nds-circle nds-lg">
+                                            <span class="nds-featured-icon nds-circle">
                                                 <i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i>
                                             </span>
                                         </div>
@@ -325,9 +325,9 @@ direction: ltr
                                             <p class="nds-card-description">Card content placeholder text goes here</p>
                                         </div>
                                         <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 1</span></span>
-                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 2</span></span>
-                                            <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Tag 3</span></span>
+                                            <span class="nds-tag nds-blue"><span class="nds-label">Tag 1</span></span>
+                                            <span class="nds-tag nds-blue"><span class="nds-label">Tag 2</span></span>
+                                            <span class="nds-tag nds-gray"><span class="nds-label">Tag 3</span></span>
                                         </div>
                                     </div>
                                     <div class="nds-card-actions">
@@ -344,7 +344,7 @@ direction: ltr
                                 <div class="nds-card nds-stroke">
                                     <div class="nds-card-header">
                                         <div class="nds-card-featured-icon">
-                                            <span class="nds-featured-icon nds-circle nds-lg">
+                                            <span class="nds-featured-icon nds-circle">
                                                 <i class="hgi hgi-stroke hgi-checkmark-circle-01" aria-hidden="true"></i>
                                             </span>
                                         </div>
@@ -355,9 +355,9 @@ direction: ltr
                                             <p class="nds-card-description">Card content placeholder text goes here</p>
                                         </div>
                                         <div class="nds-card-tags">
-                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 1</span></span>
-                                            <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Tag 2</span></span>
-                                            <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Tag 3</span></span>
+                                            <span class="nds-tag nds-blue"><span class="nds-label">Tag 1</span></span>
+                                            <span class="nds-tag nds-blue"><span class="nds-label">Tag 2</span></span>
+                                            <span class="nds-tag nds-gray"><span class="nds-label">Tag 3</span></span>
                                         </div>
                                     </div>
                                     <div class="nds-card-actions">
@@ -417,7 +417,7 @@ direction: ltr
                                         a brief description of the headline in four lines.</p>
                                 </div>
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-gray nds-sm">
+                                    <span class="nds-tag nds-gray">
                                         <span class="nds-label">12 April 2026</span>
                                     </span>
                                 </div>
@@ -445,7 +445,7 @@ direction: ltr
                                         a brief description of the headline in four lines.</p>
                                 </div>
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-gray nds-sm">
+                                    <span class="nds-tag nds-gray">
                                         <span class="nds-label">12 April 2026</span>
                                     </span>
                                 </div>
@@ -473,7 +473,7 @@ direction: ltr
                                         a brief description of the headline in four lines.</p>
                                 </div>
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-gray nds-sm">
+                                    <span class="nds-tag nds-gray">
                                         <span class="nds-label">12 April 2026</span>
                                     </span>
                                 </div>
@@ -501,7 +501,7 @@ direction: ltr
                                         a brief description of the headline in four lines.</p>
                                 </div>
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-gray nds-sm">
+                                    <span class="nds-tag nds-gray">
                                         <span class="nds-label">12 April 2026</span>
                                     </span>
                                 </div>
@@ -529,7 +529,7 @@ direction: ltr
                                         a brief description of the headline in four lines.</p>
                                 </div>
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-gray nds-sm">
+                                    <span class="nds-tag nds-gray">
                                         <span class="nds-label">12 April 2026</span>
                                     </span>
                                 </div>
@@ -557,7 +557,7 @@ direction: ltr
                                         a brief description of the headline in four lines.</p>
                                 </div>
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-gray nds-sm">
+                                    <span class="nds-tag nds-gray">
                                         <span class="nds-label">12 April 2026</span>
                                     </span>
                                 </div>

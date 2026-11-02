@@ -35,10 +35,10 @@ last_edit: "01/11/2026 - 12:30 AM"
                 </div>
                 <div class="nds-card-content">
                     <div class="nds-card-tags">
-                        <span class="nds-tag nds-blue nds-sm">
+                        <span class="nds-tag nds-blue">
                             <span class="nds-label">Conference</span>
                         </span>
-                        <span class="nds-tag nds-gray nds-sm">
+                        <span class="nds-tag nds-gray">
                             <span class="nds-label">Free</span>
                         </span>
                     </div>

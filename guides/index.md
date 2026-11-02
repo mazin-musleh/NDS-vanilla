@@ -20,7 +20,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-rocket-01"></i>
                             </span>
                         </div>
@@ -46,7 +46,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-ai-brain-01"></i>
                             </span>
                         </div>
@@ -72,7 +72,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-git-compare"></i>
                             </span>
                         </div>
@@ -97,7 +97,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-shield-01"></i>
                             </span>
                         </div>

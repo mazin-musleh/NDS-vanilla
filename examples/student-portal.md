@@ -43,7 +43,7 @@ hideFeedback: true
                         <p class="nds-alert-description">Your record has no warnings or suspensions.</p>
                     </div>
                     <div class="nds-alert-actions">
-                        <button type="button" class="nds-btn nds-subtle nds-sm" data-modal-target="standing-modal">
+                        <button type="button" class="nds-btn nds-subtle" data-modal-target="standing-modal">
                             <span class="nds-label">Academic standing</span>
                         </button>
                     </div>
@@ -124,11 +124,11 @@ hideFeedback: true
                     <div class="nds-card nds-full nds-flush" data-status="positive">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-sm">
+                                <span class="nds-featured-icon nds-circle">
                                     <i class="hgi hgi-stroke hgi-mortarboard-01" aria-hidden="true"></i>
                                 </span>
                             </div>
-                            <div class="nds-card-text nds-md">
+                            <div class="nds-card-text">
                                 <span class="nds-card-title">Cumulative GPA</span>
                             </div>
                         </div>
@@ -157,11 +157,11 @@ hideFeedback: true
                     <div class="nds-card nds-full nds-flush" data-status="negative">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-sm">
+                                <span class="nds-featured-icon nds-circle">
                                     <i class="hgi hgi-stroke hgi-chart-increase" aria-hidden="true"></i>
                                 </span>
                             </div>
-                            <div class="nds-card-text nds-md">
+                            <div class="nds-card-text">
                                 <span class="nds-card-title">Last term GPA</span>
                             </div>
                         </div>
@@ -187,16 +187,16 @@ hideFeedback: true
                         </div>
                     </div>
                 </div>
-                <div class="nds-card nds-stroke">
+                <div class="nds-card nds-sm nds-stroke">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-sm">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-graduation-scroll" aria-hidden="true"></i>
                             </span>
                         </div>
-                        <div class="nds-card-text nds-md">
+                        <div class="nds-card-text">
                             <div class="nds-card-corner">
-                                <button type="button" class="nds-btn nds-subtle nds-sm" data-modal-target="plan-modal">
+                                <button type="button" class="nds-btn nds-subtle" data-modal-target="plan-modal">
                                     <span class="nds-label">Study plan</span>
                                 </button>
                             </div>
@@ -261,16 +261,16 @@ hideFeedback: true
         </div>
         <div class="nds-section-body">
             <div class="nds-grid" style="--max-track: 1fr 2fr; --mid-track: 1fr;">
-                <div class="nds-card nds-stroke">
+                <div class="nds-card nds-sm nds-stroke">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-sm">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-calendar-03" aria-hidden="true"></i>
                             </span>
                         </div>
-                        <div class="nds-card-text nds-md">
+                        <div class="nds-card-text">
                             <div class="nds-card-corner">
-                                <a href="#" class="nds-btn nds-subtle nds-sm">
+                                <a href="#" class="nds-btn nds-subtle">
                                     <span class="nds-label">Full timetable</span>
                                     <i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i>
                                 </a>
@@ -320,16 +320,16 @@ hideFeedback: true
                         </div>
                     </div>
                 </div>
-                <div class="nds-card nds-stroke">
+                <div class="nds-card nds-sm nds-stroke">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-sm">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-task-01" aria-hidden="true"></i>
                             </span>
                         </div>
-                        <div class="nds-card-text nds-md">
+                        <div class="nds-card-text">
                             <div class="nds-card-corner">
-                                <a href="#" class="nds-btn nds-subtle nds-sm">
+                                <a href="#" class="nds-btn nds-subtle">
                                     <span class="nds-label">All requests</span>
                                     <i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i>
                                 </a>
@@ -355,12 +355,12 @@ hideFeedback: true
                                     <td>REQ-2026-0412</td>
                                     <td>12/10/2026</td>
                                     <td data-align="center">
-                                        <span class="nds-tag nds-sm" data-status="warning">
+                                        <span class="nds-tag" data-status="warning">
                                             <span class="nds-label">In review</span>
                                         </span>
                                     </td>
                                     <td class="nds-actions-column">
-                                        <a href="#" class="nds-btn nds-subtle nds-md nds-icon-only" aria-label="Details of REQ-2026-0412">
+                                        <a href="#" class="nds-btn nds-subtle nds-icon-only" aria-label="Details of REQ-2026-0412">
                                             <i class="hgi hgi-stroke hgi-view" aria-hidden="true"></i>
                                         </a>
                                     </td>
@@ -370,12 +370,12 @@ hideFeedback: true
                                     <td>REQ-2026-0398</td>
                                     <td>05/10/2026</td>
                                     <td data-align="center">
-                                        <span class="nds-tag nds-sm" data-status="info">
+                                        <span class="nds-tag" data-status="info">
                                             <span class="nds-label">Action needed</span>
                                         </span>
                                     </td>
                                     <td class="nds-actions-column">
-                                        <a href="#" class="nds-btn nds-subtle nds-md nds-icon-only" aria-label="Details of REQ-2026-0398">
+                                        <a href="#" class="nds-btn nds-subtle nds-icon-only" aria-label="Details of REQ-2026-0398">
                                             <i class="hgi hgi-stroke hgi-view" aria-hidden="true"></i>
                                         </a>
                                     </td>
@@ -385,12 +385,12 @@ hideFeedback: true
                                     <td>REQ-2026-0371</td>
                                     <td>28/09/2026</td>
                                     <td data-align="center">
-                                        <span class="nds-tag nds-sm" data-status="success">
+                                        <span class="nds-tag" data-status="success">
                                             <span class="nds-label">Done</span>
                                         </span>
                                     </td>
                                     <td class="nds-actions-column">
-                                        <a href="#" class="nds-btn nds-subtle nds-md nds-icon-only" aria-label="Details of REQ-2026-0371">
+                                        <a href="#" class="nds-btn nds-subtle nds-icon-only" aria-label="Details of REQ-2026-0371">
                                             <i class="hgi hgi-stroke hgi-view" aria-hidden="true"></i>
                                         </a>
                                     </td>
@@ -400,12 +400,12 @@ hideFeedback: true
                                     <td>REQ-2026-0355</td>
                                     <td>21/09/2026</td>
                                     <td data-align="center">
-                                        <span class="nds-tag nds-sm" data-status="error">
+                                        <span class="nds-tag" data-status="error">
                                             <span class="nds-label">Rejected</span>
                                         </span>
                                     </td>
                                     <td class="nds-actions-column">
-                                        <a href="#" class="nds-btn nds-subtle nds-md nds-icon-only" aria-label="Details of REQ-2026-0355">
+                                        <a href="#" class="nds-btn nds-subtle nds-icon-only" aria-label="Details of REQ-2026-0355">
                                             <i class="hgi hgi-stroke hgi-view" aria-hidden="true"></i>
                                         </a>
                                     </td>
@@ -414,7 +414,7 @@ hideFeedback: true
                         </table>
                     </div>
                     <div class="nds-card-actions">
-                        <a href="#" class="nds-btn nds-secondary-outline nds-md">
+                        <a href="#" class="nds-btn nds-secondary-outline">
                             <i class="hgi hgi-stroke hgi-add-01" aria-hidden="true"></i>
                             <span class="nds-label">New request</span>
                         </a>
@@ -434,11 +434,11 @@ hideFeedback: true
         </div>
         <div class="nds-section-body">
             <div class="nds-grid" style="--max-track: 2fr 1fr; --mid-track: 1fr;">
-                <div class="nds-card nds-stroke">
+                <div class="nds-card nds-sm nds-stroke">
                     <div class="nds-card-header">
-                        <div class="nds-card-text nds-md">
+                        <div class="nds-card-text">
                             <div class="nds-card-corner">
-                                <a href="#" class="nds-btn nds-subtle nds-sm">
+                                <a href="#" class="nds-btn nds-subtle">
                                     <span class="nds-label">Exam timetable</span>
                                     <i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i>
                                 </a>
@@ -448,7 +448,7 @@ hideFeedback: true
                         </div>
                     </div>
                     <div class="nds-card-content">
-                        <div class="nds-tabs nds-content-switcher nds-sm">
+                        <div class="nds-tabs nds-content-switcher">
                             <div class="nds-tab-list" role="tablist" aria-label="Exam type">
                                 <button type="button" class="nds-btn nds-secondary nds-tab" role="tab" aria-selected="true" aria-controls="exam-finals-panel" id="exam-finals-tab" tabindex="0">
                                     <span class="nds-label">Finals</span>
@@ -552,7 +552,7 @@ hideFeedback: true
                                     </div>
                                 </div>
                                 <div class="nds-tab-panel" role="tabpanel" id="exam-midterms-panel" aria-labelledby="exam-midterms-tab" tabindex="-1" hidden>
-                                    <div class="nds-progress-bar nds-md" data-value="88" role="progressbar" aria-labelledby="midterm-average">
+                                    <div class="nds-progress-bar" data-value="88" role="progressbar" aria-labelledby="midterm-average">
                                         <span class="nds-progress-label" id="midterm-average">Average: 70 of 80 marks, 88%</span>
                                         <div class="nds-progress-track">
                                             <div class="nds-progress-fill"></div>
@@ -639,11 +639,11 @@ hideFeedback: true
                         </div>
                     </div>
                 </div>
-                <div class="nds-card nds-stroke">
+                <div class="nds-card nds-sm nds-stroke">
                     <div class="nds-card-header">
-                        <div class="nds-card-text nds-md">
+                        <div class="nds-card-text">
                             <div class="nds-card-corner">
-                                <a href="#" class="nds-btn nds-subtle nds-sm">
+                                <a href="#" class="nds-btn nds-subtle">
                                     <span class="nds-label">Full calendar</span>
                                     <i class="nds-icon nds-hgi-arrow-next-01" aria-hidden="true"></i>
                                 </a>
@@ -786,7 +786,7 @@ hideFeedback: true
                                     </ul>
                                 </div>
                             </div>
-                            <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+                            <button type="button" class="nds-btn nds-subtle nds-show-more">
                                 <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
                                 <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
                             </button>
@@ -906,7 +906,7 @@ hideFeedback: true
                         <a href="#" class="nds-card nds-stroke nds-center">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-dark nds-lg">
+                                    <span class="nds-featured-icon nds-circle nds-dark">
                                         <i class="hgi hgi-stroke hgi-library" aria-hidden="true"></i>
                                     </span>
                                 </div>
@@ -920,7 +920,7 @@ hideFeedback: true
                         <a href="#" class="nds-card nds-stroke nds-center">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-dark nds-lg">
+                                    <span class="nds-featured-icon nds-circle nds-dark">
                                         <i class="hgi hgi-stroke hgi-presentation-01" aria-hidden="true"></i>
                                     </span>
                                 </div>
@@ -934,7 +934,7 @@ hideFeedback: true
                         <a href="#" class="nds-card nds-stroke nds-center">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-dark nds-lg">
+                                    <span class="nds-featured-icon nds-circle nds-dark">
                                         <i class="hgi hgi-stroke hgi-task-done-02" aria-hidden="true"></i>
                                     </span>
                                 </div>
@@ -948,7 +948,7 @@ hideFeedback: true
                         <a href="#" class="nds-card nds-stroke nds-center">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-dark nds-lg">
+                                    <span class="nds-featured-icon nds-circle nds-dark">
                                         <i class="hgi hgi-stroke hgi-mail-01" aria-hidden="true"></i>
                                     </span>
                                 </div>
@@ -962,7 +962,7 @@ hideFeedback: true
                         <a href="#" class="nds-card nds-stroke nds-center">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-dark nds-lg">
+                                    <span class="nds-featured-icon nds-circle nds-dark">
                                         <i class="hgi hgi-stroke hgi-book-open-01" aria-hidden="true"></i>
                                     </span>
                                 </div>
@@ -976,7 +976,7 @@ hideFeedback: true
                         <a href="#" class="nds-card nds-stroke nds-center">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-dark nds-lg">
+                                    <span class="nds-featured-icon nds-circle nds-dark">
                                         <i class="hgi hgi-stroke hgi-customer-support" aria-hidden="true"></i>
                                     </span>
                                 </div>
@@ -1013,7 +1013,7 @@ hideFeedback: true
                         <div class="nds-card nds-stroke">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-lg">
+                                    <span class="nds-featured-icon nds-circle">
                                         <i class="hgi hgi-stroke hgi-mortarboard-01" aria-hidden="true"></i>
                                     </span>
                                 </div>
@@ -1021,7 +1021,7 @@ hideFeedback: true
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
                                     <div class="nds-card-corner">
-                                        <span class="nds-tag nds-xs" data-status="success">
+                                        <span class="nds-tag" data-status="success">
                                             <span class="nds-label">Open</span>
                                         </span>
                                     </div>
@@ -1029,19 +1029,19 @@ hideFeedback: true
                                     <p class="nds-card-description">Apply to graduate and get your degree certificate once you meet the requirements.</p>
                                 </div>
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-blue nds-sm">
+                                    <span class="nds-tag nds-blue">
                                         <span class="nds-label">Academic</span>
                                     </span>
-                                    <span class="nds-tag nds-gray nds-sm">
+                                    <span class="nds-tag nds-gray">
                                         <span class="nds-label"><span class="nds-number-format" data-currency="SAR">100</span></span>
                                     </span>
                                 </div>
                             </div>
                             <div class="nds-card-actions">
-                                <a href="#" class="nds-btn nds-primary nds-md">
+                                <a href="#" class="nds-btn nds-primary">
                                     <span class="nds-label">Start</span>
                                 </a>
-                                <a href="#" class="nds-btn nds-secondary-outline nds-md">
+                                <a href="#" class="nds-btn nds-secondary-outline">
                                     <span class="nds-label">Details</span>
                                 </a>
                             </div>
@@ -1051,7 +1051,7 @@ hideFeedback: true
                         <div class="nds-card nds-stroke">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-lg">
+                                    <span class="nds-featured-icon nds-circle">
                                         <i class="hgi hgi-stroke hgi-file-upload" aria-hidden="true"></i>
                                     </span>
                                 </div>
@@ -1059,7 +1059,7 @@ hideFeedback: true
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
                                     <div class="nds-card-corner">
-                                        <span class="nds-tag nds-xs" data-status="success">
+                                        <span class="nds-tag" data-status="success">
                                             <span class="nds-label">Open</span>
                                         </span>
                                     </div>
@@ -1067,19 +1067,19 @@ hideFeedback: true
                                     <p class="nds-card-description">Send a medical or official excuse for a missed class or exam.</p>
                                 </div>
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-blue nds-sm">
+                                    <span class="nds-tag nds-blue">
                                         <span class="nds-label">Academic</span>
                                     </span>
-                                    <span class="nds-tag nds-gray nds-sm">
+                                    <span class="nds-tag nds-gray">
                                         <span class="nds-label">Free</span>
                                     </span>
                                 </div>
                             </div>
                             <div class="nds-card-actions">
-                                <a href="#" class="nds-btn nds-primary nds-md">
+                                <a href="#" class="nds-btn nds-primary">
                                     <span class="nds-label">Start</span>
                                 </a>
-                                <a href="#" class="nds-btn nds-secondary-outline nds-md">
+                                <a href="#" class="nds-btn nds-secondary-outline">
                                     <span class="nds-label">Details</span>
                                 </a>
                             </div>
@@ -1089,7 +1089,7 @@ hideFeedback: true
                         <div class="nds-card nds-stroke nds-disabled" inert>
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-lg">
+                                    <span class="nds-featured-icon nds-circle">
                                         <i class="hgi hgi-stroke hgi-wallet-01" aria-hidden="true"></i>
                                     </span>
                                 </div>
@@ -1097,7 +1097,7 @@ hideFeedback: true
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
                                     <div class="nds-card-corner">
-                                        <span class="nds-tag nds-xs" data-status="neutral">
+                                        <span class="nds-tag" data-status="neutral">
                                             <span class="nds-label">Closed</span>
                                         </span>
                                     </div>
@@ -1105,19 +1105,19 @@ hideFeedback: true
                                     <p class="nds-card-description">Split this term's tuition fees into monthly payments. Opens on 1 Nov 2026.</p>
                                 </div>
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-green nds-sm">
+                                    <span class="nds-tag nds-green">
                                         <span class="nds-label">Financial</span>
                                     </span>
-                                    <span class="nds-tag nds-gray nds-sm">
+                                    <span class="nds-tag nds-gray">
                                         <span class="nds-label">Free</span>
                                     </span>
                                 </div>
                             </div>
                             <div class="nds-card-actions">
-                                <a href="#" class="nds-btn nds-primary nds-md">
+                                <a href="#" class="nds-btn nds-primary">
                                     <span class="nds-label">Start</span>
                                 </a>
-                                <a href="#" class="nds-btn nds-secondary-outline nds-md">
+                                <a href="#" class="nds-btn nds-secondary-outline">
                                     <span class="nds-label">Details</span>
                                 </a>
                             </div>
@@ -1127,7 +1127,7 @@ hideFeedback: true
                         <div class="nds-card nds-stroke">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-lg">
+                                    <span class="nds-featured-icon nds-circle">
                                         <i class="hgi hgi-stroke hgi-edit-user-02" aria-hidden="true"></i>
                                     </span>
                                 </div>
@@ -1135,7 +1135,7 @@ hideFeedback: true
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
                                     <div class="nds-card-corner">
-                                        <span class="nds-tag nds-xs" data-status="success">
+                                        <span class="nds-tag" data-status="success">
                                             <span class="nds-label">Open</span>
                                         </span>
                                     </div>
@@ -1143,19 +1143,19 @@ hideFeedback: true
                                     <p class="nds-card-description">Change your mobile number, email or national address.</p>
                                 </div>
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-gray nds-sm">
+                                    <span class="nds-tag nds-gray">
                                         <span class="nds-label">Account</span>
                                     </span>
-                                    <span class="nds-tag nds-gray nds-sm">
+                                    <span class="nds-tag nds-gray">
                                         <span class="nds-label">Free</span>
                                     </span>
                                 </div>
                             </div>
                             <div class="nds-card-actions">
-                                <a href="#" class="nds-btn nds-primary nds-md">
+                                <a href="#" class="nds-btn nds-primary">
                                     <span class="nds-label">Start</span>
                                 </a>
-                                <a href="#" class="nds-btn nds-secondary-outline nds-md">
+                                <a href="#" class="nds-btn nds-secondary-outline">
                                     <span class="nds-label">Details</span>
                                 </a>
                             </div>
@@ -1165,7 +1165,7 @@ hideFeedback: true
                         <div class="nds-card nds-stroke">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-lg">
+                                    <span class="nds-featured-icon nds-circle">
                                         <i class="hgi hgi-stroke hgi-customer-support" aria-hidden="true"></i>
                                     </span>
                                 </div>
@@ -1173,7 +1173,7 @@ hideFeedback: true
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
                                     <div class="nds-card-corner">
-                                        <span class="nds-tag nds-xs" data-status="success">
+                                        <span class="nds-tag" data-status="success">
                                             <span class="nds-label">Open</span>
                                         </span>
                                     </div>
@@ -1181,19 +1181,19 @@ hideFeedback: true
                                     <p class="nds-card-description">Meet your academic advisor in person or online.</p>
                                 </div>
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-blue nds-sm">
+                                    <span class="nds-tag nds-blue">
                                         <span class="nds-label">Academic</span>
                                     </span>
-                                    <span class="nds-tag nds-gray nds-sm">
+                                    <span class="nds-tag nds-gray">
                                         <span class="nds-label">Free</span>
                                     </span>
                                 </div>
                             </div>
                             <div class="nds-card-actions">
-                                <a href="#" class="nds-btn nds-primary nds-md">
+                                <a href="#" class="nds-btn nds-primary">
                                     <span class="nds-label">Start</span>
                                 </a>
-                                <a href="#" class="nds-btn nds-secondary-outline nds-md">
+                                <a href="#" class="nds-btn nds-secondary-outline">
                                     <span class="nds-label">Details</span>
                                 </a>
                             </div>

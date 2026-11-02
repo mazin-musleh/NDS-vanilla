@@ -115,7 +115,7 @@ completed:
                 </div>
                 {{ journey_steps }}
                 <div class="nds-alert-actions">
-                    <button type="button" class="nds-btn nds-subtle nds-sm" data-modal-target="journeys-intro">
+                    <button type="button" class="nds-btn nds-subtle" data-modal-target="journeys-intro">
                         <span class="nds-label">Learn more about life journeys</span>
                         <i class="nds-icon nds-hgi-arrow-next-02" aria-hidden="true"></i>
                     </button>
@@ -148,7 +148,7 @@ completed:
                         {% for journey in page.current %}
                         <li class="nds-page-item nds-card">
                             <div class="nds-card-header">
-                                <div class="nds-progress-circle nds-md" data-num="{{ journey.step }}" data-max="{{ journey.steps }}" role="progressbar" aria-labelledby="current-{{ forloop.index }}-title">
+                                <div class="nds-progress-circle" data-num="{{ journey.step }}" data-max="{{ journey.steps }}" role="progressbar" aria-labelledby="current-{{ forloop.index }}-title">
                                     <svg width="120" height="120" viewBox="0 0 24 24">
                                         <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
                                         <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
@@ -165,10 +165,10 @@ completed:
                                 </div>
                             </div>
                             <div class="nds-card-actions">
-                                <a href="{{ '/templates/life-journey-page-template' | relative_url }}" class="nds-btn nds-secondary-outline nds-lg" aria-label="{{ journey.title }} details">
+                                <a href="{{ '/templates/life-journey-page-template' | relative_url }}" class="nds-btn nds-secondary-outline" aria-label="{{ journey.title }} details">
                                     <span class="nds-label">View Details</span>
                                 </a>
-                                <a href="{{ '/templates/journey-service-template' | relative_url }}" class="nds-btn nds-primary nds-lg" aria-label="Continue {{ journey.title }}">
+                                <a href="{{ '/templates/journey-service-template' | relative_url }}" class="nds-btn nds-primary" aria-label="Continue {{ journey.title }}">
                                     <span class="nds-label">Continue Journey</span>
                                 </a>
                             </div>
@@ -183,7 +183,7 @@ completed:
                         <li class="nds-page-item nds-card">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-lg">
+                                    <span class="nds-featured-icon nds-circle">
                                         <i class="hgi hgi-stroke {{ journey.icon }}" aria-hidden="true"></i>
                                     </span>
                                 </div>
@@ -194,10 +194,10 @@ completed:
                                 </div>
                             </div>
                             <div class="nds-card-actions">
-                                <a href="{{ '/templates/life-journey-page-template' | relative_url }}" class="nds-btn nds-secondary-outline nds-lg" aria-label="{{ journey.title }} details">
+                                <a href="{{ '/templates/life-journey-page-template' | relative_url }}" class="nds-btn nds-secondary-outline" aria-label="{{ journey.title }} details">
                                     <span class="nds-label">View Details</span>
                                 </a>
-                                <a href="{{ '/templates/journey-service-template' | relative_url }}" class="nds-btn nds-primary nds-lg" aria-label="Start {{ journey.title }}">
+                                <a href="{{ '/templates/journey-service-template' | relative_url }}" class="nds-btn nds-primary" aria-label="Start {{ journey.title }}">
                                     <span class="nds-label">Start Journey</span>
                                 </a>
                             </div>
@@ -213,7 +213,7 @@ completed:
                         {% for journey in page.completed %}
                         <li class="nds-page-item nds-card">
                             <div class="nds-card-header">
-                                <div class="nds-progress-circle nds-md" data-num="{{ journey.steps }}" data-max="{{ journey.steps }}" role="progressbar" aria-labelledby="completed-{{ forloop.index }}-title">
+                                <div class="nds-progress-circle" data-num="{{ journey.steps }}" data-max="{{ journey.steps }}" role="progressbar" aria-labelledby="completed-{{ forloop.index }}-title">
                                     <svg width="120" height="120" viewBox="0 0 24 24">
                                         <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />
                                         <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2"
@@ -230,7 +230,7 @@ completed:
                                 </div>
                             </div>
                             <div class="nds-card-actions">
-                                <a href="{{ '/templates/life-journey-page-template' | relative_url }}?status=completed" class="nds-btn nds-secondary-outline nds-lg" aria-label="{{ journey.title }} details">
+                                <a href="{{ '/templates/life-journey-page-template' | relative_url }}?status=completed" class="nds-btn nds-secondary-outline" aria-label="{{ journey.title }} details">
                                     <span class="nds-label">View Details</span>
                                 </a>
                             </div>

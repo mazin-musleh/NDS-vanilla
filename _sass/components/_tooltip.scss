@@ -35,7 +35,7 @@
 
     // 20px trigger icon (the markup's .nds-sm would otherwise be 16px).
     .nds-feedback-icon {
-      --feedback-size: 20px;
+      --_feedback-size-base: 20px;
     }
   }
 
@@ -179,7 +179,7 @@
 
   // 20px leading icon chip (the markup's .nds-sm would otherwise be 16px).
   .nds-feedback-icon {
-    --feedback-size: 20px;
+    --_feedback-size-base: 20px;
   }
 
   .nds-tooltip-body {

@@ -180,7 +180,7 @@ sidemenu_mode: false
                         <div class="nds-card nds-stroke">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-xl">
+                                    <span class="nds-featured-icon nds-circle">
                                         {{ service.icon }}
                                     </span>
                                 </div>
@@ -191,17 +191,17 @@ sidemenu_mode: false
                                     <span class="nds-card-description nds-truncate">{{ service.description }}</span>
                                 </div>
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-blue nds-sm"><span class="nds-label">{{ service.system }}</span></span>
+                                    <span class="nds-tag nds-blue"><span class="nds-label">{{ service.system }}</span></span>
                                     {% if service.most_used %}
-                                    <span class="nds-tag nds-green nds-sm"><span class="nds-label">Most Used</span></span>
+                                    <span class="nds-tag nds-green"><span class="nds-label">Most Used</span></span>
                                     {% endif %}
                                 </div>
                             </div>
                             <div class="nds-card-actions">
-                                <a href="{{ service.url }}" class="nds-btn nds-secondary-outline nds-lg" aria-label="Service Details">
+                                <a href="{{ service.url }}" class="nds-btn nds-secondary-outline" aria-label="Service Details">
                                     <span class="nds-label">Details</span>
                                 </a>
-                                <a href="{{ service.url }}" class="nds-btn nds-primary nds-lg nds-trail-icon" aria-label="Get Started">
+                                <a href="{{ service.url }}" class="nds-btn nds-primary nds-trail-icon" aria-label="Get Started">
                                     <span class="nds-label">Get Started</span>
                                 </a>
                             </div>

@@ -324,7 +324,7 @@ sidemenu_mode: false
                                 </div>
                             </div>
                             <div class="nds-card-actions">
-                                <a href="https://scholar.google.com/" class="nds-btn nds-secondary-outline nds-md nds-link">
+                                <a href="https://scholar.google.com/" class="nds-btn nds-secondary-outline nds-link">
                                     <span class="nds-label">View publication</span>
                                 </a>
                             </div>
@@ -344,7 +344,7 @@ sidemenu_mode: false
                                 </div>
                             </div>
                             <div class="nds-card-actions">
-                                <a href="https://scholar.google.com/" class="nds-btn nds-secondary-outline nds-md nds-link">
+                                <a href="https://scholar.google.com/" class="nds-btn nds-secondary-outline nds-link">
                                     <span class="nds-label">View publication</span>
                                 </a>
                             </div>
@@ -364,7 +364,7 @@ sidemenu_mode: false
                                 </div>
                             </div>
                             <div class="nds-card-actions">
-                                <a href="https://scholar.google.com/" class="nds-btn nds-secondary-outline nds-md nds-link">
+                                <a href="https://scholar.google.com/" class="nds-btn nds-secondary-outline nds-link">
                                     <span class="nds-label">View publication</span>
                                 </a>
                             </div>
@@ -384,7 +384,7 @@ sidemenu_mode: false
                                 </div>
                             </div>
                             <div class="nds-card-actions">
-                                <a href="https://scholar.google.com/" class="nds-btn nds-secondary-outline nds-md nds-link">
+                                <a href="https://scholar.google.com/" class="nds-btn nds-secondary-outline nds-link">
                                     <span class="nds-label">View publication</span>
                                 </a>
                             </div>
@@ -404,7 +404,7 @@ sidemenu_mode: false
                                 </div>
                             </div>
                             <div class="nds-card-actions">
-                                <a href="https://scholar.google.com/" class="nds-btn nds-secondary-outline nds-md nds-link">
+                                <a href="https://scholar.google.com/" class="nds-btn nds-secondary-outline nds-link">
                                     <span class="nds-label">View publication</span>
                                 </a>
                             </div>
@@ -424,7 +424,7 @@ sidemenu_mode: false
                                 </div>
                             </div>
                             <div class="nds-card-actions">
-                                <a href="https://scholar.google.com/" class="nds-btn nds-secondary-outline nds-md nds-link">
+                                <a href="https://scholar.google.com/" class="nds-btn nds-secondary-outline nds-link">
                                     <span class="nds-label">View publication</span>
                                 </a>
                             </div>
@@ -444,7 +444,7 @@ sidemenu_mode: false
                                 </div>
                             </div>
                             <div class="nds-card-actions">
-                                <a href="https://scholar.google.com/" class="nds-btn nds-secondary-outline nds-md nds-link">
+                                <a href="https://scholar.google.com/" class="nds-btn nds-secondary-outline nds-link">
                                     <span class="nds-label">View publication</span>
                                 </a>
                             </div>
@@ -464,7 +464,7 @@ sidemenu_mode: false
                                 </div>
                             </div>
                             <div class="nds-card-actions">
-                                <a href="https://scholar.google.com/" class="nds-btn nds-secondary-outline nds-md nds-link">
+                                <a href="https://scholar.google.com/" class="nds-btn nds-secondary-outline nds-link">
                                     <span class="nds-label">View publication</span>
                                 </a>
                             </div>
@@ -484,7 +484,7 @@ sidemenu_mode: false
                                 </div>
                             </div>
                             <div class="nds-card-actions">
-                                <a href="https://scholar.google.com/" class="nds-btn nds-secondary-outline nds-md nds-link">
+                                <a href="https://scholar.google.com/" class="nds-btn nds-secondary-outline nds-link">
                                     <span class="nds-label">View publication</span>
                                 </a>
                             </div>
@@ -504,7 +504,7 @@ sidemenu_mode: false
                                 </div>
                             </div>
                             <div class="nds-card-actions">
-                                <a href="https://scholar.google.com/" class="nds-btn nds-secondary-outline nds-md nds-link">
+                                <a href="https://scholar.google.com/" class="nds-btn nds-secondary-outline nds-link">
                                     <span class="nds-label">View publication</span>
                                 </a>
                             </div>

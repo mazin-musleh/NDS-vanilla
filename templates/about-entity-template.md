@@ -19,7 +19,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-information-diamond"></i>
                             </span>
                         </div>
@@ -40,7 +40,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-hierarchy-square-02"></i>
                             </span>
                         </div>
@@ -61,7 +61,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-strategy"></i>
                             </span>
                         </div>
@@ -82,7 +82,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="nds-icon nds-hgi-riyal-circular" aria-hidden="true"></i>
                             </span>
                         </div>
@@ -103,7 +103,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-validation-approval"></i>
                             </span>
                         </div>
@@ -124,7 +124,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-user-group"></i>
                             </span>
                         </div>
@@ -145,7 +145,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-building-02"></i>
                             </span>
                         </div>
@@ -166,7 +166,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-plant-03"></i>
                             </span>
                         </div>
@@ -187,7 +187,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-briefcase-06"></i>
                             </span>
                         </div>
@@ -208,7 +208,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-news-01"></i>
                             </span>
                         </div>
@@ -229,7 +229,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-contact-02"></i>
                             </span>
                         </div>

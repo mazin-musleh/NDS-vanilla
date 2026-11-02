@@ -409,7 +409,7 @@
    Its parts center through the centered-layout rules above. ── */
 
 :is(.nds-hero-section, .nds-content-section).nds-status-section {
-    --feedback-size: 56px;
+    --_feedback-size-base: 56px;
     display: flex;
     align-items: center;
     flex: 1;

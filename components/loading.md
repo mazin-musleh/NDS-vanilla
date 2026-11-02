@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "02/11/2026 - 03:47 PM"
 ---
 
 <section id="loading-overview" class="nds-content-section nds-doc-overview">
@@ -99,7 +99,7 @@ A component that has a skeleton, such as a card, a table or tabs, replaces its t
 <div class="nds-card nds-stroke nds-loading" aria-busy="true">
   <div class="nds-card-header">
     <div class="nds-card-featured-icon">
-      <span class="nds-featured-icon nds-circle nds-lg">
+      <span class="nds-featured-icon nds-circle">
         <i class="hgi hgi-stroke hgi-stars"></i>
       </span>
     </div>

@@ -64,6 +64,11 @@
   // ALERT ICON (uses feedback-icon)
   // ==============================================
 
+  // The icon's glyph reads the feedback size; :where() lets a size class on it win.
+  :where(.nds-alert-icon) {
+    --_feedback-size-base: 24px;
+  }
+
   .nds-feedback-icon {
     --nds-icon-size: 20px;
     width: calc(var(--nds-icon-size)*2);
@@ -132,6 +137,11 @@
   // ==============================================
   // ALERT CLOSE BUTTON
   // ==============================================
+
+  // MD by default; :where() lets a size class on the button win.
+  :where(.nds-alert-close) {
+    @include btn-md;
+  }
 
   .nds-alert-close {
     position: absolute;

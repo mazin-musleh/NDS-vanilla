@@ -286,11 +286,11 @@ last_edit: "01/11/2026 - 12:30 AM"
                     </div>
                 </dl>
                 <div class="nds-card-actions" data-hidden="print">
-                    <button type="button" class="nds-btn nds-secondary-outline nds-md" data-print-target="request-summary">
+                    <button type="button" class="nds-btn nds-secondary-outline" data-print-target="request-summary">
                         <i class="nds-icon nds-hgi-printer" aria-hidden="true"></i>
                         <span class="nds-label">Print summary</span>
                     </button>
-                    <a href="#" class="nds-btn nds-subtle nds-md">
+                    <a href="#" class="nds-btn nds-subtle">
                         <span class="nds-label">Contact support</span>
                     </a>
                 </div>

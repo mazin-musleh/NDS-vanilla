@@ -93,7 +93,7 @@ last_edit: "30/10/2026 - 11:14 AM"
             <li class="nds-page-item nds-card">
                 <div class="nds-card-header">
                     <div class="nds-card-featured-icon">
-                        <span class="nds-featured-icon nds-circle nds-lg">
+                        <span class="nds-featured-icon nds-circle">
                             {{ service.icon }}
                         </span>
                     </div>
@@ -115,11 +115,11 @@ last_edit: "30/10/2026 - 11:14 AM"
                     </div>
                 </div>
                 <div class="nds-card-actions">
-                    <a href="{{ '/templates/service-template' | relative_url }}" class="nds-btn nds-secondary-outline nds-lg"
+                    <a href="{{ '/templates/service-template' | relative_url }}" class="nds-btn nds-secondary-outline"
                         aria-label="Service Details">
                         <span class="nds-label">Details</span>
                     </a>
-                    <a href="{{ service.url }}" class="nds-btn nds-primary nds-lg nds-trail-icon"
+                    <a href="{{ service.url }}" class="nds-btn nds-primary nds-trail-icon"
                         aria-label="Get Started">
                         <span class="nds-label">Get Started</span>
                     </a>

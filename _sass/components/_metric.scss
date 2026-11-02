@@ -116,6 +116,9 @@
   // A small title, through the card's own size rungs: a size class or knob still wins.
   --_card-title-FS-base: var(--typo-text-sm-FS);
   --_card-title-LH-base: var(--typo-text-sm-LH);
+  // A compact header and actions, the same way.
+  @include featured-icon-sm;
+  @include btn-md;
 
   &[data-status="positive"] {
     --metric-trend-color: var(--text-success);

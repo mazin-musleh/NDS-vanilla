@@ -30,7 +30,7 @@ hideFeedback: true
                     <p class="nds-alert-description">System maintenance window from 2:00 AM to 4:00 AM on Friday. Some services may be temporarily unavailable.</p>
                 </div>
             </div>
-            <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert" data-i18n-aria-label="alert.close_alert">
+            <button class="nds-btn nds-subtle nds-icon-only nds-alert-close" aria-label="Close alert" data-i18n-aria-label="alert.close_alert">
                 <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
             </button>
         </div>
@@ -100,7 +100,7 @@ hideFeedback: true
             <div class="nds-card nds-center nds-stroke">
                 <div class="nds-card-header">
                     <div class="nds-card-featured-icon">
-                        <span class="nds-featured-icon nds-circle nds-xl">
+                        <span class="nds-featured-icon nds-circle">
                             <i class="nds-icon nds-hgi-checkmark-circle-01" aria-hidden="true"></i>
                         </span>
                     </div>
@@ -112,7 +112,7 @@ hideFeedback: true
                     </div>
                     <div class="nds-card-meta">
                         <div class="nds-card-tags">
-                            <span class="nds-tag nds-green nds-sm">
+                            <span class="nds-tag nds-green">
                                 <i class="hgi hgi-stroke hgi-analytics-up"></i>
                                 <span class="nds-label">Up 18% this quarter</span>
                             </span>
@@ -123,7 +123,7 @@ hideFeedback: true
             <div class="nds-card nds-center nds-stroke nds-yellow">
                 <div class="nds-card-header">
                     <div class="nds-card-featured-icon">
-                        <span class="nds-featured-icon nds-circle nds-xl">
+                        <span class="nds-featured-icon nds-circle">
                             <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
                         </span>
                     </div>
@@ -135,7 +135,7 @@ hideFeedback: true
                     </div>
                     <div class="nds-card-meta">
                         <div class="nds-card-tags">
-                            <span class="nds-tag nds-yellow nds-sm">
+                            <span class="nds-tag nds-yellow">
                                 <i class="hgi hgi-stroke hgi-alert-02"></i>
                                 <span class="nds-label">8 require attention</span>
                             </span>
@@ -146,7 +146,7 @@ hideFeedback: true
             <div class="nds-card nds-center nds-stroke nds-blue">
                 <div class="nds-card-header">
                     <div class="nds-card-featured-icon">
-                        <span class="nds-featured-icon nds-circle nds-xl">
+                        <span class="nds-featured-icon nds-circle">
                             <i class="hgi hgi-stroke hgi-user-multiple"></i>
                         </span>
                     </div>
@@ -158,7 +158,7 @@ hideFeedback: true
                     </div>
                     <div class="nds-card-meta">
                         <div class="nds-card-tags">
-                            <span class="nds-tag nds-blue nds-sm">
+                            <span class="nds-tag nds-blue">
                                 <i class="hgi hgi-stroke hgi-building-06"></i>
                                 <span class="nds-label">Across 5 departments</span>
                             </span>
@@ -169,7 +169,7 @@ hideFeedback: true
             <div class="nds-card nds-center nds-stroke nds-red">
                 <div class="nds-card-header">
                     <div class="nds-card-featured-icon">
-                        <span class="nds-featured-icon nds-circle nds-xl">
+                        <span class="nds-featured-icon nds-circle">
                             <i class="nds-icon nds-hgi-notification-02" aria-hidden="true"></i>
                         </span>
                     </div>
@@ -181,7 +181,7 @@ hideFeedback: true
                     </div>
                     <div class="nds-card-meta">
                         <div class="nds-card-tags">
-                            <span class="nds-tag nds-red nds-sm">
+                            <span class="nds-tag nds-red">
                                 <i class="hgi hgi-stroke hgi-shield-01"></i>
                                 <span class="nds-label">2 critical alerts</span>
                             </span>
@@ -568,15 +568,15 @@ hideFeedback: true
                             <div class="nds-card-text">
                                 <div class="nds-card-corner">
                                     {% if user.status == "active" %}
-                                    <span class="nds-tag nds-xs" data-status="success">
+                                    <span class="nds-tag" data-status="success">
                                         <span class="nds-label" data-filter="status" data-filter-value="active">Active</span>
                                     </span>
                                     {% elsif user.status == "away" %}
-                                    <span class="nds-tag nds-xs" data-status="warning">
+                                    <span class="nds-tag" data-status="warning">
                                         <span class="nds-label" data-filter="status" data-filter-value="away">Away</span>
                                     </span>
                                     {% elsif user.status == "offline" %}
-                                    <span class="nds-tag nds-xs" data-status="neutral">
+                                    <span class="nds-tag" data-status="neutral">
                                         <span class="nds-label" data-filter="status" data-filter-value="offline">Offline</span>
                                     </span>
                                     {% endif %}
@@ -593,7 +593,7 @@ hideFeedback: true
                             </div>
                         </div>
                         <div class="nds-card-actions">
-                            <a href="mailto:{{ user.email }}" class="nds-btn nds-secondary-outline nds-lg nds-lead-icon">
+                            <a href="mailto:{{ user.email }}" class="nds-btn nds-secondary-outline nds-lead-icon">
                                 <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
                                 <span class="nds-label">Contact</span>
                             </a>

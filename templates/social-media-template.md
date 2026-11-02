@@ -20,7 +20,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-new-twitter"></i>
                             </span>
                         </div>
@@ -41,7 +41,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-youtube"></i>
                             </span>
                         </div>
@@ -62,7 +62,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-instagram"></i>
                             </span>
                         </div>
@@ -83,7 +83,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-linkedin-02"></i>
                             </span>
                         </div>
@@ -104,7 +104,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-snapchat"></i>
                             </span>
                         </div>
@@ -125,7 +125,7 @@ sidemenu_mode: false
                 <li class="nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 <i class="hgi hgi-stroke hgi-facebook-02"></i>
                             </span>
                         </div>

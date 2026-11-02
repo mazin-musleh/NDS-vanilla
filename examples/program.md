@@ -104,14 +104,14 @@ layout_class: nds-card-view
                         <li class="nds-card">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-lg">
+                                    <span class="nds-featured-icon nds-circle">
                                         <i class="nds-icon nds-hgi-clock-01" aria-hidden="true"></i>
                                     </span>
                                 </div>
                             </div>
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
-                                    <span class="nds-card-number nds-md"
+                                    <span class="nds-card-number"
                                         data-counter="132">0</span>
                                     <p class="nds-card-description">Credit Hours</p>
                                 </div>
@@ -120,14 +120,14 @@ layout_class: nds-card-view
                         <li class="nds-card">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-lg">
+                                    <span class="nds-featured-icon nds-circle">
                                         <i class="hgi hgi-stroke hgi-certificate-01"></i>
                                     </span>
                                 </div>
                             </div>
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
-                                    <span class="nds-card-number nds-md"
+                                    <span class="nds-card-number"
                                         data-counter="4">0</span>
                                     <p class="nds-card-description">Years</p>
                                 </div>
@@ -136,14 +136,14 @@ layout_class: nds-card-view
                         <li class="nds-card">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-lg">
+                                    <span class="nds-featured-icon nds-circle">
                                         <i class="hgi hgi-stroke hgi-layers-01"></i>
                                     </span>
                                 </div>
                             </div>
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
-                                    <span class="nds-card-number nds-md"
+                                    <span class="nds-card-number"
                                         data-counter="8">0</span>
                                     <p class="nds-card-description">Semesters</p>
                                 </div>
@@ -152,14 +152,14 @@ layout_class: nds-card-view
                         <li class="nds-card">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-lg">
+                                    <span class="nds-featured-icon nds-circle">
                                         <i class="hgi hgi-stroke hgi-calendar-02"></i>
                                     </span>
                                 </div>
                             </div>
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
-                                    <span class="nds-card-number nds-md"
+                                    <span class="nds-card-number"
                                         data-counter="16">0</span>
                                     <p class="nds-card-description">Weeks per Semester</p>
                                 </div>

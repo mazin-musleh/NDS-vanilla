@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 09:39 AM"
+last_edit: "02/11/2026 - 03:47 PM"
 ---
 
 <section id="list-overview" class="nds-content-section nds-doc-overview">
@@ -173,7 +173,7 @@ Pick another component when:
 <script type="text/html" id="list-part-person-1" data-canon>
 <div class="nds-card-text">
   <div class="nds-card-corner">
-    <span class="nds-tag nds-xs" data-status="success">
+    <span class="nds-tag" data-status="success">
       <span class="nds-label">Active</span>
     </span>
   </div>
@@ -191,7 +191,7 @@ Pick another component when:
 <script type="text/html" id="list-part-person-2" data-canon>
 <div class="nds-card-text">
   <div class="nds-card-corner">
-    <span class="nds-tag nds-xs" data-status="warning">
+    <span class="nds-tag" data-status="warning">
       <span class="nds-label">Away</span>
     </span>
   </div>
@@ -209,7 +209,7 @@ Pick another component when:
 <script type="text/html" id="list-part-person-3" data-canon>
 <div class="nds-card-text">
   <div class="nds-card-corner">
-    <span class="nds-tag nds-xs" data-status="success">
+    <span class="nds-tag" data-status="success">
       <span class="nds-label">Active</span>
     </span>
   </div>
@@ -227,7 +227,7 @@ Pick another component when:
 <script type="text/html" id="list-part-person-4" data-canon>
 <div class="nds-card-text">
   <div class="nds-card-corner">
-    <span class="nds-tag nds-xs" data-status="neutral">
+    <span class="nds-tag" data-status="neutral">
       <span class="nds-label">Offline</span>
     </span>
   </div>
@@ -245,7 +245,7 @@ Pick another component when:
 <script type="text/html" id="list-part-person-5" data-canon>
 <div class="nds-card-text">
   <div class="nds-card-corner">
-    <span class="nds-tag nds-xs" data-status="success">
+    <span class="nds-tag" data-status="success">
       <span class="nds-label">Active</span>
     </span>
   </div>

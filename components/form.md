@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 11:34 PM"
+last_edit: "02/11/2026 - 03:50 PM"
 lang: en
 direction: ltr
 ---
@@ -192,7 +192,7 @@ Pick another component when:
 </script>
 <script type="text/html" id="field-hint" data-canon>
 <div class="nds-form-footer" data-feedback-target>
-  <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
+  <span class="nds-feedback nds-outline" data-status="neutral" data-permanent>
     <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
     <span class="nds-feedback-message">A hint that stays under the field</span>
   </span>
@@ -621,7 +621,7 @@ Source: the `forms` group in `_sass/tokens/_components.scss`.
 |---|---|---|
 | `message` | — | The text. An empty string removes the message and keeps the status |
 | `permanent` | `false` | The message stays as a hint, as `data-permanent` does |
-| `size`, `style`, `position` | `sm`, `outline`, `append` | Passed to `NDS.Feedback.create()`. See [Feedback](../components/feedback) |
+| `size`, `style`, `position` | none (SM), `outline`, `append` | Passed to `NDS.Feedback.create()`. See [Feedback](../components/feedback) |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |

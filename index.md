@@ -156,7 +156,7 @@ bundle_sizes:
                         <div class="nds-card nds-stroke nds-shadow">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-xl">
+                                    <span class="nds-featured-icon nds-circle">
                                         {{ tpl.icon }}
                                     </span>
                                 </div>
@@ -165,7 +165,7 @@ bundle_sizes:
                                 <div class="nds-card-text">
                                     {%- if tpl.new %}
                                     <div class="nds-card-corner">
-                                        <span class="nds-tag nds-xs" data-status="info">
+                                        <span class="nds-tag" data-status="info">
                                             <span class="nds-label">New</span>
                                         </span>
                                     </div>
@@ -215,7 +215,7 @@ bundle_sizes:
                         <div class="nds-card nds-stroke nds-shadow">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-xl">
+                                    <span class="nds-featured-icon nds-circle">
                                         {{ ex.icon }}
                                     </span>
                                 </div>
@@ -224,7 +224,7 @@ bundle_sizes:
                                 <div class="nds-card-text">
                                     {%- if ex.new %}
                                     <div class="nds-card-corner">
-                                        <span class="nds-tag nds-xs" data-status="info">
+                                        <span class="nds-tag" data-status="info">
                                             <span class="nds-label">New</span>
                                         </span>
                                     </div>
@@ -233,11 +233,11 @@ bundle_sizes:
                                     <p class="nds-card-description nds-truncate" style="--truncate: 2;">{{ ex.description }}</p>
                                 </div>
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-blue nds-sm">
+                                    <span class="nds-tag nds-blue">
                                         <span class="nds-label">{{ ex.category }}</span>
                                     </span>
                                     {% for tag in ex.tags %}
-                                    <span class="nds-tag nds-gray nds-sm">
+                                    <span class="nds-tag nds-gray">
                                         <span class="nds-label">{{ tag }}</span>
                                     </span>
                                     {% endfor %}
@@ -290,7 +290,7 @@ bundle_sizes:
                                 </div>
                                 {% else %}
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-xl">
+                                    <span class="nds-featured-icon nds-circle">
                                         {{ ev.icon }}
                                     </span>
                                 </div>
@@ -302,11 +302,11 @@ bundle_sizes:
                                     <p class="nds-card-description">{{ ev.description }}</p>
                                 </div>
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-blue nds-sm">
+                                    <span class="nds-tag nds-blue">
                                         <span class="nds-label">{{ ev.category }}</span>
                                     </span>
                                     {% for tag in ev.tags %}
-                                    <span class="nds-tag nds-gray nds-sm">
+                                    <span class="nds-tag nds-gray">
                                         <span class="nds-label">{{ tag }}</span>
                                     </span>
                                     {% endfor %}

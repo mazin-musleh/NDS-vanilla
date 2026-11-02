@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "02/11/2026 - 03:47 PM"
 ---
 
 <section id="scroll-more-overview" class="nds-content-section nds-doc-overview">
@@ -215,7 +215,7 @@ Pick another component when:
           <li>Qatif</li>
           <li>Al Kharj</li>
         </ul>
-        <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+        <button type="button" class="nds-btn nds-subtle nds-show-more">
           <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
           <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
         </button>

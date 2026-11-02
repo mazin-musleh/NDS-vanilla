@@ -142,7 +142,7 @@ related:
                                         <span class="nds-stepper-title">{{ step.title }}</span>
                                         <span class="nds-stepper-description">{{ step.description }}</span>
                                     </div>
-                                    <div class="nds-accordion nds-md nds-minimal">
+                                    <div class="nds-accordion nds-minimal">
                                         <div class="nds-accordion-item">
                                             <h3 class="nds-accordion-header">
                                                 <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-accordion-btn" aria-expanded="false" aria-controls="service-{{ forloop.index }}-requirements">
@@ -338,7 +338,7 @@ related:
                         <div class="nds-card nds-stroke">
                             <div class="nds-card-header">
                                 <div class="nds-card-featured-icon">
-                                    <span class="nds-featured-icon nds-circle nds-lg">
+                                    <span class="nds-featured-icon nds-circle">
                                         <i class="hgi hgi-stroke {{ journey.icon }}" aria-hidden="true"></i>
                                     </span>
                                 </div>
@@ -349,16 +349,16 @@ related:
                                     <span class="nds-card-description nds-truncate">{{ journey.description }}</span>
                                 </div>
                                 <div class="nds-card-tags">
-                                    <span class="nds-tag nds-gray nds-sm"><span class="nds-label">Entity</span></span>
-                                    <span class="nds-tag nds-blue nds-sm"><span class="nds-label">Platform</span></span>
-                                    <span class="nds-tag nds-green nds-sm"><span class="nds-label">Journey</span></span>
+                                    <span class="nds-tag nds-gray"><span class="nds-label">Entity</span></span>
+                                    <span class="nds-tag nds-blue"><span class="nds-label">Platform</span></span>
+                                    <span class="nds-tag nds-green"><span class="nds-label">Journey</span></span>
                                 </div>
                             </div>
                             <div class="nds-card-actions">
-                                <a href="{{ '/templates/life-journey-page-template' | relative_url }}" class="nds-btn nds-secondary-outline nds-lg">
+                                <a href="{{ '/templates/life-journey-page-template' | relative_url }}" class="nds-btn nds-secondary-outline">
                                     <span class="nds-label">Details</span>
                                 </a>
-                                <a href="{{ '/templates/journey-service-template' | relative_url }}" class="nds-btn nds-primary nds-lg">
+                                <a href="{{ '/templates/journey-service-template' | relative_url }}" class="nds-btn nds-primary">
                                     <span class="nds-label">Start journey</span>
                                 </a>
                             </div>
@@ -385,7 +385,7 @@ related:
         <div class="nds-card nds-stroke nds-full">
             <div class="nds-card-header">
                 <div class="nds-card-featured-icon">
-                    <span class="nds-featured-icon nds-circle nds-lg">
+                    <span class="nds-featured-icon nds-circle">
                         <i class="hgi hgi-stroke hgi-comment-01" aria-hidden="true"></i>
                     </span>
                 </div>
@@ -397,7 +397,7 @@ related:
                 </div>
             </div>
             <div class="nds-card-actions">
-                <a href="#" class="nds-btn nds-primary nds-lg">
+                <a href="#" class="nds-btn nds-primary">
                     <span class="nds-label">Contact us</span>
                 </a>
             </div>

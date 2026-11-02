@@ -398,7 +398,7 @@ console.log(rows[0].region, rows[0].population);</code>
                             </div>
                         </div>
                         <div class="nds-card-actions">
-                            <button type="button" class="nds-btn nds-secondary-outline nds-sm nds-copy" data-copy-target="#od-cite">
+                            <button type="button" class="nds-btn nds-secondary-outline nds-copy" data-copy-target="#od-cite">
                                 <i class="nds-icon nds-hgi-copy-01"></i>
                                 <span class="nds-label">Copy citation</span>
                             </button>

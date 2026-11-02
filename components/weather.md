@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 10:48 PM"
+last_edit: "02/11/2026 - 03:47 PM"
 ---
 
 <section id="weather-overview" class="nds-content-section nds-doc-overview">
@@ -69,7 +69,7 @@ Pick another component when:
 <div class="nds-card nds-stroke nds-weather" data-latitude="21.4858" data-longitude="39.1925" style="--card-width: fit-content">
   <div class="nds-card-header">
     <div class="nds-card-featured-icon">
-      <span class="nds-featured-icon nds-subtle nds-lg"><i class="nds-icon nds-weather-icon" aria-hidden="true"></i></span>
+      <span class="nds-featured-icon nds-subtle"><i class="nds-icon nds-weather-icon" aria-hidden="true"></i></span>
     </div>
   </div>
   <div class="nds-card-content">

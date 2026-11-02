@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 12:30 AM"
+last_edit: "02/11/2026 - 03:47 PM"
 ---
 
 <section id="alert-overview" class="nds-content-section nds-doc-overview">
@@ -54,7 +54,7 @@ Pick another component when:
       <p class="nds-alert-description">A new version is ready. Update now to get the latest fixes.</p>
     </div>
   </div>
-  <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert" data-i18n-aria-label="alert.close_alert">
+  <button class="nds-btn nds-subtle nds-icon-only nds-alert-close" aria-label="Close alert" data-i18n-aria-label="alert.close_alert">
     <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
   </button>
 </div>
@@ -72,7 +72,7 @@ Pick another component when:
       <p class="nds-alert-description">A new version is ready.</p>
     </div>
   </div>
-  <button class="nds-btn nds-subtle nds-icon-only nds-md nds-alert-close" aria-label="Close alert" data-i18n-aria-label="alert.close_alert">
+  <button class="nds-btn nds-subtle nds-icon-only nds-alert-close" aria-label="Close alert" data-i18n-aria-label="alert.close_alert">
     <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
   </button>
 </div>
@@ -300,7 +300,7 @@ A toast with a `duration` closes itself after that many milliseconds, and a ring
 |---|---|---|
 | `data-status` | `.nds-alert` | The status: `info`, `success`, `warning`, `error`, `critical` or `neutral`. Sets the icon and the colors |
 | `data-position` | `.nds-alert-placeholder` | Where toasts dock. Place your own placeholder with this attribute, and toasts for that position go into it instead of a new one |
-| `data-alert-close` | A button inside `.nds-alert` | Closes the alert on click, as `data-modal-close` does on a modal. `.nds-alert-close` still works, and it also places the built close button |
+| `data-alert-close` | A button inside `.nds-alert` | Closes the alert on click, as `data-modal-close` does on a modal. `.nds-alert-close` still works, and it also places the built close button and makes it MD. A size class on the button still wins |
 | `data-state` | `.nds-toast` | Set by the script: `toast-show`, `toast-hide` and `paused`. Do not set it yourself |
 {: .nds-table .nds-responsive}
 

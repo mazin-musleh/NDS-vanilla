@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "02/11/2026 - 03:47 PM"
 ---
 
 <section id="print-overview" class="nds-content-section nds-doc-overview">
@@ -74,7 +74,7 @@ Pick another component when:
     </div>
   </div>
   <div class="nds-card-actions">
-    <button type="button" class="nds-btn nds-secondary-outline nds-sm" data-hidden="print">
+    <button type="button" class="nds-btn nds-secondary-outline" data-hidden="print">
       <i class="hgi hgi-stroke hgi-share-08"></i>
       <span class="nds-label">Share</span>
     </button>

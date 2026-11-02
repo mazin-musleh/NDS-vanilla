@@ -5,7 +5,7 @@
 //   kept     a part's own size class is kept in a bare, SM and LG list
 //   knob     a knob on the list beats the list's step; a wrapper's knob beats a part's size class
 //   button   a wrapper's --btn-size does not reach a button; a set height keeps its label in a List
-//   library  the Library's list keeps its nds-xs tags at XS (20px)
+//   library  the Library's nds-sm cards step their tags to XS (20px), with no class on the tag
 //
 //   node scripts/check-part-sizes.mjs     ENGINE=webkit · CSS=<old nds-main.min.css> (must fail on HEAD~4's)
 // Needs the dev server on :4002 (SITE=<base url> for another). Each step logs its time; a stuck one fails in STEP_MS.
@@ -88,10 +88,10 @@ ok('button: a 48px button keeps its label in an SM list', b.inSmList.split(' ')[
 
 const lib = await open('components/');
 const tags = await step('measure the Library tags', () => lib.evaluate(() => {
-    const shown = [...document.querySelectorAll('ul.nds-list .nds-tag.nds-xs')].filter((t) => t.getClientRects().length);
+    const shown = [...document.querySelectorAll('ul.nds-list > .nds-card.nds-sm .nds-tag')].filter((t) => t.getClientRects().length);
     return { count: shown.length, heights: [...new Set(shown.map((t) => Math.round(t.getBoundingClientRect().height)))] };
 }));
-ok('library: the Library list keeps its nds-xs tags at 20px', tags.count > 0 && tags.heights.join() === '20', JSON.stringify(tags));
+ok('library: the Library\'s nds-sm cards make their tags 20px', tags.count > 0 && tags.heights.join() === '20', JSON.stringify(tags));
 
 await browser.close();
 log(failed ? `${failed} failed` : 'all passed');

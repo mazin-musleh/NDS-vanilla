@@ -46,7 +46,7 @@ IMPORTANT_OK = {
 }
 # Size knobs NDS never writes; `initial` only stops one inheriting (the button's own reset).
 SIZE_KNOBS = re.compile(r'--(featuredicon-size|avatar-size|progress-size|star-size|chip-size|date-tile-width'
-                        r'|tag-height|tag-fs|tag-padding-inline|btn-size|btn-gap|btn-indicator-size|btn-FS|btn-LH)$')
+                        r'|tag-height|tag-fs|tag-padding-inline|btn-size|btn-gap|btn-indicator-size|btn-FS|btn-LH|feedback-size)$')
 # The card and List size steps, the narrow list's, and the nested reset (built selectors).
 _CARD = '.nds-card:not(.nds-modal,.nds-definition-list,.nds-stepper)'
 LIST_STEPS = (f'{_CARD}.nds-sm,.nds-list.nds-sm', f'{_CARD}.nds-lg,.nds-list.nds-lg', ':where(.nds-list:not(.nds-sm,.nds-lg))>.nds-card')

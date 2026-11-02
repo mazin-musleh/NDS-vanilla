@@ -43,7 +43,7 @@ Rule-level dark tweaks (not tokens) stay next to the rule they modify via `@incl
 
 **Knobs** (`--btn-size`, `--section-*`, `--hero-*`) are NOT tokens: per-instance styling the consumer sets on the element, undefined by default, resolved via the `--_x: var(--x, default)` private pattern. Tokens theme the system; knobs style one element.
 
-**A size knob always wins.** A part (avatar, featured icon, stars, ring, chip, date tile, tag, button) reads `var(--x, var(--_x-base, default))`. Its size class and a parent's step (a List, a Persona) write only the `--_x-base`, so the nearer one wins and a knob beats both. NDS never writes a public size knob: `check-css.py` fails on one. A button's size knobs stop at the button (`:where(.nds-btn)` resets them), because a wrapper's `--btn-size` would resize other components' buttons. `plans/part-sizes.md` holds the reasons.
+**A size knob always wins.** A part (avatar, featured icon, stars, ring, chip, date tile, tag, button, feedback) reads `var(--x, var(--_x-base, default))`. Its size class and a parent's step (a List, a Persona) write only the `--_x-base`, so the nearer one wins and a knob beats both. NDS never writes a public size knob: `check-css.py` fails on one. A button's size knobs stop at the button (`:where(.nds-btn)` resets them), because a wrapper's `--btn-size` would resize other components' buttons. `plans/part-sizes.md` holds the reasons.
 
 **Global token or component knob? A value goes global (`:root`) only if something must REACH it from `:root` — stop at the first yes:**
 1. A **mode layer re-binds it** — dark, `[data-a11y]`, or a brand. They all write at `:root[…]` and cannot reach a value declared on a component selector.

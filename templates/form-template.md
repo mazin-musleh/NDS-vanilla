@@ -47,7 +47,7 @@ sidemenu_mode: false
                                 </div>
                             </div>
                             <div class="nds-form-footer" data-feedback-target>
-                                <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
+                                <span class="nds-feedback nds-outline" data-status="neutral" data-permanent>
                                     <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
                                     <span class="nds-feedback-message">10-digit number printed on the back of your ID card</span>
                                 </span>
@@ -109,7 +109,7 @@ sidemenu_mode: false
                                 </div>
                             </div>
                             <div class="nds-form-footer" data-feedback-target>
-                                <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent>
+                                <span class="nds-feedback nds-outline" data-status="neutral" data-permanent>
                                     <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
                                     <span class="nds-feedback-message">A code is sent to the mobile number above</span>
                                 </span>
@@ -325,7 +325,7 @@ sidemenu_mode: false
                     <div class="nds-card nds-stroke nds-center" style="--card-width: 100%;">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
-                                <span class="nds-featured-icon nds-circle nds-dark nds-xl" data-status="success">
+                                <span class="nds-featured-icon nds-circle nds-dark" data-status="success">
                                     <i class="hgi hgi-stroke hgi-checkmark-circle-02"></i>
                                 </span>
                             </div>

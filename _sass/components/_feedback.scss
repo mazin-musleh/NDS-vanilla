@@ -15,8 +15,8 @@
     // Default message colour. A status overrides it below; without one the
     // message reads as body text instead of inheriting whatever surrounds it.
     color: var(--_feedback-text, var(--text-primary-paragraph));
-    font-size: var(--typo-text-sm-FS);
-    line-height: var(--typo-text-sm-LH);
+    font-size: var(--_feedback-FS-base, var(--typo-text-sm-FS));
+    line-height: var(--_feedback-LH-base, var(--typo-text-sm-LH));
     font-weight: var(--font-weight-medium);
     gap: var(--spacing-sm);
 
@@ -65,19 +65,15 @@
     // ==============================================
 
     &.nds-sm {
-        --feedback-size: 16px;
+        @include feedback-sm;
     }
 
     &.nds-md {
-        --feedback-size: 24px;
-        font-size: var(--typo-text-md-FS);
-        line-height: var(--typo-text-md-LH);
+        @include feedback-md;
     }
 
     &.nds-lg {
-        --feedback-size: 32px;
-        font-size: var(--typo-text-lg-FS);
-        line-height: var(--typo-text-lg-LH);
+        @include feedback-lg;
     }
 
     .nds-feedback-message {
@@ -175,7 +171,7 @@
     //   --feedback-icon-symbol   ::after symbol shape (inert when unset)
     //   --feedback-symbol-color  ::after symbol paint (white by default)
     //   --feedback-ring-inset    inset bridging the disc↔ring gap
-    --_feedback-size: var(--feedback-size, 24px);
+    --_feedback-size: var(--feedback-size, var(--_feedback-size-base, 16px));
     --_feedback-color: var(--feedback-color, var(--icon-neutral));
     --_feedback-ring: var(--feedback-ring, var(--icon-neutral-ring));
     --_feedback-ring-inset: var(--feedback-ring-inset, calc(var(--_feedback-size) * 0.06));

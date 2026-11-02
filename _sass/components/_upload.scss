@@ -153,6 +153,7 @@
         background-color: var(--upload-background-file-item);
         gap: var(--spacing-md);
         min-height: 36px;
+        --_feedback-size-base: 24px; // the status icon is MD; a size class on it still wins
 
         // Status-driven visibility: feedback shown by default, progress hidden
         .nds-feedback { display: var(--_file-feedback, flex); align-self: var(--_file-feedback-align, auto); }

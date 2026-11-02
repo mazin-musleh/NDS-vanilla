@@ -96,7 +96,7 @@ breadcrumb: [["Examples", "/examples"]]
                 </div>
                 <div class="nds-form-footer" data-feedback-target>
                   <div class="nds-password-rules" id="password-rules">
-                    <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent data-rule="length">
+                    <span class="nds-feedback nds-outline" data-status="neutral" data-permanent data-rule="length">
                       <span class="nds-feedback-icon">
                         <i class="nds-icon" aria-hidden="true"></i>
                       </span>
@@ -128,7 +128,7 @@ breadcrumb: [["Examples", "/examples"]]
                 </div>
                 <div class="nds-form-footer" data-feedback-target>
                   <div class="nds-password-rules" id="confirm-password-rules">
-                    <span class="nds-feedback nds-outline nds-sm" data-status="neutral" data-permanent data-rule="match">
+                    <span class="nds-feedback nds-outline" data-status="neutral" data-permanent data-rule="match">
                       <span class="nds-feedback-icon">
                         <i class="nds-icon" aria-hidden="true"></i>
                       </span>
@@ -154,7 +154,7 @@ breadcrumb: [["Examples", "/examples"]]
 
             <!-- Actions sit outside .nds-card-content: that is the part that scrolls -->
             <div class="nds-card-actions nds-col">
-              <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
+              <button type="submit" class="nds-btn nds-primary nds-full">
                 <span class="nds-label">Create account</span>
               </button>
             </div>
@@ -184,7 +184,7 @@ breadcrumb: [["Examples", "/examples"]]
                 <p class="nds-card-description">Enter the 4-digit code we just sent you to continue.</p>
               </div>
 
-              <fieldset class="nds-form-group nds-otp-group nds-md nds-center" data-required>
+              <fieldset class="nds-form-group nds-otp-group nds-center" data-required>
                 <legend><span class="nds-label">Verification code</span></legend>
                 <div class="nds-otp">
                   <div class="nds-form-container nds-otp-container">
@@ -213,7 +213,7 @@ breadcrumb: [["Examples", "/examples"]]
                   <!-- Permanent feedback survives validation cycles: it hides while an error
                        shows and comes back when the error clears. A real page never prints
                        the code — this stands in for the email you would receive. -->
-                  <span class="nds-feedback nds-outline nds-sm" data-status="info" data-permanent>
+                  <span class="nds-feedback nds-outline" data-status="info" data-permanent>
                     <span class="nds-feedback-icon">
                       <i class="nds-icon" aria-hidden="true"></i>
                     </span>
@@ -231,10 +231,10 @@ breadcrumb: [["Examples", "/examples"]]
             </div>
 
             <div class="nds-card-actions nds-col">
-              <button type="submit" class="nds-btn nds-primary nds-lg nds-full">
+              <button type="submit" class="nds-btn nds-primary nds-full">
                 <span class="nds-label">Verify</span>
               </button>
-              <button type="button" class="nds-btn nds-subtle nds-lg nds-full step-prev-btn">
+              <button type="button" class="nds-btn nds-subtle nds-full step-prev-btn">
                 <span class="nds-label">Back</span>
               </button>
             </div>
@@ -255,7 +255,7 @@ breadcrumb: [["Examples", "/examples"]]
           </div>
           <div class="nds-card-content">
             <div class="nds-card-text nds-center">
-              <span class="nds-featured-icon nds-xl nds-circle nds-center" data-status="success">
+              <span class="nds-featured-icon nds-circle nds-center" data-status="success">
                 <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
               </span>
               <h1 class="nds-card-title">Account created</h1>
@@ -264,7 +264,7 @@ breadcrumb: [["Examples", "/examples"]]
           </div>
 
           <div class="nds-card-actions nds-col">
-            <a href="{{ '/examples/console-demo/' | relative_url }}" class="nds-btn nds-primary nds-lg nds-full">
+            <a href="{{ '/examples/console-demo/' | relative_url }}" class="nds-btn nds-primary nds-full">
               <span class="nds-label">Go to dashboard</span>
             </a>
           </div>

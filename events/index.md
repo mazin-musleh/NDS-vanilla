@@ -73,7 +73,7 @@ sidemenu_mode: false
                 <li class="nds-page-item nds-card">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
-                            <span class="nds-featured-icon nds-circle nds-xl">
+                            <span class="nds-featured-icon nds-circle">
                                 {{ ev.icon }}
                             </span>
                         </div>

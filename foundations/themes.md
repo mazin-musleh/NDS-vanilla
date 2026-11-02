@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "28/10/2026 - 01:20 PM"
+last_edit: "02/11/2026 - 03:47 PM"
 ---
 
 <section id="themes-overview" class="nds-content-section nds-doc-overview">
@@ -207,7 +207,7 @@ A theme option can load a stylesheet theme on click: `data-theme-css` names the 
     <div class="nds-card-content">
       <div class="nds-card-text">
         <div class="nds-card-corner">
-          <span class="nds-tag nds-xs" data-status="success"><span class="nds-label">Approved</span></span>
+          <span class="nds-tag" data-status="success"><span class="nds-label">Approved</span></span>
         </div>
         <span class="nds-card-title">Building permit</span>
         <p class="nds-card-description">Request 1184, Riyadh. Valid until 30 June 2027.</p>
@@ -221,7 +221,7 @@ A theme option can load a stylesheet theme on click: `data-theme-css` names the 
     <div class="nds-card-content">
       <div class="nds-card-text">
         <div class="nds-card-corner">
-          <span class="nds-tag nds-xs" data-status="success"><span class="nds-label">Approved</span></span>
+          <span class="nds-tag" data-status="success"><span class="nds-label">Approved</span></span>
         </div>
         <span class="nds-card-title">Building permit</span>
         <p class="nds-card-description">Request 1184, Riyadh. Valid until 30 June 2027.</p>
