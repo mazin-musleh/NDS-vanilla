@@ -166,13 +166,13 @@ main {
             --section-padding-block: 0;
 
             @include desktop(min) {
-                --_wrapper-padding: 0;
+                --_wrapper-padding: 0px;
                 // Insets to the cards' column.
                 padding-inline: max(0px, calc((100% - var(--nds-content-max-width)) / 2));
             }
 
             @include tablet(max) {
-                --_wrapper-padding: 0;
+                --_wrapper-padding: 0px;
 
                 .nds-section-body:has(> :is(.nds-card, .nds-grid, .nds-swiper)) {
                     padding-inline: var(--nds-viewport-padding);
@@ -201,7 +201,7 @@ main {
 
             // A filled section keeps its gutter, so its text clears the fill.
             .nds-content:not(.nds-stripe) .nds-content-section:not(.nds-primary, .nds-gradient-primary, .nds-neutral, .nds-brand) {
-                --_wrapper-padding: 0;
+                --_wrapper-padding: 0px;
             }
         }
     }

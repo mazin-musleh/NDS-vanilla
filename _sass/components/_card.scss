@@ -209,7 +209,7 @@
   // After the color fill, so a flat list keeps its items flat.
   &:is(.nds-flat, :where(.nds-list.nds-flat) > *) {
     --_card-bg-base: transparent;
-    --_card-padding-base: 0;
+    --_card-padding-base: 0px; // a length: calc() drops a bare 0
     --_card-text-color-base: var(--text-secondary-paragraph);
   }
 
