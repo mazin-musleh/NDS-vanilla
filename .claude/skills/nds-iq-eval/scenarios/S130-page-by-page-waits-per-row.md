@@ -11,4 +11,4 @@
   - MUST NOT: open Services in the same turn; move Home to `Built and Verified`; treat the turn-end Status-column check as applying under `page-by-page`.
   - cite: "`page-by-page` (default) builds one row to `Awaiting Verification`, reports it, and waits for the dev's go before the next row."
 - floor: not run (new definition; no field run yet)
-- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).
+- baseline: PASS 2026-11-02 scoped (Sonnet 5.5), on the split pacing bullets: reports Home, then stops and waits.
