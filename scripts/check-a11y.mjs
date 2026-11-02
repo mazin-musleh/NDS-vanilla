@@ -1,7 +1,7 @@
 // axe (WCAG 2.x A + AA) and a keyboard walk on every built page, as built (LTR) and in RTL.
 // The walk Tabs through the page: each stop must be visible, outside aria-hidden/inert, and
 // draw a focus ring (outline or box-shadow); a walk that never gets back to the start is a trap.
-//   node scripts/check-a11y.mjs [page.html …] [--dir ltr|rtl] [--no-keys] [--jobs n]   SITE=<base url> for another server
+//   node scripts/check-a11y.mjs [page.html …] [--dir ltr|rtl] [--no-keys] [--jobs n] [--width px] [--rules id,id]   SITE=<base url> for another server
 //   ENGINE=webkit for Safari. Needs the dev server (bundle exec jekyll serve).
 import { launch, ENGINE } from './lib/browser.mjs';
 import { readdirSync, statSync } from 'node:fs';
@@ -15,6 +15,8 @@ const args = process.argv.slice(2);
 const opt = (name) => { const i = args.indexOf(name); return i < 0 ? null : args.splice(i, 2)[1]; };
 const has = (name) => { const i = args.indexOf(name); return i >= 0 && !!args.splice(i, 1); };
 const dir = opt('--dir'), JOBS = +opt('--jobs') || 4, KEYS = !has('--no-keys');
+// 360 checks the phone layout: target-size and reflow differ there.
+const WIDTH = +opt('--width') || 1280, RULES = opt('--rules')?.split(',');
 const DIRS = dir ? [dir] : ['ltr', 'rtl'];
 const MAX_TABS = 600;
 
@@ -36,7 +38,7 @@ const findings = []; // { page, dir, kind, rule, target, detail }
 let stops = 0;
 
 async function check(path, d) {
-    const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce' });
+    const ctx = await browser.newContext({ viewport: { width: WIDTH, height: 900 }, reducedMotion: 'reduce' });
     const page = await ctx.newPage();
     const add = (kind, rule, target, detail = '') => findings.push({ page: path, dir: d, kind, rule, target, detail });
     // RTL: the built page's <html> takes lang="ar" dir="rtl" before any script reads it.
@@ -58,12 +60,12 @@ async function check(path, d) {
         });
         await page.addScriptTag({ path: AXE });
         // The swiper's container takes the tab stop and the arrow keys for its scrolling wrapper.
-        const axe = await page.evaluate(async () => (await axe.run(document, {
-            runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'] },
+        const axe = await page.evaluate(async (rules) => (await axe.run(document, {
+            runOnly: rules ? { type: 'rule', values: rules } : { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'] },
             resultTypes: ['violations'],
         })).violations.map((v) => ({ id: v.id, impact: v.impact, nodes: v.nodes
             .filter((n) => !(v.id === 'scrollable-region-focusable' && document.querySelector(n.target[0])?.matches('.nds-swiper-wrapper')))
-            .map((n) => n.target.join(' ')) })));
+            .map((n) => n.target.join(' ')) })), RULES);
         for (const v of axe) for (const t of v.nodes) add('axe', `${v.id} (${v.impact})`, t);
 
         if (KEYS) {
@@ -136,5 +138,5 @@ for (const g of [...groups.values()].sort((a, b) => b.where.size - a.where.size)
     console.log(`${g.kind.toUpperCase()}  ${g.rule}  ${g.target}${g.detail ? '  — ' + g.detail : ''}`);
     console.log(`      ${where.length} × ${where.slice(0, 4).join(', ')}${where.length > 4 ? ', …' : ''}`);
 }
-console.log(`${ENGINE}: ${list.length} pages × ${DIRS.join('+')}, ${stops} tab stops walked, ${findings.length} findings in ${groups.size} groups`);
+console.log(`${ENGINE} @${WIDTH}px: ${list.length} pages × ${DIRS.join('+')}, ${stops} tab stops walked, ${findings.length} findings in ${groups.size} groups`);
 process.exit(findings.length ? 1 : 0);
