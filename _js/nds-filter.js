@@ -2263,13 +2263,17 @@
         // A single picker shows its one pick ("10/2026" for a month).
         _buildDateChipLabel(filterInput, encoded) {
             const days = (this._parseDateRange(encoded) || []).slice(0, filterInput.single ? 1 : 2);
-            const shown = filterInput.input.value.split(' - ');
+            const picker = filterInput.controlContainer;
+            // Formatted here, never copied from the field: before the picker's bundle lands, the field holds the raw day.
+            const options = { format: picker.getAttribute('data-format') || NDS.Date.getFormat(picker), calendar: NDS.Date.getCalendar(picker) };
             const fragment = document.createDocumentFragment();
-            days.filter(Boolean).forEach((day, i, list) => {
+            // A range with one end reads as the slider's "up to".
+            if (!filterInput.single && days.filter(Boolean).length === 1) fragment.append(days[0] ? '≥ ' : '≤ ');
+            days.filter(Boolean).forEach((day, i) => {
                 if (i) fragment.append(' – ');
                 const time = document.createElement('time');
                 time.dateTime = day;
-                time.textContent = (list.length === shown.length ? shown[i] : '') || day;
+                time.textContent = NDS.Date.format(NDS.Date.readDay(day), options) || day;
                 fragment.append(time);
             });
             return fragment;

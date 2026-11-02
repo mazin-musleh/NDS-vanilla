@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 08:47 PM"
+last_edit: "02/11/2026 - 09:01 PM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -401,7 +401,7 @@ A filter can also drive a view that holds no items, such as a [Calendar](../comp
 ### Date Range
 {: .nds-block-title}
 
-A group that holds a [Date Picker](../components/date-picker) filters by date. In range mode (`nds-date-range`) the user picks a first and a last day. A single picker picks one day, or a whole month or year when its format has no day (`MM/YYYY`, `YYYY`), Hijri months and years too. Give the picker two `.nds-date-value` inputs (one for a single day) with `data-date-format="YYYY-MM-DD"` and `data-calendar="gregory"`: the script reads the days there, so the field may show Hijri. Each item's mark carries its day in `data-filter-value` as a Gregorian `YYYY-MM-DD`, or as a date and time; any other format never matches, and the console says so. The applied range shows as one chip in the field's format, and removing it clears the field. In the URL and the request it is two keys, `updated-min=2026-10-06&updated-max=2026-10-18`, and an open end is left out. A single picker sends the first and the last day of its pick. A `name` on a `.nds-date-value` sets its key, such as `from` and `to`.
+A group that holds a [Date Picker](../components/date-picker) filters by date. In range mode (`nds-date-range`) the user picks a first and a last day. A single picker picks one day, or a whole month or year when its format has no day (`MM/YYYY`, `YYYY`), Hijri months and years too. Give the picker two `.nds-date-value` inputs (one for a single day) with `data-date-format="YYYY-MM-DD"` and `data-calendar="gregory"`: the script reads the days there, so the field may show Hijri. Each item's mark carries its day in `data-filter-value` as a Gregorian `YYYY-MM-DD`, or as a date and time; any other format never matches, and the console says so. The applied range shows as one chip in the field's format, and removing it clears the field. A range with one end, from a link or `setFilterValues()`, shows `≥` or `≤` before its day, as the slider's "up to" does. In the URL and the request it is two keys, `updated-min=2026-10-06&updated-max=2026-10-18`, and an open end is left out. A single picker sends the first and the last day of its pick. A `name` on a `.nds-date-value` sets its key, such as `from` and `to`.
 
 The date group can also sit outside the menu, in the toolbar beside the search box: give its `<fieldset>` the filter's `data-filter-target`, and leave out `nds-dropmenu-group`. There no Apply button reaches it, so a date applies as soon as the user saves it in the calendar or types it, as a search applies on Enter. In a filter form (server mode), or in a panel with its own Apply button, it waits for the submit or the Apply like the other groups, and the request carries its two keys.
 
