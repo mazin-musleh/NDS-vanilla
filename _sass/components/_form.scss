@@ -604,7 +604,7 @@ fieldset {
 // plural = the form-level action row; singular .nds-form-action is the per-input slot
 .nds-form-actions {
     margin-block-start: var(--actions-margin-top, var(--spacing-2xl));
-    @include action-row(var(--spacing-lg));
+    @include action-row;
 
     &:first-child {
         margin-block-start: 0;

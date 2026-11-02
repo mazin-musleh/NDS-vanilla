@@ -307,7 +307,8 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 
 // A row of buttons that wraps by their size: panel, card and form footers, dropmenu actions.
 // No width point: a layout change is a class the author writes (nds-col, nds-col-sm).
-@mixin action-row($gap: var(--spacing-xl)) {
+// A gap under the container's padding keeps the buttons one group; wrapped or stacked rows sit tighter.
+@mixin action-row($gap: var(--spacing-md) var(--spacing-lg)) {
   display: flex;
   flex-wrap: wrap;
   gap: $gap;
