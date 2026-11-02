@@ -36,7 +36,7 @@
 // source), failed loads, sideways scroll and a wrong window.innerWidth; exits 1 when there is
 // any. Prints each state's sheet and only what went wrong. Inspect every sheet: the script cannot
 // judge the look. With an NDS-PLAN.md (in the working folder, or the folder above this script), it ends with the rows
-// left under `whole plan` pacing, or, once every row awaits the dev, a reminder to file NDS findings in NDS-REPORT.md.
+// left under `whole plan` pacing, and, from the last open row on, a reminder to file NDS findings in NDS-REPORT.md.
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
@@ -384,6 +384,7 @@ const open = rows.filter((cells) => cells.includes('Planned') || cells.includes(
 const done = rows.filter((cells) => cells.includes('Awaiting Verification') || cells.includes('Built and Verified'));
 if (open.length && /pacing[^\n]*whole plan/i.test(plan)) console.log(`\nPacing is whole plan, and ${open.length} plan row(s) are still Planned or In Progress (next: ${open[0][1]}). ` +
     'Unless the dev told you to stop, finish this page, then build the next row in this same turn: whole plan stops only when every row is Awaiting Verification or blocked.');
-if (!open.length && done.length) console.log('\nEvery plan row is Awaiting Verification. Before you end the run, file each NDS finding ' +
-    '(a missing API or event, a doc or canon contradiction, a reproducible bug, a rule gap) in NDS-REPORT.md, not only in the plan.');
+// From the last open row on: agents mark that row done after this check, so "none open" never shows (rig 5 run 22).
+if (open.length <= 1 && done.length) console.log(`\n${open.length ? 'One plan row is still open: this may be the last page.' : 'Every plan row is Awaiting Verification.'} ` +
+    'Before you end the run, file each NDS finding (a missing API or event, a doc or canon contradiction, a reproducible bug, a rule gap) in NDS-REPORT.md, not only in the plan.');
 process.exit(problems.length ? 1 : 0);
