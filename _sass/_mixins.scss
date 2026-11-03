@@ -413,10 +413,9 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 @mixin progress-circle-sm { --_progress-size-base: 64px; } // the default, which has no class
 @mixin progress-circle-md { --_progress-size-base: 80px; }
 @mixin progress-circle-lg { --_progress-size-base: 120px; }
-// Each step sizes the stars and the count after them.
-@mixin rating-xs { --_star-size-base: 16px; --_rating-text-FS-base: var(--typo-text-xs-FS); --_rating-text-LH-base: var(--typo-text-xs-LH); }
-@mixin rating-sm { --_star-size-base: 24px; --_rating-text-FS-base: var(--typo-text-xs-FS); --_rating-text-LH-base: var(--typo-text-xs-LH); }
-@mixin rating-md { --_star-size-base: 32px; --_rating-text-FS-base: var(--typo-text-sm-FS); --_rating-text-LH-base: var(--typo-text-sm-LH); } // the default, which has no class
+@mixin rating-xs { --_star-size-base: 16px; }
+@mixin rating-sm { --_star-size-base: 24px; }
+@mixin rating-md { --_star-size-base: 32px; } // the default, which has no class
 
 // Metric steps: a parent sets them, and the metric's value and trend read them.
 @mixin metric-sm {
@@ -506,6 +505,7 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     --card-title-color: #{$value};
     --card-subtitle-color: #{$value};
     --card-number-color: #{$value};
+    --card-rating-color: #{$value};
     --card-title-FS: #{$value};
     --card-title-LH: #{$value};
     --card-subtitle-FS: #{$value};
@@ -576,6 +576,8 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     --_card-value-unit-LH-base: var(--typo-text-md-LH);
     --_card-value-was-FS-base: var(--typo-text-lg-FS);
     --_card-value-was-LH-base: var(--typo-text-lg-LH);
+    --_card-rating-text-FS-base: var(--typo-text-sm-FS);
+    --_card-rating-text-LH-base: var(--typo-text-sm-LH);
     @include metric-lg;
     --_card-image-width-base: 200px;
     @include date-tile-lg;
@@ -594,7 +596,7 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
         --_#{$name}-base: initial;
     }
     @each $name in (card-title, card-subtitle, card-description, card-value, card-value-unit, card-value-was,
-        rating-text, metric-value, metric-trend) {
+        card-rating-text, metric-value, metric-trend) {
         --_#{$name}-FS-base: initial;
         --_#{$name}-LH-base: initial;
     }

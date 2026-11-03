@@ -26,11 +26,14 @@
  *                 writes the score into it (0 for none), so it posts with the form; a form
  *                 reset restores the first score. User Feedback shares the hook
  *   written by the component: data-value on each .nds-rating-star (its 1-based position);
- *                 on a display rating, aria-describedby at its .nds-rating-text (given an id)
+ *                 on a display rating, role img and its score as the name, or aria-hidden
+ *                 inside a button or a link; on an interactive one, role radiogroup, and on
+ *                 each star role radio, aria-checked and one tab stop
  * Gotchas:
  *   - Interactive mode is auto-detected: <button> stars on a root that is not disabled
  *     gain data-state="interactive". Non-button stars stay display-only.
- *   - A fractional data-rating of .3 or more paints a half star.
+ *   - The stars show the score rounded to the nearest half: 4.2 is 4, 4.3 is 4.5, 4.8 is 5.
+ *   - On an interactive rating the arrow keys pick the next or previous score, as radios do.
  *   - Ratings added to or removed from the page are wired and torn down automatically.
  *   - The instance lives on the element as el.ndsRating.
  */
@@ -42,7 +45,6 @@
   'use strict';
 
   // English defaults; the assets/i18n/{lang}.json pack overrides them.
-  let textIdCount = 0;
   const strings = NDS.i18n.getStrings('rating', {
     stars: { one: '{n} star', other: '{n} stars' },
     score: '{n} of {total}',
@@ -64,9 +66,13 @@
 
       this._isButtons = this._stars[0]?.tagName === 'BUTTON';
       // Set data-value on stars for delegation lookups; only a button star takes a name.
+      // Interactive stars are radios: one tab stop, and the picked one is announced as checked.
+      if (this._isButtons && !element.hasAttribute('role')) element.setAttribute('role', 'radiogroup');
       for (let i = 0; i < this._stars.length; i++) {
         this._stars[i].dataset.value = i + 1;
-        if (this._isButtons) strings.set(this._stars[i], 'aria-label', 'stars', { n: i + 1 });
+        if (!this._isButtons) continue;
+        this._stars[i].setAttribute('role', 'radio');
+        strings.set(this._stars[i], 'aria-label', 'stars', { n: i + 1 });
       }
       this._labelScore();
 
@@ -144,13 +150,10 @@
     // A display rating reads as one image with its score: "3.5 of 5".
     _labelScore() {
       if (this._isButtons) return;
+      // In a button or a link, the control's own text names the score.
+      if (this.rating.parentElement?.closest('button, a')) { this.rating.setAttribute('aria-hidden', 'true'); return; }
       if (!this.rating.hasAttribute('role')) this.rating.setAttribute('role', 'img');
       strings.set(this.rating, 'aria-label', 'score', { n: this._currentRating, total: this._stars.length });
-      // A role="img" root hides its children: the count is read as the image's description.
-      const text = this.rating.querySelector(':scope > .nds-rating-text');
-      if (!text) return;
-      if (!text.id) text.id = `nds-rating-text-${++textIdCount}`;
-      this.rating.setAttribute('aria-describedby', text.id);
     }
 
     _showPreview(value) {
@@ -167,8 +170,10 @@
     }
 
     _syncVisualState() {
-      const whole = Math.floor(this._currentRating);
-      const hasHalf = (this._currentRating % 1) >= 0.3;
+      // The nearest half: 4.2 is 4 stars, 4.3 to 4.7 four and a half, 4.8 five.
+      const halves = Math.round(this._currentRating * 2);
+      const whole = Math.floor(halves / 2);
+      const hasHalf = halves % 2 === 1;
 
       for (let i = 0; i < this._stars.length; i++) {
         const states = [];
@@ -179,6 +184,10 @@
         if (hasState(this._stars[i], 'preview')) states.push('preview');
 
         NDS.state.set(this._stars[i], ...states);
+        if (!this._isButtons) continue;
+        // The tab stop is the checked star, or the first while none is.
+        this._stars[i].setAttribute('aria-checked', String(i === whole - 1));
+        this._stars[i].tabIndex = i === Math.max(whole - 1, 0) ? 0 : -1;
       }
     }
 
@@ -186,6 +195,8 @@
       const index = value - 1;
       const isRtl = NDS.isRtl;
       const last = this._stars.length - 1;
+      // As radios do, an arrow both moves and picks.
+      const pick = (i) => { if (i < 0 || i > last) return; this._setRating(i + 1); this._stars[i].focus(); };
 
       switch(e.key) {
         case 'Enter':
@@ -196,34 +207,32 @@
 
         case 'ArrowRight':
           e.preventDefault();
-          if (isRtl) { if (index > 0) this._stars[index - 1].focus(); }
-          else { if (index < last) this._stars[index + 1].focus(); }
+          pick(isRtl ? index - 1 : index + 1);
           break;
 
         case 'ArrowLeft':
           e.preventDefault();
-          if (isRtl) { if (index < last) this._stars[index + 1].focus(); }
-          else { if (index > 0) this._stars[index - 1].focus(); }
+          pick(isRtl ? index + 1 : index - 1);
           break;
 
         case 'ArrowUp':
           e.preventDefault();
-          if (index < last) this._stars[index + 1].focus();
+          pick(index + 1);
           break;
 
         case 'ArrowDown':
           e.preventDefault();
-          if (index > 0) this._stars[index - 1].focus();
+          pick(index - 1);
           break;
 
         case 'Home':
           e.preventDefault();
-          this._stars[0].focus();
+          pick(0);
           break;
 
         case 'End':
           e.preventDefault();
-          this._stars[last].focus();
+          pick(last);
           break;
 
         case 'Escape':

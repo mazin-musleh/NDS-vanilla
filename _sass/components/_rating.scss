@@ -1,7 +1,7 @@
 /**
  * NDS Rating Component - SCSS Version
  * Star rating component with custom star shape based on Figma design specifications
- * Supports: 3 sizes (Small/Medium/Large), 4 states (Normal/Pressed/Selected/Half), 2 styles (Default/Brand)
+ * Supports: 4 sizes (XS/SM/MD/LG), 4 states (Normal/Pressed/Selected/Half), 2 styles (Default/Brand)
  */
 
 @use '../mixins' as *;
@@ -13,25 +13,14 @@
 .nds-rating {
   /* --- Rating custom properties --- */
   --_star-size: var(--star-size, var(--_star-size-base, var(--_star-size-default, 32px)));
-  --_star-color: var(--star-color, var(--rating-star-default-default));
-  --_star-selected: var(--star-selected, var(--rating-star-default-selected));
-  --_star-pressed: var(--star-pressed, var(--rating-star-default-pressed));
-  --_star-hovered: var(--star-hovered, var(--rating-star-default-hovered));
-  --_rating-text-color: var(--rating-text-color, var(--_rating-text-color-base, var(--text-secondary-paragraph)));
+  --_star-color: var(--star-color, var(--_star-color-base, var(--rating-star-default-default)));
+  --_star-selected: var(--star-selected, var(--_star-selected-base, var(--rating-star-default-selected)));
+  --_star-pressed: var(--star-pressed, var(--_star-pressed-base, var(--rating-star-default-pressed)));
+  --_star-hovered: var(--star-hovered, var(--_star-hovered-base, var(--rating-star-default-hovered)));
 
   display: flex;
   align-items: flex-start;
   font-family: var(--nds-font-family);
-}
-
-// The score or a review count, last in the rating: one part wherever a rating stands.
-.nds-rating-text {
-  align-self: center;
-  margin-inline-start: var(--spacing-xs);
-  font-size: var(--_rating-text-FS-base, var(--_rating-text-FS-default, var(--typo-text-sm-FS)));
-  line-height: var(--_rating-text-LH-base, var(--_rating-text-LH-default, var(--typo-text-sm-LH)));
-  font-weight: var(--font-weight-regular);
-  color: var(--_rating-text-color);
 }
 
 .nds-rating-star {
@@ -116,8 +105,6 @@
 
   &.nds-lg {
     --_star-size-base: 48px;
-    --_rating-text-FS-base: var(--typo-text-md-FS);
-    --_rating-text-LH-base: var(--typo-text-md-LH);
 
     @include mobile {
       --_star-size-base: 40px;
@@ -130,10 +117,10 @@
 // ==============================================
 
 .nds-rating.nds-brand {
-  --star-color: var(--rating-star-brand-default);
-  --star-selected: var(--rating-star-brand-selected);
-  --star-pressed: var(--rating-star-brand-pressed);
-  --star-hovered: var(--rating-star-brand-hovered);
+  --_star-color-base: var(--rating-star-brand-default);
+  --_star-selected-base: var(--rating-star-brand-selected);
+  --_star-pressed-base: var(--rating-star-brand-pressed);
+  --_star-hovered-base: var(--rating-star-brand-hovered);
 
 }
 

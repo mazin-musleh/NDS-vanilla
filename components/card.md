@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 09:00 PM"
+last_edit: "03/11/2026 - 09:54 PM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -200,13 +200,15 @@ Pick another component when:
 </div>
 </script>
 <script type="text/html" id="card-rating" data-canon>
-<div class="nds-rating" data-rating="4.5">
-  <span class="nds-rating-star"></span>
-  <span class="nds-rating-star"></span>
-  <span class="nds-rating-star"></span>
-  <span class="nds-rating-star"></span>
-  <span class="nds-rating-star"></span>
-  <span class="nds-rating-text">(12 reviews)</span>
+<div class="nds-card-rating">
+  <div class="nds-rating" data-rating="4.5">
+    <span class="nds-rating-star"></span>
+    <span class="nds-rating-star"></span>
+    <span class="nds-rating-star"></span>
+    <span class="nds-rating-star"></span>
+    <span class="nds-rating-star"></span>
+  </div>
+  <span class="nds-card-rating-text">(12 reviews)</span>
 </div>
 </script>
 <script type="text/html" id="card-meta" data-canon>
@@ -219,13 +221,15 @@ Pick another component when:
       <span class="nds-label">Topic</span>
     </span>
   </div>
-  <div class="nds-rating" data-rating="4.5">
-    <span class="nds-rating-star"></span>
-    <span class="nds-rating-star"></span>
-    <span class="nds-rating-star"></span>
-    <span class="nds-rating-star"></span>
-    <span class="nds-rating-star"></span>
-    <span class="nds-rating-text">(12 reviews)</span>
+  <div class="nds-card-rating">
+    <div class="nds-rating" data-rating="4.5">
+      <span class="nds-rating-star"></span>
+      <span class="nds-rating-star"></span>
+      <span class="nds-rating-star"></span>
+      <span class="nds-rating-star"></span>
+      <span class="nds-rating-star"></span>
+    </div>
+    <span class="nds-card-rating-text">(12 reviews)</span>
   </div>
 </div>
 </script>
@@ -308,7 +312,7 @@ Pick another component when:
 | Layout (any) | Middle (hint: Short content in the middle, top to bottom) (id: middle) | `.nds-middle` | `.nds-card` | Puts short content in the middle of the card's height, instead of at the top. For a row card whose header is taller than its text, or a card stretched to its row in a grid. The text keeps its side: to center it across too, add Center |
 | Meta | None (default) | — | — | No tags or rating |
 | Meta | Tags | canon `#card-tags` | `.nds-card-content:not(a.nds-card > *)` | Tags alone go straight in the content. They are standard tags that describe the item, such as its category; a status tag goes in the corner |
-| Meta | Rating | canon `#card-rating` | `.nds-card-content:not(a.nds-card > *)` | A star rating with a count: Rating's own `.nds-rating-text`, last in `.nds-rating` |
+| Meta | Rating | canon `#card-rating` | `.nds-card-content:not(a.nds-card > *)` | A star rating with a count |
 | Meta | Tags + Rating | canon `#card-meta` | `.nds-card-content:not(a.nds-card > *)` | Both together: `.nds-card-meta` groups the two meta rows. Use it only when both are present |
 | Value | None (default) | — | — | No price line |
 | Value | Price | canon `#card-value-price` | `.nds-card-text:not(.nds-card-header > *):not(a.nds-card *)` (after) | A price. `data-currency` shows the currency icon. See [Numbers](../utilities/numbers) |
@@ -537,6 +541,7 @@ Set these on `.nds-card`, or on a parent to set every card inside it. The image 
 | `--card-subtitle-color` | `var(--text-secondary)` | Subtitle color |
 | `--card-text-color` | `var(--text-primary-paragraph)` | Description color |
 | `--card-number-color` | `var(--text-primary-strong)` | Color of the headline number, `.nds-card-number` |
+| `--card-rating-color` | `var(--text-secondary-paragraph)` | Rating count color |
 | `--card-title-FS`, `--card-title-LH` | `var(--typo-text-lg-FS)`, `var(--typo-text-lg-LH)` | Title font size and line height. Size and Text size change it |
 | `--card-subtitle-FS`, `--card-subtitle-LH` | `var(--typo-text-md-FS)`, `var(--typo-text-md-LH)` | Subtitle font size and line height. Size and Text size change it |
 | `--card-description-FS`, `--card-description-LH` | `var(--typo-text-md-FS)`, `var(--typo-text-md-LH)` | Description font size and line height. Size and Text size change it |

@@ -205,9 +205,7 @@
 - { kind: property, name: --card-border-active, status: renamed, use: --card-border-color-active, since: "2.0.0", fix: "Use --card-border-color-active." }
 - { kind: property, name: --card-border-hover, status: renamed, use: --card-border-color-hover, since: "2.0.0", fix: "Use --card-border-color-hover." }
 - { kind: property, name: --card-number, status: renamed, use: --card-number-color, since: "2.0.0", fix: "Use --card-number-color." }
-- { kind: property, name: --card-rating, status: renamed, use: --rating-text-color, since: "2.0.0", fix: "Use --rating-text-color, on the rating." }
-- { kind: class, name: nds-card-rating, status: removed, since: "2.0.0", fix: "Drop the wrapper: put the count in .nds-rating-text, last inside .nds-rating." }
-- { kind: class, name: nds-card-rating-text, status: renamed, use: nds-rating-text, since: "2.0.0", fix: "Use nds-rating-text, last inside .nds-rating." }
+- { kind: property, name: --card-rating, status: renamed, use: --card-rating-color, since: "2.0.0", fix: "Use --card-rating-color." }
 - { kind: property, name: --card-subtitle, status: renamed, use: --card-subtitle-color, since: "2.0.0", fix: "Use --card-subtitle-color." }
 - { kind: property, name: --card-text, status: renamed, use: --card-text-color, since: "2.0.0", fix: "Use --card-text-color." }
 - { kind: property, name: --card-title, status: renamed, use: --card-title-color, since: "2.0.0", fix: "Use --card-title-color." }

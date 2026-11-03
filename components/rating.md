@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 08:37 PM"
+last_edit: "01/11/2026 - 05:15 PM"
 ---
 
 <section id="rating-overview" class="nds-content-section nds-doc-overview">
@@ -44,9 +44,6 @@ Pick another component when:
   <span class="nds-rating-star"></span>
   <span class="nds-rating-star"></span>
 </div>
-</script>
-<script type="text/html" id="rating-text" data-canon>
-<span class="nds-rating-text">4.5 (124 reviews)</span>
 </script>
 <script type="text/html" id="rating-interactive" data-canon>
 <div class="nds-rating" data-rating="3.5">
@@ -121,15 +118,14 @@ Pick another component when:
 | Structure | Interactive | canon `#rating-interactive` | — | The user picks a score |
 | Structure | Form (id: form) | canon `#rating-form` | — | An interactive rating in a form: a group with a question and a hidden input that sends the score |
 | Structure | Menu | canon `#rating-menu` | — | A score summary in a trigger, with the vote in a panel. Style, Value and Loading change the summary rating |
-| Count | Count (hint: The score or a review count after the stars) (not: interactive, form, menu) | canon `#rating-text` | `.nds-rating:not(.nds-dropmenu .nds-rating)` | The score or the number of reviews after the stars, such as 4.5 (124 reviews). It works anywhere: in a card, a list or a page |
-| Size | XS | `.nds-xs` | `.nds-rating:not(.nds-xs):not(.nds-dropmenu .nds-rating)` | 16px stars and a 12px count. Inline next to a title or a list item |
-| Size | SM | `.nds-sm` | `.nds-rating:not(.nds-dropmenu .nds-rating)` | 24px stars and a 12px count. Inline, a little larger |
-| Size | MD (default) | — | — | 32px stars and a 14px count. Most layouts |
-| Size | LG | `.nds-lg` | `.nds-rating:not(.nds-dropmenu .nds-rating)` | 48px stars, 40px on phones, and a 16px count. A featured review or a hero |
+| Size | XS | `.nds-xs` | `.nds-rating:not(.nds-xs):not(.nds-dropmenu .nds-rating)` | 16px stars. Inline next to a title or a list item |
+| Size | SM | `.nds-sm` | `.nds-rating:not(.nds-dropmenu .nds-rating)` | 24px stars. Inline, a little larger |
+| Size | MD (default) | — | — | 32px stars. Most layouts |
+| Size | LG | `.nds-lg` | `.nds-rating:not(.nds-dropmenu .nds-rating)` | 48px stars, 40px on phones. A featured review or a hero |
 | Style | Brand | `.nds-brand` | `.nds-rating` | Stars in the brand primary color, not the secondary color |
 | Value | Empty (not: form) | `[data-rating="0"]` | `.nds-rating` | No star is filled. The start of a new vote |
 | Value | Whole (hint: 4 of 5 stars, no half star) (not: form) | `[data-rating="4"]` | `.nds-rating` | A whole number fills that many stars |
-| Value | Half star (default) (not: form) | — | — | A decimal of .3 or more fills half of the next star |
+| Value | Half star (default) (not: form) | — | — | The stars show the score to the nearest half: 3.5 fills half of the fourth star |
 | Required | Required (hint: The user must pick a score before the form submits) | `[data-required]` | `.nds-form-group` | The form does not submit until the user picks a score |
 | State (any) | Loading | `.nds-loading` | `.nds-rating` | The stars pulse as placeholders while the score loads |
 | State (any) | Disabled | `[data-state~="disabled"]` | `.nds-rating:has(> button):not(.nds-dropmenu .nds-rating)` | The user cannot pick a score now. Interactive only |
@@ -200,7 +196,7 @@ The Menu structure puts a display rating and a vote count in a [Dropmenu](../com
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Screen Reader Score</span>
-              <p class="nds-card-description">A screen reader reads a display rating as one image with its score, such as "3.5 of 5", in the page's language. Each star of an interactive rating has its own name, such as "2 stars".</p>
+              <p class="nds-card-description">A screen reader reads a display rating as one image with its score, such as "3.5 of 5", in the page's language. An interactive rating is a group of radios: each star has its own name, such as "2 stars", and the picked star reads as checked.</p>
             </div>
           </div>
         </li>
@@ -226,7 +222,7 @@ The Menu structure puts a display rating and a vote count in a [Dropmenu](../com
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Half Stars</span>
-              <p class="nds-card-description">A decimal of .3 or more fills half of the next star. A decimal below .3 rounds down.</p>
+              <p class="nds-card-description">The stars show the score to the nearest half: 4.2 shows 4 stars, 4.3 to 4.7 show four and a half, and 4.8 shows 5. A screen reader still reads the exact score.</p>
             </div>
           </div>
         </li>
@@ -239,7 +235,7 @@ The Menu structure puts a display rating and a vote count in a [Dropmenu](../com
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Keyboard Navigation</span>
-              <p class="nds-card-description">The left and right arrow keys follow the text direction. Up and down move to the next and previous star. Home and End jump to the first and last star. Enter and Space pick a score. Escape leaves the star.</p>
+              <p class="nds-card-description">The rating is one tab stop. The arrow keys pick the next or previous score; left and right follow the text direction. Home and End pick the lowest and highest score. Enter and Space pick the focused star. Escape leaves the star.</p>
             </div>
           </div>
         </li>
@@ -298,12 +294,12 @@ The Menu structure puts a display rating and a vote count in a [Dropmenu](../com
 - Use `nds-xs` or `nds-sm` next to a title or a list item. Use the default size in most layouts. Use `nds-lg` for a featured review.
 - In a [List](../components/list), leave the size class off. The list makes the stars SM, a small list (`nds-sm`) XS, and a large list (`nds-lg`) MD.
 - Set `data-rating` to the score on a display rating. Set it to `0` on an interactive rating that collects a new score.
-- Show the score or a review count with `.nds-rating-text`, last in `.nds-rating`, in a card or anywhere else. Do not borrow another component's parts for it.
 - Do not use a rating for a yes or no choice. Use a [Switch](../components/switch).
 - Do not use a rating to show progress. Use [Progress](../components/progress).
 - Use `nds-brand` where the secondary color does not fit the page identity.
 - Add a visible label near an interactive rating, such as "Rate this service". In a form, the group's `<legend>` is the label.
 - Put the rating in a [Dropmenu](../components/dropmenu) when a compact trigger collects the vote.
+- To show a review count beside the stars, write your own text next to the rating. `.nds-card-rating` is a [Card](../components/card) part: use it only in a card.
 - Do not write `nds-md`. The default size has no class.
 
 </div>
@@ -335,7 +331,7 @@ The Menu structure puts a display rating and a vote count in a [Dropmenu](../com
 | `data-state~="interactive"` | `.nds-rating` | The script sets it at load when the first star is a `<button>` and the rating is not disabled. It turns on hover, press and pointer styles |
 | `data-state~="disabled"` | `.nds-rating` | Write it, with `disabled` on each star, for a rating that starts disabled. The script also sets it in `setDisabled(true)` and removes it in `setDisabled(false)` |
 | `data-state~="selected"` | `.nds-rating-star` | The script sets it on the first N stars, where N is the whole part of the score, and removes it when the score drops |
-| `data-state~="half"` | `.nds-rating-star` | The script sets it on the star after the whole part when the decimal is .3 or more |
+| `data-state~="half"` | `.nds-rating-star` | The script sets it on the star after the whole stars when the score rounds to a half |
 | `data-state~="preview"` | `.nds-rating-star` | The script sets it on the stars up to the hovered star, and removes it when the pointer leaves |
 | `data-value` | `.nds-rating-star` | The script writes the 1-based position of the star |
 | `data-required` | `.nds-form-group` that holds a rating | The rating must be above 0 before the form submits |
@@ -354,7 +350,6 @@ Set these on `.nds-rating`. `--star-size` also reaches it from a parent, and it 
 | `--star-selected` | `var(--rating-star-default-selected)` | Color of a filled star |
 | `--star-pressed` | `var(--rating-star-default-pressed)` | Color of a star while pressed |
 | `--star-hovered` | `var(--rating-star-default-hovered)` | Color of a star on hover, interactive only |
-| `--rating-text-color` | `var(--text-secondary-paragraph)` | Color of the count text |
 {: .nds-table .nds-responsive}
 
 ### Tokens
