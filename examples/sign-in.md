@@ -18,7 +18,7 @@ breadcrumb: [["Examples", "/examples"]]
 <section class="nds-content-section nds-ghost nds-flush">
   <div class="nds-section-wrapper">
     <div class="nds-section-body">
-      <div class="nds-block nds-flex nds-col" style="--gap: var(--spacing-xl); --align: center;">
+      <div class="nds-block nds-flex nds-col" style="--gap: var(--spacing-xl); --align: center; --card-width-max: 360px;">
         <!-- Sign in: national SSO first, credentials as the fallback -->
         <div class="nds-card nds-shadow nds-stroke" id="signin-start">
           <div class="nds-card-header nds-horizontal">

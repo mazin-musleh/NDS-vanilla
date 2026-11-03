@@ -121,7 +121,7 @@ hideFeedback: true
         <div class="nds-section-body">
             <div class="nds-grid" style="--max-col: 2; --min-col: 1;">
                 <div class="nds-card nds-stroke">
-                    <div class="nds-card nds-full nds-flush" data-status="positive">
+                    <div class="nds-card nds-flush" data-status="positive">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle">
@@ -154,7 +154,7 @@ hideFeedback: true
                         </div>
                     </div>
                     <hr class="nds-divider">
-                    <div class="nds-card nds-full nds-flush" data-status="negative">
+                    <div class="nds-card nds-flush" data-status="negative">
                         <div class="nds-card-header">
                             <div class="nds-card-featured-icon">
                                 <span class="nds-featured-icon nds-circle">

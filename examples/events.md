@@ -9,7 +9,7 @@ lang: en
 direction: ltr
 content_class: nds-stripe
 sidemenu_mode: false
-last_edit: "03/11/2026 - 04:10 PM"
+last_edit: "03/11/2026 - 04:30 PM"
 ---
 
 <!-- Layout rules: how an event opens depends on what the user does with it.
@@ -27,7 +27,7 @@ last_edit: "03/11/2026 - 04:10 PM"
             <h2 class="nds-section-title">Featured event</h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-card nds-stroke nds-horizontal nds-full">
+            <div class="nds-card nds-stroke nds-horizontal">
                 <div class="nds-card-header">
                     <div class="nds-card-image">
                         <img src="{{ 'assets/img/riyadhcenter.webp' | relative_url }}" alt="The forum's venue in Riyadh" width="1280" height="720">

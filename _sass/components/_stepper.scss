@@ -98,11 +98,6 @@
     .nds-stepper-step {
         flex: 1;
 
-        // A step that also carries nds-card fills its column, not the card's own width cap
-        &.nds-card {
-            --card-width: 100%;
-        }
-
         // The last step has no line after it, in every layout.
         &:last-child .nds-stepper-base::after {
             display: none;
@@ -290,10 +285,6 @@
 
 // nds-card composes onto the stepper, a step or a step's content: the card owns the surface
 // and its variants, the stepper sets only what the placement needs.
-// On the stepper itself: it fills its column, not the card's width cap.
-.nds-stepper.nds-card {
-    --card-width: 100%;
-}
 
 // On a step: the card is the boundary, so the step reads as separated (no line, see below) and
 // the content fills the card. --stepper-content-width still wins.

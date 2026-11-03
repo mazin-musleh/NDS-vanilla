@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 03:47 PM"
+last_edit: "03/11/2026 - 04:36 PM"
 ---
 
 <section id="loading-overview" class="nds-content-section nds-doc-overview">
@@ -35,7 +35,7 @@ Pick another component when:
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="loading-spinner" data-canon data-variants="loading-variants-table">
+<script type="text/html" id="loading-spinner" data-canon data-variants="loading-variants-table" data-demo-width="360px">
 <div class="nds-loading" aria-busy="true">
   <div class="nds-card nds-stroke">
     <div class="nds-card-content">
@@ -95,7 +95,7 @@ A container that has no skeleton of its own shows a spinner. Its children fade t
 
 A component that has a skeleton, such as a card, a table or tabs, replaces its text with gray bars in the shape of its content. The bars pulse, the children do not fade, and no spinner shows. Put `nds-loading` on a grid of cards to turn every card in it into a skeleton. Each component's page shows its own skeleton.
 
-<script type="text/html" id="loading-skeleton" data-canon>
+<script type="text/html" id="loading-skeleton" data-canon data-demo-width="360px">
 <div class="nds-card nds-stroke nds-loading" aria-busy="true">
   <div class="nds-card-header">
     <div class="nds-card-featured-icon">

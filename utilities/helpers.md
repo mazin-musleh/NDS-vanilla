@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 02:43 AM"
+last_edit: "03/11/2026 - 04:36 PM"
 ---
 
 <section id="helpers-overview" class="nds-content-section nds-doc-overview">
@@ -38,7 +38,7 @@ Pick another component when:
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="helpers-all" data-canon data-variants="helpers-variants-table">
+<script type="text/html" id="helpers-all" data-canon data-variants="helpers-variants-table" data-demo-width="360px">
 <div dir="rtl" lang="ar">
   <div class="nds-flex nds-center">
     <div class="nds-card nds-stroke" id="helpers-card">

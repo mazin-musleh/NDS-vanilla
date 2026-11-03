@@ -42,7 +42,6 @@
         > .nds-card {
             --_card-padding-base: var(--spacing-4xl);
             --card-bg: var(--background-menu);
-            --card-width: 100%;
         }
 
         // The aside sizes to its children, so a table of contents gets its own default with no :has().

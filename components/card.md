@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 03:47 PM"
+last_edit: "03/11/2026 - 04:36 PM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -36,7 +36,7 @@ Pick another component when:
       <h2 class="nds-section-title">Markup</h2>
     </div>
     <div class="nds-section-body">
-<script type="text/html" id="card-standard" data-canon data-variants="card-variants-table">
+<script type="text/html" id="card-standard" data-canon data-variants="card-variants-table" data-demo-width="360px">
 <div class="nds-card nds-stroke">
   <div class="nds-card-header">
     <div class="nds-card-featured-icon">
@@ -350,7 +350,6 @@ Pick another component when:
 | Size (any) | SM (limit: 1 size) (hint: Every part one size smaller) | `.nds-sm` | `.nds-card` | Every part one size smaller: the icon, avatar, date tile, tags, rating, buttons, chips, price, number, text and gap. A part with its own size class keeps it. For a card in a side column or a dense grid |
 | Size (any) | MD (default) (limit: 1 size) | `.nds-md` | `.nds-card` | The card's own sizes, with no class: a 48px icon, a 64px avatar, an 80px progress ring, 24px tags and stars, an 18px title, and a 24px gap (16px on phones). In a sized [List](../components/list), `.nds-md` on one card brings it back to these sizes |
 | Size (any) | LG (limit: 1 size) (hint: Every part one size larger) | `.nds-lg` | `.nds-card` | Every part one size larger, for a card that leads a page. Buttons keep their size. A part with its own size class keeps it |
-| Size (any) | Full width | `.nds-full` | `.nds-card` | Fills its container, instead of stopping at 360px. Do not use `.nds-full-width` on a card: inside a section, that class breaks out to the full screen width |
 | Number size | Auto (default) (hint: Follows the card size) | — | — | The display size, one size smaller or larger with the card's size |
 | Number size | LG | `.nds-lg` | `.nds-card-number` | The display size, at any card size |
 | Number size | MD | `.nds-md` | `.nds-card-number` | A smaller headline number |
@@ -472,7 +471,7 @@ Pick another component when:
 - Put `nds-center` on the card root only. On an inner part, it centers nothing.
 - Add `nds-middle` when a row card's header is taller than its text, such as a progress ring beside one title. Without it, the text sits at the top.
 - `nds-center` centers the card's content, not the card. To center the card itself, center it with its container: `nds-center` on an `nds-grid`, or on an `nds-flex` wrapper for a single card.
-- To fill the container, use `nds-full` on a card, not `nds-full-width`. Inside a section, `nds-full-width` breaks out to the full screen width.
+- A card fills its container. To stop it at a width, set `--card-width-max`. Do not use `nds-full-width` on a card: inside a section, it breaks out to the full screen width.
 - Put `.nds-card-actions` after `.nds-card-content`, not inside it. In a [modal](../components/modal), only the content scrolls. Actions inside the content still work there, because the modal pins them to the bottom.
 - To make a whole card smaller or larger, put `nds-sm` or `nds-lg` on the card, not a size class on each part. The card changes every part together.
 - On a [Modal](../components/modal), a [Definition List](../components/definition-list) or a [Stepper](../components/stepper), `nds-sm` and `nds-lg` set that component's own size, not the card's.
@@ -535,7 +534,7 @@ Set these on `.nds-card`, or on a parent to set every card inside it. The image 
 | `--card-radius` | `var(--radius-lg)` | Corner radius |
 | `--card-width` | `100%` | Width |
 | `--card-width-min` | `0` | Minimum width |
-| `--card-width-max` | `var(--card-width)`, else `360px` | Maximum width |
+| `--card-width-max` | `var(--card-width)`, else none | Maximum width |
 | `--card-title-color` | `var(--text-display)` | Title color |
 | `--card-subtitle-color` | `var(--text-secondary)` | Subtitle color |
 | `--card-text-color` | `var(--text-primary-paragraph)` | Description color |

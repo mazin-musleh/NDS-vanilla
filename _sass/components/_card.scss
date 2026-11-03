@@ -76,12 +76,11 @@
   --_card-number-color: var(--card-number-color, var(--_card-number-color-base));
   --_card-rating-color-base: var(--text-secondary-paragraph);
   --_card-rating-color: var(--card-rating-color, var(--_card-rating-color-base));
-  // The width family stays on the public knob: --_card-width-max chains through
-  // --card-width, so a variant that retuned a -base value would drop out of that
-  // fallback and cap a full-width card at 360px.
+  // A card fills its box: what lays cards side by side (List, Grid, Swiper) sizes them.
+  // --card-width alone pins the width, so the max chains through it.
   --_card-width: var(--card-width, 100%);
   --_card-width-min: var(--card-width-min, 0);
-  --_card-width-max: var(--card-width-max, var(--card-width, 360px));
+  --_card-width-max: var(--card-width-max, var(--card-width, none));
 
   font-family: var(--nds-font-family);
   text-align: start;
@@ -211,14 +210,6 @@
     --_card-bg-base: transparent;
     --_card-padding-base: 0px; // a length: calc() drops a bare 0
     --_card-text-color-base: var(--text-secondary-paragraph);
-  }
-
-  &.nds-full {
-    --card-width: 100%;
-  }
-
-  &:is(.nds-block, .nds-prose) {
-    --card-width: 100%;
   }
 
   // Flow content: the block or prose margins space the children, so the flex gap would double them.

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "03/11/2026 - 04:39 PM"
 ---
 
 <section id="table-overview" class="nds-content-section nds-doc-overview">
@@ -723,7 +723,7 @@ Keep Selection only when the page has a bulk action that acts on the selected ro
 - Give each icon-only button an `aria-label`, such as the sub-row toggle and the row menu.
 - Give the table an `id` when it has a column menu, so the choice is kept.
 - Lock the identifier column with `data-columns-lock`, so the user cannot hide it.
-- The sub-row background is a sunken surface. Put its content on a surface of its own, never straight on the sub-row: most often a compact table (`nds-table nds-compact`), or a card (`nds-card nds-full`).
+- The sub-row background is a sunken surface. Put its content on a surface of its own, never straight on the sub-row: most often a compact table (`nds-table nds-compact`), or a card (`nds-card`).
 - Put a short detail in a sub-row, not a whole record. Link to a page for the full record.
 - Write a short sub-row detail in the markup: it needs no code. Load it on demand when it is large or the users rarely open it.
 - Page a table of more than about 20 rows.

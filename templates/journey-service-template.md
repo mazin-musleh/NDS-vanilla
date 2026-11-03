@@ -382,7 +382,7 @@ related:
 
 <section id="journey-feedback" class="nds-content-section">
     <div class="nds-section-body">
-        <div class="nds-card nds-stroke nds-full">
+        <div class="nds-card nds-stroke">
             <div class="nds-card-header">
                 <div class="nds-card-featured-icon">
                     <span class="nds-featured-icon nds-circle">

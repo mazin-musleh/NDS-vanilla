@@ -180,8 +180,6 @@ $section-breakout: ':where(.nds-content-wrapper, .nds-hero-section, .nds-content
 
     > .nds-card {
         height: 100%;
-        max-width: unset;
-        --card-width: 100%;
     }
 
     // A lazy image has no source until its slide nears the viewport, so its box

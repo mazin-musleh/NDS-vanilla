@@ -358,8 +358,6 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
 
 // Card on entire .nds-tabs container
 .nds-tabs.nds-card {
-  --card-width: 100%;
-
   &:not(.nds-stroke) {
     border: 0;
   }
@@ -396,7 +394,6 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
 
 // Card on .nds-tab-content or .nds-tab-panel only
 :is(.nds-tab-content, .nds-tab-panel).nds-card {
-  --card-width: 100%;
   margin-block-start: var(--spacing-xl);
 
   // With the card's own padding, the same 24px from the list as a whole-set card.

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 03:47 PM"
+last_edit: "03/11/2026 - 04:30 PM"
 ---
 
 <section id="list-overview" class="nds-content-section nds-doc-overview">
@@ -628,7 +628,7 @@ Set these on the list for every item, or on one item. `--gap` and `--align` are 
 | Property | Default | Controls |
 |---|---|---|
 | `--card-width` | `320px` | The width an item starts at, before it grows. `auto`: the width of its content |
-| `--card-width-max` | none | The widest an item grows. The card's own 360px cap is off in a flex list |
+| `--card-width-max` | none | The widest an item grows |
 | `--grow` | `1` | How fast an item grows. `0` keeps it at `--card-width`. `2` grows twice as fast as `1` |
 | `--justify` | `flex-start` | Where a short row sits: `center` or `flex-end` |
 {: .nds-table .nds-responsive}

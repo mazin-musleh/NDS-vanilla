@@ -134,9 +134,8 @@ html {
         overflow: hidden;
 
         :where(.nds-swiper-slide) {
-            // Mirrors the card's own max-width chain (cards size as 100% OF
-            // the slide, so they can't size it — circular): consumer card
-            // width knobs propagate to the pre-init slide automatically.
+            // A 360px guess until init sizes the slides (a card fills its
+            // slide, so it can't size it); a consumer's card width knob wins.
             flex: 0 0 min(100%, var(--card-width-max, var(--card-width, 360px)));
         }
     }

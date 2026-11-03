@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 03:47 PM"
+last_edit: "03/11/2026 - 04:30 PM"
 ---
 
 <section id="countdown-overview" class="nds-content-section nds-doc-overview">
@@ -36,7 +36,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body">
 <script type="text/html" id="countdown-banner" data-canon data-variants="countdown-variants-table">
-<div class="nds-card nds-stroke nds-horizontal nds-full">
+<div class="nds-card nds-stroke nds-horizontal">
   <div class="nds-card-header">
     <div class="nds-card-featured-icon">
       <span class="nds-featured-icon nds-circle">
@@ -174,8 +174,8 @@ Pick another component when:
 | Color | On color (hint: For a dark or photo background) | `.nds-oncolor` | `.nds-card` | For cards on a dark or photo background. It replaces the color classes, which do nothing on an on-color card |
 | Color | On color (hint: For a dark or photo background) | `.nds-oncolor` | `.nds-card-actions .nds-btn` | The button does not follow the card. Give it `.nds-oncolor` too |
 | Tinted | Tinted (hint: A light tint of the card color) | `.nds-color` | `.nds-card:not(.nds-oncolor)` | Fills each card with a light tint of its color. With no color class, the tint is the brand primary |
-| Layout | Row (default) | `.nds-horizontal` | `.nds-card.nds-full` | One row, which wraps as the Banner row says |
-| Layout | Center (hint: Every part stacked and centered) | `.nds-center` | `.nds-card.nds-full` | Stacks the icon, the text, the countdown and the button, each centered. Use it for a banner that stands alone, such as the top of a page |
+| Layout | Row (default) | `.nds-horizontal` | `.nds-card` | One row, which wraps as the Banner row says |
+| Layout | Center (hint: Every part stacked and centered) | `.nds-center` | `.nds-card` | Stacks the icon, the text, the countdown and the button, each centered. Use it for a banner that stands alone, such as the top of a page |
 | Warning | Warning (hint: Turns red near the end) (demo: + duration) | `[data-countdown-warn="60"]` | `.nds-countdown` | The countdown turns red when 60 seconds are left. The builder picks Duration with it, 63 seconds, so the red shows after 3 seconds |
 | Ended | Ended message (hint: Text shown at zero) (id: ended) (demo: + passed) | canon `#countdown-ended` | `.nds-countdown` | The text replaces the countdown at zero. Without it, the zeros stay. The builder picks Passed with it, so the text shows at once |
 | End action | Hide at end (hint: The actions hide at zero) (not: inline, units, cards) (demo: + passed) | `[data-countdown-hide="countdown-apply"]` | `.nds-countdown` | At zero, the elements whose ids it lists get `hidden`, wherever they are on the page. Here it is the actions row, whose button has no use after the deadline. The builder picks Passed with it, so the row is gone at once |

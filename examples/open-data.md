@@ -391,7 +391,7 @@ console.log(rows[0].region, rows[0].population);</code>
                     <p class="nds-section-description">Name the source when you use this data, as the licence asks.</p>
                 </div>
                 <div class="nds-section-body">
-                    <div class="nds-card nds-stroke nds-full">
+                    <div class="nds-card nds-stroke">
                         <div class="nds-card-content">
                             <div class="nds-card-text nds-prose">
                                 <p id="od-cite">National Statistics Center (2023). Population by Region, 2022 census. Dataset POP-REG-2022. <a href="https://data.example.gov.sa/dataset/population-by-region">https://data.example.gov.sa/dataset/population-by-region</a></p>

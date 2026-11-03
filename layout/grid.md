@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 08:28 PM"
+last_edit: "03/11/2026 - 04:30 PM"
 ---
 
 <section id="grid-overview" class="nds-content-section nds-doc-overview">
@@ -120,14 +120,14 @@ Pick another component when:
 <!-- The same grid in a wide column and in a 280px side column. Each takes its columns
      from its nds-cq parent's width, not the screen's: the side column gets one -->
 <div class="nds-grid" style="--max-track: 1fr 280px; --mid-track: 1fr;">
-  <div class="nds-card nds-shadow nds-stroke nds-full nds-cq">
+  <div class="nds-card nds-shadow nds-stroke nds-cq">
     <div class="nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
       <div class="nds-card nds-stroke">Main 1</div>
       <div class="nds-card nds-stroke">Main 2</div>
       <div class="nds-card nds-stroke">Main 3</div>
     </div>
   </div>
-  <aside class="nds-card nds-shadow nds-stroke nds-full nds-cq">
+  <aside class="nds-card nds-shadow nds-stroke nds-cq">
     <div class="nds-grid" style="--max-col: 3; --mid-col: 2; --min-col: 1;">
       <div class="nds-card nds-stroke">Side 1</div>
       <div class="nds-card nds-stroke">Side 2</div>

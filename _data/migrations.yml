@@ -91,7 +91,7 @@
 - { kind: class, name: nds-filter-bar, status: renamed, use: nds-toolbar, since: "2.0.0", fix: "Use nds-toolbar." }
 - { kind: class, name: nds-focus, status: removed, since: "2.0.0", fix: "Remove it: the field styles its own focus." }
 - { kind: class, name: nds-foundingDay, status: renamed, use: nds-founding-day, since: "2.0.0", fix: "Use nds-founding-day." }
-- { kind: class, name: nds-full-width, scope: "&.nds-card", status: renamed, use: nds-full, since: "2.0.0", fix: "Use nds-full: on a card, nds-full-width is the full-bleed breakout." }
+- { kind: class, name: nds-full-width, scope: "&.nds-card", status: removed, since: "2.0.0", fix: "Remove it: a card fills its container. On a card, nds-full-width is the full-bleed breakout." }
 - { kind: class, name: nds-full-width, scope: "&body", status: removed, since: "2.0.0", fix: "Move nds-full-width to .nds-content-layout (layout_class in page front matter). The header and the footer follow it." }
 - { kind: class, name: nds-gradient-green, status: renamed, use: nds-gradient-primary, since: "2.0.0", fix: "Use nds-gradient-primary." }
 - { kind: class, name: nds-green, scope: "&:is(.nds-content-section, .nds-footer)", status: renamed, use: nds-primary, since: "2.0.0", fix: "Use nds-primary or nds-brand: the surface follows the theme color." }
