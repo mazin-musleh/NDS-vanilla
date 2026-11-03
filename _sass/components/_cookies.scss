@@ -13,3 +13,8 @@
     flex-direction: column;
     gap: inherit;
 }
+
+// A view's content stacks 16px apart, not flex's 8px.
+.nds-cookies-view .nds-scroll-more-content {
+    gap: var(--gap, var(--spacing-xl));
+}

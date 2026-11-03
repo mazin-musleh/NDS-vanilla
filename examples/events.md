@@ -388,7 +388,7 @@ last_edit: "03/11/2026 - 11:59 AM"
         </div>
     </div>
     <div class="nds-panel-body">
-        <div class="nds-flex nds-col">
+        <div class="nds-flex nds-col" style="--gap: var(--spacing-xl);">
             <p id="event-summary"></p>
             <dl class="nds-definition-list nds-grid nds-highlight-value nds-sm" style="--max-col: 2;">
                 <div class="nds-definition-item">

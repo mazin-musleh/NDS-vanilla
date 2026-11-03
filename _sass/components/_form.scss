@@ -14,6 +14,12 @@
     display: contents;
 }
 
+// The fields' stack: 16px apart, not flex's 8px.
+.nds-form.nds-flex,
+.nds-form > .nds-flex {
+    gap: var(--gap, var(--spacing-xl));
+}
+
 .nds-form-container {
     --_form-width: var(--form-width, 100%);
     display: flex;

@@ -8,7 +8,7 @@
   justify-content: var(--justify, flex-start);
   // stretch, so a column's children fill its width
   align-items: var(--align, stretch);
-  gap: var(--gap, var(--spacing-xl));
+  gap: var(--gap, var(--spacing-md));
 }
 
 // Centers the children along the row; a column also centers them across, where a

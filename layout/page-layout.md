@@ -254,7 +254,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
         <section class="nds-content-section nds-ghost nds-flush">
           <div class="nds-section-wrapper">
             <div class="nds-section-body">
-              <div class="nds-block nds-flex nds-col" style="--align: center;">
+              <div class="nds-block nds-flex nds-col" style="--gap: var(--spacing-xl); --align: center;">
                 <div class="nds-card nds-shadow nds-stroke">
                   <div class="nds-card-content">
                     <div class="nds-card-text nds-center">

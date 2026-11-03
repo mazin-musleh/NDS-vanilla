@@ -54,7 +54,7 @@ Pick another component when:
 </div>
 </script>
 <script type="text/html" id="divider-vertical" data-canon>
-<div class="nds-flex nds-row">
+<div class="nds-flex nds-row" style="--gap: var(--spacing-xl);">
   <div>
     <strong>125K</strong>
     <span>Services</span>

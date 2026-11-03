@@ -18,7 +18,7 @@ breadcrumb: [["Examples", "/examples"]]
 <section class="nds-content-section nds-ghost nds-flush">
   <div class="nds-section-wrapper">
     <div class="nds-section-body">
-      <div class="nds-block nds-flex nds-col" style="--align: center;">
+      <div class="nds-block nds-flex nds-col" style="--gap: var(--spacing-xl); --align: center;">
         <!-- Step 1: Account Details -->
         <div class="nds-card nds-shadow nds-stroke" id="registration-step-1">
           <div class="nds-card-header nds-horizontal">

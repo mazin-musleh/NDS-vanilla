@@ -279,7 +279,7 @@ completed:
                     <p>Before, reaching your goal meant moving between several platforms to complete the services. Now, life journeys bring all the services related to your goal into one journey, for a smoother experience from start to finish.</p>
                 </div>
                 <div class="nds-block nds-grid" style="--max-col: 2; --mid-col: 2; --min-col: 1; --gap: var(--spacing-4xl);">
-                    <div class="nds-flex nds-col">
+                    <div class="nds-flex nds-col" style="--gap: var(--spacing-xl);">
                         <span class="nds-btn nds-neutral nds-circle nds-full"><span class="nds-label">Current State</span></span>
                         <div class="nds-grid" style="--max-track: auto 1fr; --col-gap: var(--spacing-xl); --align: stretch;">
                             <div class="nds-flex nds-col" style="--justify: space-around; --gap: 0;">
@@ -300,7 +300,7 @@ completed:
                             </svg>
                         </div>
                     </div>
-                    <div class="nds-flex nds-col">
+                    <div class="nds-flex nds-col" style="--gap: var(--spacing-xl);">
                         <span class="nds-btn nds-primary nds-circle nds-full"><span class="nds-label">Target State</span></span>
                         <p class="nds-center nds-color-primary"><strong>An integrated journey through one platform</strong></p>
                         <svg viewBox="0 0 420 39" role="img" aria-label="Target state: all the services in one journey, on one platform.">

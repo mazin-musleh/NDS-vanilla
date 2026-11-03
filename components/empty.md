@@ -106,7 +106,7 @@ The Message and Icon rows go on the element that carries `nds-empty`, whatever i
 Add and remove items to watch the placeholder.
 
 <script type="text/html" id="empty-live" data-canon data-code="none">
-<div class="nds-flex nds-col">
+<div class="nds-flex nds-col" style="--gap: var(--spacing-xl);">
   <div class="nds-card nds-stroke" style="--card-width: 300px;">
     <ul id="empty-live-list" class="nds-list nds-grid nds-flat nds-divided nds-empty" data-empty-message="No requests yet"></ul>
   </div>

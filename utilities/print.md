@@ -36,7 +36,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body">
 <script type="text/html" id="print-target" data-canon data-variants="print-variants-table">
-<div class="nds-flex nds-col nds-center">
+<div class="nds-flex nds-col nds-center" style="--gap: var(--spacing-xl);">
   <div class="nds-card nds-stroke nds-block" id="print-permit">
     <h3 class="nds-block-title">Vehicle Entry Permit</h3>
     <dl class="nds-definition-list nds-table-view">

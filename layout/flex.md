@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 11:34 PM"
+last_edit: "03/11/2026 - 01:45 PM"
 ---
 
 <section id="flex-overview" class="nds-content-section nds-doc-overview">
@@ -78,8 +78,8 @@ Each Justify, Align and Gap option sets one custom property in the `style` of `.
 | Align | Start | `--align: flex-start` | `.nds-flex` | Each child keeps its own size and sits at the top, or at the start edge in a column |
 | Align | End | `--align: flex-end` | `.nds-flex` | Each child keeps its own size and sits at the bottom, or at the end edge in a column |
 | Gap | XS (hint: 4px between the children) | `--gap: var(--spacing-xs)` | `.nds-flex` | 4px. Small children close together, such as icon buttons in a table cell |
-| Gap | MD (hint: 8px between the children) | `--gap: var(--spacing-md)` | `.nds-flex` | 8px. Tags and chips |
-| Gap | XL (default) (hint: 16px between the children) | — | — | 16px |
+| Gap | MD (default) (hint: 8px between the children) | — | — | 8px. Tags, chips and buttons |
+| Gap | XL (hint: 16px between the children) | `--gap: var(--spacing-xl)` | `.nds-flex` | 16px. Blocks in a column, such as cards or sections. A form's field stack and a List of cards have it already |
 | Gap | 3XL (hint: 24px between the children) | `--gap: var(--spacing-3xl)` | `.nds-flex` | 24px. Larger children, such as cards in a column |
 | Wrap | Wrap | `.nds-wrap` | `.nds-flex:not(.nds-col)` | The children flow onto a new line when the row is full. Row only: a column wraps only when it has a fixed height |
 | Reverse | Reverse (hint: Shows the children in the opposite order, from the other edge) | `.nds-reverse` | `.nds-flex` | Shows the children in the opposite order. They also move to the other edge: with Justify Start they sit at the end. The keyboard order stays the markup order |
@@ -118,7 +118,7 @@ Each Justify, Align and Gap option sets one custom property in the `style` of `.
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Default Layout</span>
-              <p class="nds-card-description">The children sit at the start edge, 16px apart. They stretch to the tallest child in a row, and to the full width in a column, unless a child has its own size, as a button does.</p>
+              <p class="nds-card-description">The children sit at the start edge, 8px apart. They stretch to the tallest child in a row, and to the full width in a column, unless a child has its own size, as a button does.</p>
             </div>
           </div>
         </li>
@@ -232,7 +232,7 @@ Set these in the `style` of `.nds-flex`.
 |---|---|---|
 | `--justify` | `flex-start` | `justify-content`: where the children sit along the row or the column, such as `center`, `flex-end` or `space-between`. `flex-start` and `flex-end` follow the text direction |
 | `--align` | `stretch` | `align-items`: how the children sit across the row or the column, such as `center`, `flex-start` or `baseline` |
-| `--gap` | `var(--spacing-xl)` | Space between the children |
+| `--gap` | `var(--spacing-md)` | Space between the children. A form's field stack and a List of cards default to `var(--spacing-xl)` |
 {: .nds-table .nds-responsive}
 
 </div>

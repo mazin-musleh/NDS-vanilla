@@ -43,6 +43,7 @@
 // The card's 360px cap is off: --card-width-max sets one.
 .nds-list.nds-flex {
   flex-wrap: wrap;
+  gap: var(--gap, var(--spacing-xl)); // cards need more room than flex's 8px
 
   > .nds-card {
     flex: var(--grow, 1) 1 var(--card-width, 320px);

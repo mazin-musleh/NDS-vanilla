@@ -144,7 +144,7 @@ sidemenu_mode: false
         </div>
     </div>
     <div class="nds-panel-body">
-        <div class="nds-flex nds-col">
+        <div class="nds-flex nds-col" style="--gap: var(--spacing-xl);">
             <p id="message-text"></p>
             <a href="#" id="message-attachment" class="nds-btn nds-secondary-outline" download>
                 <i class="nds-icon nds-hgi-download-04" aria-hidden="true"></i>
