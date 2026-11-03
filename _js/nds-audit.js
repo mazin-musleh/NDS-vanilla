@@ -187,6 +187,19 @@
             'Replace the alert with a Status Section that carries the same title, text and action.');
     } });
 
+    // A status section is a whole page; beside other content the outcome is a status card (rigs 1 and 2).
+    addRule({ id: 'status-section-alone', group: 'page', docs: 'layout/status-section.html', check(context) {
+        const isShown = el => el.checkVisibility ? el.checkVisibility() : el.getClientRects().length > 0;
+        const status = context.find('main .nds-status-section').find(isShown);
+        if (!status) return;
+        // The page hero may stay: it names the page, as the breadcrumb does.
+        const others = context.find('main .nds-content-section')
+            .filter(section => section !== status && !section.contains(status) && !status.contains(section) && isShown(section));
+        if (!others.length) return;
+        context.report(status, `a Status Section with ${others.length} other content section${others.length > 1 ? 's' : ''} on the page: a status section is the whole page.`,
+            'Show the outcome in a status card (Card, canon #card-status) at the top of the content, or hide the other sections while the status shows.', undefined, others.length);
+    } });
+
     // An NDS page runs NDS and vanilla JS only; a legacy library loaded beside it
     // restyles or re-wires NDS markup with nothing else reporting it.
     addRule({ id: 'legacy-library', group: 'page', check(context) {

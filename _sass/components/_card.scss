@@ -916,6 +916,11 @@ html:not([data-nds-loaded]) .nds-card {
   --_tag-padding-inline-default: var(--spacing-md);
 }
 
+// A status card's feedback chip, in the header: the card's step sizes it; a size class on the chip wins.
+:where(.nds-card > .nds-card-header) > .nds-feedback {
+  --_feedback-size-base: var(--_card-feedback-size-base, 48px);
+}
+
 // Size: every part one step. A container passes a step with the same mixin on itself (a list here);
 // the card's own class wins. Modal, Definition List and Stepper keep their size classes for their own sizes.
 // ponytail: a skip list; a new component built on a card with its own sizes joins it.

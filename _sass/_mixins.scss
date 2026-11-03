@@ -529,6 +529,7 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     @include progress-circle-sm;
     @include date-tile-sm;
     --_card-gap-base: var(--spacing-lg);
+    --_card-feedback-size-base: 40px;
 }
 
 @mixin card-sm {
@@ -563,6 +564,7 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
     @include progress-circle-lg;
     @include rating-md;
     --_card-gap-base: var(--spacing-4xl);
+    --_card-feedback-size-base: 56px;
     --_card-title-FS-base: var(--typo-text-xl-FS);
     --_card-title-LH-base: var(--typo-text-xl-LH);
     --_card-subtitle-FS-base: var(--typo-text-lg-FS);
@@ -590,7 +592,7 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 @mixin card-md {
     @include date-tile-md;
     @include meta-md;
-    @each $name in (card-gap, card-image-width, card-number-FS, featuredicon-size, avatar-size, star-size,
+    @each $name in (card-gap, card-feedback-size, card-image-width, card-number-FS, featuredicon-size, avatar-size, star-size,
         tag-height, tag-fs, tag-padding-inline, progress-size, chip-size, chip-padding, chip-FS,
         btn-size, btn-gap, btn-indicator-size) {
         --_#{$name}-base: initial;

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 11:52 PM"
+last_edit: "03/11/2026 - 10:19 PM"
 ---
 
 <section id="modal-overview" class="nds-content-section nds-doc-overview">
@@ -169,11 +169,11 @@ Pick another component when:
 </button>
 <dialog id="submitted-modal" class="nds-modal nds-card nds-stroke nds-center" data-status="success" aria-labelledby="submitted-modal-title">
   <div class="nds-card-header">
-    <div class="nds-card-featured-icon">
-      <span class="nds-featured-icon nds-xl nds-circle">
-        <i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i>
+    <span class="nds-feedback nds-ring">
+      <span class="nds-feedback-icon">
+        <i class="nds-icon" aria-hidden="true"></i>
       </span>
-    </div>
+    </span>
   </div>
   <div class="nds-card-content">
     <div class="nds-card-text">
@@ -221,15 +221,6 @@ Pick another component when:
   </dialog>
 </template>
 </script>
-<script type="text/html" id="modal-icon-error" data-canon>
-<i class="nds-icon nds-hgi-cancel-circle" aria-hidden="true"></i>
-</script>
-<script type="text/html" id="modal-icon-warning" data-canon>
-<i class="nds-icon nds-hgi-alert-circle" aria-hidden="true"></i>
-</script>
-<script type="text/html" id="modal-icon-info" data-canon>
-<i class="nds-icon nds-hgi-information-circle" aria-hidden="true"></i>
-</script>
     </div>
   </div>
 </section>
@@ -241,14 +232,14 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-Every option goes on the `nds-modal` element. On a lazy modal, write it on the `nds-modal` inside the `<template>`. Each Status option has three rows: set `data-status`, and swap the icon in the featured icon for that status's icon. Make all three changes.
+Every option goes on the `nds-modal` element. On a lazy modal, write it on the `nds-modal` inside the `<template>`. A Status option sets `data-status`: the [feedback](../components/feedback) chip in the header takes its icon and color from it, as in a status [card](../components/card).
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Dialog (default) | — | — | A question or a short task, with a close button and two actions |
 | Structure | Header title (hint: The title beside the icon, over a form, a list or longer text) | canon `#modal-header-title` | — | A modal whose content is more than its message, such as a form, a list or terms to read. The title and description sit in the header beside the icon, as in a [Card](../components/card)'s header title, and the content holds the rest. A one-line title centers on the icon |
 | Structure | Scroll more (hint: Long content that fades at its edge, with a Show more button) | canon `#modal-scroll-more` | — | A modal whose content runs longer than the screen, such as terms to read. The content scrolls in a [Scroll More](../components/scroll-more): its edge fades while more is below, and Show more scrolls on. The header and the actions stay in view |
-| Structure | Status (demo: + size-sm) | canon `#modal-status` | — | The result of an action, centered, with a large icon and one action. It has no close button |
+| Structure | Status (demo: + size-sm) | canon `#modal-status` | — | The result of an action, centered, with a status chip and one action. It has no close button. It is a status [card](../components/card) in a dialog |
 | Structure | Lazy modal | canon `#modal-lazy` | — | The modal sits in a `<template>` and joins the page on the first click. For a large modal that most users never open |
 | Size | MD (default) | — | — | 600px wide. For a message with a short form |
 | Size | SM (id: size-sm) | `.nds-sm` | `.nds-modal` | 400px wide. For a status or a confirmation with one or two buttons |
@@ -256,14 +247,8 @@ Every option goes on the `nds-modal` element. On a lazy modal, write it on the `
 | Size | Full | `.nds-full` | `.nds-modal` | The width of the screen, less 64px on each side. For a large preview, such as a document or an image |
 | Status | Success (default) | — | `.nds-modal.nds-center` | The action worked |
 | Status | Error | `[data-status="error"]` | `.nds-modal.nds-center` | The action failed |
-| Status | Error | remove | `.nds-featured-icon.nds-xl > .nds-hgi-checkmark-circle-02` | The action failed |
-| Status | Error | canon `#modal-icon-error` | `.nds-featured-icon.nds-xl` | The action failed |
 | Status | Warning | `[data-status="warning"]` | `.nds-modal.nds-center` | The action worked, with a risk the user should know about |
-| Status | Warning | remove | `.nds-featured-icon.nds-xl > .nds-hgi-checkmark-circle-02` | The action worked, with a risk the user should know about |
-| Status | Warning | canon `#modal-icon-warning` | `.nds-featured-icon.nds-xl` | The action worked, with a risk the user should know about |
 | Status | Info | `[data-status="info"]` | `.nds-modal.nds-center` | Neutral news about the action |
-| Status | Info | remove | `.nds-featured-icon.nds-xl > .nds-hgi-checkmark-circle-02` | Neutral news about the action |
-| Status | Info | canon `#modal-icon-info` | `.nds-featured-icon.nds-xl` | Neutral news about the action |
 | Static | Static (hint: Escape and an overlay click do not close it) | `[data-modal-static]` | `.nds-modal` | Escape and a click on the overlay do not close the modal. For a choice the user must make |
 {: #modal-variants-table .nds-table .nds-responsive}
 

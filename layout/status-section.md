@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.10.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 12:11 PM"
+last_edit: "03/11/2026 - 10:09 PM"
 ---
 
 <section id="status-overview" class="nds-content-section nds-doc-overview">
@@ -18,11 +18,12 @@ last_edit: "02/11/2026 - 12:11 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A status section is a content section or a hero section with the `nds-status-section` class. It stacks a feedback chip or an illustration, a title, a description and an action row in one centered column. Use it as a whole page, such as an error page or a confirmation page, or as one section of a longer page. It is also the view a user cannot use: sign in first, no permission, or an item that is not found. It needs no JavaScript.
+A status section is a content section or a hero section with the `nds-status-section` class. It stacks a feedback chip or an illustration, a title, a description and an action row in one centered column. It is a whole page: the page shows nothing else, apart from its hero, such as an error page or a final confirmation page. It is also the view a user cannot use: sign in first, no permission, or an item that is not found. It needs no JavaScript.
 
 Pick another component when:
 
 - the message sits inside a form or a region of the page: [Alert](../components/alert)
+- the page shows the outcome with other content, such as a booking above its details: a status [Card](../components/card)
 - the status needs only an icon and a line of text: [Feedback Icons](../components/feedback)
 
 </div>
@@ -168,9 +169,9 @@ Pick another component when:
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- Put a whole-page status section in the [page layout](../layout/page-layout).
+- Put a status section in the [page layout](../layout/page-layout), as the only section after the page hero. When the page also shows other content, such as the details of a request, use a status [Card](../components/card) instead.
 - On a page with tabs, a status section replaces the whole tabs section only when no tab can show its content, such as before sign-in. When one tab fails, put an [Alert](../components/alert) or [Empty](../components/empty) in its panel, so the user can still open the other tabs. A section never goes inside a tab panel.
-- On its own page, the title is the page heading: use `h1`. In a longer page, follow the page's heading order.
+- With no page hero, the title is the page heading: use `h1`. Below a page hero, use `h2`.
 - Write the outcome in the title and what happens next in the description. Keep both short.
 - Pick the status by meaning, not by color: `success` for work that completed, `error` for work that failed, `critical` for a failure the user must act on now, `warning` for work that needs attention, `info` for a plain notice.
 - Use an illustration only on a page with its own artwork, and a chip everywhere else. Never use both.

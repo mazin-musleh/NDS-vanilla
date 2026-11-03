@@ -27,43 +27,43 @@ sidemenu_mode: false
      - On a signed-in page, the name and the ID come from the account: show them as a Definition List, never as fields.
      - The summary is the side info column (nds-has-sideinfo), filled from the form's change events. It holds the Book button
        (form="book-form"). Without nds-top it sits under the form on a phone, so Book comes after the last field.
-     - After a passing submit, a Status Section goes first on the page, with the booking number, Add to calendar and directions.
+     - After a passing submit, a status Card goes first in the main column, with the booking number, Add to calendar and directions.
+       The booking stays on the page, so the outcome is a card, not a Status Section.
        The form gives way to what to bring; the summary stays, with the booking number, Change and Cancel.
      - Change brings the form back with the booking in it and keeps the booking number. Cancel asks first, in a Modal.
      - The script's two server calls (free times, booking) are demo fakes: their comments give the request and the answer. -->
 
-<!-- Booked: the outcome, first on the page -->
-<section id="book-done" class="nds-content-section nds-status-section" data-status="success" hidden>
-    <div class="nds-section-wrapper">
-        <div class="nds-section-icon">
-            <span class="nds-feedback nds-ring">
-                <span class="nds-feedback-icon">
-                    <i class="nds-icon" aria-hidden="true"></i>
-                </span>
-            </span>
-        </div>
-        <div class="nds-section-head">
-            <h2 class="nds-section-title" tabindex="-1">Your appointment is booked</h2>
-            <p class="nds-section-description" id="book-done-text">Your booking number is APT-2026-55120. We sent it to your mobile, and we remind you the day before.</p>
-        </div>
-        <div class="nds-section-action">
-            <!-- Your server sends the .ics file; this demo builds it in the page -->
-            <a href="#" id="book-ics" class="nds-btn nds-primary" download="appointment.ics">
-                <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
-                <span class="nds-label">Add to calendar</span>
-            </a>
-            <a href="#" id="book-directions" class="nds-btn nds-secondary-outline" target="_blank" rel="noopener">
-                <i class="hgi hgi-stroke hgi-directions-01" aria-hidden="true"></i>
-                <span class="nds-label">Get directions</span>
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- The booking: the form (then what to bring) in the main column, the summary in the side column -->
+<!-- The booking: the form (then the outcome and what to bring) in the main column, the summary in the side column -->
 <section id="book-details" class="nds-content-section nds-sideinfo-section">
     <div class="nds-section-body">
         <div class="nds-info-content">
+            <!-- Booked: the outcome, first in the main column -->
+            <div id="book-done" class="nds-card nds-stroke nds-center nds-block" data-status="success" hidden>
+                <div class="nds-card-header">
+                    <span class="nds-feedback nds-ring">
+                        <span class="nds-feedback-icon">
+                            <i class="nds-icon" aria-hidden="true"></i>
+                        </span>
+                    </span>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h2 class="nds-card-title" tabindex="-1">Your appointment is booked</h2>
+                        <p class="nds-card-description" id="book-done-text">Your booking number is APT-2026-55120. We sent it to your mobile, and we remind you the day before.</p>
+                    </div>
+                </div>
+                <div class="nds-card-actions nds-col-sm">
+                    <!-- Your server sends the .ics file; this demo builds it in the page -->
+                    <a href="#" id="book-ics" class="nds-btn nds-primary" download="appointment.ics">
+                        <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
+                        <span class="nds-label">Add to calendar</span>
+                    </a>
+                    <a href="#" id="book-directions" class="nds-btn nds-secondary-outline" target="_blank" rel="noopener">
+                        <i class="hgi hgi-stroke hgi-directions-01" aria-hidden="true"></i>
+                        <span class="nds-label">Get directions</span>
+                    </a>
+                </div>
+            </div>
             <div id="book-start">
                 <p class="nds-note nds-block" data-status="error"><span class="nds-label">*Required information</span></p>
                 <!-- data-ajax: Forms checks every field and stops the POST; send the request from nds:form:valid -->
@@ -579,7 +579,7 @@ sidemenu_mode: false
         document.getElementById('book-ics').href = calendarFile(answer.ref);
         document.getElementById('book-directions').href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(branchAddress());
         showView('booked');
-        document.querySelector('#book-done .nds-section-title').focus();
+        document.querySelector('#book-done .nds-card-title').focus();
       }));
     });
 

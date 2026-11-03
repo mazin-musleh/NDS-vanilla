@@ -27,73 +27,72 @@ hero_float_actions:
         <option value="rejected">Rejected</option>
         </select></div>
         </div>
-last_edit: "01/11/2026 - 12:30 AM"
+last_edit: "03/11/2026 - 10:10 PM"
 ---
 
 <!-- Layout rules: one request the user already sent.
      - Its history is a Timeline (a vertical dot Stepper, newest on top). A flow the user is filling in is a Stepper; dated items with no order are Drawer rows.
      - The user must act: a warning Alert at the top of the main column, with the action right under it (here an Upload and Send). Never send them to another page to do it.
      - No action needed: an info Alert that says what happens next and when.
-     - A final answer: a Status Section with data-status (success or error), first on the page, above the history. The history stays.
+     - A final answer: a status Card with data-status (success or error), first in the main column, above the history.
+       The history stays, so the outcome is a card, not a Status Section.
      - A finished service: the User Feedback rating closes the page, after the last edit line (feedback_type: rating).
      - The summary is the side info column (nds-has-sideinfo), and Print prints it alone (data-print-target).
      - A signed-in page runs NDS.SessionTimeout.init() (see the script at the end). -->
 
-<!-- Approved: the outcome, first on the page -->
-<section id="request-approved" class="nds-content-section nds-status-section" data-status="success" hidden>
-    <div class="nds-section-wrapper">
-        <div class="nds-section-icon">
-            <span class="nds-feedback nds-ring">
-                <span class="nds-feedback-icon">
-                    <i class="nds-icon" aria-hidden="true"></i>
-                </span>
-            </span>
-        </div>
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Your license is renewed</h2>
-            <p class="nds-section-description">Commercial license 1010-445566 is valid until 26 October 2027. We emailed you a copy.</p>
-        </div>
-        <div class="nds-section-action">
-            <a href="#" class="nds-btn nds-primary">
-                <i class="nds-icon nds-hgi-download-04" aria-hidden="true"></i>
-                <span class="nds-label">Download license</span>
-            </a>
-            <a href="#" class="nds-btn nds-secondary-outline">
-                <span class="nds-label">My requests</span>
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- Rejected: the outcome, first on the page, with the reason and the way forward -->
-<section id="request-rejected" class="nds-content-section nds-status-section" data-status="error" hidden>
-    <div class="nds-section-wrapper">
-        <div class="nds-section-icon">
-            <span class="nds-feedback nds-ring">
-                <span class="nds-feedback-icon">
-                    <i class="nds-icon" aria-hidden="true"></i>
-                </span>
-            </span>
-        </div>
-        <div class="nds-section-head">
-            <h2 class="nds-section-title">Your request was not approved</h2>
-            <p class="nds-section-description">The national ID does not match the owner in the commercial register. Apply again with the owner's national ID.</p>
-        </div>
-        <div class="nds-section-action">
-            <a href="#" class="nds-btn nds-primary">
-                <span class="nds-label">Apply again</span>
-            </a>
-            <a href="#" class="nds-btn nds-secondary-outline">
-                <span class="nds-label">Contact support</span>
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- Details: what to do now and the history in the main column, the summary in the side column -->
+<!-- Details: the outcome or what to do now, then the history, in the main column; the summary in the side column -->
 <section id="request-details" class="nds-content-section nds-sideinfo-section">
     <div class="nds-section-body">
         <div class="nds-info-content">
+            <!-- Approved: the outcome, first in the main column -->
+            <div id="request-approved" class="nds-card nds-stroke nds-center nds-block" data-status="success" hidden>
+                <div class="nds-card-header">
+                    <span class="nds-feedback nds-ring">
+                        <span class="nds-feedback-icon">
+                            <i class="nds-icon" aria-hidden="true"></i>
+                        </span>
+                    </span>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h2 class="nds-card-title">Your license is renewed</h2>
+                        <p class="nds-card-description">Commercial license 1010-445566 is valid until 26 October 2027. We emailed you a copy.</p>
+                    </div>
+                </div>
+                <div class="nds-card-actions nds-col-sm">
+                    <a href="#" class="nds-btn nds-primary">
+                        <i class="nds-icon nds-hgi-download-04" aria-hidden="true"></i>
+                        <span class="nds-label">Download license</span>
+                    </a>
+                    <a href="#" class="nds-btn nds-secondary-outline">
+                        <span class="nds-label">My requests</span>
+                    </a>
+                </div>
+            </div>
+            <!-- Rejected: the outcome, with the reason and the way forward -->
+            <div id="request-rejected" class="nds-card nds-stroke nds-center nds-block" data-status="error" hidden>
+                <div class="nds-card-header">
+                    <span class="nds-feedback nds-ring">
+                        <span class="nds-feedback-icon">
+                            <i class="nds-icon" aria-hidden="true"></i>
+                        </span>
+                    </span>
+                </div>
+                <div class="nds-card-content">
+                    <div class="nds-card-text">
+                        <h2 class="nds-card-title">Your request was not approved</h2>
+                        <p class="nds-card-description">The national ID does not match the owner in the commercial register. Apply again with the owner's national ID.</p>
+                    </div>
+                </div>
+                <div class="nds-card-actions nds-col-sm">
+                    <a href="#" class="nds-btn nds-primary">
+                        <span class="nds-label">Apply again</span>
+                    </a>
+                    <a href="#" class="nds-btn nds-secondary-outline">
+                        <span class="nds-label">Contact support</span>
+                    </a>
+                </div>
+            </div>
             <!-- Action needed: the Alert says what and by when; the action sits right under it -->
             <div id="request-action" class="nds-block">
                 <!-- No close button: the request waits on this -->
