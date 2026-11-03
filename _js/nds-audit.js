@@ -396,6 +396,14 @@
             'Write the number alone in <span class="nds-number-format" data-currency="SAR">1200</span>, and drop the currency word.', undefined, elements.length);
     } });
 
+    // A status in the tag row reads as one more category; the card's corner holds its state (rig 4: stock beside the category).
+    addRule({ id: 'card-status-place', group: 'structure', docs: 'components/card.html', check(context) {
+        const elements = context.find('.nds-card :is(.nds-card-tags, .nds-card-meta) .nds-tag[data-status]')
+            .filter(tag => !tag.closest('.nds-card-corner') && tag.getClientRects().length);
+        if (elements.length) context.report(elements[0], `a status tag in a card's tag row, "${elements[0].textContent.trim().slice(0, 30)}"${elements.length > 1 ? ` (${elements.length} tags; the first is shown)` : ''}: it reads as one more category.`,
+            'Move it to .nds-card-corner, written first in .nds-card-text. The tag row keeps the standard tags.', undefined, elements.length);
+    } });
+
     // ── i18n ─────────────────────────────────────────────────────────
 
     addRule({ id: 'i18n-pack', group: 'i18n', severity: 'error', docs: 'core/i18n.html', check(context) {

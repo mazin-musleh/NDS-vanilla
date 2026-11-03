@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 04:36 PM"
+last_edit: "03/11/2026 - 08:29 PM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -311,7 +311,7 @@ Pick another component when:
 | Layout (any) | Reverse (hint: Header at the end side. Row only) (id: reverse) | `.nds-reverse` | `.nds-card.nds-horizontal` | Puts the header at the end side of the row, after the content. For a figure that closes the row, such as a progress ring. Row only |
 | Layout (any) | Middle (hint: Short content in the middle, top to bottom) (id: middle) | `.nds-middle` | `.nds-card` | Puts short content in the middle of the card's height, instead of at the top. For a row card whose header is taller than its text, or a card stretched to its row in a grid. The text keeps its side: to center it across too, add Center |
 | Meta | None (default) | — | — | No tags or rating |
-| Meta | Tags | canon `#card-tags` | `.nds-card-content:not(a.nds-card > *)` | Tags alone go straight in the content |
+| Meta | Tags | canon `#card-tags` | `.nds-card-content:not(a.nds-card > *)` | Tags alone go straight in the content. They are standard tags that describe the item, such as its category; a status tag goes in the corner |
 | Meta | Rating | canon `#card-rating` | `.nds-card-content:not(a.nds-card > *)` | A star rating with a count |
 | Meta | Tags + Rating | canon `#card-meta` | `.nds-card-content:not(a.nds-card > *)` | Both together: `.nds-card-meta` groups the two meta rows. Use it only when both are present |
 | Value | None (default) | — | — | No price line |
@@ -484,6 +484,7 @@ Pick another component when:
 - For a set of cards, use a [List](../components/list): each card is a list item, and the list sets the look they share. A set of link cards stays a [Grid](../layout/grid).
 - To show a card's content with no box, add `nds-flush`. It drops the padding, the border, the fill and the shadow.
 - Put a card's small extras in `.nds-card-corner`, first in `.nds-card-text`: a status tag, a menu or "View all" button, or a select checkbox. A bare button in the header shrinks when the title is long, and its label spills out.
+- Keep `.nds-card-tags` for standard tags that describe the item. A state, such as stock or a request's status, is a status tag in `.nds-card-corner`, never in the tag row.
 - Keep the corner to one or two small items: a tag, a subtle or icon-only button, or a checkbox. The corner makes a tag XS and a button SM, one step bigger in an `nds-lg` card, and a size class on the part still wins. A wide corner meets the header icon on a narrow card.
 - Write the tag first and the checkbox last, so the checkbox sits in the corner.
 - A card the user selects holds no buttons in its corner. Picking it and opening it are two different actions.
