@@ -238,7 +238,7 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 // needs no group class in its markup. Horizontal only — .nds-vertical stays
 // with .nds-btn-group, the sole consumer that stacks.
 @mixin btn-group-joined {
-  --btn-group-radius: var(--radius-md);
+  --btn-group-radius: var(--radius-md); // one radius at every size (DGA)
   display: flex;
   border-radius: var(--btn-group-radius);
   gap: 0 !important;

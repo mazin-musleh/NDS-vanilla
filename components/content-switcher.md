@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.6.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "03/11/2026 - 03:28 PM"
 ---
 
 <section id="switcher-overview" class="nds-content-section nds-doc-overview">
@@ -83,7 +83,7 @@ The first button is open in the markup: its `aria-selected` is `true`, and every
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
-| Size | SM | `.nds-sm` | `.nds-content-switcher` | 32px buttons with a small label and smaller corners, for cards and toolbars |
+| Size | SM | `.nds-sm` | `.nds-content-switcher` | 32px buttons with a small label, for cards and toolbars |
 | Size | MD (default) | — | — | 40px buttons, for page content. It needs no class |
 | Size | LG | `.nds-lg` | `.nds-content-switcher` | 48px buttons, for a larger touch target |
 | On color | On color | `.nds-oncolor` | `.nds-content-switcher` | For a switcher on a deep primary or dark background. The open button turns brand primary, as in dark mode. The panel text turns white |
@@ -239,7 +239,7 @@ The first button is open in the markup: its `aria-selected` is `true`, and every
 
 | Property | Default | Controls |
 |---|---|---|
-| `--btn-group-radius` | `var(--radius-md)`, `var(--radius-sm)` with `nds-sm` | Corner radius of the two ends of the row. Set it on `.nds-tab-list` |
+| `--btn-group-radius` | `var(--radius-md)` | Corner radius of the two ends of the row, the same at every size. Set it on `.nds-tab-list` |
 | `--btn-size` | `40px` | Button height, for a size between the three sizes. Set it on `.nds-tab` |
 | `--tab-button-gap` | `var(--spacing-xs)` | Gap between a button's icon and its label |
 | `--tab-button-padding-block` | `0` | Padding above and below a button's label |

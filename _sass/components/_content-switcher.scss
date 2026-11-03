@@ -40,13 +40,6 @@
     margin-inline: auto;
   }
 
-  // .nds-btn-group drops its radius a rung for small children via :has(), which
-  // root-level sizing never trips — mirror it so a 32px switcher matches a 32px
-  // button group.
-  &.nds-sm > .nds-tab-list {
-    --btn-group-radius: var(--radius-sm);
-  }
-
   // The seam between segments. .nds-btn-group's own version is variant-aware
   // across both axes; a switcher is always horizontal and always secondary, so
   // one rule covers it. Reads --btn-border, the knob the selected pair blanks.

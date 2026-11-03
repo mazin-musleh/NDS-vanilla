@@ -904,10 +904,6 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
 .nds-btn-group {
   @include btn-group-joined;
 
-  &:has(> .nds-md, > .nds-sm) {
-    --btn-group-radius: var(--radius-sm);
-  }
-
   // Opt-in: no divider between the buttons (the 1px seam stays, transparent, so widths hold).
   &.nds-seamless .nds-btn {
     --_btn-seam: transparent;

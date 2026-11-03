@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 11:52 PM"
+last_edit: "03/11/2026 - 03:28 PM"
 ---
 
 <section id="btn-overview" class="nds-content-section nds-doc-overview">
@@ -316,7 +316,7 @@ Set these on the button itself. There, a size property wins over the size classe
 | `--btn-border`, `--btn-border-hover`, `--btn-border-active`, `--btn-border-selected`, `--btn-border-disabled` | set by the variant | Border color in each state |
 | `--btn-indicator-size` | `3px`, `2px` on SM | Height of the indicator bar |
 | `--btn-loading-color`, `--btn-loading-track` | set by the variant | Spinner colors |
-| `--btn-group-radius` | `var(--radius-md)` | Corner radius of a group. It is `var(--radius-sm)` when the group holds MD or SM buttons |
+| `--btn-group-radius` | `var(--radius-md)` | Corner radius of a group, the same at every button size |
 | `--progress-duration` | `4000ms` | Time the ring takes to fill |
 | `--progress-value` | `0` | Fill of a `nds-progress-static` ring, from 0 to 100 |
 | `--progress-size` | `size - 8px` | Size of the ring |
