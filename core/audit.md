@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 08:49 PM"
+last_edit: "03/11/2026 - 09:00 PM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -267,6 +267,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `parts-touch` | structure | warn | Two NDS parts, or a part and a paragraph or note, that follow each other in the markup and sit one under the other with no space between them, anywhere on the page, such as fields dropped straight into a tab panel. A table counts by its wrapper. It skips a section the browser has not laid out yet |
 | `price-text` | structure | warn | A price written as text with a riyal word or sign, such as `1200 ريال` or `SAR 600`, in a table cell, a field or a figure. Sentences in prose, paragraphs and descriptions pass. Write the number in `nds-number-format` with `data-currency="SAR"` |
 | `card-status-place` | structure | warn | A status tag (`.nds-tag` with `data-status`) in a card's tag row or meta. A card's state goes in `.nds-card-corner`; the tag row keeps standard tags |
+| `card-value-number` | structure | warn | A `.nds-card-value` with only bare text inside. Bare text shows as the small unit, not the value. Put a number in `nds-number-format`, and a word such as Free in a `<span>` |
 | `i18n-pack` | i18n | error | The language file of the page did not load. A language NDS does not ship is a `warn`, and only when `window.NDS_I18N_LANGS` has no words for it |
 | `i18n-override` | i18n | warn | A section or key in `window.NDS_I18N` or `window.NDS_I18N_LANGS` that no NDS component or `getStrings()` call has, so it changes nothing |
 | `filter-unclaimed` | structure | error | `data-filter-items` that no filter claimed, so it stays in its skeleton |

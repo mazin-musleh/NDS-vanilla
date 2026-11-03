@@ -412,6 +412,14 @@
             'Move it to .nds-card-corner, written first in .nds-card-text. The tag row keeps the standard tags.', undefined, elements.length);
     } });
 
+    // The value line's own type is the small unit; only an element child shows as the value (rig 2: bare text).
+    addRule({ id: 'card-value-number', group: 'structure', docs: 'components/card.html', check(context) {
+        const elements = context.find('.nds-card-value')
+            .filter(value => !value.querySelector(':scope > :not(s)') && value.textContent.trim() && value.getClientRects().length);
+        if (elements.length) context.report(elements[0], `a card value written as bare text, "${elements[0].textContent.trim().slice(0, 30)}"${elements.length > 1 ? ` (${elements.length} values; the first is shown)` : ''}: it shows as the small unit text.`,
+            'Put the value in an element: a number in <span class="nds-number-format">, with data-currency="SAR" for a price; a word such as Free in a <span>. Bare text after it stays the unit.', undefined, elements.length);
+    } });
+
     // ── i18n ─────────────────────────────────────────────────────────
 
     addRule({ id: 'i18n-pack', group: 'i18n', severity: 'error', docs: 'core/i18n.html', check(context) {

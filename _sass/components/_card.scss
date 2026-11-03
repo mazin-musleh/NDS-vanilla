@@ -447,11 +447,10 @@
   // CARD PRICE SECTION
   // ==============================================
 
-  // Value line built on the numbers utility — a price, a rate, a size. The
-  // wrapper's own type IS the muted suffix style, so bare text like "/ كجم"
-  // needs no class; the .nds-number-format child is the prominent value
-  // (currency icon tracks the font via 1em); a <s> child is the crossed-out
-  // original.
+  // Value line — a price, a rate, a size. The wrapper's own type IS the muted
+  // suffix style, so bare text like "/ كجم" needs no class; an element child is
+  // the prominent value (a .nds-number-format, or a word such as "Free"); a <s>
+  // child is the crossed-out original.
   .nds-card-value {
     display: flex;
     align-items: baseline;
@@ -460,7 +459,7 @@
     line-height: var(--_card-value-unit-LH-base, var(--typo-text-sm-LH));
     color: var(--_card-text-color);
 
-    .nds-number-format:not(s) {
+    > :not(s) {
       font-size: var(--_card-value-FS-base, var(--typo-text-xl-FS));
       line-height: var(--_card-value-LH-base, var(--typo-text-xl-LH));
       font-weight: var(--font-weight-bold);
@@ -824,8 +823,8 @@ html:not([data-nds-loaded]) .nds-card {
   .nds-card-value {
     @include skeleton-bar;
 
-    // Outranks the value line's own colour on the prominent number.
-    .nds-number-format {
+    // Outranks the value line's own colour on the prominent value.
+    > * {
       color: transparent;
     }
   }

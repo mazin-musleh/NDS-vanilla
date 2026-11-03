@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 08:37 PM"
+last_edit: "03/11/2026 - 09:00 PM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -473,6 +473,7 @@ Pick another component when:
 - On a [Modal](../components/modal), a [Definition List](../components/definition-list) or a [Stepper](../components/stepper), `nds-sm` and `nds-lg` set that component's own size, not the card's.
 - Leave the size class off an icon, an avatar, a progress ring, a tag, a rating or a corner button: the card's size sets it. Write a size class on a part only for a custom size.
 - Show a price with `.nds-card-value`, not with a tag.
+- In `.nds-card-value`, put the value in an element: a number in `.nds-number-format`, a word such as Free in a `<span>`. Bare text there shows as the small unit, such as `/ kg`.
 - Keep the description to one or two lines. For longer text, [truncate](../utilities/truncate-text) it or link to a detail page.
 - Do not put a card inside a card. Use `.nds-card-meta` or a [definition list](../components/definition-list) inside the content.
 - Use `data-status` only when the card really has that status. For a color without a status, use the color class.
