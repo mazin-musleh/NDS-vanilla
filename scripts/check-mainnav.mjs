@@ -100,6 +100,14 @@ async function timedClick(page, sel, label) {
   await page.click(`${FIT} > .nds-nav-link`);
   await wait();
   ok('desktop: its trigger closes it', !(await probe(page, FIT)).shown);
+
+  await page.click(`${P1} > .nds-nav-link`);
+  await wait();
+  await page.click(`${P2} > .nds-nav-link`);
+  await page.evaluate(() => NDS.MainNav.closeMenus());
+  await wait(1200);
+  m = await probe(page, P2);
+  ok('desktop: closeMenus() during a menu switch leaves both closed, no dim layer', !(await probe(page, P1)).shown && !m.shown && !m.dimmed, JSON.stringify(m));
   await page.click(`${P1} > .nds-nav-link`);
   await wait();
   ok('desktop: destroy() with a menu open leaves nothing in the top layer', await page.evaluate(() => {
@@ -136,6 +144,13 @@ async function timedClick(page, sel, label) {
   await page.click('.nds-nav-toggler');
   await wait(1200);
   ok('phone: the toggler closes the drawer', !/open/.test(await page.evaluate(() => document.getElementById('nds-nav-collapse').getAttribute('data-state') || '')));
+  await page.click('.nds-nav-toggler');
+  await wait();
+  await page.click(`.nds-nav-minimal ${SEARCH} > .nds-nav-link`);
+  await page.evaluate(() => NDS.MainNav.closeMenus());
+  await wait(1500);
+  m = await probe(page, `.nds-nav-minimal ${SEARCH}`);
+  ok('phone: closeMenus() while the drawer hands off to a menu leaves it closed, no dim layer', !m.shown && !m.dimmed, JSON.stringify(m));
   ok('phone: no page errors', !errors.length, errors.join(' | '));
   await ctx.close();
 }

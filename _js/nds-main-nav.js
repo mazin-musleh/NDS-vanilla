@@ -517,6 +517,13 @@
     // ==============================================
     const dropdown = {
         closeAll(except = null) {
+            // A menu switch waits on toggleTimer to open the next menu: a close-all cancels it.
+            if (!except && toggleTimer) {
+                cancelToggleAction();
+                // The phone path handed the drawer's backdrop to the menu: the drawer's slide-out takes it back.
+                if (hasState(dom.collapse, 'open')) { if (navBackdropOwner === 'dropdown') navBackdropOwner = 'navbar'; }
+                else if (!openDropdowns.size) hideNavBackdrop('dropdown');
+            }
             let maxDuration = 0;
             openDropdowns.forEach(dropdownItem => {
                 if (dropdownItem !== except) {
