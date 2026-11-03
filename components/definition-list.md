@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 01:24 PM"
+last_edit: "03/11/2026 - 01:38 PM"
 ---
 
 <section id="dl-overview" class="nds-content-section nds-doc-overview">
@@ -221,7 +221,7 @@ The Layout, Style, Emphasis, Size and Loading rows go on the list. The two Cards
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Automatic Icon Indent</span>
-              <p class="nds-card-description">In the stacked layout, a value lines up with its title's text when the title has an icon. A transparent button in a value loses its padding and its minimum size and takes the value's text size, so its label lines up with the text too.</p>
+              <p class="nds-card-description">In the stacked layout, a value lines up with its title's text when the title has an icon.</p>
             </div>
           </div>
         </li>

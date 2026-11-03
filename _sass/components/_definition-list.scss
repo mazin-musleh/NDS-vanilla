@@ -206,16 +206,6 @@
     font-size: var(--_dl-desc-FS);
     line-height: var(--_dl-desc-LH);
     margin: 0; // a <p> inside .nds-prose would take the paragraph gap
-
-    // Reads as a link: the label lines up with the value text.
-    .nds-btn.nds-transparent {
-        padding: 0;
-        min-width: 0;
-        --btn-height: fit-content;
-        --btn-height-min: 0px;
-        --_btn-FS-base: 1em; // the value's text size, also in nds-highlight-value
-        --_btn-LH-base: var(--_dl-desc-LH);
-    }
 }
 
 // The value leads: the title takes the value's look and the value the title's.
