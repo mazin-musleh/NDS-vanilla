@@ -201,7 +201,8 @@ def ports(dest, baseline):
     own = 3000 + int(num)
     with open(path, 'a', encoding='utf-8', newline='\n') as f:
         f.write(f"\n## Ports\n\nOther projects run on this machine at ports 3001 to 3010. This project's app is on {own}. "
-                f'Any other server you start, such as a second build target or a static preview, uses port {own + 100}.\n')
+                f'Any other server you start, such as a second build target or a static preview, uses port {own + 100}. '
+                'Stop only a process you started: before you stop a PID, check that its command line is your own command in this folder.\n')
 
 
 def reset(dest, save):

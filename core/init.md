@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 08:21 PM"
+last_edit: "04/11/2026 - 12:02 AM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -139,6 +139,8 @@ NDS is plain HTML, CSS and JS, so any stack can host it: a framework such as Rea
 {: .nds-block-title}
 
 Call `window.NDS?.init.mount(view)` after a view mounts, and `window.NDS?.init.destroy(view)` before it unmounts. Do not wait for `NDS.init.ready`, poll or retry before these calls. A view that mounts before NDS loads is found by NDS's own startup scan, and the `?.` skips each call while `NDS` does not exist yet.
+
+A view is any part the framework adds and removes, not only a page or a route: an `@if`, `v-if` or `{cond && ...}` branch, and a `@for` or `v-for` row. When one holds NDS components, it takes the same two calls. A call on the page alone keeps a removed branch's components and their listeners running until the page goes. In Angular, a directive on the branch's root element does both: `mount` after it renders, and `destroy` from its `DestroyRef`.
 
 `destroy()` also works on a view the framework has already removed, so a cleanup that runs after the removal, such as React's `useEffect` cleanup, is in time. Keep the view's element in a variable when the effect runs: React has emptied the ref by the time the cleanup runs.
 
