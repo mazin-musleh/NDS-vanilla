@@ -258,6 +258,7 @@ To stage a newer build, delete the project's `.nds/` by hand and stage the next 
 ## Gotchas
 
 - **Leftover servers.** The agent often leaves a static server on `.nds/_site` (`python -m http.server`, a node server; ports seen: 4000, 4001, 4010, 8099). It locks `.nds/`, and the reset reports the path as still locked. Find it with `Get-NetTCPConnection -State Listen` and stop it by PID. Never stop a process by name, and leave the app's own server alone.
+- **Rigs side by side.** Rig N's app is on 3000 + N, so a second server an agent starts can take the next rig's port (run 1 of rig 9 served its NDS target on 3010, rig 10's). `stage` adds a Ports section to the rig's `CLAUDE.md`: its own port, and 3100 + N for anything else.
 - **An empty locked `.nds/` folder** is fine: staging accepts it.
 - **A background `jekyll serve` from a Claude session** survives `TaskStop`: the shell ends and ruby keeps running. Several servers then rebuild `_site` at once, and each rebuild fails with "end of file reached". List `ruby.exe` processes and stop yours by PID. A server whose parent is your own terminal is yours to keep.
 - **Browser checks** run headless, through `scripts/lib/browser.mjs`. Never the interactive browser tools: they drive the owner's real browser.

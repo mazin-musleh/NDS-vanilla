@@ -180,11 +180,28 @@ def stage(dest, release):
         shutil.copy2('_includes/NDS-IQ-draft.md', os.path.join(dest, 'NDS-IQ.md'))
         what = 'NDS-IQ.md is the draft'
     ignore(dest)
+    ports(dest, baseline)
     # Put the dev site back: mkrelease's cleaner and compressor rewrote _site for the zip.
     run('bundle exec jekyll build')
     print(f'staged {dest}: {n} files stamped {release}, {what}')
     if baseline in APPS:
         print(f'start the app: cd {dest} && {APPS[baseline][0]}  ->  {APPS[baseline][1]}')
+
+
+# Rigs run side by side: an agent's second server (a build target, a preview) took the next rig's
+# port. Each run's CLAUDE.md names the rig's own port and a spare at 3100 + N. Reset restores it.
+def ports(dest, baseline):
+    num = next((k for k, v in NUMS.items() if v == baseline), None)
+    path = os.path.join(dest, 'CLAUDE.md')
+    if not num or not os.path.exists(path):  # a real project: its ports are its own
+        return
+    text = open(path, encoding='utf-8').read()
+    if '## Ports' in text:
+        return
+    own = 3000 + int(num)
+    with open(path, 'a', encoding='utf-8', newline='\n') as f:
+        f.write(f"\n## Ports\n\nOther projects run on this machine at ports 3001 to 3010. This project's app is on {own}. "
+                f'Any other server you start, such as a second build target or a static preview, uses port {own + 100}.\n')
 
 
 def reset(dest, save):
