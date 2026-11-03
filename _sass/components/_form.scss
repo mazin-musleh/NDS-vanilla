@@ -796,6 +796,11 @@ fieldset {
     }
 }
 
+// A stepper's number sits between its two buttons, not against the minus.
+.nds-form-control:has(> .nds-form-action > :is(.nds-number-increment, .nds-number-decrement)) > .nds-input {
+    text-align: center;
+}
+
 // Addresses and numbers read left to right in every language: "50 123 4567" showed as "4567 123 50" on
 // an Arabic page. Aligned to the page's side, as the other fields are.
 .nds-input:is([type="email"], [type="tel"], [type="url"]), .nds-formatted .nds-input {

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "25/10/2026 - 09:11 PM"
+last_edit: "03/11/2026 - 08:21 PM"
 ---
 
 <section id="head-overview" class="nds-content-section nds-doc-overview">
@@ -163,7 +163,7 @@ The last choice under a strict Content Security Policy, after a nonce and a hash
 ### Framework Navigation
 {: .nds-block-title}
 
-The inline script runs once, at page load. The stylesheet links it adds and the `data-nds-loaded` stamp are not in the server HTML. A framework that compares `<head>` with the server HTML on each navigation removes them, while the gate stays, so the page hides itself until a full reload. Turbo, htmx boost and Blazor enhanced navigation work this way. Mark those links and the stamp as permanent, in the way your framework offers. If it removes them anyway, run the stylesheet loop again after each navigation and put the stamp back. Components on a new view are covered on [Init](../core/init).
+The inline script runs once, at page load. The stylesheet links it adds and the `data-nds-loaded` stamp are not in the server HTML. A framework that compares `<head>` with the server HTML on each navigation removes them, while the gate stays, so the page hides itself until a full reload. Turbo, htmx boost and Blazor enhanced navigation work this way. Mark those links and the stamp as permanent, in the way your framework offers. If it removes them anyway, run the stylesheet loop again after each navigation and put the stamp back. A framework that renders the head in the browser creates the inline script without running it. The Next.js App Router does this for a not-found page under several root layouts. There, your startup code runs the stylesheet loop and adds the main script itself. Components on a new view are covered on [Init](../core/init).
 
 </div>
   </div>

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 11:56 PM"
+last_edit: "03/11/2026 - 08:21 PM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -161,6 +161,8 @@ A library or your own script that replaces or morphs server HTML in place, such 
 A framework that hydrates server HTML, such as Next.js or Nuxt, needs that HTML unchanged until hydration ends. When NDS starts first, it changes some of it: the clock writes the time, and Main Navigation sets classes. React then throws the server HTML away and renders it again, without what NDS wrote. When React renders `<html>` too, as the Next.js App Router does, it also removes `data-nds-loaded`, the mark that shows the page, so the page stays hidden. Which one starts first can change from one load to the next: Next.js loads its own scripts with `async`.
 
 Write `data-no-auto-init` on `<html>`. Once hydration ends, remove that attribute and call `window.NDS?.init.initialize()`: in React from an effect in the root component, in Vue from `onMounted` in the root component. When NDS has not loaded yet, the `?.` skips the call, and NDS starts when it loads, because the attribute is gone.
+
+A framework that streams the page hydrates it in parts. The root component's effect can then run before a later part hydrates, such as a Next.js `loading.tsx` boundary or a lazy client component. Start NDS in such a part from an effect inside it, with `NDS.init.mount(el)` on its own root. `initialize()` from the root then covers only what has hydrated.
 
 When the framework renders `<html>` too, as the Next.js App Router does, put `suppressHydrationWarning` on `<html>`. The head inline script writes the saved theme to its `data-theme` before hydration, and React reports that in development. React 18 also reports the `data-nds-defer` that the script removes from each preload link, so put the same prop on those links.
 

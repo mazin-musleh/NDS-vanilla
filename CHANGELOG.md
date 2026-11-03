@@ -404,6 +404,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Filter and Pagination** — Items added after the page loads keep the filter values and the page in the URL. `NDS.init.mount()` dropped `?category=` for a group built from the new items, a `reapplyUrlParamsForFilter()` call dropped the value of the group reapplied next, and `?page=` went back to page 1.
 - **Filter, Multiselect and Tag Input** — A chip left on the page after `destroy()` no longer calls the destroyed instance when clicked.
 - **Filter and Tables** — `destroy()` removes the `data-delay` it wrote on a dropmenu, and a `data-delay` you wrote stays. A column menu's `destroy()` removes its Reset footer, so a second `create()` no longer shows two. A filter created again watches filter options added later.
+- **Forms** — The Number stepper's buttons fire `change` as well as `input`, as a native number field does. A press fires both; a held button fires `change` once, when it is let go. Before, a page that listened for `change` saw no step.
+- **Forms** — A Number stepper's value sits centered between its buttons. In a wide field it sat against the minus button.
 - **Forms** — a required field with a picker in its prefix (a phone number with a country code) is checked again.
 - **Forms** — A read-only checkbox, radio or switch holds its value against Space and the arrow keys. A disabled one, and a disabled field's buttons in dark mode, take the disabled colours. `data-state="loading"` written in the HTML shows the spinner from the start, in its own slot.
 - **Forms** — A required `data-strict` Autocomplete submitted empty shows its "required" message: the strict check cleared it, leaving the form blocked with no message.
