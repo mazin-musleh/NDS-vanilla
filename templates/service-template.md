@@ -125,7 +125,7 @@ sidemenu_mode: false
                             <span class="nds-label">User guide</span>
                         </dt>
                         <dd>
-                            <a href="#user-guide" class="nds-btn nds-secondary nds-md">
+                            <a href="#user-guide" class="nds-btn nds-secondary">
                                 <span class="nds-label">Download User Guide</span>
                             </a>
                         </dd>
@@ -135,9 +135,7 @@ sidemenu_mode: false
                             <i class="hgi hgi-stroke hgi-checkmark-badge-01"></i>
                             <span class="nds-label">Service Level</span>
                         </dt>
-                        <dd><a href="#user-guide" class="nds-primary">
-                                <span class="nds-label">Service Level Agreement</span>
-                            </a>
+                        <dd><a href="#user-guide">Service Level Agreement</a>
                         </dd>
                     </div>
                     <div class="nds-definition-item">
@@ -148,16 +146,12 @@ sidemenu_mode: false
                         <dd>
                             <address>
                                 Unified Tel:
-                                <a href="tel:19996" class="nds-primary">
-                                    <span class="nds-label">19996</span>
-                                </a>
+                                <a href="tel:19996">19996</a>
                                 <br>
                                 Ext: 1234
                                 <br>
                                 Email:
-                                <a href="mailto:support@services.gov.sa" class="nds-primary">
-                                    <span class="nds-label">support@services.gov.sa</span>
-                                </a>
+                                <a href="mailto:support@services.gov.sa">support@services.gov.sa</a>
                             </address>
                         </dd>
                     </div>

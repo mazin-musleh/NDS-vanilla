@@ -258,7 +258,7 @@ related:
                         <i class="hgi hgi-stroke hgi-checkmark-badge-01" aria-hidden="true"></i>
                         <span class="nds-label">Journey level</span>
                     </dt>
-                    <dd><a href="#" class="nds-primary"><span class="nds-label">Journey level agreement</span></a></dd>
+                    <dd><a href="#">Journey level agreement</a></dd>
                 </div>
                 <div class="nds-divider"></div>
                 <div class="nds-definition-item">
@@ -276,10 +276,10 @@ related:
                     <dd>
                         <address>
                             Phone:
-                            <a href="tel:9200343222" class="nds-primary"><span class="nds-label">9200343222</span></a>
+                            <a href="tel:9200343222">9200343222</a>
                             <br>
                             Email:
-                            <a href="mailto:help@company.sa" class="nds-primary"><span class="nds-label">help@company.sa</span></a>
+                            <a href="mailto:help@company.sa">help@company.sa</a>
                         </address>
                     </dd>
                 </div>
@@ -289,7 +289,7 @@ related:
                         <span class="nds-label">User guide</span>
                     </dt>
                     <dd>
-                        <a href="#" class="nds-btn nds-secondary nds-md">
+                        <a href="#" class="nds-btn nds-secondary">
                             <span class="nds-label">Download user guide</span>
                         </a>
                     </dd>
@@ -301,13 +301,13 @@ related:
                         <span class="nds-label">Mobile apps</span>
                     </dt>
                     <dd class="nds-flex">
-                        <a class="nds-btn nds-secondary-outline nds-xl nds-icon-only" href="#" target="_blank" aria-label="Apple App Store">
+                        <a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" aria-label="Apple App Store">
                             <i class="nds-icon nds-icon-apple" aria-hidden="true"></i>
                         </a>
-                        <a class="nds-btn nds-secondary-outline nds-xl nds-icon-only" href="#" target="_blank" aria-label="Google Play Store">
+                        <a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" aria-label="Google Play Store">
                             <i class="nds-icon nds-icon-google-play" aria-hidden="true"></i>
                         </a>
-                        <a class="nds-btn nds-secondary-outline nds-xl nds-icon-only" href="#" target="_blank" aria-label="Huawei AppGallery">
+                        <a class="nds-btn nds-secondary-outline nds-icon-only" href="#" target="_blank" aria-label="Huawei AppGallery">
                             <i class="nds-icon nds-icon-huawei" aria-hidden="true"></i>
                         </a>
                     </dd>

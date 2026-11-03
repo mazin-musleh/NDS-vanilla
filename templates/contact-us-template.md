@@ -327,9 +327,7 @@ sidemenu_mode: false
                                 <span class="nds-label">Phone</span>
                             </dt>
                             <dd class="nds-definition-action">
-                                <a href="tel:9200343222" class="nds-primary">
-                                    <span class="nds-label">9200343222</span>
-                                </a>
+                                <a href="tel:9200343222">9200343222</a>
                                 <button type="button" class="nds-btn nds-subtle nds-icon-only nds-copy"
                                     data-copy="9200343222" aria-label="Copy phone number">
                                     <i class="nds-icon nds-hgi-copy-01"></i>
@@ -342,9 +340,7 @@ sidemenu_mode: false
                                 <span class="nds-label">SMS</span>
                             </dt>
                             <dd class="nds-definition-action">
-                                <a href="sms:199099" class="nds-primary">
-                                    <span class="nds-label">199099</span>
-                                </a>
+                                <a href="sms:199099">199099</a>
                                 <button type="button" class="nds-btn nds-subtle nds-icon-only nds-copy"
                                     data-copy="199099" aria-label="Copy SMS number">
                                     <i class="nds-icon nds-hgi-copy-01"></i>
@@ -357,9 +353,7 @@ sidemenu_mode: false
                                 <span class="nds-label">Email</span>
                             </dt>
                             <dd class="nds-definition-action">
-                                <a href="mailto:help@company.sa" class="nds-primary">
-                                    <span class="nds-label">help@company.sa</span>
-                                </a>
+                                <a href="mailto:help@company.sa">help@company.sa</a>
                                 <button type="button" class="nds-btn nds-subtle nds-icon-only nds-copy"
                                     data-copy="help@company.sa" aria-label="Copy email">
                                     <i class="nds-icon nds-hgi-copy-01"></i>
@@ -372,9 +366,7 @@ sidemenu_mode: false
                                 <span class="nds-label">FAX</span>
                             </dt>
                             <dd class="nds-definition-action">
-                                <a href="tel:+966114346654" class="nds-primary">
-                                    <span class="nds-label">00966-11-434-6654</span>
-                                </a>
+                                <a href="tel:+966114346654">00966-11-434-6654</a>
                                 <button type="button" class="nds-btn nds-subtle nds-icon-only nds-copy"
                                     data-copy="00966-11-434-6654" aria-label="Copy fax number">
                                     <i class="nds-icon nds-hgi-copy-01"></i>
@@ -387,27 +379,27 @@ sidemenu_mode: false
                                 <span class="nds-label">Location</span>
                             </dt>
                             <dd>
-                                <a href="https://maps.google.com/?q=Riyadh" target="_blank" class="nds-primary">
-                                    <span class="nds-label">Riyadh</span>
+                                <a href="https://maps.google.com/?q=Riyadh" target="_blank">Riyadh</a>
+                            </dd>
+                        </div>
+                        <div class="nds-definition-item">
+                            <dt>
+                                <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
+                                <span class="nds-label">Follow us</span>
+                            </dt>
+                            <dd class="nds-flex">
+                                <a href="https://x.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only" aria-label="Follow us on X">
+                                    <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
+                                </a>
+                                <a href="https://linkedin.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only" aria-label="Follow us on LinkedIn">
+                                    <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
+                                </a>
+                                <a href="https://instagram.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only" aria-label="Follow us on Instagram">
+                                    <i class="hgi hgi-stroke hgi-instagram" aria-hidden="true"></i>
                                 </a>
                             </dd>
                         </div>
                     </dl>
-                </div>
-
-                <div class="nds-sideinfo-group">
-                    <span class="nds-sideinfo-title">Follow us</span>
-                    <div class="nds-social-links">
-                        <a href="https://x.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only" aria-label="Follow us on X">
-                            <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
-                        </a>
-                        <a href="https://linkedin.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only" aria-label="Follow us on LinkedIn">
-                            <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
-                        </a>
-                        <a href="https://instagram.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only" aria-label="Follow us on Instagram">
-                            <i class="hgi hgi-stroke hgi-instagram"></i>
-                        </a>
-                    </div>
                 </div>
 
                 <div class="nds-divider"></div>
@@ -421,9 +413,7 @@ sidemenu_mode: false
                                 <span class="nds-label">Civil defence</span>
                             </dt>
                             <dd class="nds-definition-action">
-                                <a href="tel:998" class="nds-primary">
-                                    <span class="nds-label">998</span>
-                                </a>
+                                <a href="tel:998">998</a>
                                 <button type="button" class="nds-btn nds-subtle nds-icon-only nds-copy"
                                     data-copy="998" aria-label="Copy civil defence number">
                                     <i class="nds-icon nds-hgi-copy-01"></i>
@@ -436,9 +426,7 @@ sidemenu_mode: false
                                 <span class="nds-label">Police</span>
                             </dt>
                             <dd class="nds-definition-action">
-                                <a href="tel:999" class="nds-primary">
-                                    <span class="nds-label">999</span>
-                                </a>
+                                <a href="tel:999">999</a>
                                 <button type="button" class="nds-btn nds-subtle nds-icon-only nds-copy"
                                     data-copy="999" aria-label="Copy police number">
                                     <i class="nds-icon nds-hgi-copy-01"></i>
@@ -451,9 +439,7 @@ sidemenu_mode: false
                                 <span class="nds-label">Ambulance</span>
                             </dt>
                             <dd class="nds-definition-action">
-                                <a href="tel:997" class="nds-primary">
-                                    <span class="nds-label">997</span>
-                                </a>
+                                <a href="tel:997">997</a>
                                 <button type="button" class="nds-btn nds-subtle nds-icon-only nds-copy"
                                     data-copy="997" aria-label="Copy ambulance number">
                                     <i class="nds-icon nds-hgi-copy-01"></i>
