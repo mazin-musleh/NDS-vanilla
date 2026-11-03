@@ -163,7 +163,7 @@ Two more slips, not planted, that the agent may name: `/clinics`' filters are th
 
 ### Rig 9: an Angular portal
 
-**Tests:** a port in the framework that works most unlike the others: Angular renders with no zone (signals decide when the view updates), scopes component styles with its own attributes, sanitizes `[innerHTML]`, and swaps lazy routes and `@if`/`@for` blocks. The pages use the layouts no other rig reaches: Life Journey, Journey Service, E-Participation, Help & Support, and an article page whose side menu sits on top on phones.
+**Tests:** a port in the framework that works most unlike the others: Angular renders with no zone (signals decide when the view updates), scopes component styles with its own attributes, sanitizes `[innerHTML]`, and swaps lazy routes and `@if`/`@for` blocks. It grades the Angular half only. The legacy app's content already has the shape of the Life Journey, Journey Service, E-Participation and Help & Support templates, so a template match proves nothing: it is a leak, not a layout test.
 
 **Dev answers:** porting strategy: the agent's recommendation; the digital stamp: "No"; pacing: `whole plan`.
 
@@ -172,7 +172,6 @@ Two more slips, not planted, that the agent may name: `/clinics`' filters are th
 - The language switch flips `lang` and `dir` in place, with no reload, and NDS components follow it.
 - No NDS internal is restyled through `::ng-deep` or a component stylesheet. The legacy `::ng-deep` overrides leave with the ported pages.
 - The article HTML from the old CMS renders as prose. The agent never bypasses the sanitizer to bring back the stripped `onclick`.
-- Journeys use the Life Journey templates, the service page the Journey Service template, consultations the E-Participation template, and the help center the Help & Support template. The article page puts its side menu on top on phones.
 - Consultation `C-104` fails on submit, and the error shows in NDS. A ticket email ending `@fail.test` fails, and each field type validates on its own.
 - No Angular Material is left on a ported page.
 
