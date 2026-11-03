@@ -266,7 +266,7 @@ related:
                         <i class="hgi hgi-stroke hgi-help-circle" aria-hidden="true"></i>
                         <span class="nds-label">Common questions</span>
                     </dt>
-                    <dd><a href="#" class="nds-btn nds-transparent nds-color"><span class="nds-label">FAQ</span></a></dd>
+                    <dd><a href="#">FAQ</a></dd>
                 </div>
                 <div class="nds-definition-item">
                     <dt>

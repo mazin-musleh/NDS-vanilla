@@ -117,7 +117,7 @@ sidemenu_mode: false
                             <i class="hgi hgi-stroke hgi-help-circle"></i>
                             <span class="nds-label">Common Questions</span>
                         </dt>
-                        <dd><a href="#faq" class="nds-btn nds-transparent nds-color"><span class="nds-label">FAQ</span></a></dd>
+                        <dd><a href="#faq">FAQ</a></dd>
                     </div>
                     <div class="nds-definition-item">
                         <dt>

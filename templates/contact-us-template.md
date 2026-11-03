@@ -387,16 +387,18 @@ sidemenu_mode: false
                                 <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
                                 <span class="nds-label">Follow us</span>
                             </dt>
-                            <dd class="nds-flex">
-                                <a href="https://x.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only" aria-label="Follow us on X">
-                                    <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
-                                </a>
-                                <a href="https://linkedin.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only" aria-label="Follow us on LinkedIn">
-                                    <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
-                                </a>
-                                <a href="https://instagram.com/" target="_blank" class="nds-btn nds-subtle nds-icon-only" aria-label="Follow us on Instagram">
-                                    <i class="hgi hgi-stroke hgi-instagram" aria-hidden="true"></i>
-                                </a>
+                            <dd>
+                                <div class="nds-btn-group nds-seamless">
+                                    <a href="https://x.com/" target="_blank" class="nds-btn nds-transparent nds-icon-only" aria-label="Follow us on X">
+                                        <i class="nds-icon nds-hgi-new-twitter" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="https://linkedin.com/" target="_blank" class="nds-btn nds-transparent nds-icon-only" aria-label="Follow us on LinkedIn">
+                                        <i class="nds-icon nds-hgi-linkedin-02" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="https://instagram.com/" target="_blank" class="nds-btn nds-transparent nds-icon-only" aria-label="Follow us on Instagram">
+                                        <i class="hgi hgi-stroke hgi-instagram" aria-hidden="true"></i>
+                                    </a>
+                                </div>
                             </dd>
                         </div>
                     </dl>
