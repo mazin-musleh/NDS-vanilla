@@ -433,15 +433,9 @@
             // [data-state~="selected"] item, so consumers can drive it from
             // data without editing the item markup.
             const initialValue = this.dropmenu.getAttribute('data-select-value');
-            let initialItem = null;
-            if (initialValue != null) {
-                initialItem = this._getOwnItems()
-                    .find(el => el.getAttribute('data-value') === initialValue) || null;
-            }
-            if (!initialItem) {
-                initialItem = this._getOwnItems()
-                    .find(el => NDS.state.has(el, 'selected')) || null;
-            }
+            const ownItems = this._getOwnItems();
+            const initialItem = (initialValue != null && ownItems.find(el => el.getAttribute('data-value') === initialValue))
+                || ownItems.find(el => NDS.state.has(el, 'selected')) || null;
             // The trigger's own text, before a pick replaces it: what a form reset with no first pick shows.
             const triggerLabel = this.trigger !== this.dropmenu && (this.trigger.querySelector('.nds-label') || this.trigger);
             const startLabel = triggerLabel ? triggerLabel.textContent : '';
