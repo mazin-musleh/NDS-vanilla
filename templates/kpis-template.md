@@ -497,12 +497,12 @@ sidemenu_mode: false
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Application Submission</td><td>124,300</td><td>82%</td><td>94%</td><td>88%</td><td>12 SAR</td><td>0.4 kg</td></tr>
-                        <tr><td>Document Verification</td><td>98,200</td><td>76%</td><td>91%</td><td>85%</td><td>8 SAR</td><td>0.2 kg</td></tr>
-                        <tr><td>Fee Payment</td><td>87,500</td><td>95%</td><td>98%</td><td>90%</td><td>5 SAR</td><td>0.1 kg</td></tr>
-                        <tr><td>Certificate Issuance</td><td>54,300</td><td>88%</td><td>92%</td><td>86%</td><td>10 SAR</td><td>0.3 kg</td></tr>
-                        <tr><td>Status Tracking</td><td>72,100</td><td>92%</td><td>97%</td><td>89%</td><td>3 SAR</td><td>0.1 kg</td></tr>
-                        <tr><td>Support Request</td><td>21,800</td><td>70%</td><td>85%</td><td>78%</td><td>15 SAR</td><td>0.5 kg</td></tr>
+                        <tr><td>Application Submission</td><td>124,300</td><td>82%</td><td>94%</td><td>88%</td><td><span class="nds-number-format" data-currency="SAR">12</span></td><td>0.4 kg</td></tr>
+                        <tr><td>Document Verification</td><td>98,200</td><td>76%</td><td>91%</td><td>85%</td><td><span class="nds-number-format" data-currency="SAR">8</span></td><td>0.2 kg</td></tr>
+                        <tr><td>Fee Payment</td><td>87,500</td><td>95%</td><td>98%</td><td>90%</td><td><span class="nds-number-format" data-currency="SAR">5</span></td><td>0.1 kg</td></tr>
+                        <tr><td>Certificate Issuance</td><td>54,300</td><td>88%</td><td>92%</td><td>86%</td><td><span class="nds-number-format" data-currency="SAR">10</span></td><td>0.3 kg</td></tr>
+                        <tr><td>Status Tracking</td><td>72,100</td><td>92%</td><td>97%</td><td>89%</td><td><span class="nds-number-format" data-currency="SAR">3</span></td><td>0.1 kg</td></tr>
+                        <tr><td>Support Request</td><td>21,800</td><td>70%</td><td>85%</td><td>78%</td><td><span class="nds-number-format" data-currency="SAR">15</span></td><td>0.5 kg</td></tr>
                     </tbody>
                 </table>
             </div>

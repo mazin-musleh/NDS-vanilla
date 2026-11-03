@@ -378,6 +378,24 @@
             'Name what the section or card holds, or drop its title: the page title already names the page.', undefined, elements.length);
     } });
 
+    // A price typed as text skips the Riyal sign and the separators the number format draws (rig 2: "1200 ريال").
+    // ponytail: riyals only; add other currency words when a site needs them.
+    addRule({ id: 'price-text', group: 'structure', docs: 'utilities/numbers.html', check(context) {
+        const root = context.find('main')[0];
+        if (!root) return;
+        const price = /\d[\d,.٬٫]*\s*(ريال|ر\.س|SAR|SR\b|riyals?\b|⃁)|(SAR|SR|ر\.س|⃁)\s*\d/i;
+        // Sentences keep their words: only a value shown as data (a cell, a field, a figure) is flagged.
+        const sentence = '.nds-prose, p, blockquote, .nds-description, .nds-card-description, .nds-number-format, pre, script, style, textarea';
+        const elements = [];
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+        for (let node; (node = walker.nextNode());) {
+            const el = node.parentElement;
+            if (price.test(node.textContent) && !el.closest(sentence) && !elements.includes(el) && el.getClientRects().length) elements.push(el);
+        }
+        if (elements.length) context.report(elements[0], `a price written as text, "${elements[0].textContent.trim().slice(0, 40)}"${elements.length > 1 ? ` (${elements.length} places; the first is shown)` : ''}: it shows no Riyal sign and no separators.`,
+            'Write the number alone in <span class="nds-number-format" data-currency="SAR">1200</span>, and drop the currency word.', undefined, elements.length);
+    } });
+
     // ── i18n ─────────────────────────────────────────────────────────
 
     addRule({ id: 'i18n-pack', group: 'i18n', severity: 'error', docs: 'core/i18n.html', check(context) {

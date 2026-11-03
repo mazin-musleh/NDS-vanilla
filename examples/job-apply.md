@@ -10,7 +10,7 @@ breadcrumb:
 lang: en
 direction: ltr
 sidemenu_mode: false
-last_edit: "25/10/2026 - 05:46 PM"
+last_edit: "03/11/2026 - 08:12 PM"
 ---
 
 <!-- Layout rules: one job post, with its application on the same page.
@@ -430,7 +430,7 @@ last_edit: "25/10/2026 - 05:46 PM"
                             <i class="hgi hgi-stroke hgi-money-bag-02" aria-hidden="true"></i>
                             <span class="nds-label">Salary</span>
                         </dt>
-                        <dd>SAR 18,000 to 26,000 a month</dd>
+                        <dd><span class="nds-number-format" data-currency="SAR">18000</span> to <span class="nds-number-format" data-currency="SAR">26000</span> a month</dd>
                     </div>
                     <div class="nds-definition-item">
                         <dt>
