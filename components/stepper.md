@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "03/11/2026 - 03:14 PM"
 ---
 
 <section id="stepper-overview" class="nds-content-section nds-doc-overview">
@@ -492,7 +492,7 @@ A stepper in the page starts by itself. The instance is on the element as `el.nd
 | `NDS.Stepper.control(idOrEl, action, value)` | What a control button calls. `action` is `next`, `previous` or `goto`, and `value` is the step for `goto` |
 | `instance.next()`, `instance.prev()`, `instance.goTo(step)` | The same moves on one instance |
 | `instance.current`, `instance.total`, `instance.progress` | The current step, the number of steps, and the percent done. `current` is one past the last step when the flow is completed |
-| `instance.destroy()` | Removes the instance and its start marks, so `init()` can start the stepper again |
+| `instance.destroy()` | Removes the instance. The stepper keeps its look, and a later `init()` or `create()` starts it again |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |

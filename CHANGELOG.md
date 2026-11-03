@@ -261,6 +261,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Top Bar** — Today, the clock and the weather are [Meta](https://mazin-musleh.github.io/NDS-vanilla/components/meta.html) lines, at Meta's LG size: 16px at every width (the text shrank to 12–14px on tablets). `nds-md` or `nds-sm` on the item's `.nds-meta` picks a smaller one.
 
 ### Fixed
+- **Alert** — An alert that is not a toast and has `closable: false` shows no close button, also with a `duration`. The `duration` added a close button, though only a toast closes itself.
 - **Pagination** — `NDS.Pagination.setPage()` with a page the nav does not have does nothing, as a click does. Before, it took the highlight off the current page and wrote the missing page into `?page=` and `data-active-page`.
 - **Section** — An image in `nds-section-image` moves above the head when it leaves the head less than 13rem, and a wide image shrinks to fit the section. On a phone, a 120px image squeezed the title into a narrow column, and a wide image was cut off.
 - **Accordion, Breadcrumb, Filter, Pagination and Stepper** — `destroy()` on a component that stays in the page leaves it as it is. Before, the loading bars came back over it, or over a filter's items. A later `init()` or `create()` sets it up again, as before.

@@ -125,9 +125,11 @@
                 </div>
             `;
 
-            if (closable || duration > 0) {
-                const progressClass = (display === 'toast' && duration > 0) ? ' nds-progress' : '';
-                const progressSvg = (display === 'toast' && duration > 0) ? `
+            // Only a toast closes itself, so only a timed toast forces the close button (it carries the ring).
+            const timedToast = display === 'toast' && duration > 0;
+            if (closable || timedToast) {
+                const progressClass = timedToast ? ' nds-progress' : '';
+                const progressSvg = timedToast ? `
                     <div class="nds-progress-circle">
                         <svg width="100%" height="100%" viewBox="0 0 24 24">
                             <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
@@ -149,7 +151,7 @@
             if (closeBtn) strings.set(closeBtn, 'aria-label', 'close');
 
             // Knob via CSSOM, never a style attribute — a strict style-src blocks the attribute form.
-            if (display === 'toast' && duration > 0) {
+            if (timedToast) {
                 closeBtn.style.setProperty('--progress-duration', `${Number(duration)}ms`);
             }
 
