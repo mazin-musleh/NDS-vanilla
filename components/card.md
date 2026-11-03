@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 10:25 PM"
+last_edit: "04/11/2026 - 12:15 AM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -329,7 +329,7 @@ Pick another component when:
 | Structure | Progress (hint: A progress ring beside a short title. Turns on Row, Reverse and Middle) (id: progress) (demo: + row) (demo: + reverse) (demo: + middle) | canon `#card-progress` | — | A [progress ring](../components/progress) beside a short title, as on a life journey page. Write Row, Reverse and Middle too: the ring closes the row, and the title sits level with its middle |
 | Structure | Status (hint: The outcome of an action, in a page with other content) (id: status) | canon `#card-status` | — | The outcome of an action, centered, with a large icon and the way forward, such as a booking that went through above its details. A page that shows only the outcome is a [Status Section](../layout/status-section). Set `data-status` on the card: the [feedback](../components/feedback) chip takes its icon and color from it, as in a status section |
 | Structure | Header title (hint: The title in the header, over a list) (id: header-title) (demo: + text-md) (demo: + breakout) | canon `#card-header-title` | — | A panel card: the title sits in the header, beside an icon when the content has none of its own, and the content holds a list, a table or a chart. Wrap the title in `.nds-card-text`, as in the content. A one-line title centers on the icon. A taller text starts level with the icon's top |
-| Layout (any) | Row (limit: 1 layout) (hint: Header beside the content, instead of above it) (id: row) (not: header-title) | `.nds-horizontal` | `.nds-card` | Header beside content. The header goes on top when it no longer fits beside 13rem of text: an image then fills the width. A card narrower than 324px always stacks |
+| Layout (any) | Row (limit: 1 layout) (hint: Header beside the content, instead of above it) (id: row) (not: header-title) | `.nds-horizontal` | `.nds-card` | Header beside content. The header goes on top when it no longer fits beside 13rem of text: an image then fills the width. A card narrower than 324px always stacks. The actions end the row when they fit beside the text, and go under it in a card narrower than 480px |
 | Layout (any) | Center (limit: 1 layout) (not: statistic, header-title, link, status) | `.nds-center` | `.nds-card` | Centers every part. Put it on the card root only: the featured icon reads it there, so on an inner part it centers nothing. It does not move the card: its container places it |
 | Layout (any) | Reverse (hint: Header at the end side. Row only) (id: reverse) | `.nds-reverse` | `.nds-card.nds-horizontal` | Puts the header at the end side of the row, after the content. For a figure that closes the row, such as a progress ring. Row only |
 | Layout (any) | Middle (hint: Short content in the middle, top to bottom) (id: middle) | `.nds-middle` | `.nds-card` | Puts short content in the middle of the card's height, instead of at the top. For a row card whose header is taller than its text, or a card stretched to its row in a grid. The text keeps its side: to center it across too, add Center |

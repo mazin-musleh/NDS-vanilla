@@ -180,8 +180,17 @@
       }
     }
 
+    // The actions end the row when they fit beside the text, and take their own line when not.
+    // A 0 basis: the action row's 100% width would always push them onto a line of their own.
     > .nds-card-actions {
-      flex-basis: 100%;
+      flex: 1;
+    }
+
+    // A narrow card keeps the text its room: the actions go under it.
+    @container (width < 480px) {
+      > .nds-card-actions {
+        flex-basis: 100%;
+      }
     }
 
     // Reverse: the header at the end side of the row, for a figure that closes it (a progress
