@@ -110,7 +110,10 @@
     display: flex;
     flex-direction: column;
     row-gap: var(--_dl-gap);
-    @include btn-md; // a button in the list steps with it; its own size class still wins
+    // A button, tag or chip in the list steps with it; its own size class still wins.
+    @include btn-md;
+    @include tag-sm; // tags and chips take their two lowest steps
+    @include chip-md;
 
     &.nds-sm {
         --dl-icon-size: 20px;
@@ -121,6 +124,8 @@
         --dl-desc-LH: var(--typo-text-sm-LH);
         --row-gap: var(--spacing-lg);
         @include btn-sm;
+        @include tag-xs;
+        @include chip-sm;
     }
 
     // Always-on tableView

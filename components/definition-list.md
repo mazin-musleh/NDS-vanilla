@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 04:27 PM"
+last_edit: "03/11/2026 - 04:46 PM"
 ---
 
 <section id="dl-overview" class="nds-content-section nds-doc-overview">
@@ -109,8 +109,8 @@ The Layout, Style, Emphasis, Size and Loading rows go on the list. The two Cards
 | Style | Cards | `.nds-card` | `.nds-definition-item` | Each item in its own card |
 | Style | Cards | `.nds-stroke` | `.nds-definition-item` | The same: gives each card its border |
 | Emphasis | Highlight value | `.nds-highlight-value` | `.nds-definition-list` | The value bold, the title muted. For records the reader scans by value, such as a student's status card |
-| Size | MD (default) | — | — | A 24px icon, 16px text, MD buttons and the larger gap. A size class on a button still wins |
-| Size | SM | `.nds-sm` | `.nds-definition-list` | A 20px icon, 14px text, SM buttons and a smaller gap |
+| Size | MD (default) | — | — | A 24px icon, 16px text, MD buttons, SM tags, MD chips and the larger gap. A size class on a button, tag or chip still wins |
+| Size | SM | `.nds-sm` | `.nds-definition-list` | A 20px icon, 14px text, SM buttons, XS tags, SM chips and a smaller gap |
 | Loading | Loading | `.nds-loading` | `.nds-definition-list` | Gray bars in place of the titles and values while the data loads. The icons hide |
 {: #dl-variants-table .nds-table .nds-responsive}
 
@@ -266,7 +266,7 @@ The Layout, Style, Emphasis, Size and Loading rows go on the list. The two Cards
 ### CSS Custom Properties
 {: .nds-block-title}
 
-Set these on the list. `nds-sm` sets the icon size, the title and value sizes, the buttons and the row gap. A value in the list's `style` attribute wins over the size class.
+Set these on the list. `nds-sm` sets the icon size, the title and value sizes, the buttons, tags and chips, and the row gap. A value in the list's `style` attribute wins over the size class.
 
 | Property | Default | Controls |
 |---|---|---|
