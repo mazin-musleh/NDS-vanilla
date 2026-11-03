@@ -1677,7 +1677,8 @@
         setPage: function(container, pageNumber) {
             const pagination = resolveList(container);
             const { min, max } = getPageBounds(getAllPageElements(pagination));
-            if (!Number.isFinite(min)) return;
+            // Same check as a click: a page the nav lacks would clear the highlight and land in ?page=.
+            if (!Number.isFinite(min) || !hasPage(pagination, pageNumber)) return;
             setActivePage(pagination, pageNumber);
             setPrevNextStates(pagination, pageNumber, min, max);
             scrollOnPageChange(pagination);
