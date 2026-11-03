@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "03/11/2026 - 09:20 AM"
 ---
 
 <section id="sideinfo-overview" class="nds-content-section nds-doc-overview">
@@ -267,7 +267,7 @@ The `aside` shows where it is in the markup: after the content, it is on the end
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Compact Facts</span>
-              <p class="nds-card-description">A definition list in the column gets larger icons (24px) and smaller labels. A transparent button in a value loses its padding, so it lines up with the text.</p>
+              <p class="nds-card-description">A definition list in the column keeps its own size: large by default, or the size class on the list. A transparent button in a value loses its padding, so it lines up with the text.</p>
             </div>
           </div>
         </li>

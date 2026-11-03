@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 03:47 PM"
+last_edit: "03/11/2026 - 10:30 AM"
 ---
 
 <section id="dl-overview" class="nds-content-section nds-doc-overview">
@@ -131,8 +131,8 @@ The Layout, Style, Emphasis, Size and Loading rows go on the list. The two Cards
 | Style | Cards | `.nds-card` | `.nds-definition-item` | Each item in its own card |
 | Style | Cards | `.nds-stroke` | `.nds-definition-item` | The same: gives each card its border |
 | Emphasis | Highlight value | `.nds-highlight-value` | `.nds-definition-list` | The value large and bold, the title small and muted. For records the reader scans by value, such as a student's status card |
-| Size | LG (default) | — | — | A 20px icon, a large title and the largest gap |
-| Size | MD | `.nds-md` | `.nds-definition-list` | An 18px icon, a medium title, the same value size and a smaller gap |
+| Size | LG (default) | — | — | A 24px icon, a large title and the largest gap |
+| Size | MD | `.nds-md` | `.nds-definition-list` | A 20px icon, a medium title, the same value size and a smaller gap |
 | Size | SM | `.nds-sm` | `.nds-definition-list` | An 18px icon, a small title, a small value and the smallest gap |
 | Loading | Loading | `.nds-loading` | `.nds-definition-list` | Gray bars in place of the titles and values while the data loads. The icons hide |
 {: #dl-variants-table .nds-table .nds-responsive}
@@ -293,11 +293,13 @@ Set these on the list. The size classes set the icon size, the title size and th
 
 | Property | Default | Controls |
 |---|---|---|
-| `--dl-icon-size` | `20px` | Size of a title icon. An icon never renders below 18px |
-| `--dl-icon-gap` | half of `--dl-icon-size` | Gap between a title icon and its label |
+| `--dl-icon-size` | `24px` | Size of a title icon. An icon never renders below 18px |
+| `--dl-icon-gap` | `12px` | Gap between a title icon and its label. `nds-md` and `nds-sm` set `8px` |
 | `--dl-title-FS` | `var(--typo-text-lg-FS)` | Title font size. `nds-md` sets `--typo-text-md-FS` and `nds-sm` sets `--typo-text-sm-FS` |
+| `--dl-title-LH` | `var(--typo-text-lg-LH)` | Title line height. `nds-md` sets `--typo-text-md-LH` and `nds-sm` sets `--typo-text-sm-LH`. Set it with a custom `--dl-title-FS` |
 | `--dl-desc-FS` | `var(--typo-text-md-FS)` | Value font size. `nds-sm` sets `--typo-text-sm-FS` |
-| `--row-gap` | `var(--spacing-lg)` | Gap between items |
+| `--dl-desc-LH` | `var(--typo-text-md-LH)` | Value line height. `nds-sm` sets `--typo-text-sm-LH`. Set it with a custom `--dl-desc-FS` |
+| `--row-gap` | `var(--spacing-xl)` | Gap between items, on each side of a divider and between table rows. `nds-md` sets `--spacing-lg` and `nds-sm` sets `--spacing-md` |
 | `--col-gap` | `var(--spacing-xl)` | Gap between a title and its value in the table layout. The row layout uses `var(--spacing-sm)` |
 | `--gap` | — | Sets both gaps when `--row-gap` and `--col-gap` are not set |
 {: .nds-table .nds-responsive}

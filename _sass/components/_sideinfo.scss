@@ -130,14 +130,6 @@
         }
 
         .nds-definition-list {
-            --dl-icon-size: 24px;
-            --dl-icon-gap: var(--spacing-md);
-            gap: var(--spacing-xl);
-
-            dt {
-                font-size: var(--typo-text-md-FS);
-            }
-
             dd {
                 .nds-btn.nds-transparent {
                     padding: 0;
