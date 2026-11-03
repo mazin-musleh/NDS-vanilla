@@ -25,7 +25,8 @@
  *   data-rating-value   a hidden input in the root or its .nds-form-group: the component
  *                 writes the score into it (0 for none), so it posts with the form; a form
  *                 reset restores the first score. User Feedback shares the hook
- *   written by the component: data-value on each .nds-rating-star (its 1-based position)
+ *   written by the component: data-value on each .nds-rating-star (its 1-based position);
+ *                 on a display rating, aria-describedby at its .nds-rating-text (given an id)
  * Gotchas:
  *   - Interactive mode is auto-detected: <button> stars on a root that is not disabled
  *     gain data-state="interactive". Non-button stars stay display-only.
@@ -41,6 +42,7 @@
   'use strict';
 
   // English defaults; the assets/i18n/{lang}.json pack overrides them.
+  let textIdCount = 0;
   const strings = NDS.i18n.getStrings('rating', {
     stars: { one: '{n} star', other: '{n} stars' },
     score: '{n} of {total}',
@@ -144,6 +146,11 @@
       if (this._isButtons) return;
       if (!this.rating.hasAttribute('role')) this.rating.setAttribute('role', 'img');
       strings.set(this.rating, 'aria-label', 'score', { n: this._currentRating, total: this._stars.length });
+      // A role="img" root hides its children: the count is read as the image's description.
+      const text = this.rating.querySelector(':scope > .nds-rating-text');
+      if (!text) return;
+      if (!text.id) text.id = `nds-rating-text-${++textIdCount}`;
+      this.rating.setAttribute('aria-describedby', text.id);
     }
 
     _showPreview(value) {

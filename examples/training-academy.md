@@ -9,7 +9,7 @@ lang: en
 direction: ltr
 content_class: nds-stripe
 sidemenu_mode: false
-last_edit: "24/10/2026 - 11:27 PM"
+last_edit: "03/11/2026 - 08:37 PM"
 ---
 
 <!-- Layout rules: pick a list's look by how much each item holds.
@@ -146,15 +146,13 @@ last_edit: "24/10/2026 - 11:27 PM"
                                         <span class="nds-label">Intermediate</span>
                                     </span>
                                 </div>
-                                <div class="nds-card-rating">
-                                    <div class="nds-rating" data-rating="4.7">
-                                        <span class="nds-rating-star"></span>
-                                        <span class="nds-rating-star"></span>
-                                        <span class="nds-rating-star"></span>
-                                        <span class="nds-rating-star"></span>
-                                        <span class="nds-rating-star"></span>
-                                    </div>
-                                    <span class="nds-card-rating-text">(86 reviews)</span>
+                                <div class="nds-rating" data-rating="4.7">
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-text">(86 reviews)</span>
                                 </div>
                             </div>
                         </div>
@@ -194,15 +192,13 @@ last_edit: "24/10/2026 - 11:27 PM"
                                         <span class="nds-label">Beginner</span>
                                     </span>
                                 </div>
-                                <div class="nds-card-rating">
-                                    <div class="nds-rating" data-rating="4.4">
-                                        <span class="nds-rating-star"></span>
-                                        <span class="nds-rating-star"></span>
-                                        <span class="nds-rating-star"></span>
-                                        <span class="nds-rating-star"></span>
-                                        <span class="nds-rating-star"></span>
-                                    </div>
-                                    <span class="nds-card-rating-text">(132 reviews)</span>
+                                <div class="nds-rating" data-rating="4.4">
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-text">(132 reviews)</span>
                                 </div>
                             </div>
                         </div>
@@ -241,15 +237,13 @@ last_edit: "24/10/2026 - 11:27 PM"
                                         <span class="nds-label">All levels</span>
                                     </span>
                                 </div>
-                                <div class="nds-card-rating">
-                                    <div class="nds-rating" data-rating="4.9">
-                                        <span class="nds-rating-star"></span>
-                                        <span class="nds-rating-star"></span>
-                                        <span class="nds-rating-star"></span>
-                                        <span class="nds-rating-star"></span>
-                                        <span class="nds-rating-star"></span>
-                                    </div>
-                                    <span class="nds-card-rating-text">(41 reviews)</span>
+                                <div class="nds-rating" data-rating="4.9">
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-text">(41 reviews)</span>
                                 </div>
                             </div>
                         </div>
@@ -288,15 +282,13 @@ last_edit: "24/10/2026 - 11:27 PM"
                                         <span class="nds-label">All levels</span>
                                     </span>
                                 </div>
-                                <div class="nds-card-rating">
-                                    <div class="nds-rating" data-rating="4.6">
-                                        <span class="nds-rating-star"></span>
-                                        <span class="nds-rating-star"></span>
-                                        <span class="nds-rating-star"></span>
-                                        <span class="nds-rating-star"></span>
-                                        <span class="nds-rating-star"></span>
-                                    </div>
-                                    <span class="nds-card-rating-text">(58 reviews)</span>
+                                <div class="nds-rating" data-rating="4.6">
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-text">(58 reviews)</span>
                                 </div>
                             </div>
                         </div>
@@ -340,15 +332,13 @@ last_edit: "24/10/2026 - 11:27 PM"
                                         <span class="nds-label">Intermediate</span>
                                     </span>
                                 </div>
-                                <div class="nds-card-rating">
-                                    <div class="nds-rating" data-rating="4.5">
-                                        <span class="nds-rating-star"></span>
-                                        <span class="nds-rating-star"></span>
-                                        <span class="nds-rating-star"></span>
-                                        <span class="nds-rating-star"></span>
-                                        <span class="nds-rating-star"></span>
-                                    </div>
-                                    <span class="nds-card-rating-text">(23 reviews)</span>
+                                <div class="nds-rating" data-rating="4.5">
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-star"></span>
+                                    <span class="nds-rating-text">(23 reviews)</span>
                                 </div>
                             </div>
                         </div>

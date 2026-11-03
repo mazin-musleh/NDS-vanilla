@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "03/11/2026 - 08:37 PM"
 ---
 
 <section id="rating-overview" class="nds-content-section nds-doc-overview">
@@ -44,6 +44,9 @@ Pick another component when:
   <span class="nds-rating-star"></span>
   <span class="nds-rating-star"></span>
 </div>
+</script>
+<script type="text/html" id="rating-text" data-canon>
+<span class="nds-rating-text">4.5 (124 reviews)</span>
 </script>
 <script type="text/html" id="rating-interactive" data-canon>
 <div class="nds-rating" data-rating="3.5">
@@ -118,10 +121,11 @@ Pick another component when:
 | Structure | Interactive | canon `#rating-interactive` | — | The user picks a score |
 | Structure | Form (id: form) | canon `#rating-form` | — | An interactive rating in a form: a group with a question and a hidden input that sends the score |
 | Structure | Menu | canon `#rating-menu` | — | A score summary in a trigger, with the vote in a panel. Style, Value and Loading change the summary rating |
-| Size | XS | `.nds-xs` | `.nds-rating:not(.nds-xs):not(.nds-dropmenu .nds-rating)` | 16px stars. Inline next to a title or a list item |
-| Size | SM | `.nds-sm` | `.nds-rating:not(.nds-dropmenu .nds-rating)` | 24px stars. Inline, a little larger |
-| Size | MD (default) | — | — | 32px stars. Most layouts |
-| Size | LG | `.nds-lg` | `.nds-rating:not(.nds-dropmenu .nds-rating)` | 48px stars, 40px on phones. A featured review or a hero |
+| Count | Count (hint: The score or a review count after the stars) (not: interactive, form, menu) | canon `#rating-text` | `.nds-rating:not(.nds-dropmenu .nds-rating)` | The score or the number of reviews after the stars, such as 4.5 (124 reviews). It works anywhere: in a card, a list or a page |
+| Size | XS | `.nds-xs` | `.nds-rating:not(.nds-xs):not(.nds-dropmenu .nds-rating)` | 16px stars and a 12px count. Inline next to a title or a list item |
+| Size | SM | `.nds-sm` | `.nds-rating:not(.nds-dropmenu .nds-rating)` | 24px stars and a 12px count. Inline, a little larger |
+| Size | MD (default) | — | — | 32px stars and a 14px count. Most layouts |
+| Size | LG | `.nds-lg` | `.nds-rating:not(.nds-dropmenu .nds-rating)` | 48px stars, 40px on phones, and a 16px count. A featured review or a hero |
 | Style | Brand | `.nds-brand` | `.nds-rating` | Stars in the brand primary color, not the secondary color |
 | Value | Empty (not: form) | `[data-rating="0"]` | `.nds-rating` | No star is filled. The start of a new vote |
 | Value | Whole (hint: 4 of 5 stars, no half star) (not: form) | `[data-rating="4"]` | `.nds-rating` | A whole number fills that many stars |
@@ -294,6 +298,7 @@ The Menu structure puts a display rating and a vote count in a [Dropmenu](../com
 - Use `nds-xs` or `nds-sm` next to a title or a list item. Use the default size in most layouts. Use `nds-lg` for a featured review.
 - In a [List](../components/list), leave the size class off. The list makes the stars SM, a small list (`nds-sm`) XS, and a large list (`nds-lg`) MD.
 - Set `data-rating` to the score on a display rating. Set it to `0` on an interactive rating that collects a new score.
+- Show the score or a review count with `.nds-rating-text`, last in `.nds-rating`, in a card or anywhere else. Do not borrow another component's parts for it.
 - Do not use a rating for a yes or no choice. Use a [Switch](../components/switch).
 - Do not use a rating to show progress. Use [Progress](../components/progress).
 - Use `nds-brand` where the secondary color does not fit the page identity.
@@ -349,6 +354,7 @@ Set these on `.nds-rating`. `--star-size` also reaches it from a parent, and it 
 | `--star-selected` | `var(--rating-star-default-selected)` | Color of a filled star |
 | `--star-pressed` | `var(--rating-star-default-pressed)` | Color of a star while pressed |
 | `--star-hovered` | `var(--rating-star-default-hovered)` | Color of a star on hover, interactive only |
+| `--rating-text-color` | `var(--text-secondary-paragraph)` | Color of the count text |
 {: .nds-table .nds-responsive}
 
 ### Tokens

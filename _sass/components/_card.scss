@@ -74,8 +74,6 @@
   --_card-subtitle-color: var(--card-subtitle-color, var(--_card-subtitle-color-base));
   --_card-number-color-base: var(--text-primary-strong);
   --_card-number-color: var(--card-number-color, var(--_card-number-color-base));
-  --_card-rating-color-base: var(--text-secondary-paragraph);
-  --_card-rating-color: var(--card-rating-color, var(--_card-rating-color-base));
   // A card fills its box: what lays cards side by side (List, Grid, Swiper) sizes them.
   // --card-width alone pins the width, so the max chains through it.
   --_card-width: var(--card-width, 100%);
@@ -233,9 +231,9 @@
       text-align: center;
     }
 
-    :is(.nds-card-rating) {
-      flex-direction: column;
-    }
+    // A centered card puts a rating's count under its stars.
+    .nds-rating { flex-wrap: wrap; justify-content: center; }
+    .nds-rating-text { flex-basis: 100%; margin-inline-start: 0; }
 
     // The text is a block: a narrow part (a logo) centers on its margins.
     .nds-card-text > :not(.nds-card-corner) {
@@ -443,25 +441,6 @@
     flex-wrap: wrap;
     gap: var(--spacing-md);
     align-items: flex-start;
-  }
-
-  // ==============================================
-  // CARD RATING SECTION
-  // ==============================================
-
-  .nds-card-rating {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-  }
-
-  // The --_card-*-FS/LH values below are steps a list's size sets on its items.
-  .nds-card-rating-text {
-    font-size: var(--_card-rating-text-FS-base, var(--typo-text-xs-FS));
-    line-height: var(--_card-rating-text-LH-base, var(--typo-text-xs-LH));
-    font-weight: var(--font-weight-regular);
-    color: var(--_card-rating-color);
-    margin: 0;
   }
 
   // ==============================================
@@ -736,7 +715,7 @@
   --_card-number-color-base: var(--text-oncolor-primary);
   --featuredicon-bg: var(--colors-alpha-white-10);
   --featuredicon-color: var(--featuredicons-icon-oncolor);
-  --_card-rating-color-base: var(--colors-alpha-white-80);
+  --_rating-text-color-base: var(--colors-alpha-white-80);
 }
 
 
@@ -792,7 +771,7 @@
   --_card-border-color: var(--border-disabled);
   --featuredicon-color: var(--icon-default-disabled);
   --featuredicon-bg: var(--background-inverse-disabled);
-  --_card-rating-color: var(--text-default-disabled);
+  --_rating-text-color-base: var(--text-default-disabled);
   box-shadow: none;
   pointer-events: none;
 
@@ -837,7 +816,7 @@ html:not([data-nds-loaded]) .nds-card {
   }
 
   :is(.nds-card-title, .nds-card-subtitle, .nds-card-description,
-    .nds-card-number, .nds-card-rating-text) {
+    .nds-card-number, .nds-rating-text) {
     @include skeleton-bar;
   }
 
@@ -912,6 +891,8 @@ html:not([data-nds-loaded]) .nds-card {
   --_avatar-size-default: 64px;
   --_progress-size-default: 80px;
   --_star-size-default: 24px;
+  --_rating-text-FS-default: var(--typo-text-xs-FS);
+  --_rating-text-LH-default: var(--typo-text-xs-LH);
   --_tag-height-default: 24px;
   --_tag-fs-default: var(--typo-text-sm-FS);
   --_tag-padding-inline-default: var(--spacing-md);
