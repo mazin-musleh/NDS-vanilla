@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 05:53 PM"
+last_edit: "04/11/2026 - 12:28 AM"
 ---
 
 <section id="tag-overview" class="nds-content-section nds-doc-overview">
@@ -186,6 +186,7 @@ A row on `.nds-tag:not([data-status])` applies to a standard tag only, and a row
 
 - Use tags for labels that people read and do not click. For a label the user picks or removes, use [Chips](../components/chips).
 - Use a status tag for the state of an item. Write the state in the label: every status shows the same dot, so the color alone does not name it.
+- Do not put an icon in a status tag: it shows beside the dot, so the tag has two markers. For a tag with an icon, use a standard tag with a color class.
 - Pick the color by meaning, and give tags of the same kind the same color.
 - Pick the style by weight. A standard tag is light, or outline to stay quiet. A status tag is light, dark to stand out, or ghost to stay quiet.
 - Keep labels to one to three words. A label longer than 160px ends with an ellipsis.

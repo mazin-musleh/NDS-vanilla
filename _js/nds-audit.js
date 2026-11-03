@@ -425,6 +425,14 @@
             'Move it to .nds-card-corner, written first in .nds-card-text. The tag row keeps the standard tags.', undefined, elements.length);
     } });
 
+    // A status tag draws its dot; an icon beside it shows two markers (rig 10: a clock and a dot in On track).
+    addRule({ id: 'status-tag-icon', group: 'structure', docs: 'components/tag.html', check(context) {
+        const elements = context.find('.nds-tag[data-status]')
+            .filter(tag => tag.querySelector(':scope > :is(i, svg, img, .nds-icon)') && tag.getClientRects().length);
+        if (elements.length) context.report(elements[0], `a status tag with an icon, "${elements[0].textContent.trim().slice(0, 30)}"${elements.length > 1 ? ` (${elements.length} tags; the first is shown)` : ''}: it shows its dot and the icon, two markers.`,
+            'Drop the icon: the dot and the label name the status. For an icon, use a standard tag with a color class.', undefined, elements.length);
+    } });
+
     // The value line's own type is the small unit; only an element child shows as the value (rig 2: bare text).
     addRule({ id: 'card-value-number', group: 'structure', docs: 'components/card.html', check(context) {
         const elements = context.find('.nds-card-value')
