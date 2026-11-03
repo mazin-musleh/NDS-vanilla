@@ -4,7 +4,8 @@
 //
 // --only checks just the pages whose path holds one of the texts: after a fix, re-check that
 // page alone (write `nds/cart`, not `/nds/cart`: Git Bash turns a leading slash into a Windows
-// path). --jobs sets how many shots run at once (default: half the cores, 2 to 8).
+// path). A text equal to a page's whole path picks that page only, so `--only /` is the home
+// page (in Git Bash: MSYS_NO_PATHCONV=1 node nds-verify.mjs … --only /). --jobs sets how many shots run at once (default: half the cores, 2 to 8).
 //
 // Needs Node 18+ and Chrome or Edge (or CHROME_PATH). Installs nothing: it drives the browser
 // over its own debugging pipe, headless, with a throwaway profile.
@@ -53,8 +54,14 @@ const config = JSON.parse(readFileSync(configPath, 'utf8'));
 const OUT = resolve(flag('--out') || mkdtempSync(join(tmpdir(), 'nds-verify-')));
 const ONLY = flag('--only')?.split(',').filter(Boolean);
 const JOBS = Math.max(1, Number(flag('--jobs')) || Math.min(8, Math.max(2, cpus().length >> 1)));
-const PAGES = config.pages.filter((p) => !ONLY || ONLY.some((o) => p.path.includes(o)));
-if (!PAGES.length) { console.error(`No page path holds ${ONLY.join(' or ')}.`); process.exit(2); }
+// A whole path picks its page only: `/` would otherwise hold every page.
+const isWholePath = (o) => config.pages.some((p) => p.path === o);
+const PAGES = config.pages.filter((p) => !ONLY || ONLY.some((o) => isWholePath(o) ? p.path === o : p.path.includes(o)));
+if (!PAGES.length) {
+    const rewritten = ONLY.some((o) => /^[A-Za-z]:[\/]/.test(o));
+    console.error(`No page path holds ${ONLY.join(' or ')}.${rewritten ? ' Git Bash turned a leading slash into a Windows path: run with MSYS_NO_PATHCONV=1.' : ''}`);
+    process.exit(2);
+}
 const SITE = resolve(process.env.NDS_SITE || join(HERE, '_site'));
 if (PAGES.some((p) => p.reference) && !existsSync(SITE)) {
     console.error(`No built site at ${SITE}: run this copy from the template folder, or set NDS_SITE.`); process.exit(2);
