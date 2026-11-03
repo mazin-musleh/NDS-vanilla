@@ -169,7 +169,7 @@ Two more slips, not planted, that the agent may name: `/clinics`' filters are th
 
 **What a pass looks like:**
 - The chrome is written once, in the app shell. NDS starts after Angular renders the view, and again after each route change and each `@if`/`@for` re-render, through the documented framework rules (mount after the view renders, destroy before it goes). Nothing leans on zone ticks.
-- The language switch flips `lang` and `dir` in place, with no reload, and NDS components follow it.
+- The language switch reloads the page (`core/i18n.md`, Language Change), and the page comes back in the other language and direction.
 - No NDS internal is restyled through `::ng-deep` or a component stylesheet. The legacy `::ng-deep` overrides leave with the ported pages.
 - The article HTML from the old CMS renders as prose. The agent never bypasses the sanitizer to bring back the stripped `onclick`.
 - Consultation `C-104` fails on submit, and the error shows in NDS. A ticket email ending `@fail.test` fails, and each field type validates on its own.
@@ -177,7 +177,7 @@ Two more slips, not planted, that the agent may name: `/clinics`' filters are th
 
 ### Rig 10: a Vue subsite from a brief
 
-**Tests:** a new UI built inside a Vue app whose data, stores and routes already work. Vue keeps `SitesView` and `KpisView` alive in `<KeepAlive>`, runs every view through an out-in `<Transition>`, rebuilds nodes on each `v-if`/`v-for` change, and the brief's language switch flips `dir` with no reload. The pages use the subsite shape, a striped home, KPIs, About the Entity, Social Media, search results and a minimal sign-in with a background photo. It is also the one rig with its own brand: `brand/BRAND.md` is an agency's identity sheet (colors, a tint scale, patterns, an emblem) with no NDS words in it, built from the Foundation Day pack's palette and art.
+**Tests:** a new UI built inside a Vue app whose data, stores and routes already work. Vue keeps `SitesView` and `KpisView` alive in `<KeepAlive>`, runs every view through an out-in `<Transition>`, rebuilds nodes on each `v-if`/`v-for` change, and the brief asks for a language switch with no reload, which NDS does not support (`core/i18n.md`, Language Change). The pages use the subsite shape, a striped home, KPIs, About the Entity, Social Media, search results and a minimal sign-in with a background photo. It is also the one rig with its own brand: `brand/BRAND.md` is an agency's identity sheet (colors, a tint scale, patterns, an emblem) with no NDS words in it, built from the Foundation Day pack's palette and art.
 
 **Dev answers:** the `NDS_ASSETS` folder the agent recommends under `public/`; the digital stamp: "No"; pacing: `whole plan`.
 
@@ -185,7 +185,7 @@ Two more slips, not planted, that the agent may name: `/clinics`' filters are th
 - No UI library is added. The chrome is written once; the partner sign-in is a minimal page with a full-screen background photo and no header or footer.
 - A kept-alive view's NDS components survive leaving and coming back: they are never destroyed and started again on each visit, and never started twice. A view that leaves through the transition is destroyed only once it is gone.
 - A filter change that rebuilds cards starts NDS on the new nodes. The site gallery opens in NDS's own image viewer, never a hand-built lightbox.
-- The language switch flips `lang` and `dir` in place, and NDS components (sliders, charts, menus) follow it.
+- The no-reload switch the brief asks for is raised with the dev and filed in the report as a gap NDS does not cover. The agent never hides it, and never works around it by restyling or re-wiring NDS. A reload that keeps the page and its filters is a fair answer.
 - The KPIs page shows figures, charts and an indicators table. 2023 fails to load and shows an error with a retry. The home figures count up.
 - A newsletter email ending `@fail.test` shows its error on the field. The sign-in errors (wrong password, locked account) show on the form.
 - Each page the brief names matches its template or is built from NDS parts, each gap a finding.
