@@ -6,7 +6,7 @@ A field rig is a real legacy app that a fresh agent session ports to NDS, or a b
 
 ## Baselines
 
-The baselines live in `rigs/`, at their clean state. Rig N runs on port 300N, so all of them can run at once; `rig.py` prints the start command and the link. Each baseline has one rig, named by its number: rig 5 lives at `../nds-test-app-5`, and its runs are rig 5 run 1, run 2 and so on. Rigs 5 to 7 are the starters, legacy apps to port. Rigs 1 to 4 and 8 are designed to test NDS IQ on purpose: each covers a work mode or stack the starters miss. Field rigs are not the behavior-mode rigs R1 to R7 in `SKILL.md`: write "rig N" for a field rig, "RN" for a behavior rig.
+The baselines live in `rigs/`, at their clean state. Rig N runs on port 3000 + N, so all of them can run at once; `rig.py` prints the start command and the link. Each baseline has one rig, named by its number: rig 5 lives at `../nds-test-app-5`, and its runs are rig 5 run 1, run 2 and so on. Rigs 5 to 7 are the starters, legacy apps to port. Rigs 1 to 4 and 8 to 10 are designed to test NDS IQ on purpose: each covers a work mode, a framework or page layouts the starters miss. Field rigs are not the behavior-mode rigs R1 to R7 in `SKILL.md`: write "rig N" for a field rig, "RN" for a behavior rig.
 
 | Rig | Baseline | App | Run | URL |
 |---|---|---|---|---|
@@ -18,6 +18,8 @@ The baselines live in `rigs/`, at their clean state. Rig N runs on port 300N, so
 | 6 | `citydesk` | English LTR municipal help desk: Express and JSON APIs, Bootstrap, jQuery, DataTables, Select2, TinyMCE, a staff back office | `npm start` | `http://localhost:3006` |
 | 7 | `grants-desk` | English staff console: a React single-page app on Vite, no backend | `npm run dev` | `http://localhost:3007` |
 | 8 | `ops-desk` | English live dispatch dashboard on one page: React 19 in StrictMode, Zustand, TanStack Query, a simulated live feed, react-select, react-datepicker, recharts, TanStack Table, react-hot-toast | `npm run dev` | `http://localhost:3008` |
+| 9 | `rafeeq` | A citizen life-journey portal in Arabic and English: Angular 22 and Angular Material 22, standalone components, signals, zoneless, lazy routes. Life journeys, service pages, e-participation surveys, a help center | `npm start` | `http://localhost:3009` |
+| 10 | `turathna` | A heritage program subsite in English and Arabic: Vue 3.5, Vite 8, Vue Router 5 and Pinia 4. The data, stores, routes and copy are done; every view is a placeholder. `BRIEF.md` | `npm run dev` | `http://localhost:3010` |
 
 ## What each rig tests
 
@@ -43,6 +45,8 @@ The plans of rigs 5 to 7 (every run to 2026-10-11) never named these components,
 | Modal | 3: the Bootstrap modal it replaces. 4: confirmations |
 | Drawer, Rating, Currency, Image Popup Viewer, Tag Input | 4: mini-cart, ratings, prices, image zoom, notification emails |
 | Chart, Clock | 3: lab trends, the waiting-room screen |
+| Rating, Accordion, Autocomplete | 9: service rating, top questions, help search |
+| Metric, Chart, Image Popup Viewer, Swiper | 10: KPIs, the three charts, the site gallery, featured sites |
 
 ### Rig 1: a new site from a brief
 
@@ -156,6 +160,38 @@ Two more slips, not planted, that the agent may name: `/clinics`' filters are th
 - The new ticket form keeps its React 19 form Action and `useActionState`: one submit, validation once, the 422 error on the title field through the field's NDS status. The subtype list follows the category.
 - The crew board mounts late (`React.lazy`): its components start when it mounts, not at page load.
 - Counts that tick (KPIs, the shift countdown) update their text, never restart a counter animation.
+
+### Rig 9: an Angular portal
+
+**Tests:** a port in the framework that works most unlike the others: Angular renders with no zone (signals decide when the view updates), scopes component styles with its own attributes, sanitizes `[innerHTML]`, and swaps lazy routes and `@if`/`@for` blocks. The pages use the layouts no other rig reaches: Life Journey, Journey Service, E-Participation, Help & Support, and an article page whose side menu sits on top on phones.
+
+**Dev answers:** porting strategy: the agent's recommendation; the digital stamp: "No"; pacing: `whole plan`.
+
+**What a pass looks like:**
+- The chrome is written once, in the app shell. NDS starts after Angular renders the view, and again after each route change and each `@if`/`@for` re-render, through the documented framework rules (mount after the view renders, destroy before it goes). Nothing leans on zone ticks.
+- The language switch flips `lang` and `dir` in place, with no reload, and NDS components follow it.
+- No NDS internal is restyled through `::ng-deep` or a component stylesheet. The legacy `::ng-deep` overrides leave with the ported pages.
+- The article HTML from the old CMS renders as prose. The agent never bypasses the sanitizer to bring back the stripped `onclick`.
+- Journeys use the Life Journey templates, the service page the Journey Service template, consultations the E-Participation template, and the help center the Help & Support template. The article page puts its side menu on top on phones.
+- Consultation `C-104` fails on submit, and the error shows in NDS. A ticket email ending `@fail.test` fails, and each field type validates on its own.
+- No Angular Material is left on a ported page.
+
+### Rig 10: a Vue subsite from a brief
+
+**Tests:** a new UI built inside a Vue app whose data, stores and routes already work. Vue keeps `SitesView` and `KpisView` alive in `<KeepAlive>`, runs every view through an out-in `<Transition>`, rebuilds nodes on each `v-if`/`v-for` change, and the brief's language switch flips `dir` with no reload. The pages use the subsite shape, a striped home, KPIs, About the Entity, Social Media, search results and a minimal sign-in with a background photo. It is also the one rig with its own brand: `brand/BRAND.md` is an agency's identity sheet (colors, a tint scale, patterns, an emblem) with no NDS words in it, built from the Foundation Day pack's palette and art.
+
+**Dev answers:** the `NDS_ASSETS` folder the agent recommends under `public/`; the digital stamp: "No"; pacing: `whole plan`.
+
+**What a pass looks like:**
+- No UI library is added. The chrome is written once; the partner sign-in is a minimal page with a full-screen background photo and no header or footer.
+- A kept-alive view's NDS components survive leaving and coming back: they are never destroyed and started again on each visit, and never started twice. A view that leaves through the transition is destroyed only once it is gone.
+- A filter change that rebuilds cards starts NDS on the new nodes. The site gallery opens in NDS's own image viewer, never a hand-built lightbox.
+- The language switch flips `lang` and `dir` in place, and NDS components (sliders, charts, menus) follow it.
+- The KPIs page shows figures, charts and an indicators table. 2023 fails to load and shows an error with a retry. The home figures count up.
+- A newsletter email ending `@fail.test` shows its error on the field. The sign-in errors (wrong password, locked account) show on the form.
+- Each page the brief names matches its template or is built from NDS parts, each gap a finding.
+- The brand goes in through NDS theming: a custom palette from the brown seed, or a stylesheet theme that sets the color tokens, the way the Foundation Day pack does. Never component colors one by one. Dark mode keeps the brand, and status colors stay standard.
+- The patterns, the divider and the footer art sit in the project's own stylesheet on NDS's section and footer classes, never by restyling NDS internals. The emblem with the name in text stands in for the logo, with a plan checkbox for the lockup.
 
 ## Set up a rig
 

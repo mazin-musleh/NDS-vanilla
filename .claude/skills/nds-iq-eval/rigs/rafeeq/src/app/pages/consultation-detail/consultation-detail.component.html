@@ -1,0 +1,207 @@
+<div class="page">
+  @if (consultation(); as c) {
+    <a mat-button routerLink="/participate" class="back-link">
+      <mat-icon>{{ lang.dir() === 'rtl' ? 'arrow_forward' : 'arrow_back' }}</mat-icon>
+      {{ t().consultation.back }}
+    </a>
+
+    <header class="consult-head">
+      <p class="topic">{{ t().topic[c.topic] }}</p>
+      <h1>{{ c.title[l()] }}</h1>
+      <p class="meta">
+        <span><mat-icon>account_balance</mat-icon> {{ t().consultation.entity }}: {{ c.entity[l()] }}</span>
+        <span>
+          <mat-icon>{{ c.status === 'open' ? 'schedule' : 'event_busy' }}</mat-icon>
+          @if (c.status === 'open') {
+            {{ t().participate.endsIn(c.days) }} · {{ t().consultation.deadline(lang.date(c.date)) }}
+          } @else {
+            {{ t().consultation.closedOn(lang.date(c.date)) }}
+          }
+        </span>
+        <span><mat-icon>groups</mat-icon> {{ t().participate.participants(c.participants) }}</span>
+      </p>
+    </header>
+
+    <div class="consult-layout">
+      <div class="consult-main">
+        <section>
+          <h2>{{ t().consultation.summary }}</h2>
+          <p>{{ c.summary[l()] }}</p>
+        </section>
+
+        <section>
+          <h2>{{ t().consultation.documents }}</h2>
+          <mat-nav-list class="docs-list">
+            @for (d of c.documents; track $index) {
+              <a mat-list-item href="#" (click)="$event.preventDefault()">
+                <mat-icon matListItemIcon>picture_as_pdf</mat-icon>
+                <span matListItemTitle>{{ d.name[l()] }}</span>
+                <span matListItemLine>{{ t().consultation.docMeta(d.type, d.sizeKb) }}</span>
+              </a>
+            }
+          </mat-nav-list>
+        </section>
+
+        @if (receipt(); as ref) {
+          <mat-card appearance="outlined" class="thanks-card" role="status">
+            <mat-card-header>
+              <mat-icon mat-card-avatar class="thanks-icon">check_circle</mat-icon>
+              <mat-card-title>{{ t().consultation.thanksTitle }}</mat-card-title>
+              <mat-card-subtitle>{{ t().consultation.thanksText(ref) }}</mat-card-subtitle>
+            </mat-card-header>
+          </mat-card>
+        }
+
+        @if (showResults()) {
+          <section class="results">
+            <h2>
+              {{ c.status === 'closed' ? t().consultation.resultsClosedTitle : t().consultation.resultsTitle }}
+            </h2>
+            @if (c.status === 'closed') {
+              <p class="muted">{{ t().consultation.resultsClosedNote }}</p>
+            }
+            <p class="muted">{{ t().consultation.respondents(c.participants) }}</p>
+
+            <h3>{{ c.survey.choice.q[l()] }}</h3>
+            @for (o of c.survey.choice.options; track $index) {
+              <div class="result-row">
+                <div class="result-label">
+                  <span>{{ o[l()] }}</span>
+                  <strong>{{ c.results.choice[$index] }}%</strong>
+                </div>
+                <mat-progress-bar mode="determinate" [value]="c.results.choice[$index]" [attr.aria-label]="o[l()]" />
+              </div>
+            }
+
+            <h3>{{ c.survey.priorities.q[l()] }}</h3>
+            @for (o of c.survey.priorities.options; track $index) {
+              <div class="result-row">
+                <div class="result-label">
+                  <span>{{ o[l()] }}</span>
+                  <strong>{{ c.results.priorities[$index] }}%</strong>
+                </div>
+                <mat-progress-bar
+                  mode="determinate"
+                  [value]="c.results.priorities[$index]"
+                  [attr.aria-label]="o[l()]"
+                />
+              </div>
+            }
+
+            <h3>{{ c.survey.rating.q[l()] }}</h3>
+            <div class="result-row">
+              <div class="result-label">
+                <span>{{ t().consultation.ratingAvg(c.results.rating.toFixed(1)) }}</span>
+                <strong>{{ Math.round((c.results.rating / 5) * 100) }}%</strong>
+              </div>
+              <mat-progress-bar mode="determinate" [value]="(c.results.rating / 5) * 100" />
+            </div>
+          </section>
+        } @else {
+          <section>
+            <h2>{{ t().consultation.surveyTitle }}</h2>
+            <p class="muted">{{ t().consultation.surveyIntro }}</p>
+
+            <form class="survey-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+              <fieldset class="q-block">
+                <legend>{{ c.survey.choice.q[l()] }}</legend>
+                <mat-radio-group formControlName="choice" class="radio-col" [attr.aria-label]="c.survey.choice.q[l()]">
+                  @for (o of c.survey.choice.options; track $index) {
+                    <mat-radio-button [value]="$index">{{ o[l()] }}</mat-radio-button>
+                  }
+                </mat-radio-group>
+                @if (invalid('choice')) {
+                  <p class="field-error" role="alert">{{ t().consultation.errChoice }}</p>
+                }
+              </fieldset>
+
+              <fieldset class="q-block">
+                <legend>{{ c.survey.priorities.q[l()] }}</legend>
+                <p class="hint">{{ t().consultation.prioritiesLegend }}</p>
+                <div formArrayName="priorities" class="check-col">
+                  @for (o of c.survey.priorities.options; track $index) {
+                    <mat-checkbox [formControlName]="$index">{{ o[l()] }}</mat-checkbox>
+                  }
+                </div>
+                @if (invalid('priorities')) {
+                  <p class="field-error" role="alert">{{ t().consultation.errPriorities }}</p>
+                }
+              </fieldset>
+
+              <fieldset class="q-block">
+                <legend>{{ c.survey.rating.q[l()] }}</legend>
+                <div class="slider-row">
+                  <span class="slider-end">{{ t().consultation.agreeLow }}</span>
+                  <mat-slider min="1" max="5" step="1" discrete showTickMarks class="rating-slider">
+                    <input matSliderThumb formControlName="rating" [attr.aria-label]="c.survey.rating.q[l()]" />
+                  </mat-slider>
+                  <span class="slider-end">{{ t().consultation.agreeHigh }}</span>
+                </div>
+              </fieldset>
+
+              <div class="q-block">
+                <mat-form-field>
+                  <mat-label>{{ t().consultation.comment }}</mat-label>
+                  <textarea matInput rows="5" formControlName="comment" [maxlength]="commentMax"></textarea>
+                  <mat-hint align="end">{{ t().consultation.counter(commentLength(), commentMax) }}</mat-hint>
+                  @if (invalid('comment')) {
+                    <mat-error>{{ t().consultation.errComment }}</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+
+              <div class="q-block file-block">
+                <span class="file-label">{{ t().consultation.attach }}</span>
+                <input
+                  #fileInput
+                  type="file"
+                  class="file-input"
+                  accept=".pdf,image/*"
+                  (change)="onFile($event)"
+                  tabindex="-1"
+                  aria-hidden="true"
+                />
+                <div class="file-row">
+                  <button mat-stroked-button type="button" (click)="fileInput.click()">
+                    <mat-icon>attach_file</mat-icon>
+                    {{ t().consultation.attachButton }}
+                  </button>
+                  @if (file(); as f) {
+                    <span class="file-name">{{ f.name }}</span>
+                    <button
+                      mat-icon-button
+                      type="button"
+                      [attr.aria-label]="t().consultation.removeFile"
+                      (click)="clearFile(fileInput)"
+                    >
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  } @else {
+                    <span class="muted">{{ t().consultation.noFile }}</span>
+                  }
+                </div>
+                <p class="hint">{{ t().consultation.attachHint }}</p>
+                @if (fileError()) {
+                  <p class="field-error" role="alert">{{ t().consultation.fileTooBig }}</p>
+                }
+              </div>
+
+              <div class="form-actions">
+                <button mat-flat-button type="submit" [disabled]="submitting()">
+                  {{ submitting() ? t().consultation.submitting : t().consultation.submit }}
+                </button>
+              </div>
+            </form>
+          </section>
+        }
+      </div>
+    </div>
+  } @else if (consultation() === null) {
+    <p class="empty-state">{{ t().consultation.notFound }}</p>
+    <p class="empty-state"><a mat-flat-button routerLink="/participate">{{ t().consultation.back }}</a></p>
+  } @else {
+    <div class="loading-bar">
+      <mat-progress-bar mode="indeterminate" [attr.aria-label]="t().common.loading" />
+    </div>
+  }
+</div>

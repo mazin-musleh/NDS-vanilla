@@ -1,0 +1,79 @@
+<div class="page">
+  @if (data(); as d) {
+    @if (article(); as a) {
+      <a mat-button routerLink="/help" class="back-link">
+        <mat-icon>{{ lang.dir() === 'rtl' ? 'arrow_forward' : 'arrow_back' }}</mat-icon>
+        {{ t().article.back }}
+      </a>
+
+      <div class="article-layout">
+        @if (isPhone()) {
+          <mat-form-field class="category-select">
+            <mat-label>{{ t().article.categorySelect }}</mat-label>
+            <mat-select [value]="a.categoryId" (selectionChange)="goCategory($event.value)">
+              @for (c of d.categories; track c.id) {
+                <mat-option [value]="c.id">{{ c.name[l()] }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        } @else {
+          <nav class="category-nav" [attr.aria-label]="t().article.categories">
+            <h2 class="nav-title">{{ t().article.categories }}</h2>
+            <mat-nav-list>
+              @for (c of d.categories; track c.id) {
+                <a
+                  mat-list-item
+                  [routerLink]="['/help/articles', firstArticle(c.id)]"
+                  [activated]="c.id === a.categoryId"
+                >
+                  <mat-icon matListItemIcon>{{ c.icon }}</mat-icon>
+                  <span matListItemTitle>{{ c.name[l()] }}</span>
+                </a>
+              }
+            </mat-nav-list>
+          </nav>
+        }
+
+        <article class="article">
+          <h1>{{ a.title[l()] }}</h1>
+          <p class="muted updated">{{ t().article.updated(lang.date(a.updated)) }}</p>
+
+          <div class="article-body" [innerHTML]="a.body[l()]"></div>
+
+          <div class="feedback">
+            @if (answered()) {
+              <p class="thanks" role="status"><mat-icon>check_circle</mat-icon> {{ t().article.thanks }}</p>
+            } @else {
+              <span class="feedback-q">{{ t().article.helpfulQ }}</span>
+              <button mat-stroked-button type="button" [disabled]="sending()" (click)="vote(a.id, true)">
+                <mat-icon>thumb_up</mat-icon> {{ t().common.yes }}
+              </button>
+              <button mat-stroked-button type="button" [disabled]="sending()" (click)="vote(a.id, false)">
+                <mat-icon>thumb_down</mat-icon> {{ t().common.no }}
+              </button>
+            }
+          </div>
+
+          @if (related().length) {
+            <h2 class="related-title">{{ t().article.related }}</h2>
+            <mat-nav-list class="related-list">
+              @for (r of related(); track r.id) {
+                <a mat-list-item [routerLink]="['/help/articles', r.id]">
+                  <span matListItemTitle>{{ r.title[l()] }}</span>
+                  <span matListItemLine>{{ r.summary[l()] }}</span>
+                </a>
+              }
+            </mat-nav-list>
+          }
+        </article>
+      </div>
+    } @else {
+      <p class="empty-state">{{ t().article.notFound }}</p>
+      <p class="empty-state"><a mat-flat-button routerLink="/help">{{ t().article.back }}</a></p>
+    }
+  } @else {
+    <div class="loading-bar">
+      <mat-progress-bar mode="indeterminate" [attr.aria-label]="t().common.loading" />
+    </div>
+  }
+</div>

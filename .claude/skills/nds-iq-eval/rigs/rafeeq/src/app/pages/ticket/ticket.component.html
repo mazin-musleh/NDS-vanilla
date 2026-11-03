@@ -1,0 +1,128 @@
+<div class="page">
+  <header class="page-head">
+    <h1>{{ t().ticket.title }}</h1>
+    <p>{{ t().ticket.subtitle }}</p>
+  </header>
+
+  @if (reference(); as ref) {
+    <mat-card appearance="outlined" class="done-card" role="status">
+      <mat-card-header>
+        <mat-icon mat-card-avatar class="done-icon">check_circle</mat-icon>
+        <mat-card-title>{{ t().ticket.doneTitle }}</mat-card-title>
+        <mat-card-subtitle>{{ t().ticket.doneText }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="ref-label">{{ t().ticket.reference }}</p>
+        <p class="ref" dir="ltr">{{ ref }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <a mat-flat-button routerLink="/help">{{ t().ticket.back }}</a>
+        <button mat-button type="button" (click)="another()">{{ t().ticket.another }}</button>
+      </mat-card-actions>
+    </mat-card>
+  } @else {
+    <form class="ticket-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <mat-form-field>
+        <mat-label>{{ t().ticket.category }}</mat-label>
+        <mat-select formControlName="category" required>
+          @for (c of categories()?.categories ?? []; track c.id) {
+            <mat-option [value]="c.id">{{ c.name[l()] }}</mat-option>
+          }
+          <mat-option value="other">{{ t().ticket.otherCategory }}</mat-option>
+        </mat-select>
+        <mat-error>{{ error('category') }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ t().ticket.subject }}</mat-label>
+        <input matInput formControlName="subject" required autocomplete="off" />
+        <mat-error>{{ error('subject') }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ t().ticket.description }}</mat-label>
+        <textarea matInput rows="6" formControlName="description" required></textarea>
+        <mat-error>{{ error('description') }}</mat-error>
+      </mat-form-field>
+
+      <div class="row-2">
+        <mat-form-field>
+          <mat-label>{{ t().ticket.nationalId }}</mat-label>
+          <input
+            matInput
+            formControlName="nationalId"
+            inputmode="numeric"
+            maxlength="10"
+            dir="ltr"
+            required
+            autocomplete="off"
+          />
+          <mat-hint>{{ t().ticket.nationalIdHint }}</mat-hint>
+          <mat-error>{{ error('nationalId') }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>{{ t().ticket.mobile }}</mat-label>
+          <input
+            matInput
+            type="tel"
+            formControlName="mobile"
+            inputmode="numeric"
+            maxlength="10"
+            dir="ltr"
+            required
+            autocomplete="tel"
+          />
+          <mat-hint>{{ t().ticket.mobileHint }}</mat-hint>
+          <mat-error>{{ error('mobile') }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field>
+        <mat-label>{{ t().ticket.email }}</mat-label>
+        <input matInput type="email" formControlName="email" dir="ltr" required autocomplete="email" />
+        <mat-error>{{ error('email') }}</mat-error>
+      </mat-form-field>
+
+      <div class="attachments">
+        <span class="group-label">{{ t().ticket.attachments }}</span>
+        <input #fileInput type="file" multiple class="file-input" (change)="addFiles($event)" tabindex="-1" />
+        <button mat-stroked-button type="button" (click)="fileInput.click()">
+          <mat-icon>attach_file</mat-icon>
+          {{ t().ticket.attachButton }}
+        </button>
+        <p class="hint">{{ t().ticket.attachHint }}</p>
+        @if (fileError(); as fe) {
+          <p class="field-error" role="alert">{{ fe === 'size' ? t().ticket.fileTooBig : t().ticket.tooMany }}</p>
+        }
+        @if (files().length) {
+          <ul class="file-list">
+            @for (f of files(); track $index) {
+              <li>
+                <mat-icon>insert_drive_file</mat-icon>
+                <span class="file-name">{{ f.name }}</span>
+                <button mat-button type="button" (click)="removeFile($index)">{{ t().ticket.removeFile }}</button>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+
+      <div class="contact-method">
+        <span class="group-label" id="contact-method-label">{{ t().ticket.contactMethod }}</span>
+        <mat-radio-group formControlName="contactMethod" class="methods" aria-labelledby="contact-method-label">
+          @for (m of methods; track m) {
+            <mat-radio-button [value]="m">{{ t().ticket.methods[m] }}</mat-radio-button>
+          }
+        </mat-radio-group>
+      </div>
+
+      <div class="form-actions">
+        <button mat-flat-button type="submit" [disabled]="submitting()">
+          {{ submitting() ? t().ticket.submitting : t().ticket.submit }}
+        </button>
+        <a mat-button routerLink="/help">{{ t().common.cancel }}</a>
+      </div>
+    </form>
+  }
+</div>

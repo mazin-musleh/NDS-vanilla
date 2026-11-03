@@ -1,0 +1,36 @@
+<mat-toolbar color="primary" class="site-toolbar">
+  <button mat-icon-button class="menu-btn" type="button" [attr.aria-label]="t().header.menu" (click)="menuClick.emit()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <a class="logo" routerLink="/" aria-label="Rafeeq">
+    <span class="logo-mark">{{ lang.code() === 'ar' ? 'رفيق' : 'Rafeeq' }}</span>
+  </a>
+
+  <nav class="top-nav" aria-label="Main">
+    @for (link of links; track link.path) {
+      <a
+        mat-button
+        class="top-nav-link"
+        [routerLink]="link.path"
+        routerLinkActive="is-active"
+        [routerLinkActiveOptions]="{ exact: link.exact }"
+      >
+        {{ t().nav[link.key] }}
+      </a>
+    }
+  </nav>
+
+  <span class="spacer"></span>
+
+  <button
+    mat-stroked-button
+    class="lang-toggle"
+    type="button"
+    [attr.aria-label]="t().header.switchLabel"
+    (click)="lang.toggle()"
+  >
+    <mat-icon>translate</mat-icon>
+    {{ t().header.switchTo }}
+  </button>
+</mat-toolbar>

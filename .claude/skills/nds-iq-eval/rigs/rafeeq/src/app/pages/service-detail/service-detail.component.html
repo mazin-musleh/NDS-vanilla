@@ -1,0 +1,181 @@
+<div class="page">
+  @if (view(); as v) {
+    <header class="service-head">
+      <div>
+        <h1>{{ v.service.name[l()] }}</h1>
+        <p class="muted">{{ v.service.summary[l()] }}</p>
+      </div>
+      <button mat-flat-button class="start-btn" type="button" (click)="start(v.service)">
+        <mat-icon>open_in_new</mat-icon>
+        {{ t().service.start }}
+      </button>
+    </header>
+
+    <mat-card appearance="outlined" class="summary-card">
+      <mat-card-content>
+        <dl class="facts">
+          <div class="fact">
+            <mat-icon>schedule</mat-icon>
+            <div>
+              <dt>{{ t().service.facts.duration }}</dt>
+              <dd>{{ v.service.duration[l()] }}</dd>
+            </div>
+          </div>
+          <div class="fact">
+            <mat-icon>payments</mat-icon>
+            <div>
+              <dt>{{ t().service.facts.fee }}</dt>
+              <dd>{{ lang.fee(total(v.service)) }}</dd>
+            </div>
+          </div>
+          <div class="fact">
+            <mat-icon>devices</mat-icon>
+            <div>
+              <dt>{{ t().service.facts.channel }}</dt>
+              <dd>{{ channelsText(v.service) }}</dd>
+            </div>
+          </div>
+          <div class="fact">
+            <mat-icon>groups</mat-icon>
+            <div>
+              <dt>{{ t().service.facts.audience }}</dt>
+              <dd>{{ audienceText(v.service) }}</dd>
+            </div>
+          </div>
+          <div class="fact">
+            <mat-icon>account_balance</mat-icon>
+            <div>
+              <dt>{{ t().service.facts.provider }}</dt>
+              <dd>{{ v.service.provider[l()] }}</dd>
+            </div>
+          </div>
+        </dl>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-tab-group class="service-tabs" animationDuration="150ms">
+      <mat-tab [label]="t().service.tabs.overview">
+        <div class="tab-body">
+          <p>{{ v.service.summary[l()] }}</p>
+          <h3>{{ t().service.eligibility }}</h3>
+          <p>{{ v.service.eligibility[l()] }}</p>
+        </div>
+      </mat-tab>
+
+      <mat-tab [label]="t().service.tabs.requirements">
+        <ul class="check-list tab-body">
+          @for (r of v.service.requirements; track $index) {
+            <li><mat-icon>check_circle</mat-icon> <span>{{ r[l()] }}</span></li>
+          }
+        </ul>
+      </mat-tab>
+
+      <mat-tab [label]="t().service.tabs.steps">
+        <ol class="steps-list tab-body">
+          @for (s of v.service.steps; track $index) {
+            <li>{{ s[l()] }}</li>
+          }
+        </ol>
+      </mat-tab>
+
+      <mat-tab [label]="t().service.tabs.fees">
+        <div class="tab-body">
+          @if (total(v.service) === 0 && v.service.fees.length <= 1) {
+            <p>{{ t().service.noFees }}</p>
+          } @else {
+            <table class="fees-table">
+              <thead>
+                <tr>
+                  <th scope="col">{{ t().service.feesItem }}</th>
+                  <th scope="col">{{ t().service.feesAmount }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (f of v.service.fees; track $index) {
+                  <tr>
+                    <td>{{ f.label[l()] }}</td>
+                    <td>{{ lang.fee(f.amountSar) }}</td>
+                  </tr>
+                }
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th scope="row">{{ t().service.feesTotal }}</th>
+                  <td>{{ lang.fee(total(v.service)) }}</td>
+                </tr>
+              </tfoot>
+            </table>
+          }
+        </div>
+      </mat-tab>
+
+      <mat-tab [label]="t().service.tabs.faqs">
+        <div class="tab-body">
+          <mat-accordion>
+            @for (f of v.service.faqs; track $index) {
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>{{ f.q[l()] }}</mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>{{ f.a[l()] }}</p>
+              </mat-expansion-panel>
+            }
+          </mat-accordion>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+    <mat-card appearance="outlined" class="rating-card">
+      <mat-card-header>
+        <mat-card-title>{{ t().service.rating.title }}</mat-card-title>
+        <mat-card-subtitle>{{ t().service.rating.hint }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stars" role="group" [attr.aria-label]="t().service.rating.title" (mouseleave)="hover.set(0)">
+          @for (n of stars; track n) {
+            <button
+              mat-icon-button
+              type="button"
+              class="star-btn"
+              [disabled]="saving()"
+              [attr.aria-label]="t().service.rating.star(n)"
+              [attr.aria-pressed]="rating() === n"
+              (mouseenter)="hover.set(n)"
+              (click)="rate(v.service, n)"
+            >
+              <mat-icon [class.on]="n <= (hover() || rating())">
+                {{ n <= (hover() || rating()) ? 'star' : 'star_border' }}
+              </mat-icon>
+            </button>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    @if (v.related.length) {
+      <div class="section-head">
+        <h2>{{ t().service.related }}</h2>
+      </div>
+      <div class="card-grid">
+        @for (r of v.related; track r.id) {
+          <mat-card appearance="outlined" class="related-card">
+            <mat-card-header>
+              <mat-card-title>{{ r.name[l()] }}</mat-card-title>
+              <mat-card-subtitle>{{ r.provider[l()] }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions>
+              <a mat-button [routerLink]="['/services', r.id]">{{ t().journeys.open }}</a>
+            </mat-card-actions>
+          </mat-card>
+        }
+      </div>
+    }
+  } @else if (view() === null) {
+    <p class="empty-state">{{ t().service.notFound }}</p>
+    <p class="empty-state"><a mat-flat-button routerLink="/journeys">{{ t().journey.back }}</a></p>
+  } @else {
+    <div class="loading-bar">
+      <mat-progress-bar mode="indeterminate" [attr.aria-label]="t().common.loading" />
+    </div>
+  }
+</div>

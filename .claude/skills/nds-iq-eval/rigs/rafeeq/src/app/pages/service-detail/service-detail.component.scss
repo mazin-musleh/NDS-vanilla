@@ -1,0 +1,165 @@
+.service-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 20px;
+
+  p {
+    max-width: 720px;
+  }
+}
+
+.start-btn {
+  flex: none;
+  height: 48px;
+  padding: 0 24px;
+
+  mat-icon {
+    margin-inline-end: 8px;
+  }
+}
+
+.summary-card {
+  margin-bottom: 24px;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px 24px;
+  margin: 0;
+
+  dt {
+    font-size: 13px;
+    color: var(--rf-muted);
+  }
+
+  dd {
+    margin: 0;
+    font-weight: 600;
+  }
+}
+
+.fact {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+
+  mat-icon {
+    color: #00695c;
+    margin-top: 2px;
+  }
+}
+
+.service-tabs {
+  background: #fff;
+  border: 1px solid var(--rf-border);
+  border-radius: 12px;
+  padding: 4px 16px 16px;
+  margin-bottom: 24px;
+
+  // tab labels were cut off on narrow phones
+  ::ng-deep .mdc-tab {
+    min-width: 0;
+    padding-inline: 14px;
+  }
+
+  ::ng-deep .mdc-tab__text-label {
+    font-size: 15px;
+  }
+}
+
+.tab-body {
+  padding: 8px 0;
+}
+
+.check-list {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+
+  li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+
+  mat-icon {
+    flex: none;
+    color: #00897b;
+  }
+}
+
+.steps-list {
+  margin: 0;
+  padding-inline-start: 24px;
+
+  li {
+    margin-bottom: 10px;
+    padding-inline-start: 6px;
+  }
+}
+
+.fees-table {
+  width: 100%;
+  max-width: 560px;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 10px 12px;
+    text-align: start;
+    border-bottom: 1px solid var(--rf-border);
+  }
+
+  thead th {
+    background: #eef6f5;
+  }
+
+  tfoot th,
+  tfoot td {
+    font-weight: 700;
+    border-bottom: 0;
+  }
+}
+
+.rating-card {
+  max-width: 480px;
+}
+
+.stars {
+  display: flex;
+  gap: 2px;
+  margin-inline-start: -12px;
+}
+
+.star-btn mat-icon {
+  color: #9aa5a4;
+  font-size: 30px;
+  width: 30px;
+  height: 30px;
+
+  &.on {
+    color: #f5a300;
+  }
+}
+
+.related-card {
+  transition: box-shadow 0.18s ease;
+
+  &:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media (max-width: 599px) {
+  .service-head {
+    flex-direction: column;
+  }
+
+  .start-btn {
+    width: 100%;
+  }
+}

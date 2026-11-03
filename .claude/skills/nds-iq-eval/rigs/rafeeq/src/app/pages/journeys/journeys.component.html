@@ -1,0 +1,50 @@
+<div class="page">
+  <header class="page-head">
+    <h1>{{ t().journeys.title }}</h1>
+    <p>{{ t().journeys.subtitle }}</p>
+  </header>
+
+  <mat-chip-listbox
+    class="audience-filter"
+    [attr.aria-label]="t().journeys.filterLabel"
+    [value]="audience()"
+    (change)="pick($event.value)"
+  >
+    @for (f of filters; track f) {
+      <mat-chip-option [value]="f">{{ t().audience[f] }}</mat-chip-option>
+    }
+  </mat-chip-listbox>
+
+  @if (visible(); as list) {
+    @if (list.length) {
+      <div class="card-grid journeys-grid">
+        @for (j of list; track j.slug) {
+          <mat-card appearance="outlined" class="journey-card">
+            <mat-card-header>
+              <mat-icon mat-card-avatar class="card-icon">{{ j.icon }}</mat-icon>
+              <mat-card-title>{{ j.title[l()] }}</mat-card-title>
+              <mat-card-subtitle>{{ t().journeys.stages(j.stages.length) }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p>{{ j.tagline[l()] }}</p>
+              <div class="audience-tags">
+                @for (a of j.audience; track a) {
+                  <span class="tag">{{ t().audience[a] }}</span>
+                }
+              </div>
+            </mat-card-content>
+            <mat-card-actions>
+              <a mat-flat-button [routerLink]="['/journeys', j.slug]">{{ t().journeys.open }}</a>
+            </mat-card-actions>
+          </mat-card>
+        }
+      </div>
+    } @else {
+      <p class="empty-state">{{ t().journeys.empty }}</p>
+    }
+  } @else {
+    <div class="loading-bar">
+      <mat-progress-bar mode="indeterminate" [attr.aria-label]="t().common.loading" />
+    </div>
+  }
+</div>

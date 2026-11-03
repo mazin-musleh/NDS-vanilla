@@ -1,0 +1,317 @@
+{
+  "about": {
+    "vision": {
+      "en": "A country whose heritage places are cared for, open to everyone and alive with the people who use them.",
+      "ar": "وطن تُصان فيه مواقعه التراثية، وتُفتح للجميع، وتنبض بالحياة مع من يستخدمها."
+    },
+    "mission": {
+      "en": "We restore heritage sites with traditional methods and modern records, train the next generation of craftspeople, and work with local communities so that every restored place has a future.",
+      "ar": "نرمّم المواقع التراثية بالأساليب التقليدية والتوثيق الحديث، ونُدرّب الجيل القادم من الحرفيين، ونعمل مع المجتمعات المحلية ليكون لكل موقع مرمَّم مستقبل."
+    },
+    "values": [
+      {
+        "key": "authenticity",
+        "title": {
+          "en": "Authenticity",
+          "ar": "الأصالة"
+        },
+        "text": {
+          "en": "We repair with the materials and methods a building was made with, and we record every change.",
+          "ar": "نرمّم بالمواد والأساليب التي بُني بها المبنى، ونوثّق كل تغيير."
+        }
+      },
+      {
+        "key": "community",
+        "title": {
+          "en": "Community",
+          "ar": "المجتمع"
+        },
+        "text": {
+          "en": "People who live near a site help decide what happens to it.",
+          "ar": "يشارك سكان محيط الموقع في تقرير مصيره."
+        }
+      },
+      {
+        "key": "craft",
+        "title": {
+          "en": "Craft",
+          "ar": "الحرفة"
+        },
+        "text": {
+          "en": "Skilled hands keep heritage alive, so we invest in training and fair work.",
+          "ar": "الأيدي الماهرة تُبقي التراث حيًّا، لذلك نستثمر في التدريب والعمل العادل."
+        }
+      },
+      {
+        "key": "openness",
+        "title": {
+          "en": "Openness",
+          "ar": "الانفتاح"
+        },
+        "text": {
+          "en": "Our records, reports and results are public, including the ones that fall short.",
+          "ar": "سجلاتنا وتقاريرنا ونتائجنا متاحة للجميع، بما فيها ما لم يبلغ المستهدف."
+        }
+      },
+      {
+        "key": "care",
+        "title": {
+          "en": "Care",
+          "ar": "العناية"
+        },
+        "text": {
+          "en": "We plan for upkeep from the first day, not only for the opening day.",
+          "ar": "نخطط للصيانة منذ اليوم الأول، لا ليوم الافتتاح فقط."
+        }
+      }
+    ],
+    "goals": [
+      {
+        "id": "goal-1",
+        "title": {
+          "en": "Restore 120 sites by 2030",
+          "ar": "ترميم 120 موقعًا بحلول 2030"
+        },
+        "text": {
+          "en": "Prioritise sites at risk of collapse, then sites that communities ask us to take on.",
+          "ar": "نبدأ بالمواقع المهددة بالانهيار، ثم المواقع التي تطلبها المجتمعات."
+        }
+      },
+      {
+        "id": "goal-2",
+        "title": {
+          "en": "Train 3,000 artisans",
+          "ar": "تدريب 3,000 حرفي"
+        },
+        "text": {
+          "en": "Pass on stone, plaster, timber and textile skills through the Artisan Academy.",
+          "ar": "نقل مهارات الحجر والجص والخشب والنسيج عبر أكاديمية الحرفيين."
+        }
+      },
+      {
+        "id": "goal-3",
+        "title": {
+          "en": "Record every site digitally",
+          "ar": "توثيق كل موقع رقميًا"
+        },
+        "text": {
+          "en": "Keep a public registry with drawings, photographs and condition reports.",
+          "ar": "الاحتفاظ بسجل عام يضم الرسوم والصور وتقارير الحالة."
+        }
+      },
+      {
+        "id": "goal-4",
+        "title": {
+          "en": "Welcome 6 million visits a year",
+          "ar": "استقبال 6 ملايين زيارة سنويًا"
+        },
+        "text": {
+          "en": "Open sites safely, with clear information and fair prices.",
+          "ar": "فتح المواقع بأمان، مع معلومات واضحة وأسعار عادلة."
+        }
+      }
+    ],
+    "leadership": [
+      {
+        "id": "director",
+        "name": {
+          "en": "Dr. Faisal Al-Harbi",
+          "ar": "د. فيصل الحربي"
+        },
+        "role": {
+          "en": "Program Director",
+          "ar": "مدير البرنامج"
+        },
+        "bio": {
+          "en": "An archaeologist with twenty years of field work in the northern and central regions.",
+          "ar": "عالم آثار بخبرة عشرين عامًا في العمل الميداني بالمنطقتين الشمالية والوسطى."
+        },
+        "photo": "/images/portrait-1.svg"
+      },
+      {
+        "id": "conservation",
+        "name": {
+          "en": "Eng. Huda Al-Zahrani",
+          "ar": "م. هدى الزهراني"
+        },
+        "role": {
+          "en": "Head of Conservation",
+          "ar": "رئيسة الترميم"
+        },
+        "bio": {
+          "en": "A structural engineer who leads the restoration teams and sets the repair standards.",
+          "ar": "مهندسة إنشائية تقود فرق الترميم وتضع معايير الإصلاح."
+        },
+        "photo": "/images/portrait-2.svg"
+      },
+      {
+        "id": "research",
+        "name": {
+          "en": "Dr. Khalid Al-Mutairi",
+          "ar": "د. خالد المطيري"
+        },
+        "role": {
+          "en": "Head of Research and Records",
+          "ar": "رئيس البحث والتوثيق"
+        },
+        "bio": {
+          "en": "Runs the digital registry and the survey teams across all five regions.",
+          "ar": "يدير السجل الرقمي وفرق المسح في المناطق الخمس."
+        },
+        "photo": "/images/portrait-3.svg"
+      },
+      {
+        "id": "community",
+        "name": {
+          "en": "Reem Al-Dossary",
+          "ar": "ريم الدوسري"
+        },
+        "role": {
+          "en": "Head of Community and Partnerships",
+          "ar": "رئيسة المجتمع والشراكات"
+        },
+        "bio": {
+          "en": "Works with councils, families and organisations that take part in restoration projects.",
+          "ar": "تعمل مع المجالس والأسر والجهات المشاركة في مشاريع الترميم."
+        },
+        "photo": "/images/portrait-4.svg"
+      }
+    ],
+    "structure": [
+      {
+        "id": "conservation",
+        "name": {
+          "en": "Conservation and Restoration",
+          "ar": "الحفظ والترميم"
+        },
+        "text": {
+          "en": "Site teams, materials lab and the Artisan Academy.",
+          "ar": "فرق المواقع ومختبر المواد وأكاديمية الحرفيين."
+        }
+      },
+      {
+        "id": "research",
+        "name": {
+          "en": "Research and Records",
+          "ar": "البحث والتوثيق"
+        },
+        "text": {
+          "en": "Excavation, survey and the digital registry.",
+          "ar": "التنقيب والمسح والسجل الرقمي."
+        }
+      },
+      {
+        "id": "visitors",
+        "name": {
+          "en": "Visitor Experience",
+          "ar": "تجربة الزائر"
+        },
+        "text": {
+          "en": "Routes, signs, guides, tickets and events.",
+          "ar": "المسارات واللوحات والمرشدون والتذاكر والفعاليات."
+        }
+      },
+      {
+        "id": "community",
+        "name": {
+          "en": "Community and Partnerships",
+          "ar": "المجتمع والشراكات"
+        },
+        "text": {
+          "en": "Local councils, homestays, partner proposals and the partner portal.",
+          "ar": "المجالس المحلية وبيوت الضيافة ومقترحات الشركاء وبوابة الشركاء."
+        }
+      },
+      {
+        "id": "services",
+        "name": {
+          "en": "Corporate Services",
+          "ar": "الخدمات المساندة"
+        },
+        "text": {
+          "en": "Finance, procurement, legal, people and communications.",
+          "ar": "المالية والمشتريات والشؤون القانونية والموارد البشرية والاتصال."
+        }
+      }
+    ],
+    "milestones": [
+      {
+        "year": 2019,
+        "title": {
+          "en": "The program is founded",
+          "ar": "تأسيس البرنامج"
+        },
+        "text": {
+          "en": "A small team starts a national survey of buildings at risk.",
+          "ar": "يبدأ فريق صغير مسحًا وطنيًا للمباني المعرضة للخطر."
+        }
+      },
+      {
+        "year": 2020,
+        "title": {
+          "en": "First survey report",
+          "ar": "أول تقرير مسح"
+        },
+        "text": {
+          "en": "The survey lists 900 places and ranks them by condition.",
+          "ar": "يحصي المسح 900 موقع ويرتبها حسب حالتها."
+        }
+      },
+      {
+        "year": 2021,
+        "title": {
+          "en": "First ten sites restored",
+          "ar": "ترميم أول عشرة مواقع"
+        },
+        "text": {
+          "en": "Work finishes at ten sites in four regions.",
+          "ar": "يكتمل العمل في عشرة مواقع في أربع مناطق."
+        }
+      },
+      {
+        "year": 2022,
+        "title": {
+          "en": "Artisan Academy opens",
+          "ar": "افتتاح أكاديمية الحرفيين"
+        },
+        "text": {
+          "en": "The first cohort of forty trainees begins.",
+          "ar": "تبدأ الدفعة الأولى المكونة من أربعين متدربًا."
+        }
+      },
+      {
+        "year": 2023,
+        "title": {
+          "en": "Digital registry goes public",
+          "ar": "السجل الرقمي للجمهور"
+        },
+        "text": {
+          "en": "Drawings and condition reports become open to read.",
+          "ar": "تصبح الرسوم وتقارير الحالة متاحة للاطلاع."
+        }
+      },
+      {
+        "year": 2025,
+        "title": {
+          "en": "Eighteen sites in one year",
+          "ar": "ثمانية عشر موقعًا في عام واحد"
+        },
+        "text": {
+          "en": "The program completes its busiest restoration year.",
+          "ar": "يُنهي البرنامج أكثر سنوات الترميم نشاطًا."
+        }
+      },
+      {
+        "year": 2026,
+        "title": {
+          "en": "Partner portal opens",
+          "ar": "افتتاح بوابة الشركاء"
+        },
+        "text": {
+          "en": "Organisations can submit and follow proposals online.",
+          "ar": "تستطيع الجهات تقديم المقترحات ومتابعتها عبر الإنترنت."
+        }
+      }
+    ]
+  }
+}

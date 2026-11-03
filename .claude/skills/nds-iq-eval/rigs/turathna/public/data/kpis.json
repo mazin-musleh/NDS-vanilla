@@ -1,0 +1,1287 @@
+{
+  "years": [
+    2023,
+    2024,
+    2025,
+    2026
+  ],
+  "regions": [
+    "central",
+    "western",
+    "eastern",
+    "northern",
+    "southern"
+  ],
+  "budgetUnit": "SAR million",
+  "visitorsUnit": "visits",
+  "byYear": {
+    "2023": {
+      "central": {
+        "sitesRestored": 3,
+        "jobsCreated": 149,
+        "visitorsPerMonth": [
+          83400,
+          86600,
+          80000,
+          67100,
+          51300,
+          40000,
+          35200,
+          40800,
+          56000,
+          82400,
+          93200,
+          90000
+        ],
+        "budget": {
+          "conservation": 21.5,
+          "research": 6.1,
+          "visitorExperience": 7.8,
+          "training": 4.4,
+          "operations": 7.2
+        },
+        "indicators": [
+          {
+            "key": "sitesRestored",
+            "unit": "count",
+            "target": 2,
+            "actual": 3
+          },
+          {
+            "key": "visitorSatisfaction",
+            "unit": "percent",
+            "target": 85,
+            "actual": 84
+          },
+          {
+            "key": "artisansTrained",
+            "unit": "count",
+            "target": 40,
+            "actual": 36
+          },
+          {
+            "key": "recordsDigitised",
+            "unit": "percent",
+            "target": 60,
+            "actual": 60
+          },
+          {
+            "key": "localSupplierShare",
+            "unit": "percent",
+            "target": 60,
+            "actual": 65
+          },
+          {
+            "key": "budgetUtilisation",
+            "unit": "percent",
+            "target": 95,
+            "actual": 93
+          }
+        ]
+      },
+      "western": {
+        "sitesRestored": 3,
+        "jobsCreated": 148,
+        "visitorsPerMonth": [
+          85200,
+          88400,
+          84400,
+          69300,
+          52700,
+          41000,
+          39000,
+          40400,
+          61900,
+          84800,
+          96700,
+          93200
+        ],
+        "budget": {
+          "conservation": 20.9,
+          "research": 6.8,
+          "visitorExperience": 7.1,
+          "training": 4,
+          "operations": 7.5
+        },
+        "indicators": [
+          {
+            "key": "sitesRestored",
+            "unit": "count",
+            "target": 3,
+            "actual": 3
+          },
+          {
+            "key": "visitorSatisfaction",
+            "unit": "percent",
+            "target": 85,
+            "actual": 82
+          },
+          {
+            "key": "artisansTrained",
+            "unit": "count",
+            "target": 35,
+            "actual": 38
+          },
+          {
+            "key": "recordsDigitised",
+            "unit": "percent",
+            "target": 60,
+            "actual": 55
+          },
+          {
+            "key": "localSupplierShare",
+            "unit": "percent",
+            "target": 60,
+            "actual": 62
+          },
+          {
+            "key": "budgetUtilisation",
+            "unit": "percent",
+            "target": 95,
+            "actual": 97
+          }
+        ]
+      },
+      "eastern": {
+        "sitesRestored": 2,
+        "jobsCreated": 89,
+        "visitorsPerMonth": [
+          55700,
+          57400,
+          53000,
+          43500,
+          34000,
+          26900,
+          23700,
+          26800,
+          36600,
+          51500,
+          59100,
+          58800
+        ],
+        "budget": {
+          "conservation": 15.7,
+          "research": 5.2,
+          "visitorExperience": 5.5,
+          "training": 3,
+          "operations": 5.2
+        },
+        "indicators": [
+          {
+            "key": "sitesRestored",
+            "unit": "count",
+            "target": 3,
+            "actual": 2
+          },
+          {
+            "key": "visitorSatisfaction",
+            "unit": "percent",
+            "target": 85,
+            "actual": 82
+          },
+          {
+            "key": "artisansTrained",
+            "unit": "count",
+            "target": 31,
+            "actual": 29
+          },
+          {
+            "key": "recordsDigitised",
+            "unit": "percent",
+            "target": 60,
+            "actual": 54
+          },
+          {
+            "key": "localSupplierShare",
+            "unit": "percent",
+            "target": 60,
+            "actual": 64
+          },
+          {
+            "key": "budgetUtilisation",
+            "unit": "percent",
+            "target": 95,
+            "actual": 97
+          }
+        ]
+      },
+      "northern": {
+        "sitesRestored": 3,
+        "jobsCreated": 119,
+        "visitorsPerMonth": [
+          66700,
+          66800,
+          59300,
+          48500,
+          40200,
+          31700,
+          28700,
+          31400,
+          45200,
+          59200,
+          72000,
+          70300
+        ],
+        "budget": {
+          "conservation": 21.9,
+          "research": 6.5,
+          "visitorExperience": 7.7,
+          "training": 3.9,
+          "operations": 6.8
+        },
+        "indicators": [
+          {
+            "key": "sitesRestored",
+            "unit": "count",
+            "target": 4,
+            "actual": 3
+          },
+          {
+            "key": "visitorSatisfaction",
+            "unit": "percent",
+            "target": 85,
+            "actual": 82
+          },
+          {
+            "key": "artisansTrained",
+            "unit": "count",
+            "target": 30,
+            "actual": 31
+          },
+          {
+            "key": "recordsDigitised",
+            "unit": "percent",
+            "target": 60,
+            "actual": 59
+          },
+          {
+            "key": "localSupplierShare",
+            "unit": "percent",
+            "target": 60,
+            "actual": 60
+          },
+          {
+            "key": "budgetUtilisation",
+            "unit": "percent",
+            "target": 95,
+            "actual": 89
+          }
+        ]
+      },
+      "southern": {
+        "sitesRestored": 2,
+        "jobsCreated": 116,
+        "visitorsPerMonth": [
+          32200,
+          32900,
+          30500,
+          26000,
+          19400,
+          15100,
+          14100,
+          16000,
+          23100,
+          30500,
+          34700,
+          35500
+        ],
+        "budget": {
+          "conservation": 16.2,
+          "research": 4.7,
+          "visitorExperience": 5.5,
+          "training": 3.3,
+          "operations": 5.4
+        },
+        "indicators": [
+          {
+            "key": "sitesRestored",
+            "unit": "count",
+            "target": 1,
+            "actual": 2
+          },
+          {
+            "key": "visitorSatisfaction",
+            "unit": "percent",
+            "target": 85,
+            "actual": 90
+          },
+          {
+            "key": "artisansTrained",
+            "unit": "count",
+            "target": 24,
+            "actual": 25
+          },
+          {
+            "key": "recordsDigitised",
+            "unit": "percent",
+            "target": 60,
+            "actual": 55
+          },
+          {
+            "key": "localSupplierShare",
+            "unit": "percent",
+            "target": 60,
+            "actual": 58
+          },
+          {
+            "key": "budgetUtilisation",
+            "unit": "percent",
+            "target": 95,
+            "actual": 90
+          }
+        ]
+      }
+    },
+    "2024": {
+      "central": {
+        "sitesRestored": 3,
+        "jobsCreated": 147,
+        "visitorsPerMonth": [
+          100000,
+          106900,
+          96800,
+          78100,
+          61400,
+          47800,
+          42500,
+          47800,
+          69700,
+          91600,
+          110800,
+          108600
+        ],
+        "budget": {
+          "conservation": 21.2,
+          "research": 6.5,
+          "visitorExperience": 7.2,
+          "training": 4.1,
+          "operations": 7.4
+        },
+        "indicators": [
+          {
+            "key": "sitesRestored",
+            "unit": "count",
+            "target": 4,
+            "actual": 3
+          },
+          {
+            "key": "visitorSatisfaction",
+            "unit": "percent",
+            "target": 85,
+            "actual": 92
+          },
+          {
+            "key": "artisansTrained",
+            "unit": "count",
+            "target": 24,
+            "actual": 24
+          },
+          {
+            "key": "recordsDigitised",
+            "unit": "percent",
+            "target": 65,
+            "actual": 61
+          },
+          {
+            "key": "localSupplierShare",
+            "unit": "percent",
+            "target": 60,
+            "actual": 56
+          },
+          {
+            "key": "budgetUtilisation",
+            "unit": "percent",
+            "target": 95,
+            "actual": 88
+          }
+        ]
+      },
+      "western": {
+        "sitesRestored": 4,
+        "jobsCreated": 183,
+        "visitorsPerMonth": [
+          104900,
+          104700,
+          100500,
+          83600,
+          64400,
+          50600,
+          45500,
+          50000,
+          71800,
+          97700,
+          113200,
+          112100
+        ],
+        "budget": {
+          "conservation": 25.9,
+          "research": 8.3,
+          "visitorExperience": 8.7,
+          "training": 5.2,
+          "operations": 9
+        },
+        "indicators": [
+          {
+            "key": "sitesRestored",
+            "unit": "count",
+            "target": 4,
+            "actual": 4
+          },
+          {
+            "key": "visitorSatisfaction",
+            "unit": "percent",
+            "target": 85,
+            "actual": 93
+          },
+          {
+            "key": "artisansTrained",
+            "unit": "count",
+            "target": 31,
+            "actual": 30
+          },
+          {
+            "key": "recordsDigitised",
+            "unit": "percent",
+            "target": 65,
+            "actual": 60
+          },
+          {
+            "key": "localSupplierShare",
+            "unit": "percent",
+            "target": 60,
+            "actual": 53
+          },
+          {
+            "key": "budgetUtilisation",
+            "unit": "percent",
+            "target": 95,
+            "actual": 92
+          }
+        ]
+      },
+      "eastern": {
+        "sitesRestored": 3,
+        "jobsCreated": 168,
+        "visitorsPerMonth": [
+          63600,
+          70600,
+          61500,
+          50000,
+          38500,
+          30000,
+          27500,
+          30200,
+          45500,
+          63000,
+          70700,
+          77900
+        ],
+        "budget": {
+          "conservation": 21.1,
+          "research": 6.3,
+          "visitorExperience": 7.6,
+          "training": 4,
+          "operations": 7.4
+        },
+        "indicators": [
+          {
+            "key": "sitesRestored",
+            "unit": "count",
+            "target": 4,
+            "actual": 3
+          },
+          {
+            "key": "visitorSatisfaction",
+            "unit": "percent",
+            "target": 85,
+            "actual": 81
+          },
+          {
+            "key": "artisansTrained",
+            "unit": "count",
+            "target": 20,
+            "actual": 18
+          },
+          {
+            "key": "recordsDigitised",
+            "unit": "percent",
+            "target": 65,
+            "actual": 53
+          },
+          {
+            "key": "localSupplierShare",
+            "unit": "percent",
+            "target": 60,
+            "actual": 57
+          },
+          {
+            "key": "budgetUtilisation",
+            "unit": "percent",
+            "target": 95,
+            "actual": 94
+          }
+        ]
+      },
+      "northern": {
+        "sitesRestored": 3,
+        "jobsCreated": 127,
+        "visitorsPerMonth": [
+          75500,
+          82900,
+          71800,
+          59600,
+          47700,
+          37800,
+          32400,
+          37200,
+          54300,
+          72200,
+          83300,
+          85300
+        ],
+        "budget": {
+          "conservation": 22.4,
+          "research": 6.9,
+          "visitorExperience": 7.2,
+          "training": 4,
+          "operations": 6.9
+        },
+        "indicators": [
+          {
+            "key": "sitesRestored",
+            "unit": "count",
+            "target": 3,
+            "actual": 3
+          },
+          {
+            "key": "visitorSatisfaction",
+            "unit": "percent",
+            "target": 85,
+            "actual": 93
+          },
+          {
+            "key": "artisansTrained",
+            "unit": "count",
+            "target": 36,
+            "actual": 34
+          },
+          {
+            "key": "recordsDigitised",
+            "unit": "percent",
+            "target": 65,
+            "actual": 60
+          },
+          {
+            "key": "localSupplierShare",
+            "unit": "percent",
+            "target": 60,
+            "actual": 61
+          },
+          {
+            "key": "budgetUtilisation",
+            "unit": "percent",
+            "target": 95,
+            "actual": 96
+          }
+        ]
+      },
+      "southern": {
+        "sitesRestored": 3,
+        "jobsCreated": 143,
+        "visitorsPerMonth": [
+          37500,
+          38500,
+          35400,
+          29000,
+          22600,
+          17800,
+          16900,
+          18100,
+          26100,
+          35400,
+          41800,
+          50900
+        ],
+        "budget": {
+          "conservation": 23,
+          "research": 6.2,
+          "visitorExperience": 8,
+          "training": 4.3,
+          "operations": 7.2
+        },
+        "indicators": [
+          {
+            "key": "sitesRestored",
+            "unit": "count",
+            "target": 4,
+            "actual": 3
+          },
+          {
+            "key": "visitorSatisfaction",
+            "unit": "percent",
+            "target": 85,
+            "actual": 80
+          },
+          {
+            "key": "artisansTrained",
+            "unit": "count",
+            "target": 37,
+            "actual": 33
+          },
+          {
+            "key": "recordsDigitised",
+            "unit": "percent",
+            "target": 65,
+            "actual": 67
+          },
+          {
+            "key": "localSupplierShare",
+            "unit": "percent",
+            "target": 60,
+            "actual": 53
+          },
+          {
+            "key": "budgetUtilisation",
+            "unit": "percent",
+            "target": 95,
+            "actual": 93
+          }
+        ]
+      }
+    },
+    "2025": {
+      "central": {
+        "sitesRestored": 3,
+        "jobsCreated": 132,
+        "visitorsPerMonth": [
+          116100,
+          118700,
+          110100,
+          87800,
+          68500,
+          54300,
+          50200,
+          52500,
+          77700,
+          107700,
+          120000,
+          128400
+        ],
+        "budget": {
+          "conservation": 23.1,
+          "research": 7,
+          "visitorExperience": 7.6,
+          "training": 4.7,
+          "operations": 7.8
+        },
+        "indicators": [
+          {
+            "key": "sitesRestored",
+            "unit": "count",
+            "target": 4,
+            "actual": 3
+          },
+          {
+            "key": "visitorSatisfaction",
+            "unit": "percent",
+            "target": 85,
+            "actual": 86
+          },
+          {
+            "key": "artisansTrained",
+            "unit": "count",
+            "target": 38,
+            "actual": 38
+          },
+          {
+            "key": "recordsDigitised",
+            "unit": "percent",
+            "target": 70,
+            "actual": 66
+          },
+          {
+            "key": "localSupplierShare",
+            "unit": "percent",
+            "target": 60,
+            "actual": 62
+          },
+          {
+            "key": "budgetUtilisation",
+            "unit": "percent",
+            "target": 95,
+            "actual": 99
+          }
+        ]
+      },
+      "western": {
+        "sitesRestored": 4,
+        "jobsCreated": 160,
+        "visitorsPerMonth": [
+          119100,
+          124000,
+          113000,
+          95400,
+          69100,
+          54400,
+          52900,
+          56600,
+          83300,
+          113800,
+          123900,
+          128500
+        ],
+        "budget": {
+          "conservation": 28.8,
+          "research": 8.5,
+          "visitorExperience": 9.8,
+          "training": 5.7,
+          "operations": 8.9
+        },
+        "indicators": [
+          {
+            "key": "sitesRestored",
+            "unit": "count",
+            "target": 4,
+            "actual": 4
+          },
+          {
+            "key": "visitorSatisfaction",
+            "unit": "percent",
+            "target": 85,
+            "actual": 81
+          },
+          {
+            "key": "artisansTrained",
+            "unit": "count",
+            "target": 22,
+            "actual": 19
+          },
+          {
+            "key": "recordsDigitised",
+            "unit": "percent",
+            "target": 70,
+            "actual": 66
+          },
+          {
+            "key": "localSupplierShare",
+            "unit": "percent",
+            "target": 60,
+            "actual": 55
+          },
+          {
+            "key": "budgetUtilisation",
+            "unit": "percent",
+            "target": 95,
+            "actual": 94
+          }
+        ]
+      },
+      "eastern": {
+        "sitesRestored": 4,
+        "jobsCreated": 207,
+        "visitorsPerMonth": [
+          76100,
+          78700,
+          71600,
+          59800,
+          45200,
+          34700,
+          32000,
+          34500,
+          51300,
+          69100,
+          82000,
+          79000
+        ],
+        "budget": {
+          "conservation": 27.6,
+          "research": 8.5,
+          "visitorExperience": 9.9,
+          "training": 5.2,
+          "operations": 9.4
+        },
+        "indicators": [
+          {
+            "key": "sitesRestored",
+            "unit": "count",
+            "target": 4,
+            "actual": 4
+          },
+          {
+            "key": "visitorSatisfaction",
+            "unit": "percent",
+            "target": 85,
+            "actual": 93
+          },
+          {
+            "key": "artisansTrained",
+            "unit": "count",
+            "target": 26,
+            "actual": 28
+          },
+          {
+            "key": "recordsDigitised",
+            "unit": "percent",
+            "target": 70,
+            "actual": 68
+          },
+          {
+            "key": "localSupplierShare",
+            "unit": "percent",
+            "target": 60,
+            "actual": 63
+          },
+          {
+            "key": "budgetUtilisation",
+            "unit": "percent",
+            "target": 95,
+            "actual": 97
+          }
+        ]
+      },
+      "northern": {
+        "sitesRestored": 4,
+        "jobsCreated": 155,
+        "visitorsPerMonth": [
+          87200,
+          93300,
+          84500,
+          66500,
+          54800,
+          40600,
+          39000,
+          41200,
+          62400,
+          86200,
+          96900,
+          87400
+        ],
+        "budget": {
+          "conservation": 29.6,
+          "research": 8.2,
+          "visitorExperience": 9.9,
+          "training": 5.2,
+          "operations": 8.5
+        },
+        "indicators": [
+          {
+            "key": "sitesRestored",
+            "unit": "count",
+            "target": 5,
+            "actual": 4
+          },
+          {
+            "key": "visitorSatisfaction",
+            "unit": "percent",
+            "target": 85,
+            "actual": 88
+          },
+          {
+            "key": "artisansTrained",
+            "unit": "count",
+            "target": 36,
+            "actual": 41
+          },
+          {
+            "key": "recordsDigitised",
+            "unit": "percent",
+            "target": 70,
+            "actual": 72
+          },
+          {
+            "key": "localSupplierShare",
+            "unit": "percent",
+            "target": 60,
+            "actual": 66
+          },
+          {
+            "key": "budgetUtilisation",
+            "unit": "percent",
+            "target": 95,
+            "actual": 89
+          }
+        ]
+      },
+      "southern": {
+        "sitesRestored": 3,
+        "jobsCreated": 156,
+        "visitorsPerMonth": [
+          42100,
+          45500,
+          41400,
+          34700,
+          25600,
+          20200,
+          18800,
+          21200,
+          31400,
+          40700,
+          46800,
+          51600
+        ],
+        "budget": {
+          "conservation": 22,
+          "research": 7,
+          "visitorExperience": 8.3,
+          "training": 4.7,
+          "operations": 7.7
+        },
+        "indicators": [
+          {
+            "key": "sitesRestored",
+            "unit": "count",
+            "target": 3,
+            "actual": 3
+          },
+          {
+            "key": "visitorSatisfaction",
+            "unit": "percent",
+            "target": 85,
+            "actual": 91
+          },
+          {
+            "key": "artisansTrained",
+            "unit": "count",
+            "target": 29,
+            "actual": 24
+          },
+          {
+            "key": "recordsDigitised",
+            "unit": "percent",
+            "target": 70,
+            "actual": 60
+          },
+          {
+            "key": "localSupplierShare",
+            "unit": "percent",
+            "target": 60,
+            "actual": 57
+          },
+          {
+            "key": "budgetUtilisation",
+            "unit": "percent",
+            "target": 95,
+            "actual": 98
+          }
+        ]
+      }
+    },
+    "2026": {
+      "central": {
+        "sitesRestored": 4,
+        "jobsCreated": 195,
+        "visitorsPerMonth": [
+          116900,
+          122400,
+          111900,
+          94200,
+          75700,
+          59100,
+          50600,
+          59400,
+          84800,
+          112200,
+          135600,
+          147200
+        ],
+        "budget": {
+          "conservation": 28.5,
+          "research": 9.1,
+          "visitorExperience": 9.5,
+          "training": 5.4,
+          "operations": 9.4
+        },
+        "indicators": [
+          {
+            "key": "sitesRestored",
+            "unit": "count",
+            "target": 5,
+            "actual": 4
+          },
+          {
+            "key": "visitorSatisfaction",
+            "unit": "percent",
+            "target": 85,
+            "actual": 90
+          },
+          {
+            "key": "artisansTrained",
+            "unit": "count",
+            "target": 22,
+            "actual": 19
+          },
+          {
+            "key": "recordsDigitised",
+            "unit": "percent",
+            "target": 75,
+            "actual": 62
+          },
+          {
+            "key": "localSupplierShare",
+            "unit": "percent",
+            "target": 60,
+            "actual": 62
+          },
+          {
+            "key": "budgetUtilisation",
+            "unit": "percent",
+            "target": 95,
+            "actual": 92
+          }
+        ]
+      },
+      "western": {
+        "sitesRestored": 4,
+        "jobsCreated": 209,
+        "visitorsPerMonth": [
+          129900,
+          129600,
+          116000,
+          95500,
+          78000,
+          61600,
+          56600,
+          60000,
+          86200,
+          123900,
+          140300,
+          137400
+        ],
+        "budget": {
+          "conservation": 28.8,
+          "research": 9.1,
+          "visitorExperience": 10,
+          "training": 5.5,
+          "operations": 9.6
+        },
+        "indicators": [
+          {
+            "key": "sitesRestored",
+            "unit": "count",
+            "target": 4,
+            "actual": 4
+          },
+          {
+            "key": "visitorSatisfaction",
+            "unit": "percent",
+            "target": 85,
+            "actual": 86
+          },
+          {
+            "key": "artisansTrained",
+            "unit": "count",
+            "target": 38,
+            "actual": 37
+          },
+          {
+            "key": "recordsDigitised",
+            "unit": "percent",
+            "target": 75,
+            "actual": 68
+          },
+          {
+            "key": "localSupplierShare",
+            "unit": "percent",
+            "target": 60,
+            "actual": 54
+          },
+          {
+            "key": "budgetUtilisation",
+            "unit": "percent",
+            "target": 95,
+            "actual": 98
+          }
+        ]
+      },
+      "eastern": {
+        "sitesRestored": 3,
+        "jobsCreated": 171,
+        "visitorsPerMonth": [
+          81400,
+          82700,
+          73500,
+          61100,
+          49700,
+          38600,
+          35600,
+          38000,
+          55300,
+          73300,
+          89500,
+          86300
+        ],
+        "budget": {
+          "conservation": 22.2,
+          "research": 6.8,
+          "visitorExperience": 7.9,
+          "training": 4.6,
+          "operations": 7.3
+        },
+        "indicators": [
+          {
+            "key": "sitesRestored",
+            "unit": "count",
+            "target": 3,
+            "actual": 3
+          },
+          {
+            "key": "visitorSatisfaction",
+            "unit": "percent",
+            "target": 85,
+            "actual": 86
+          },
+          {
+            "key": "artisansTrained",
+            "unit": "count",
+            "target": 33,
+            "actual": 33
+          },
+          {
+            "key": "recordsDigitised",
+            "unit": "percent",
+            "target": 75,
+            "actual": 63
+          },
+          {
+            "key": "localSupplierShare",
+            "unit": "percent",
+            "target": 60,
+            "actual": 61
+          },
+          {
+            "key": "budgetUtilisation",
+            "unit": "percent",
+            "target": 95,
+            "actual": 94
+          }
+        ]
+      },
+      "northern": {
+        "sitesRestored": 4,
+        "jobsCreated": 187,
+        "visitorsPerMonth": [
+          95900,
+          93900,
+          90600,
+          71500,
+          57000,
+          44400,
+          40100,
+          43400,
+          64800,
+          87000,
+          101300,
+          110100
+        ],
+        "budget": {
+          "conservation": 30.1,
+          "research": 8.2,
+          "visitorExperience": 10.2,
+          "training": 5.6,
+          "operations": 9.7
+        },
+        "indicators": [
+          {
+            "key": "sitesRestored",
+            "unit": "count",
+            "target": 4,
+            "actual": 4
+          },
+          {
+            "key": "visitorSatisfaction",
+            "unit": "percent",
+            "target": 85,
+            "actual": 83
+          },
+          {
+            "key": "artisansTrained",
+            "unit": "count",
+            "target": 36,
+            "actual": 37
+          },
+          {
+            "key": "recordsDigitised",
+            "unit": "percent",
+            "target": 75,
+            "actual": 81
+          },
+          {
+            "key": "localSupplierShare",
+            "unit": "percent",
+            "target": 60,
+            "actual": 62
+          },
+          {
+            "key": "budgetUtilisation",
+            "unit": "percent",
+            "target": 95,
+            "actual": 98
+          }
+        ]
+      },
+      "southern": {
+        "sitesRestored": 4,
+        "jobsCreated": 156,
+        "visitorsPerMonth": [
+          48400,
+          47600,
+          44400,
+          35500,
+          28900,
+          23200,
+          19900,
+          21700,
+          33500,
+          43400,
+          52200,
+          51300
+        ],
+        "budget": {
+          "conservation": 29.7,
+          "research": 9.3,
+          "visitorExperience": 9.8,
+          "training": 5.5,
+          "operations": 9.8
+        },
+        "indicators": [
+          {
+            "key": "sitesRestored",
+            "unit": "count",
+            "target": 5,
+            "actual": 4
+          },
+          {
+            "key": "visitorSatisfaction",
+            "unit": "percent",
+            "target": 85,
+            "actual": 88
+          },
+          {
+            "key": "artisansTrained",
+            "unit": "count",
+            "target": 36,
+            "actual": 31
+          },
+          {
+            "key": "recordsDigitised",
+            "unit": "percent",
+            "target": 75,
+            "actual": 75
+          },
+          {
+            "key": "localSupplierShare",
+            "unit": "percent",
+            "target": 60,
+            "actual": 61
+          },
+          {
+            "key": "budgetUtilisation",
+            "unit": "percent",
+            "target": 95,
+            "actual": 89
+          }
+        ]
+      }
+    }
+  }
+}

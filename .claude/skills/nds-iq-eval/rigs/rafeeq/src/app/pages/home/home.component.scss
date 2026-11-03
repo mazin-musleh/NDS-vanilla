@@ -1,0 +1,123 @@
+.hero {
+  background: linear-gradient(135deg, #00695c 0%, #00897b 100%);
+  color: #fff;
+}
+
+.hero-inner {
+  padding-top: 48px;
+  padding-bottom: 56px;
+
+  h1 {
+    max-width: 640px;
+  }
+}
+
+.hero-text {
+  max-width: 620px;
+  font-size: 18px;
+  opacity: 0.92;
+}
+
+.hero-search {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 680px;
+  margin-top: 24px;
+}
+
+.hero-field {
+  flex: 1;
+  background: #fff;
+  border-radius: 8px;
+
+  // outline + white card looked broken on the gradient
+  ::ng-deep .mdc-text-field--outlined {
+    padding-inline: 12px;
+  }
+}
+
+.hero-submit {
+  height: 56px;
+  padding: 0 28px;
+  background: #ffb300;
+  color: #1b2524;
+}
+
+.journey-card {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #e8f5f3;
+  color: #00695c;
+}
+
+.two-col {
+  display: grid;
+  gap: 0 32px;
+  grid-template-columns: 1fr;
+}
+
+.popular-list {
+  background: #fff;
+  border: 1px solid var(--rf-border);
+  border-radius: 12px;
+  padding: 4px 0;
+}
+
+.consult-card {
+  .deadline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #b45309;
+  }
+}
+
+.quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  mat-icon {
+    margin-inline-end: 8px;
+  }
+}
+
+:host-context([dir='rtl']) .chevron {
+  transform: none;
+}
+
+:host-context([dir='ltr']) .chevron {
+  transform: scaleX(-1);
+}
+
+@media (min-width: 960px) {
+  .two-col {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 599px) {
+  .hero-search {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-submit {
+    width: 100%;
+  }
+}

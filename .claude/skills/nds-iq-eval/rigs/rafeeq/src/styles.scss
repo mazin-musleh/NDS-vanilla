@@ -1,0 +1,192 @@
+@use '@angular/material' as mat;
+
+html {
+  color-scheme: light;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$cyan-palette,
+        tertiary: mat.$orange-palette,
+      ),
+      typography: (
+        plain-family: ('IBM Plex Sans Arabic', Roboto, sans-serif),
+        brand-family: ('IBM Plex Sans Arabic', Roboto, sans-serif),
+        bold-weight: 700,
+        medium-weight: 500,
+        regular-weight: 400,
+      ),
+      density: 0,
+    )
+  );
+}
+
+// brand teal on top of the generated palette
+html {
+  --mat-sys-primary: #00695c;
+  --mat-sys-on-primary: #ffffff;
+  --mat-sys-primary-container: #b2dfdb;
+  --mat-sys-on-primary-container: #00201c;
+  --mat-sys-surface-tint: #00695c;
+
+  --rf-page-width: 1200px;
+  --rf-gap: 24px;
+  --rf-muted: #5f6b6a;
+  --rf-border: #dbe3e2;
+  --rf-tint: #e8f5f3;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: #f7faf9;
+  color: #1b2524;
+  font-family: 'IBM Plex Sans Arabic', Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 0 0 12px;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 19px;
+}
+
+p {
+  margin: 0 0 12px;
+}
+
+a {
+  color: #00695c;
+}
+
+/* ---------- page scaffolding shared by every route ---------- */
+
+.page {
+  max-width: var(--rf-page-width);
+  margin: 0 auto;
+  padding: 24px 16px 8px;
+}
+
+.page-head {
+  margin-bottom: 24px;
+
+  p {
+    color: var(--rf-muted);
+    max-width: 720px;
+  }
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 40px 0 16px;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--rf-gap);
+}
+
+.muted {
+  color: var(--rf-muted);
+}
+
+.loading-bar {
+  margin: 48px auto;
+  max-width: 320px;
+  text-align: center;
+  color: var(--rf-muted);
+}
+
+.empty-state {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--rf-muted);
+}
+
+.field-error {
+  color: #b3261e;
+  font-size: 13px;
+  margin: 4px 0 0;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+/* ---------- Material tweaks the old portal relied on ---------- */
+
+.mat-mdc-card {
+  margin-bottom: 0;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.mat-mdc-tab-body-wrapper {
+  padding-top: 16px;
+}
+
+.mat-mdc-snack-bar-container.snack-error {
+  --mdc-snackbar-container-color: #b3261e;
+  --mat-snack-bar-button-color: #fff;
+  --mdc-snackbar-supporting-text-color: #fff;
+}
+
+.mat-mdc-standard-chip.mdc-evolved-chip {
+  margin-inline-end: 8px;
+}
+
+.mat-mdc-dialog-surface {
+  border-radius: 12px !important;
+}
+
+.mat-mdc-paginator {
+  background: transparent;
+}
+
+/* ---------- phone ---------- */
+
+@media (max-width: 599px) {
+  h1 {
+    font-size: 26px;
+  }
+
+  h2 {
+    font-size: 21px;
+  }
+
+  .page {
+    padding: 16px 12px 4px;
+  }
+}

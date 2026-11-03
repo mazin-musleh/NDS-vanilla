@@ -1,0 +1,35 @@
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+
+.topic-field {
+  max-width: 280px;
+}
+
+.consultations-grid {
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+.status-tabs {
+  ::ng-deep .mat-mdc-tab-body-content {
+    padding: 8px 2px 0;
+  }
+}
+
+mat-paginator {
+  margin-top: 8px;
+}
+
+@media (max-width: 599px) {
+  .topic-field {
+    max-width: none;
+  }
+
+  .consultations-grid {
+    grid-template-columns: 1fr;
+  }
+}

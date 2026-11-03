@@ -1,0 +1,154 @@
+{
+  "categories": [
+    { "id": "account", "icon": "manage_accounts", "name": { "ar": "الحساب وتسجيل الدخول", "en": "Account and sign-in" } },
+    { "id": "services", "icon": "assignment", "name": { "ar": "الخدمات والطلبات", "en": "Services and requests" } },
+    { "id": "payments", "icon": "payments", "name": { "ar": "الرسوم والدفع", "en": "Fees and payment" } },
+    { "id": "appointments", "icon": "event", "name": { "ar": "المواعيد", "en": "Appointments" } },
+    { "id": "documents", "icon": "description", "name": { "ar": "المستندات والوثائق", "en": "Documents" } },
+    { "id": "accessibility", "icon": "accessibility_new", "name": { "ar": "اللغة وإمكانية الوصول", "en": "Language and accessibility" } }
+  ],
+  "articles": [
+    {
+      "id": "a-101",
+      "categoryId": "account",
+      "title": { "ar": "كيف أستعيد كلمة المرور؟", "en": "How do I recover my password?" },
+      "summary": { "ar": "خطوات إعادة تعيين كلمة المرور لحسابك على منصة الخدمة.", "en": "Steps to reset the password for your service platform account." },
+      "body": {
+        "ar": "<p>إذا نسيت كلمة المرور فيمكنك إعادة تعيينها من صفحة تسجيل الدخول في المنصة التي تستخدمها.</p><ol><li>اضغط على <strong>نسيت كلمة المرور</strong>.</li><li>أدخل رقم الهوية الوطنية أو الإقامة.</li><li>أدخل رمز التحقق المرسل إلى جوالك المسجّل.</li><li>اختر كلمة مرور جديدة لا تقل عن 8 أحرف.</li></ol><p>إذا لم يعد رقم جوالك مفعّلًا فعليك تحديثه من أقرب فرع للخدمة.</p>",
+        "en": "<p>If you forgot your password, you can reset it from the sign-in page of the platform you use.</p><ol><li>Select <strong>Forgot password</strong>.</li><li>Enter your national ID or iqama number.</li><li>Enter the code sent to your registered mobile.</li><li>Choose a new password of at least 8 characters.</li></ol><p>If your mobile number is no longer active, update it at the nearest service branch.</p>"
+      },
+      "updated": "2026-09-14",
+      "related": ["a-102", "a-601"]
+    },
+    {
+      "id": "a-102",
+      "categoryId": "account",
+      "title": { "ar": "لماذا لا يصلني رمز التحقق؟", "en": "Why does my verification code not arrive?" },
+      "summary": { "ar": "أسباب تأخر الرسالة النصية وكيف تعالجها.", "en": "Why a text message is late and how to fix it." },
+      "body": {
+        "ar": "<p>قد يتأخر وصول الرمز لأحد الأسباب التالية:</p><table><thead><tr><th>السبب</th><th>الحل</th></tr></thead><tbody><tr><td>الجوال غير مسجل باسمك</td><td>حدّث رقم الجوال من فرع الخدمة</td></tr><tr><td>ازدحام شبكة الاتصالات</td><td>انتظر دقيقتين ثم أعد الطلب</td></tr><tr><td>حظر الرسائل الدعائية</td><td>ألغِ الحظر أو استخدم تطبيق الجوال</td></tr></tbody></table><p>لا تطلب الرمز أكثر من ثلاث مرات متتالية حتى لا يُقفل الحساب مؤقتًا.</p>",
+        "en": "<p>The code may be late for one of these reasons:</p><table><thead><tr><th>Cause</th><th>What to do</th></tr></thead><tbody><tr><td>The mobile is not registered in your name</td><td>Update the number at a service branch</td></tr><tr><td>Network congestion</td><td>Wait two minutes and request again</td></tr><tr><td>Promotional messages are blocked</td><td>Lift the block or use the mobile app</td></tr></tbody></table><p>Do not request the code more than three times in a row, or the account will lock for a while.</p>"
+      },
+      "updated": "2026-08-30",
+      "related": ["a-101", "a-401"]
+    },
+    {
+      "id": "a-201",
+      "categoryId": "services",
+      "title": { "ar": "كيف أتابع حالة طلبي؟", "en": "How do I track my request?" },
+      "summary": { "ar": "اعرف أين وصل طلبك وما معنى كل حالة.", "en": "See where your request stands and what each status means." },
+      "body": {
+        "ar": "<p>ادخل إلى <strong>طلباتي</strong> في المنصة التي قدّمت منها الطلب، وستجد الحالة الحالية:</p><ol><li><em>قيد المراجعة</em>: استلمت الجهة طلبك.</li><li><em>مطلوب استكمال</em>: ينقصك مستند أو معلومة.</li><li><em>مكتمل</em>: صدر القرار وأُرسل إليك.</li></ol><div style=\"background:#fff4e5;border-right:4px solid #f59e0b;padding:12px 16px;margin:16px 0;\">تنبيه: عند ظهور حالة «مطلوب استكمال» تملك 7 أيام للرد قبل إلغاء الطلب تلقائيًا.</div>",
+        "en": "<p>Open <strong>My requests</strong> on the platform where you applied to see the current status:</p><ol><li><em>Under review</em>: the agency received your request.</li><li><em>Action required</em>: a document or detail is missing.</li><li><em>Completed</em>: a decision was issued and sent to you.</li></ol><div style=\"background:#fff4e5;border-left:4px solid #f59e0b;padding:12px 16px;margin:16px 0;\">Note: when the status shows “Action required” you have 7 days to respond before the request is cancelled automatically.</div>"
+      },
+      "updated": "2026-10-02",
+      "related": ["a-202", "a-402"]
+    },
+    {
+      "id": "a-202",
+      "categoryId": "services",
+      "title": { "ar": "كيف ألغي طلبًا قدّمته؟", "en": "How do I cancel a request I submitted?" },
+      "summary": { "ar": "متى يمكن إلغاء الطلب وماذا يحدث للرسوم.", "en": "When a request can be cancelled and what happens to fees." },
+      "body": {
+        "ar": "<p>يمكنك إلغاء الطلب ما دامت حالته <strong>قيد المراجعة</strong>. بعد صدور القرار لا يمكن الإلغاء، لكن يمكنك التقدم بطلب جديد.</p><ol><li>افتح <strong>طلباتي</strong>.</li><li>اختر الطلب ثم <strong>إلغاء الطلب</strong>.</li><li>أكّد الإلغاء.</li></ol><p>تُعاد الرسوم المسددة وفق سياسة الجهة المقدمة للخدمة.</p><p><button onclick=\"window.print()\" class=\"print-btn\">طباعة هذه الصفحة</button></p>",
+        "en": "<p>You can cancel a request while its status is <strong>Under review</strong>. After a decision is issued it cannot be cancelled, but you can file a new request.</p><ol><li>Open <strong>My requests</strong>.</li><li>Select the request, then <strong>Cancel request</strong>.</li><li>Confirm the cancellation.</li></ol><p>Paid fees are refunded according to the providing agency's policy.</p><p><button onclick=\"window.print()\" class=\"print-btn\">Print this page</button></p>"
+      },
+      "updated": "2026-07-21",
+      "related": ["a-201", "a-302"]
+    },
+    {
+      "id": "a-301",
+      "categoryId": "payments",
+      "title": { "ar": "طرق الدفع المتاحة", "en": "Available payment methods" },
+      "summary": { "ar": "كيف تسدد رسوم الخدمات إلكترونيًا.", "en": "How to pay service fees electronically." },
+      "body": {
+        "ar": "<p>تدعم معظم الخدمات طرق الدفع التالية:</p><table><thead><tr><th>الطريقة</th><th>المدة</th><th>رسوم إضافية</th></tr></thead><tbody><tr><td>سداد</td><td>فوري</td><td>بدون</td></tr><tr><td>بطاقة مدى</td><td>فوري</td><td>بدون</td></tr><tr><td>بطاقة ائتمانية</td><td>فوري</td><td>1.5% على بعض الخدمات</td></tr><tr><td>Apple Pay</td><td>فوري</td><td>بدون</td></tr></tbody></table><p>يظهر إيصال السداد في <strong>طلباتي</strong> خلال دقائق.</p>",
+        "en": "<p>Most services accept these payment methods:</p><table><thead><tr><th>Method</th><th>Time</th><th>Extra charge</th></tr></thead><tbody><tr><td>SADAD</td><td>Instant</td><td>None</td></tr><tr><td>mada card</td><td>Instant</td><td>None</td></tr><tr><td>Credit card</td><td>Instant</td><td>1.5% on some services</td></tr><tr><td>Apple Pay</td><td>Instant</td><td>None</td></tr></tbody></table><p>The payment receipt shows under <strong>My requests</strong> within minutes.</p>"
+      },
+      "updated": "2026-09-01",
+      "related": ["a-302", "a-201"]
+    },
+    {
+      "id": "a-302",
+      "categoryId": "payments",
+      "title": { "ar": "كيف أسترد رسومًا دفعتها؟", "en": "How do I get a refund of fees I paid?" },
+      "summary": { "ar": "شروط الاسترداد ومدة وصول المبلغ.", "en": "Refund conditions and how long the money takes." },
+      "body": {
+        "ar": "<p>تُسترد الرسوم في الحالات التالية: الدفع المكرر، أو إلغاء الطلب قبل المراجعة، أو رفض الطلب لسبب لا يعود إليك.</p><ol><li>افتح الطلب في <strong>طلباتي</strong>.</li><li>اختر <strong>طلب استرداد</strong>.</li><li>أدخل رقم الآيبان المسجل باسمك.</li></ol><p style=\"color:#b3261e;font-weight:600\">يستغرق وصول المبلغ من 7 إلى 14 يوم عمل.</p>",
+        "en": "<p>Fees are refunded in these cases: a duplicate payment, a request cancelled before review, or a rejection that was not your fault.</p><ol><li>Open the request in <strong>My requests</strong>.</li><li>Select <strong>Request a refund</strong>.</li><li>Enter an IBAN registered in your name.</li></ol><p style=\"color:#b3261e;font-weight:600\">The money takes 7 to 14 working days to arrive.</p>"
+      },
+      "updated": "2026-06-18",
+      "related": ["a-301", "a-202"]
+    },
+    {
+      "id": "a-401",
+      "categoryId": "appointments",
+      "title": { "ar": "كيف أحجز موعدًا في أحد الفروع؟", "en": "How do I book an appointment at a branch?" },
+      "summary": { "ar": "احجز موعدك مسبقًا لتتجنب الانتظار.", "en": "Book ahead to avoid waiting." },
+      "body": {
+        "ar": "<p>تتطلب بعض الخدمات حضورًا شخصيًا. احجز موعدك مسبقًا:</p><ol><li>اختر الخدمة من صفحتها ثم <strong>حجز موعد</strong>.</li><li>حدّد المدينة والفرع.</li><li>اختر اليوم والوقت المتاحين.</li><li>احفظ رمز الحجز الذي يصلك برسالة نصية.</li></ol><p style=\"background:#e8f5f3;padding:10px 14px;border-radius:6px\">احضر قبل الموعد بعشر دقائق ومعك الهوية الأصلية.</p>",
+        "en": "<p>Some services need you to attend in person. Book ahead:</p><ol><li>Open the service page and select <strong>Book an appointment</strong>.</li><li>Choose the city and branch.</li><li>Pick an available day and time.</li><li>Keep the booking code sent by text message.</li></ol><p style=\"background:#e8f5f3;padding:10px 14px;border-radius:6px\">Arrive ten minutes early with your original ID.</p>"
+      },
+      "updated": "2026-09-27",
+      "related": ["a-402", "a-102"]
+    },
+    {
+      "id": "a-402",
+      "categoryId": "appointments",
+      "title": { "ar": "تعديل الموعد أو إلغاؤه", "en": "Change or cancel an appointment" },
+      "summary": { "ar": "غيّر موعدك قبل 24 ساعة على الأقل.", "en": "Change your slot at least 24 hours ahead." },
+      "body": {
+        "ar": "<p>تستطيع تعديل الموعد أو إلغاءه قبل 24 ساعة من موعده من رابط الرسالة النصية أو من صفحة <strong>مواعيدي</strong>.</p><p>إذا تغيبت عن موعدين متتاليين دون إلغاء فقد يتعذر عليك الحجز لمدة 30 يومًا.</p>",
+        "en": "<p>You can change or cancel an appointment up to 24 hours before it from the link in the text message or from <strong>My appointments</strong>.</p><p>If you miss two appointments in a row without cancelling, you may not be able to book for 30 days.</p>"
+      },
+      "updated": "2026-05-12",
+      "related": ["a-401", "a-201"]
+    },
+    {
+      "id": "a-501",
+      "categoryId": "documents",
+      "title": { "ar": "المستندات المقبولة لإثبات الهوية", "en": "Documents accepted as proof of identity" },
+      "summary": { "ar": "قائمة المستندات التي تقبلها الجهات الخدمية.", "en": "The documents service agencies accept." },
+      "body": {
+        "ar": "<p>تقبل الجهات المستندات التالية بحسب فئتك:</p><table><thead><tr><th>الفئة</th><th>المستند</th></tr></thead><tbody><tr><td>المواطن</td><td>الهوية الوطنية، أو الهوية الرقمية في التطبيق</td></tr><tr><td>المقيم</td><td>الإقامة سارية المفعول</td></tr><tr><td>الزائر</td><td>جواز السفر مع التأشيرة</td></tr></tbody></table><p><button onclick=\"downloadList()\" class=\"dl-btn\">تنزيل القائمة</button></p>",
+        "en": "<p>Agencies accept the following documents depending on your category:</p><table><thead><tr><th>Category</th><th>Document</th></tr></thead><tbody><tr><td>Citizen</td><td>National ID, or the digital ID in the app</td></tr><tr><td>Resident</td><td>A valid iqama</td></tr><tr><td>Visitor</td><td>Passport with visa</td></tr></tbody></table><p><button onclick=\"downloadList()\" class=\"dl-btn\">Download the list</button></p>"
+      },
+      "updated": "2026-08-09",
+      "related": ["a-101", "a-401"]
+    },
+    {
+      "id": "a-601",
+      "categoryId": "accessibility",
+      "title": { "ar": "تغيير لغة الموقع وحجم الخط", "en": "Change the site language and text size" },
+      "summary": { "ar": "اجعل الموقع أنسب لك.", "en": "Make the site fit you better." },
+      "body": {
+        "ar": "<p>لتبديل اللغة اضغط على زر <strong>English</strong> في أعلى الصفحة، وسيتغير اتجاه الصفحة تلقائيًا دون إعادة تحميل.</p><p>لتكبير الخط استخدم إعدادات المتصفح (<kbd>Ctrl</kbd> و <kbd>+</kbd>). تدعم الصفحات التكبير حتى 200% دون فقدان المحتوى.</p>",
+        "en": "<p>To switch language, select the <strong>العربية</strong> button at the top of the page. The page direction changes automatically without reloading.</p><p>To enlarge text use your browser settings (<kbd>Ctrl</kbd> and <kbd>+</kbd>). Pages support zooming up to 200% without losing content.</p>"
+      },
+      "updated": "2026-04-03",
+      "related": ["a-101"]
+    }
+  ],
+  "topQuestions": [
+    {
+      "q": { "ar": "هل أحتاج إلى حساب لاستخدام رفيق؟", "en": "Do I need an account to use Rafeeq?" },
+      "a": { "ar": "لا. رفيق دليل يرشدك إلى الخدمات، أما تنفيذ الخدمة نفسها فيتم على منصة الجهة المقدمة وقد يتطلب تسجيل الدخول هناك.", "en": "No. Rafeeq is a guide to services. The service itself is delivered on the providing agency's platform, where you may need to sign in." }
+    },
+    {
+      "q": { "ar": "هل تُحفظ بياناتي عند تعليم المراحل كمكتملة؟", "en": "Is my data saved when I mark stages as done?" },
+      "a": { "ar": "يُحفظ تقدّمك في متصفحك على هذا الجهاز فقط ولا يُرسل إلى أي خادم.", "en": "Your progress is saved in your browser on this device only and is not sent to any server." }
+    },
+    {
+      "q": { "ar": "كيف أعرف أن الرسوم المعروضة محدّثة؟", "en": "How do I know the fees shown are current?" },
+      "a": { "ar": "نراجع بيانات الخدمات دوريًا، وتظهر الرسوم النهائية على منصة الجهة قبل السداد.", "en": "We review service data regularly, and the final fee is shown on the agency's platform before payment." }
+    },
+    {
+      "q": { "ar": "هل المشاركة في الاستشارات العامة مجهولة؟", "en": "Is taking part in public consultations anonymous?" },
+      "a": { "ar": "نعم، لا تُربط إجاباتك باسمك أو رقم هويتك.", "en": "Yes. Your answers are not linked to your name or ID number." }
+    },
+    {
+      "q": { "ar": "كم يستغرق الرد على تذكرة الدعم؟", "en": "How long does a support ticket take to answer?" },
+      "a": { "ar": "يرد الفريق خلال يومي عمل في الحالات العادية.", "en": "The team replies within two working days in normal cases." }
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "hero": {
+    "image": "/images/hero.svg"
+  },
+  "figures": [
+    {
+      "key": "sitesRestored",
+      "value": 87
+    },
+    {
+      "key": "annualVisitors",
+      "value": 4200000
+    },
+    {
+      "key": "artisansTrained",
+      "value": 1850
+    },
+    {
+      "key": "partners",
+      "value": 64
+    }
+  ],
+  "featuredSiteIds": [
+    "hegra",
+    "at-turaif",
+    "al-balad",
+    "al-ahsa-oasis",
+    "jubbah-rock-art",
+    "rijal-almaa"
+  ],
+  "events": [
+    {
+      "id": "masmak-open-day",
+      "date": "2026-11-14",
+      "title": {
+        "en": "Open day at Masmak Fortress",
+        "ar": "يوم مفتوح في قصر المصمك"
+      },
+      "place": {
+        "en": "Riyadh",
+        "ar": "الرياض"
+      },
+      "siteId": "masmak-fortress",
+      "free": true
+    },
+    {
+      "id": "lime-plaster-masterclass",
+      "date": "2026-11-28",
+      "title": {
+        "en": "Masterclass: working with lime plaster",
+        "ar": "ورشة متخصصة: العمل بجص الجير"
+      },
+      "place": {
+        "en": "At-Turaif Quarter, Diriyah",
+        "ar": "حي الطريف، الدرعية"
+      },
+      "siteId": "at-turaif",
+      "free": false
+    },
+    {
+      "id": "balad-photo-walk",
+      "date": "2026-12-12",
+      "title": {
+        "en": "Photography walk in Al-Balad",
+        "ar": "جولة تصوير في جدة التاريخية"
+      },
+      "place": {
+        "en": "Jeddah",
+        "ar": "جدة"
+      },
+      "siteId": "al-balad",
+      "free": true
+    },
+    {
+      "id": "ahsa-artisans-market",
+      "date": "2027-01-09",
+      "title": {
+        "en": "Artisans' market in Al-Ahsa",
+        "ar": "سوق الحرفيين في الأحساء"
+      },
+      "place": {
+        "en": "Al-Ahsa Oasis",
+        "ar": "واحة الأحساء"
+      },
+      "siteId": "al-ahsa-oasis",
+      "free": true
+    },
+    {
+      "id": "partners-forum",
+      "date": "2027-02-06",
+      "title": {
+        "en": "Annual partners' forum",
+        "ar": "ملتقى الشركاء السنوي"
+      },
+      "place": {
+        "en": "Riyadh",
+        "ar": "الرياض"
+      },
+      "siteId": null,
+      "free": false
+    }
+  ],
+  "partnerLogos": [
+    {
+      "id": "noor",
+      "name": {
+        "en": "Al-Noor Foundation",
+        "ar": "مؤسسة النور"
+      },
+      "logo": "/images/logos/partner-1.svg"
+    },
+    {
+      "id": "desert-crafts",
+      "name": {
+        "en": "Desert Crafts Cooperative",
+        "ar": "تعاونية حرف الصحراء"
+      },
+      "logo": "/images/logos/partner-2.svg"
+    },
+    {
+      "id": "najd-builders",
+      "name": {
+        "en": "Najd Builders Association",
+        "ar": "جمعية بنّائي نجد"
+      },
+      "logo": "/images/logos/partner-3.svg"
+    },
+    {
+      "id": "red-sea-museum",
+      "name": {
+        "en": "Red Sea Maritime Museum Trust",
+        "ar": "مؤسسة متحف البحر الأحمر البحري"
+      },
+      "logo": "/images/logos/partner-4.svg"
+    },
+    {
+      "id": "hijaz-lab",
+      "name": {
+        "en": "Hijaz Conservation Lab",
+        "ar": "مختبر الحجاز للترميم"
+      },
+      "logo": "/images/logos/partner-5.svg"
+    },
+    {
+      "id": "asir-weavers",
+      "name": {
+        "en": "Asir Weavers Guild",
+        "ar": "نقابة حائكي عسير"
+      },
+      "logo": "/images/logos/partner-6.svg"
+    },
+    {
+      "id": "gulf-archaeology",
+      "name": {
+        "en": "Gulf Archaeology Society",
+        "ar": "جمعية آثار الخليج"
+      },
+      "logo": "/images/logos/partner-7.svg"
+    },
+    {
+      "id": "oasis-farmers",
+      "name": {
+        "en": "Oasis Farmers Union",
+        "ar": "اتحاد مزارعي الواحات"
+      },
+      "logo": "/images/logos/partner-8.svg"
+    }
+  ]
+}

@@ -1,0 +1,819 @@
+[
+  {
+    "id": "birth-notification",
+    "name": { "ar": "الإبلاغ عن مولود جديد", "en": "Notify a new birth" },
+    "provider": { "ar": "وزارة الصحة", "en": "Ministry of Health" },
+    "summary": { "ar": "تسجيل بلاغ الولادة في السجل المدني ليصبح مولودك مسجّلًا رسميًا.", "en": "Record the birth in the civil register so your baby is officially registered." },
+    "audience": ["citizens", "residents"],
+    "channels": ["app", "online", "branch"],
+    "duration": { "ar": "خلال يوم عمل واحد", "en": "Within one working day" },
+    "feeSar": 0,
+    "eligibility": { "ar": "أحد الوالدين أو من ينوب عنهما، خلال 30 يومًا من الولادة.", "en": "Either parent or a representative, within 30 days of the birth." },
+    "popular": false,
+    "platformUrl": "https://www.moh.gov.sa",
+    "requirements": [
+      { "ar": "بلاغ الولادة الصادر من المنشأة الصحية", "en": "Birth notice issued by the health facility" },
+      { "ar": "الهوية الوطنية أو الإقامة للأب والأم", "en": "National ID or iqama of both parents" },
+      { "ar": "عقد الزواج الموثّق", "en": "A registered marriage contract" }
+    ],
+    "steps": [
+      { "ar": "سجّل الدخول إلى المنصة", "en": "Sign in to the platform" },
+      { "ar": "اختر الإبلاغ عن مولود وأدخل بيانات الوالدين", "en": "Choose notify a birth and enter the parents' details" },
+      { "ar": "أدخل اسم المولود وتاريخ الولادة وأرفق البلاغ", "en": "Enter the baby's name and birth date and attach the notice" },
+      { "ar": "راجع الطلب وأرسله", "en": "Review and submit the request" }
+    ],
+    "fees": [{ "label": { "ar": "رسوم الإبلاغ", "en": "Notification fee" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "ماذا لو تجاوزت مدة 30 يومًا؟", "en": "What if I pass the 30 days?" }, "a": { "ar": "يمكنك التقديم بعد المدة، لكن يلزم إرفاق إفادة مكتوبة بسبب التأخر.", "en": "You can still apply, but you must attach a written statement explaining the delay." } },
+      { "q": { "ar": "هل أحتاج إلى مراجعة فرع؟", "en": "Do I need to visit a branch?" }, "a": { "ar": "لا، الخدمة إلكترونية بالكامل إذا كانت بيانات الوالدين مكتملة.", "en": "No, the service is fully online when the parents' records are complete." } }
+    ],
+    "related": ["birth-certificate", "add-newborn-family-card"]
+  },
+  {
+    "id": "birth-certificate",
+    "name": { "ar": "إصدار شهادة ميلاد", "en": "Issue a birth certificate" },
+    "provider": { "ar": "وزارة الداخلية - الأحوال المدنية", "en": "Ministry of Interior - Civil Status" },
+    "summary": { "ar": "إصدار شهادة ميلاد رسمية بعد تسجيل بلاغ الولادة.", "en": "Get an official birth certificate once the birth has been recorded." },
+    "audience": ["citizens", "residents"],
+    "channels": ["app", "online"],
+    "duration": { "ar": "فوري", "en": "Instant" },
+    "feeSar": 0,
+    "eligibility": { "ar": "الوالدان أو المولود بعد بلوغه سن الرشد.", "en": "The parents, or the child once they reach adulthood." },
+    "popular": true,
+    "platformUrl": "https://www.absher.sa",
+    "requirements": [
+      { "ar": "تسجيل المولود في السجل المدني", "en": "The baby recorded in the civil register" },
+      { "ar": "حساب نشط على المنصة", "en": "An active account on the platform" }
+    ],
+    "steps": [
+      { "ar": "ادخل إلى خدماتي ثم الأحوال المدنية", "en": "Open My services, then Civil status" },
+      { "ar": "اختر إصدار شهادة ميلاد وحدّد المولود", "en": "Choose issue a birth certificate and select the child" },
+      { "ar": "نزّل الشهادة بصيغة PDF", "en": "Download the certificate as a PDF" }
+    ],
+    "fees": [{ "label": { "ar": "إصدار الشهادة", "en": "Certificate issuance" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "هل الشهادة الإلكترونية معتمدة؟", "en": "Is the electronic certificate valid?" }, "a": { "ar": "نعم، وتحمل رمز تحقق يمكن للجهات مسحه للتأكد من صحتها.", "en": "Yes. It carries a verification code that agencies can scan to confirm it." } },
+      { "q": { "ar": "هل يمكنني طلب نسخة مطبوعة؟", "en": "Can I get a printed copy?" }, "a": { "ar": "يمكنك طباعة النسخة الإلكترونية أو زيارة أقرب مكتب للأحوال المدنية.", "en": "You can print the electronic copy or visit the nearest civil status office." } }
+    ],
+    "related": ["add-newborn-family-card", "birth-notification"]
+  },
+  {
+    "id": "add-newborn-family-card",
+    "name": { "ar": "إضافة مولود إلى سجل الأسرة", "en": "Add a newborn to the family record" },
+    "provider": { "ar": "وزارة الداخلية - الأحوال المدنية", "en": "Ministry of Interior - Civil Status" },
+    "summary": { "ar": "قيد المولود في سجل الأسرة وإصدار رقم هويته الوطنية.", "en": "Enter the baby in the family record and issue their national ID number." },
+    "audience": ["citizens"],
+    "channels": ["app", "online"],
+    "duration": { "ar": "من 1 إلى 3 أيام عمل", "en": "1 to 3 working days" },
+    "feeSar": 0,
+    "eligibility": { "ar": "رب الأسرة أو الزوجة المسجّلة في السجل نفسه.", "en": "The head of the household or the spouse in the same record." },
+    "popular": false,
+    "platformUrl": "https://www.absher.sa",
+    "requirements": [
+      { "ar": "شهادة الميلاد", "en": "The birth certificate" },
+      { "ar": "اسم المولود كاملًا", "en": "The baby's full name" },
+      { "ar": "رقم جوال مسجّل باسم رب الأسرة", "en": "A mobile number registered to the head of household" }
+    ],
+    "steps": [
+      { "ar": "اختر إضافة مولود من خدمات سجل الأسرة", "en": "Choose add a newborn under family record services" },
+      { "ar": "أدخل بيانات المولود وتحقق منها", "en": "Enter and check the baby's details" },
+      { "ar": "أكّد الطلب برمز التحقق المرسل إلى جوالك", "en": "Confirm with the code sent to your mobile" }
+    ],
+    "fees": [{ "label": { "ar": "القيد في سجل الأسرة", "en": "Family record entry" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "متى يصدر رقم الهوية؟", "en": "When is the ID number issued?" }, "a": { "ar": "يظهر الرقم في سجل الأسرة فور اعتماد الطلب.", "en": "The number shows in the family record as soon as the request is approved." } },
+      { "q": { "ar": "كيف أصحح خطأ في الاسم؟", "en": "How do I correct a name error?" }, "a": { "ar": "قدّم طلب تعديل بيانات من الخدمة نفسها مع إرفاق ما يثبت الصحيح.", "en": "File a data-correction request from the same service with proof of the correct spelling." } }
+    ],
+    "related": ["birth-certificate", "newborn-health-insurance"]
+  },
+  {
+    "id": "dependent-iqama",
+    "name": { "ar": "إصدار إقامة لمرافق", "en": "Issue a dependent iqama" },
+    "provider": { "ar": "وزارة الداخلية - الجوازات", "en": "Ministry of Interior - Passports" },
+    "summary": { "ar": "إصدار إقامة لمولود أو زوجة أو أحد الأبناء على كفالة المقيم.", "en": "Issue an iqama for a newborn, spouse or child sponsored by a resident." },
+    "audience": ["residents"],
+    "channels": ["app", "online"],
+    "duration": { "ar": "من 3 إلى 5 أيام عمل", "en": "3 to 5 working days" },
+    "feeSar": 500,
+    "eligibility": { "ar": "المقيم الذي تسمح مهنته ودخله بإضافة مرافقين.", "en": "A resident whose occupation and income allow dependents." },
+    "popular": false,
+    "platformUrl": "https://www.absher.sa",
+    "requirements": [
+      { "ar": "جواز سفر المرافق أو شهادة ميلاده مصدّقة", "en": "The dependent's passport or an attested birth certificate" },
+      { "ar": "إقامة الكفيل سارية", "en": "The sponsor's iqama, still valid" },
+      { "ar": "التأمين الصحي للمرافق", "en": "Health insurance for the dependent" }
+    ],
+    "steps": [
+      { "ar": "اختر إصدار إقامة مرافق", "en": "Choose issue a dependent iqama" },
+      { "ar": "أدخل بيانات المرافق وأرفق المستندات", "en": "Enter the dependent's details and attach documents" },
+      { "ar": "سدّد الرسوم عبر سداد", "en": "Pay the fees through SADAD" }
+    ],
+    "fees": [
+      { "label": { "ar": "رسوم الإقامة", "en": "Iqama fee" }, "amountSar": 500 },
+      { "label": { "ar": "رسوم المرافقين", "en": "Dependents levy" }, "amountSar": 0 }
+    ],
+    "faqs": [
+      { "q": { "ar": "هل تُحتسب رسوم المرافقين سنويًا؟", "en": "Is the dependents levy yearly?" }, "a": { "ar": "تُحتسب الرسوم عند الإصدار وعند كل تجديد حسب النظام المعمول به.", "en": "The levy applies at issuance and at each renewal, per the current rules." } },
+      { "q": { "ar": "هل أستطيع التقديم لمولودي مباشرة بعد الولادة؟", "en": "Can I apply right after the birth?" }, "a": { "ar": "نعم، خلال 90 يومًا من الولادة بشهادة ميلاد مصدّقة.", "en": "Yes, within 90 days of the birth with an attested birth certificate." } }
+    ],
+    "related": ["iqama-renewal", "newborn-health-insurance"]
+  },
+  {
+    "id": "newborn-health-insurance",
+    "name": { "ar": "إضافة مولود إلى التأمين الصحي", "en": "Add a newborn to health insurance" },
+    "provider": { "ar": "مجلس الضمان الصحي", "en": "Council of Health Insurance" },
+    "summary": { "ar": "تغطية المولود بوثيقة التأمين الصحي لأسرتك دون فترة انتظار.", "en": "Cover your baby under the family health insurance policy with no waiting period." },
+    "audience": ["citizens", "residents"],
+    "channels": ["online", "phone"],
+    "duration": { "ar": "من 1 إلى 2 يوم عمل", "en": "1 to 2 working days" },
+    "feeSar": 0,
+    "eligibility": { "ar": "حامل وثيقة تأمين سارية تشمل الأسرة.", "en": "A holder of an active policy that covers dependents." },
+    "popular": false,
+    "platformUrl": "https://www.chi.gov.sa",
+    "requirements": [
+      { "ar": "رقم الوثيقة الحالية", "en": "Your current policy number" },
+      { "ar": "شهادة الميلاد أو بلاغ الولادة", "en": "Birth certificate or birth notice" }
+    ],
+    "steps": [
+      { "ar": "ادخل إلى حساب الوثيقة لدى شركة التأمين", "en": "Sign in to your policy with the insurer" },
+      { "ar": "اختر إضافة تابع وأرفق شهادة الميلاد", "en": "Choose add a dependent and attach the birth certificate" },
+      { "ar": "استلم الوثيقة المعدّلة على بريدك", "en": "Receive the updated policy by email" }
+    ],
+    "fees": [{ "label": { "ar": "إضافة المولود خلال 60 يومًا", "en": "Adding the baby within 60 days" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "ماذا لو تأخرت عن 60 يومًا؟", "en": "What if I miss the 60 days?" }, "a": { "ar": "قد تُحتسب فترة انتظار وتختلف الأقساط حسب شركة التأمين.", "en": "A waiting period may apply and premiums vary by insurer." } },
+      { "q": { "ar": "هل تغطي الوثيقة ولادة جديدة؟", "en": "Does the policy cover another birth?" }, "a": { "ar": "يعتمد ذلك على فئة الوثيقة، راجع جدول المنافع لديك.", "en": "That depends on your policy class. Check your benefits schedule." } }
+    ],
+    "related": ["add-newborn-family-card", "family-support-application"]
+  },
+  {
+    "id": "family-support-application",
+    "name": { "ar": "التقديم على دعم الأسرة", "en": "Apply for family support" },
+    "provider": { "ar": "وزارة الموارد البشرية والتنمية الاجتماعية", "en": "Ministry of Human Resources and Social Development" },
+    "summary": { "ar": "تقديم طلب للحصول على دعم شهري للأسر ذات الدخل المحدود.", "en": "Apply for a monthly benefit for households with limited income." },
+    "audience": ["citizens"],
+    "channels": ["app", "online"],
+    "duration": { "ar": "حتى 15 يوم عمل", "en": "Up to 15 working days" },
+    "feeSar": 0,
+    "eligibility": { "ar": "الأسر السعودية التي يقل دخلها الشهري عن الحد المقرر للفئة.", "en": "Saudi households whose monthly income is below the threshold for their size." },
+    "popular": false,
+    "platformUrl": "https://www.hrsd.gov.sa",
+    "requirements": [
+      { "ar": "سجل الأسرة", "en": "The family record" },
+      { "ar": "إثبات الدخل أو الإفادة بعدم وجود دخل", "en": "Proof of income, or a statement of no income" },
+      { "ar": "رقم حساب بنكي باسم مقدم الطلب", "en": "A bank account in the applicant's name" }
+    ],
+    "steps": [
+      { "ar": "حدّث بياناتك الشخصية وبيانات الدخل", "en": "Update your personal and income details" },
+      { "ar": "أرفق المستندات وقدّم الطلب", "en": "Attach documents and submit the request" },
+      { "ar": "تابع حالة الطلب وأكمل أي نقص يُطلب منك", "en": "Track the request and supply anything that is requested" }
+    ],
+    "fees": [{ "label": { "ar": "تقديم الطلب", "en": "Application" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "متى يبدأ صرف الدعم؟", "en": "When does payment start?" }, "a": { "ar": "يبدأ الصرف في الشهر التالي لاعتماد الطلب.", "en": "Payment starts the month after approval." } },
+      { "q": { "ar": "هل أحتاج إلى التحديث كل سنة؟", "en": "Do I need to update every year?" }, "a": { "ar": "نعم، يلزم تحديث بيانات الدخل مرة كل سنة لاستمرار الصرف.", "en": "Yes. Income details must be refreshed once a year for payments to continue." } }
+    ],
+    "related": ["housing-subsidy", "newborn-health-insurance"]
+  },
+  {
+    "id": "premarital-screening",
+    "name": { "ar": "الفحص الطبي قبل الزواج", "en": "Premarital medical screening" },
+    "provider": { "ar": "وزارة الصحة", "en": "Ministry of Health" },
+    "summary": { "ar": "حجز موعد الفحص قبل الزواج واستلام الشهادة إلكترونيًا.", "en": "Book your premarital screening visit and receive the certificate electronically." },
+    "audience": ["citizens", "residents"],
+    "channels": ["app", "branch"],
+    "duration": { "ar": "من 2 إلى 3 أيام عمل", "en": "2 to 3 working days" },
+    "feeSar": 0,
+    "eligibility": { "ar": "المقبلان على الزواج، سعوديين أو مقيمين نظاميين.", "en": "Couples planning to marry, Saudi or legally resident." },
+    "popular": false,
+    "platformUrl": "https://www.moh.gov.sa",
+    "requirements": [
+      { "ar": "الهوية الوطنية أو الإقامة للطرفين", "en": "National ID or iqama of both partners" },
+      { "ar": "حجز موعد مسبق", "en": "A booked appointment" }
+    ],
+    "steps": [
+      { "ar": "احجز موعدًا في أقرب مركز صحي", "en": "Book a slot at the nearest health center" },
+      { "ar": "احضر في الموعد وأجرِ الفحص", "en": "Attend your slot and take the screening" },
+      { "ar": "استلم الشهادة عبر الرسائل أو التطبيق", "en": "Receive the certificate by SMS or in the app" }
+    ],
+    "fees": [{ "label": { "ar": "الفحص الأساسي", "en": "Standard screening" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "كم مدة صلاحية الشهادة؟", "en": "How long is the certificate valid?" }, "a": { "ar": "ثلاثة أشهر من تاريخ إصدارها.", "en": "Three months from the date of issue." } },
+      { "q": { "ar": "هل يمكن إجراء الفحص في مستشفى خاص؟", "en": "Can I take it at a private hospital?" }, "a": { "ar": "نعم، في المنشآت المعتمدة، وقد تختلف الرسوم.", "en": "Yes, at accredited facilities, though fees may differ." } }
+    ],
+    "related": ["marriage-contract"]
+  },
+  {
+    "id": "marriage-contract",
+    "name": { "ar": "توثيق عقد الزواج", "en": "Register a marriage contract" },
+    "provider": { "ar": "وزارة العدل", "en": "Ministry of Justice" },
+    "summary": { "ar": "حجز موعد المأذون وتوثيق العقد وإصدار وثيقة الزواج.", "en": "Book the officiant, register the contract, and receive the marriage certificate." },
+    "audience": ["citizens", "residents"],
+    "channels": ["online", "branch"],
+    "duration": { "ar": "يوم واحد", "en": "One day" },
+    "feeSar": 100,
+    "eligibility": { "ar": "من أتم الثامنة عشرة واستوفى شروط العقد النظامية.", "en": "Anyone aged 18 or over who meets the legal conditions." },
+    "popular": false,
+    "platformUrl": "https://www.moj.gov.sa",
+    "requirements": [
+      { "ar": "شهادة الفحص قبل الزواج للطرفين", "en": "Premarital screening certificate for both" },
+      { "ar": "الهوية الوطنية أو الإقامة للطرفين وللشاهدين", "en": "National ID or iqama for both parties and two witnesses" },
+      { "ar": "حضور الولي أو وكيله", "en": "Presence of the guardian or an agent" }
+    ],
+    "steps": [
+      { "ar": "ارفع طلب التوثيق واختر موعدًا", "en": "Submit the registration request and pick a slot" },
+      { "ar": "حضور الطرفين والشهود في الموعد", "en": "Both parties and witnesses attend at the time" },
+      { "ar": "استلم وثيقة الزواج إلكترونيًا", "en": "Receive the marriage certificate electronically" }
+    ],
+    "fees": [{ "label": { "ar": "رسوم التوثيق", "en": "Registration fee" }, "amountSar": 100 }],
+    "faqs": [
+      { "q": { "ar": "هل يمكن التوثيق خارج المملكة؟", "en": "Can I register abroad?" }, "a": { "ar": "يمكن عبر السفارة أو القنصلية، ثم تصديق العقد في الوزارة.", "en": "Yes, through an embassy or consulate, then attest the contract at the ministry." } },
+      { "q": { "ar": "كم يستغرق الحصول على الوثيقة؟", "en": "How long until I get the certificate?" }, "a": { "ar": "تصدر في اليوم نفسه بعد اكتمال التوثيق.", "en": "It is issued the same day once registration is complete." } }
+    ],
+    "related": ["update-family-register", "premarital-screening"]
+  },
+  {
+    "id": "update-family-register",
+    "name": { "ar": "تحديث سجل الأسرة", "en": "Update the family record" },
+    "provider": { "ar": "وزارة الداخلية - الأحوال المدنية", "en": "Ministry of Interior - Civil Status" },
+    "summary": { "ar": "إضافة الزوج أو الزوجة أو تعديل حالة أحد أفراد السجل.", "en": "Add a spouse or change the status of someone in the record." },
+    "audience": ["citizens"],
+    "channels": ["app", "online"],
+    "duration": { "ar": "من 1 إلى 3 أيام عمل", "en": "1 to 3 working days" },
+    "feeSar": 0,
+    "eligibility": { "ar": "رب الأسرة المسجّل في السجل.", "en": "The head of household named in the record." },
+    "popular": false,
+    "platformUrl": "https://www.absher.sa",
+    "requirements": [
+      { "ar": "وثيقة الحالة الجديدة (عقد زواج أو شهادة وفاة)", "en": "Document for the new status (marriage contract or death certificate)" },
+      { "ar": "حساب نشط لرب الأسرة", "en": "An active account for the head of household" }
+    ],
+    "steps": [
+      { "ar": "افتح خدمات سجل الأسرة", "en": "Open family record services" },
+      { "ar": "اختر نوع التحديث وارفع الوثيقة", "en": "Choose the update type and upload the document" },
+      { "ar": "انتظر إشعار الاعتماد", "en": "Wait for the approval notice" }
+    ],
+    "fees": [{ "label": { "ar": "تحديث السجل", "en": "Record update" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "هل يتحدث السجل تلقائيًا بعد توثيق الزواج؟", "en": "Does the record update itself after a registered marriage?" }, "a": { "ar": "غالبًا نعم، وإن لم يحدث خلال أسبوع فقدّم الطلب يدويًا.", "en": "Usually, yes. If it has not within a week, file the request manually." } },
+      { "q": { "ar": "من يستطيع التقديم عن الأسرة؟", "en": "Who can apply for the household?" }, "a": { "ar": "رب الأسرة فقط أو وكيله الشرعي.", "en": "Only the head of household or a legal agent." } }
+    ],
+    "related": ["marriage-contract", "death-certificate"]
+  },
+  {
+    "id": "national-address-update",
+    "name": { "ar": "تسجيل وتحديث العنوان الوطني", "en": "Register or update a national address" },
+    "provider": { "ar": "البريد السعودي - سبل", "en": "Saudi Post - SPL" },
+    "summary": { "ar": "ربط عنوانك أو عنوان منشأتك برمز مختصر يوصل إليه الشحن والمراسلات الرسمية.", "en": "Link your home or business to a short address code used for deliveries and official mail." },
+    "audience": ["citizens", "residents", "businesses"],
+    "channels": ["app", "online"],
+    "duration": { "ar": "فوري إلى يوم واحد", "en": "Instant to one day" },
+    "feeSar": 0,
+    "eligibility": { "ar": "الأفراد والمنشآت، بوجود عقد إيجار أو ملكية.", "en": "Individuals and businesses holding a lease or title." },
+    "popular": true,
+    "platformUrl": "https://splonline.com.sa",
+    "requirements": [
+      { "ar": "الهوية الوطنية أو الإقامة أو السجل التجاري", "en": "National ID, iqama or commercial registration" },
+      { "ar": "عقد إيجار موثّق أو صك ملكية", "en": "A registered lease or title deed" },
+      { "ar": "الموقع على الخريطة", "en": "The location on the map" }
+    ],
+    "steps": [
+      { "ar": "حدّد موقع العنوان على الخريطة", "en": "Pin the address location on the map" },
+      { "ar": "أدخل رقم المبنى والحي والرمز البريدي", "en": "Enter building number, district and postal code" },
+      { "ar": "أرفق المستند وأكّد الطلب", "en": "Attach the document and confirm" }
+    ],
+    "fees": [{ "label": { "ar": "التسجيل", "en": "Registration" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "هل يمكن أن يكون لي أكثر من عنوان؟", "en": "Can I have more than one address?" }, "a": { "ar": "نعم، ويُحدَّد أحدها رئيسيًا لباقي الجهات.", "en": "Yes. One is set as primary for other agencies." } },
+      { "q": { "ar": "كم يستغرق ظهور العنوان في الجهات الحكومية؟", "en": "How long until agencies see the new address?" }, "a": { "ar": "يصل التحديث إلى معظم الجهات خلال 48 ساعة.", "en": "Most agencies receive the update within 48 hours." } }
+    ],
+    "related": ["electricity-connection", "update-family-register"]
+  },
+  {
+    "id": "housing-subsidy",
+    "name": { "ar": "التقديم على الدعم السكني", "en": "Apply for the housing subsidy" },
+    "provider": { "ar": "وزارة الشؤون البلدية والقروية والإسكان", "en": "Ministry of Municipal, Rural Affairs and Housing" },
+    "summary": { "ar": "طلب الدعم السكني للحصول على منتج سكني أو أرض أو قرض عقاري مدعوم.", "en": "Apply for housing support toward a home, a plot or a subsidized mortgage." },
+    "audience": ["citizens"],
+    "channels": ["online", "app"],
+    "duration": { "ar": "حتى 10 أيام عمل", "en": "Up to 10 working days" },
+    "feeSar": 0,
+    "eligibility": { "ar": "المواطن الذي لا يملك سكنًا ويقل دخل أسرته عن الحد المقرر.", "en": "A citizen who owns no home and whose household income is under the limit." },
+    "popular": true,
+    "platformUrl": "https://sakani.sa",
+    "requirements": [
+      { "ar": "سجل الأسرة", "en": "Family record" },
+      { "ar": "تعريف بالراتب", "en": "Salary certificate" },
+      { "ar": "إفادة بعدم تملّك عقار سكني", "en": "A statement of no residential property owned" }
+    ],
+    "steps": [
+      { "ar": "سجّل الدخول وأكمل ملفك السكني", "en": "Sign in and complete your housing profile" },
+      { "ar": "اختر المنتج السكني المناسب", "en": "Choose a suitable housing product" },
+      { "ar": "أرسل الطلب وتابع حالته", "en": "Submit and follow the request" }
+    ],
+    "fees": [{ "label": { "ar": "التقديم", "en": "Application" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "هل أستطيع التقديم مع زوجتي؟", "en": "Can I apply jointly with my spouse?" }, "a": { "ar": "نعم، ويُحتسب الدخل المشترك للأسرة.", "en": "Yes, and the household's combined income is counted." } },
+      { "q": { "ar": "كم مدة صلاحية الموافقة؟", "en": "How long is the approval valid?" }, "a": { "ar": "تبقى الموافقة سارية لمدة سنة قابلة للتجديد.", "en": "Approval is valid for one year and can be renewed." } }
+    ],
+    "related": ["property-deed-transfer", "family-support-application"]
+  },
+  {
+    "id": "commercial-registration",
+    "name": { "ar": "إصدار سجل تجاري", "en": "Issue a commercial registration" },
+    "provider": { "ar": "وزارة التجارة", "en": "Ministry of Commerce" },
+    "summary": { "ar": "تأسيس منشأة فردية وإصدار سجلها التجاري خلال دقائق.", "en": "Set up a sole proprietorship and issue its commercial register in minutes." },
+    "audience": ["businesses", "citizens"],
+    "channels": ["online"],
+    "duration": { "ar": "فوري", "en": "Instant" },
+    "feeSar": 200,
+    "eligibility": { "ar": "المواطن البالغ الذي لا يعمل في جهة حكومية، أو الشركة وفق عقد التأسيس.", "en": "An adult citizen not employed by a government body, or a company per its articles." },
+    "popular": true,
+    "platformUrl": "https://mc.gov.sa",
+    "requirements": [
+      { "ar": "هوية وطنية سارية", "en": "A valid national ID" },
+      { "ar": "الاسم التجاري المحجوز", "en": "A reserved trade name" },
+      { "ar": "عنوان وطني للمنشأة", "en": "A national address for the business" }
+    ],
+    "steps": [
+      { "ar": "احجز الاسم التجاري", "en": "Reserve the trade name" },
+      { "ar": "حدّد الأنشطة ورأس المال", "en": "Pick the activities and capital" },
+      { "ar": "سدّد الرسوم واستلم السجل", "en": "Pay the fee and receive the register" }
+    ],
+    "fees": [
+      { "label": { "ar": "إصدار السجل", "en": "Registration issuance" }, "amountSar": 100 },
+      { "label": { "ar": "حجز الاسم التجاري", "en": "Trade name reservation" }, "amountSar": 100 }
+    ],
+    "faqs": [
+      { "q": { "ar": "كم عدد الأنشطة المسموح بها؟", "en": "How many activities are allowed?" }, "a": { "ar": "حتى عشرة أنشطة في سجل واحد بشرط التوافق.", "en": "Up to ten activities in one register, provided they are compatible." } },
+      { "q": { "ar": "متى أجدد السجل؟", "en": "When do I renew it?" }, "a": { "ar": "يُجدَّد سنويًا قبل تاريخ الانتهاء بتسعين يومًا على الأكثر.", "en": "Renew yearly, up to ninety days before it expires." } }
+    ],
+    "related": ["municipal-license", "vat-registration"]
+  },
+  {
+    "id": "municipal-license",
+    "name": { "ar": "استخراج رخصة بلدية", "en": "Get a municipal license" },
+    "provider": { "ar": "منصة بلدي", "en": "Balady Platform" },
+    "summary": { "ar": "ترخيص موقع النشاط التجاري بعد التحقق من اشتراطات الموقع والسلامة.", "en": "License the business premises after site and safety requirements are verified." },
+    "audience": ["businesses"],
+    "channels": ["online"],
+    "duration": { "ar": "من 3 إلى 7 أيام عمل", "en": "3 to 7 working days" },
+    "feeSar": 400,
+    "eligibility": { "ar": "صاحب سجل تجاري ساري وموقع نشاط مطابق للاشتراطات.", "en": "An owner with an active register and premises that meet the conditions." },
+    "popular": false,
+    "platformUrl": "https://balady.gov.sa",
+    "requirements": [
+      { "ar": "سجل تجاري ساري", "en": "An active commercial register" },
+      { "ar": "عقد إيجار موثّق للموقع", "en": "A registered lease for the premises" },
+      { "ar": "شهادة الدفاع المدني للأنشطة المطلوبة", "en": "Civil defense certificate, where the activity needs it" }
+    ],
+    "steps": [
+      { "ar": "اختر النشاط والموقع على المنصة", "en": "Pick the activity and location on the platform" },
+      { "ar": "أرفق المستندات واحجز موعد التفتيش", "en": "Attach documents and book an inspection" },
+      { "ar": "سدّد الرسوم واطبع الرخصة", "en": "Pay the fees and print the license" }
+    ],
+    "fees": [
+      { "label": { "ar": "إصدار الرخصة", "en": "License issuance" }, "amountSar": 200 },
+      { "label": { "ar": "رسوم اللوحة التعريفية", "en": "Signboard fee" }, "amountSar": 200 }
+    ],
+    "faqs": [
+      { "q": { "ar": "هل يمكن العمل قبل الحصول على الرخصة؟", "en": "Can I operate before the license?" }, "a": { "ar": "لا، ويُعرِّض المخالف لغرامة وإغلاق المحل.", "en": "No. Doing so risks a fine and closure of the premises." } },
+      { "q": { "ar": "كيف أجدد الرخصة؟", "en": "How do I renew?" }, "a": { "ar": "من خدمة تجديد الرخصة في المنصة قبل انتهائها بشهر.", "en": "Use the renew-license service on the platform a month before expiry." } }
+    ],
+    "related": ["commercial-registration", "national-address-update"]
+  },
+  {
+    "id": "vat-registration",
+    "name": { "ar": "التسجيل في ضريبة القيمة المضافة", "en": "Register for VAT" },
+    "provider": { "ar": "هيئة الزكاة والضريبة والجمارك", "en": "Zakat, Tax and Customs Authority" },
+    "summary": { "ar": "تسجيل المنشأة للحصول على الرقم الضريبي وإصدار فواتير ضريبية.", "en": "Register the business for a tax number and tax invoices." },
+    "audience": ["businesses"],
+    "channels": ["online"],
+    "duration": { "ar": "من 3 إلى 5 أيام عمل", "en": "3 to 5 working days" },
+    "feeSar": 0,
+    "eligibility": { "ar": "المنشآت التي تتجاوز إيراداتها السنوية 375 ألف ريال إلزاميًا، واختياريًا فوق 187.5 ألف.", "en": "Mandatory above SAR 375,000 annual revenue, optional above SAR 187,500." },
+    "popular": false,
+    "platformUrl": "https://zatca.gov.sa",
+    "requirements": [
+      { "ar": "السجل التجاري", "en": "Commercial register" },
+      { "ar": "الحساب البنكي للمنشأة", "en": "The establishment's bank account" },
+      { "ar": "بيان الإيرادات للأشهر الاثني عشر الماضية", "en": "A revenue statement for the past twelve months" }
+    ],
+    "steps": [
+      { "ar": "ادخل إلى حساب المنشأة في المنصة", "en": "Sign in to the establishment account" },
+      { "ar": "اختر التسجيل في ضريبة القيمة المضافة", "en": "Choose VAT registration" },
+      { "ar": "أرفق البيانات وأرسل الطلب", "en": "Attach data and submit" }
+    ],
+    "fees": [{ "label": { "ar": "التسجيل", "en": "Registration" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "ما نسبة الضريبة؟", "en": "What is the VAT rate?" }, "a": { "ar": "15% على معظم السلع والخدمات.", "en": "15% on most goods and services." } },
+      { "q": { "ar": "متى أقدّم الإقرار؟", "en": "When do I file the return?" }, "a": { "ar": "شهريًا أو ربع سنويًا حسب حجم إيراداتك.", "en": "Monthly or quarterly, depending on your revenue." } }
+    ],
+    "related": ["commercial-registration", "employer-social-insurance"]
+  },
+  {
+    "id": "employer-social-insurance",
+    "name": { "ar": "تسجيل المنشأة في التأمينات الاجتماعية", "en": "Register an establishment with social insurance" },
+    "provider": { "ar": "المؤسسة العامة للتأمينات الاجتماعية", "en": "General Organization for Social Insurance" },
+    "summary": { "ar": "فتح ملف المنشأة لتسجيل العاملين واشتراكاتهم.", "en": "Open the establishment file so staff and contributions can be recorded." },
+    "audience": ["businesses"],
+    "channels": ["online"],
+    "duration": { "ar": "يوم عمل واحد", "en": "One working day" },
+    "feeSar": 0,
+    "eligibility": { "ar": "كل منشأة لديها عامل واحد على الأقل.", "en": "Any establishment with at least one employee." },
+    "popular": false,
+    "platformUrl": "https://www.gosi.gov.sa",
+    "requirements": [
+      { "ar": "السجل التجاري", "en": "Commercial register" },
+      { "ar": "هوية المفوّض بالتوقيع", "en": "ID of the authorized signatory" }
+    ],
+    "steps": [
+      { "ar": "ادخل بحساب المنشأة", "en": "Sign in with the establishment account" },
+      { "ar": "اختر تسجيل منشأة جديدة", "en": "Choose register a new establishment" },
+      { "ar": "أضف العاملين وأكّد الطلب", "en": "Add employees and confirm" }
+    ],
+    "fees": [{ "label": { "ar": "التسجيل", "en": "Registration" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "ما نسبة اشتراك صاحب العمل؟", "en": "What is the employer's contribution?" }, "a": { "ar": "تختلف حسب جنسية العامل وفرع التأمين، وتظهر في حاسبة الاشتراكات.", "en": "It depends on the employee's nationality and the branch. See the contribution calculator." } },
+      { "q": { "ar": "متى أسدد الاشتراكات؟", "en": "When do I pay contributions?" }, "a": { "ar": "قبل نهاية الشهر التالي لشهر الأجر.", "en": "Before the end of the month after the pay month." } }
+    ],
+    "related": ["employment-contract-documentation", "vat-registration"]
+  },
+  {
+    "id": "employment-contract-documentation",
+    "name": { "ar": "توثيق عقد العمل", "en": "Document an employment contract" },
+    "provider": { "ar": "منصة قوى", "en": "Qiwa Platform" },
+    "summary": { "ar": "توثيق عقد العمل بين العامل وصاحب العمل لحفظ الحقوق.", "en": "Document the contract between employee and employer to protect both sides." },
+    "audience": ["citizens", "residents", "businesses"],
+    "channels": ["online", "app"],
+    "duration": { "ar": "فوري بعد موافقة الطرفين", "en": "Instant once both sides agree" },
+    "feeSar": 0,
+    "eligibility": { "ar": "كل عامل مسجّل لدى منشأته.", "en": "Any worker registered with their establishment." },
+    "popular": false,
+    "platformUrl": "https://qiwa.sa",
+    "requirements": [
+      { "ar": "حساب صاحب العمل والعامل", "en": "Accounts for the employer and the employee" },
+      { "ar": "بيانات الأجر والمسمى الوظيفي", "en": "Salary and job title details" }
+    ],
+    "steps": [
+      { "ar": "ينشئ صاحب العمل العقد", "en": "The employer creates the contract" },
+      { "ar": "يراجع العامل البنود ويوافق", "en": "The employee reviews and accepts" },
+      { "ar": "يصبح العقد موثقًا وتتاح نسخة لكلا الطرفين", "en": "The contract is documented and both sides get a copy" }
+    ],
+    "fees": [{ "label": { "ar": "التوثيق", "en": "Documentation" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "هل العقد غير الموثق ملزم؟", "en": "Is an undocumented contract binding?" }, "a": { "ar": "لا يُعتد به عند الخلاف أمام الجهات المختصة.", "en": "It carries no weight in a dispute before the authorities." } },
+      { "q": { "ar": "كم مدة التوثيق بعد المباشرة؟", "en": "How long after starting work?" }, "a": { "ar": "خلال 30 يومًا من مباشرة العامل العمل.", "en": "Within 30 days of the employee starting work." } }
+    ],
+    "related": ["employer-social-insurance", "job-seeker-registration"]
+  },
+  {
+    "id": "property-deed-transfer",
+    "name": { "ar": "نقل ملكية عقار", "en": "Transfer property ownership" },
+    "provider": { "ar": "وزارة العدل - السجل العقاري", "en": "Ministry of Justice - Real Estate Registry" },
+    "summary": { "ar": "إفراغ العقار باسم المشتري إلكترونيًا بعد سداد ضريبة التصرفات العقارية.", "en": "Transfer the property to the buyer online after paying the real estate transaction tax." },
+    "audience": ["citizens"],
+    "channels": ["online", "app"],
+    "duration": { "ar": "من 1 إلى 3 أيام عمل", "en": "1 to 3 working days" },
+    "feeSar": 0,
+    "eligibility": { "ar": "المالك المسجّل والمشتري بوجود اتفاق موثّق.", "en": "The registered owner and the buyer with a documented agreement." },
+    "popular": false,
+    "platformUrl": "https://www.moj.gov.sa",
+    "requirements": [
+      { "ar": "صك الملكية", "en": "The title deed" },
+      { "ar": "عقد البيع الموثّق", "en": "A documented sale contract" },
+      { "ar": "شهادة سداد ضريبة التصرفات العقارية", "en": "Receipt of real estate transaction tax" }
+    ],
+    "steps": [
+      { "ar": "ينشئ البائع طلب الإفراغ ويحدد المشتري", "en": "The seller creates the transfer request and names the buyer" },
+      { "ar": "يوافق المشتري ويسدد الضريبة", "en": "The buyer accepts and pays the tax" },
+      { "ar": "يصدر الصك الجديد باسم المشتري", "en": "The new deed is issued to the buyer" }
+    ],
+    "fees": [
+      { "label": { "ar": "ضريبة التصرفات العقارية (5% من قيمة العقار)", "en": "Real estate transaction tax (5% of the value)" }, "amountSar": 0 },
+      { "label": { "ar": "رسوم الإفراغ", "en": "Transfer fee" }, "amountSar": 0 }
+    ],
+    "faqs": [
+      { "q": { "ar": "هل يلزم حضور الطرفين؟", "en": "Must both parties attend?" }, "a": { "ar": "لا، يمكن إتمام الإفراغ كاملًا إلكترونيًا.", "en": "No. The transfer can be completed entirely online." } },
+      { "q": { "ar": "كيف أحسب الضريبة؟", "en": "How is the tax calculated?" }, "a": { "ar": "تُحتسب بنسبة 5% من قيمة العقار المتفق عليها في العقد.", "en": "It is 5% of the property value stated in the contract." } }
+    ],
+    "related": ["electricity-connection", "housing-subsidy"]
+  },
+  {
+    "id": "electricity-connection",
+    "name": { "ar": "توصيل الخدمة الكهربائية", "en": "Request an electricity connection" },
+    "provider": { "ar": "الشركة السعودية للكهرباء", "en": "Saudi Electricity Company" },
+    "summary": { "ar": "طلب عداد جديد أو نقل العداد القائم إلى اسمك.", "en": "Request a new meter or move an existing meter into your name." },
+    "audience": ["citizens", "residents"],
+    "channels": ["online", "app", "branch"],
+    "duration": { "ar": "من 5 إلى 14 يوم عمل", "en": "5 to 14 working days" },
+    "feeSar": 300,
+    "eligibility": { "ar": "مالك العقار أو مستأجره بتفويض.", "en": "The property owner, or a tenant with authorization." },
+    "popular": false,
+    "platformUrl": "https://www.se.com.sa",
+    "requirements": [
+      { "ar": "صك الملكية أو عقد الإيجار", "en": "Title deed or lease contract" },
+      { "ar": "رخصة البناء للمباني الجديدة", "en": "Building permit for new construction" },
+      { "ar": "العنوان الوطني", "en": "The national address" }
+    ],
+    "steps": [
+      { "ar": "قدّم الطلب وحدّد نوع العداد", "en": "File the request and pick the meter type" },
+      { "ar": "سدّد الرسوم", "en": "Pay the fee" },
+      { "ar": "تحديد موعد التركيب ثم تفعيل الخدمة", "en": "Agree the installation date, then activate service" }
+    ],
+    "fees": [
+      { "label": { "ar": "فتح الحساب", "en": "Account opening" }, "amountSar": 100 },
+      { "label": { "ar": "تركيب العداد (سكني)", "en": "Meter installation (residential)" }, "amountSar": 200 }
+    ],
+    "faqs": [
+      { "q": { "ar": "هل يمكن نقل العداد من مستأجر سابق؟", "en": "Can I take over a meter from a previous tenant?" }, "a": { "ar": "نعم، بعد سداد أي مبالغ مستحقة وتحديث بيانات المشترك.", "en": "Yes, after settling any dues and updating the subscriber details." } },
+      { "q": { "ar": "ماذا يحدث إذا تأخر التركيب؟", "en": "What if installation is delayed?" }, "a": { "ar": "يمكنك رفع شكوى من الطلب نفسه عند تجاوز المدة المحددة.", "en": "You can raise a complaint from the request if the stated time is exceeded." } }
+    ],
+    "related": ["national-address-update", "property-deed-transfer"]
+  },
+  {
+    "id": "job-seeker-registration",
+    "name": { "ar": "التسجيل كباحث عن عمل", "en": "Register as a job seeker" },
+    "provider": { "ar": "برنامج طاقات", "en": "Taqat Program" },
+    "summary": { "ar": "إنشاء ملف وظيفي والتقدم للوظائف والتدريب المتاحة.", "en": "Build a profile and apply to available jobs and training." },
+    "audience": ["citizens"],
+    "channels": ["online", "app"],
+    "duration": { "ar": "فوري", "en": "Instant" },
+    "feeSar": 0,
+    "eligibility": { "ar": "المواطن الباحث عن عمل والبالغ 18 سنة فأكثر.", "en": "A citizen aged 18 or over who is looking for work." },
+    "popular": true,
+    "platformUrl": "https://www.hrsd.gov.sa",
+    "requirements": [
+      { "ar": "الهوية الوطنية", "en": "National ID" },
+      { "ar": "المؤهلات والخبرات", "en": "Qualifications and experience" },
+      { "ar": "رقم جوال وبريد إلكتروني", "en": "A mobile number and email" }
+    ],
+    "steps": [
+      { "ar": "سجّل الدخول وأنشئ ملفك", "en": "Sign in and create your profile" },
+      { "ar": "أضف المؤهلات والمهارات", "en": "Add qualifications and skills" },
+      { "ar": "تقدّم للوظائف المقترحة", "en": "Apply to the suggested jobs" }
+    ],
+    "fees": [{ "label": { "ar": "التسجيل", "en": "Registration" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "هل أحتاج إلى تحديث الملف؟", "en": "Do I need to refresh my profile?" }, "a": { "ar": "يُنصح بتحديثه كل 6 أشهر ليبقى ظاهرًا لأصحاب العمل.", "en": "Refresh it every 6 months to stay visible to employers." } },
+      { "q": { "ar": "هل يشمل التسجيل المقيمين؟", "en": "Is registration open to residents?" }, "a": { "ar": "الخدمة مخصصة للمواطنين، وللمقيمين منصات توظيف أخرى.", "en": "This service is for citizens. Residents use other hiring platforms." } }
+    ],
+    "related": ["employment-contract-documentation", "unemployment-insurance"]
+  },
+  {
+    "id": "iqama-renewal",
+    "name": { "ar": "تجديد الإقامة", "en": "Renew an iqama" },
+    "provider": { "ar": "وزارة الداخلية - الجوازات", "en": "Ministry of Interior - Passports" },
+    "summary": { "ar": "تجديد إقامة المقيم ومرافقيه قبل انتهائها.", "en": "Renew a resident's iqama and those of dependents before expiry." },
+    "audience": ["residents"],
+    "channels": ["app", "online"],
+    "duration": { "ar": "فوري بعد السداد", "en": "Instant after payment" },
+    "feeSar": 650,
+    "eligibility": { "ar": "المقيم الذي تسمح حالته بالتجديد وبحوزته جواز سفر ساري.", "en": "A resident eligible to renew with a valid passport." },
+    "popular": true,
+    "platformUrl": "https://www.absher.sa",
+    "requirements": [
+      { "ar": "جواز سفر ساري ستة أشهر على الأقل", "en": "A passport valid for at least six months" },
+      { "ar": "تأمين صحي ساري", "en": "Active health insurance" },
+      { "ar": "عدم وجود مخالفات مرورية غير مسددة", "en": "No unpaid traffic fines" }
+    ],
+    "steps": [
+      { "ar": "ادخل إلى خدمات الجوازات", "en": "Open passport services" },
+      { "ar": "اختر تجديد الإقامة ومدة التجديد", "en": "Choose renew iqama and the renewal term" },
+      { "ar": "سدّد الرسوم واطبع الإقامة", "en": "Pay the fees and print the iqama" }
+    ],
+    "fees": [
+      { "label": { "ar": "رسوم الإقامة السنوية", "en": "Annual iqama fee" }, "amountSar": 650 },
+      { "label": { "ar": "رسوم تجديد الإقامة", "en": "Renewal fee" }, "amountSar": 0 }
+    ],
+    "faqs": [
+      { "q": { "ar": "هل هناك غرامة على التأخر؟", "en": "Is there a fine for late renewal?" }, "a": { "ar": "نعم، غرامة تأخير تزداد مع التكرار.", "en": "Yes. A late fine applies and increases on repeat." } },
+      { "q": { "ar": "هل تُجدَّد إقامة المرافقين معي؟", "en": "Are dependents renewed with me?" }, "a": { "ar": "يمكنك تجديدها في الطلب نفسه عند تحقق الشروط.", "en": "You can renew them in the same request when conditions are met." } }
+    ],
+    "related": ["dependent-iqama", "employment-contract-documentation"]
+  },
+  {
+    "id": "unemployment-insurance",
+    "name": { "ar": "طلب تعويض البطالة (ساند)", "en": "Claim unemployment benefit (SANED)" },
+    "provider": { "ar": "المؤسسة العامة للتأمينات الاجتماعية", "en": "General Organization for Social Insurance" },
+    "summary": { "ar": "صرف تعويض شهري عند فقدان الوظيفة لأسباب خارجة عن إرادتك.", "en": "A monthly payment when you lose a job for reasons outside your control." },
+    "audience": ["citizens"],
+    "channels": ["online", "app"],
+    "duration": { "ar": "حتى 10 أيام عمل", "en": "Up to 10 working days" },
+    "feeSar": 0,
+    "eligibility": { "ar": "المشترك بمدة اشتراك لا تقل عن 12 شهرًا، منها 6 أشهر متصلة.", "en": "Contributors with at least 12 months of contributions, 6 of them consecutive." },
+    "popular": false,
+    "platformUrl": "https://www.gosi.gov.sa",
+    "requirements": [
+      { "ar": "إثبات انتهاء العلاقة العمالية", "en": "Proof the employment ended" },
+      { "ar": "التسجيل في منصة العمل", "en": "Registration on the employment platform" },
+      { "ar": "حساب بنكي باسمك", "en": "A bank account in your name" }
+    ],
+    "steps": [
+      { "ar": "ادخل إلى حسابك في التأمينات", "en": "Sign in to your insurance account" },
+      { "ar": "قدّم طلب ساند خلال 30 يومًا", "en": "File the SANED request within 30 days" },
+      { "ar": "ثبّت بحثك عن عمل شهريًا", "en": "Confirm your job search every month" }
+    ],
+    "fees": [{ "label": { "ar": "تقديم الطلب", "en": "Application" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "كم مدة الصرف؟", "en": "How long are payments made?" }, "a": { "ar": "حتى 12 شهرًا بحسب مدة اشتراكك.", "en": "Up to 12 months depending on your contribution history." } },
+      { "q": { "ar": "متى يتوقف التعويض؟", "en": "When do payments stop?" }, "a": { "ar": "عند التحاقك بعمل جديد أو عدم تأكيد البحث عن عمل.", "en": "When you start a new job or stop confirming your job search." } }
+    ],
+    "related": ["job-seeker-registration", "retirement-pension-claim"]
+  },
+  {
+    "id": "pension-statement",
+    "name": { "ar": "كشف حساب المعاش التقاعدي", "en": "Pension account statement" },
+    "provider": { "ar": "المؤسسة العامة للتأمينات الاجتماعية", "en": "General Organization for Social Insurance" },
+    "summary": { "ar": "عرض سنوات الخدمة والاشتراكات والمعاش المتوقع.", "en": "See your years of service, contributions and expected pension." },
+    "audience": ["citizens"],
+    "channels": ["online", "app"],
+    "duration": { "ar": "فوري", "en": "Instant" },
+    "feeSar": 0,
+    "eligibility": { "ar": "كل مشترك في التأمينات الاجتماعية.", "en": "Any social insurance contributor." },
+    "popular": false,
+    "platformUrl": "https://www.gosi.gov.sa",
+    "requirements": [{ "ar": "حساب نشط في التأمينات", "en": "An active insurance account" }],
+    "steps": [
+      { "ar": "ادخل إلى حسابك", "en": "Sign in to your account" },
+      { "ar": "اختر كشف الحساب وحدّد الفترة", "en": "Choose the statement and set the period" },
+      { "ar": "نزّل الكشف أو اطبعه", "en": "Download or print the statement" }
+    ],
+    "fees": [{ "label": { "ar": "إصدار الكشف", "en": "Statement issuance" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "لماذا تنقص سنوات خدمتي؟", "en": "Why are some years of service missing?" }, "a": { "ar": "قد لا تكون المنشأة قد سجلتك أو سددت اشتراكاتك، فقدّم اعتراضًا من الكشف.", "en": "Your employer may not have registered or paid for you. File an objection from the statement." } },
+      { "q": { "ar": "هل الكشف رسمي؟", "en": "Is the statement official?" }, "a": { "ar": "نعم، ويحمل رمزًا للتحقق.", "en": "Yes. It carries a verification code." } }
+    ],
+    "related": ["retirement-pension-claim"]
+  },
+  {
+    "id": "retirement-pension-claim",
+    "name": { "ar": "طلب معاش التقاعد", "en": "Claim a retirement pension" },
+    "provider": { "ar": "المؤسسة العامة للتأمينات الاجتماعية", "en": "General Organization for Social Insurance" },
+    "summary": { "ar": "تقديم طلب المعاش الشهري عند بلوغ سن التقاعد أو انتهاء الخدمة.", "en": "File for your monthly pension at retirement age or when service ends." },
+    "audience": ["citizens"],
+    "channels": ["online", "app", "branch"],
+    "duration": { "ar": "حتى 20 يوم عمل", "en": "Up to 20 working days" },
+    "feeSar": 0,
+    "eligibility": { "ar": "المشترك الذي أتم 60 سنة، أو اكتملت مدة اشتراكه النظامية.", "en": "A contributor who reached 60, or completed the required contribution period." },
+    "popular": false,
+    "platformUrl": "https://www.gosi.gov.sa",
+    "requirements": [
+      { "ar": "الهوية الوطنية", "en": "National ID" },
+      { "ar": "قرار إنهاء الخدمة", "en": "Decision ending service" },
+      { "ar": "رقم الآيبان", "en": "IBAN number" }
+    ],
+    "steps": [
+      { "ar": "راجع كشف الحساب وتأكد من مدة الخدمة", "en": "Check the statement and your length of service" },
+      { "ar": "قدّم طلب المعاش وأرفق المستندات", "en": "File the claim and attach documents" },
+      { "ar": "استلم قرار الصرف وموعد أول دفعة", "en": "Receive the payment decision and first payment date" }
+    ],
+    "fees": [{ "label": { "ar": "تقديم الطلب", "en": "Application" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "هل أستطيع العمل بعد التقاعد؟", "en": "Can I work after retiring?" }, "a": { "ar": "نعم، مع مراعاة أحكام الجمع بين المعاش والأجر.", "en": "Yes, subject to the rules on combining pension and wages." } },
+      { "q": { "ar": "كيف يُحسب المعاش؟", "en": "How is the pension calculated?" }, "a": { "ar": "من متوسط أجر آخر سنتين مضروبًا في سنوات الخدمة.", "en": "From the average wage of the last two years times years of service." } }
+    ],
+    "related": ["pension-statement", "family-support-application"]
+  },
+  {
+    "id": "school-transfer-request",
+    "name": { "ar": "طلب نقل طالب إلى مدرسة أخرى", "en": "Request a school transfer" },
+    "provider": { "ar": "وزارة التعليم", "en": "Ministry of Education" },
+    "summary": { "ar": "نقل الطالب إلى مدرسة حكومية في المدينة الجديدة.", "en": "Move a student to a public school in the new city." },
+    "audience": ["citizens", "residents"],
+    "channels": ["online", "app"],
+    "duration": { "ar": "من 3 إلى 7 أيام عمل", "en": "3 to 7 working days" },
+    "feeSar": 0,
+    "eligibility": { "ar": "ولي أمر طالب مقيّد في مدرسة حكومية.", "en": "A guardian of a student enrolled in a public school." },
+    "popular": false,
+    "platformUrl": "https://noor.moe.gov.sa",
+    "requirements": [
+      { "ar": "العنوان الوطني الجديد", "en": "The new national address" },
+      { "ar": "هوية ولي الأمر", "en": "The guardian's ID" },
+      { "ar": "آخر شهادة دراسية", "en": "The latest school report" }
+    ],
+    "steps": [
+      { "ar": "اختر خدمة النقل وحدّد الطالب", "en": "Choose the transfer service and select the student" },
+      { "ar": "اختر المدرسة المطلوبة من المقترحات", "en": "Pick the target school from the suggestions" },
+      { "ar": "انتظر قبول المدرسة المستقبِلة", "en": "Wait for the receiving school to accept" }
+    ],
+    "fees": [{ "label": { "ar": "طلب النقل", "en": "Transfer request" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "هل أضمن مقعدًا في المدرسة التي أريدها؟", "en": "Is a seat in my chosen school guaranteed?" }, "a": { "ar": "يعتمد ذلك على الطاقة الاستيعابية، وتُقترح بدائل قريبة عند الاكتمال.", "en": "It depends on capacity. Nearby alternatives are offered when a school is full." } },
+      { "q": { "ar": "هل يشمل ذلك المدارس الأهلية؟", "en": "Does this cover private schools?" }, "a": { "ar": "لا، يُنسَّق نقل الطالب فيها مع المدرسة نفسها.", "en": "No. Private school transfers are arranged with the school itself." } }
+    ],
+    "related": ["national-address-update"]
+  },
+  {
+    "id": "death-notification",
+    "name": { "ar": "الإبلاغ عن وفاة", "en": "Report a death" },
+    "provider": { "ar": "وزارة الصحة", "en": "Ministry of Health" },
+    "summary": { "ar": "تسجيل بلاغ الوفاة في السجل المدني.", "en": "Record a death notice in the civil register." },
+    "audience": ["citizens", "residents"],
+    "channels": ["app", "online", "branch"],
+    "duration": { "ar": "خلال يوم عمل واحد", "en": "Within one working day" },
+    "feeSar": 0,
+    "eligibility": { "ar": "أحد أقارب المتوفى أو الجهة الصحية.", "en": "A relative of the deceased or the health facility." },
+    "popular": false,
+    "platformUrl": "https://www.moh.gov.sa",
+    "requirements": [
+      { "ar": "تقرير الوفاة من الجهة الصحية", "en": "Death report from the health facility" },
+      { "ar": "هوية المتوفى", "en": "The deceased's ID" },
+      { "ar": "هوية مقدم البلاغ", "en": "ID of the person reporting" }
+    ],
+    "steps": [
+      { "ar": "افتح خدمة الإبلاغ عن وفاة", "en": "Open the report-a-death service" },
+      { "ar": "أدخل بيانات المتوفى وأرفق التقرير", "en": "Enter the deceased's details and attach the report" },
+      { "ar": "أرسل البلاغ واحتفظ برقم الطلب", "en": "Submit and keep the request number" }
+    ],
+    "fees": [{ "label": { "ar": "الإبلاغ", "en": "Notification" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "هل يُبلَّغ تلقائيًا من المستشفى؟", "en": "Does the hospital report automatically?" }, "a": { "ar": "نعم عند حدوث الوفاة داخلها، وتصلك رسالة تأكيد.", "en": "Yes, when the death occurs there. You receive a confirmation message." } },
+      { "q": { "ar": "ماذا عن الوفاة خارج المملكة؟", "en": "What about a death abroad?" }, "a": { "ar": "يُبلَّغ عبر السفارة أو القنصلية ثم يُسجَّل هنا.", "en": "Report via the embassy or consulate, then it is recorded here." } }
+    ],
+    "related": ["death-certificate", "inheritance-estate-division"]
+  },
+  {
+    "id": "death-certificate",
+    "name": { "ar": "إصدار شهادة وفاة", "en": "Issue a death certificate" },
+    "provider": { "ar": "وزارة الداخلية - الأحوال المدنية", "en": "Ministry of Interior - Civil Status" },
+    "summary": { "ar": "إصدار شهادة وفاة رسمية بعد تسجيل البلاغ.", "en": "Get an official death certificate once the notice is recorded." },
+    "audience": ["citizens", "residents"],
+    "channels": ["app", "online"],
+    "duration": { "ar": "فوري", "en": "Instant" },
+    "feeSar": 0,
+    "eligibility": { "ar": "أقارب المتوفى من الدرجة الأولى.", "en": "First-degree relatives of the deceased." },
+    "popular": false,
+    "platformUrl": "https://www.absher.sa",
+    "requirements": [{ "ar": "تسجيل بلاغ الوفاة", "en": "A recorded death notice" }, { "ar": "حساب نشط لمقدم الطلب", "en": "An active account for the applicant" }],
+    "steps": [
+      { "ar": "ادخل إلى خدمات الأحوال المدنية", "en": "Open civil status services" },
+      { "ar": "اختر شهادة وفاة وحدّد المتوفى", "en": "Choose death certificate and select the deceased" },
+      { "ar": "نزّل الشهادة", "en": "Download the certificate" }
+    ],
+    "fees": [{ "label": { "ar": "إصدار الشهادة", "en": "Certificate issuance" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "كم نسخة يمكنني إصدارها؟", "en": "How many copies can I issue?" }, "a": { "ar": "عدد غير محدود، فهي إلكترونية.", "en": "As many as you need. It is electronic." } },
+      { "q": { "ar": "هل تقبلها المحاكم والبنوك؟", "en": "Do courts and banks accept it?" }, "a": { "ar": "نعم، بوجود رمز التحقق.", "en": "Yes, with the verification code." } }
+    ],
+    "related": ["inheritance-estate-division", "update-family-register"]
+  },
+  {
+    "id": "inheritance-estate-division",
+    "name": { "ar": "طلب حصر الورثة", "en": "Request an inheritance determination" },
+    "provider": { "ar": "وزارة العدل", "en": "Ministry of Justice" },
+    "summary": { "ar": "تقديم طلب إلى المحكمة لحصر الورثة وتحديد أنصبتهم.", "en": "File with the court to establish the heirs and their shares." },
+    "audience": ["citizens", "residents"],
+    "channels": ["online", "branch"],
+    "duration": { "ar": "من 5 إلى 15 يوم عمل", "en": "5 to 15 working days" },
+    "feeSar": 0,
+    "eligibility": { "ar": "أحد الورثة أو وكيله.", "en": "Any of the heirs or their agent." },
+    "popular": false,
+    "platformUrl": "https://najiz.sa",
+    "requirements": [
+      { "ar": "شهادة الوفاة", "en": "The death certificate" },
+      { "ar": "هويات الورثة", "en": "IDs of the heirs" },
+      { "ar": "سجل الأسرة", "en": "The family record" }
+    ],
+    "steps": [
+      { "ar": "ارفع الطلب من خدمات المحاكم", "en": "Submit from court services" },
+      { "ar": "أضف الورثة وأرفق المستندات", "en": "Add the heirs and attach documents" },
+      { "ar": "استلم صك حصر الورثة", "en": "Receive the deed of heirs" }
+    ],
+    "fees": [{ "label": { "ar": "الطلب", "en": "Application" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "ماذا لو وُجدت وصية؟", "en": "What if there is a will?" }, "a": { "ar": "ارفقها بالطلب لتنظر فيها المحكمة مع الحصر.", "en": "Attach it so the court reviews it together." } },
+      { "q": { "ar": "ماذا لو لم يتفق الورثة؟", "en": "What if the heirs disagree?" }, "a": { "ar": "يحال النزاع إلى القضاء بدعوى مستقلة.", "en": "A dispute goes to the court as a separate case." } }
+    ],
+    "related": ["survivor-pension-claim", "death-certificate"]
+  },
+  {
+    "id": "survivor-pension-claim",
+    "name": { "ar": "طلب معاش الورثة", "en": "Claim a survivor pension" },
+    "provider": { "ar": "المؤسسة العامة للتأمينات الاجتماعية", "en": "General Organization for Social Insurance" },
+    "summary": { "ar": "صرف معاش شهري لورثة المشترك المتوفى.", "en": "Monthly pension for the heirs of a deceased contributor." },
+    "audience": ["citizens"],
+    "channels": ["online", "branch"],
+    "duration": { "ar": "حتى 15 يوم عمل", "en": "Up to 15 working days" },
+    "feeSar": 0,
+    "eligibility": { "ar": "الزوج/الزوجة والأبناء والوالدان وفق نظام التأمينات.", "en": "Spouse, children and parents under the insurance rules." },
+    "popular": false,
+    "platformUrl": "https://www.gosi.gov.sa",
+    "requirements": [
+      { "ar": "صك حصر الورثة", "en": "Deed of heirs" },
+      { "ar": "شهادة الوفاة", "en": "Death certificate" },
+      { "ar": "حسابات بنكية للمستحقين", "en": "Bank accounts for beneficiaries" }
+    ],
+    "steps": [
+      { "ar": "قدّم الطلب من حساب أحد المستحقين", "en": "File from a beneficiary's account" },
+      { "ar": "أضف المستحقين وأرفق المستندات", "en": "Add beneficiaries and attach documents" },
+      { "ar": "تابع قرار الصرف", "en": "Follow the payment decision" }
+    ],
+    "fees": [{ "label": { "ar": "الطلب", "en": "Application" }, "amountSar": 0 }],
+    "faqs": [
+      { "q": { "ar": "كيف توزع الحصص بين الورثة؟", "en": "How are shares split?" }, "a": { "ar": "وفق النسب المقررة في نظام التأمينات لكل فئة مستحقة.", "en": "By the shares the insurance rules set for each beneficiary class." } },
+      { "q": { "ar": "هل يستمر المعاش لابن بلغ سن الرشد؟", "en": "Does it continue for an adult child?" }, "a": { "ar": "يتوقف عند البلوغ إلا إذا كان طالبًا أو عاجزًا.", "en": "It stops at adulthood unless the child is studying or unable to work." } }
+    ],
+    "related": ["inheritance-estate-division", "pension-statement"]
+  }
+]

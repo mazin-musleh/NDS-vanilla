@@ -1,0 +1,436 @@
+[
+  {
+    "id": "C-112",
+    "topic": "digital",
+    "status": "open",
+    "days": 21,
+    "participants": 1284,
+    "entity": { "ar": "الهيئة السعودية للبيانات والذكاء الاصطناعي", "en": "Saudi Data and AI Authority" },
+    "title": { "ar": "مسودة دليل الاستخدام المسؤول للذكاء الاصطناعي في الخدمات الحكومية", "en": "Draft guide to responsible use of AI in government services" },
+    "summary": {
+      "ar": "تطرح الهيئة مسودة دليل ينظّم استخدام الأنظمة الذكية في الخدمات الموجهة للمستفيدين، ويشمل الشفافية والخصوصية وحق المستفيد في مراجعة بشرية للقرارات المؤتمتة. نرحب بآرائكم حول مدى وضوح الدليل وإمكانية تطبيقه.",
+      "en": "The authority is publishing a draft guide on using intelligent systems in services for beneficiaries, covering transparency, privacy and the right to a human review of automated decisions. We welcome your views on how clear and workable it is."
+    },
+    "documents": [
+      { "name": { "ar": "مسودة الدليل", "en": "Draft guide" }, "type": "PDF", "sizeKb": 1840 },
+      { "name": { "ar": "ملخص تنفيذي", "en": "Executive summary" }, "type": "PDF", "sizeKb": 312 }
+    ],
+    "survey": {
+      "choice": {
+        "q": { "ar": "متى ترى أن إخطار المستفيد باستخدام الذكاء الاصطناعي ضروري؟", "en": "When should a beneficiary be told that AI is being used?" },
+        "options": [
+          { "ar": "في كل تفاعل مع الخدمة", "en": "In every interaction with the service" },
+          { "ar": "عند اتخاذ قرار يمسّ حقوقه فقط", "en": "Only when a decision affects their rights" },
+          { "ar": "مرة واحدة عند أول استخدام", "en": "Once, at first use" }
+        ]
+      },
+      "priorities": {
+        "q": { "ar": "ما الأولويات التي تريد أن يركز عليها الدليل؟", "en": "Which priorities should the guide focus on?" },
+        "options": [
+          { "ar": "حماية البيانات الشخصية", "en": "Personal data protection" },
+          { "ar": "حق المراجعة البشرية", "en": "Right to human review" },
+          { "ar": "وضوح المسؤولية عند الخطأ", "en": "Clear accountability for errors" },
+          { "ar": "دعم اللغة العربية", "en": "Arabic language support" }
+        ]
+      },
+      "rating": { "q": { "ar": "المسودة الحالية واضحة وقابلة للتطبيق.", "en": "The current draft is clear and workable." } }
+    },
+    "results": { "choice": [46, 41, 13], "priorities": [78, 64, 52, 37], "rating": 3.7 }
+  },
+  {
+    "id": "C-111",
+    "topic": "education",
+    "status": "closed",
+    "days": 3,
+    "participants": 2130,
+    "entity": { "ar": "وزارة التعليم", "en": "Ministry of Education" },
+    "title": { "ar": "تعديل التقويم الدراسي للعام القادم", "en": "Adjusting next year's school calendar" },
+    "summary": {
+      "ar": "استطلعت الوزارة آراء أولياء الأمور والمعلمين حول توزيع الإجازات وطول الفصل الدراسي الصيفي المقترح.",
+      "en": "The ministry sought the views of parents and teachers on how holidays are spread and on the proposed length of the summer term."
+    },
+    "documents": [{ "name": { "ar": "ورقة الخيارات المقترحة", "en": "Options paper" }, "type": "PDF", "sizeKb": 560 }],
+    "survey": {
+      "choice": {
+        "q": { "ar": "أي التقويمات تفضّل؟", "en": "Which calendar do you prefer?" },
+        "options": [
+          { "ar": "ثلاثة فصول متساوية", "en": "Three equal terms" },
+          { "ar": "فصلان مع إجازة نصف فصلية", "en": "Two terms with a mid-term break" },
+          { "ar": "كما هو الحال الآن", "en": "Keep the current calendar" }
+        ]
+      },
+      "priorities": {
+        "q": { "ar": "ما أهم ما تراعيه في التقويم؟", "en": "What matters most in the calendar?" },
+        "options": [
+          { "ar": "حرارة الصيف", "en": "Summer heat" },
+          { "ar": "المناسبات والأعياد", "en": "Holidays and festivals" },
+          { "ar": "مواعيد الاختبارات", "en": "Exam timing" },
+          { "ar": "توافق إجازات الأسرة", "en": "Family leave alignment" }
+        ]
+      },
+      "rating": { "q": { "ar": "التقويم الحالي يناسب أسرتي.", "en": "The current calendar suits my family." } }
+    },
+    "results": { "choice": [52, 33, 15], "priorities": [71, 58, 44, 49], "rating": 3.1 }
+  },
+  {
+    "id": "C-110",
+    "topic": "housing",
+    "status": "open",
+    "days": 14,
+    "participants": 856,
+    "entity": { "ar": "وزارة الشؤون البلدية والقروية والإسكان", "en": "Ministry of Municipal, Rural Affairs and Housing" },
+    "title": { "ar": "ضوابط الإيجار قصير المدى للوحدات السكنية", "en": "Rules for short-term residential rentals" },
+    "summary": {
+      "ar": "مقترح لتنظيم تأجير الوحدات السكنية بالأيام والأسابيع، يشمل الترخيص والحد الأقصى لعدد الليالي ومسؤوليات المالك تجاه الجيران.",
+      "en": "A proposal to regulate renting homes by the day or week, covering licensing, a cap on nights per year, and the owner's duties toward neighbors."
+    },
+    "documents": [
+      { "name": { "ar": "المقترح التنظيمي", "en": "Regulatory proposal" }, "type": "PDF", "sizeKb": 940 },
+      { "name": { "ar": "تحليل الأثر", "en": "Impact assessment" }, "type": "PDF", "sizeKb": 1220 }
+    ],
+    "survey": {
+      "choice": {
+        "q": { "ar": "ما الحد الأنسب للتأجير القصير سنويًا؟", "en": "What yearly cap on short-term letting is right?" },
+        "options": [
+          { "ar": "90 ليلة", "en": "90 nights" },
+          { "ar": "180 ليلة", "en": "180 nights" },
+          { "ar": "دون حد مع الترخيص", "en": "No cap, with a license" }
+        ]
+      },
+      "priorities": {
+        "q": { "ar": "ما الشروط التي ترى أنها ضرورية؟", "en": "Which conditions do you consider essential?" },
+        "options": [
+          { "ar": "موافقة اتحاد الملاك", "en": "Owners' association approval" },
+          { "ar": "تأمين على الوحدة", "en": "Insurance on the unit" },
+          { "ar": "تسجيل الضيوف", "en": "Guest registration" },
+          { "ar": "غرامات الإزعاج", "en": "Nuisance penalties" }
+        ]
+      },
+      "rating": { "q": { "ar": "هناك حاجة إلى تنظيم هذا النشاط.", "en": "This activity needs regulation." } }
+    },
+    "results": { "choice": [34, 43, 23], "priorities": [69, 55, 61, 47], "rating": 4.1 }
+  },
+  {
+    "id": "C-109",
+    "topic": "environment",
+    "status": "closed",
+    "days": 20,
+    "participants": 1742,
+    "entity": { "ar": "وزارة البيئة والمياه والزراعة", "en": "Ministry of Environment, Water and Agriculture" },
+    "title": { "ar": "الحد من الأكياس البلاستيكية أحادية الاستخدام", "en": "Reducing single-use plastic bags" },
+    "summary": {
+      "ar": "طُرح مقترح فرض رسم على الأكياس البلاستيكية في المتاجر وتشجيع الأكياس القابلة لإعادة الاستخدام.",
+      "en": "A proposal to charge for plastic bags in shops and to encourage reusable ones."
+    },
+    "documents": [{ "name": { "ar": "ورقة المقترح", "en": "Proposal paper" }, "type": "PDF", "sizeKb": 430 }],
+    "survey": {
+      "choice": {
+        "q": { "ar": "ما رأيك في فرض رسم على الكيس الواحد؟", "en": "What do you think of a per-bag charge?" },
+        "options": [
+          { "ar": "أؤيد", "en": "I support it" },
+          { "ar": "أؤيد بشرط إعفاء بعض الفئات", "en": "I support it with exemptions" },
+          { "ar": "لا أؤيد", "en": "I do not support it" }
+        ]
+      },
+      "priorities": {
+        "q": { "ar": "ما البدائل التي تفضّلها؟", "en": "Which alternatives do you prefer?" },
+        "options": [
+          { "ar": "أكياس قماشية مجانية", "en": "Free cloth bags" },
+          { "ar": "أكياس ورقية", "en": "Paper bags" },
+          { "ar": "حوافز للمتاجر", "en": "Incentives for shops" },
+          { "ar": "حملات توعية", "en": "Awareness campaigns" }
+        ]
+      },
+      "rating": { "q": { "ar": "أستخدم أكياسًا قابلة لإعادة الاستخدام بانتظام.", "en": "I regularly use reusable bags." } }
+    },
+    "results": { "choice": [49, 37, 14], "priorities": [57, 40, 63, 52], "rating": 2.9 }
+  },
+  {
+    "id": "C-108",
+    "topic": "education",
+    "status": "open",
+    "days": 9,
+    "participants": 1507,
+    "entity": { "ar": "هيئة تقويم التعليم والتدريب", "en": "Education and Training Evaluation Commission" },
+    "title": { "ar": "إطار جديد لتقويم أداء المعلمين", "en": "A new framework for evaluating teacher performance" },
+    "summary": {
+      "ar": "تقترح الهيئة إطارًا يجمع بين الملاحظة الصفية ونتائج الطلاب والتطوير المهني. نطلب آراء المعلمين وأولياء الأمور حول أوزان المعايير.",
+      "en": "The commission proposes a framework combining classroom observation, student results and professional development. We are asking teachers and parents about the weight of each criterion."
+    },
+    "documents": [
+      { "name": { "ar": "وثيقة الإطار", "en": "Framework document" }, "type": "PDF", "sizeKb": 2100 },
+      { "name": { "ar": "نموذج بطاقة التقويم", "en": "Sample evaluation card" }, "type": "XLSX", "sizeKb": 88 }
+    ],
+    "survey": {
+      "choice": {
+        "q": { "ar": "ما أهم معيار في تقويم المعلم؟", "en": "What is the most important criterion for evaluating a teacher?" },
+        "options": [
+          { "ar": "الملاحظة الصفية", "en": "Classroom observation" },
+          { "ar": "نمو مستوى الطلاب", "en": "Student progress" },
+          { "ar": "التطوير المهني", "en": "Professional development" }
+        ]
+      },
+      "priorities": {
+        "q": { "ar": "ما الذي يجب أن يوفره الإطار للمعلم؟", "en": "What should the framework give teachers?" },
+        "options": [
+          { "ar": "تغذية راجعة دورية", "en": "Regular feedback" },
+          { "ar": "فرص تدريب", "en": "Training opportunities" },
+          { "ar": "ربط بالحوافز", "en": "Link to incentives" },
+          { "ar": "شفافية المعايير", "en": "Transparent criteria" }
+        ]
+      },
+      "rating": { "q": { "ar": "المعايير المقترحة عادلة.", "en": "The proposed criteria are fair." } }
+    },
+    "results": { "choice": [39, 28, 33], "priorities": [76, 68, 41, 72], "rating": 3.4 }
+  },
+  {
+    "id": "C-107",
+    "topic": "transport",
+    "status": "closed",
+    "days": 41,
+    "participants": 3318,
+    "entity": { "ar": "الهيئة العامة للنقل", "en": "Transport General Authority" },
+    "title": { "ar": "مواقف الدراجات الكهربائية والسكوترات في الأحياء", "en": "Parking for e-bikes and scooters in neighborhoods" },
+    "summary": {
+      "ar": "جمعت الهيئة آراء السكان حول أماكن الإيقاف المخصصة وسرعة المركبات الصغيرة على الأرصفة.",
+      "en": "The authority gathered residents' views on designated parking and on the speed of small vehicles on sidewalks."
+    },
+    "documents": [{ "name": { "ar": "ملخص المقترح", "en": "Proposal summary" }, "type": "PDF", "sizeKb": 275 }],
+    "survey": {
+      "choice": {
+        "q": { "ar": "أين ينبغي إيقاف السكوترات؟", "en": "Where should scooters be parked?" },
+        "options": [
+          { "ar": "في مواقف مخصصة فقط", "en": "In designated bays only" },
+          { "ar": "على الرصيف في مناطق محددة", "en": "On sidewalks in set zones" },
+          { "ar": "في أي مكان لا يعيق المشاة", "en": "Anywhere that does not block walkers" }
+        ]
+      },
+      "priorities": {
+        "q": { "ar": "ما الإجراءات التي تؤيدها؟", "en": "Which measures do you support?" },
+        "options": [
+          { "ar": "حد أقصى للسرعة", "en": "A speed limit" },
+          { "ar": "غرامات الإيقاف الخاطئ", "en": "Fines for wrong parking" },
+          { "ar": "تحديد عمر أدنى للمستخدم", "en": "A minimum rider age" },
+          { "ar": "تأمين إلزامي", "en": "Mandatory insurance" }
+        ]
+      },
+      "rating": { "q": { "ar": "السكوترات تشكل خطرًا في حيّي.", "en": "Scooters are a hazard in my neighborhood." } }
+    },
+    "results": { "choice": [62, 25, 13], "priorities": [81, 66, 59, 38], "rating": 3.8 }
+  },
+  {
+    "id": "C-106",
+    "topic": "health",
+    "status": "open",
+    "days": 6,
+    "participants": 2046,
+    "entity": { "ar": "وزارة الصحة", "en": "Ministry of Health" },
+    "title": { "ar": "تنظيم مواعيد العيادات الخارجية في المراكز الصحية", "en": "Organizing outpatient appointments at health centers" },
+    "summary": {
+      "ar": "تدرس الوزارة نظام حجز موحّد للعيادات الخارجية يقلل أوقات الانتظار، ويتيح تذكيرًا بالموعد وإلغاءً سهلًا. نرجو مشاركتكم تجاربكم الحالية.",
+      "en": "The ministry is studying a single booking system for outpatient clinics that cuts waiting times, with appointment reminders and easy cancellation. Please share your current experience."
+    },
+    "documents": [
+      { "name": { "ar": "وصف النظام المقترح", "en": "Proposed system description" }, "type": "PDF", "sizeKb": 690 }
+    ],
+    "survey": {
+      "choice": {
+        "q": { "ar": "كيف تفضّل حجز الموعد؟", "en": "How do you prefer to book?" },
+        "options": [
+          { "ar": "عبر التطبيق", "en": "Through the app" },
+          { "ar": "عبر الاتصال الهاتفي", "en": "By phone" },
+          { "ar": "بالحضور إلى المركز", "en": "In person at the center" }
+        ]
+      },
+      "priorities": {
+        "q": { "ar": "ما الميزات التي تهمك أكثر؟", "en": "Which features matter most to you?" },
+        "options": [
+          { "ar": "تذكير قبل الموعد", "en": "Reminder before the visit" },
+          { "ar": "إعادة الجدولة بنقرة", "en": "One-tap rescheduling" },
+          { "ar": "عرض وقت الانتظار الحالي", "en": "Showing current wait time" },
+          { "ar": "حجز لأفراد الأسرة", "en": "Booking for family members" }
+        ]
+      },
+      "rating": { "q": { "ar": "أنتظر طويلًا عند زيارة العيادة عادةً.", "en": "I usually wait a long time at the clinic." } }
+    },
+    "results": { "choice": [71, 14, 15], "priorities": [84, 63, 57, 69], "rating": 3.9 }
+  },
+  {
+    "id": "C-105",
+    "topic": "environment",
+    "status": "open",
+    "days": 2,
+    "participants": 673,
+    "entity": { "ar": "المركز الوطني للأرصاد", "en": "National Center for Meteorology" },
+    "title": { "ar": "تحسين تنبيهات الطقس القاسي للجمهور", "en": "Improving severe weather alerts for the public" },
+    "summary": {
+      "ar": "نستطلع رأيكم في شكل تنبيهات الأمطار والغبار والحرارة المرسلة إلى الجوال: التوقيت، والمحتوى، والمستويات اللونية.",
+      "en": "We are asking about the form of rain, dust and heat alerts sent to phones: their timing, wording and color levels."
+    },
+    "documents": [{ "name": { "ar": "نماذج التنبيهات المقترحة", "en": "Sample alert designs" }, "type": "PDF", "sizeKb": 1510 }],
+    "survey": {
+      "choice": {
+        "q": { "ar": "متى تفضّل وصول التنبيه؟", "en": "When would you like the alert to arrive?" },
+        "options": [
+          { "ar": "قبل 24 ساعة", "en": "24 hours ahead" },
+          { "ar": "قبل 6 ساعات", "en": "6 hours ahead" },
+          { "ar": "قبل ساعة واحدة", "en": "One hour ahead" }
+        ]
+      },
+      "priorities": {
+        "q": { "ar": "ما المعلومات التي يجب أن يتضمنها التنبيه؟", "en": "What should an alert include?" },
+        "options": [
+          { "ar": "المنطقة المتأثرة", "en": "The affected area" },
+          { "ar": "مدة الحالة", "en": "How long it will last" },
+          { "ar": "إرشادات السلامة", "en": "Safety guidance" },
+          { "ar": "رابط للتفاصيل", "en": "A link to details" }
+        ]
+      },
+      "rating": { "q": { "ar": "التنبيهات الحالية مفيدة.", "en": "The current alerts are useful." } }
+    },
+    "results": { "choice": [18, 52, 30], "priorities": [88, 54, 79, 33], "rating": 3.5 }
+  },
+  {
+    "id": "C-104",
+    "topic": "transport",
+    "status": "open",
+    "days": 11,
+    "participants": 982,
+    "entity": { "ar": "وزارة النقل والخدمات اللوجستية", "en": "Ministry of Transport and Logistics" },
+    "title": { "ar": "مقترح مسارات الحافلات الجديدة بين الأحياء", "en": "Proposed new inter-neighborhood bus routes" },
+    "summary": {
+      "ar": "تعرض الوزارة خريطة مبدئية لثمانية مسارات جديدة للحافلات داخل المدن الكبرى، وتطلب رأي السكان في أولوية المسارات وتكرار الرحلات وساعات التشغيل.",
+      "en": "The ministry is showing a first map of eight new bus routes in major cities and asks residents about route priority, trip frequency and operating hours."
+    },
+    "documents": [
+      { "name": { "ar": "خريطة المسارات المقترحة", "en": "Proposed route map" }, "type": "PDF", "sizeKb": 3260 },
+      { "name": { "ar": "جدول التشغيل المبدئي", "en": "Draft timetable" }, "type": "XLSX", "sizeKb": 142 }
+    ],
+    "survey": {
+      "choice": {
+        "q": { "ar": "ما أكثر ما يشجعك على استخدام الحافلة؟", "en": "What would most encourage you to ride the bus?" },
+        "options": [
+          { "ar": "رحلات كل 10 دقائق", "en": "A bus every 10 minutes" },
+          { "ar": "محطات قريبة من المنزل", "en": "Stops close to home" },
+          { "ar": "تتبع الحافلة بالتطبيق", "en": "Live bus tracking in the app" }
+        ]
+      },
+      "priorities": {
+        "q": { "ar": "ما الوجهات التي تحتاج إلى مسارات؟", "en": "Which destinations need routes?" },
+        "options": [
+          { "ar": "المدارس والجامعات", "en": "Schools and universities" },
+          { "ar": "المراكز الصحية", "en": "Health centers" },
+          { "ar": "مناطق العمل", "en": "Employment areas" },
+          { "ar": "الأسواق والمجمعات", "en": "Markets and malls" }
+        ]
+      },
+      "rating": { "q": { "ar": "سأستخدم الحافلة بدل السيارة إن توفرت هذه المسارات.", "en": "I would use the bus instead of my car if these routes existed." } }
+    },
+    "results": { "choice": [44, 36, 20], "priorities": [67, 49, 73, 41], "rating": 3.6 }
+  },
+  {
+    "id": "C-103",
+    "topic": "economy",
+    "status": "open",
+    "days": 30,
+    "participants": 421,
+    "entity": { "ar": "الهيئة العامة للمنشآت الصغيرة والمتوسطة", "en": "Small and Medium Enterprises General Authority" },
+    "title": { "ar": "تبسيط متطلبات تأسيس المنشآت المنزلية", "en": "Simplifying setup rules for home-based businesses" },
+    "summary": {
+      "ar": "نبحث عن أبسط مسار يسمح لأصحاب المشاريع المنزلية بالترخيص دون الحاجة إلى محل تجاري، مع ضمان سلامة المنتج.",
+      "en": "We are looking for the simplest path for home-based entrepreneurs to be licensed without a shop, while keeping products safe."
+    },
+    "documents": [{ "name": { "ar": "ورقة النقاش", "en": "Discussion paper" }, "type": "PDF", "sizeKb": 780 }],
+    "survey": {
+      "choice": {
+        "q": { "ar": "ما الأنسب لترخيص المشروع المنزلي؟", "en": "What suits licensing a home business best?" },
+        "options": [
+          { "ar": "ترخيص إلكتروني مبسّط", "en": "A simplified online license" },
+          { "ar": "تسجيل دون ترخيص تحت حد دخل معين", "en": "Registration without license below an income limit" },
+          { "ar": "كما هو الحال الآن", "en": "Keep the current process" }
+        ]
+      },
+      "priorities": {
+        "q": { "ar": "ما الأنشطة التي ينبغي شمولها أولًا؟", "en": "Which activities should be covered first?" },
+        "options": [
+          { "ar": "الأطعمة والحلويات", "en": "Food and sweets" },
+          { "ar": "الحرف اليدوية", "en": "Handicrafts" },
+          { "ar": "الخدمات الرقمية", "en": "Digital services" },
+          { "ar": "التعليم والتدريب", "en": "Education and training" }
+        ]
+      },
+      "rating": { "q": { "ar": "إجراءات الترخيص الحالية تعيق المشاريع الصغيرة.", "en": "Current licensing procedures hold small ventures back." } }
+    },
+    "results": { "choice": [58, 29, 13], "priorities": [74, 61, 52, 35], "rating": 4.2 }
+  },
+  {
+    "id": "C-102",
+    "topic": "health",
+    "status": "closed",
+    "days": 75,
+    "participants": 2891,
+    "entity": { "ar": "وزارة الصحة", "en": "Ministry of Health" },
+    "title": { "ar": "حملة الفحص المبكر للأمراض المزمنة", "en": "Early screening campaign for chronic diseases" },
+    "summary": {
+      "ar": "استطلعت الوزارة آراء المواطنين والمقيمين حول أنسب أماكن وأوقات الفحص المجاني لمرض السكري وضغط الدم.",
+      "en": "The ministry asked citizens and residents about the best places and times for free diabetes and blood pressure screening."
+    },
+    "documents": [{ "name": { "ar": "خطة الحملة", "en": "Campaign plan" }, "type": "PDF", "sizeKb": 610 }],
+    "survey": {
+      "choice": {
+        "q": { "ar": "أين تفضّل إجراء الفحص؟", "en": "Where do you prefer to be screened?" },
+        "options": [
+          { "ar": "المركز الصحي", "en": "The health center" },
+          { "ar": "المجمعات التجارية", "en": "Shopping centers" },
+          { "ar": "مكان العمل", "en": "The workplace" }
+        ]
+      },
+      "priorities": {
+        "q": { "ar": "ما الذي يشجعك على الفحص؟", "en": "What would encourage you to get screened?" },
+        "options": [
+          { "ar": "فحص مجاني", "en": "A free test" },
+          { "ar": "نتيجة فورية", "en": "Instant results" },
+          { "ar": "إجازة قصيرة من العمل", "en": "Short leave from work" },
+          { "ar": "تذكير عبر الجوال", "en": "A phone reminder" }
+        ]
+      },
+      "rating": { "q": { "ar": "أجريت فحصًا دوريًا خلال العام الماضي.", "en": "I had a routine check-up last year." } }
+    },
+    "results": { "choice": [37, 41, 22], "priorities": [92, 77, 38, 59], "rating": 2.8 }
+  },
+  {
+    "id": "C-101",
+    "topic": "economy",
+    "status": "closed",
+    "days": 120,
+    "participants": 1166,
+    "entity": { "ar": "وزارة التجارة", "en": "Ministry of Commerce" },
+    "title": { "ar": "حماية المستهلك في التجارة الإلكترونية", "en": "Consumer protection in e-commerce" },
+    "summary": {
+      "ar": "جمعت الوزارة ملاحظات المستهلكين والمتاجر حول الاستبدال والاسترجاع ووضوح الأسعار في المتاجر الإلكترونية.",
+      "en": "The ministry collected consumer and merchant input on exchanges, returns and price clarity in online shops."
+    },
+    "documents": [{ "name": { "ar": "مسودة الأحكام", "en": "Draft provisions" }, "type": "PDF", "sizeKb": 530 }],
+    "survey": {
+      "choice": {
+        "q": { "ar": "ما مدة الاسترجاع المناسبة؟", "en": "What return period is right?" },
+        "options": [
+          { "ar": "7 أيام", "en": "7 days" },
+          { "ar": "14 يومًا", "en": "14 days" },
+          { "ar": "30 يومًا", "en": "30 days" }
+        ]
+      },
+      "priorities": {
+        "q": { "ar": "ما أكثر ما تواجهه من مشكلات؟", "en": "Which problems do you meet most?" },
+        "options": [
+          { "ar": "تأخر التوصيل", "en": "Late delivery" },
+          { "ar": "اختلاف المنتج عن الوصف", "en": "Product differs from description" },
+          { "ar": "رسوم مخفية", "en": "Hidden fees" },
+          { "ar": "صعوبة الاسترجاع", "en": "Difficult returns" }
+        ]
+      },
+      "rating": { "q": { "ar": "أثق في المتاجر الإلكترونية المحلية.", "en": "I trust local online shops." } }
+    },
+    "results": { "choice": [21, 47, 32], "priorities": [66, 61, 48, 70], "rating": 3.3 }
+  }
+]

@@ -1,0 +1,111 @@
+<div class="page">
+  <header class="page-head">
+    <h1>{{ t().help.title }}</h1>
+    <p>{{ t().help.subtitle }}</p>
+  </header>
+
+  <div class="help-search">
+    <mat-form-field>
+      <mat-label>{{ t().help.searchLabel }}</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input
+        matInput
+        type="search"
+        [formControl]="search"
+        [matAutocomplete]="auto"
+        [placeholder]="t().help.searchPlaceholder"
+      />
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="titleOf" (optionSelected)="open($event)">
+        @for (a of matches(); track a.id) {
+          <mat-option [value]="a.id">
+            <span [innerHTML]="highlight(a.title[l()])"></span>
+          </mat-option>
+        }
+        @if (term().trim() && !matches().length && data()) {
+          <mat-option disabled>{{ t().help.noMatch }}</mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
+  @if (data(); as d) {
+    <div class="section-head">
+      <h2>{{ t().help.categoriesTitle }}</h2>
+    </div>
+    <div class="card-grid categories">
+      @for (c of d.categories; track c.id) {
+        <a class="cat-link" [routerLink]="['/help/articles', firstArticle(c.id)]">
+          <mat-card appearance="outlined" class="cat-card">
+            <mat-card-header>
+              <mat-icon mat-card-avatar class="cat-icon">{{ c.icon }}</mat-icon>
+              <mat-card-title>{{ c.name[l()] }}</mat-card-title>
+              <mat-card-subtitle>{{ t().help.articles(articleCount(c.id)) }}</mat-card-subtitle>
+            </mat-card-header>
+          </mat-card>
+        </a>
+      }
+    </div>
+
+    <div class="section-head">
+      <h2>{{ t().help.topTitle }}</h2>
+    </div>
+    <mat-accordion class="top-questions">
+      @for (item of d.topQuestions; track $index) {
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ item.q[l()] }}</mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>{{ item.a[l()] }}</p>
+        </mat-expansion-panel>
+      }
+    </mat-accordion>
+  } @else {
+    <div class="loading-bar">
+      <mat-progress-bar mode="indeterminate" [attr.aria-label]="t().common.loading" />
+    </div>
+  }
+
+  <div class="section-head" id="contact">
+    <h2>{{ t().help.contactTitle }}</h2>
+  </div>
+  <div class="card-grid channels">
+    <mat-card appearance="outlined">
+      <mat-card-header>
+        <mat-icon mat-card-avatar class="cat-icon">call</mat-icon>
+        <mat-card-title>{{ t().help.phoneLabel }}</mat-card-title>
+        <mat-card-subtitle>{{ t().help.phoneHours }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <a class="channel-value" [href]="'tel:' + t().help.phoneValue" dir="ltr">{{ t().help.phoneValue }}</a>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card appearance="outlined">
+      <mat-card-header>
+        <mat-icon mat-card-avatar class="cat-icon">chat</mat-icon>
+        <mat-card-title>{{ t().help.chatLabel }}</mat-card-title>
+        <mat-card-subtitle>{{ t().help.chatValue }}</mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+
+    <mat-card appearance="outlined">
+      <mat-card-header>
+        <mat-icon mat-card-avatar class="cat-icon">mail</mat-icon>
+        <mat-card-title>{{ t().help.emailLabel }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <a class="channel-value" [href]="'mailto:' + t().help.emailValue" dir="ltr">{{ t().help.emailValue }}</a>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-card appearance="outlined" class="ticket-cta">
+    <mat-card-header>
+      <mat-card-title>{{ t().help.ticketTitle }}</mat-card-title>
+      <mat-card-subtitle>{{ t().help.ticketText }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions>
+      <a mat-flat-button routerLink="/help/ticket">{{ t().help.ticketButton }}</a>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -1,0 +1,149 @@
+.back-link {
+  margin-inline-start: -8px;
+  margin-bottom: 8px;
+
+  mat-icon {
+    margin-inline-end: 4px;
+  }
+}
+
+.journey-head {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+
+  .intro {
+    max-width: 760px;
+    color: var(--rf-muted);
+  }
+}
+
+.head-icon {
+  flex: none;
+  width: 64px;
+  height: 64px;
+  font-size: 36px;
+  line-height: 64px;
+  text-align: center;
+  border-radius: 16px;
+  background: #e8f5f3;
+  color: #00695c;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  color: #00695c;
+  font-weight: 600;
+}
+
+.progress-box {
+  background: #fff;
+  border: 1px solid var(--rf-border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+
+.progress-text {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.all-done {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0 0;
+  color: #00695c;
+  font-weight: 600;
+}
+
+.journey-layout {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+.journey-stepper {
+  border: 1px solid var(--rf-border);
+  border-radius: 12px;
+  padding: 8px 8px 16px;
+}
+
+.stage-services {
+  list-style: none;
+  margin: 16px 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stage-service {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--rf-border);
+  border-radius: 8px;
+  background: #fbfdfc;
+
+  &-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+}
+
+.stage-nav {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.docs-panel {
+  mat-card-header {
+    padding-bottom: 8px;
+  }
+}
+
+// document names are long, let them wrap instead of clipping
+.docs-list {
+  ::ng-deep .mat-mdc-list-item {
+    height: auto !important;
+    min-height: 48px;
+    padding-block: 6px;
+  }
+
+  ::ng-deep .mdc-list-item__primary-text {
+    white-space: normal;
+  }
+}
+
+@media (min-width: 960px) {
+  .journey-layout {
+    grid-template-columns: minmax(0, 1fr) 320px;
+  }
+
+  .docs-panel {
+    position: sticky;
+    top: 88px;
+  }
+}
+
+@media (max-width: 599px) {
+  .journey-head {
+    flex-direction: column;
+  }
+
+  .stage-service {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

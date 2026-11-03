@@ -1,0 +1,107 @@
+.ticket-form {
+  max-width: 720px;
+  background: #fff;
+  border: 1px solid var(--rf-border);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.row-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.group-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.file-input {
+  display: none;
+}
+
+.attachments mat-icon,
+.file-list mat-icon {
+  margin-inline-end: 6px;
+}
+
+.hint {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: var(--rf-muted);
+}
+
+.file-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+}
+
+.file-name {
+  flex: 1;
+  word-break: break-all;
+}
+
+.methods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 16px;
+}
+
+.done-card {
+  max-width: 560px;
+  background: #e8f5f3;
+  border-color: #b2dfdb;
+
+  mat-card-actions {
+    padding: 8px 16px 16px;
+  }
+}
+
+.done-icon {
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+  color: #00695c;
+}
+
+.ref-label {
+  margin: 12px 0 0;
+  color: var(--rf-muted);
+}
+
+.ref {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-align: start;
+}
+
+// hint and error share one line in the old design; give errors room
+:host ::ng-deep .mat-mdc-form-field-error {
+  font-size: 13px;
+}
+
+@media (min-width: 720px) {
+  .row-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 599px) {
+  .ticket-form {
+    padding: 16px;
+  }
+}

@@ -6,7 +6,7 @@ Run from the NDS repo root. The guide is .claude/skills/nds-iq-eval/RIGS.md.
   python scripts/rig.py stage <rig> <release>  unpack a mkrelease --preview zip to .nds/, add _source/, stamp <release>, copy the draft to NDS-IQ.md
   python scripts/rig.py reset <rig> [--save]   commit the run to a runN-date branch, back to the baseline tag
 
-<rig> is a rig number (1 sawaed, 2 shop-licenses, 3 nakheel-clinics, 4 hiraf-store, 5 library-portal, 6 citydesk, 7 grants-desk, 8 ops-desk), which lives at ../nds-test-app-<N>,
+<rig> is a rig number (1 sawaed, 2 shop-licenses, 3 nakheel-clinics, 4 hiraf-store, 5 library-portal, 6 citydesk, 7 grants-desk, 8 ops-desk, 9 rafeeq, 10 turathna), which lives at ../nds-test-app-<N>,
 or a baseline name (new) or a path (stage, reset). Baselines live in .claude/skills/nds-iq-eval/rigs/.
 """
 import datetime, io, os, re, shutil, subprocess, sys, tarfile, urllib.request, zipfile
@@ -15,17 +15,19 @@ RIGS = '.claude/skills/nds-iq-eval/rigs'
 # A nested CLAUDE.md would load into sessions working on NDS itself, so the rig gets it at setup.
 OPT_OUT = ('## Memory\n\nDo not save any memory (user, feedback, project, or reference) for this project.\n'
            'Do not write to or read from the memory directory for this repo.\n')
-# How each baseline starts, and where it serves: rig N on port 300N, set in each app's own code.
+# How each baseline starts, and where it serves: rig N on port 3000 + N, set in each app's own code.
 APPS = {'library-portal': ('npm start', 'http://localhost:3005'),
         'citydesk': ('npm start', 'http://localhost:3006'),
         'grants-desk': ('npm run dev', 'http://localhost:3007'),
         'ops-desk': ('npm run dev', 'http://localhost:3008'),
+        'rafeeq': ('npm start', 'http://localhost:3009'),
+        'turathna': ('npm run dev', 'http://localhost:3010'),
         'nakheel-clinics': ('npm start', 'http://localhost:3003'),
         'hiraf-store': ('npm run dev', 'http://localhost:3004'),
         'shop-licenses': ('.venv/Scripts/python manage.py runserver 3002' if os.name == 'nt'
                           else '.venv/bin/python manage.py runserver 3002', 'http://localhost:3002')}
 # The numbers past runs cite ("rig 5 run 8" = nds-test-app-5).
-NUMS = {'1': 'sawaed', '2': 'shop-licenses', '3': 'nakheel-clinics', '4': 'hiraf-store', '5': 'library-portal', '6': 'citydesk', '7': 'grants-desk', '8': 'ops-desk'}
+NUMS = {'1': 'sawaed', '2': 'shop-licenses', '3': 'nakheel-clinics', '4': 'hiraf-store', '5': 'library-portal', '6': 'citydesk', '7': 'grants-desk', '8': 'ops-desk', '9': 'rafeeq', '10': 'turathna'}
 # A baseline built on an older release: that release, and where its runtime goes. Its stage leaves it
 # on that release and puts the new one in next-release/, for an upgrade.
 PRIOR = {'nakheel-clinics': ('1.0.5', 'public/nds')}

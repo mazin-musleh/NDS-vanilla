@@ -1,0 +1,25 @@
+.not-found {
+  text-align: center;
+  padding-top: 72px;
+  padding-bottom: 48px;
+
+  p {
+    max-width: 520px;
+    margin-inline: auto;
+  }
+}
+
+.big-icon {
+  width: 80px;
+  height: 80px;
+  font-size: 80px;
+  color: #00897b;
+  margin-bottom: 16px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}

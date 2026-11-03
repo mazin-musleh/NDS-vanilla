@@ -1,0 +1,115 @@
+.back-link {
+  margin-inline-start: -8px;
+  margin-bottom: 8px;
+
+  mat-icon {
+    margin-inline-end: 4px;
+  }
+}
+
+.article-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.category-nav {
+  background: #fff;
+  border: 1px solid var(--rf-border);
+  border-radius: 12px;
+  padding: 12px 8px;
+
+  .nav-title {
+    font-size: 16px;
+    margin: 4px 16px 4px;
+  }
+}
+
+.article {
+  min-width: 0;
+  max-width: 780px;
+
+  .updated {
+    font-size: 13px;
+  }
+}
+
+// content migrated from the old CMS carries its own markup, so it needs ng-deep
+.article-body {
+  margin: 16px 0 24px;
+}
+
+:host ::ng-deep .article-body {
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+  }
+
+  th,
+  td {
+    border: 1px solid var(--rf-border);
+    padding: 8px 12px;
+    text-align: start;
+  }
+
+  th {
+    background: #eef6f5;
+  }
+
+  ol {
+    padding-inline-start: 24px;
+  }
+
+  li {
+    margin-bottom: 6px;
+  }
+
+  kbd {
+    border: 1px solid #b0bec5;
+    border-radius: 4px;
+    padding: 1px 6px;
+    background: #f1f4f4;
+  }
+}
+
+.feedback {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--rf-border);
+
+  mat-icon {
+    margin-inline-end: 6px;
+  }
+
+  .thanks {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    color: #00695c;
+    font-weight: 600;
+  }
+}
+
+.related-title {
+  margin-top: 32px;
+  font-size: 20px;
+}
+
+.related-list {
+  background: #fff;
+  border: 1px solid var(--rf-border);
+  border-radius: 12px;
+}
+
+@media (min-width: 720px) {
+  .article-layout {
+    grid-template-columns: 280px minmax(0, 1fr);
+  }
+}

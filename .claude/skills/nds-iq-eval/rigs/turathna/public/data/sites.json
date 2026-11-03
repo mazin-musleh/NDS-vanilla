@@ -1,0 +1,2039 @@
+{
+  "sites": [
+    {
+      "id": "hegra",
+      "name": {
+        "en": "Hegra Archaeological Site",
+        "ar": "موقع الحِجر الأثري"
+      },
+      "region": "northern",
+      "type": "archaeological",
+      "unesco": true,
+      "restoredYear": 2024,
+      "coordinates": {
+        "lat": 26.79,
+        "lng": 37.95
+      },
+      "cover": "/images/landscape-1.svg",
+      "summary": {
+        "en": "Over a hundred rock-cut tombs with carved facades, set in a sandstone desert valley.",
+        "ar": "أكثر من مئة مقبرة منحوتة في الصخر بواجهات مزخرفة، في وادٍ صحراوي من الحجر الرملي."
+      },
+      "description": {
+        "en": "The site was a trading town on the incense routes. Our team stabilised eroding facades, mapped every tomb in 3D and opened a guided walking route for visitors.",
+        "ar": "كان الموقع مدينة تجارية على طرق اللبان. ثبّت فريقنا الواجهات المتآكلة، ووثّق كل مقبرة بالمسح ثلاثي الأبعاد، وافتتح مسار مشي مع مرشدين للزوار."
+      },
+      "visiting": {
+        "hours": [
+          {
+            "days": [
+              "sun",
+              "mon",
+              "tue",
+              "wed",
+              "thu"
+            ],
+            "open": "09:00",
+            "close": "17:00"
+          },
+          {
+            "days": [
+              "fri"
+            ],
+            "open": "14:00",
+            "close": "20:00"
+          },
+          {
+            "days": [
+              "sat"
+            ],
+            "open": "09:00",
+            "close": "17:00"
+          }
+        ],
+        "closedOn": [],
+        "note": {
+          "en": "Last entry one hour before closing.",
+          "ar": "آخر دخول قبل الإغلاق بساعة."
+        }
+      },
+      "tickets": {
+        "free": false,
+        "currency": "SAR",
+        "adult": 60,
+        "child": 30,
+        "student": 36,
+        "under6Free": true,
+        "note": {
+          "en": "Book online or at the entrance. Children under 6 enter free.",
+          "ar": "احجز عبر الإنترنت أو عند المدخل. دخول الأطفال دون السادسة مجاني."
+        }
+      },
+      "gallery": [
+        {
+          "src": "/images/landscape-1.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Hegra Archaeological Site, view 1",
+            "ar": "موقع الحِجر الأثري، منظر 1"
+          }
+        },
+        {
+          "src": "/images/landscape-2.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Hegra Archaeological Site, view 2",
+            "ar": "موقع الحِجر الأثري، منظر 2"
+          }
+        },
+        {
+          "src": "/images/portrait-3.svg",
+          "width": 800,
+          "height": 1000,
+          "alt": {
+            "en": "Hegra Archaeological Site, view 3",
+            "ar": "موقع الحِجر الأثري، منظر 3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "at-turaif",
+      "name": {
+        "en": "At-Turaif Quarter",
+        "ar": "حي الطريف"
+      },
+      "region": "central",
+      "type": "old-town",
+      "unesco": true,
+      "restoredYear": 2023,
+      "coordinates": {
+        "lat": 24.73,
+        "lng": 46.57
+      },
+      "cover": "/images/landscape-2.svg",
+      "summary": {
+        "en": "A mud-brick city quarter with palaces, a mosque and walled lanes, rebuilt with traditional methods.",
+        "ar": "حيّ من الطين يضم قصورًا ومسجدًا وأزقة محاطة بالأسوار، أُعيد بناؤه بالأساليب التقليدية."
+      },
+      "description": {
+        "en": "Craftsmen relaid the earthen walls using locally dug clay and palm timber. Visitors can walk the lanes and enter the restored palace rooms.",
+        "ar": "أعاد الحرفيون بناء الجدران الطينية بطين محلي وخشب النخيل. يستطيع الزوار السير في الأزقة ودخول غرف القصر المرمَّمة."
+      },
+      "visiting": {
+        "hours": [
+          {
+            "days": [
+              "sun",
+              "mon",
+              "tue",
+              "wed",
+              "thu"
+            ],
+            "open": "08:00",
+            "close": "16:00"
+          },
+          {
+            "days": [
+              "fri"
+            ],
+            "open": "14:00",
+            "close": "18:00"
+          },
+          {
+            "days": [
+              "sat"
+            ],
+            "open": "08:00",
+            "close": "16:00"
+          }
+        ],
+        "closedOn": [],
+        "note": {
+          "en": "Last entry one hour before closing.",
+          "ar": "آخر دخول قبل الإغلاق بساعة."
+        }
+      },
+      "tickets": {
+        "free": false,
+        "currency": "SAR",
+        "adult": 75,
+        "child": 38,
+        "student": 45,
+        "under6Free": true,
+        "note": {
+          "en": "Book online or at the entrance. Children under 6 enter free.",
+          "ar": "احجز عبر الإنترنت أو عند المدخل. دخول الأطفال دون السادسة مجاني."
+        }
+      },
+      "gallery": [
+        {
+          "src": "/images/landscape-2.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "At-Turaif Quarter, view 1",
+            "ar": "حي الطريف، منظر 1"
+          }
+        },
+        {
+          "src": "/images/landscape-3.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "At-Turaif Quarter, view 2",
+            "ar": "حي الطريف، منظر 2"
+          }
+        },
+        {
+          "src": "/images/landscape-4.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "At-Turaif Quarter, view 3",
+            "ar": "حي الطريف، منظر 3"
+          }
+        },
+        {
+          "src": "/images/landscape-5.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "At-Turaif Quarter, view 4",
+            "ar": "حي الطريف، منظر 4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "al-balad",
+      "name": {
+        "en": "Historic Al-Balad",
+        "ar": "جدة التاريخية"
+      },
+      "region": "western",
+      "type": "old-town",
+      "unesco": true,
+      "restoredYear": 2025,
+      "coordinates": {
+        "lat": 21.48,
+        "lng": 39.19
+      },
+      "cover": "/images/landscape-3.svg",
+      "summary": {
+        "en": "A coastal old town of coral-stone houses with carved wooden balconies.",
+        "ar": "بلدة ساحلية قديمة من بيوت الحجر المرجاني ذات الرواشين الخشبية المنحوتة."
+      },
+      "description": {
+        "en": "Restoration here focuses on the balconies and the lanes between houses. Work continues house by house, and some buildings now serve as small museums and workshops.",
+        "ar": "يركز الترميم هنا على الرواشين والأزقة بين البيوت. يتواصل العمل بيتًا بيتًا، وتعمل بعض المباني اليوم متاحف صغيرة وورشًا."
+      },
+      "visiting": {
+        "hours": [
+          {
+            "days": [
+              "sun",
+              "mon",
+              "tue",
+              "wed",
+              "thu"
+            ],
+            "open": "10:00",
+            "close": "21:00"
+          },
+          {
+            "days": [
+              "fri"
+            ],
+            "open": "16:00",
+            "close": "22:00"
+          },
+          {
+            "days": [
+              "sat"
+            ],
+            "open": "10:00",
+            "close": "21:00"
+          }
+        ],
+        "closedOn": [],
+        "note": {
+          "en": "Last entry one hour before closing.",
+          "ar": "آخر دخول قبل الإغلاق بساعة."
+        }
+      },
+      "tickets": {
+        "free": false,
+        "currency": "SAR",
+        "adult": 90,
+        "child": 45,
+        "student": 54,
+        "under6Free": true,
+        "note": {
+          "en": "Book online or at the entrance. Children under 6 enter free.",
+          "ar": "احجز عبر الإنترنت أو عند المدخل. دخول الأطفال دون السادسة مجاني."
+        }
+      },
+      "gallery": [
+        {
+          "src": "/images/landscape-3.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Historic Al-Balad, view 1",
+            "ar": "جدة التاريخية، منظر 1"
+          }
+        },
+        {
+          "src": "/images/landscape-4.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Historic Al-Balad, view 2",
+            "ar": "جدة التاريخية، منظر 2"
+          }
+        },
+        {
+          "src": "/images/portrait-1.svg",
+          "width": 800,
+          "height": 1000,
+          "alt": {
+            "en": "Historic Al-Balad, view 3",
+            "ar": "جدة التاريخية، منظر 3"
+          }
+        },
+        {
+          "src": "/images/landscape-6.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Historic Al-Balad, view 4",
+            "ar": "جدة التاريخية، منظر 4"
+          }
+        },
+        {
+          "src": "/images/landscape-1.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Historic Al-Balad, view 5",
+            "ar": "جدة التاريخية، منظر 5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "al-ahsa-oasis",
+      "name": {
+        "en": "Al-Ahsa Oasis",
+        "ar": "واحة الأحساء"
+      },
+      "region": "eastern",
+      "type": "oasis",
+      "unesco": true,
+      "restoredYear": 2024,
+      "coordinates": {
+        "lat": 25.38,
+        "lng": 49.59
+      },
+      "cover": "/images/landscape-4.svg",
+      "summary": {
+        "en": "One of the largest palm oases in the world, with springs, canals and old markets.",
+        "ar": "إحدى أكبر واحات النخيل في العالم، بعيونها وقنواتها وأسواقها القديمة."
+      },
+      "description": {
+        "en": "We repaired the historic irrigation channels and recorded the springs that still feed the gardens. A walking trail links the markets, a fort and working farms.",
+        "ar": "رمّمنا قنوات الري التاريخية ووثّقنا العيون التي لا تزال تغذي البساتين. يربط مسار مشي بين الأسواق وقلعة ومزارع عاملة."
+      },
+      "visiting": {
+        "hours": [
+          {
+            "days": [
+              "sun",
+              "tue",
+              "wed",
+              "thu"
+            ],
+            "open": "09:00",
+            "close": "17:00"
+          },
+          {
+            "days": [
+              "fri"
+            ],
+            "open": "14:00",
+            "close": "20:00"
+          },
+          {
+            "days": [
+              "sat"
+            ],
+            "open": "09:00",
+            "close": "17:00"
+          }
+        ],
+        "closedOn": [
+          "mon"
+        ],
+        "note": {
+          "en": "Last entry one hour before closing.",
+          "ar": "آخر دخول قبل الإغلاق بساعة."
+        }
+      },
+      "tickets": {
+        "free": false,
+        "currency": "SAR",
+        "adult": 60,
+        "child": 30,
+        "student": 36,
+        "under6Free": true,
+        "note": {
+          "en": "Book online or at the entrance. Children under 6 enter free.",
+          "ar": "احجز عبر الإنترنت أو عند المدخل. دخول الأطفال دون السادسة مجاني."
+        }
+      },
+      "gallery": [
+        {
+          "src": "/images/landscape-4.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Al-Ahsa Oasis, view 1",
+            "ar": "واحة الأحساء، منظر 1"
+          }
+        },
+        {
+          "src": "/images/landscape-5.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Al-Ahsa Oasis, view 2",
+            "ar": "واحة الأحساء، منظر 2"
+          }
+        },
+        {
+          "src": "/images/landscape-6.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Al-Ahsa Oasis, view 3",
+            "ar": "واحة الأحساء، منظر 3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "jubbah-rock-art",
+      "name": {
+        "en": "Jubbah Rock Art",
+        "ar": "الفن الصخري في جبة"
+      },
+      "region": "northern",
+      "type": "rock-art",
+      "unesco": true,
+      "restoredYear": 2025,
+      "coordinates": {
+        "lat": 28.02,
+        "lng": 40.92
+      },
+      "cover": "/images/landscape-5.svg",
+      "summary": {
+        "en": "Thousands of carvings of people and animals on sandstone outcrops above an ancient lake bed.",
+        "ar": "آلاف النقوش لأشخاص وحيوانات على نتوءات الحجر الرملي فوق قاع بحيرة قديمة."
+      },
+      "description": {
+        "en": "Protective barriers and shaded paths now keep visitors away from the fragile panels. Rangers lead morning tours and explain the carvings.",
+        "ar": "تُبعد الحواجز الواقية والممرات المظللة الزوار عن اللوحات الهشة. ينظّم المرشدون جولات صباحية ويشرحون النقوش."
+      },
+      "visiting": {
+        "hours": [
+          {
+            "days": [
+              "sun",
+              "mon",
+              "tue",
+              "wed",
+              "thu"
+            ],
+            "open": "08:00",
+            "close": "16:00"
+          },
+          {
+            "days": [
+              "fri"
+            ],
+            "open": "14:00",
+            "close": "18:00"
+          },
+          {
+            "days": [
+              "sat"
+            ],
+            "open": "08:00",
+            "close": "16:00"
+          }
+        ],
+        "closedOn": [],
+        "note": {
+          "en": "Last entry one hour before closing.",
+          "ar": "آخر دخول قبل الإغلاق بساعة."
+        }
+      },
+      "tickets": {
+        "free": false,
+        "currency": "SAR",
+        "adult": 75,
+        "child": 38,
+        "student": 45,
+        "under6Free": true,
+        "note": {
+          "en": "Book online or at the entrance. Children under 6 enter free.",
+          "ar": "احجز عبر الإنترنت أو عند المدخل. دخول الأطفال دون السادسة مجاني."
+        }
+      },
+      "gallery": [
+        {
+          "src": "/images/landscape-5.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Jubbah Rock Art, view 1",
+            "ar": "الفن الصخري في جبة، منظر 1"
+          }
+        },
+        {
+          "src": "/images/landscape-6.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Jubbah Rock Art, view 2",
+            "ar": "الفن الصخري في جبة، منظر 2"
+          }
+        },
+        {
+          "src": "/images/portrait-3.svg",
+          "width": 800,
+          "height": 1000,
+          "alt": {
+            "en": "Jubbah Rock Art, view 3",
+            "ar": "الفن الصخري في جبة، منظر 3"
+          }
+        },
+        {
+          "src": "/images/landscape-2.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Jubbah Rock Art, view 4",
+            "ar": "الفن الصخري في جبة، منظر 4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "masmak-fortress",
+      "name": {
+        "en": "Masmak Fortress",
+        "ar": "قصر المصمك"
+      },
+      "region": "central",
+      "type": "fort",
+      "unesco": false,
+      "restoredYear": 2023,
+      "coordinates": {
+        "lat": 24.63,
+        "lng": 46.71
+      },
+      "cover": "/images/landscape-6.svg",
+      "summary": {
+        "en": "A clay and stone fort with thick walls and watchtowers in the heart of Riyadh.",
+        "ar": "حصن من الطين والحجر بأسوار سميكة وأبراج مراقبة في قلب الرياض."
+      },
+      "description": {
+        "en": "The fort now houses a museum of the city's history. We restored the main gate, the courtyard well and the roof of the inner hall.",
+        "ar": "يضم الحصن اليوم متحفًا لتاريخ المدينة. رمّمنا البوابة الرئيسية وبئر الفناء وسقف القاعة الداخلية."
+      },
+      "visiting": {
+        "hours": [
+          {
+            "days": [
+              "sun",
+              "mon",
+              "tue",
+              "wed",
+              "thu"
+            ],
+            "open": "10:00",
+            "close": "21:00"
+          },
+          {
+            "days": [
+              "fri"
+            ],
+            "open": "16:00",
+            "close": "22:00"
+          },
+          {
+            "days": [
+              "sat"
+            ],
+            "open": "10:00",
+            "close": "21:00"
+          }
+        ],
+        "closedOn": [],
+        "note": {
+          "en": "Last entry one hour before closing.",
+          "ar": "آخر دخول قبل الإغلاق بساعة."
+        }
+      },
+      "tickets": {
+        "free": true,
+        "currency": "SAR",
+        "note": {
+          "en": "Entry is free. Guided tours need a booking.",
+          "ar": "الدخول مجاني. تحتاج الجولات المرشَدة إلى حجز."
+        }
+      },
+      "gallery": [
+        {
+          "src": "/images/landscape-6.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Masmak Fortress, view 1",
+            "ar": "قصر المصمك، منظر 1"
+          }
+        },
+        {
+          "src": "/images/landscape-1.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Masmak Fortress, view 2",
+            "ar": "قصر المصمك، منظر 2"
+          }
+        },
+        {
+          "src": "/images/landscape-2.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Masmak Fortress, view 3",
+            "ar": "قصر المصمك، منظر 3"
+          }
+        },
+        {
+          "src": "/images/landscape-3.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Masmak Fortress, view 4",
+            "ar": "قصر المصمك، منظر 4"
+          }
+        },
+        {
+          "src": "/images/landscape-4.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Masmak Fortress, view 5",
+            "ar": "قصر المصمك، منظر 5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "shubra-palace",
+      "name": {
+        "en": "Shubra Palace",
+        "ar": "قصر شبرا"
+      },
+      "region": "western",
+      "type": "palace",
+      "unesco": false,
+      "restoredYear": 2024,
+      "coordinates": {
+        "lat": 21.27,
+        "lng": 40.41
+      },
+      "cover": "/images/landscape-1.svg",
+      "summary": {
+        "en": "A two-storey palace in Taif with a stone staircase and painted wooden ceilings.",
+        "ar": "قصر من طابقين في الطائف بدرج حجري وأسقف خشبية مزخرفة."
+      },
+      "description": {
+        "en": "Conservators cleaned and consolidated the ceiling paintings and replaced damaged shutters. Today the palace hosts exhibitions of local crafts.",
+        "ar": "نظّف المرمّمون لوحات الأسقف وثبّتوها واستبدلوا النوافذ التالفة. يستضيف القصر اليوم معارض للحرف المحلية."
+      },
+      "visiting": {
+        "hours": [
+          {
+            "days": [
+              "sun",
+              "mon",
+              "tue",
+              "wed",
+              "thu"
+            ],
+            "open": "09:00",
+            "close": "17:00"
+          },
+          {
+            "days": [
+              "fri"
+            ],
+            "open": "14:00",
+            "close": "20:00"
+          },
+          {
+            "days": [
+              "sat"
+            ],
+            "open": "09:00",
+            "close": "17:00"
+          }
+        ],
+        "closedOn": [],
+        "note": {
+          "en": "Last entry one hour before closing.",
+          "ar": "آخر دخول قبل الإغلاق بساعة."
+        }
+      },
+      "tickets": {
+        "free": false,
+        "currency": "SAR",
+        "adult": 40,
+        "child": 20,
+        "student": 24,
+        "under6Free": true,
+        "note": {
+          "en": "Book online or at the entrance. Children under 6 enter free.",
+          "ar": "احجز عبر الإنترنت أو عند المدخل. دخول الأطفال دون السادسة مجاني."
+        }
+      },
+      "gallery": [
+        {
+          "src": "/images/landscape-1.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Shubra Palace, view 1",
+            "ar": "قصر شبرا، منظر 1"
+          }
+        },
+        {
+          "src": "/images/landscape-2.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Shubra Palace, view 2",
+            "ar": "قصر شبرا، منظر 2"
+          }
+        },
+        {
+          "src": "/images/portrait-1.svg",
+          "width": 800,
+          "height": 1000,
+          "alt": {
+            "en": "Shubra Palace, view 3",
+            "ar": "قصر شبرا، منظر 3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "zabal-fort",
+      "name": {
+        "en": "Zabal Fort",
+        "ar": "قلعة زعبل"
+      },
+      "region": "northern",
+      "type": "fort",
+      "unesco": false,
+      "restoredYear": 2025,
+      "coordinates": {
+        "lat": 29.97,
+        "lng": 40.2
+      },
+      "cover": "/images/landscape-2.svg",
+      "summary": {
+        "en": "A hilltop fort above the oasis town of Sakaka, with views over the surrounding plain.",
+        "ar": "قلعة على قمة تل تطل على بلدة سكاكا الواحية والسهل المحيط بها."
+      },
+      "description": {
+        "en": "We rebuilt the collapsed section of the outer wall and added a safe stair to the lookout. The fort is open at sunrise and sunset for visitors who like the view.",
+        "ar": "أعدنا بناء الجزء المنهار من السور الخارجي وأضفنا درجًا آمنًا إلى نقطة المراقبة. تفتح القلعة عند الشروق والغروب لمحبي المنظر."
+      },
+      "visiting": {
+        "hours": [
+          {
+            "days": [
+              "sun",
+              "mon",
+              "tue",
+              "wed",
+              "thu"
+            ],
+            "open": "08:00",
+            "close": "16:00"
+          },
+          {
+            "days": [
+              "fri"
+            ],
+            "open": "14:00",
+            "close": "18:00"
+          },
+          {
+            "days": [
+              "sat"
+            ],
+            "open": "08:00",
+            "close": "16:00"
+          }
+        ],
+        "closedOn": [],
+        "note": {
+          "en": "Last entry one hour before closing.",
+          "ar": "آخر دخول قبل الإغلاق بساعة."
+        }
+      },
+      "tickets": {
+        "free": false,
+        "currency": "SAR",
+        "adult": 50,
+        "child": 25,
+        "student": 30,
+        "under6Free": true,
+        "note": {
+          "en": "Book online or at the entrance. Children under 6 enter free.",
+          "ar": "احجز عبر الإنترنت أو عند المدخل. دخول الأطفال دون السادسة مجاني."
+        }
+      },
+      "gallery": [
+        {
+          "src": "/images/landscape-2.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Zabal Fort, view 1",
+            "ar": "قلعة زعبل، منظر 1"
+          }
+        },
+        {
+          "src": "/images/landscape-3.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Zabal Fort, view 2",
+            "ar": "قلعة زعبل، منظر 2"
+          }
+        },
+        {
+          "src": "/images/landscape-4.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Zabal Fort, view 3",
+            "ar": "قلعة زعبل، منظر 3"
+          }
+        },
+        {
+          "src": "/images/landscape-5.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Zabal Fort, view 4",
+            "ar": "قلعة زعبل، منظر 4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dumat-al-jandal",
+      "name": {
+        "en": "Dumat Al-Jandal",
+        "ar": "دومة الجندل"
+      },
+      "region": "northern",
+      "type": "archaeological",
+      "unesco": false,
+      "restoredYear": 2026,
+      "coordinates": {
+        "lat": 29.81,
+        "lng": 39.87
+      },
+      "cover": "/images/landscape-3.svg",
+      "summary": {
+        "en": "An ancient oasis settlement with a fortress, a mosque and old stone dwellings.",
+        "ar": "مستوطنة واحية قديمة تضم قلعة ومسجدًا ومساكن حجرية عتيقة."
+      },
+      "description": {
+        "en": "The mosque's minaret and the Marid fortress walls were stabilised in the latest phase. An on-site lab records new finds from the dig season.",
+        "ar": "ثُبّتت مئذنة المسجد وأسوار قلعة مارد في المرحلة الأخيرة. ويسجّل مختبر في الموقع المكتشفات الجديدة من موسم التنقيب."
+      },
+      "visiting": {
+        "hours": [
+          {
+            "days": [
+              "sun",
+              "tue",
+              "wed",
+              "thu"
+            ],
+            "open": "10:00",
+            "close": "21:00"
+          },
+          {
+            "days": [
+              "fri"
+            ],
+            "open": "16:00",
+            "close": "22:00"
+          },
+          {
+            "days": [
+              "sat"
+            ],
+            "open": "10:00",
+            "close": "21:00"
+          }
+        ],
+        "closedOn": [
+          "mon"
+        ],
+        "note": {
+          "en": "Last entry one hour before closing.",
+          "ar": "آخر دخول قبل الإغلاق بساعة."
+        }
+      },
+      "tickets": {
+        "free": false,
+        "currency": "SAR",
+        "adult": 20,
+        "child": 10,
+        "student": 12,
+        "under6Free": true,
+        "note": {
+          "en": "Book online or at the entrance. Children under 6 enter free.",
+          "ar": "احجز عبر الإنترنت أو عند المدخل. دخول الأطفال دون السادسة مجاني."
+        }
+      },
+      "gallery": [
+        {
+          "src": "/images/landscape-3.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Dumat Al-Jandal, view 1",
+            "ar": "دومة الجندل، منظر 1"
+          }
+        },
+        {
+          "src": "/images/landscape-4.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Dumat Al-Jandal, view 2",
+            "ar": "دومة الجندل، منظر 2"
+          }
+        },
+        {
+          "src": "/images/portrait-3.svg",
+          "width": 800,
+          "height": 1000,
+          "alt": {
+            "en": "Dumat Al-Jandal, view 3",
+            "ar": "دومة الجندل، منظر 3"
+          }
+        },
+        {
+          "src": "/images/landscape-6.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Dumat Al-Jandal, view 4",
+            "ar": "دومة الجندل، منظر 4"
+          }
+        },
+        {
+          "src": "/images/landscape-1.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Dumat Al-Jandal, view 5",
+            "ar": "دومة الجندل، منظر 5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "al-ukhdood",
+      "name": {
+        "en": "Al-Ukhdood Archaeological Site",
+        "ar": "موقع الأخدود الأثري"
+      },
+      "region": "southern",
+      "type": "archaeological",
+      "unesco": false,
+      "restoredYear": 2025,
+      "coordinates": {
+        "lat": 17.62,
+        "lng": 44.35
+      },
+      "cover": "/images/landscape-4.svg",
+      "summary": {
+        "en": "The remains of a walled city near Najran, with stone foundations and carved inscriptions.",
+        "ar": "بقايا مدينة مسوّرة قرب نجران، بأساسات حجرية ونقوش محفورة."
+      },
+      "description": {
+        "en": "Teams cleared the site, rebuilt the visitor path and fenced the inscribed stones. A small centre explains the history of the trade routes.",
+        "ar": "نظّفت الفرق الموقع وأعادت بناء مسار الزوار وسيّجت الأحجار المنقوشة. ويشرح مركز صغير تاريخ طرق التجارة."
+      },
+      "visiting": {
+        "hours": [
+          {
+            "days": [
+              "sun",
+              "mon",
+              "tue",
+              "wed",
+              "thu"
+            ],
+            "open": "09:00",
+            "close": "17:00"
+          },
+          {
+            "days": [
+              "fri"
+            ],
+            "open": "14:00",
+            "close": "20:00"
+          },
+          {
+            "days": [
+              "sat"
+            ],
+            "open": "09:00",
+            "close": "17:00"
+          }
+        ],
+        "closedOn": [],
+        "note": {
+          "en": "Last entry one hour before closing.",
+          "ar": "آخر دخول قبل الإغلاق بساعة."
+        }
+      },
+      "tickets": {
+        "free": false,
+        "currency": "SAR",
+        "adult": 30,
+        "child": 15,
+        "student": 18,
+        "under6Free": true,
+        "note": {
+          "en": "Book online or at the entrance. Children under 6 enter free.",
+          "ar": "احجز عبر الإنترنت أو عند المدخل. دخول الأطفال دون السادسة مجاني."
+        }
+      },
+      "gallery": [
+        {
+          "src": "/images/landscape-4.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Al-Ukhdood Archaeological Site, view 1",
+            "ar": "موقع الأخدود الأثري، منظر 1"
+          }
+        },
+        {
+          "src": "/images/landscape-5.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Al-Ukhdood Archaeological Site, view 2",
+            "ar": "موقع الأخدود الأثري، منظر 2"
+          }
+        },
+        {
+          "src": "/images/landscape-6.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Al-Ukhdood Archaeological Site, view 3",
+            "ar": "موقع الأخدود الأثري، منظر 3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "rijal-almaa",
+      "name": {
+        "en": "Rijal Almaa Village",
+        "ar": "قرية رجال ألمع"
+      },
+      "region": "southern",
+      "type": "village",
+      "unesco": false,
+      "restoredYear": 2024,
+      "coordinates": {
+        "lat": 18.2,
+        "lng": 42.2
+      },
+      "cover": "/images/landscape-5.svg",
+      "summary": {
+        "en": "A mountain village of tall stone houses decorated with bands of white and coloured paint.",
+        "ar": "قرية جبلية من بيوت حجرية شاهقة مزينة بأشرطة من الطلاء الأبيض والملوّن."
+      },
+      "description": {
+        "en": "Local families took part in restoring their houses, guided by our masons. Several homes now take overnight guests and a museum shows traditional dress.",
+        "ar": "شاركت العائلات المحلية في ترميم بيوتها بإشراف بنّائينا. تستقبل عدة بيوت اليوم ضيوفًا للمبيت، ويعرض متحف الأزياء التقليدية."
+      },
+      "visiting": {
+        "hours": [
+          {
+            "days": [
+              "sun",
+              "mon",
+              "tue",
+              "wed",
+              "thu"
+            ],
+            "open": "08:00",
+            "close": "16:00"
+          },
+          {
+            "days": [
+              "fri"
+            ],
+            "open": "14:00",
+            "close": "18:00"
+          },
+          {
+            "days": [
+              "sat"
+            ],
+            "open": "08:00",
+            "close": "16:00"
+          }
+        ],
+        "closedOn": [],
+        "note": {
+          "en": "Last entry one hour before closing.",
+          "ar": "آخر دخول قبل الإغلاق بساعة."
+        }
+      },
+      "tickets": {
+        "free": false,
+        "currency": "SAR",
+        "adult": 40,
+        "child": 20,
+        "student": 24,
+        "under6Free": true,
+        "note": {
+          "en": "Book online or at the entrance. Children under 6 enter free.",
+          "ar": "احجز عبر الإنترنت أو عند المدخل. دخول الأطفال دون السادسة مجاني."
+        }
+      },
+      "gallery": [
+        {
+          "src": "/images/landscape-5.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Rijal Almaa Village, view 1",
+            "ar": "قرية رجال ألمع، منظر 1"
+          }
+        },
+        {
+          "src": "/images/landscape-6.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Rijal Almaa Village, view 2",
+            "ar": "قرية رجال ألمع، منظر 2"
+          }
+        },
+        {
+          "src": "/images/portrait-1.svg",
+          "width": 800,
+          "height": 1000,
+          "alt": {
+            "en": "Rijal Almaa Village, view 3",
+            "ar": "قرية رجال ألمع، منظر 3"
+          }
+        },
+        {
+          "src": "/images/landscape-2.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Rijal Almaa Village, view 4",
+            "ar": "قرية رجال ألمع، منظر 4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dhee-ain",
+      "name": {
+        "en": "Dhee Ain Village",
+        "ar": "قرية ذي عين"
+      },
+      "region": "southern",
+      "type": "village",
+      "unesco": false,
+      "restoredYear": 2023,
+      "coordinates": {
+        "lat": 19.97,
+        "lng": 41.43
+      },
+      "cover": "/images/landscape-6.svg",
+      "summary": {
+        "en": "A hillside village of stone houses beside a stream, terraced farms and a spring.",
+        "ar": "قرية على سفح تل ببيوت حجرية بجانب جدول ومزارع مدرّجة وعين ماء."
+      },
+      "description": {
+        "en": "The terraces and the footpath down to the spring were rebuilt with the village council. Visitors walk the paths early in the day, before the heat.",
+        "ar": "أُعيد بناء المدرجات والممر المؤدي إلى العين بالتعاون مع مجلس القرية. يمشي الزوار في المسارات مبكرًا قبل اشتداد الحر."
+      },
+      "visiting": {
+        "hours": [
+          {
+            "days": [
+              "sun",
+              "mon",
+              "tue",
+              "wed",
+              "thu"
+            ],
+            "open": "10:00",
+            "close": "21:00"
+          },
+          {
+            "days": [
+              "fri"
+            ],
+            "open": "16:00",
+            "close": "22:00"
+          },
+          {
+            "days": [
+              "sat"
+            ],
+            "open": "10:00",
+            "close": "21:00"
+          }
+        ],
+        "closedOn": [],
+        "note": {
+          "en": "Last entry one hour before closing.",
+          "ar": "آخر دخول قبل الإغلاق بساعة."
+        }
+      },
+      "tickets": {
+        "free": true,
+        "currency": "SAR",
+        "note": {
+          "en": "Entry is free. Guided tours need a booking.",
+          "ar": "الدخول مجاني. تحتاج الجولات المرشَدة إلى حجز."
+        }
+      },
+      "gallery": [
+        {
+          "src": "/images/landscape-6.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Dhee Ain Village, view 1",
+            "ar": "قرية ذي عين، منظر 1"
+          }
+        },
+        {
+          "src": "/images/landscape-1.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Dhee Ain Village, view 2",
+            "ar": "قرية ذي عين، منظر 2"
+          }
+        },
+        {
+          "src": "/images/landscape-2.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Dhee Ain Village, view 3",
+            "ar": "قرية ذي عين، منظر 3"
+          }
+        },
+        {
+          "src": "/images/landscape-3.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Dhee Ain Village, view 4",
+            "ar": "قرية ذي عين، منظر 4"
+          }
+        },
+        {
+          "src": "/images/landscape-4.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Dhee Ain Village, view 5",
+            "ar": "قرية ذي عين، منظر 5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "uqair-port",
+      "name": {
+        "en": "Uqair Port",
+        "ar": "ميناء العقير"
+      },
+      "region": "eastern",
+      "type": "port",
+      "unesco": false,
+      "restoredYear": 2025,
+      "coordinates": {
+        "lat": 25.65,
+        "lng": 50.21
+      },
+      "cover": "/images/landscape-1.svg",
+      "summary": {
+        "en": "A historic trading port on the Gulf coast with a customs house and a small fort.",
+        "ar": "ميناء تجاري تاريخي على ساحل الخليج، فيه دار جمارك وحصن صغير."
+      },
+      "description": {
+        "en": "We repaired the customs house roof and the sea wall, and laid a boardwalk along the shore. The port is a popular stop for coastal day trips.",
+        "ar": "رمّمنا سقف دار الجمارك والسور البحري ومددنا ممشى خشبيًا على الشاطئ. الميناء محطة محبوبة للرحلات الساحلية اليومية."
+      },
+      "visiting": {
+        "hours": [
+          {
+            "days": [
+              "sun",
+              "mon",
+              "tue",
+              "wed",
+              "thu"
+            ],
+            "open": "09:00",
+            "close": "17:00"
+          },
+          {
+            "days": [
+              "fri"
+            ],
+            "open": "14:00",
+            "close": "20:00"
+          },
+          {
+            "days": [
+              "sat"
+            ],
+            "open": "09:00",
+            "close": "17:00"
+          }
+        ],
+        "closedOn": [],
+        "note": {
+          "en": "Last entry one hour before closing.",
+          "ar": "آخر دخول قبل الإغلاق بساعة."
+        }
+      },
+      "tickets": {
+        "free": false,
+        "currency": "SAR",
+        "adult": 20,
+        "child": 10,
+        "student": 12,
+        "under6Free": true,
+        "note": {
+          "en": "Book online or at the entrance. Children under 6 enter free.",
+          "ar": "احجز عبر الإنترنت أو عند المدخل. دخول الأطفال دون السادسة مجاني."
+        }
+      },
+      "gallery": [
+        {
+          "src": "/images/landscape-1.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Uqair Port, view 1",
+            "ar": "ميناء العقير، منظر 1"
+          }
+        },
+        {
+          "src": "/images/landscape-2.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Uqair Port, view 2",
+            "ar": "ميناء العقير، منظر 2"
+          }
+        },
+        {
+          "src": "/images/portrait-3.svg",
+          "width": 800,
+          "height": 1000,
+          "alt": {
+            "en": "Uqair Port, view 3",
+            "ar": "ميناء العقير، منظر 3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "tarout-castle",
+      "name": {
+        "en": "Tarout Castle",
+        "ar": "قلعة تاروت"
+      },
+      "region": "eastern",
+      "type": "fort",
+      "unesco": false,
+      "restoredYear": 2024,
+      "coordinates": {
+        "lat": 26.58,
+        "lng": 50.04
+      },
+      "cover": "/images/landscape-2.svg",
+      "summary": {
+        "en": "A fortress on a low rise by the sea, built over layers of much older settlement.",
+        "ar": "قلعة على ربوة منخفضة قرب البحر، مبنية فوق طبقات من استيطان أقدم بكثير."
+      },
+      "description": {
+        "en": "Excavators recorded the layers beneath the castle before conservation began. The restored ramparts now carry a walkway with signs in two languages.",
+        "ar": "وثّق المنقّبون الطبقات تحت القلعة قبل بدء الترميم. وتحمل الأسوار المرمَّمة اليوم ممرًا بلوحات إرشادية بلغتين."
+      },
+      "visiting": {
+        "hours": [
+          {
+            "days": [
+              "sun",
+              "tue",
+              "wed",
+              "thu"
+            ],
+            "open": "08:00",
+            "close": "16:00"
+          },
+          {
+            "days": [
+              "fri"
+            ],
+            "open": "14:00",
+            "close": "18:00"
+          },
+          {
+            "days": [
+              "sat"
+            ],
+            "open": "08:00",
+            "close": "16:00"
+          }
+        ],
+        "closedOn": [
+          "mon"
+        ],
+        "note": {
+          "en": "Last entry one hour before closing.",
+          "ar": "آخر دخول قبل الإغلاق بساعة."
+        }
+      },
+      "tickets": {
+        "free": false,
+        "currency": "SAR",
+        "adult": 30,
+        "child": 15,
+        "student": 18,
+        "under6Free": true,
+        "note": {
+          "en": "Book online or at the entrance. Children under 6 enter free.",
+          "ar": "احجز عبر الإنترنت أو عند المدخل. دخول الأطفال دون السادسة مجاني."
+        }
+      },
+      "gallery": [
+        {
+          "src": "/images/landscape-2.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Tarout Castle, view 1",
+            "ar": "قلعة تاروت، منظر 1"
+          }
+        },
+        {
+          "src": "/images/landscape-3.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Tarout Castle, view 2",
+            "ar": "قلعة تاروت، منظر 2"
+          }
+        },
+        {
+          "src": "/images/landscape-4.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Tarout Castle, view 3",
+            "ar": "قلعة تاروت، منظر 3"
+          }
+        },
+        {
+          "src": "/images/landscape-5.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Tarout Castle, view 4",
+            "ar": "قلعة تاروت، منظر 4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "al-qishla",
+      "name": {
+        "en": "Al-Qishla Fort",
+        "ar": "قلعة القشلة"
+      },
+      "region": "northern",
+      "type": "fort",
+      "unesco": false,
+      "restoredYear": 2023,
+      "coordinates": {
+        "lat": 27.52,
+        "lng": 41.7
+      },
+      "cover": "/images/landscape-3.svg",
+      "summary": {
+        "en": "A large square fort in Ha'il with corner towers, built to guard the town and its wells.",
+        "ar": "قلعة مربعة كبيرة في حائل بأبراج في زواياها، بُنيت لحماية البلدة وآبارها."
+      },
+      "description": {
+        "en": "The courtyard now hosts evening events. We rebuilt the roofs of the arcades and restored the original wooden doors.",
+        "ar": "يستضيف الفناء اليوم فعاليات مسائية. أعدنا بناء أسقف الأروقة ورمّمنا الأبواب الخشبية الأصلية."
+      },
+      "visiting": {
+        "hours": [
+          {
+            "days": [
+              "sun",
+              "mon",
+              "tue",
+              "wed",
+              "thu"
+            ],
+            "open": "10:00",
+            "close": "21:00"
+          },
+          {
+            "days": [
+              "fri"
+            ],
+            "open": "16:00",
+            "close": "22:00"
+          },
+          {
+            "days": [
+              "sat"
+            ],
+            "open": "10:00",
+            "close": "21:00"
+          }
+        ],
+        "closedOn": [],
+        "note": {
+          "en": "Last entry one hour before closing.",
+          "ar": "آخر دخول قبل الإغلاق بساعة."
+        }
+      },
+      "tickets": {
+        "free": false,
+        "currency": "SAR",
+        "adult": 40,
+        "child": 20,
+        "student": 24,
+        "under6Free": true,
+        "note": {
+          "en": "Book online or at the entrance. Children under 6 enter free.",
+          "ar": "احجز عبر الإنترنت أو عند المدخل. دخول الأطفال دون السادسة مجاني."
+        }
+      },
+      "gallery": [
+        {
+          "src": "/images/landscape-3.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Al-Qishla Fort, view 1",
+            "ar": "قلعة القشلة، منظر 1"
+          }
+        },
+        {
+          "src": "/images/landscape-4.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Al-Qishla Fort, view 2",
+            "ar": "قلعة القشلة، منظر 2"
+          }
+        },
+        {
+          "src": "/images/portrait-1.svg",
+          "width": 800,
+          "height": 1000,
+          "alt": {
+            "en": "Al-Qishla Fort, view 3",
+            "ar": "قلعة القشلة، منظر 3"
+          }
+        },
+        {
+          "src": "/images/landscape-6.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Al-Qishla Fort, view 4",
+            "ar": "قلعة القشلة، منظر 4"
+          }
+        },
+        {
+          "src": "/images/landscape-1.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Al-Qishla Fort, view 5",
+            "ar": "قلعة القشلة، منظر 5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "thaj",
+      "name": {
+        "en": "Thaj Archaeological Site",
+        "ar": "موقع ثاج الأثري"
+      },
+      "region": "eastern",
+      "type": "archaeological",
+      "unesco": false,
+      "restoredYear": 2026,
+      "coordinates": {
+        "lat": 27.35,
+        "lng": 48.7
+      },
+      "cover": "/images/landscape-4.svg",
+      "summary": {
+        "en": "The walls and wells of a large inland city that once lay on a major caravan route.",
+        "ar": "أسوار وآبار مدينة داخلية كبيرة كانت على طريق قوافل رئيسي."
+      },
+      "description": {
+        "en": "Aerial survey and test pits helped us plan the first public trail. A shaded rest area and a small exhibit hall were added near the entrance.",
+        "ar": "ساعد المسح الجوي والحفر الاختباري في تخطيط أول مسار عام. وأُضيفت منطقة استراحة مظللة وقاعة عرض صغيرة قرب المدخل."
+      },
+      "visiting": {
+        "hours": [
+          {
+            "days": [
+              "sun",
+              "mon",
+              "tue",
+              "wed",
+              "thu"
+            ],
+            "open": "09:00",
+            "close": "17:00"
+          },
+          {
+            "days": [
+              "fri"
+            ],
+            "open": "14:00",
+            "close": "20:00"
+          },
+          {
+            "days": [
+              "sat"
+            ],
+            "open": "09:00",
+            "close": "17:00"
+          }
+        ],
+        "closedOn": [],
+        "note": {
+          "en": "Last entry one hour before closing.",
+          "ar": "آخر دخول قبل الإغلاق بساعة."
+        }
+      },
+      "tickets": {
+        "free": false,
+        "currency": "SAR",
+        "adult": 50,
+        "child": 25,
+        "student": 30,
+        "under6Free": true,
+        "note": {
+          "en": "Book online or at the entrance. Children under 6 enter free.",
+          "ar": "احجز عبر الإنترنت أو عند المدخل. دخول الأطفال دون السادسة مجاني."
+        }
+      },
+      "gallery": [
+        {
+          "src": "/images/landscape-4.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Thaj Archaeological Site, view 1",
+            "ar": "موقع ثاج الأثري، منظر 1"
+          }
+        },
+        {
+          "src": "/images/landscape-5.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Thaj Archaeological Site, view 2",
+            "ar": "موقع ثاج الأثري، منظر 2"
+          }
+        },
+        {
+          "src": "/images/landscape-6.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Thaj Archaeological Site, view 3",
+            "ar": "موقع ثاج الأثري، منظر 3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "old-yanbu",
+      "name": {
+        "en": "Old Yanbu",
+        "ar": "ينبع القديمة"
+      },
+      "region": "western",
+      "type": "old-town",
+      "unesco": false,
+      "restoredYear": 2026,
+      "coordinates": {
+        "lat": 24.09,
+        "lng": 38.06
+      },
+      "cover": "/images/landscape-5.svg",
+      "summary": {
+        "en": "Coral-stone merchant houses and lanes beside the old harbour on the Red Sea coast.",
+        "ar": "بيوت تجار من الحجر المرجاني وأزقة بجانب الميناء القديم على ساحل البحر الأحمر."
+      },
+      "description": {
+        "en": "Merchant houses were stabilised one by one and their wooden doors repaired. The lanes are closed to cars, and cafés occupy a few of the ground floors.",
+        "ar": "ثُبّتت بيوت التجار واحدًا تلو الآخر ورُمّمت أبوابها الخشبية. الأزقة مغلقة أمام السيارات، وتشغل مقاهٍ بعض الطوابق الأرضية."
+      },
+      "visiting": {
+        "hours": [
+          {
+            "days": [
+              "sun",
+              "mon",
+              "tue",
+              "wed",
+              "thu"
+            ],
+            "open": "08:00",
+            "close": "16:00"
+          },
+          {
+            "days": [
+              "fri"
+            ],
+            "open": "14:00",
+            "close": "18:00"
+          },
+          {
+            "days": [
+              "sat"
+            ],
+            "open": "08:00",
+            "close": "16:00"
+          }
+        ],
+        "closedOn": [],
+        "note": {
+          "en": "Last entry one hour before closing.",
+          "ar": "آخر دخول قبل الإغلاق بساعة."
+        }
+      },
+      "tickets": {
+        "free": false,
+        "currency": "SAR",
+        "adult": 20,
+        "child": 10,
+        "student": 12,
+        "under6Free": true,
+        "note": {
+          "en": "Book online or at the entrance. Children under 6 enter free.",
+          "ar": "احجز عبر الإنترنت أو عند المدخل. دخول الأطفال دون السادسة مجاني."
+        }
+      },
+      "gallery": [
+        {
+          "src": "/images/landscape-5.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Old Yanbu, view 1",
+            "ar": "ينبع القديمة، منظر 1"
+          }
+        },
+        {
+          "src": "/images/landscape-6.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Old Yanbu, view 2",
+            "ar": "ينبع القديمة، منظر 2"
+          }
+        },
+        {
+          "src": "/images/portrait-3.svg",
+          "width": 800,
+          "height": 1000,
+          "alt": {
+            "en": "Old Yanbu, view 3",
+            "ar": "ينبع القديمة، منظر 3"
+          }
+        },
+        {
+          "src": "/images/landscape-2.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Old Yanbu, view 4",
+            "ar": "ينبع القديمة، منظر 4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "khuzam-palace",
+      "name": {
+        "en": "Khuzam Palace",
+        "ar": "قصر خزام"
+      },
+      "region": "western",
+      "type": "palace",
+      "unesco": false,
+      "restoredYear": 2023,
+      "coordinates": {
+        "lat": 21.55,
+        "lng": 39.17
+      },
+      "cover": "/images/landscape-6.svg",
+      "summary": {
+        "en": "A 20th-century palace in Jeddah with a stucco façade and a large garden courtyard.",
+        "ar": "قصر من القرن العشرين في جدة بواجهة جصية وفناء حديقة واسع."
+      },
+      "description": {
+        "en": "Plaster details on the façade were copied from old photographs and recast. The garden courtyard is open for small concerts and school visits.",
+        "ar": "نُسخت تفاصيل الجص على الواجهة من صور قديمة وأُعيد صبّها. الفناء الحدائقي مفتوح لحفلات صغيرة وزيارات المدارس."
+      },
+      "visiting": {
+        "hours": [
+          {
+            "days": [
+              "sun",
+              "mon",
+              "tue",
+              "wed",
+              "thu"
+            ],
+            "open": "10:00",
+            "close": "21:00"
+          },
+          {
+            "days": [
+              "fri"
+            ],
+            "open": "16:00",
+            "close": "22:00"
+          },
+          {
+            "days": [
+              "sat"
+            ],
+            "open": "10:00",
+            "close": "21:00"
+          }
+        ],
+        "closedOn": [],
+        "note": {
+          "en": "Last entry one hour before closing.",
+          "ar": "آخر دخول قبل الإغلاق بساعة."
+        }
+      },
+      "tickets": {
+        "free": true,
+        "currency": "SAR",
+        "note": {
+          "en": "Entry is free. Guided tours need a booking.",
+          "ar": "الدخول مجاني. تحتاج الجولات المرشَدة إلى حجز."
+        }
+      },
+      "gallery": [
+        {
+          "src": "/images/landscape-6.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Khuzam Palace, view 1",
+            "ar": "قصر خزام، منظر 1"
+          }
+        },
+        {
+          "src": "/images/landscape-1.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Khuzam Palace, view 2",
+            "ar": "قصر خزام، منظر 2"
+          }
+        },
+        {
+          "src": "/images/landscape-2.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Khuzam Palace, view 3",
+            "ar": "قصر خزام، منظر 3"
+          }
+        },
+        {
+          "src": "/images/landscape-3.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Khuzam Palace, view 4",
+            "ar": "قصر خزام، منظر 4"
+          }
+        },
+        {
+          "src": "/images/landscape-4.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Khuzam Palace, view 5",
+            "ar": "قصر خزام، منظر 5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "aba-al-saud-palace",
+      "name": {
+        "en": "Aba Al-Saud Palace",
+        "ar": "قصر أبا السعود"
+      },
+      "region": "southern",
+      "type": "palace",
+      "unesco": false,
+      "restoredYear": 2026,
+      "coordinates": {
+        "lat": 17.49,
+        "lng": 44.13
+      },
+      "cover": "/images/landscape-1.svg",
+      "summary": {
+        "en": "A tall mud-brick palace in Najran with decorated windows and a walled courtyard.",
+        "ar": "قصر طيني شاهق في نجران بنوافذ مزخرفة وفناء مسوّر."
+      },
+      "description": {
+        "en": "Builders from the region re-plastered the walls using the old lime and mud mix. Inside, rooms show how the household lived.",
+        "ar": "أعاد بنّاؤون من المنطقة تجصيص الجدران بخلطة الجير والطين القديمة. وتعرض الغرف في الداخل كيف عاشت الأسرة."
+      },
+      "visiting": {
+        "hours": [
+          {
+            "days": [
+              "sun",
+              "tue",
+              "wed",
+              "thu"
+            ],
+            "open": "09:00",
+            "close": "17:00"
+          },
+          {
+            "days": [
+              "fri"
+            ],
+            "open": "14:00",
+            "close": "20:00"
+          },
+          {
+            "days": [
+              "sat"
+            ],
+            "open": "09:00",
+            "close": "17:00"
+          }
+        ],
+        "closedOn": [
+          "mon"
+        ],
+        "note": {
+          "en": "Last entry one hour before closing.",
+          "ar": "آخر دخول قبل الإغلاق بساعة."
+        }
+      },
+      "tickets": {
+        "free": false,
+        "currency": "SAR",
+        "adult": 40,
+        "child": 20,
+        "student": 24,
+        "under6Free": true,
+        "note": {
+          "en": "Book online or at the entrance. Children under 6 enter free.",
+          "ar": "احجز عبر الإنترنت أو عند المدخل. دخول الأطفال دون السادسة مجاني."
+        }
+      },
+      "gallery": [
+        {
+          "src": "/images/landscape-1.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Aba Al-Saud Palace, view 1",
+            "ar": "قصر أبا السعود، منظر 1"
+          }
+        },
+        {
+          "src": "/images/landscape-2.svg",
+          "width": 1200,
+          "height": 800,
+          "alt": {
+            "en": "Aba Al-Saud Palace, view 2",
+            "ar": "قصر أبا السعود، منظر 2"
+          }
+        },
+        {
+          "src": "/images/portrait-1.svg",
+          "width": 800,
+          "height": 1000,
+          "alt": {
+            "en": "Aba Al-Saud Palace, view 3",
+            "ar": "قصر أبا السعود، منظر 3"
+          }
+        }
+      ]
+    }
+  ]
+}

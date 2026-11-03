@@ -1,0 +1,53 @@
+:host {
+  display: block;
+}
+
+.app-root {
+  min-height: 100vh;
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.app-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-main {
+  flex: 1 0 auto;
+  outline: none;
+}
+
+.app-drawer {
+  width: 280px;
+}
+
+.drawer-brand {
+  padding: 20px 24px 8px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #00695c;
+}
+
+.skip-link {
+  position: absolute;
+  inset-inline-start: 8px;
+  top: -48px;
+  z-index: 1000;
+  padding: 8px 16px;
+  background: #00695c;
+  color: #fff;
+  border-radius: 4px;
+
+  &:focus {
+    top: 8px;
+  }
+}
+
+// the active drawer item was too faint on the teal tint
+.app-drawer ::ng-deep .mdc-list-item--activated .mdc-list-item__primary-text {
+  font-weight: 700;
+}

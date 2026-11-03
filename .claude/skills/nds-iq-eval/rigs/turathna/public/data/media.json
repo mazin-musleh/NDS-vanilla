@@ -1,0 +1,192 @@
+{
+  "channels": [
+    {
+      "id": "x",
+      "name": "X",
+      "handle": "@turathna_sa",
+      "url": "https://x.com/turathna_sa",
+      "followers": 412000
+    },
+    {
+      "id": "instagram",
+      "name": "Instagram",
+      "handle": "@turathna.sa",
+      "url": "https://www.instagram.com/turathna.sa",
+      "followers": 689000
+    },
+    {
+      "id": "youtube",
+      "name": "YouTube",
+      "handle": "@turathna",
+      "url": "https://www.youtube.com/@turathna",
+      "followers": 158000
+    },
+    {
+      "id": "tiktok",
+      "name": "TikTok",
+      "handle": "@turathna.sa",
+      "url": "https://www.tiktok.com/@turathna.sa",
+      "followers": 301000
+    },
+    {
+      "id": "snapchat",
+      "name": "Snapchat",
+      "handle": "turathna",
+      "url": "https://www.snapchat.com/add/turathna",
+      "followers": 97000
+    },
+    {
+      "id": "linkedin",
+      "name": "LinkedIn",
+      "handle": "turathna-program",
+      "url": "https://www.linkedin.com/company/turathna-program",
+      "followers": 42000
+    }
+  ],
+  "posts": [
+    {
+      "id": "post-1",
+      "channel": "instagram",
+      "date": "2026-10-24",
+      "image": "/images/square-1.svg",
+      "text": {
+        "en": "The courtyard at Aba Al-Saud Palace on opening morning.",
+        "ar": "فناء قصر أبا السعود صباح الافتتاح."
+      },
+      "engagement": 18400,
+      "url": "https://www.instagram.com/turathna.sa"
+    },
+    {
+      "id": "post-2",
+      "channel": "x",
+      "date": "2026-10-22",
+      "image": null,
+      "text": {
+        "en": "Aba Al-Saud Palace is open again. Tours run every hour until 5 pm.",
+        "ar": "قصر أبا السعود يفتح أبوابه من جديد. الجولات كل ساعة حتى الخامسة مساءً."
+      },
+      "engagement": 6200,
+      "url": "https://x.com/turathna_sa"
+    },
+    {
+      "id": "post-3",
+      "channel": "youtube",
+      "date": "2026-10-15",
+      "image": "/images/landscape-2.svg",
+      "text": {
+        "en": "Two years in two minutes: restoring a mud-brick palace.",
+        "ar": "عامان في دقيقتين: ترميم قصر طيني."
+      },
+      "engagement": 54000,
+      "url": "https://www.youtube.com/@turathna"
+    },
+    {
+      "id": "post-4",
+      "channel": "tiktok",
+      "date": "2026-10-09",
+      "image": "/images/square-2.svg",
+      "text": {
+        "en": "How we mix lime plaster the way it was done a century ago.",
+        "ar": "كيف نخلط جص الجير كما كان يُفعل قبل قرن."
+      },
+      "engagement": 131000,
+      "url": "https://www.tiktok.com/@turathna.sa"
+    },
+    {
+      "id": "post-5",
+      "channel": "linkedin",
+      "date": "2026-10-06",
+      "image": null,
+      "text": {
+        "en": "Applications for the Artisan Academy third cohort are now closed. Thank you to the 1,400 applicants.",
+        "ar": "أُغلق باب التقديم على الدفعة الثالثة من أكاديمية الحرفيين. شكرًا للمتقدمين البالغ عددهم 1,400."
+      },
+      "engagement": 910,
+      "url": "https://www.linkedin.com/company/turathna-program"
+    },
+    {
+      "id": "post-6",
+      "channel": "snapchat",
+      "date": "2026-09-28",
+      "image": "/images/square-3.svg",
+      "text": {
+        "en": "Sunrise at Zabal Fort. The lookout is open at dawn.",
+        "ar": "شروق الشمس في قلعة زعبل. نقطة المراقبة مفتوحة عند الفجر."
+      },
+      "engagement": 22800,
+      "url": "https://www.snapchat.com/add/turathna"
+    },
+    {
+      "id": "post-7",
+      "channel": "instagram",
+      "date": "2026-09-19",
+      "image": "/images/square-2.svg",
+      "text": {
+        "en": "First evening tour at Jubbah Rock Art, lit at low level.",
+        "ar": "أول جولة مسائية في الفن الصخري بجبة، بإضاءة منخفضة."
+      },
+      "engagement": 15300,
+      "url": "https://www.instagram.com/turathna.sa"
+    },
+    {
+      "id": "post-8",
+      "channel": "x",
+      "date": "2026-09-03",
+      "image": null,
+      "text": {
+        "en": "The digital registry now holds 12,000 records. Search them on the partner portal.",
+        "ar": "السجل الرقمي يضم اليوم 12 ألف سجل. ابحث فيها عبر بوابة الشركاء."
+      },
+      "engagement": 3900,
+      "url": "https://x.com/turathna_sa"
+    },
+    {
+      "id": "post-9",
+      "channel": "youtube",
+      "date": "2026-08-20",
+      "image": "/images/landscape-4.svg",
+      "text": {
+        "en": "Walk with a guide through the tombs of Hegra.",
+        "ar": "امشِ مع مرشد بين مقابر الحِجر."
+      },
+      "engagement": 38700,
+      "url": "https://www.youtube.com/@turathna"
+    },
+    {
+      "id": "post-10",
+      "channel": "tiktok",
+      "date": "2026-08-02",
+      "image": "/images/square-1.svg",
+      "text": {
+        "en": "Palm-wood door repair, step by step.",
+        "ar": "إصلاح باب من خشب النخيل خطوة بخطوة."
+      },
+      "engagement": 96500,
+      "url": "https://www.tiktok.com/@turathna.sa"
+    },
+    {
+      "id": "post-11",
+      "channel": "instagram",
+      "date": "2026-07-25",
+      "image": "/images/square-3.svg",
+      "text": {
+        "en": "Summer school students drawing a survey at Masmak Fortress.",
+        "ar": "طلاب المدرسة الصيفية يرسمون مسحًا في قصر المصمك."
+      },
+      "engagement": 11200,
+      "url": "https://www.instagram.com/turathna.sa"
+    },
+    {
+      "id": "post-12",
+      "channel": "linkedin",
+      "date": "2026-07-11",
+      "image": null,
+      "text": {
+        "en": "We are hiring two conservators and a survey coordinator. Details on our careers page.",
+        "ar": "نبحث عن مرمِّمَين ومنسق مسح. التفاصيل في صفحة الوظائف."
+      },
+      "engagement": 1500,
+      "url": "https://www.linkedin.com/company/turathna-program"
+    }
+  ]
+}

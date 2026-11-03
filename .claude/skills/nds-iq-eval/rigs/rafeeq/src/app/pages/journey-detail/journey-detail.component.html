@@ -1,0 +1,96 @@
+<div class="page">
+  @if (view(); as v) {
+    <a mat-button routerLink="/journeys" class="back-link">
+      <mat-icon>{{ lang.dir() === 'rtl' ? 'arrow_forward' : 'arrow_back' }}</mat-icon>
+      {{ t().journey.back }}
+    </a>
+
+    <header class="journey-head">
+      <mat-icon class="head-icon">{{ v.journey.icon }}</mat-icon>
+      <div>
+        <p class="eyebrow">{{ t().journey.eyebrow }}</p>
+        <h1>{{ v.journey.title[l()] }}</h1>
+        <p class="intro">{{ v.journey.intro[l()] }}</p>
+      </div>
+    </header>
+
+    <div class="progress-box">
+      <div class="progress-text">
+        <strong>{{ t().journey.progress(doneCount(), v.journey.stages.length) }}</strong>
+        <span>{{ percent() }}%</span>
+      </div>
+      <mat-progress-bar
+        mode="determinate"
+        [value]="percent()"
+        [attr.aria-label]="t().journey.progress(doneCount(), v.journey.stages.length)"
+      />
+      @if (percent() === 100) {
+        <p class="all-done"><mat-icon>celebration</mat-icon> {{ t().journey.allDone }}</p>
+      }
+      @if (doneCount() > 0) {
+        <button mat-button type="button" (click)="reset()">{{ t().journey.reset }}</button>
+      }
+    </div>
+
+    <div class="journey-layout">
+      <mat-stepper orientation="vertical" [linear]="false" class="journey-stepper">
+        @for (stage of v.journey.stages; track stage.id; let i = $index; let last = $last) {
+          <mat-step [label]="stage.title[l()]" [completed]="isDone(stage.id)">
+            <p>{{ stage.description[l()] }}</p>
+
+            <ul class="stage-services">
+              @for (s of stageServices(stage, v.byId); track s.id) {
+                <li class="stage-service">
+                  <div class="stage-service-text">
+                    <strong>{{ s.name[l()] }}</strong>
+                    <span class="muted">{{ s.duration[l()] }} · {{ lang.fee(s.feeSar) }}</span>
+                  </div>
+                  <a mat-stroked-button [routerLink]="['/services', s.id]">{{ t().journey.startService }}</a>
+                </li>
+              }
+            </ul>
+
+            <mat-checkbox [checked]="isDone(stage.id)" (change)="toggle(stage.id, $event.checked)">
+              {{ t().journey.markDone }}
+            </mat-checkbox>
+
+            <div class="stage-nav">
+              @if (i > 0) {
+                <button mat-button matStepperPrevious type="button">{{ t().journey.prev }}</button>
+              }
+              @if (!last) {
+                <button mat-flat-button matStepperNext type="button">{{ t().journey.next }}</button>
+              }
+            </div>
+          </mat-step>
+        }
+      </mat-stepper>
+
+      <aside class="docs-panel">
+        <mat-card appearance="outlined">
+          <mat-card-header>
+            <mat-card-title>{{ t().journey.docsTitle }}</mat-card-title>
+            <mat-card-subtitle>{{ t().journey.docsHint }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-list class="docs-list">
+              @for (doc of v.journey.documents; track $index) {
+                <mat-list-item>
+                  <mat-icon matListItemIcon>description</mat-icon>
+                  <span matListItemTitle>{{ doc[l()] }}</span>
+                </mat-list-item>
+              }
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+      </aside>
+    </div>
+  } @else if (view() === null) {
+    <p class="empty-state">{{ t().journey.notFound }}</p>
+    <p class="empty-state"><a mat-flat-button routerLink="/journeys">{{ t().journey.back }}</a></p>
+  } @else {
+    <div class="loading-bar">
+      <mat-progress-bar mode="indeterminate" [attr.aria-label]="t().common.loading" />
+    </div>
+  }
+</div>

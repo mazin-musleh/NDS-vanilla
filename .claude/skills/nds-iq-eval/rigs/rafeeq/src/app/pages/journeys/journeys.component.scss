@@ -1,0 +1,58 @@
+.audience-filter {
+  display: block;
+  margin-bottom: 24px;
+}
+
+.journeys-grid {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.journey-card {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+
+  mat-card-content {
+    flex: 1;
+    padding-top: 12px;
+  }
+
+  mat-card-actions {
+    padding: 8px 16px 16px;
+  }
+}
+
+.card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #e8f5f3;
+  color: #00695c;
+}
+
+.audience-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  font-size: 12px;
+  padding: 2px 10px;
+  border-radius: 12px;
+  background: #eef2f1;
+  color: #44514f;
+}
+
+// the selected chip kept the default grey; match the brand
+:host ::ng-deep .mat-mdc-chip-option.mdc-evolved-chip--selected {
+  background-color: #b2dfdb;
+}

@@ -1,0 +1,159 @@
+.back-link {
+  margin-inline-start: -8px;
+  margin-bottom: 8px;
+
+  mat-icon {
+    margin-inline-end: 4px;
+  }
+}
+
+.consult-head {
+  margin-bottom: 24px;
+
+  .topic {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #00695c;
+  }
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  color: var(--rf-muted);
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.consult-layout {
+  max-width: 820px;
+}
+
+.consult-main section {
+  margin-bottom: 32px;
+}
+
+.docs-list {
+  background: #fff;
+  border: 1px solid var(--rf-border);
+  border-radius: 12px;
+  padding: 4px 0;
+}
+
+.thanks-card {
+  margin-bottom: 32px;
+  background: #e8f5f3;
+  border-color: #b2dfdb;
+}
+
+.thanks-icon {
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+  color: #00695c;
+}
+
+.survey-form {
+  margin-top: 16px;
+}
+
+.q-block {
+  border: 0;
+  padding: 0;
+  margin: 0 0 28px;
+  min-inline-size: 0;
+
+  legend {
+    padding: 0;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+}
+
+.radio-col,
+.check-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.hint {
+  margin: 0 0 4px;
+  font-size: 13px;
+  color: var(--rf-muted);
+}
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.slider-end {
+  flex: none;
+  font-size: 13px;
+  color: var(--rf-muted);
+  max-width: 90px;
+  text-align: center;
+}
+
+.rating-slider {
+  flex: 1;
+}
+
+.file-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.file-input {
+  display: none;
+}
+
+.file-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  mat-icon {
+    margin-inline-end: 6px;
+  }
+}
+
+.file-name {
+  word-break: break-all;
+}
+
+.result-row {
+  margin-bottom: 14px;
+
+  mat-progress-bar {
+    height: 10px;
+    border-radius: 5px;
+  }
+}
+
+.result-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+// textarea hint sat under the border in RTL
+:host ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  padding-inline: 4px;
+}

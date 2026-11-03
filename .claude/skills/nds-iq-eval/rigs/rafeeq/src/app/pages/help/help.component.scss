@@ -1,0 +1,65 @@
+.help-search {
+  max-width: 640px;
+}
+
+.categories {
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+.cat-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.cat-card {
+  height: 100%;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.cat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #e8f5f3;
+  color: #00695c;
+}
+
+.top-questions {
+  display: block;
+  max-width: 860px;
+}
+
+.channel-value {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.ticket-cta {
+  margin-top: 32px;
+  background: #e8f5f3;
+  border-color: #b2dfdb;
+
+  mat-card-actions {
+    padding: 8px 16px 16px;
+  }
+}
+
+// highlight inside autocomplete options
+::ng-deep .mat-mdc-option mark {
+  background: #ffe082;
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+}

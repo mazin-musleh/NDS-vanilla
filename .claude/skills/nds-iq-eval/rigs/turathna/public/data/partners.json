@@ -1,0 +1,148 @@
+{
+  "proposals": [
+    {
+      "id": "PR-2026-021",
+      "title": {
+        "en": "Roof repair for the village guesthouse",
+        "ar": "سقف بيت الضيافة في القرية"
+      },
+      "siteId": "rijal-almaa",
+      "submitted": "2026-10-28",
+      "updated": "2026-10-28",
+      "status": "submitted",
+      "amountSar": 180000,
+      "nextStep": {
+        "en": "Waiting for a reviewer to be assigned.",
+        "ar": "بانتظار تعيين مراجع."
+      }
+    },
+    {
+      "id": "PR-2026-019",
+      "title": {
+        "en": "Interpretation panels in two languages",
+        "ar": "لوحات تفسيرية بلغتين"
+      },
+      "siteId": "al-ukhdood",
+      "submitted": "2026-10-02",
+      "updated": "2026-10-19",
+      "status": "underReview",
+      "amountSar": 95000,
+      "nextStep": {
+        "en": "Review meeting on 18 November.",
+        "ar": "اجتماع المراجعة في 18 نوفمبر."
+      }
+    },
+    {
+      "id": "PR-2026-017",
+      "title": {
+        "en": "Sea wall survey at the old harbour",
+        "ar": "مسح السور البحري في الميناء القديم"
+      },
+      "siteId": "old-yanbu",
+      "submitted": "2026-09-12",
+      "updated": "2026-10-08",
+      "status": "needsInfo",
+      "amountSar": 240000,
+      "nextStep": {
+        "en": "Send the updated survey drawing and the owner letter.",
+        "ar": "أرسل الرسم المساحي المحدّث وخطاب المالك."
+      }
+    },
+    {
+      "id": "PR-2026-014",
+      "title": {
+        "en": "Plaster conservation workshop for local builders",
+        "ar": "ورشة ترميم الجص للبنّائين المحليين"
+      },
+      "siteId": "at-turaif",
+      "submitted": "2026-08-04",
+      "updated": "2026-09-15",
+      "status": "approved",
+      "amountSar": 120000,
+      "nextStep": {
+        "en": "Sign the funding agreement by 30 November.",
+        "ar": "وقّع اتفاقية التمويل قبل 30 نوفمبر."
+      }
+    },
+    {
+      "id": "PR-2026-011",
+      "title": {
+        "en": "Palm irrigation gate rebuild",
+        "ar": "إعادة بناء بوابة ري النخيل"
+      },
+      "siteId": "al-ahsa-oasis",
+      "submitted": "2026-06-20",
+      "updated": "2026-08-01",
+      "status": "approved",
+      "amountSar": 310000,
+      "nextStep": {
+        "en": "Work started on 1 September.",
+        "ar": "بدأ العمل في 1 سبتمبر."
+      }
+    },
+    {
+      "id": "PR-2026-009",
+      "title": {
+        "en": "Visitor car park beside the fort",
+        "ar": "موقف زوار بجانب القلعة"
+      },
+      "siteId": "zabal-fort",
+      "submitted": "2026-05-30",
+      "updated": "2026-07-02",
+      "status": "rejected",
+      "amountSar": 450000,
+      "nextStep": {
+        "en": "Outside the program scope. See the reviewer note.",
+        "ar": "خارج نطاق البرنامج. راجع ملاحظة المراجع."
+      }
+    },
+    {
+      "id": "PR-2026-006",
+      "title": {
+        "en": "Oral history recordings with village elders",
+        "ar": "تسجيلات الروايات الشفهية مع كبار القرية"
+      },
+      "siteId": "dhee-ain",
+      "submitted": "2026-04-14",
+      "updated": "2026-06-01",
+      "status": "approved",
+      "amountSar": 60000,
+      "nextStep": {
+        "en": "Recordings are being added to the registry.",
+        "ar": "تُضاف التسجيلات إلى السجل."
+      }
+    },
+    {
+      "id": "PR-2026-003",
+      "title": {
+        "en": "Photographic survey of merchant house doors",
+        "ar": "مسح فوتوغرافي لأبواب بيوت التجار"
+      },
+      "siteId": "al-balad",
+      "submitted": "2026-03-03",
+      "updated": "2026-04-10",
+      "status": "approved",
+      "amountSar": 48000,
+      "nextStep": {
+        "en": "Final report due in December.",
+        "ar": "التقرير النهائي مستحق في ديسمبر."
+      }
+    },
+    {
+      "id": "PR-2026-D02",
+      "title": {
+        "en": "School visit programme for 2027",
+        "ar": "برنامج زيارات المدارس لعام 2027"
+      },
+      "siteId": null,
+      "submitted": "2026-10-30",
+      "updated": "2026-10-30",
+      "status": "draft",
+      "amountSar": 75000,
+      "nextStep": {
+        "en": "Not yet submitted.",
+        "ar": "لم يُقدَّم بعد."
+      }
+    }
+  ]
+}

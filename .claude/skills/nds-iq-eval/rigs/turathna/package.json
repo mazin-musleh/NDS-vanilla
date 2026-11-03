@@ -1,0 +1,22 @@
+{
+  "name": "turathna",
+  "private": true,
+  "version": "0.4.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 3010",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview --port 3010"
+  },
+  "dependencies": {
+    "pinia": "4.1.0",
+    "vue": "3.5.44",
+    "vue-router": "5.4.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "6.0.10",
+    "typescript": "~6.0.3",
+    "vite": "8.3.5",
+    "vue-tsc": "3.3.14"
+  }
+}

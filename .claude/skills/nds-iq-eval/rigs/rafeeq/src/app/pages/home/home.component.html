@@ -1,0 +1,95 @@
+<section class="hero">
+  <div class="page hero-inner">
+    <h1>{{ t().home.heroTitle }}</h1>
+    <p class="hero-text">{{ t().home.heroText }}</p>
+
+    <form class="hero-search" role="search" (submit)="search($event)">
+      <mat-form-field class="hero-field">
+        <mat-label>{{ t().home.searchLabel }}</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput type="search" [formControl]="query" [placeholder]="t().home.searchPlaceholder" />
+      </mat-form-field>
+      <button mat-flat-button class="hero-submit" type="submit">{{ t().home.searchButton }}</button>
+    </form>
+  </div>
+</section>
+
+<div class="page">
+  @if (data(); as d) {
+    <div class="section-head">
+      <h2>{{ t().home.featuredTitle }}</h2>
+      <a mat-button routerLink="/journeys">{{ t().home.featuredAll }}</a>
+    </div>
+    <div class="card-grid">
+      @for (j of d.featured; track j.slug) {
+        <mat-card appearance="outlined" class="journey-card">
+          <mat-card-header>
+            <mat-icon mat-card-avatar class="card-icon">{{ j.icon }}</mat-icon>
+            <mat-card-title>{{ j.title[l()] }}</mat-card-title>
+            <mat-card-subtitle>{{ j.tagline[l()] }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions>
+            <a mat-button [routerLink]="['/journeys', j.slug]">{{ t().journeys.open }}</a>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+
+    <div class="two-col">
+      <section>
+        <div class="section-head">
+          <h2>{{ t().home.popularTitle }}</h2>
+        </div>
+        <mat-nav-list class="popular-list">
+          @for (s of d.popular; track s.id) {
+            <a mat-list-item [routerLink]="['/services', s.id]">
+              <span matListItemTitle>{{ s.name[l()] }}</span>
+              <span matListItemLine>{{ s.provider[l()] }} · {{ lang.fee(s.feeSar) }}</span>
+              <mat-icon matListItemMeta class="chevron">chevron_left</mat-icon>
+            </a>
+          }
+        </mat-nav-list>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <h2>{{ t().home.consultTitle }}</h2>
+          <a mat-button routerLink="/participate">{{ t().home.consultAll }}</a>
+        </div>
+        @if (d.consultation; as c) {
+          <mat-card appearance="outlined" class="consult-card">
+            <mat-card-header>
+              <mat-card-subtitle>{{ t().home.consultLead }}</mat-card-subtitle>
+              <mat-card-title>{{ c.title[l()] }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p class="deadline">
+                <mat-icon>schedule</mat-icon>
+                {{ t().participate.endsIn(c.days) }} · {{ lang.date(c.date) }}
+              </p>
+              <p class="muted">{{ t().participate.participants(c.participants) }}</p>
+            </mat-card-content>
+            <mat-card-actions>
+              <a mat-flat-button [routerLink]="['/participate', c.id]">{{ t().home.consultOpen }}</a>
+            </mat-card-actions>
+          </mat-card>
+        } @else {
+          <p class="empty-state">{{ t().home.consultNone }}</p>
+        }
+      </section>
+    </div>
+  } @else {
+    <div class="loading-bar">
+      <mat-progress-bar mode="indeterminate" [attr.aria-label]="t().common.loading" />
+    </div>
+  }
+
+  <div class="section-head">
+    <h2>{{ t().home.helpTitle }}</h2>
+  </div>
+  <div class="quick-links">
+    <a mat-stroked-button routerLink="/help"><mat-icon>menu_book</mat-icon>{{ t().home.helpArticles }}</a>
+    <a mat-stroked-button routerLink="/help/ticket"><mat-icon>support_agent</mat-icon>{{ t().home.helpTicket }}</a>
+    <a mat-stroked-button routerLink="/help" fragment="contact"><mat-icon>call</mat-icon>{{ t().home.helpContact }}</a>
+  </div>
+</div>

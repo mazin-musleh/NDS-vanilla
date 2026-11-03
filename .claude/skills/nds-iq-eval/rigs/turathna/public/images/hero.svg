@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="Hero photo">
+  <rect width="1920" height="1080" fill="#bda889"/>
+  <path d="M0 842 L576 594 L1056 778 L1536 540 L1920 756 V1080 H0 Z" fill="#4a4338" opacity="0.18"/>
+  <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="sans-serif" font-size="68" fill="#4a4338" opacity="0.8">Hero photo</text>
+</svg>

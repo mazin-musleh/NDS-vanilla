@@ -1,0 +1,47 @@
+<div class="page">
+  <header class="page-head">
+    <h1>{{ t().participate.title }}</h1>
+    <p>{{ t().participate.subtitle }}</p>
+  </header>
+
+  <div class="toolbar">
+    <mat-form-field class="topic-field">
+      <mat-label>{{ t().participate.topicLabel }}</mat-label>
+      <mat-select [value]="topic()" (selectionChange)="setTopic($event.value)">
+        @for (tp of topics; track tp) {
+          <mat-option [value]="tp">{{ t().topic[tp] }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  @if (filtered()) {
+    <mat-tab-group class="status-tabs" animationDuration="150ms">
+      @for (status of statuses; track status) {
+        <mat-tab [label]="tabLabel(status)">
+          @if (items(status).length) {
+            <div class="card-grid consultations-grid">
+              @for (c of paged(status); track c.id) {
+                <app-consultation-card [item]="c" />
+              }
+            </div>
+            <mat-paginator
+              [length]="items(status).length"
+              [pageSize]="pageSize"
+              [pageIndex]="pageIndex()[status]"
+              [hidePageSize]="true"
+              [showFirstLastButtons]="true"
+              (page)="onPage(status, $event)"
+            />
+          } @else {
+            <p class="empty-state">{{ t().participate.empty }}</p>
+          }
+        </mat-tab>
+      }
+    </mat-tab-group>
+  } @else {
+    <div class="loading-bar">
+      <mat-progress-bar mode="indeterminate" [attr.aria-label]="t().common.loading" />
+    </div>
+  }
+</div>

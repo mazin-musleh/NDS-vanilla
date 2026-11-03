@@ -1,0 +1,362 @@
+[
+  {
+    "slug": "new-baby",
+    "icon": "child_care",
+    "featured": true,
+    "audience": ["citizens", "residents"],
+    "title": { "ar": "مولود جديد", "en": "A new baby" },
+    "tagline": { "ar": "من الإبلاغ عن الولادة حتى التأمين الصحي والدعم", "en": "From birth notification to health cover and support" },
+    "intro": {
+      "ar": "مبارك قدوم مولودك. تجمع هذه الرحلة الخدمات التي تحتاجها خلال الأسابيع الأولى: الإبلاغ عن الولادة، واستخراج شهادة الميلاد، وإضافة المولود إلى سجل الأسرة، وتغطيته بالتأمين الصحي.",
+      "en": "Congratulations on your new arrival. This journey gathers what you need in the first weeks: notifying the birth, getting the birth certificate, adding your baby to the family record, and arranging health cover."
+    },
+    "documents": [
+      { "ar": "بلاغ الولادة الصادر من المستشفى", "en": "Birth notice issued by the hospital" },
+      { "ar": "الهوية الوطنية أو الإقامة للوالدين", "en": "National ID or iqama of both parents" },
+      { "ar": "عقد الزواج أو سجل الأسرة", "en": "Marriage contract or family record" },
+      { "ar": "وثيقة التأمين الصحي سارية المفعول", "en": "A valid health insurance policy" }
+    ],
+    "stages": [
+      {
+        "id": "s1",
+        "title": { "ar": "الإبلاغ عن الولادة", "en": "Notify the birth" },
+        "description": { "ar": "يُبلَّغ عن الولادة خلال 30 يومًا من تاريخها، ويتم ذلك عادةً من المستشفى نفسه.", "en": "A birth must be notified within 30 days. The hospital usually does this for you." },
+        "services": ["birth-notification"]
+      },
+      {
+        "id": "s2",
+        "title": { "ar": "الوثائق الرسمية للمولود", "en": "Your baby's official documents" },
+        "description": { "ar": "بعد تسجيل البلاغ تستطيع استخراج شهادة الميلاد وتحديث سجل الأسرة، أو إصدار إقامة لمرافق إن كنت مقيمًا.", "en": "Once the notice is recorded you can get the birth certificate and update the family record, or issue a dependent iqama if you are a resident." },
+        "services": ["birth-certificate", "add-newborn-family-card", "dependent-iqama"]
+      },
+      {
+        "id": "s3",
+        "title": { "ar": "التأمين الصحي", "en": "Health insurance" },
+        "description": { "ar": "أضف مولودك إلى وثيقة التأمين الصحي خلال 60 يومًا من الولادة ليحصل على التغطية كاملة.", "en": "Add your baby to your health insurance policy within 60 days of birth to get full cover." },
+        "services": ["newborn-health-insurance"]
+      },
+      {
+        "id": "s4",
+        "title": { "ar": "الدعم المالي للأسرة", "en": "Family financial support" },
+        "description": { "ar": "اطّلع على برامج الدعم وقدّم طلبك إن كانت أسرتك مستحقة.", "en": "Check the support programs and apply if your family is eligible." },
+        "services": ["family-support-application"]
+      }
+    ]
+  },
+  {
+    "slug": "marriage",
+    "icon": "favorite",
+    "featured": true,
+    "audience": ["citizens", "residents"],
+    "title": { "ar": "الزواج", "en": "Getting married" },
+    "tagline": { "ar": "الفحص الطبي وتوثيق العقد وبداية حياة أسرية", "en": "Medical screening, the contract, and starting a family" },
+    "intro": {
+      "ar": "تساعدك هذه الرحلة على إتمام إجراءات الزواج بترتيب واضح: الفحص الطبي قبل الزواج، ثم توثيق العقد، ثم تحديث سجلاتك وعنوانك، وأخيرًا التعرف على برامج الإسكان والدعم.",
+      "en": "This journey takes you through the paperwork of marriage in order: premarital screening, registering the contract, updating your records and address, and finally housing and support programs."
+    },
+    "documents": [
+      { "ar": "الهوية الوطنية أو الإقامة للطرفين", "en": "National ID or iqama for both parties" },
+      { "ar": "شهادة الفحص الطبي قبل الزواج", "en": "Premarital screening certificate" },
+      { "ar": "موافقة ولي الأمر عند الحاجة", "en": "Guardian approval where required" },
+      { "ar": "وثيقة الطلاق أو الوفاة إن وُجدت", "en": "Divorce or death record, if applicable" }
+    ],
+    "stages": [
+      {
+        "id": "s1",
+        "title": { "ar": "الفحص الطبي قبل الزواج", "en": "Premarital screening" },
+        "description": { "ar": "احجز موعد الفحص في أقرب مركز صحي. تصدر الشهادة خلال أيام قليلة وتبقى صالحة 3 أشهر.", "en": "Book a screening visit at the nearest health center. The certificate is issued within a few days and stays valid for 3 months." },
+        "services": ["premarital-screening"]
+      },
+      {
+        "id": "s2",
+        "title": { "ar": "توثيق عقد الزواج", "en": "Register the marriage contract" },
+        "description": { "ar": "احجز موعدًا مع المأذون أو وثّق العقد إلكترونيًا إذا استوفيت الشروط.", "en": "Book an appointment with the marriage officiant, or register the contract online if you qualify." },
+        "services": ["marriage-contract"]
+      },
+      {
+        "id": "s3",
+        "title": { "ar": "تحديث السجلات والعنوان", "en": "Update your records and address" },
+        "description": { "ar": "حدّث سجل الأسرة وعنوانك الوطني بعد الزواج لتصلك المراسلات الرسمية.", "en": "Update the family record and your national address after the wedding so official mail reaches you." },
+        "services": ["update-family-register", "national-address-update"]
+      },
+      {
+        "id": "s4",
+        "title": { "ar": "السكن والدعم", "en": "Housing and support" },
+        "description": { "ar": "تعرّف على الدعم السكني وبرامج دعم الأسرة المتاحة للمتزوجين حديثًا.", "en": "Look at the housing subsidy and family support programs open to newlyweds." },
+        "services": ["housing-subsidy", "family-support-application"]
+      }
+    ]
+  },
+  {
+    "slug": "start-business",
+    "icon": "storefront",
+    "featured": true,
+    "audience": ["businesses", "citizens"],
+    "title": { "ar": "بدء نشاط تجاري", "en": "Starting a business" },
+    "tagline": { "ar": "من السجل التجاري إلى الرخصة والتأمينات", "en": "From commercial registration to licensing and insurance" },
+    "intro": {
+      "ar": "تجمع هذه الرحلة متطلبات تأسيس منشأة جديدة: السجل التجاري، والرخصة البلدية، والعنوان الوطني، والتسجيل الضريبي، وتوثيق عقود العاملين والتأمينات الاجتماعية.",
+      "en": "This journey covers what a new establishment needs: the commercial register, the municipal license, the national address, tax registration, and employee contracts and social insurance."
+    },
+    "documents": [
+      { "ar": "الهوية الوطنية لمالك المنشأة", "en": "National ID of the owner" },
+      { "ar": "عقد إيجار المحل أو صك الملكية", "en": "Shop lease or title deed" },
+      { "ar": "الاسم التجاري المحجوز", "en": "A reserved trade name" },
+      { "ar": "عقد التأسيس للشركات", "en": "Articles of association for companies" },
+      { "ar": "رقم الحساب البنكي للمنشأة (الآيبان)", "en": "The establishment's bank account IBAN" }
+    ],
+    "stages": [
+      {
+        "id": "s1",
+        "title": { "ar": "تسجيل النشاط", "en": "Register the business" },
+        "description": { "ar": "احجز الاسم التجاري ثم أصدر السجل التجاري للنشاط الذي تريده.", "en": "Reserve the trade name, then issue the commercial registration for your activity." },
+        "services": ["commercial-registration"]
+      },
+      {
+        "id": "s2",
+        "title": { "ar": "الترخيص", "en": "Licensing" },
+        "description": { "ar": "استخرج الرخصة البلدية لموقع النشاط بعد استيفاء اشتراطات الموقع.", "en": "Get the municipal license for the premises once the site requirements are met." },
+        "services": ["municipal-license"]
+      },
+      {
+        "id": "s3",
+        "title": { "ar": "العنوان الوطني والضريبة", "en": "Address and tax" },
+        "description": { "ar": "سجّل العنوان الوطني للمنشأة، وسجّل في ضريبة القيمة المضافة إذا تجاوزت إيراداتك الحد الإلزامي.", "en": "Register the establishment's national address, and register for VAT if your revenue passes the mandatory threshold." },
+        "services": ["national-address-update", "vat-registration"]
+      },
+      {
+        "id": "s4",
+        "title": { "ar": "العاملون والتأمينات", "en": "Staff and insurance" },
+        "description": { "ar": "سجّل المنشأة في التأمينات الاجتماعية ووثّق عقود العاملين قبل مباشرتهم العمل.", "en": "Register with social insurance and document employment contracts before staff start work." },
+        "services": ["employer-social-insurance", "employment-contract-documentation"]
+      }
+    ]
+  },
+  {
+    "slug": "buy-home",
+    "icon": "home",
+    "featured": true,
+    "audience": ["citizens"],
+    "title": { "ar": "شراء منزل", "en": "Buying a home" },
+    "tagline": { "ar": "الدعم السكني ونقل الملكية وربط الخدمات", "en": "Housing support, ownership transfer, and utilities" },
+    "intro": {
+      "ar": "من الاستفادة من الدعم السكني إلى نقل ملكية العقار وتوصيل الكهرباء، ترتّب لك هذه الرحلة خطوات شراء المنزل الأول بوضوح.",
+      "en": "From housing support to transferring the title and connecting electricity, this journey lays out the steps of buying a first home."
+    },
+    "documents": [
+      { "ar": "الهوية الوطنية للمشتري والبائع", "en": "National ID of buyer and seller" },
+      { "ar": "صك الملكية الإلكتروني", "en": "Electronic title deed" },
+      { "ar": "عقد البيع المبدئي", "en": "Preliminary sale contract" },
+      { "ar": "تعريف بالراتب أو شهادة التمويل العقاري", "en": "Salary statement or mortgage approval" }
+    ],
+    "stages": [
+      {
+        "id": "s1",
+        "title": { "ar": "الدعم والتمويل", "en": "Support and financing" },
+        "description": { "ar": "قدّم على الدعم السكني قبل التعاقد لتعرف مقدار الدعم والتمويل المتاح لك.", "en": "Apply for the housing subsidy before signing so you know the support and financing available to you." },
+        "services": ["housing-subsidy"]
+      },
+      {
+        "id": "s2",
+        "title": { "ar": "إتمام الشراء ونقل الملكية", "en": "Complete the purchase" },
+        "description": { "ar": "انقل ملكية العقار إلكترونيًا بعد الاتفاق على السعر وسداد ضريبة التصرفات العقارية.", "en": "Transfer the title online once the price is agreed and the real estate transaction tax is paid." },
+        "services": ["property-deed-transfer"]
+      },
+      {
+        "id": "s3",
+        "title": { "ar": "الكهرباء والخدمات", "en": "Electricity and utilities" },
+        "description": { "ar": "اطلب توصيل الكهرباء للمنزل الجديد أو نقل العداد باسمك.", "en": "Request an electricity connection for the new home, or move the meter into your name." },
+        "services": ["electricity-connection"]
+      },
+      {
+        "id": "s4",
+        "title": { "ar": "تحديث عنوانك", "en": "Update your address" },
+        "description": { "ar": "حدّث العنوان الوطني ليشمل المنزل الجديد.", "en": "Update your national address to the new home." },
+        "services": ["national-address-update"]
+      }
+    ]
+  },
+  {
+    "slug": "find-job",
+    "icon": "work",
+    "featured": false,
+    "audience": ["citizens", "residents"],
+    "title": { "ar": "البحث عن عمل", "en": "Looking for work" },
+    "tagline": { "ar": "التسجيل والتوثيق وحماية دخلك عند فقدان الوظيفة", "en": "Register, document your contract, protect your income" },
+    "intro": {
+      "ar": "تساعد هذه الرحلة الباحثين عن عمل على التسجيل في المنصة الوطنية، وتوثيق عقد العمل عند التعيين، والاستفادة من تعويض البطالة عند الحاجة.",
+      "en": "This journey helps job seekers register on the national platform, document their contract once hired, and claim unemployment benefits if they need to."
+    },
+    "documents": [
+      { "ar": "الهوية الوطنية أو الإقامة", "en": "National ID or iqama" },
+      { "ar": "السيرة الذاتية", "en": "Your CV" },
+      { "ar": "الشهادات العلمية والخبرات", "en": "Academic and work certificates" },
+      { "ar": "عرض العمل أو العقد", "en": "The job offer or contract" }
+    ],
+    "stages": [
+      {
+        "id": "s1",
+        "title": { "ar": "التسجيل كباحث عن عمل", "en": "Register as a job seeker" },
+        "description": { "ar": "أنشئ ملفك الوظيفي وأضف مهاراتك لتصلك الفرص المناسبة.", "en": "Build your profile and add your skills to receive matching openings." },
+        "services": ["job-seeker-registration"]
+      },
+      {
+        "id": "s2",
+        "title": { "ar": "توثيق عقد العمل", "en": "Document your contract" },
+        "description": { "ar": "وثّق عقدك إلكترونيًا لتضمن حقوقك الوظيفية من اليوم الأول.", "en": "Document your contract online to secure your rights from day one." },
+        "services": ["employment-contract-documentation"]
+      },
+      {
+        "id": "s3",
+        "title": { "ar": "الإقامة والمهنة", "en": "Residency and occupation" },
+        "description": { "ar": "للمقيمين: تأكد من تجديد الإقامة قبل انتهائها لتتجنب الغرامات.", "en": "For residents: renew the iqama before it expires to avoid fines." },
+        "services": ["iqama-renewal"]
+      },
+      {
+        "id": "s4",
+        "title": { "ar": "عند فقدان الوظيفة", "en": "If you lose your job" },
+        "description": { "ar": "قدّم على تعويض البطالة خلال 30 يومًا من انتهاء عملك، وواصل البحث عن فرصة جديدة.", "en": "Apply for unemployment benefit within 30 days of your job ending, and keep looking for a new opening." },
+        "services": ["unemployment-insurance", "job-seeker-registration"]
+      }
+    ]
+  },
+  {
+    "slug": "retirement",
+    "icon": "elderly",
+    "featured": false,
+    "audience": ["citizens"],
+    "title": { "ar": "التقاعد", "en": "Retirement" },
+    "tagline": { "ar": "معاشك وحقوقك بعد سنوات العمل", "en": "Your pension and your rights after years of work" },
+    "intro": {
+      "ar": "تعرّف على مستحقاتك التقاعدية وقدّم طلب المعاش وحدّث بياناتك، لتبدأ مرحلتك الجديدة باطمئنان.",
+      "en": "Check your pension entitlement, file your claim, and update your records so you can start the next chapter with peace of mind."
+    },
+    "documents": [
+      { "ar": "الهوية الوطنية", "en": "National ID" },
+      { "ar": "رقم الحساب البنكي (الآيبان)", "en": "Bank account IBAN" },
+      { "ar": "قرار إنهاء الخدمة أو التقاعد", "en": "Termination or retirement decision" },
+      { "ar": "كشف الاشتراكات في التأمينات", "en": "Social insurance contribution statement" }
+    ],
+    "stages": [
+      {
+        "id": "s1",
+        "title": { "ar": "اعرف مستحقاتك", "en": "Know your entitlement" },
+        "description": { "ar": "اطلب كشف المعاش لتعرف المبلغ المتوقع وسنوات الخدمة المحتسبة.", "en": "Request a pension statement to see the expected amount and counted years of service." },
+        "services": ["pension-statement"]
+      },
+      {
+        "id": "s2",
+        "title": { "ar": "تقديم طلب المعاش", "en": "File the pension claim" },
+        "description": { "ar": "قدّم الطلب قبل نهاية الخدمة بشهر على الأقل لتصرف أول دفعة في موعدها.", "en": "File at least a month before your last day so the first payment arrives on time." },
+        "services": ["retirement-pension-claim"]
+      },
+      {
+        "id": "s3",
+        "title": { "ar": "الدعم الإضافي", "en": "Additional support" },
+        "description": { "ar": "إن كان دخل أسرتك محدودًا فقد تستحق دعمًا إضافيًا.", "en": "If your household income is limited you may qualify for extra support." },
+        "services": ["family-support-application"]
+      },
+      {
+        "id": "s4",
+        "title": { "ar": "تحديث بياناتك", "en": "Update your details" },
+        "description": { "ar": "حدّث عنوانك الوطني لتصلك إشعارات المعاش.", "en": "Update your national address so pension notices reach you." },
+        "services": ["national-address-update"]
+      }
+    ]
+  },
+  {
+    "slug": "move-city",
+    "icon": "location_city",
+    "featured": false,
+    "audience": ["citizens", "residents"],
+    "title": { "ar": "الانتقال إلى مدينة جديدة", "en": "Moving to a new city" },
+    "tagline": { "ar": "العنوان والكهرباء والمدرسة في مكانك الجديد", "en": "Address, electricity and school in your new place" },
+    "intro": {
+      "ar": "عند الانتقال إلى مدينة أخرى تتغير عدة جهات تتعامل معك. تجمع لك هذه الرحلة ما يجب تحديثه في عنوانك وخدمات منزلك ومدارس أبنائك.",
+      "en": "Moving to another city changes who serves you. This journey collects what to update: your address, home utilities and your children's school."
+    },
+    "documents": [
+      { "ar": "عقد الإيجار أو صك الملكية للسكن الجديد", "en": "Lease or title deed for the new home" },
+      { "ar": "الهوية الوطنية أو الإقامة", "en": "National ID or iqama" },
+      { "ar": "شهادة قيد الطالب", "en": "The student's enrolment certificate" },
+      { "ar": "فاتورة الكهرباء القديمة", "en": "Your previous electricity bill" }
+    ],
+    "stages": [
+      {
+        "id": "s1",
+        "title": { "ar": "تحديث العنوان الوطني", "en": "Update your national address" },
+        "description": { "ar": "حدّث عنوانك أولًا، فكثير من الجهات تعتمد عليه.", "en": "Update your address first, since many agencies rely on it." },
+        "services": ["national-address-update"]
+      },
+      {
+        "id": "s2",
+        "title": { "ar": "خدمات المنزل", "en": "Home utilities" },
+        "description": { "ar": "اطلب خدمة الكهرباء للمنزل الجديد وأغلق الحساب القديم.", "en": "Request electricity for the new home and close the old account." },
+        "services": ["electricity-connection"]
+      },
+      {
+        "id": "s3",
+        "title": { "ar": "مدارس الأبناء", "en": "Your children's school" },
+        "description": { "ar": "قدّم طلب النقل المدرسي في بداية الفصل الدراسي كي لا يتأخر طالبك عن الدراسة.", "en": "File the school transfer early in the term so your child does not miss classes." },
+        "services": ["school-transfer-request"]
+      },
+      {
+        "id": "s4",
+        "title": { "ar": "الإقامة للمقيمين", "en": "Residency for residents" },
+        "description": { "ar": "إن كنت مقيمًا فتحقق من موعد انتهاء إقامتك وجدّدها عند الحاجة.", "en": "If you are a resident, check when your iqama expires and renew it if needed." },
+        "services": ["iqama-renewal"]
+      }
+    ]
+  },
+  {
+    "slug": "family-loss",
+    "icon": "local_florist",
+    "featured": false,
+    "audience": ["citizens", "residents"],
+    "title": { "ar": "وفاة أحد أفراد الأسرة", "en": "Losing a family member" },
+    "tagline": { "ar": "إجراءات الوفاة والميراث والمعاشات", "en": "Death registration, inheritance and pensions" },
+    "intro": {
+      "ar": "نعزّيك في فقيدك. نضع بين يديك الإجراءات الرسمية بترتيب هادئ وواضح: الإبلاغ عن الوفاة، وشهادة الوفاة، وحصر الورثة، ومعاش الورثة، وتحديث سجل الأسرة.",
+      "en": "We are sorry for your loss. Here are the official steps in a calm, clear order: reporting the death, the death certificate, the inheritance claim, survivor pension and updating the family record."
+    },
+    "documents": [
+      { "ar": "تقرير الوفاة الصادر من المستشفى أو الجهة الصحية", "en": "Death report from the hospital or health authority" },
+      { "ar": "الهوية الوطنية للمتوفى", "en": "The deceased's national ID" },
+      { "ar": "هويات الورثة", "en": "IDs of all heirs" },
+      { "ar": "سجل الأسرة", "en": "The family record" },
+      { "ar": "وصية المتوفى إن وُجدت", "en": "The will, if one exists" }
+    ],
+    "stages": [
+      {
+        "id": "s1",
+        "title": { "ar": "الإبلاغ عن الوفاة", "en": "Report the death" },
+        "description": { "ar": "تتولى المستشفى الإبلاغ غالبًا، وإن حدثت الوفاة خارجها فيمكنك الإبلاغ إلكترونيًا.", "en": "The hospital usually reports it. If the death happened elsewhere you can report it online." },
+        "services": ["death-notification"]
+      },
+      {
+        "id": "s2",
+        "title": { "ar": "شهادة الوفاة", "en": "The death certificate" },
+        "description": { "ar": "استخرج شهادة الوفاة، فهي مطلوبة في بقية الإجراءات.", "en": "Issue the death certificate, which the remaining steps depend on." },
+        "services": ["death-certificate"]
+      },
+      {
+        "id": "s3",
+        "title": { "ar": "حصر الورثة", "en": "Establish the heirs" },
+        "description": { "ar": "قدّم طلب حصر الورثة إلى المحكمة المختصة لتوزيع التركة.", "en": "File the inheritance claim with the competent court so the estate can be divided." },
+        "services": ["inheritance-estate-division"]
+      },
+      {
+        "id": "s4",
+        "title": { "ar": "معاش الورثة", "en": "Survivor pension" },
+        "description": { "ar": "إن كان المتوفى مشتركًا في التأمينات فقد يستحق ورثته معاشًا شهريًا.", "en": "If the deceased was insured, the heirs may be entitled to a monthly pension." },
+        "services": ["survivor-pension-claim"]
+      },
+      {
+        "id": "s5",
+        "title": { "ar": "تحديث سجل الأسرة", "en": "Update the family record" },
+        "description": { "ar": "حدّث سجل الأسرة بعد الوفاة ليعكس الوضع الحالي.", "en": "Update the family record so it shows the current situation." },
+        "services": ["update-family-register"]
+      }
+    ]
+  }
+]
