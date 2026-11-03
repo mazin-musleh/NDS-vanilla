@@ -13,7 +13,7 @@ sidemenu_mode: false
 <section id="search-results" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Search results <span data-filter-query data-filter-target="search_results_content"></span></h2>
+            <h2 class="nds-section-title">Results <span data-filter-query data-filter-target="search_results_content"></span></h2>
         </div>
         <div class="nds-section-body">
             <div class="nds-toolbar">

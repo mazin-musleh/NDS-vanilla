@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 01:38 PM"
+last_edit: "03/11/2026 - 04:08 PM"
 ---
 
 <section id="dl-overview" class="nds-content-section nds-doc-overview">
@@ -314,7 +314,6 @@ Set these on the list. `nds-sm` sets the icon size, the title and value sizes, t
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- [Faculty](../examples/faculty): table layouts for staff details, and a divided table on desktops.
 - [Contact Us Template](../templates/contact-us-template): contact details in a table layout.
 - [Form Template](../templates/form-template): a divided list of the answers to review before the user sends the form.
 - [Help and Support Template](../templates/help-support-template): medium lists of support channels.

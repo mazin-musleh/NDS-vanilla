@@ -9,7 +9,7 @@ lang: en
 direction: ltr
 content_class: nds-stripe
 sidemenu_mode: false
-last_edit: "03/11/2026 - 11:59 AM"
+last_edit: "03/11/2026 - 04:10 PM"
 ---
 
 <!-- Layout rules: how an event opens depends on what the user does with it.
@@ -84,7 +84,7 @@ last_edit: "03/11/2026 - 11:59 AM"
 <section id="calendar" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Events calendar</h2>
+            <h2 class="nds-section-title">All events</h2>
             <p class="nds-section-description">Pick an event to see its details and book a seat.</p>
         </div>
         <div class="nds-section-body">

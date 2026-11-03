@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 08:44 PM"
+last_edit: "03/11/2026 - 04:08 PM"
 ---
 
 <section id="tabs-overview" class="nds-content-section nds-doc-overview">
@@ -497,7 +497,7 @@ The full API is in the banner of `_js/nds-tabs.js`.
 
 - [Service Page Template](../templates/service-template): the sections of a service in tabs.
 - [FAQ Template](../templates/faq-template): questions grouped by topic in tabs.
-- [Faculty](../examples/faculty) and [Program](../examples/program): profile and program details in tabs.
+- [Academic Program](../examples/program): program details in tabs.
 - [Support Inbox](../examples/support-inbox): a Rail beside the message list.
 - [Content Switcher](../components/content-switcher): the same controller, drawn as one segmented control.
 - [Scroll More](../components/scroll-more): the overflow scrolling of the tab row.

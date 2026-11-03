@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.8.0"
 updated: "1.12.x"
-last_edit: "29/10/2026 - 02:00 AM"
+last_edit: "03/11/2026 - 04:08 PM"
 ---
 
 <section id="page-layout-overview" class="nds-content-section nds-doc-overview">
@@ -766,8 +766,7 @@ The page layout has no script, methods or events.
     <div class="nds-section-body nds-prose" markdown="1">
 
 - [Home Page Template](../templates/home-template): the home shape, with the header, hero and footer written in one file. The [home page](../) of this site is the same shape.
-- [Academic Program](../examples/program): card view with a side menu.
-- [Faculty Profile](../examples/faculty): card view with the side menu above the content.
+- [Academic Program](../examples/program): card view, with the side menu as a bar above the content on phones.
 - [Content Template](../templates/content-template) and [Faculty CV](../examples/faculty-cv): the article shape.
 - [Contact Us Template](../templates/contact-us-template) and [Form Template](../templates/form-template): side info beside a form.
 - [Registration](../examples/registration): the minimal shape over a page image.

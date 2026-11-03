@@ -8,6 +8,7 @@ lang: en
 direction: ltr
 # layout + layout_class name the page shape: the Front Matter table in layout/page-layout.md maps each key to its markup. This file's body is only the inner content.
 layout_class: nds-card-view
+sidemenu_mode: top
 ---
 
 <!--Section 1: About the Program - Expandable Content -->

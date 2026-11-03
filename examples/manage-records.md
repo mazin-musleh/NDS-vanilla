@@ -21,7 +21,7 @@ hideFeedback: true
                     <span class="nds-label" data-hidden="sm sr">New request</span>
                 </button>
             </div>
-            <h2 class="nds-section-title">Service Requests</h2>
+            <h2 class="nds-section-title">All requests</h2>
             <p class="nds-section-description">Every request citizens submitted to the department. Open a row to read its processing detail.</p>
         </div>
         <div class="nds-section-body">

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 11:52 PM"
+last_edit: "03/11/2026 - 04:08 PM"
 ---
 
 <section id="avatar-overview" class="nds-content-section nds-doc-overview">
@@ -310,7 +310,6 @@ Source: the `avatar` group in `_sass/tokens/_components.scss`.
     <div class="nds-section-body nds-prose" markdown="1">
 
 - [Admin Console Demo](../examples/console-demo): an avatar in each item of the team directory, a List, with an icon when there is no photo.
-- [Faculty Profile](../examples/faculty): a 3XL photo with an image border beside the page title.
 - [Faculty CV](../examples/faculty-cv): a photo avatar in the hero, set by `hero_avatar`.
 - [Cards](../components/card): an avatar in the card header.
 - [Persona](../components/persona): an avatar beside a name and a role.

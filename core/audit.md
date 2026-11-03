@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 09:34 PM"
+last_edit: "03/11/2026 - 03:59 PM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -250,6 +250,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `sidemenu-missing` | page | warn | `nds-has-sidemenu` on an element with no `.nds-sidemenu` child, or a `hidden` one: the content squeezes into the menu column |
 | `alert-as-page` | page | warn | A view whose only visible content, apart from a tab list, a breadcrumb or pagination, is an `.nds-alert` outside a tab panel: a view that cannot show its content (sign in, no permission, not found, a failed load) is a Status Section |
 | `content-layout-once` | page | warn | More than one `.nds-content-layout` on the page, or one inside another: the page grid is set once |
+| `title-repeat` | page | warn | A heading, block title or card title in `<main>` with the same text as the page's `h1`. A table of contents title and a slider's clone slides pass |
 | `sidemenu-pair` | page | warn | A `.nds-sidemenu` outside a layout with `nds-has-sidemenu` |
 | `legacy-library` | page | warn | A common legacy UI library loaded on the page, such as jQuery, Select2, DataTables, Bootstrap CSS or Font Awesome |
 | `bundle-tag` | page | warn | A tag in the page for a bundle the loader adds itself, such as `nds-delegated.min.js` |
@@ -263,7 +264,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `toolbar-sizes` | structure | warn | Items on one toolbar line with different heights, such as a 32px `nds-md` button beside a 40px one. It skips hidden items |
 | `table-min-width` | structure | warn | On a desktop, a table with an actions column whose `--min-width` is wider than its box, so users scroll sideways to reach a row's actions. Content that widens a table does not count. Phones and tablets are skipped |
 | `form-row-align` | structure | warn | Fields side by side whose inputs do not start level, because something above one input pushes it down, such as an Info line under its label or a label on two lines. A message under an input does not count. A stack of fields in one row slot, such as a date over a time, counts as its top field. It skips checkboxes, radios, switches and uploads |
-| `parts-touch` | structure | warn | Two NDS parts that follow each other in the markup and sit one under the other with no space between them, anywhere on the page, such as fields dropped straight into a tab panel. A table counts by its wrapper. It skips a section the browser has not laid out yet |
+| `parts-touch` | structure | warn | Two NDS parts, or a part and a paragraph or note, that follow each other in the markup and sit one under the other with no space between them, anywhere on the page, such as fields dropped straight into a tab panel. A table counts by its wrapper. It skips a section the browser has not laid out yet |
 | `i18n-pack` | i18n | error | The language file of the page did not load. A language NDS does not ship is a `warn`, and only when `window.NDS_I18N_LANGS` has no words for it |
 | `i18n-override` | i18n | warn | A section or key in `window.NDS_I18N` or `window.NDS_I18N_LANGS` that no NDS component or `getStrings()` call has, so it changes nothing |
 | `filter-unclaimed` | structure | error | `data-filter-items` that no filter claimed, so it stays in its skeleton |

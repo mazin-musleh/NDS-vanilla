@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 12:18 PM"
+last_edit: "03/11/2026 - 04:08 PM"
 ---
 
 <section id="section-overview" class="nds-content-section nds-doc-overview">
@@ -492,7 +492,6 @@ Sections have no methods or events. The core script writes `data-nds-drawn` on a
 
 - [Page Layout](../layout/page-layout): where sections go on a page, card view and stripes.
 - [Home Page Template](../templates/home-template): sections with actions, colors and a breakout swiper.
-- [Faculty Profile](../examples/faculty): a profile section with a photo and a definition list.
 - [Faculty CV](../examples/faculty-cv): stacked wrappers in one section.
 
 </div>

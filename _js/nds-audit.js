@@ -347,17 +347,35 @@
         if (!isMainSheetApplied()) return; // measured before the gaps exist; css-missing reports it
         // A table counts by the wrapper its script adds: before that, bare tables in prose touch for a moment.
         const partSelector = ':is(.nds-form-container, .nds-form-group, .nds-definition-list, .nds-table-wrapper, .nds-alert, .nds-stepper, .nds-list, .nds-tabs, .nds-block, .nds-flex, .nds-grid, .nds-empty, .nds-chart, form)';
-        const isPart = el => el?.matches(partSelector) && el.getClientRects().length && getComputedStyle(el).position !== 'absolute';
-        const touching = context.find(partSelector).filter(below => {
+        // A note or paragraph flush against a part touches too (rig 7: a note under a definition list).
+        const textSelector = ':is(p, .nds-note)';
+        const isShown = el => el.getClientRects().length && getComputedStyle(el).position !== 'absolute';
+        const touching = context.find(`${partSelector}, ${textSelector}`).filter(below => {
             const above = below.previousElementSibling;
             // A section content-visibility skips has no layout yet, and a style read would lay it out.
-            if (!above || (below.checkVisibility && !below.checkVisibility({ contentVisibilityAuto: true })) || !isPart(above) || !isPart(below)) return false;
+            if (!above || (below.checkVisibility && !below.checkVisibility({ contentVisibilityAuto: true }))) return false;
+            // Two parts, or a part and text; text against text is prose's own spacing.
+            const isPair = above.matches(partSelector) ? below.matches(`${partSelector}, ${textSelector}`) : above.matches(textSelector) && below.matches(partSelector);
+            if (!isPair || !isShown(above) || !isShown(below)) return false;
             const top = above.getBoundingClientRect(), bottom = below.getBoundingClientRect();
             // Stacked, not side by side, with no space between.
             return top.height && bottom.height && bottom.top >= top.bottom - 1 && bottom.top - top.bottom < 1;
         });
-        if (touching.length) context.report(touching[0], `two NDS parts stack with no space between them${touching.length > 1 ? ` (${touching.length} places; the first is shown)` : ''}: their container spaces nothing.`,
-            'Stack the parts with the layout the docs give: fields in one form.nds-form, other parts each in an .nds-block.', undefined, touching.length);
+        if (touching.length) context.report(touching[0], `an NDS part and the part or text next to it stack with no space between them${touching.length > 1 ? ` (${touching.length} places; the first is shown)` : ''}: their container spaces nothing.`,
+            'Stack them with the layout the docs give: fields in one form.nds-form, other parts each in an .nds-block. A block puts its space below itself, so the upper one needs it: the last block in a box gets none.', undefined, touching.length);
+    } });
+
+    // A heading that repeats the page title tells the reader nothing new (rig 7: a receipt card named like its page).
+    addRule({ id: 'title-repeat', group: 'page', check(context) {
+        const normalize = text => text.replace(/\s+/g, ' ').trim().toLowerCase();
+        const title = context.find('main h1')[0];
+        const titleText = title && normalize(title.textContent);
+        if (!titleText) return;
+        // A table of contents names the page on purpose; a slider's clone slides are copies nobody reads.
+        const elements = context.find('main :is(h2, h3, h4, h5, h6, .nds-block-title, .nds-card-title):not(h1, .nds-toc-title)')
+            .filter(el => el.getClientRects().length && !el.closest('[aria-hidden="true"]') && normalize(el.textContent) === titleText);
+        if (elements.length) context.report(elements[0], `a heading repeats the page title "${title.textContent.trim()}"${elements.length > 1 ? ` (${elements.length} headings; the first is shown)` : ''}.`,
+            'Name what the section or card holds, or drop its title: the page title already names the page.', undefined, elements.length);
     } });
 
     // ── i18n ─────────────────────────────────────────────────────────

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 05:30 PM"
+last_edit: "03/11/2026 - 04:08 PM"
 ---
 
 <section id="sidemenu-overview" class="nds-content-section nds-doc-overview">
@@ -624,7 +624,7 @@ The full API is in the banner of `_js/nds-sidemenu.js`.
 
 - [Page Layout](../layout/page-layout): the content layout, and the console page with a side menu.
 - [Drawer](../components/drawer): the list inside the side menu, and its other classes.
-- [Faculty](../examples/faculty): a page with the side menu in top bar mode.
+- [Academic Program](../examples/program): a page with the side menu in top bar mode.
 - [Header](../ui-shell/header), [Main Navigation](../ui-shell/main-nav) and [Footer](../ui-shell/footer): the other parts of the page shell.
 
 </div>
