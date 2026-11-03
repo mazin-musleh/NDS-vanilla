@@ -760,8 +760,7 @@
             }
             NDS.writeUrlParams(params);
 
-            this._mirrorSearchInputs('');
-            this.criteria.search = '';
+            this._setSearch('');
             this._resetFilterInputs();
             this._readUrlParams();
 
@@ -811,11 +810,14 @@
         // ==============================================
 
         // One write path for the search keyword (typed, dropmenu, URL, API), so a
-        // shared link reproduces the list. It is only matched and written to
-        // value / textContent, never rendered as HTML, so nothing is stripped. Kept as typed,
-        // as the request sends it; only the match ignores case.
+        // shared link reproduces the list and no search box keeps a stale word.
+        // It is only matched and written to value / textContent, never rendered as
+        // HTML, so nothing is stripped. Kept as typed, as the request sends it; only
+        // the match ignores case.
         _setSearch(raw) {
-            this.criteria.search = String(raw || '').trim();
+            const value = String(raw || '');
+            this.criteria.search = value.trim();
+            this._mirrorSearchInputs(value);
         }
 
         // Sanitize a URL-supplied value for *matching* against existing DOM
@@ -842,7 +844,6 @@
 
             if (searchParam) {
                 this._setSearch(searchParam);
-                this._mirrorSearchInputs(searchParam);
                 hasParams = true;
             }
 
@@ -1093,13 +1094,6 @@
         _syncSearchFromDropmenu() {
             if (!this._searchInputs.dropmenu) return;
             this._setSearch(this._searchInputs.dropmenu.input.value);
-            if (this._searchInputs.direct) {
-                this._searchInputs.direct.input.value = this._searchInputs.dropmenu.input.value;
-                this._syncClearButtonVisibility(
-                    this._searchInputs.direct.input,
-                    this._searchInputs.direct.clearBtn
-                );
-            }
         }
 
         // ==============================================
@@ -1357,9 +1351,7 @@
         }
 
         removeSearchFilter() {
-            this.criteria.search = '';
-
-            this._mirrorSearchInputs('');
+            this._setSearch('');
             if (this._searchInputs.dropmenu) this._syncApplyButtonLabel();
 
             this._commitCriteriaChange();
@@ -1566,11 +1558,7 @@
                 const wrapper = input.closest('.nds-form-control') || input.parentElement;
                 const clearBtn = wrapper?.querySelector('.nds-clear');
 
-                this._searchInputs.direct = {
-                    input: input,
-                    clearBtn: clearBtn,
-                    element: wrapper || input
-                };
+                this._searchInputs.direct = { input: input, clearBtn: clearBtn };
 
                 this._setupDirectSearch(input, clearBtn);
                 return;
@@ -1647,7 +1635,7 @@
             const searchContainer = element.matches('input') ? element.parentElement : element;
             const clearBtn = searchContainer.querySelector('.nds-clear');
 
-            const searchRef = { input: searchInput, clearBtn: clearBtn, element: element };
+            const searchRef = { input: searchInput, clearBtn: clearBtn };
 
             if (isInsideDropmenu) {
                 this._searchInputs.dropmenu = searchRef;
@@ -1743,14 +1731,7 @@
 
         _runDirectSearch(searchInput) {
             this._setSearch(searchInput.value);
-            if (this._searchInputs.dropmenu) {
-                this._searchInputs.dropmenu.input.value = searchInput.value;
-                this._syncClearButtonVisibility(
-                    this._searchInputs.dropmenu.input,
-                    this._searchInputs.dropmenu.clearBtn
-                );
-                this._syncApplyButtonLabel();
-            }
+            if (this._searchInputs.dropmenu) this._syncApplyButtonLabel();
 
             // In form mode, submit the form directly (spinner on the search button)
             if (this.isFormMode) {
@@ -2853,7 +2834,7 @@
         }
 
         // Walk each item once and stash its filter values + lowercased search
-        // text on the element itself. syncFilters() then matches against the
+        // text in itemCaches. syncFilters() then matches against the
         // cache instead of re-querying every item's [data-filter] descendants
         // and re-walking textContent on every pass.
         _buildItemCache() {
@@ -2881,13 +2862,10 @@
 
         _matchesSearch(item) {
             const searchText = this.criteria.search.toLowerCase();
-            if (!searchText) return true;
             return (itemCaches.get(item)?.searchText || '').includes(searchText);
         }
 
         _matchesFilter(item, filterName, selectedValues) {
-            if (selectedValues.length === 0) return true;
-
             // Range: numeric in-bounds test against the item's cached value.
             if (this.filterInputs[filterName]?.type === 'range') {
                 return this._matchesRange(item, filterName, selectedValues[0]);
@@ -2943,12 +2921,8 @@
             // Emptying the dropmenu search box has to zero criteria.search with it.
             // Clearing the value alone left the keyword applied: the box read empty
             // and the Apply count dropped, while the results stayed filtered and the
-            // search chip stayed up until the next Apply. _mirrorSearchInputs is the
-            // same pair every other clear path uses, and keeps the direct box in step.
-            if (this._searchInputs.dropmenu) {
-                this.criteria.search = '';
-                this._mirrorSearchInputs('');
-            }
+            // search chip stayed up until the next Apply. _setSearch keeps the direct box in step.
+            if (this._searchInputs.dropmenu) this._setSearch('');
 
             this._resetFilterInputs();
 
@@ -2959,9 +2933,7 @@
         }
 
         clear() {
-            this._mirrorSearchInputs('');
-
-            this.criteria.search = '';
+            this._setSearch('');
 
             this._resetFilterInputs();
 
@@ -3139,8 +3111,7 @@
                     element.innerHTML = '';
 
                     // Regenerate (may replace element with fieldset)
-                    const actualEl = this._buildFilterInputs(element, filterName, filterType) || element;
-                    this._setupManualFilter(actualEl, filterName);
+                    this._setupDynamicFilter(element, filterName, filterType);
                 });
                 this._flushAccordionInit();
 
@@ -3159,8 +3130,6 @@
 
         setSearchValue(value) {
             this._setSearch(value);
-
-            this._mirrorSearchInputs(value);
 
             this._syncApplyButtonLabel();
             // Not syncFilters(): in AJAX mode that repaints chips, badge and URL
@@ -3206,11 +3175,8 @@
             // Determine input type from data attribute or parameter
             const type = inputType || container.getAttribute('data-filter-type') || 'checkbox';
 
-            // Generate inputs with explicit values
-            const actualElement = this._buildFilterInputs(container, filterName, type, values) || container;
-
-            // Re-setup the filter listeners; a URL value it took has to reach the items and chips too.
-            this._setupManualFilter(actualElement, filterName);
+            // Generate inputs with explicit values; a URL value it took has to reach the items and chips too.
+            this._setupDynamicFilter(container, filterName, type, values);
             this._flushAccordionInit();
             if (readSearchParams().has(filterName)) this._settleAfterCriteriaChange();
         }
