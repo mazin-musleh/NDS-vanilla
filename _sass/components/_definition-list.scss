@@ -110,6 +110,7 @@
     display: flex;
     flex-direction: column;
     row-gap: var(--_dl-gap);
+    @include btn-md; // a button in the list steps with it; its own size class still wins
 
     &.nds-sm {
         --dl-icon-size: 20px;
@@ -119,7 +120,7 @@
         --dl-desc-FS: var(--typo-text-sm-FS);
         --dl-desc-LH: var(--typo-text-sm-LH);
         --row-gap: var(--spacing-lg);
-        @include btn-md; // a button in the list steps with it; its own size class still wins
+        @include btn-sm;
     }
 
     // Always-on tableView
@@ -212,6 +213,8 @@
         min-width: 0;
         --btn-height: fit-content;
         --btn-height-min: 0px;
+        --_btn-FS-base: 1em; // the value's text size, also in nds-highlight-value
+        --_btn-LH-base: var(--_dl-desc-LH);
     }
 }
 

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 01:17 PM"
+last_edit: "03/11/2026 - 01:24 PM"
 ---
 
 <section id="dl-overview" class="nds-content-section nds-doc-overview">
@@ -131,8 +131,8 @@ The Layout, Style, Emphasis, Size and Loading rows go on the list. The two Cards
 | Style | Cards | `.nds-card` | `.nds-definition-item` | Each item in its own card |
 | Style | Cards | `.nds-stroke` | `.nds-definition-item` | The same: gives each card its border |
 | Emphasis | Highlight value | `.nds-highlight-value` | `.nds-definition-list` | The value bold, the title muted. For records the reader scans by value, such as a student's status card |
-| Size | MD (default) | — | — | A 24px icon, 16px text and the larger gap |
-| Size | SM | `.nds-sm` | `.nds-definition-list` | A 20px icon, 14px text, MD buttons and a smaller gap |
+| Size | MD (default) | — | — | A 24px icon, 16px text, MD buttons and the larger gap. A size class on a button still wins |
+| Size | SM | `.nds-sm` | `.nds-definition-list` | A 20px icon, 14px text, SM buttons and a smaller gap |
 | Loading | Loading | `.nds-loading` | `.nds-definition-list` | Gray bars in place of the titles and values while the data loads. The icons hide |
 {: #dl-variants-table .nds-table .nds-responsive}
 
@@ -221,7 +221,7 @@ The Layout, Style, Emphasis, Size and Loading rows go on the list. The two Cards
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Automatic Icon Indent</span>
-              <p class="nds-card-description">In the stacked layout, a value lines up with its title's text when the title has an icon. A transparent button in a value loses its padding and its minimum size, so its label lines up with the text too.</p>
+              <p class="nds-card-description">In the stacked layout, a value lines up with its title's text when the title has an icon. A transparent button in a value loses its padding and its minimum size and takes the value's text size, so its label lines up with the text too.</p>
             </div>
           </div>
         </li>
