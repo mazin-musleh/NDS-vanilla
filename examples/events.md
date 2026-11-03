@@ -9,7 +9,7 @@ lang: en
 direction: ltr
 content_class: nds-stripe
 sidemenu_mode: false
-last_edit: "01/11/2026 - 12:30 AM"
+last_edit: "03/11/2026 - 11:59 AM"
 ---
 
 <!-- Layout rules: how an event opens depends on what the user does with it.
@@ -390,7 +390,7 @@ last_edit: "01/11/2026 - 12:30 AM"
     <div class="nds-panel-body">
         <div class="nds-flex nds-col">
             <p id="event-summary"></p>
-            <dl class="nds-definition-list nds-grid nds-highlight-value nds-md" style="--max-col: 2;">
+            <dl class="nds-definition-list nds-grid nds-highlight-value nds-sm" style="--max-col: 2;">
                 <div class="nds-definition-item">
                     <dt>
                         <i class="hgi hgi-stroke hgi-calendar-03" aria-hidden="true"></i>

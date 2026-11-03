@@ -97,14 +97,13 @@
 // ==============================================
 
 .nds-definition-list {
-    // Default is lg — nds-lg class is a no-op, provided so an ancestor-set
-    // smaller size can be overridden back to the default on a specific list.
+    // Default is MD: nds-md on the list is a no-op.
     --_dl-icon-size: max(18px, var(--dl-icon-size, 24px)); // an icon never renders below 18px
-    --_dl-icon-gap: var(--dl-icon-gap, var(--spacing-lg));
-    --_dl-title-FS: var(--dl-title-FS, var(--typo-text-lg-FS));
+    --_dl-icon-gap: var(--dl-icon-gap, var(--spacing-md));
+    --_dl-title-FS: var(--dl-title-FS, var(--typo-text-md-FS));
     --_dl-desc-FS: var(--dl-desc-FS, var(--typo-text-md-FS));
     --_dl-desc-LH: var(--dl-desc-LH, var(--typo-text-md-LH));
-    --_dl-title-LH: var(--dl-title-LH, var(--typo-text-lg-LH));
+    --_dl-title-LH: var(--dl-title-LH, var(--typo-text-md-LH));
     --_dl-gap: var(--row-gap, var(--gap, var(--spacing-xl)));
     // Items read it, and --col-gap does not inherit. Unset stays invalid, so each layout keeps its own default.
     --_dl-col-gap: var(--col-gap, var(--gap));
@@ -112,23 +111,15 @@
     flex-direction: column;
     row-gap: var(--_dl-gap);
 
-    &.nds-md {
-        --dl-icon-size: 20px;
-        --dl-icon-gap: var(--spacing-md);
-        // Fixed, not fluid: a clamp shrank the title below its value on phones.
-        --dl-title-FS: var(--typo-text-md-FS);
-        --dl-title-LH: var(--typo-text-md-LH);
-        --row-gap: var(--spacing-lg);
-    }
-
     &.nds-sm {
-        --dl-icon-size: 18px;
-        --dl-icon-gap: var(--spacing-md);
+        --dl-icon-size: 20px;
+        // Fixed, not fluid: a clamp shrank the title below its value on phones.
         --dl-title-FS: var(--typo-text-sm-FS);
         --dl-title-LH: var(--typo-text-sm-LH);
         --dl-desc-FS: var(--typo-text-sm-FS);
         --dl-desc-LH: var(--typo-text-sm-LH);
-        --row-gap: var(--spacing-md);
+        --row-gap: var(--spacing-lg);
+        @include btn-md; // a button in the list steps with it; its own size class still wins
     }
 
     // Always-on tableView
@@ -159,7 +150,7 @@
 .nds-definition-item {
     display: flex;
     flex-direction: column;
-    gap: 0; // the line heights space the title from the value
+    gap: var(--spacing-xs);
     text-align: start;
     width: 100%;
 
@@ -214,12 +205,20 @@
     font-size: var(--_dl-desc-FS);
     line-height: var(--_dl-desc-LH);
     margin: 0; // a <p> inside .nds-prose would take the paragraph gap
+
+    // Reads as a link: the label lines up with the value text.
+    .nds-btn.nds-transparent {
+        padding: 0;
+        min-width: 0;
+        --btn-height: fit-content;
+        --btn-height-min: 0px;
+    }
 }
 
 // The value leads: the title takes the value's look and the value the title's.
 .nds-definition-list.nds-highlight-value {
     --_dl-title-LH: var(--dl-desc-LH, var(--typo-text-md-LH));
-    --_dl-desc-LH: var(--dl-title-LH, var(--typo-text-lg-LH));
+    --_dl-desc-LH: var(--dl-title-LH, var(--typo-text-md-LH));
 
     dt {
         font-size: var(--_dl-desc-FS);

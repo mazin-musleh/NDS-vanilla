@@ -128,15 +128,6 @@
             color: var(--text-display);
             font-weight: var(--font-weight-bold);
         }
-
-        .nds-definition-list {
-            dd {
-                .nds-btn.nds-transparent {
-                    padding: 0;
-                    --btn-height: fit-content;
-                }
-            }
-        }
     }
 }
 
