@@ -190,7 +190,7 @@ hero_float_actions:
 </section>
 
 <!-- Built-in Features -->
-<section id="hajj-features" class="nds-content-section nds-demo-section nds-doc-features">
+<section id="hajj-features" class="nds-content-section nds-doc-features">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -281,7 +281,7 @@ hero_float_actions:
 </section>
 
 <!-- Usage Guidelines -->
-<section id="hajj-guidelines" class="nds-content-section nds-demo-section">
+<section id="hajj-guidelines" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>

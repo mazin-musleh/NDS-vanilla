@@ -282,7 +282,7 @@ hero_float_actions:
 </section>
 
 <!-- Built-in Features -->
-<section id="nd96-features" class="nds-content-section nds-demo-section nds-doc-features">
+<section id="nd96-features" class="nds-content-section nds-doc-features">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Built-in Features</h2>
@@ -386,7 +386,7 @@ hero_float_actions:
 </section>
 
 <!-- Usage Guidelines -->
-<section id="nd96-guidelines" class="nds-content-section nds-demo-section">
+<section id="nd96-guidelines" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Usage Guidelines</h2>
