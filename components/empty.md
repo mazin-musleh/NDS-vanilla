@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 02:43 AM"
+last_edit: "03/11/2026 - 10:32 PM"
 ---
 
 <section id="empty-overview" class="nds-content-section nds-doc-overview">
@@ -24,7 +24,7 @@ Pick another component when:
 
 - the data is still loading: [Loading](../components/loading).
 - a request failed and the rest of the view still shows: [Alert](../components/alert), with `data-status="error"`, so the user knows that something went wrong.
-- a request failed and the view has nothing else to show: [Status Section](../layout/status-section).
+- a request failed and the view has nothing else to show, or the page is a status, such as not found or no permission: [Status Section](../layout/status-section). An empty cart or an empty list stays Empty, even when it is all the page shows: items can arrive without a reload.
 - the container has items but none match the user's filter: [Filter](../components/filter) shows its own alert. A filtered-out item stays in the container, so the placeholder does not show.
 
 </div>
@@ -66,6 +66,13 @@ Pick another component when:
   <tbody class="nds-empty"></tbody>
 </table>
 </script>
+<script type="text/html" id="empty-action" data-canon>
+<template data-empty-action>
+  <a href="#" class="nds-btn nds-md nds-secondary-outline">
+    <span class="nds-label">Add a request</span>
+  </a>
+</template>
+</script>
     </div>
   </div>
 </section>
@@ -85,6 +92,7 @@ The Message and Icon rows go on the element that carries `nds-empty`, whatever i
 | Structure | List | canon `#empty-list` | — | A `<ul>` or an `<ol>`. The placeholder is an `<li>`, so the list stays valid |
 | Structure | Table | canon `#empty-table` | — | `nds-empty` on the `<table>`. The script adds a `<tbody>` when the table has none |
 | Structure | Table body | canon `#empty-tbody` | — | `nds-empty` on one `<tbody>`, for a table with more than one body |
+| Action | Action (hint: A button under the message, such as Add a request) | canon `#empty-action` | `.nds-empty` | A `<template data-empty-action>` in the container. Each placeholder gets a copy of its content under the message, so the button shows only while the container is empty. The template is never an item, in a `<div>`, a list or a table |
 | Message | Message (hint: Replaces the default text) | `[data-empty-message="No requests match your search"]` | `.nds-empty` | Replaces the default text. Say why the container is empty, or what the user can do next |
 | Icon | Icon (hint: Replaces the default icon) | `[data-empty-icon="nds-icon nds-hgi-search-01"]` | `.nds-empty` | Replaces the default icon. The value is the whole `class` of the icon, from any icon set |
 {: #empty-variants-table .nds-table .nds-responsive}
@@ -231,10 +239,10 @@ In a table, the placeholder is one row with one cell across every column. The sc
 
 - Show [Loading](../components/loading) while data loads, not the placeholder. If the request returns no items, the placeholder then shows.
 - Write a `data-empty-message` that says why the container has no items, or what the user can do next. "No requests match your search" tells the user more than "Empty".
-- Keep the message to one short sentence. Put longer help and any button, such as "Add a request", outside the container: the placeholder holds the message only.
+- Keep the message to one short sentence. For a button under it, such as "Add a request", put it in a `<template data-empty-action>` in the container. Put longer help outside the container.
 - Wrap text content in an element. The script counts child elements only, so a container that holds only text still shows the placeholder.
 - Do not add your own "no results" markup to the container. The script counts it as an item, so the placeholder never shows.
-- When your code counts the items in a container, skip the element with `data-nds-empty-placeholder`.
+- When your code counts the items in a container, skip the element with `data-nds-empty-placeholder` and the action's `<template>`.
 
 </div>
   </div>
@@ -263,6 +271,7 @@ In a table, the placeholder is one row with one cell across every column. The sc
 |---|---|---|
 | `data-empty-message` | `.nds-empty` | Replaces the default text. A change at run time updates the placeholder |
 | `data-empty-icon` | `.nds-empty` | Replaces the default icon, `nds-icon nds-hgi-desert`. The value becomes the whole `class` of the icon `<i>`. A change at run time updates the placeholder |
+| `data-empty-action` | a `<template>` in `.nds-empty` | Its content goes under the message in each placeholder, such as a button. The template is never an item |
 | `data-nds-empty-placeholder` | the placeholder | Set by the script on the placeholder element, and on a `<tbody>` it adds. Do not set it yourself |
 {: .nds-table .nds-responsive}
 

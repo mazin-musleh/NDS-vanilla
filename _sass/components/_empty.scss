@@ -24,6 +24,11 @@
   grid-column: 1 / -1; // span every column when the container is a grid
 }
 
+// An action under the message (data-empty-action, Calendar's Show all) sits xl below it: the gap plus this.
+.nds-empty-placeholder > :not(i, .nds-empty-message) {
+  margin-block-start: var(--spacing-md);
+}
+
 li.nds-empty-placeholder {
   list-style: none;
 }
@@ -50,6 +55,11 @@ tr[data-nds-empty-placeholder] > td {
     margin-inline: auto;
     position: sticky;
     inset-inline: calc(50% - 10rem);
+  }
+
+  // An action under the message (data-empty-action) sits xl below it, as in the div placeholder.
+  > :not(i, .nds-empty-message) {
+    margin-block-start: var(--spacing-xl);
   }
 }
 

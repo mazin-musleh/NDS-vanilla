@@ -10,11 +10,13 @@
  *   data-empty-message   replace the localized default text
  *   data-empty-icon      the value is written straight onto the placeholder's <i>
  *                        className, so any icon system works
+ *   data-empty-action    on a <template> in the container: each placeholder gets a copy
+ *                        of its content under the message, such as a button
  * Gotchas:
  *   - Put .nds-empty on the CONTAINER. It works on a div, a ul/ol, a table or a tbody, and
  *     builds a placeholder that fits that element.
  *   - In a table only non-placeholder rows inside a tbody count as content — thead, tfoot
- *     and caption do not.
+ *     and caption do not. A <template> never counts.
  *   - init() runs once. Added and removed children, and changes to the two attributes, are
  *     picked up by the shared observers, so there is no need to call init() again.
  */
@@ -56,9 +58,10 @@
     return el.hasAttribute(PLACEHOLDER_ATTRIBUTE);
   }
 
+  // A <template> renders nothing, so it is never an item (the action's template sits here).
   function countRealChildren(container) {
     let count = 0;
-    for (const child of container.children) if (!isPlaceholder(child)) count++;
+    for (const child of container.children) if (!isPlaceholder(child) && child.tagName !== 'TEMPLATE') count++;
     return count;
   }
 
@@ -129,8 +132,17 @@
     return div;
   }
 
+  // A copy, so the action leaves with the placeholder when an item arrives.
+  function addAction(container) {
+    const template = container.querySelector(':scope > template[data-empty-action], :scope > tbody > template[data-empty-action]');
+    if (!template) return;
+    const placeholder = findPlaceholder(container);
+    (placeholder.querySelector('td') || placeholder).append(template.content.cloneNode(true));
+  }
+
   function inject(container) {
     place(container);
+    addAction(container);
     if ((container.getAttribute('data-empty-message') || '').trim()) return;
     // The default text is a marker: core writes it in the page language, as a bar until it lands.
     strings.set(findPlaceholder(container).querySelector('.nds-empty-message'), 'text', 'message');

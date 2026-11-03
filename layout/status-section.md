@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.10.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 10:09 PM"
+last_edit: "03/11/2026 - 10:32 PM"
 ---
 
 <section id="status-overview" class="nds-content-section nds-doc-overview">
@@ -18,12 +18,13 @@ last_edit: "03/11/2026 - 10:09 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A status section is a content section or a hero section with the `nds-status-section` class. It stacks a feedback chip or an illustration, a title, a description and an action row in one centered column. It is a whole page: the page shows nothing else, apart from its hero, such as an error page or a final confirmation page. It is also the view a user cannot use: sign in first, no permission, or an item that is not found. It needs no JavaScript.
+A status section is a content section or a hero section with the `nds-status-section` class. It stacks a feedback chip or an illustration, a title, a description and an action row in one centered column. It is a whole page: the page shows nothing else, apart from its hero, such as an error page or a final confirmation page. Content the page hides while the status shows does not count: a page can swap its form for a status section, as [Job Apply](../examples/job-apply) does. It is also the view a user cannot use: sign in first, no permission, or an item that is not found. It needs no JavaScript.
 
 Pick another component when:
 
 - the message sits inside a form or a region of the page: [Alert](../components/alert)
 - the page shows the outcome with other content, such as a booking above its details: a status [Card](../components/card)
+- a list or a cart has no items, even when it is all the page shows: [Empty](../components/empty)
 - the status needs only an icon and a line of text: [Feedback Icons](../components/feedback)
 
 </div>

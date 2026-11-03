@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 10:09 PM"
+last_edit: "03/11/2026 - 10:25 PM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -504,7 +504,7 @@ Pick another component when:
 - Keep the description to one or two lines. For longer text, [truncate](../utilities/truncate-text) it or link to a detail page.
 - Do not put a card inside a card. Use `.nds-card-meta` or a [definition list](../components/definition-list) inside the content.
 - Use `data-status` only when the card really has that status. For a color without a status, use the color class.
-- Show an outcome inside a page with a status card. A [Status Section](../layout/status-section) is a whole page, with nothing but the page hero beside it.
+- Show an outcome inside a page with a status card. A [Status Section](../layout/status-section) is a whole page, with nothing else shown but the page hero.
 - Put a row of cards in a [grid](../layout/grid).
 - For a set of cards, use a [List](../components/list): each card is a list item, and the list sets the look they share. A set of link cards stays a [Grid](../layout/grid).
 - To show a card's content with no box, add `nds-flush`. It drops the padding, the border, the fill and the shadow.
