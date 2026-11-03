@@ -327,16 +327,24 @@
         const topField = cell => cell.matches(fieldSelector) ? cell : cell.firstElementChild?.matches(fieldSelector) ? cell.firstElementChild : null;
         const rows = new Set(context.find(fieldSelector).flatMap(field => [field.parentElement, topField(field.parentElement) === field ? field.parentElement.parentElement : null]).filter(Boolean));
         rows.forEach(parent => {
-            const inputTops = new Map(); // a slot's top → the tops of the inputs of the slots that start there
+            const slots = new Map(); // a slot's top → its fields' and inputs' tops
             [...parent.children].forEach(cell => {
-                const control = topField(cell)?.querySelector(':scope > .nds-form-control');
+                const field = topField(cell), control = field?.querySelector(':scope > .nds-form-control');
                 if (!control?.getClientRects().length) return;
                 const top = Math.round(cell.getBoundingClientRect().top);
-                inputTops.set(top, [...(inputTops.get(top) || []), control.getBoundingClientRect().top]);
+                if (!slots.has(top)) slots.set(top, { fields: [], inputs: [] });
+                slots.get(top).fields.push(field.getBoundingClientRect().top);
+                slots.get(top).inputs.push(control.getBoundingClientRect().top);
             });
-            inputTops.forEach(tops => {
-                if (tops.length > 1 && Math.max(...tops) - Math.min(...tops) > 2) context.report(parent,
-                    `Fields side by side start their inputs ${Math.round(Math.max(...tops) - Math.min(...tops))}px apart: something above one input, such as an Info line under its label or a label on two lines, pushes it down.`,
+            const spread = tops => Math.max(...tops) - Math.min(...tops);
+            slots.forEach(({ fields, inputs }) => {
+                if (inputs.length < 2 || spread(inputs) <= 2) return;
+                // Fields that start apart sit in a row that centers them: a message under one moves the others (rig 4's table).
+                if (spread(fields) > 2) context.report(parent,
+                    `Fields side by side start their inputs ${Math.round(spread(inputs))}px apart: the row centers its fields, so a taller one, such as a field showing its message, moves the others.`,
+                    'Align the fields in the row to the top, so a message under one field leaves the others in place: on an nds-flex row, --align: flex-start.');
+                else context.report(parent,
+                    `Fields side by side start their inputs ${Math.round(spread(inputs))}px apart: something above one input, such as an Info line under its label or a label on two lines, pushes it down.`,
                     'Put help text in a Hint under the field or a Help tooltip beside the label, or give every field in the row an Info line. Keep the labels short enough for one line.');
             });
         });

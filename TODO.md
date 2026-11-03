@@ -23,6 +23,7 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
 ### Parked features (owner calls; after v2.0.0 unless noted)
 
 - **Chat component (2026-10-16), later.** Found in the Student Portal mockup (https://seu-exam-support.netlify.app/) with Date Tile and Meta, which shipped. Think it through first: the real uses, how it fits with other components, and what it replaces. The portal's support panel (`dialog#support-panel` in `examples/student-portal.md`) is where it would land.
+- **Editable table cells (rig 4, 2026-11-03).** No canon for a field in a table cell. Rig 4 put fields in cells, and an error message under one makes the row taller, so the table re-centers the other inputs 30px lower. `form-row-align` flags it, and names the centering; design the in-cell field and its error once (top alignment, or an error that does not grow the row).
 - **File Upload image preview for a photo picker.** The old catalog card promised one; it never existed.
 - **Rig asks, checked against the docs 2026-10-27.** The rest were already covered or dropped (shop parts are off-mission).
   - **Selection: a pick limit.** None today; Multiselect's `data-max-checked` only checks on submit. Owner call.
