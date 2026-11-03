@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 11:59 AM"
+last_edit: "03/11/2026 - 01:17 PM"
 ---
 
 <section id="dl-overview" class="nds-content-section nds-doc-overview">
@@ -71,8 +71,8 @@ Pick another component when:
     </dt>
     <dd>
       <div class="nds-definition-action">
-        <span>https://example.gov.sa/profile</span>
-        <button type="button" class="nds-btn nds-subtle nds-icon-only">
+        <span id="dl-profile-url">https://example.gov.sa/profile</span>
+        <button type="button" class="nds-btn nds-subtle nds-icon-only nds-copy" data-copy-target="#dl-profile-url">
           <i class="nds-icon nds-hgi-copy-01" aria-hidden="true"></i>
           <span class="nds-label">Copy URL</span>
         </button>
@@ -90,8 +90,8 @@ Pick another component when:
     </dt>
     <dd>
       <div class="nds-definition-action">
-        <span>user@example.gov.sa</span>
-        <button type="button" class="nds-btn nds-subtle nds-icon-only">
+        <span id="dl-email">user@example.gov.sa</span>
+        <button type="button" class="nds-btn nds-subtle nds-icon-only nds-copy" data-copy-target="#dl-email">
           <i class="nds-icon nds-hgi-copy-01" aria-hidden="true"></i>
           <span class="nds-label">Copy email</span>
         </button>

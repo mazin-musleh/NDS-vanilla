@@ -9,11 +9,8 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
 ### Next session (handoff 2026-10-26)
 
 - **Autocomplete: one aborted request, once.** A screenshot run logged `docs-assets/data/appointment-services.json` as `ERR_ABORTED` on the first click. A trace showed one request that finishes, and two reruns were clean. Watch for it.
-- **Event pages: a link in muted text fails axe `link-in-text-block` (serious).** The Built-in Features description links on `events/hajj.md`, `foundation-day.md` and `national-day-96.md`, before and after the Feature List move (old build A/B, 2026-10-29). A plain `<a>` fails there too while the same link passes on doc pages, so the cause is shared by the event pages (likely their link styling), not the link class. Find it in the event pack CSS or the page.
-- **JS architecture hotspots (full-tree `js architecture` audit, 2026-11-01).** Suspected, not proven: each needs a single-file deep read (`/nds-js-audit nds-<file>.js architecture`), which confirms or clears it. All nine checked 2026-11-01. One note from the deep reads is left below.
-  - `nds-main-nav.js`, known and left: a menu switch arms its open in `toggleTimer`, and `dropdown.closeAll()` does not cancel it, so `NDS.MainNav.closeMenus()` or a Modal that opens in the ~0.3 s switch still opens the new menu (reproduced in Chrome). Cancelling it in `closeAll` can leave the dim layer up in the phone drawer path (`scheduleDropdownOpen`); fix the backdrop hand-off with it.
+- **Definition List: "With actions" is an add-on to Details, not a Structure row** (its Copy buttons now use `nds-copy` + `data-copy-target`).
 - **Card text on phones (owner, 2026-11-01), later.** (The action row gap is now 12px across, 8px between rows, 2026-11-02.) Card text should scale on phones: check it against `_sass/sass.md` ("shrink boxes, never reading text"; a title may step, a description may not) before you build.
-- **Definition List: the `#dl-actions` Copy button has no `nds-copy` + `data-copy-target`** (see `utilities/copy.md`); "With actions" is an add-on to Details, not a Structure row.
 
 ### v2.0.0 release
 
