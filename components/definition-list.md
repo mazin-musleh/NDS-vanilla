@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 04:08 PM"
+last_edit: "03/11/2026 - 04:27 PM"
 ---
 
 <section id="dl-overview" class="nds-content-section nds-doc-overview">
@@ -48,6 +48,15 @@ Pick another component when:
   </div>
   <div class="nds-definition-item">
     <dt>
+      <i class="hgi hgi-stroke hgi-mail-01" aria-hidden="true"></i>
+      <span class="nds-label">Email</span>
+    </dt>
+    <dd id="dl-email">
+      <span>m.alharbi@example.gov.sa</span>
+    </dd>
+  </div>
+  <div class="nds-definition-item">
+    <dt>
       <i class="hgi hgi-stroke hgi-building-02" aria-hidden="true"></i>
       <span class="nds-label">Organization</span>
     </dt>
@@ -62,43 +71,11 @@ Pick another component when:
   </div>
 </dl>
 </script>
-<script type="text/html" id="dl-actions" data-canon>
-<dl class="nds-definition-list">
-  <div class="nds-definition-item">
-    <dt>
-      <i class="hgi hgi-stroke hgi-link-01" aria-hidden="true"></i>
-      <span class="nds-label">Profile URL</span>
-    </dt>
-    <dd>
-      <div class="nds-definition-action">
-        <span id="dl-profile-url">https://example.gov.sa/profile</span>
-        <button type="button" class="nds-btn nds-subtle nds-icon-only nds-copy" data-copy-target="#dl-profile-url">
-          <i class="nds-icon nds-hgi-copy-01" aria-hidden="true"></i>
-          <span class="nds-label">Copy URL</span>
-        </button>
-        <button type="button" class="nds-btn nds-subtle nds-icon-only">
-          <i class="nds-icon nds-hgi-share-01" aria-hidden="true"></i>
-          <span class="nds-label">Share URL</span>
-        </button>
-      </div>
-    </dd>
-  </div>
-  <div class="nds-definition-item">
-    <dt>
-      <i class="hgi hgi-stroke hgi-mail-01" aria-hidden="true"></i>
-      <span class="nds-label">Email</span>
-    </dt>
-    <dd>
-      <div class="nds-definition-action">
-        <span id="dl-email">user@example.gov.sa</span>
-        <button type="button" class="nds-btn nds-subtle nds-icon-only nds-copy" data-copy-target="#dl-email">
-          <i class="nds-icon nds-hgi-copy-01" aria-hidden="true"></i>
-          <span class="nds-label">Copy email</span>
-        </button>
-      </div>
-    </dd>
-  </div>
-</dl>
+<script type="text/html" id="dl-copy" data-canon>
+<button type="button" class="nds-btn nds-subtle nds-icon-only nds-copy" data-copy="m.alharbi@example.gov.sa">
+  <i class="nds-icon nds-hgi-copy-01" aria-hidden="true"></i>
+  <span class="nds-label">Copy email</span>
+</button>
 </script>
     </div>
   </div>
@@ -116,7 +93,8 @@ The Layout, Style, Emphasis, Size and Loading rows go on the list. The two Cards
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Details (default) | — | — | `dl`, `dt` and `dd`, for data where each title names its value, such as a profile |
-| Structure | With actions | canon `#dl-actions` | — | Values with buttons after them, such as copy and share. `nds-definition-action` holds the value and its buttons in one row. A button in it is SM, and a size class on the button still wins |
+| Actions | Copy button | `.nds-definition-action` | `#dl-email` | Buttons after a value, such as copy and share. `nds-definition-action` on the `dd` puts the value and its buttons in one row. A button in it is SM, and a size class on the button still wins |
+| Actions | Copy button | canon `#dl-copy` | `#dl-email` | The same: the button. Give it a `data-copy` with the value, or a `data-copy-target`, see [Copy](../utilities/copy) |
 | Layout | Stacked (default) | — | — | Each value under its title, for long values |
 | Layout | Table | `.nds-table-view` | `.nds-definition-list` | Titles in one column and values in the next, aligned across every item |
 | Layout | Table on phones (hint: Below 600px only) | `.nds-table-view-sm` | `.nds-definition-list` | The table layout below 600px only. Stacked on wider screens |

@@ -9,7 +9,6 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
 ### Next session (handoff 2026-10-26)
 
 - **Autocomplete: one aborted request, once.** A screenshot run logged `docs-assets/data/appointment-services.json` as `ERR_ABORTED` on the first click. A trace showed one request that finishes, and two reruns were clean. Watch for it.
-- **Definition List: "With actions" is an add-on to Details, not a Structure row** (its Copy buttons now use `nds-copy` + `data-copy-target`).
 - **Card text on phones (owner, 2026-11-01), later.** (The action row gap is now 12px across, 8px between rows, 2026-11-02.) Card text should scale on phones: check it against `_sass/sass.md` ("shrink boxes, never reading text"; a title may step, a description may not) before you build.
 
 ### v2.0.0 release
