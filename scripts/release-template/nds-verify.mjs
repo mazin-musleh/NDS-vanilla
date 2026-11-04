@@ -37,7 +37,8 @@
 //   }
 //
 // Writes, per page: each state at each width and theme, and per state a sheet-<state>.png that
-// shows it under the reference: every theme for the page's first state, the first theme for the rest. The reference takes the state's lang and direction, so an Arabic
+// shows it under the reference: every theme for the page's first state, the first theme for the rest.
+// A page taller than a sheet gets more, one slice each: sheet-<state>-2.png and on. The reference takes the state's lang and direction, so an Arabic
 // page compares with a right-to-left reference in Arabic. Prints the audit findings, console errors (a CSP one names its
 // source), failed loads, sideways scroll, a wrong window.innerWidth, and NDS parts still alive off the
 // page (a view that left without NDS.init.destroy: give a framework view a state whose run leaves it); exits 1 when there is
@@ -388,24 +389,33 @@ try {
         // every theme; the rest show the first theme. Every shot was still checked above: agents skipped
         // sheets when each held four shots (rigs 4, 5, 9, 10).
         const scale = 0.375;
+        // A row shows 1400px of sheet, about 3,700px of page: a taller page takes more sheets, one slice each,
+        // so the bottom is never cut and no sheet grows too tall to read.
+        const slice = 1400;
+        const pngHeight = (file) => readFileSync(join(dir, file)).readUInt32BE(20) * scale;
         for (const [n, r] of rows.entries()) {
             const shown = cols.map((c, i) => i).filter((i) => n === 0 || cols[i].t === THEMES[0]);
             const head = shown.map((i) => `<th>${cols[i].w}px ${cols[i].t}</th>`).join('');
-            const row = (x) => `<tr><th>${x.name}</th>${shown.map((i) =>
-                `<td><div style="width:${cols[i].w * scale}px"><img src="${x.cells[i]}" style="width:100%"></div></td>`).join('')}</tr>`;
+            const row = (x, part) => `<tr><th>${x.name}</th>${shown.map((i) =>
+                `<td><div style="width:${cols[i].w * scale}px"><img src="${x.cells[i]}" style="width:100%; margin-top:-${part * slice}px"></div></td>`).join('')}</tr>`;
             const sheetWidth = Math.ceil(shown.reduce((sum, i) => sum + cols[i].w * scale + 10, 160));
-            const name = `sheet-${slug(r.name)}`;
-            // data-nds-loaded up front: the shot's reveal wait would otherwise run out its 10 s.
-            writeFileSync(join(dir, `${name}.html`), `<!doctype html><html data-nds-loaded><meta charset="utf-8"><style>
-                body { margin: 8px; font: 13px system-ui; background: #fff } table { border-collapse: collapse }
-                th, td { border: 1px solid #ccc; padding: 4px; vertical-align: top; text-align: start }
-                td div { max-height: 1400px; overflow: hidden }</style>
-                <h1 style="font-size:16px">${pg.path}: ${r.name}</h1><table><tr><th></th>${head}</tr>${r.ref ? row(r.ref) : ''}${row(r)}</table>`);
-            sheets.push(async () => {
-                const sheet = await shoot(`${LOCAL}/__out/${slug(pg.path)}/${name}.html`, { width: sheetWidth, theme: 'light' });
-                writeFileSync(join(dir, `${name}.png`), sheet.png);
-            });
-            report.push(`${pg.path} [${r.name}] sheet: ${join(dir, `${name}.png`)}`);
+            const tallest = Math.max(...[r, r.ref].filter(Boolean).flatMap((x) => shown.map((i) => pngHeight(x.cells[i]))));
+            const parts = Math.max(1, Math.ceil(tallest / slice));
+            for (let part = 0; part < parts; part++) {
+                const name = `sheet-${slug(r.name)}${part ? `-${part + 1}` : ''}`;
+                const title = `${pg.path}: ${r.name}${parts > 1 ? ` (part ${part + 1} of ${parts})` : ''}`;
+                // data-nds-loaded up front: the shot's reveal wait would otherwise run out its 10 s.
+                writeFileSync(join(dir, `${name}.html`), `<!doctype html><html data-nds-loaded><meta charset="utf-8"><style>
+                    body { margin: 8px; font: 13px system-ui; background: #fff } table { border-collapse: collapse }
+                    th, td { border: 1px solid #ccc; padding: 4px; vertical-align: top; text-align: start }
+                    td div { max-height: ${slice}px; overflow: hidden }</style>
+                    <h1 style="font-size:16px">${title}</h1><table><tr><th></th>${head}</tr>${r.ref ? row(r.ref, part) : ''}${row(r, part)}</table>`);
+                sheets.push(async () => {
+                    const sheet = await shoot(`${LOCAL}/__out/${slug(pg.path)}/${name}.html`, { width: sheetWidth, theme: 'light' });
+                    writeFileSync(join(dir, `${name}.png`), sheet.png);
+                });
+                report.push(`${pg.path} [${r.name}${parts > 1 ? `, part ${part + 1} of ${parts}` : ''}] sheet: ${join(dir, `${name}.png`)}`);
+            }
         }
     }
     await pool(sheets);
