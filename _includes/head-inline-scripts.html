@@ -1,23 +1,23 @@
 <script>
     (function() {
-        var v; try { v = localStorage.getItem('nds-theme'); } catch (e) {}
-        if (v) {
-            var d = document.documentElement;
-            var t = ((d.getAttribute('data-theme') || '') + ' ' + v).split(/\s+/)
-                .filter(function (x, i, a) { return x && a.indexOf(x) === i; });
-            d.setAttribute('data-theme', t.join(' '));
+        var saved; try { saved = localStorage.getItem('nds-theme'); } catch (e) {}
+        if (saved) {
+            var root = document.documentElement;
+            var themes = ((root.getAttribute('data-theme') || '') + ' ' + saved).split(/\s+/)
+                .filter(function (theme, i, all) { return theme && all.indexOf(theme) === i; });
+            root.setAttribute('data-theme', themes.join(' '));
         }
     })();
     (function () {
-        document.querySelectorAll('link[rel="preload"][data-nds-defer]').forEach(function (p) {
-            var l = document.createElement('link');
-            for (var i = 0; i < p.attributes.length; i++) {
-                var a = p.attributes[i];
-                if (a.name !== 'rel' && a.name !== 'as') l.setAttribute(a.name, a.value);
+        document.querySelectorAll('link[rel="preload"][data-nds-defer]').forEach(function (preload) {
+            var link = document.createElement('link');
+            for (var i = 0; i < preload.attributes.length; i++) {
+                var attribute = preload.attributes[i];
+                if (attribute.name !== 'rel' && attribute.name !== 'as') link.setAttribute(attribute.name, attribute.value);
             }
-            l.rel = 'stylesheet';
-            p.removeAttribute('data-nds-defer');
-            document.head.appendChild(l);
+            link.rel = 'stylesheet';
+            preload.removeAttribute('data-nds-defer');
+            preload.parentNode.insertBefore(link, preload.nextSibling);
         });
     })();
 </script>
