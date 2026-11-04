@@ -186,6 +186,11 @@
       flex: 1;
     }
 
+    // In a row, the column's auto top margin drops the actions to the bottom; .nds-end keeps that.
+    > .nds-card-actions:not(.nds-end) {
+      margin-top: 0;
+    }
+
     // A narrow card keeps the text its room: the actions go under it.
     @container (width < 480px) {
       > .nds-card-actions {
