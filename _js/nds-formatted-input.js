@@ -531,10 +531,13 @@
         return container && NDS.field.findOwnInput(container);
     }
 
+    var writingValue = false;
     function setValue(el, value) {
         var input = findInput(el);
         if (!input) return false;
-        NDS.setValue(input, value == null ? '' : String(value));
+        // A whole value from a script may lack its country, as a paste may: the input handler reads the flag.
+        writingValue = true;
+        try { NDS.setValue(input, value == null ? '' : String(value)); } finally { writingValue = false; }
         return true;
     }
 
@@ -579,7 +582,7 @@
             },
             // A keyboard composing a word owns its text until it commits (Android): a rewrite then doubles it.
             input: function(e, context) {
-                if (context && !e.isComposing) stampIdentifier(context.input, { country: /^insertFrom(Paste|Drop)$/.test(e.inputType), inserted: e.data });
+                if (context && !e.isComposing) stampIdentifier(context.input, { country: writingValue || /^insertFrom(Paste|Drop)$/.test(e.inputType), inserted: e.data });
             },
             // A word composed into an empty field takes the country, as one typed does.
             compositionend: function(e, context) {

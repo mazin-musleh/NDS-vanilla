@@ -130,9 +130,6 @@
                 return;
             }
 
-            // Native attribute — the browser enforces it too, so the length rule
-            // still gates before this JS loads (or with it deleted).
-            this.minLength = parseInt(this._input.getAttribute('minlength'), 10) || 8;
             // Keep every authored chip — tests resolve per check, so a rule
             // registered after init (addRule) activates its chips on the next input.
             this._ruleChips = Array.from(container.querySelectorAll('[data-rule]'));
@@ -198,6 +195,8 @@
             // null when this container has no match source — the match rule reads it
             // to tell "no source wired" apart from "source is empty".
             var matchValue = this._matchSource ? this._matchSource.value : null;
+            // Native minlength, read per check: the browser enforces it too, and a host may change it after start.
+            this.minLength = parseInt(this._input.getAttribute('minlength'), 10) || 8;
             var context = { minLength: this.minLength, matchValue: matchValue };
 
             this._ruleChips.forEach(function (chip) {

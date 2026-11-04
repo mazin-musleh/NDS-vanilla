@@ -52,6 +52,8 @@
     // An input that stays interactive is readonly by design (Custom Select's display): leaving the state keeps it so.
     NDS.state.onToggle('readonly', SCOPE, (el, on) => {
         el.querySelectorAll('input, textarea, select').forEach((input) => { if (!isInteractive(input)) input.readOnly = on; });
+        // The fields inside take and drop it too, whether markup or a script set the scope's: the pickers read it there.
+        el.querySelectorAll('.nds-form-container').forEach((container) => (on ? NDS.state.add : NDS.state.remove)(container, 'readonly'));
         el.querySelectorAll(PICKER).forEach((btn) => {
             const held = on || !!btn.closest(`${DISABLED}, ${READONLY}`);
             NDS.aria.disabled(btn, held);
