@@ -367,7 +367,7 @@
     addRule({ id: 'parts-touch', group: 'structure', docs: 'layout/block.html', check(context) {
         if (!isMainSheetApplied()) return; // measured before the gaps exist; css-missing reports it
         // A table counts by the wrapper its script adds: before that, bare tables in prose touch for a moment.
-        const partSelector = ':is(.nds-form-container, .nds-form-group, .nds-definition-list, .nds-table-wrapper, .nds-alert, .nds-stepper, .nds-list, .nds-tabs, .nds-block, .nds-flex, .nds-grid, .nds-empty, .nds-chart, form)';
+        const partSelector = ':is(.nds-form-container, .nds-form-group, .nds-definition-list, .nds-table-wrapper, .nds-alert, .nds-stepper, .nds-list, .nds-tabs, .nds-block, .nds-prose, .nds-flex, .nds-grid, .nds-empty, .nds-chart, form)';
         // A note or paragraph flush against a part touches too (rig 7: a note under a definition list).
         const textSelector = ':is(p, .nds-note)';
         const isShown = el => el.getClientRects().length && getComputedStyle(el).position !== 'absolute';
