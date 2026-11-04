@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "04/11/2026 - 10:28 PM"
 ---
 
 <section id="share-overview" class="nds-content-section nds-doc-overview">
@@ -167,6 +167,27 @@ Pick another component when:
 </button>
 </script>
 
+<script type="text/html" id="share-device-item" data-canon>
+<button class="nds-btn nds-subtle nds-dropmenu-item nds-share-device" type="button" aria-label="More Options" data-i18n-aria-label="share.more_options" hidden>
+  <i class="nds-icon nds-hgi-more-horizontal" aria-hidden="true"></i>
+  <span class="nds-label" data-i18n="share.more_options">More Options</span>
+</button>
+</script>
+
+<script type="text/html" id="share-device-button" data-canon>
+<button class="nds-btn nds-secondary-outline nds-share-device" type="button" aria-label="More Options" data-i18n-aria-label="share.more_options" hidden>
+  <i class="nds-icon nds-hgi-more-horizontal" aria-hidden="true"></i>
+  <span class="nds-label" data-i18n="share.more_options">More Options</span>
+</button>
+</script>
+
+<script type="text/html" id="share-device-icon" data-canon>
+<button class="nds-btn nds-secondary-outline nds-icon-only nds-share-device nds-tooltip" type="button" aria-label="More Options" data-i18n-aria-label="share.more_options" title="More Options" data-i18n-title="share.more_options" data-tooltip-hover="500" hidden>
+  <i class="nds-icon nds-hgi-more-horizontal" aria-hidden="true"></i>
+  <span class="nds-label" data-i18n="share.more_options">More Options</span>
+</button>
+</script>
+
     </div>
   </div>
 </section>
@@ -178,7 +199,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-Custom Link is two rows of one choice: write both attributes on `.nds-share`. Icon Only Trigger is four rows of one choice on the menu's trigger button, so it is off on the Inline structures. Each Custom Target is three rows of one choice, one per structure: a menu item at the end of the menu, or a button after Copy Link in the Inline row or in Inline Icons.
+Custom Link is two rows of one choice: write both attributes on `.nds-share`. Icon Only Trigger is four rows of one choice on the menu's trigger button, so it is off on the Inline structures. Each Custom Target is three rows of one choice, one per structure: a menu item at the end of the menu, or a button after Copy Link in the Inline row or in Inline Icons. Device Share is three rows of one choice in the same places. Write its button `hidden`: the script shows it where the browser can open the device's share sheet.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
@@ -191,6 +212,9 @@ Custom Link is two rows of one choice: write both attributes on `.nds-share`. Ic
 | Icon Only Trigger | Icon Only Trigger (hint: Hide the trigger's label) | `.nds-tooltip` | `.nds-dropmenu-trigger` | The tooltip that names the hidden label |
 | Icon Only Trigger | Icon Only Trigger (hint: Hide the trigger's label) | `[data-tooltip-hover="500"]` | `.nds-dropmenu-trigger` | Opens the tooltip on hover, so a click still opens the menu |
 | Icon Only Trigger | Icon Only Trigger (hint: Hide the trigger's label) | `[title="Share Page"]` | `.nds-dropmenu-trigger` | The tooltip text: the same words as the `aria-label` |
+| Device Share | Device Share (hint: Opens the phone's share sheet, for any app) | canon `#share-device-item` | `.nds-dropmenu-menu` | The device's share sheet, as a menu item. It reaches every app on the device, such as Telegram, Snapchat, SMS and AirDrop |
+| Device Share | Device Share (hint: Opens the phone's share sheet, for any app) | canon `#share-device-button` | `.nds-share-copy:not(.nds-dropmenu-item):not(.nds-icon-only)` (after) | The same button in the Inline row |
+| Device Share | Device Share (hint: Opens the phone's share sheet, for any app) | canon `#share-device-icon` | `.nds-share-copy.nds-icon-only` (after) | The same button, icon only, in Inline Icons |
 | Custom Target (any) | Facebook (hint: Adds a button that uses data-share-href) | canon `#share-facebook-item` | `.nds-dropmenu-menu` | A target added with `data-share-href`, as a menu item |
 | Custom Target (any) | Facebook (hint: Adds a button that uses data-share-href) | canon `#share-facebook-button` | `.nds-share-copy:not(.nds-dropmenu-item):not(.nds-icon-only)` (after) | The same target as a button in the Inline row |
 | Custom Target (any) | Facebook (hint: Adds a button that uses data-share-href) | canon `#share-facebook-icon` | `.nds-share-copy.nds-icon-only` (after) | The same target as an icon-only button in Inline Icons |
@@ -222,6 +246,11 @@ Custom Link is two rows of one choice: write both attributes on `.nds-share`. Ic
 {: #share-custom-link}
 
 `data-share-url` and `data-share-title` on `.nds-share` replace the page link and the page title. A relative link, such as `/news/12`, becomes a full link on the current site. A link whose scheme is not `http`, `https`, `mailto` or `tel` is ignored, and the buttons share the current page.
+
+### Device Share
+{: #share-device}
+
+`.nds-share-device` opens the device's own share sheet with the link and the title. The user picks any app on the device, not only the built-in targets. The button ships with `hidden`, and the script shows it only where the browser has `navigator.share`: most phones, and Chrome and Edge on Windows. Elsewhere it stays hidden, and Copy Link still covers every app. Closing the sheet does nothing.
 
 ### Custom Target
 {: #share-custom-target}
@@ -347,6 +376,7 @@ Custom Link is two rows of one choice: write both attributes on `.nds-share`. Ic
 | `.nds-share-linkedin` | a button in `.nds-share` | Opens the LinkedIn share page with the link |
 | `.nds-share-whatsapp` | a button in `.nds-share` | Opens WhatsApp with the title and the link in one message |
 | `.nds-share-copy` | a button in `.nds-share` | Copies the link and shows the checkmark |
+| `.nds-share-device` | a button in `.nds-share` | Opens the device's share sheet with the title and the link. Write it `hidden`: `init()` shows it where the browser has `navigator.share` |
 | `.nds-share-menu` | the `.nds-dropmenu-menu` in `.nds-share` | The script adds it at `init()`. Labels in the menu stay on one line |
 {: .nds-table .nds-responsive}
 

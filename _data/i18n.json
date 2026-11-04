@@ -1848,6 +1848,12 @@
   "ar": "نسخ الرابط"
  },
  {
+  "section": "share",
+  "key": "more_options",
+  "en": "More Options",
+  "ar": "خيارات أخرى"
+ },
+ {
   "section": "sidemenu",
   "key": "sidebar",
   "en": "Sidebar",

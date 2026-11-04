@@ -2,9 +2,10 @@
  * Rides: nds-copy (the copy-link action)
  *      · nds-dropmenu (when the buttons sit in a menu; soft — an inline row works too)
  * Requires:
- *   .nds-share needs .nds-share-x, .nds-share-linkedin, .nds-share-whatsapp, .nds-share-copy, [data-share-href] — no button shares
+ *   .nds-share needs .nds-share-x, .nds-share-linkedin, .nds-share-whatsapp, .nds-share-copy, .nds-share-device, [data-share-href] — no button shares
  * Methods:
- *   NDS.Share.init()   delegate clicks on .nds-share — safe to call again
+ *   NDS.Share.init()   delegate clicks on .nds-share, and show each .nds-share-device where
+ *                      the browser has navigator.share — safe to call again
  * Events:
  *   (none)
  * Hooks:
@@ -15,7 +16,9 @@
  *                      classes don't cover; {url} and {title} are filled in, encoded
  * Gotchas:
  *   - The built-in targets are identified by CLASS: .nds-share-x, .nds-share-linkedin,
- *     .nds-share-whatsapp, .nds-share-copy. A class wins over data-share-href.
+ *     .nds-share-whatsapp, .nds-share-copy, .nds-share-device. A class wins over data-share-href.
+ *   - .nds-share-device opens the device's share sheet. Write it `hidden`: init() shows it
+ *     only where the browser has navigator.share.
  *   - X, LinkedIn, WhatsApp and data-share-href open a 600×400 popup window; a mailto: or
  *     tel: pattern opens in the same tab, so no empty window stays behind.
  *   - init() stamps .nds-share-menu on each share dropmenu's menu.
@@ -72,7 +75,13 @@
         else if (button.classList.contains('nds-share-linkedin')) shareOnLinkedIn(url);
         else if (button.classList.contains('nds-share-whatsapp')) shareOnWhatsApp(url, title);
         else if (button.classList.contains('nds-share-copy')) copyLink(url, button);
+        else if (button.classList.contains('nds-share-device')) shareOnDevice(url, title);
         else shareOnHref(button.getAttribute('data-share-href'), url, title);
+    }
+
+    function shareOnDevice(url, title) {
+        // A closed sheet rejects: nothing to show
+        navigator.share({ url, title }).catch(() => {});
     }
 
     function shareOnHref(template, url, title) {
@@ -83,7 +92,7 @@
         else openPopup(href);
     }
 
-    const TARGET_SELECTOR = '.nds-share-x, .nds-share-linkedin, .nds-share-whatsapp, .nds-share-copy, [data-share-href]';
+    const TARGET_SELECTOR = '.nds-share-x, .nds-share-linkedin, .nds-share-whatsapp, .nds-share-copy, .nds-share-device, [data-share-href]';
 
     let abortController = null;
     function init() {
@@ -94,6 +103,7 @@
         // mis-stamp — so a scoped sweep is unambiguous.
         document.querySelectorAll('.nds-share .nds-dropmenu-menu')
             .forEach(menu => menu.classList.add('nds-share-menu'));
+        if (navigator.share) document.querySelectorAll('.nds-share-device').forEach(button => { button.hidden = false; });
         document.addEventListener('click', (e) => {
             const button = e.target.closest(TARGET_SELECTOR);
             if (!button) return;
