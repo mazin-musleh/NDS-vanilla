@@ -60,7 +60,8 @@
  *     for a component that shows the cause itself (password's red chips). It beats native messages.
  *   - A readonly checkbox, radio or switch cannot change: NDS.field cancels the click that Space
  *     or an arrow key sends, since the browser ignores readOnly on those inputs.
- *   - refresh() dispatches nothing on the field but a phone's nds:phone:change (nds-formatted-input.js), so it cannot re-enter your own input handler. Setting
+ *   - refresh() dispatches nothing on the field but a phone's nds:phone:change and the country picker's
+ *     select when a full number picks it (nds-formatted-input.js), so it cannot re-enter your own input handler. Setting
  *     input.value from JS notifies nothing on its own: call refresh() or dispatch input/change.
  *   - Forms owns the submit listener on every real <form class="nds-form">. data-ajax makes it
  *     preventDefault() after validation — the request is yours to send from nds:form:valid.
@@ -102,6 +103,8 @@
     // Where a status lives: the nearest of these.
     var STATUS_HOST = '.nds-form-container, .nds-form-group, .nds-feedback';
     var loadingRefs = new WeakMap();
+    // A form's fields that failed while their component's bundle had not landed.
+    var waitedOn = new WeakMap();
     // An event whose part already showed the field's message: the status part leaves it up.
     var messagedEvents = new WeakSet();
     var pendingEnds = new WeakMap();
@@ -170,11 +173,9 @@
         loadingRefs.delete(formControl);
         NDS.state.remove(refs.shell, 'loading');
         refs.shell.hidden = true;
+        refs.rest.forEach(function(wasHidden, child) { child.hidden = wasHidden; });
         var input = formControl.querySelector('input, textarea, select');
-        var hasValue = !!(input && String(input.value || '').trim());
-        refs.rest.forEach(function(wasHidden, child) {
-            child.hidden = child.classList.contains('nds-clear') ? !hasValue : wasHidden;
-        });
+        if (input) syncClear(input, formControl);
     }
 
     // nds-loading is the canon on every container, so the class spells loading too.
@@ -394,6 +395,8 @@
             options = options || { showMessages: true, focusFirst: true };
             var form = formElement.closest('.nds-form') || formElement;
             var validationResult = NDS.validation.checkAll(form, { extra: getRangeMessage });
+            // Read before the mount below can start what they wait for.
+            var waiting = validationResult.pending ? validationResult.invalidFields.filter(NDS.init.isPending) : [];
             // A field still waiting for its component: load what it waits for, so the next submit can pass.
             if (validationResult.pending) NDS.init.mount(form);
 
@@ -402,6 +405,12 @@
                 validationResult.errors.forEach(function(e) { statusManager.set({ element: e.field, status: 'error', message: e.message }); });
                 // A rule's field that passed drops the error it showed.
                 validationResult.passed.forEach(function(el) { statusManager.clear(el); });
+                // "Still loading" on a field the native pass now passes: nothing else drops it.
+                var failed = validationResult.invalidFields;
+                (waitedOn.get(form) || []).forEach(function(el) {
+                    if (failed.indexOf(el) === -1 && validationResult.passed.indexOf(el) === -1 && NDS.status.get(el) !== '') statusManager.clear(el);
+                });
+                waitedOn.set(form, waiting);
             }
             var first = validationResult.errors.find(function(e) { return e.input; });
             if (options.focusFirst && first) first.input.focus();
@@ -421,7 +430,8 @@
     var recheckOn = null;
     function syncShownMessages(e) {
         var target = e.target;
-        if (!target || !target.closest) return;
+        // A country pick during setup is not the user's fix: the status the page shipped stays.
+        if (!target || !target.closest || NDS.field.isSettingUp()) return;
         var seen = [];
         NDS.validation.rules.forEach(function(recheckRule) {
             if (recheckRule.on.indexOf(e.type) === -1) return;
@@ -464,8 +474,9 @@
     // checks the target itself.
     var isActive = NDS.field.isActive;
 
-    // The clear button shows while the field holds a value.
+    // The clear button shows while the field holds a value, and not beside the spinner: exitLoading syncs it.
     function syncClear(input, formControl) {
+        if (loadingRefs.has(formControl)) return;
         var clearButton = formControl.querySelector('.nds-clear');
         if (clearButton && input.type !== 'radio' && input.type !== 'checkbox') {
             clearButton.toggleAttribute('hidden', input.value.trim() === '');
@@ -705,7 +716,7 @@
                 // A group without its own rule drops its message on input too.
                 var group = context.control.closest('.nds-form-group');
                 if (group && NDS.status.get(group) !== ''
-                    && !group.hasAttribute('data-min-checked') && !group.hasAttribute('data-max-checked') && !group.hasAttribute('data-required')) {
+                    && !group.hasAttribute('data-min-checked') && !group.hasAttribute('data-max-checked') && !NDS.validation.isRequired(group)) {
                     statusManager.clear(group);
                 }
             },
@@ -865,12 +876,6 @@
             }
         },
 
-        // Re-sync a form-control's chrome (clear button, validation, radio-group
-        // paint) after its value/checked is set programmatically. Call this — or
-        // dispatch an input/change event — when changing a field's value from JS;
-        // raw assignment alone no longer notifies the field. Dispatches nothing
-        // itself, so it can't re-enter a caller's own input handler. No-op outside
-        // a form-control.
         refresh: function(el) { NDS.field.refresh(el); },
 
         // Form Validation

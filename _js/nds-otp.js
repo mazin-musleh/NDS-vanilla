@@ -95,11 +95,6 @@
         return last;
     }
 
-    function clearInputs(group) {
-        getOtpInputs(group).forEach(function (i) { i.value = ''; });
-        syncHidden(group);
-    }
-
     // The group from the group, a box or a selector.
     function findGroup(el) {
         el = NDS.resolveElement(el);
@@ -114,9 +109,10 @@
     }
 
     function clearGroup(group) {
-        clearInputs(group);
-        dispatch(group, 'nds:otp:clear');
         var inputs = getOtpInputs(group);
+        inputs.forEach(function (i) { i.value = ''; });
+        syncHidden(group);
+        dispatch(group, 'nds:otp:clear');
         if (inputs[0]) inputs[0].focus();
         return true;
     }
@@ -156,7 +152,7 @@
         dispatch(group, 'nds:otp:change', { filled: isAllFilled(group) });
     }
 
-    function handleBeforeInput(e, group, input, inputs) {
+    function handleBeforeInput(e, group) {
         // Multi-char insert = paste or autofill. Paste text rides on
         // dataTransfer (e.data is null for insertFromPaste), so fall back to it.
         // Handling it here lets the paste event itself proceed un-prevented —
@@ -170,7 +166,9 @@
         var digits = NDS.toLatinDigits(data).replace(/\D/g, '');
         if (!digits.length) return;
 
-        focusAfterSpread(group, inputs, distributeDigits(group, digits, inputs.indexOf(input)));
+        // The live boxes, as handleInput reads them: a host may have removed one since setup.
+        var inputs = getOtpInputs(group);
+        focusAfterSpread(group, inputs, distributeDigits(group, digits, inputs.indexOf(e.target)));
 
         dispatch(group, 'nds:otp:change', { filled: isAllFilled(group) });
     }
@@ -179,7 +177,6 @@
         var input = e.target;
         var inputs = getOtpInputs(group);
         var index = inputs.indexOf(input);
-        var isRtl = NDS.isRtl;
 
         // preventDefault still: WebKit reads Backspace in a read-only field as Back.
         if (input.readOnly && (e.key === 'Backspace' || e.key === 'Delete')) { e.preventDefault(); return; }
@@ -204,15 +201,16 @@
                 dispatch(group, 'nds:otp:change', { filled: false });
                 break;
 
+            // The row is always laid out left to right (_otp.scss), so the arrows never mirror.
             case 'ArrowLeft':
                 e.preventDefault();
-                var left = isRtl ? inputs[index + 1] : inputs[index - 1];
+                var left = inputs[index - 1];
                 if (left) left.focus();
                 break;
 
             case 'ArrowRight':
                 e.preventDefault();
-                var right = isRtl ? inputs[index - 1] : inputs[index + 1];
+                var right = inputs[index + 1];
                 if (right) right.focus();
                 break;
 
@@ -275,7 +273,8 @@
         };
 
         // A form reset empties the boxes but not the hidden carrier: a hidden input's value is its attribute.
-        NDS.field.onReset(inputs[0].form, function () { syncHidden(group); }, { signal: signal });
+        // The message goes first: the carrier's change would re-check the group and show it again.
+        NDS.field.onReset(inputs[0].form, function () { clearStaleStatus(group); syncHidden(group); }, { signal: signal });
 
         inputs.forEach(function (input, i) {
             // Each box says its place in the page's language; a label the page wrote itself stays.
@@ -283,7 +282,7 @@
             var label = input.getAttribute('aria-label');
             if (!label || DEFAULT_LABEL.test(label)) strings.set(input, 'aria-label', 'digit', vars);
             input.addEventListener('beforeinput', function (e) {
-                handleBeforeInput(e, group, input, inputs);
+                handleBeforeInput(e, group);
             }, { signal: signal });
             input.addEventListener('input', function (e) { handleInput(e, group); }, { signal: signal });
             input.addEventListener('keydown', function (e) { handleKeydown(e, group); }, { signal: signal });

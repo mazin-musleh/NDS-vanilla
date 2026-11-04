@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 09:20 PM"
+last_edit: "04/11/2026 - 12:54 PM"
 ---
 
 <section id="otp-overview" class="nds-content-section nds-doc-overview">
@@ -172,7 +172,7 @@ For another code length, copy a box and give it a unique `id`. The script number
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Keyboard Navigation</span>
-              <p class="nds-card-description">The arrow keys move between the boxes, in the reading direction of the page. Backspace empties the box and moves back. Delete empties it and moves forward.</p>
+              <p class="nds-card-description">The left and right arrow keys move to the box on that side. Backspace empties the box and moves back. Delete empties it and moves forward.</p>
             </div>
           </div>
         </li>

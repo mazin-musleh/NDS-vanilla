@@ -259,8 +259,9 @@
     function getKind(input) {
         var control = input.parentElement;
         if (input.type === 'hidden' || !control || !control.classList.contains('nds-form-control')) return null;
-        var container = control.closest('.nds-formatted');
-        if (!container) return null;
+        // The input's own container: a country picker's search box sits inside the phone's control.
+        var container = control.closest('.nds-form-container');
+        if (!container || !container.classList.contains('nds-formatted')) return null;
         var kind = container.getAttribute('data-format');
         return presets.indexOf(kind) >= 0 ? kind : 'formatted';
     }
@@ -299,7 +300,7 @@
     // The picked country item: the one whose data-value Dropmenu holds in its hidden input. Before Dropmenu
     // builds that input, the item it will pick first: data-select-value beats a selected item, as there.
     function getPickedItem(picker) {
-        var hidden = picker.querySelector('input[type="hidden"]');
+        var hidden = picker.querySelector('input[type="hidden"][data-nds-select-value]');
         var value = hidden ? hidden.value : picker.getAttribute('data-select-value');
         var items = picker.querySelectorAll('.nds-dropmenu-item');
         return [].find.call(items, function(item) { return value && item.getAttribute('data-value') === value; })
@@ -527,7 +528,7 @@
     // The text box of a .nds-formatted field, from its container or its input; null on a miss.
     function findInput(ref) {
         var el = NDS.resolveElement(ref), container = el && el.closest && el.closest('.nds-formatted');
-        return container && container.querySelector('.nds-form-control > input:not([type="hidden"])');
+        return container && NDS.field.findOwnInput(container);
     }
 
     function setValue(el, value) {

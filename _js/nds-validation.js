@@ -186,7 +186,7 @@
         // Form's field classes are the structure every component sits in.
         const isFilled = (field) => { const input = findOwnField(field); return !!input && input.type !== 'checkbox' && input.type !== 'radio' && input.value !== ''; };
         const waiting = [...form.querySelectorAll('.nds-form-container, .nds-form-group')].filter((field) =>
-            !answered.has(field) && isVisible(field, form) && !isDisabled(field)
+            !answered.has(field) && isVisible(field, form) && !isDisabled(field, findOwnField(field))
             && (isRequired(field) || field.querySelector('[required]') || isFilled(field)) && NDS.init.isPending(field));
         waiting.filter((field) => !waiting.some((other) => other !== field && field.contains(other))).forEach((field) => {
             fail(field, field.querySelector(NDS.focusableSel), strings.text('still_loading'));

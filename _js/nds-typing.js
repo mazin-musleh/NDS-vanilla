@@ -5,7 +5,6 @@
  *                                     with one group around the format's tokens, getUnit(token) its unit:
  *                                     { size, first, valid, open } for digits (no first: a fixed run, as a
  *                                     year), or { words(), keys, label(name) } for a word (AM/PM)
- *   NDS.typing.type(mask, value, caret, end, keys)  keys typed over [caret, end] → { value, caret }
  *   NDS.typing.addTypingListeners(input, options)  shaped typing and paste on the input: options { getMask(), read(text)
  *                                     (the text in the field's format, or null), adopt() (commit what the
  *                                     read just found; true when it did), signal, decimal }
@@ -369,5 +368,5 @@
         return { value, caret: at, dropped, open: slots.length - kept.length };
     }
 
-    NDS.typing ={ compile, type, addTypingListeners, group, isSlotCharacter };
+    NDS.typing ={ compile, addTypingListeners, group, isSlotCharacter };
 })();

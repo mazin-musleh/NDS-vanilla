@@ -81,6 +81,8 @@
                 const switchToggle = findToggle(e.target);
                 if (!switchToggle) return;
                 e.preventDefault();
+                // A held key toggles once, as a native checkbox does.
+                if (e.repeat) return;
                 toggle(switchToggle);
             },
         },

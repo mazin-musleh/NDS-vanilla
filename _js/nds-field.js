@@ -17,6 +17,7 @@
  *                                     was cancelled; form a <form>, document (every form) or null
  *   NDS.field.isActive(input)         it takes the active and focus states: not readonly, or interactive
  *   NDS.field.findOwnControl(container) · NDS.field.findOwnInput(container)   a container's own, never a nested one's
+ *   NDS.field.isSettingUp()           true while the parts' setupInput run: an event then comes from setup, not the user
  * Events:
  *   (none)
  * Hooks:
@@ -103,7 +104,10 @@
     // A container's own field: never one inside a nested container, never a hidden carrier. A group's: its first field.
     function findOwnInput(container) {
         const selector = 'input:not([type="hidden"]), textarea, select';
-        if (!container.classList.contains('nds-form-container')) return container.querySelector(selector);
+        // A group's first enabled field: the one its rule focuses (NDS.validation.answerGroup).
+        if (!container.classList.contains('nds-form-container')) {
+            return container.querySelector('input:not([type="hidden"]):enabled, textarea:enabled, select:enabled') || container.querySelector(selector);
+        }
         return NDS.findOwnParts(container, selector, '.nds-form-container')[0] || null;
     }
 
@@ -279,5 +283,5 @@
         });
     }
 
-    NDS.field = { addType, create, refresh, onReset, isActive, findOwnControl, findOwnInput };
+    NDS.field = { addType, create, refresh, onReset, isActive, findOwnControl, findOwnInput, isSettingUp: () => settingUp };
 })();
