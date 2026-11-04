@@ -282,6 +282,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Top Bar** — Today, the clock and the weather are [Meta](https://mazin-musleh.github.io/NDS-vanilla/components/meta.html) lines, at Meta's LG size: 16px at every width (the text shrank to 12–14px on tablets). `nds-md` or `nds-sm` on the item's `.nds-meta` picks a smaller one.
 
 ### Fixed
+- **Table of Contents** — A click on an entry keeps the page's own address. In an app with `<base href>`, such as Angular, the address changed to the site root, so a reload opened the home page.
 - **Hero** — A sub hero keeps a light tint of the brand color with a dull brand, such as a brown one. Its tint was so near gray that it matched the top bar, and the white navigation between them looked like a gap. This hit custom palettes and the Foundation Day theme. DGA and bright brands look the same as before.
 - **Document Head** — A stylesheet you load after the head's preloads, such as a theme right after the critical CSS, now wins its ties with NDS. The head script added each NDS stylesheet at the end of `<head>`, after yours, so the critical CSS overrode a theme's color tokens. It now adds each one where its preload is.
 - **Alert** — An alert that is not a toast and has `closable: false` shows no close button, also with a `duration`. The `duration` added a close button, though only a toast closes itself.

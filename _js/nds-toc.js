@@ -249,7 +249,8 @@
             const top = entry.target.getBoundingClientRect().top - this._getNavOffset();
             (this._box || window).scrollBy({ top, behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
             // A router keeps its state. A srcdoc frame has no address: the browser throws on the write.
-            if (location.protocol !== 'about:') history.replaceState(history.state, '', link.getAttribute('href'));
+            // The page's own path: a <base href> would resolve a bare #id against the site root.
+            if (location.protocol !== 'about:') history.replaceState(history.state, '', location.pathname + location.search + link.hash);
         }
 
         destroy() {

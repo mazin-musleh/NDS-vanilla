@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.8.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 08:21 PM"
+last_edit: "04/11/2026 - 09:16 PM"
 ---
 
 <section id="page-layout-overview" class="nds-content-section nds-doc-overview">
@@ -673,6 +673,7 @@ A console has no side info, because the side menu holds the side column. What a 
 - Return a fragment, not a wrapper `div`, from a framework component in the content layout or in `nds-content`. In the content layout, a wrapper takes a grid column: with a side menu, the whole page shrinks to the side menu's width. In `nds-content`, a wrapper gets no width of its own, so narrow content moves away from the page edges.
 - Angular has no fragments: it keeps each component's tag in the page. Give a component that renders an NDS element an attribute selector, such as `selector: 'section[appSubHero]'`, so its tag is the NDS element. A tag in between breaks the NDS rules that read the next element, such as the hero with `nds-aside`, which moves the side info up beside the title.
 - In an app with a hash router (`#/page`), the skip link's `#main-content` reads as a route. Handle its click instead: `preventDefault()`, then focus `#main-content`, which needs `tabindex="-1"` for that.
+- In an app with `<base href>`, such as Angular, a `#` link reads against the base, not the page: the skip link opens the home page. Handle its click the same way.
 - On a page with long text, flatten the hero with `nds-flat`: see [Hero](../ui-shell/hero).
 
 </div>
