@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 04:36 PM"
+last_edit: "04/11/2026 - 07:45 PM"
 ---
 
 <section id="helpers-overview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "03/11/2026 - 04:36 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-Helper classes are seven CSS classes for the markup you write yourself: a wrapper, a custom panel, a line of text. Each class does one thing. `nds-center` centers, and `nds-flush` removes spacing, `nds-flush-inline` and `nds-flush-block` remove only the side or the top and bottom padding. `nds-ltr` sets left-to-right text, and `nds-color-primary` sets the brand text color. `nds-note` makes a small line of secondary text.
+Helper classes are six CSS classes for the markup you write yourself: a wrapper, a custom panel, a line of text. Each class does one thing. `nds-center` centers, and `nds-flush` removes spacing, `nds-flush-inline` and `nds-flush-block` remove only the side or the top and bottom padding. `nds-color-primary` sets the brand text color. `nds-note` makes a small line of secondary text.
 
 Pick another component when:
 
@@ -45,8 +45,8 @@ Pick another component when:
       <div class="nds-card-content">
         <div class="nds-card-text">
           <span class="nds-card-title">تم استلام طلبك</span>
-          <p class="nds-card-description">رقم الطلب <span id="helpers-number">REQ-2026-4417</span>، وسيصلك رد خلال يومي عمل.</p>
-          <p class="nds-card-description">للاستفسار اتصل على <span id="helpers-phone">+966 11 456 7890</span></p>
+          <p class="nds-card-description">رقم الطلب <span id="helpers-number" dir="ltr">REQ-2026-4417</span>، وسيصلك رد خلال يومي عمل.</p>
+          <p class="nds-card-description">للاستفسار اتصل على <span dir="ltr">+966 11 456 7890</span></p>
         </div>
       </div>
       <p class="nds-note">احتفظ برقم الطلب لمتابعة حالته.</p>
@@ -73,8 +73,6 @@ The canon is a request confirmation on an Arabic page. Each Class chip adds its 
 | Class (any) | Flush (hint: Removes padding, margin, border and corner radius) (limit: 1 flush) | `.nds-flush` | `#helpers-card` | Removes a component's own padding, margin, border and corner radius when the frame around it gives them. Here the card loses its border and padding, and a card also loses its fill and shadow, so its content sits straight on the page |
 | Class (any) | Flush sides (hint: Removes only the padding at the start and the end) (limit: 1 flush) | `.nds-flush-inline` | `#helpers-card` | Removes only the padding at the start and the end, so the content lines up with the edge around it. On [Tabs](../components/tabs), write it on each panel |
 | Class (any) | Flush top and bottom (hint: Removes only the padding above and below) (limit: 1 flush) | `.nds-flush-block` | `#helpers-card` | Removes only the padding above and below. |
-| Class (any) | LTR | `.nds-ltr` | `#helpers-number` | A request number, phone number, IBAN, email address or URL inside Arabic text. Without it, the hyphens and the plus sign move to the wrong end |
-| Class (any) | LTR | `.nds-ltr` | `#helpers-phone` | The phone number. Written with the first |
 | Class (any) | Brand Color | `.nds-color-primary` | `#helpers-number` | Text that is not a link, in the brand text color: a figure, a term, a status word |
 | Note Status | None (default) | — | — | Secondary text color |
 | Note Status | Error | `[data-status="error"]` | `.nds-note` | The required-fields line above a form, or a note about a cost or a limit |
@@ -116,20 +114,7 @@ The canon is a request confirmation on an Arabic page. Each Class chip adds its 
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Priority Over Component Styles</span>
-              <p class="nds-card-description"><code class="nds-inline-code lang-html">nds-center</code>, <code class="nds-inline-code lang-html">nds-flush</code>, <code class="nds-inline-code lang-html">nds-flush-inline</code>, <code class="nds-inline-code lang-html">nds-flush-block</code> and <code class="nds-inline-code lang-html">nds-ltr</code> use <code class="nds-inline-code lang-css">!important</code>, so they apply on any element, even one a component styles, with no extra selector.</p>
-            </div>
-          </div>
-        </li>
-        <li class="nds-card">
-          <div class="nds-card-header">
-            <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-language-skill" aria-hidden="true"></i></span>
-            </div>
-          </div>
-          <div class="nds-card-content">
-            <div class="nds-card-text">
-              <span class="nds-card-title">LTR Inside a Sentence</span>
-              <p class="nds-card-description"><code class="nds-inline-code lang-html">nds-ltr</code> works on a <code class="nds-inline-code lang-html">span</code> in running text. It isolates the value, so its signs stay in place and the Arabic text around it keeps its order.</p>
+              <p class="nds-card-description"><code class="nds-inline-code lang-html">nds-center</code>, <code class="nds-inline-code lang-html">nds-flush</code>, <code class="nds-inline-code lang-html">nds-flush-inline</code> and <code class="nds-inline-code lang-html">nds-flush-block</code> use <code class="nds-inline-code lang-css">!important</code>, so they apply on any element, even one a component styles, with no extra selector.</p>
             </div>
           </div>
         </li>
@@ -188,8 +173,7 @@ The canon is a request confirmation on an Arabic page. Each Class chip adds its 
 - Put one `nds-center` on a wrapper, not on every child. Text alignment inherits.
 - `nds-center` centers the element itself only when it is narrower than its parent, such as an element with a `max-width`.
 - A card with `nds-center` centers its content, not the card. To center the card, center its container: `nds-flex nds-center`.
-- Use `nds-ltr` on every left-to-right value inside Arabic text: phone numbers, IBANs, tracking codes, email addresses and URLs. Without it, a leading plus sign, a slash or a question mark moves to the wrong end.
-- There is no class for the other direction. For right-to-left text in a left-to-right page, write `dir="rtl"` and `lang` on the element. Browsers, screen readers and translation tools read the attributes.
+- Write `dir="ltr"` on a `span` around every left-to-right value inside Arabic text: phone numbers, IBANs, tracking codes, email addresses and URLs. Without it, a leading plus sign, a slash or a question mark moves to the wrong end. For right-to-left text in a left-to-right page, write `dir="rtl"` and `lang`. Browsers, screen readers and translation tools read the attributes, so NDS has no class for direction.
 - Do not use `nds-flush` for small spacing changes. It clears four properties with `!important`, so a later change is harder. Set the component's own custom property instead.
 - Do not build a layout from these classes. Use [Flex](../layout/flex) or [Grid](../layout/grid).
 - There are no margin or padding classes. Set `--gap` on the flex or grid that holds the items, or use a [spacing token](../foundations/tokens) in your own CSS.
@@ -217,7 +201,6 @@ The canon is a request confirmation on an Arabic page. Each Class chip adds its 
 | `nds-flush` | Any element | Sets padding, margin, border and corner radius to 0, with `!important` |
 | `nds-flush-inline` | Any element | Sets the start and end padding to 0, with `!important`. |
 | `nds-flush-block` | Any element | Sets the top and bottom padding to 0, with `!important`. |
-| `nds-ltr` | Any element | Sets left-to-right direction with `!important` on the element and everything inside it, and isolates it from the text around it |
 | `nds-color-primary` | Any element | Sets the brand text color, `--text-primary` |
 | `nds-note` | A text element | Small text in the secondary paragraph color. No margin |
 {: .nds-table .nds-responsive}
@@ -245,7 +228,6 @@ The canon is a request confirmation on an Arabic page. Each Class chip adds its 
 - [Registration](../examples/registration): centered notes, and `nds-flush` on a section.
 - [Sign In](../examples/sign-in): `nds-flush` on a section.
 - [FAQ Template](../templates/faq-template): `nds-flush` on tab panels.
-- [Contact Us Template](../templates/contact-us-template): `nds-ltr` on a phone field.
 - [Help and Support Template](../templates/help-support-template): `nds-color-primary` on definition list titles.
 
 </div>

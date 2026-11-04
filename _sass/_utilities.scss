@@ -150,20 +150,6 @@
 
 
 // ==============================================
-// DIRECTION UTILITIES
-// ==============================================
-
-// Force LTR direction on a subtree — useful for phone numbers, codes, URLs,
-// and any LTR-only content that must render predictably inside an RTL page.
-.nds-ltr {
-  direction: ltr !important;
-  // Required, not optional: a browser ignores direction on an inline element
-  // while unicode-bidi is normal. isolate also stops the LTR run from reordering
-  // the Arabic text around it.
-  unicode-bidi: isolate;
-}
-
-// ==============================================
 // TEXT COLOR UTILITIES
 // ==============================================
 

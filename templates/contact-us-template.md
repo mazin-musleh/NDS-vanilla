@@ -79,7 +79,7 @@ sidemenu_mode: false
                                 <span class="nds-label">Phone</span>
                             </label>
                         </div>
-                        <div class="nds-form-control nds-ltr">
+                        <div class="nds-form-control" dir="ltr">
                             <div class="nds-form-action nds-prefix nds-dropmenu" data-select-name="country-code" data-select-value="+966">
                                 <button type="button" class="nds-btn nds-subtle nds-menu-btn nds-dropmenu-trigger">
                                     <span class="nds-label">+966</span>

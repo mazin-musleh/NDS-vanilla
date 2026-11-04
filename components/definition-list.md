@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 04:46 PM"
+last_edit: "04/11/2026 - 07:28 PM"
 ---
 
 <section id="dl-overview" class="nds-content-section nds-doc-overview">
@@ -233,6 +233,7 @@ The Layout, Style, Emphasis, Size and Loading rows go on the list. The two Cards
 - Use the table layout for short values side by side. For tablets and wider, add both `nds-table-view-md` and `nds-table-view-lg`.
 - Use the row layout for compact details inside a card.
 - Give every title icon `aria-hidden="true"`. The label names the item.
+- A value that needs `dir="ltr"`, such as a time or a phone number, takes it on a `<span>` inside the `<dd>`, never on the `<dd>`. On the `<dd>`, it moves the value to the left edge of an Arabic page.
 - Keep the label inside an icon-only action button. Screen readers read it as the button's name.
 - In a divided list that is not a grid, add `nds-last-row` to the last item when another element comes after it in the list. Otherwise the item keeps the line under it.
 
