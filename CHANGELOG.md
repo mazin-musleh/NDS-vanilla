@@ -304,6 +304,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Alert, Feedback Icons and File Upload** — A method that takes an element also takes its bare id, such as `'save-alert'`, as other components do.
 - **Autocomplete** — "No results" shows only on a `data-strict` field. `destroy()` cleans the field so it can start again. `NDS.init.destroy(view)` releases the field, and `create()` on a built field returns its instance.
 - **Autocomplete** — A failed request is announced ("Could not load suggestions") and tried again on the next focus. One empty row no longer drops all the results, Enter in an input method (IME) picks its own candidate and not a suggestion, and results that arrive after the user left the field no longer open the menu. Enter and Space on the clear button clear the field; they toggled the menu.
+- **Autocomplete** — With `data-fetch="once"`, a second click or Down Arrow while the list loads waits for that request. It aborted it and started the download again.
 - **Autocomplete** — The clear button empties the field again: Forms empties it from a page-wide listener, which the click no longer reached. `nds:autocomplete:clear` fires once the field is empty.
 - **Avatar** — an avatar that is also an `nds-btn` shows its photo.
 - **Avatar** — A photo that fails to load shows the person icon, not its alt text. Screen readers still read the alt text.

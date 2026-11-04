@@ -116,6 +116,7 @@
 
             // State
             this._cache = null;
+            this._cacheRequest = null;
             this._results = [];
             this._activeIndex = -1;
             // Rendered items — keyboard nav reads this on every arrow keypress,
@@ -378,25 +379,10 @@
         // on every subsequent call.
         async _fetchOnceAndFilter(query) {
             if (!this._cache) {
-                if (this.fetchAbortController) this.fetchAbortController.abort();
-                this.fetchAbortController = new AbortController();
-                var { signal } = this.fetchAbortController;
-                this._setLoading(true);
-                try {
-                    var data = (await NDS.request(this._url, { signal, json: true })).data;
-                    this._cache = this._extractResults(data);
-                    this._fetchFailed = false;
-                } catch (error) {
-                    if (error.name !== 'AbortError') {
-                        // No cache: the next input retries.
-                        console.warn('NDS Autocomplete: Fetch failed', error);
-                        this._loadFailed();
-                    }
-                    return;
-                } finally {
-                    // See _fetchEach — only the current request clears loading.
-                    if (this.fetchAbortController?.signal === signal) this._setLoading(false);
-                }
+                // A call while the list loads waits for that request: aborting it restarted the download.
+                this._cacheRequest ||= this._fetchCache().finally(() => { this._cacheRequest = null; });
+                await this._cacheRequest;
+                if (!this._cache) return;
             }
 
             if (this._customFilter) {
@@ -411,6 +397,25 @@
             }
             this._renderResults(this._results, query);
             this._dispatchEvent('nds:autocomplete:fetch', { query: query, results: this._results });
+        }
+
+        async _fetchCache() {
+            this.fetchAbortController = new AbortController();
+            var { signal } = this.fetchAbortController;
+            this._setLoading(true);
+            try {
+                var data = (await NDS.request(this._url, { signal, json: true })).data;
+                this._cache = this._extractResults(data);
+                this._fetchFailed = false;
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    // No cache: the next input retries.
+                    console.warn('NDS Autocomplete: Fetch failed', error);
+                    this._loadFailed();
+                }
+            } finally {
+                this._setLoading(false);
+            }
         }
 
         // Extract the array of results from a parsed JSON response, honoring
