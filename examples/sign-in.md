@@ -686,10 +686,11 @@ breadcrumb: [["Examples", "/examples"]]
     });
 
     // A server rejection belongs in the card, not a toast — it must stay until
-    // fixed. Create it on demand from the failure path:
+    // fixed. It goes last in the content, just above the submit button, where the
+    // user looks after a press on a tall form. Create it on demand from the failure path:
     //   NDS.Alert.create({ status: 'error', title: 'Sign-in failed',
     //     description: reason, target: '#credentials-form .nds-card-content',
-    //     prepend: true, closable: false });
+    //     closable: false });
     credForm.addEventListener('nds:form:valid', function () {
       var captchaField = captchaInput.closest('.nds-form-container');
       if (captchaInput.value !== captchaCode) {
