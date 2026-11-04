@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "04/11/2026 - 07:11 PM"
 ---
 
 <section id="autocomplete-overview" class="nds-content-section nds-doc-overview">
@@ -269,7 +269,7 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-url` | `.nds-form-container` | The URL that returns the JSON results. Required. It may hold a query string: the script then adds the typed text after `&` |
+| `data-url` | `.nds-form-container` | The URL that returns the JSON results. Required, unless `create()` gets the `items` option. It may hold a query string: the script then adds the typed text after `&` |
 | `data-display-field` | `.nds-form-container` | The result field that each row shows and that a pick writes into the input. The default is `Title` |
 | `data-field` | an element in the `.nds-autocomplete-row` template | The result field the script writes into it, as text. In the `data-display-field` field, the match is marked. A field with no value removes its element, or the whole `.nds-meta-item` around it. `renderItem()`, when you pass it, replaces the template |
 | `data-fetch` | `.nds-form-container` | `each` (the default) requests the URL on each search. `once` requests it once and filters in the browser |
@@ -328,6 +328,7 @@ The `NDS.Autocomplete` script loads after the page shows. Until it loads, each c
 |---|---|---|
 | `filter(items, query)` | a match in the `data-display-field` field | Returns the results to show. It runs in both fetch modes: with `each`, on the server's results |
 | `renderItem(item, query)` | the `data-display-field` field, with the match marked | Returns the HTML of one row. The script inserts it as HTML, so escape the text yourself. The match is not marked: add `<mark>` yourself if you need it |
+| `items` | none | The results your page already holds, in place of `data-url`. Pass an array, or a function that returns one: the script calls it on each search, so it can return the list for the page language. The field needs no `data-url`, and it searches the list as `data-fetch="once"` does |
 {: .nds-table .nds-responsive}
 
 | Event | Fired on | Detail |

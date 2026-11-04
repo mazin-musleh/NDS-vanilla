@@ -4,7 +4,7 @@
  *      · nds-empty (the "no results" placeholder)
  * Methods:
  *   NDS.Autocomplete.init()                 arm the delegated focusin builder
- *   NDS.Autocomplete.create(el, options)     build one field now; options {filter, renderItem}.
+ *   NDS.Autocomplete.create(el, options)     build one field now; options {filter, renderItem, items}.
  *                                            Null when the markup is incomplete; the live one if started
  *   NDS.Autocomplete.validate(el, opts)  a data-strict field's check → {valid, message, picked}; opts {showMessage}
  *   NDS.Autocomplete.destroy(el)             undo create() before you discard the field
@@ -28,7 +28,8 @@
  *     doesn't match it ("Choose from the suggestions"). It never changes what submits.
  *     Text already in the field when it builds (server-prefilled) counts as picked.
  *   - Activates on an input[autocomplete="on"] inside .nds-form-container[data-url], built
- *     on the field's FIRST FOCUS.
+ *     on the field's FIRST FOCUS. A field given `items` needs no data-url: create() builds it.
+ *   - `items` is an array, or a function read on each search (a list that follows the page language).
  *   - renderItem() output is inserted as HTML — you own the escaping. The default renderer
  *     escapes and highlights the match.
  *   - Only the first 20 results render; data-fetch="once" caches the list and filters it
@@ -113,6 +114,9 @@
             //                      per keystroke. Use for small static datasets
             //                      (countries, currencies, departments, etc.)
             this._fetchMode = containerElement.getAttribute('data-fetch') || 'each';
+            // Items the page already holds: searched like a fetched-once list.
+            this._itemSource = options.items || null;
+            if (this._itemSource) this._fetchMode = 'once';
 
             // State
             this._cache = null;
@@ -378,6 +382,7 @@
         // Fetch the full list once, cache it, filter the cache client-side
         // on every subsequent call.
         async _fetchOnceAndFilter(query) {
+            if (this._itemSource) this._cache = (typeof this._itemSource === 'function' ? this._itemSource() : this._itemSource) || [];
             if (!this._cache) {
                 // A call while the list loads waits for that request: aborting it restarted the download.
                 this._cacheRequest ||= this._fetchCache().finally(() => { this._cacheRequest = null; });
@@ -808,8 +813,12 @@
     // The built instance and the input of a field from its container, its input or a selector.
     // A field nothing has focused is not built: no menu, no listeners, so a plain write is all it needs.
     const find = (ref) => {
-        const container = NDS.resolveElement(ref)?.closest?.('.nds-form-container[data-url]');
-        return { instance: container?.ndsAutocomplete, input: container?.querySelector('input[autocomplete="on"]') };
+        const field = NDS.resolveElement(ref);
+        // A field built with `items` has no data-url.
+        const container = field?.closest?.('.nds-form-container[data-url]') || field?.closest?.('.nds-form-container');
+        // A built field's input reads autocomplete="off".
+        const instance = container?.ndsAutocomplete;
+        return { instance, input: instance?._input || container?.querySelector('input[autocomplete="on"]') };
     };
 
     NDS.Autocomplete = {
@@ -829,7 +838,7 @@
         validate: (el, opts) => NDS.Form.validateField(NDS.resolveElement(el)?.closest('.nds-form-container') || el, checkField, opts),
         destroy: (element) => NDS.resolveElement(element)?.ndsAutocomplete?.destroy(),
         // Programmatic construction. Pass { filter, renderItem } to override
-        // the default substring match and dropdown-row renderer.
+        // the default substring match and dropdown-row renderer, { items } for a list in memory.
         create: function (element, options) {
             element = NDS.resolveElement(element);
             if (!element) return null;
