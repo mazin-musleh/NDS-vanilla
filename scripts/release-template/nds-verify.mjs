@@ -105,19 +105,24 @@ const CHROME = [process.env.CHROME_PATH,
 ].find((p) => p && existsSync(p));
 if (!CHROME) { console.error('No Chrome or Edge found: set CHROME_PATH.'); process.exit(2); }
 const profile = mkdtempSync(join(tmpdir(), 'nds-verify-profile-'));
-// From an admin shell, Chrome and Edge relaunch themselves de-elevated: the relaunch drops every flag
-// (headless, profile, pipe) and opens a window in the user's own profile. These two stop it.
+// From an admin shell, Chrome and Edge relaunch themselves de-elevated and the relaunch loses the pipe.
+// --do-not-de-elevate stops it (Chrome and Edge 156); the next two cover older builds.
 const chrome = spawn(CHROME, ['--headless=new', '--remote-debugging-pipe', `--user-data-dir=${profile}`,
-    '--disable-features=AutoDeElevate', '--edge-skip-compat-layer-relaunch',
+    '--do-not-de-elevate', '--disable-features=AutoDeElevate', '--edge-skip-compat-layer-relaunch',
     '--no-first-run', '--no-default-browser-check', '--hide-scrollbars', 'about:blank'],
     { stdio: ['ignore', 'ignore', 'ignore', 'pipe', 'pipe'] });
 
-let nextId = 1, buffer = '';
+let nextId = 1, buffer = '', answered = false;
 const pending = new Map(), handlers = new Map();
 // A Chrome that dies mid-run would leave every pending call waiting forever.
-chrome.on('exit', (code) => { for (const { reject } of pending.values()) reject(new Error(`Chrome exited (${code})`)); pending.clear(); });
+chrome.on('exit', (code) => {
+    const why = answered ? '' : ' at launch, before it answered. From an administrator shell, run from a normal one';
+    for (const { reject } of pending.values()) reject(new Error(`Chrome exited (${code})${why}`));
+    pending.clear();
+});
 chrome.stdio[4].setEncoding('utf8'); // a multi-byte char split across chunks decodes whole
 chrome.stdio[4].on('data', (chunk) => {
+    answered = true;
     const parts = (buffer + chunk).split('\0');
     buffer = parts.pop();
     for (const raw of parts) {
