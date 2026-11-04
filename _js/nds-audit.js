@@ -1120,9 +1120,12 @@
         }
     } });
 
-    // A column of standard tags in several colors shows a state: a status tag shows it (rig 10: proposal states as colored tags with icons).
+    // A column of standard tags in several colors or icons shows a state: a status tag shows it (rig 10: proposal states as colored
+    // tags with icons; KPI states as gray tags with a clock or a check).
     addRule({ id: 'tag-state-color', group: 'structure', docs: 'components/tag.html', check(context) {
         const COLOR = /^nds-(blue|green|red|yellow)$/;
+        // State icons only: a category column may give each category its own icon (a globe for online, a building for in person).
+        const STATE_ICON = /^(nds-)?hgi-.*(check|tick|clock|time|hourglass|alert|warning|cancel|close|block|error|loading|pending)/;
         const columns = new Map();
         context.find('td .nds-tag:not([data-status])').forEach(tag => {
             const td = tag.closest('td');
@@ -1135,7 +1138,9 @@
         });
         for (const byCell of columns.values()) for (const tags of byCell.values()) {
             const colors = new Set(tags.map(tag => [...tag.classList].find(name => COLOR.test(name)) || 'default'));
-            if (colors.size > 1) context.report(tags[0], `a table column shows standard tags in ${colors.size} colors: colors that change by row show a state.`,
+            const icons = new Set(tags.map(tag => [...(tag.querySelector('i')?.classList || [])].find(name => STATE_ICON.test(name))).filter(Boolean));
+            const varies = colors.size > 1 ? `${colors.size} colors` : icons.size > 1 ? `${icons.size} different state icons` : '';
+            if (varies) context.report(tags[0], `a table column shows standard tags in ${varies}: what changes by row shows a state.`,
                 'Give every tag in the column data-status: success, info, warning, error or neutral. Drop their icons and color classes. The label names the state.', undefined, tags.length);
         }
     } });

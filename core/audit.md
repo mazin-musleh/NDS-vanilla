@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 09:26 PM"
+last_edit: "05/11/2026 - 12:35 AM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -271,7 +271,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `card-status-place` | structure | warn | A status tag (`.nds-tag` with `data-status`) in a card's tag row or meta. A card's state goes in `.nds-card-corner`; the tag row keeps standard tags |
 | `card-value-number` | structure | warn | A `.nds-card-value` with only bare text inside. Bare text shows as the small unit, not the value. Put a number in `nds-number-format`, and a word such as Free in a `<span>` |
 | `status-tag-icon` | structure | warn | An icon in a status tag (`.nds-tag` with `data-status`). The tag shows its dot and the icon, two markers. Drop the icon: the label names the status |
-| `tag-state-color` | structure | warn | A table column whose one-tag cells hold standard tags in more than one color. Colors that change by row show a state: give every tag `data-status` and drop the color classes and icons |
+| `tag-state-color` | structure | warn | A table column whose one-tag cells hold standard tags in more than one color, or with more than one state icon (a check, a clock, an alert). Colors or state icons that change by row show a state: give every tag `data-status` and drop the color classes and icons. A category column with an icon per category passes |
 | `i18n-pack` | i18n | error | The language file of the page did not load. A language NDS does not ship is a `warn`, and only when `window.NDS_I18N_LANGS` has no words for it |
 | `i18n-override` | i18n | warn | A section or key in `window.NDS_I18N` or `window.NDS_I18N_LANGS` that no NDS component or `getStrings()` call has, so it changes nothing |
 | `filter-unclaimed` | structure | error | `data-filter-items` that no filter claimed, so it stays in its skeleton |
