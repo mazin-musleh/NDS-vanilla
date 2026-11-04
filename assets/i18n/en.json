@@ -86,6 +86,7 @@
    "one": "1 event",
    "other": "{n} events"
   },
+  "day_empty": "No events on this day",
   "previous_week": "Previous week",
   "next_week": "Next week",
   "previous_month": "Previous month",
@@ -95,7 +96,6 @@
   "rows": "Rows",
   "month": "Month",
   "days": "Days",
-  "day_empty": "No events on this day",
   "show_all": "Show all events"
  },
  "chart": {

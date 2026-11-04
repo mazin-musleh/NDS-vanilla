@@ -427,6 +427,12 @@
  },
  {
   "section": "calendar",
+  "key": "day_empty",
+  "en": "No events on this day",
+  "ar": "لا توجد فعاليات في هذا اليوم"
+ },
+ {
+  "section": "calendar",
   "key": "previous_week",
   "en": "Previous week",
   "ar": "الأسبوع السابق"
@@ -478,12 +484,6 @@
   "key": "days",
   "en": "Days",
   "ar": "الأيام"
- },
- {
-  "section": "calendar",
-  "key": "day_empty",
-  "en": "No events on this day",
-  "ar": "لا توجد فعاليات في هذا اليوم"
  },
  {
   "section": "calendar",

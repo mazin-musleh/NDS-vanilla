@@ -20,7 +20,7 @@
  *   data-date                any day of the shown week or month, YYYY-MM-DD (none: today); the
  *                            script writes the first day back
  *   data-view                grid | rows | month (none: grid). A calendar under 860px wide shows
- *                            grid as rows
+ *                            grid as a row per day, and has data-state="narrow"
  *   data-day                 the picked day, YYYY-MM-DD (none: the whole week or month)
  *   data-date-param          the date's key in the address (none: date). The date stays there as
  *                            ?date=YYYY-MM-DD, as a Filter's filters do: read once at load, before
@@ -29,12 +29,12 @@
  *                            the opening view drops it
  *   data-calendar-action     on a button: prev | next | today | all (the whole week or month). Its calendar.previous_week (or next_week)
  *                            label marker becomes previous_month in the month view, and back
- *   data-calendar-view       on a button: grid | rows | month. The current one is pressed (rows
- *                            for grid in a narrow calendar)
+ *   data-calendar-view       on a button: grid | rows | month. The current one is pressed
  *   data-calendar-second     hijri | gregory: the title and each day button also show the dates
  *                            in that calendar
  *   .nds-calendar-title      the script writes the week's dates, or the month, into it
- *   .nds-calendar-days       the script writes the weekday names and a button per day into it
+ *   .nds-calendar-days       the script writes the weekday names, a button per day and a narrow
+ *                            Grid's empty-day messages (.nds-calendar-day-none) into it
  *   .nds-calendar-events     a list: each <li> is an event, on the day of its first time[datetime]
  *   .nds-calendar-empty      shows while the week or month, or the picked day, has no events
  *   .nds-calendar-empty-filtered   parts of the empty message (hidden) that show while a Filter hides
@@ -90,6 +90,7 @@
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
     const strings = NDS.i18n.getStrings('calendar', {
         events: { one: '1 event', other: '{n} events' },
+        day_empty: 'No events on this day',
         previous_week: 'Previous week',
         next_week: 'Next week',
         previous_month: 'Previous month',
@@ -135,12 +136,12 @@
             // The grid has 1px rows and each event spans its own height, so a day stacks its events
             // without the gap a taller event in another day leaves in shared rows.
             this._offResizes = [];
-            // Grid draws as rows in a narrow calendar: the Rows button is the one pressed there.
+            // Grid draws a row per day in a narrow calendar. A state, as the calendar cannot query its own width.
             this._offWidth = NDS.onElementResize(el, ({ contentBoxSize }) => {
                 const isNarrow = contentBoxSize[0].inlineSize < GRID_MIN_WIDTH;
                 if (isNarrow !== this._isNarrow) return () => {
                     this._isNarrow = isNarrow;
-                    this._syncViewButtons();
+                    NDS.state[isNarrow ? 'add' : 'remove'](el, 'narrow');
                 };
             });
             // Debounced, so a server's new events land before the count is read.
@@ -165,6 +166,7 @@
             const box = this._element.querySelector('.nds-calendar-days');
             this._weekdays = [];
             this._dayButtons = [];
+            this._dayEmpties = [];
             if (!box) return;
             // The initial stands in for the name in a narrow calendar: Arabic short names are whole words.
             const makeParts = (parts) => parts.map((part) => {
@@ -190,7 +192,18 @@
                 btn.append(name, initial, number, second, dot);
                 return btn;
             });
-            box.replaceChildren(...this._weekdays, ...this._dayButtons);
+            // A narrow Grid's empty day says so beside its button. The button's description already does.
+            this._dayEmpties = Array.from({ length: 7 }, () => {
+                const empty = document.createElement('span');
+                empty.className = 'nds-empty-placeholder nds-calendar-day-none';
+                empty.hidden = true;
+                NDS.aria.hidden(empty, true);
+                const message = document.createElement('span');
+                message.className = 'nds-empty-message';
+                empty.append(message);
+                return empty;
+            });
+            box.replaceChildren(...this._weekdays, ...this._dayButtons, ...this._dayEmpties);
         }
 
         _readEvents() {
@@ -374,6 +387,18 @@
                 if (isInRange && (!this._day || isSameDay(day, this._day))) item.setAttribute('data-calendar-day', offset % 7);
                 else item.removeAttribute('data-calendar-day');
             }
+            // A narrow Grid's day button spans its day's lines of two events. An empty day says so,
+            // unless the whole range is empty or a day is picked: the calendar's own message speaks then.
+            const shownPerDay = Array(7).fill(0);
+            for (const { item } of this._events) {
+                if (isShown({ item })) shownPerDay[item.getAttribute('data-calendar-day')]++;
+            }
+            const isEmpty = !shownPerDay.some(Boolean);
+            this._dayEmpties.forEach((empty, i) => {
+                this._dayButtons[i].style.setProperty('--_calendar-lines', Math.max(1, Math.ceil(shownPerDay[i] / 2)));
+                empty.hidden = shownPerDay[i] > 0 || isEmpty || !!this._day;
+                empty.firstChild.textContent = strings.text('day_empty', null, lang);
+            });
             this._fillTiles(calendar, lang);
             this._syncEmpty();
             // A list fitted to the month keeps its size as events hide: Scroll More would not measure again.
@@ -386,9 +411,8 @@
         }
 
         _syncViewButtons() {
-            const pressed = this._view === 'grid' && this._isNarrow ? 'rows' : this._view;
             this._element.querySelectorAll('[data-calendar-view]').forEach((btn) => {
-                const current = btn.dataset.calendarView === pressed;
+                const current = btn.dataset.calendarView === this._view;
                 NDS.aria.pressed(btn, current);
                 NDS.state[current ? 'add' : 'remove'](btn, 'selected');
             });
@@ -452,15 +476,16 @@
         }
 
         // Arrows move along the days (in reading order, so Left is the next day in RTL), Up and Down
-        // a week in the month, Home and End to the ends.
+        // a week in the month and a day in a narrow Grid's column of days, Home and End to the ends.
         _handleDayKey(e) {
             const index = this._dayButtons.indexOf(e.target);
             if (index < 0) return;
             const step = { ArrowLeft: -1, ArrowRight: 1 }[e.key];
+            const rowStep = this._view === 'month' ? 7 : this._view === 'grid' && this._isNarrow ? 1 : 0;
             const last = this._dayCount - 1;
             let target;
             if (step) target = (index + (getComputedStyle(e.target).direction === 'rtl' ? -step : step) + last + 1) % (last + 1);
-            else if (this._view === 'month' && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) target = Math.min(last, Math.max(0, index + (e.key === 'ArrowUp' ? -7 : 7)));
+            else if (rowStep && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) target = Math.min(last, Math.max(0, index + (e.key === 'ArrowUp' ? -rowStep : rowStep)));
             else if (e.key === 'Home') target = 0;
             else if (e.key === 'End') target = last;
             else return;

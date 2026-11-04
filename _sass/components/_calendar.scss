@@ -127,16 +127,17 @@
     display: none;
 }
 
+// Month and a narrow Grid lay the calendar out as a grid: the bar keeps the full row.
+.nds-calendar > .nds-toolbar {
+    grid-column: 1 / -1;
+}
+
 // The events beside the month from 860px. The calendar is its own container and cannot query
 // itself: auto-fit opens the second column at that width.
 .nds-calendar[data-view="month"] {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, calc((860px - var(--_calendar-gap)) / 2)), 1fr));
     align-items: start;
-
-    > .nds-toolbar {
-        grid-column: 1 / -1;
-    }
 
     // The empty message takes the events' cell, not Empty's full row.
     &[data-state~="empty"] > .nds-drawer {
@@ -186,41 +187,28 @@
 
 // Hidden events follow the last one shown, so it takes the divided drawer's last-row look itself.
 // Not on Grid's cards, which keep a whole border.
-@mixin calendar-last-shown($calendar) {
-    #{$calendar} .nds-drawer.nds-divided .nds-calendar-events > li:nth-last-child(1 of [data-calendar-day]:not([data-filtered])) {
-        border-block-end: none;
-        padding-bottom: 0;
-    }
+.nds-calendar[data-nds-calendar-initialized]:not([data-view="grid"]) .nds-drawer.nds-divided .nds-calendar-events > li:nth-last-child(1 of [data-calendar-day]:not([data-filtered])) {
+    border-block-end: none;
+    padding-bottom: 0;
 }
-
-@include calendar-last-shown('.nds-calendar[data-nds-calendar-initialized]:not([data-view="grid"])');
 
 // Rows break out by their own padding, as a drawer does in a card: a row's tile lines up with the
 // title and the days, and its hover fill takes the margin. Not Grid's columns, which sit under their days.
-@mixin calendar-rows-breakout($calendar) {
-    #{$calendar} > .nds-drawer {
-        // And the row button's 1px border. The drawer's width: 100% grows by both sides, as a card breakout does.
-        --_calendar-breakout: calc(var(--spacing-lg) + 1px);
-        width: calc(100% + 2 * var(--_calendar-breakout));
-        margin-inline: calc(-1 * var(--_calendar-breakout));
+.nds-calendar:not([data-view="grid"]) > .nds-drawer {
+    // And the row button's 1px border. The drawer's width: 100% grows by both sides, as a card breakout does.
+    --_calendar-breakout: calc(var(--spacing-lg) + 1px);
+    width: calc(100% + 2 * var(--_calendar-breakout));
+    margin-inline: calc(-1 * var(--_calendar-breakout));
 
-        > .nds-calendar-events > li > .nds-btn {
-            padding-inline: var(--spacing-lg);
-        }
+    // Descendant: the list sits in its Scroll More.
+    .nds-calendar-events > li > .nds-btn {
+        padding-inline: var(--spacing-lg);
     }
 }
-
-@include calendar-rows-breakout('.nds-calendar:not([data-view="grid"])');
 
 // The list's Scroll More only scrolls beside the month: not the Drawer's 400px cap.
 .nds-calendar > .nds-drawer {
     --drawer-max-height: none;
-}
-
-// Under the grid's width Grid draws as rows.
-@container nds-calendar (width < 860px) {
-    @include calendar-last-shown('.nds-calendar[data-nds-calendar-initialized]');
-    @include calendar-rows-breakout('.nds-calendar');
 }
 
 .nds-calendar .nds-calendar-empty {
@@ -232,30 +220,20 @@
 }
 
 // A phone's 7 columns cannot hold Arabic short names, which are whole words: the initial stands in.
+// Not Grid's day rows, which have the room, and where S would be Saturday or Sunday.
 @container nds-calendar (width < 480px) {
-    .nds-calendar-day-name {
-        @include label-hidden;
-    }
-    .nds-calendar-day-initial {
-        display: block;
+    .nds-calendar:not([data-view="grid"]) {
+        .nds-calendar-day-name {
+            @include label-hidden;
+        }
+        .nds-calendar-day-initial {
+            display: block;
+        }
     }
     // A short value in a narrow box steps down with it.
     .nds-calendar-day-number {
         font-size: var(--typo-text-md-FS);
         line-height: var(--typo-text-md-LH);
-    }
-}
-
-// Under the grid's width grid draws as rows, so the switch offers Rows and Month only.
-@container nds-calendar (width < 860px) {
-    .nds-calendar-views > [data-calendar-view="grid"] {
-        display: none;
-
-        // The group rounds its first child's corners; the button after Grid starts the group now.
-        + .nds-btn {
-            border-start-start-radius: var(--btn-group-radius);
-            border-end-start-radius: var(--btn-group-radius);
-        }
     }
 }
 
@@ -318,42 +296,6 @@
 
         .nds-calendar-events > li {
             grid-row-end: span var(--_calendar-rows, 1);
-            padding: 0;
-            // A card's surface and border, as on a stroke card: meta text needs the card's background for contrast.
-            border: 1px solid var(--border-neutral-primary);
-            border-radius: var(--radius-md);
-            background-color: var(--background-card);
-
-            // A divided drawer drops its last row's divider; here it is the card's bottom edge.
-            &:last-child {
-                border-block-end: 1px solid var(--border-neutral-primary);
-            }
-
-            // The column names the day on screen; a screen reader still reads the tile.
-            > .nds-btn > .nds-date-tile {
-                @include label-hidden;
-            }
-
-            // A day column is narrow: the padding steps down, the title takes the SM size,
-            // and a default-size meta its SM step.
-            // The tag still floats; a title line that wraps under it keeps a gap.
-            > .nds-btn {
-                padding: var(--spacing-sm);
-            }
-
-            .nds-drawer-item-head .nds-tag {
-                margin-block-end: var(--spacing-xs);
-            }
-
-            .nds-drawer-item-head > .nds-label {
-                font-size: var(--typo-text-sm-FS);
-                line-height: var(--typo-text-sm-LH);
-                font-weight: var(--font-weight-medium);
-            }
-
-            .nds-meta:not(.nds-sm, .nds-md, .nds-lg) {
-                @include meta-sm;
-            }
         }
 
         // Seven fixed columns, one per day of the week.
@@ -371,6 +313,132 @@
 
         > li[data-calendar-day] {
             grid-column: 1 / -1;
+        }
+    }
+}
+
+// Grid's events are cards, in a day's column or beside its button in a narrow calendar.
+.nds-calendar[data-view="grid"] .nds-calendar-events > li {
+    padding: 0;
+    // A card's surface and border, as on a stroke card: meta text needs the card's background for contrast.
+    border: 1px solid var(--border-neutral-primary);
+    border-radius: var(--radius-md);
+    background-color: var(--background-card);
+
+    // A divided drawer drops its last row's divider; here it is the card's bottom edge.
+    &:last-child {
+        border-block-end: 1px solid var(--border-neutral-primary);
+    }
+
+    // The day's column or row names it on screen; a screen reader still reads the tile.
+    > .nds-btn > .nds-date-tile {
+        @include label-hidden;
+    }
+
+    // A card is narrow: the padding steps down, the title takes the SM size,
+    // and a default-size meta its SM step.
+    // The tag still floats; a title line that wraps under it keeps a gap.
+    > .nds-btn {
+        padding: var(--spacing-sm);
+    }
+
+    .nds-drawer-item-head .nds-tag {
+        margin-block-end: var(--spacing-xs);
+    }
+
+    .nds-drawer-item-head > .nds-label {
+        font-size: var(--typo-text-sm-FS);
+        line-height: var(--typo-text-sm-LH);
+        font-weight: var(--font-weight-medium);
+    }
+
+    .nds-meta:not(.nds-sm, .nds-md, .nds-lg) {
+        @include meta-sm;
+    }
+}
+
+// ----------------------------------------------
+// Grid in a narrow calendar: a row per day
+// ----------------------------------------------
+// The day button heads its row and the day's events wrap two to a line beside it. The script writes
+// the lines each button spans, and the narrow state at the same 860px: the calendar cannot query
+// its own width. The state styles the calendar only; its parts take the container query, as a
+// data-state rule that reaches into the parts restyles them on every state write on the page.
+
+// Over Empty's flex, which the hidden attribute does not beat.
+.nds-calendar .nds-calendar-day-none {
+    display: none;
+}
+
+.nds-calendar {
+    --_calendar-row-gap: var(--spacing-md);
+}
+
+.nds-calendar[data-view="grid"][data-state~="narrow"] {
+    // The calendar's gap under the bar, not the cards' gap.
+    --toolbar-margin-block: 0 calc(var(--_calendar-gap) - var(--_calendar-row-gap));
+    display: grid;
+    grid-template-columns: auto repeat(2, minmax(0, 1fr));
+    gap: var(--_calendar-row-gap);
+    align-items: start;
+}
+
+@container nds-calendar (width < 860px) {
+    .nds-calendar[data-view="grid"] {
+        // One grid for the day buttons and the events: the boxes between step aside.
+        :is(.nds-calendar-days, .nds-drawer, .nds-scroll-more, .nds-calendar-events) {
+            display: contents;
+        }
+
+        // Empty spans the row already; after the days.
+        > .nds-calendar-empty {
+            order: 99;
+        }
+
+        .nds-calendar-day {
+            grid-column: 1;
+            grid-row-end: span var(--_calendar-lines, 1);
+            align-self: stretch;
+            justify-content: center;
+            padding-inline: var(--spacing-lg);
+
+            // A line between days, across the row: 100cqi is the calendar's width, from the button's start.
+            &:not(:first-of-type)::before {
+                content: "";
+                position: absolute;
+                inset-inline-start: 0;
+                inset-block-start: calc(-0.5 * var(--_calendar-row-gap));
+                inline-size: 100cqi;
+                border-block-start: 1px solid var(--divider-color);
+                pointer-events: none;
+            }
+        }
+
+        .nds-calendar-day-none:not([hidden]) {
+            display: flex;
+            grid-column: 2 / -1;
+            align-self: center;
+            padding: var(--spacing-md);
+        }
+
+        // Each day's button, its events, then its empty message; the odd events of a day start a line.
+        @for $day from 0 through 6 {
+            .nds-calendar-day:nth-child(#{$day + 1} of .nds-calendar-day) {
+                order: #{$day * 3};
+            }
+
+            .nds-calendar-events > li[data-calendar-day="#{$day}"] {
+                order: #{$day * 3 + 1};
+                grid-column: 2;
+
+                &:nth-child(even of [data-calendar-day="#{$day}"]:not([data-filtered])) {
+                    grid-column: 3;
+                }
+            }
+
+            .nds-calendar-day-none:nth-child(#{$day + 1} of .nds-calendar-day-none) {
+                order: #{$day * 3 + 2};
+            }
         }
     }
 }
