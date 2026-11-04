@@ -653,6 +653,53 @@
 }
 
 // ==============================================
+// ALTERNATE (vertical, desktop)
+// ==============================================
+// The line in the middle, the steps on both sides, each against the line. Desktop
+// only: a narrower screen keeps them on one side. `of` skips the progress circle.
+
+@include desktop(min) {
+    .nds-stepper#{stepper-is(vertical, lg)}.nds-alternate {
+        .nds-stepper-step {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+            column-gap: var(--spacing-xl);
+        }
+
+        .nds-stepper-base {
+            grid-area: 1 / 2;
+        }
+
+        .nds-stepper-content {
+            grid-area: 1 / 3;
+        }
+
+        .nds-stepper-step:nth-child(even of .nds-stepper-step) .nds-stepper-content {
+            grid-column: 1;
+            text-align: end;
+
+            // A row (a Date Tile beside the text) keeps its cross alignment.
+            &:not(.nds-row) {
+                align-items: flex-end;
+            }
+
+            &.nds-row {
+                justify-content: flex-end;
+            }
+
+            .nds-meta {
+                justify-content: flex-end;
+            }
+
+            > .nds-divider {
+                align-self: stretch;
+                flex-direction: row-reverse;
+            }
+        }
+    }
+}
+
+// ==============================================
 // SEPARATED (vertical)
 // ==============================================
 // No line between the steps: nds-separated on the stepper, or a card on the steps, which the

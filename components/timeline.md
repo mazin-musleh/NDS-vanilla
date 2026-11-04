@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 05:30 PM"
+last_edit: "04/11/2026 - 11:00 PM"
 ---
 
 <section id="timeline-overview" class="nds-content-section nds-doc-overview">
@@ -456,6 +456,7 @@ Each Structure is one use of the timeline, with its order and its labels written
 | Structure | Milestones (hint: The phases of a plan, with an icon each and a button on the current one) (id: milestones) | canon `#timeline-milestones` | — | The phases of a project or a plan, first on top. `nds-icons` gives each phase its icon, and a done phase shows a check mark in its place. The current phase holds a button in `nds-stepper-action` |
 | Order | Newest on top (default) (hint: The last event on top) (not: agenda, milestones) | `.nds-reverse` | `.nds-stepper` | The last event on top. Write the events oldest first, and add a new event at the end. See Order under Behavior |
 | Order | Oldest on top (hint: The first event on top) (not: agenda, milestones) | — | — | The first event on top. Agenda and Milestones always read this way |
+| Alternate | Alternate (hint: The line in the middle, the events on both sides. Desktop only) | `.nds-alternate` | `.nds-stepper:not(.nds-card)` | On a desktop, the line runs down the middle and the events take turns on each side of it. Tablets and phones keep every event on one side. For a page-wide history or plan, such as an About page. Not in a timeline card, which is too narrow |
 | Size | MD (default) | — | — | 32px circles. A dot has one size: 16px |
 | Size | LG | `.nds-lg` | `.nds-stepper:not(.nds-dot)` | 40px circles. Not with dots |
 | Size | XL | `.nds-xl` | `.nds-stepper:not(.nds-dot)` | 48px circles. Not with dots |
@@ -500,6 +501,11 @@ Each Structure is one use of the timeline, with its order and its labels written
 {: .nds-block-title}
 
 A [Divider](../components/divider) at the start of a step's content labels the event: a date, a quarter, or a word such as Today or Pending. Its line runs on as the separator between events. Give every event a label, or none: labels on only some events read unevenly.
+
+### Alternate
+{: .nds-block-title}
+
+`nds-alternate` puts the line in the middle on a desktop, and the events take turns on each side of it, each one against the line. Tablets and phones keep every event on one side, since two columns would be too narrow. Use it for a page-wide history or plan, such as the milestones on an About page.
 
 </div>
   </div>
@@ -606,6 +612,7 @@ A timeline is a Stepper. Its methods, events, custom properties and tokens are o
 | `nds-vertical` | `.nds-stepper` | The events in a column. A timeline needs it |
 | `nds-dot` | `.nds-stepper` | A small dot with no number for each event |
 | `nds-reverse` | `.nds-stepper` | The last step on top. See Order under Behavior |
+| `nds-alternate` | `.nds-stepper` | On a desktop, the line in the middle and the events on both sides. See Alternate under Behavior |
 | `nds-static` | `.nds-stepper` | Every event has the same look, with no progress. See Static under Behavior |
 | `nds-row` | `.nds-stepper-content` | The parts of the event side by side, such as a Date Tile beside the text |
 | `nds-middle` | `.nds-stepper-content.nds-row` | The parts on their middles, top to bottom. A [Flex](../layout/flex) class |

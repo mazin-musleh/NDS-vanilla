@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 03:14 PM"
+last_edit: "04/11/2026 - 11:00 PM"
 ---
 
 <section id="stepper-overview" class="nds-content-section nds-doc-overview">
@@ -151,6 +151,7 @@ Most classes go on `.nds-stepper`. The Card rows put `nds-card` on the stepper, 
 | Layout | Horizontal (default) | — | — | The steps in a row, start to end. Every title must fit its column |
 | Layout | Vertical | `.nds-vertical` | `.nds-stepper` | The steps in a column. For a step with long content or buttons, or a narrow column |
 | Layout | Radial (hint: The current step only, beside a progress ring) | `.nds-radial` | `.nds-stepper:not(.nds-static)` | The current step only, beside the ring. For a narrow space, such as a side column |
+| Alternate | Alternate (hint: Vertical: the line in the middle, the steps on both sides. Desktop only) | `.nds-alternate` | `.nds-stepper.nds-vertical:not(.nds-card)` | On a desktop, the line runs down the middle and the steps take turns on each side. Tablets and phones keep one side. For a page-wide [Timeline](../components/timeline) |
 | Phone layout | Same (default) (hint: Uses the Layout choice) | — | — | The Layout choice on phones: narrower than 600px |
 | Phone layout | Horizontal | `.nds-horizontal-sm` | `.nds-stepper.nds-vertical` | A row on phones: narrower than 600px |
 | Phone layout | Horizontal | `.nds-horizontal-sm` | `.nds-stepper.nds-radial` | A row on phones: narrower than 600px |
