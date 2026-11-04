@@ -248,7 +248,8 @@
             this._box = this._findBox();
             const top = entry.target.getBoundingClientRect().top - this._getNavOffset();
             (this._box || window).scrollBy({ top, behavior: NDS.prefersReducedMotion ? 'auto' : 'smooth' });
-            history.replaceState(history.state, '', link.getAttribute('href'));   // a router keeps its state
+            // A router keeps its state. A srcdoc frame has no address: the browser throws on the write.
+            if (location.protocol !== 'about:') history.replaceState(history.state, '', link.getAttribute('href'));
         }
 
         destroy() {

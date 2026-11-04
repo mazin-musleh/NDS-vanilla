@@ -942,7 +942,8 @@
 
             setTimeout(() => {
                 target.scrollIntoView({ behavior: getScrollBehavior(), block: 'start' });
-                history.replaceState(history.state, '', `#${hash}`);   // a router keeps its state
+                // A router keeps its state. A srcdoc frame has no address: the browser throws on the write.
+                if (location.protocol !== 'about:') history.replaceState(history.state, '', `#${hash}`);
             }, delay);
         }, { signal });
 

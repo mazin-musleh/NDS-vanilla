@@ -1305,6 +1305,8 @@
     // written as is (a leading ? is optional), so a snapshot is restored unre-encoded.
     // Usage: const p = new URLSearchParams(location.search); p.set('page', 2); NDS.writeUrlParams(p);
     NDS.writeUrlParams = (params) => {
+        // A srcdoc or about:blank frame has no address of its own: the browser throws on the write.
+        if (location.protocol === 'about:') return;
         const queryString = String(params).replace(/^\?/, '');
         history.replaceState(history.state, '', location.pathname + (queryString ? '?' + queryString : '') + location.hash);
     };
