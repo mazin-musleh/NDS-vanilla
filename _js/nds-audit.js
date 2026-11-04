@@ -680,6 +680,22 @@
         out.push(selector.slice(from).trim());
         return out;
     };
+    // ponytail: ids, classes and types packed in base 1000; a selector with 1000 of one kind overflows.
+    const getSpecificity = (selector) => {
+        let score = 0;
+        let rest = selector.replace(/:(where|is|not|has)\(((?:[^()]|\([^()]*\))*)\)/g, (whole, name, inner) => {
+            if (name !== 'where') score += Math.max(...splitSelectors(inner).map(getSpecificity));
+            return ' ';
+        });
+        const count = (pattern, weight) => { rest = rest.replace(pattern, () => { score += weight; return ' '; }); };
+        count(/\[[^\]]*\]/g, 1e3);
+        count(/#(?:[\w-]|\\.)+/g, 1e6);
+        count(/\.(?:[\w-]|\\.)+/g, 1e3);
+        count(/::?(?:before|after|first-line|first-letter)\b|::[\w-]+(?:\([^)]*\))?/g, 1);
+        count(/:[\w-]+(?:\([^)]*\))?/g, 1e3);
+        count(/(?:^|[\s>+~])[a-zA-Z][\w-]*/g, 1);
+        return score;
+    };
     const DARK_MODE = /^:root\[data-theme~?="dark"\]/;
     const DARK_AREA = /\[data-theme~?="dark"\]:not\(:root\)/;
     const STATE = /^(--[\w-]+)-(default|hovered|pressed|selected|focused|disabled)$/;
@@ -697,9 +713,11 @@
 
     // What NDS's own sheets declare: their classes, the nds- classes of each selector, and the tokens
     // at :root in light mode, in dark mode, and with the dark-area selector. null when the sheets
-    // come from another origin. With a node, only the sheets that load after it.
+    // come from another origin. With a node, only the sheets that load after it, and the
+    // specificities each class and token is declared at (ties).
     function readNdsSheets(after) {
-        const nds = { classes: new Set(), items: [], light: new Set(), dark: new Set(), area: new Set() };
+        const nds = { classes: new Set(), items: [], light: new Set(), dark: new Set(), area: new Set(), ties: new Map() };
+        const addTie = (key, selector) => (nds.ties.get(key) || nds.ties.set(key, new Set()).get(key)).add(getSpecificity(selector));
         let readable = false;
         for (const sheet of document.styleSheets) {
             if (!sheet.href || !OWN.test(sheet.href)) continue;
@@ -709,10 +727,15 @@
                 for (const selector of it) {
                     const classNames = new Set([...selector.matchAll(/\.(nds-[\w-]+)/g)].map(match => match[1]));
                     if (classNames.size) { nds.items.push(classNames); classNames.forEach(className => nds.classes.add(className)); }
+                    if (after) classNames.forEach(className => addTie(className, selector));
                 }
                 const dark = it.some(selector => DARK_MODE.test(selector)), root = it.includes(':root'), area = it.some(selector => DARK_AREA.test(selector));
                 if (!dark && !root) return;
-                for (const property of cssRule.style) if (property.startsWith('--')) { nds[dark ? 'dark' : 'light'].add(property); if (area) nds.area.add(property); }
+                for (const property of cssRule.style) if (property.startsWith('--')) {
+                    nds[dark ? 'dark' : 'light'].add(property);
+                    if (area) nds.area.add(property);
+                    if (after) it.forEach(selector => addTie(property, selector));
+                }
             }) || readable;
         }
         return readable ? nds : null;
@@ -720,7 +743,8 @@
     const isToken = (nds, property) => nds.light.has(property) || nds.dark.has(property);
 
     // A site sheet before an NDS one loses every tie with it, so its overrides of what that sheet declares do nothing.
-    // A theme between the critical and main sheets passes: main declares no palette or semantic token.
+    // A tie is the same specificity: a :root:root bump wins from anywhere. A theme between the critical and main
+    // sheets passes: main declares no palette or semantic token.
     addRule({ id: 'css-order', group: 'page', docs: 'foundations/tokens.html', check(context) {
         const main = document.querySelector('link[rel="stylesheet"][href*="nds-main"]');
         if (!main || !readNdsSheets()) return;
@@ -731,8 +755,12 @@
             if (!later) continue;
             let touches = false;
             walkRules(sheet, cssRule => {
-                touches ||= [...cssRule.selectorText.matchAll(/\.(nds-[\w-]+)/g)].some(match => later.classes.has(match[1]))
-                    || [...cssRule.style].some(property => isToken(later, property));
+                for (const selector of splitSelectors(cssRule.selectorText)) {
+                    const specificity = getSpecificity(selector);
+                    const isTie = (key) => !!later.ties.get(key)?.has(specificity);
+                    touches ||= [...selector.matchAll(/\.(nds-[\w-]+)/g)].some(match => isTie(match[1]))
+                        || [...cssRule.style].some(property => property.startsWith('--') && isTie(property));
+                }
             });
             if (touches) context.report(node, `${sheet.href || 'an inline <style>'} styles NDS but loads before the NDS stylesheet, so NDS wins every tie and the override does nothing.`,
                 'Load it after the NDS stylesheet.');

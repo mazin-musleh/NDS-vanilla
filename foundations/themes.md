@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 03:47 PM"
+last_edit: "04/11/2026 - 08:18 AM"
 ---
 
 <section id="themes-overview" class="nds-content-section nds-doc-overview">
@@ -186,7 +186,7 @@ A stylesheet theme is your own CSS file that sets the color tokens at `:root`. L
   --background-image-overlay:  var(--colors-primary-950);
 }
 
-/* Dark mode fixes. The second selector reaches dark areas. :root:root wins even if this sheet loads before NDS. */
+/* Dark mode fixes. :root:root wins wherever this sheet loads. The second selector reaches dark areas, and wins only after the critical CSS. */
 :root:root[data-theme~="dark"],
 [data-theme~="dark"]:not(:root) {
   --background-card:   #1f2a37;
