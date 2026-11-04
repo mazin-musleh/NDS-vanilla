@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 07:11 PM"
+last_edit: "04/11/2026 - 09:15 PM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -159,7 +159,11 @@ A view that the framework keeps while it is hidden, such as one in Vue's `<KeepA
 
 A view that leaves with an animation, such as one in Vue's `<Transition>`, stays on the page until the animation ends. Its unmount hooks run when the animation starts, so a `destroy` there stops its components while the user still sees them. Call `destroy` when the animation ends instead. Keep the animation: NDS needs no change to it.
 
+A `<Transition>` fades one element, and a page view renders two: the hero and the content layout. Wrap them in one `div` with `flex: 1; display: flex; flex-direction: column`, the style that the app's mount element takes, and keep the transition. Do not give the wrapper `display: contents`: an element with no box cannot fade.
+
 In Vue, a directive does both calls for a view or a branch. Its `unmounted` hook destroys a branch that is already off the page, and skips one that is still on it because its view is leaving. The `after-leave` event of the `<Transition>` then destroys the whole view. A view that `<KeepAlive>` keeps is only moved off the page, so it still has a parent and keeps its components.
+
+Put the directive on an element that holds a FAB, never on the FAB. A FAB moves to a dock on `<body>`, so it is still on the page when its view goes, and the directive skips it. `destroy` on the element that held it puts the FAB back, and it leaves with the view.
 
 <script type="text/html" id="init-vue-directive" data-canon data-lang="js">
 // v-nds: put it on the root element of a view or of a v-if or v-for branch
