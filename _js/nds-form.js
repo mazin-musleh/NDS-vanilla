@@ -307,8 +307,9 @@
                 return this.clear(container);
             }
 
+            // The message the field shows, as getStatus() reads it: an omitted one kept the old.
             container.dispatchEvent(new CustomEvent('nds:form:status', {
-                detail: { status: status, message: message },
+                detail: { status: status, message: container.getAttribute('data-message') || '' },
                 bubbles: true
             }));
 

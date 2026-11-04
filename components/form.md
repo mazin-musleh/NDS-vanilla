@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 08:24 PM"
+last_edit: "04/11/2026 - 01:11 PM"
 lang: en
 direction: ltr
 ---
@@ -626,7 +626,7 @@ Source: the `forms` group in `_sass/tokens/_components.scss`.
 
 | Event | Fired on | Detail |
 |---|---|---|
-| `nds:form:status` | the field's container, and it bubbles | `{ status, message }`. Both are `null` after `clearStatus()` |
+| `nds:form:status` | the field's container, and it bubbles | `{ status, message }`. `message` is the text the field shows, the same as `getStatus()`, and `''` when it shows none. Both are `null` after `clearStatus()` |
 | `nds:form:validate` | the form, and it bubbles | `{ valid, invalidFields, errors }`, after every `validate()`. Each error is `{ field, input, message }` |
 | `nds:form:valid` | the form, and it bubbles | `{ waitUntil(promise) }`, when a submit passes. `waitUntil()` keeps the form from a second submit until the promise ends, and the submit button shows the spinner |
 | `nds:form:invalid` | the form, and it bubbles | `{ invalidFields, errors }`, when a submit is blocked |

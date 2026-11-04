@@ -1,5 +1,5 @@
 /* NDS.Radio — public surface
- * Rides: nds-validation (its rule; data-error-message when none is picked) · nds-field (its part) · nds-form (validate shows the outcome)
+ * Rides: nds-validation (its rule; data-error-message when none is picked) · nds-form (validate shows the outcome)
  * Methods:
  *   NDS.Radio.validate(el, opts)   the radio group el sits in → {valid, message, selected};
  *                                  opts {showMessage} (default on)
@@ -11,10 +11,8 @@
  * Hooks:
  *   data-required   on the .nds-form-group: one radio must be picked
  * Gotchas:
- *   - A type part of the form field: no init() and no loader entry.
+ *   - No init() and no loader entry: its rule registers when the file runs.
  *   - A group showing an error is checked again on each change, so the message follows the fix.
- *   - A pick, or a checked radio set from code and refreshed, re-syncs the others of its name group:
- *     the browser unchecks them with no event.
  */
 (() => {
     'use strict';
@@ -37,20 +35,6 @@
         answer,
         { on: ['change'] }
     );
-
-    function repaint(changed) {
-        if (changed.type !== 'radio' || !changed.name) return;
-        const group = changed.closest('.nds-form-group');
-        if (!group) return;
-        group.querySelectorAll(`input[type="radio"][name="${CSS.escape(changed.name)}"]`).forEach((radio) => {
-            if (radio !== changed && radio.closest('.nds-form-control')) NDS.field.refresh(radio, { validate: true });
-        });
-    }
-
-    NDS.field.addType('radio', {
-        refresh: (input) => { if (input.type === 'radio' && input.checked) repaint(input); },
-        on: { change: (e, context) => { if (context) repaint(context.input); } },
-    });
 
     const resolveRadios = (el) => {
         const group = NDS.resolveElement(getGroup(el));

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 09:20 PM"
+last_edit: "04/11/2026 - 01:20 PM"
 ---
 
 <section id="checkbox-overview" class="nds-content-section nds-doc-overview">
@@ -124,7 +124,7 @@ A row on `.nds-checkbox-input` (every `<input>`) or `.nds-checkbox` changes ever
 | Validation | At most 3 (hint: Check all four options, then press Validate) | `[data-max-checked="3"]` | `.nds-checkbox-group` | No more than 3 options may be checked. Say the rule in the legend |
 | Validation | At least 2 + At most 3 | `[data-min-checked="2"]` | `.nds-checkbox-group` | Both together: between 2 and 3 options must be checked |
 | Validation | At least 2 + At most 3 | `[data-max-checked="3"]` | `.nds-checkbox-group` | The same |
-| Disabled | Disabled | `[disabled]` | `.nds-checkbox-input` | The user cannot change these options now. Put it on one input to disable one option, or use `data-state~="disabled"` on the group |
+| Disabled | Disabled | `[disabled]` | `.nds-checkbox-input` | The user cannot change these options now. Put it on one input to disable one option, or use `data-state~="disabled"` on the group. To keep one option disabled when the group is enabled again, put `data-state="disabled"` on that option's container |
 | Readonly | Readonly | `[data-state~="readonly"]` | `.nds-checkbox` | The options show their value but cannot change, by pointer or by keyboard. The tile shows a border only, and a checked tile keeps its mark |
 | Layout | Row | `.nds-horizontal` | `.nds-checkbox-group` | The options sit side by side and wrap |
 | Field states | Label, info, feedback | — | — | Shared by every form field. See [Forms](../components/form) |

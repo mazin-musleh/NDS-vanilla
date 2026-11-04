@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 09:20 PM"
+last_edit: "04/11/2026 - 01:20 PM"
 ---
 
 <section id="radio-overview" class="nds-content-section nds-doc-overview">
@@ -95,7 +95,7 @@ A row on `.nds-radio-input` (every `<input>`) or `.nds-radio` changes every opti
 | Color | Neutral (demo: + checked) | `.nds-neutral` | `.nds-radio-input` | Put it on each `<input>`. The checked tile uses the neutral color, not the primary color. Use it when the choice is not a brand action. The color shows only when an option is checked |
 | Checked | Checked (default) (id: checked) | `[checked]` | `#radio-1` | This option is chosen when the page loads. Put it on one option of a group only. Leave every option unchecked when the user must decide |
 | Required | Required (hint: Turn Checked off: the user must then pick an option) | `[data-required]` | `.nds-radio-group` | The user must pick an option before the form submits. A required mark shows before the legend. Use it with no option checked |
-| Disabled | Disabled | `[disabled]` | `.nds-radio-input` | The user cannot pick these options now. Put it on one input to disable one option, or use `data-state~="disabled"` on the group |
+| Disabled | Disabled | `[disabled]` | `.nds-radio-input` | The user cannot pick these options now. Put it on one input to disable one option, or use `data-state~="disabled"` on the group. To keep one option disabled when the group is enabled again, put `data-state="disabled"` on that option's container |
 | Readonly | Readonly | `[data-state~="readonly"]` | `.nds-radio` | The group shows its value but cannot change, by pointer or by keyboard. Put it on every option's container. The tile outline takes the disabled color, and the fill stays |
 | Layout | Row | `.nds-horizontal` | `.nds-radio-group` | The options sit side by side and wrap |
 | Field states | Label, info, feedback | — | — | Shared by every form field. See [Forms](../components/form) |
