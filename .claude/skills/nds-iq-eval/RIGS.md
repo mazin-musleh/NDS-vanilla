@@ -224,6 +224,19 @@ A run tests either the published rules and release, or the unreleased ones on ma
 
    This is the get-started setup prompt without its download step: the download would replace the draft with the published file. Its last sentence stops the agent from comparing the draft with the older published rules and release.
 
+### Unattended, from an NDS session
+
+A fresh headless session in the rig folder, never an Agent-tool helper: a helper loads this repo's AGENTS.md and the host session's settings, which the rig must not see.
+
+1. Start the app in the background. A rig app already on its port is reused: a reset rebuilds it from the baseline files.
+2. First turn, the setup prompt above, unchanged:
+   `cd ../nds-test-app-<N> && claude -p "<setup prompt>" --model sonnet --permission-mode auto --output-format json > tmp/rig-runs/rig<N>-step1.json`
+   It ends at the plan review. Read the questions and `session_id` from the JSON.
+3. Answer them in a second turn, as the rig's Dev answers say:
+   `claude -p "<numbered answers>" --resume <session_id> --model sonnet --permission-mode auto --output-format json > tmp/rig-runs/rig<N>-step2.json`
+
+`--permission-mode auto`, never `bypassPermissions`: the host's safety check refuses to start a session that skips permissions, and auto is how every earlier run went. Run several rigs side by side: each serves on its own port.
+
 ### Either way
 
 - Answer the review questions as a dev would. `whole plan` pacing tests the most.
