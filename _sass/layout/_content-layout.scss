@@ -52,6 +52,10 @@ main {
         // Stretch, not flex-start: the column fills the page, so a max-width card
         // (card view, no side menu) has room to center on its auto margins.
         align-content: stretch;
+        // Start + a full min-height, not stretch: Chrome kept a stretched column's load
+        // height when a section (an inline-size container) grew later, so it ran over the footer.
+        align-self: start;
+        min-height: 100%;
         position: relative;
         padding-block: var(--_content-padding-block);
         padding-inline: var(--_content-padding-inline);
@@ -76,7 +80,10 @@ main {
             padding: var(--nds-viewport-padding);
         }
 
+        // Centered at its own height: a full min-height would grow the section.
         .nds-content {
+            align-self: center;
+            min-height: auto;
             justify-content: center;
             align-content: center;
         }
