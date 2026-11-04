@@ -10,7 +10,7 @@
  *   instance.next() / .prev()           the next or the previous week, or month in the month view
  *   instance.goTo(date)                 the week or month that holds date (a Date or YYYY-MM-DD)
  *   instance.setView(view)              grid | rows | month
- *   instance.setDay(date)               that day's events only; null shows the week or month
+ *   instance.setDay(date)               that day's events only; null shows the week or month. None in Grid
  *   instance.refresh()                  read the events again
  *   instance.destroy()
  * Events (bubble from the .nds-calendar):
@@ -21,7 +21,8 @@
  *                            script writes the first day back
  *   data-view                grid | rows | month (none: grid). A calendar under 860px wide shows
  *                            grid as a row per day, and has data-state="narrow"
- *   data-day                 the picked day, YYYY-MM-DD (none: the whole week or month)
+ *   data-day                 the picked day, YYYY-MM-DD (none: the whole week or month). Grid drops it:
+ *                            its days only head their columns or rows
  *   data-date-param          the date's key in the address (none: date). The date stays there as
  *                            ?date=YYYY-MM-DD, as a Filter's filters do: read once at load, before
  *                            data-date; the opening week or month drops it. Two calendars on a page take two keys
@@ -271,10 +272,14 @@
 
         _setState(anchor, view, day, first) {
             const { start, end } = this._getRange(anchor, view);
-            // A picked day outside the range drops: the range wins.
-            if (day && (day < start || day > end)) day = null;
+            // A picked day outside the range drops: the range wins. Grid has none: its days head their own columns or rows.
+            if (view === 'grid' || (day && (day < start || day > end))) day = null;
             const changed = !isSameDay(start, this._start) || view !== this._view || !isSameDay(day, this._day);
-            if (!changed && !first) return false;
+            // A dropped value, such as data-day on Grid, leaves the hooks: they show the state again.
+            if (!changed && !first) {
+                this._writeHooks();
+                return false;
+            }
             this._start = start;
             this._end = end;
             this._view = view;
@@ -310,12 +315,7 @@
             const secondCalendar = second && second !== calendar ? second : null;
             const lang = getLang(el);
             const isMonth = this._view === 'month';
-            // Written only when it differs: each write reaches the hooks' observer.
-            const state = { date: getIso(this._start), view: this._view, day: this._day && getIso(this._day) };
-            for (const key in state) {
-                if (!state[key]) el.removeAttribute('data-' + key);
-                else if (el.dataset[key] !== state[key]) el.dataset[key] = state[key];
-            }
+            this._writeHooks();
 
             const title = el.querySelector('.nds-calendar-title');
             if (title) {
@@ -378,6 +378,9 @@
             const stop = shown.find((btn) => NDS.state.has(btn, 'selected'))
                 || shown.find((btn) => btn.hasAttribute('aria-current')) || shown[0];
             this._dayButtons.forEach((btn) => { btn.tabIndex = btn === stop ? 0 : -1; });
+            // Grid's days only head their columns or rows: no press, no Tab stop. Each event's tile names its day.
+            const days = el.querySelector('.nds-calendar-days');
+            if (days) days.inert = this._view === 'grid';
 
             this._syncViewButtons();
 
@@ -388,7 +391,7 @@
                 else item.removeAttribute('data-calendar-day');
             }
             // A narrow Grid's day button spans its day's lines of two events. An empty day says so,
-            // unless the whole range is empty or a day is picked: the calendar's own message speaks then.
+            // unless the whole range is empty: the calendar's own message speaks then.
             const shownPerDay = Array(7).fill(0);
             for (const { item } of this._events) {
                 if (isShown({ item })) shownPerDay[item.getAttribute('data-calendar-day')]++;
@@ -396,7 +399,7 @@
             const isEmpty = !shownPerDay.some(Boolean);
             this._dayEmpties.forEach((empty, i) => {
                 this._dayButtons[i].style.setProperty('--_calendar-lines', Math.max(1, Math.ceil(shownPerDay[i] / 2)));
-                empty.hidden = shownPerDay[i] > 0 || isEmpty || !!this._day;
+                empty.hidden = shownPerDay[i] > 0 || isEmpty;
                 empty.firstChild.textContent = strings.text('day_empty', null, lang);
             });
             this._fillTiles(calendar, lang);
@@ -407,6 +410,16 @@
             if (list?.parentElement.hasAttribute('data-nds-scroll-more-initialized')) {
                 list.scrollTop = 0;
                 NDS.ScrollMore.refresh(list.parentElement);
+            }
+        }
+
+        // Written only when it differs: each write reaches the hooks' observer.
+        _writeHooks() {
+            const el = this._element;
+            const state = { date: getIso(this._start), view: this._view, day: this._day && getIso(this._day) };
+            for (const key in state) {
+                if (!state[key]) el.removeAttribute('data-' + key);
+                else if (el.dataset[key] !== state[key]) el.dataset[key] = state[key];
             }
         }
 
@@ -476,16 +489,15 @@
         }
 
         // Arrows move along the days (in reading order, so Left is the next day in RTL), Up and Down
-        // a week in the month and a day in a narrow Grid's column of days, Home and End to the ends.
+        // a week in the month, Home and End to the ends.
         _handleDayKey(e) {
             const index = this._dayButtons.indexOf(e.target);
             if (index < 0) return;
             const step = { ArrowLeft: -1, ArrowRight: 1 }[e.key];
-            const rowStep = this._view === 'month' ? 7 : this._view === 'grid' && this._isNarrow ? 1 : 0;
             const last = this._dayCount - 1;
             let target;
             if (step) target = (index + (getComputedStyle(e.target).direction === 'rtl' ? -step : step) + last + 1) % (last + 1);
-            else if (rowStep && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) target = Math.min(last, Math.max(0, index + (e.key === 'ArrowUp' ? -rowStep : rowStep)));
+            else if (this._view === 'month' && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) target = Math.min(last, Math.max(0, index + (e.key === 'ArrowUp' ? -7 : 7)));
             else if (e.key === 'Home') target = 0;
             else if (e.key === 'End') target = last;
             else return;

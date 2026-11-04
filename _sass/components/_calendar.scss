@@ -266,21 +266,23 @@
     }
 
     .nds-calendar[data-view="grid"] {
+        // A line between days, behind the day buttons and the events, so a day with none still
+        // shows its column. The days and the events share the 7 columns and their gap.
+        $lines: ();
+        @for $k from 1 through 6 {
+            $x: calc((100% - 6 * var(--_calendar-day-gap)) / 7 * #{$k} + var(--_calendar-day-gap) * #{$k - 0.5});
+            $lines: list.append($lines, linear-gradient(var(--divider-color), var(--divider-color)) $x 0 / 1px 100% no-repeat, comma);
+        }
+
         .nds-calendar-days {
             padding-block-end: var(--spacing-md);
-            border-block-end: 1px solid var(--divider-color);
+            background: $lines;
         }
 
         .nds-calendar-events {
-            // A line between days, behind the events, so a day with none still shows its column.
-            $lines: ();
-            @for $k from 1 through 6 {
-                $x: calc((100% - 6 * var(--_calendar-day-gap)) / 7 * #{$k} + var(--_calendar-day-gap) * #{$k - 0.5});
-                $lines: list.append($lines, linear-gradient(var(--divider-color), var(--divider-color)) $x 0 / 1px 100% no-repeat, comma);
-            }
             background: $lines;
             min-height: 160px;
-            // Up through the calendar's gap, so the day lines meet the line under the day names.
+            // Up through the calendar's gap, so the day lines run on from the day buttons.
             margin-block-start: calc(-1 * var(--_calendar-gap));
             padding-block-start: var(--_calendar-gap);
             display: grid;
@@ -303,16 +305,6 @@
             .nds-calendar-events > li[data-calendar-day="#{$column}"] {
                 grid-column: #{$column + 1};
             }
-        }
-    }
-
-    // A picked day's events take the whole width, so the day lines would only show between them.
-    .nds-calendar[data-view="grid"][data-day] .nds-calendar-events {
-        background: none;
-        min-height: 0;
-
-        > li[data-calendar-day] {
-            grid-column: 1 / -1;
         }
     }
 }
@@ -411,6 +403,21 @@
                 inline-size: 100cqi;
                 border-block-start: 1px solid var(--divider-color);
                 pointer-events: none;
+            }
+        }
+
+        // A day's row can be tall: the dot follows the number, not the cell's bottom.
+        .nds-calendar-day-dot {
+            position: static;
+            translate: none;
+        }
+
+        // The two cards of a line share its height: nothing here is measured, unlike wide Grid.
+        .nds-calendar-events > li {
+            align-self: stretch;
+
+            > .nds-btn {
+                flex-grow: 1;
             }
         }
 

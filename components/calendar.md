@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 01:20 PM"
+last_edit: "04/11/2026 - 01:58 PM"
 ---
 
 <section id="calendar-overview" class="nds-content-section nds-doc-overview">
@@ -440,7 +440,7 @@ Every option goes on `.nds-calendar`, except No view switch, which removes `.nds
 ### Views
 {: .nds-block-title}
 
-Grid shows a column for each day, and each day stacks its events. In a calendar narrower than 860px, Grid shows a row for each day: the day button at the start, and the day's events beside it, two to a line. A day with no events says "No events on this day". Rows shows the events as one list, each with its date tile. Month shows a month of days beside the list. `data-calendar-view="grid"`, `"rows"` and `"month"` on a button switch the view, and the script marks the current one as pressed. When the view changes, the calendar keeps the picked day in view, else today, else the first day shown.
+Grid shows a column for each day, and each day stacks its events. In a calendar narrower than 860px, Grid shows a row for each day: the day at the start, and the day's events beside it, two to a line. A day with no events says "No events on this day". In Grid, the days only head their columns or rows: a press on one does nothing, and they are not a Tab stop. Rows shows the events as one list, each with its date tile. Month shows a month of days beside the list. `data-calendar-view="grid"`, `"rows"` and `"month"` on a button switch the view, and the script marks the current one as pressed. When the view changes, the calendar keeps the picked day in view, else today, else the first day shown.
 
 ### Month View
 {: .nds-block-title}
@@ -455,9 +455,9 @@ The month view shows the days of one month as buttons, with the weekday names ov
 ### Day Filter
 {: .nds-block-title}
 
-A press on a day button shows that day's events only, and a second press shows the week or the month again. In Grid, the day's events take the whole width. When the week, the month or the day has no events, `.nds-calendar-empty` shows in place of the list. A picked day with no events shows the message's `.nds-calendar-empty-day` parts in place of its message: in the canon, "No events on this day" and a Show all events button. `data-calendar-action="all"` on that button shows the whole week or month again, so the picked day is not mistaken for today.
+In Rows and Month, a press on a day button shows that day's events only, and a second press shows the week or the month again. A switch to Grid shows the whole week again. When the week, the month or the day has no events, `.nds-calendar-empty` shows in place of the list. A picked day with no events shows the message's `.nds-calendar-empty-day` parts in place of its message: in the canon, "No events on this day" and a Show all events button. `data-calendar-action="all"` on that button shows the whole week or month again, so the picked day is not mistaken for today.
 
-The day buttons are one Tab stop, as the Date Picker's days: the picked day, else today, else the first. The arrow keys move between them, and Up and Down move one week in the month view, and one day in a narrow Grid. Home and End move to the first and the last. A picked day that is also today keeps a ring inside its fill, so today stays in view.
+In Rows and Month, the day buttons are one Tab stop, as the Date Picker's days: the picked day, else today, else the first. The arrow keys move between them, and in the month view Up and Down move one week. Home and End move to the first and the last. A picked day that is also today keeps a ring inside its fill, so today stays in view.
 
 ### Week Start and Hijri
 {: .nds-block-title}
@@ -575,7 +575,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Keyboard</span>
-              <p class="nds-card-description">The day buttons are one Tab stop. The arrow keys move between the days, as in the Date Picker.</p>
+              <p class="nds-card-description">In Rows and Month, the day buttons are one Tab stop. The arrow keys move between the days, as in the Date Picker.</p>
             </div>
           </div>
         </li>
@@ -677,7 +677,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 |---|---|---|
 | `data-date` | `.nds-calendar` | Any day of the week or month to show, as `YYYY-MM-DD`. Without it, today. The script writes the first day shown back to it |
 | `data-view` | `.nds-calendar` | `grid` (the default), `rows` or `month`. The script writes it when the user switches the view |
-| `data-day` | `.nds-calendar` | The picked day, as `YYYY-MM-DD`: only its events show. The script writes it when the user presses a day, and removes it when the user presses it again or moves to another week or month |
+| `data-day` | `.nds-calendar` | The picked day, as `YYYY-MM-DD`: only its events show. The script writes it when the user presses a day, and removes it when the user presses it again or moves to another week or month. Grid drops it |
 | `data-date-param` | `.nds-calendar` | The name of the date in the address, `date` by default. Two calendars on a page need two names |
 | `data-view-param` | `.nds-calendar` | The name of the view in the address, `view` by default. Two calendars on a page need two names |
 | `data-calendar` | `.nds-calendar`, or any element around it | `hijri` shows Hijri dates. The nearest one wins. The default is Gregorian |
@@ -715,7 +715,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 | `next()`, `prev()` | Moves to the next or the previous week, or month in the month view |
 | `goTo(date)` | Moves to the week or the month that holds `date`, a `Date` or `YYYY-MM-DD` |
 | `setView(view)` | `grid`, `rows` or `month` |
-| `setDay(date)` | Shows the events of that day only. A day outside the shown week or month moves the calendar there. `null` shows the week or the month |
+| `setDay(date)` | Shows the events of that day only. A day outside the shown week or month moves the calendar there. `null` shows the week or the month. In Grid, it only moves to the day's week |
 | `refresh()` | Reads the events again. The calendar does it by itself when items are added or removed |
 | `destroy()` | Removes the weekday names, the day buttons, the listeners, and what the script wrote on the events and the view buttons. `data-date`, `data-view` and `data-day` stay |
 {: .nds-table .nds-responsive}
