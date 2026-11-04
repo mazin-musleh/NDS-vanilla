@@ -2,6 +2,7 @@
 layout: page
 # layout + layout_class name the page shape: the Front Matter table in layout/page-layout.md maps each key to its markup. This file's body is only the inner content.
 layout_class: nds-has-sideinfo
+content_class: nds-stripe
 title: Service Page Template
 hero_style: "nds-aside"
 hero_title: Government Digital Service
@@ -159,7 +160,7 @@ sidemenu_mode: false
             </aside>
     </div>
 </section>
-<section id="related-services" class="nds-content-section nds-brand">
+<section id="related-services" class="nds-content-section">
 
     <div class="nds-section-head">
         <h2 class="nds-section-title">Related Services</h2>

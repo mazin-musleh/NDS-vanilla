@@ -2,6 +2,7 @@
 layout: page
 # layout + layout_class name the page shape: the Front Matter table in layout/page-layout.md maps each key to its markup. This file's body is only the inner content.
 layout_class: nds-has-sideinfo
+content_class: nds-stripe
 title: Journey Service Page Template
 hero_style: "nds-aside"
 hero_title: Establishing a Foreign Company Branch
@@ -317,7 +318,7 @@ related:
     </div>
 </section>
 
-<section id="related-journeys" class="nds-content-section nds-brand">
+<section id="related-journeys" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Related Journeys</h2>
