@@ -51,7 +51,12 @@ Each doc, example and template has a built page at the same path under `_site/`,
 
 ## Verify
 
-`nds-verify.mjs`, at this folder's root, runs both browser passes on your pages: `node nds-verify.mjs <config.json>`. Its header gives the config: each page, its built reference page, and each state with its setup (a URL, cookies, a localStorage value set before load, a request made to fail or answered with your data or status, a script to run). It needs Node 18 or later and Chrome or Edge, and installs nothing. For each state, at desktop and mobile width, in light and dark, it checks `window.innerWidth`, runs the audit, collects console errors, and writes a sheet that shows the state under the reference, which takes the state's language and direction, so an Arabic page compares with a right-to-left reference. It prints only what went wrong, the sheets, and any value a state's script returns. It also names each NDS part still alive on an element that left the page: its view left without `NDS.init.destroy(view)`. For a framework view, add a state whose script leaves the view and comes back. Give a kept-alive view's state `"kept": true`: its parts are listed, never failed. When `NDS-PLAN.md` paces the work as `whole plan`, it ends by naming the plan rows still left. From the last open row on, it reminds you to file NDS findings in `NDS-REPORT.md`. It exits 1 on any finding. After a fix, re-check only the pages it touched with `--only`. You still inspect every sheet and exercise the behavior. If it cannot run (no Node 18, no Chrome or Edge), run both passes as the rules' Verify section says.
+- `node nds-verify.mjs <config.json>`, at this folder's root, runs both browser passes on your pages. It needs Node 18 or later and Chrome or Edge, and installs nothing. Its header gives the config: each page, its built reference page, and each state's setup.
+- Each state, at desktop and mobile width, in light and dark: it checks `window.innerWidth`, runs the audit and collects console errors. It exits 1 on any finding.
+- It writes one sheet per state to `tmp/nds-verify/`: the state under its reference, in the state's language and direction. A page's first state shows light and dark, the rest light. Inspect every sheet and exercise the behavior: the script cannot judge the look.
+- It names each NDS part still alive on an element that left the page: its view left without `NDS.init.destroy(view)`. For a framework view, add a state whose script leaves the view and comes back. Give a kept-alive view's state `"kept": true`: its parts are listed, never failed.
+- After a fix, re-check only the pages it touched with `--only`.
+- If it cannot run (no Node 18, no Chrome or Edge), run both passes as the rules' Verify section says.
 
 ## Audit
 

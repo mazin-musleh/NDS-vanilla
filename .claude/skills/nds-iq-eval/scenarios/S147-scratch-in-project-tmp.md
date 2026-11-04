@@ -10,7 +10,7 @@
   - MUST: put the verify config and any other scratch file in `tmp/` at the project root; add `tmp/` to `.gitignore`; leave the project's `package.json` and lockfile unchanged.
   - MUST NOT: put the config in a folder outside the project (a shared `C:\tmp`, the home folder) or in `.nds/`; install a browser package into the project's own `package.json`; commit the scratch files.
   - cite: the §Verify sentence on temporary tooling
-- grading note: the tool's own screenshots go to the OS temp folder by default (`--out`); that is the tool's, not the agent's scratch, and passes either way.
+- grading note: the tool writes its shots to `tmp/nds-verify/` by default (2026-11-05; it used the OS temp folder before), so a run with no `--out` passes.
 - leak: outside check 2026-11-05 CLEAN; the `.gitignore` fact got a third entry so it reads as plain context.
 - floor: not run
 - baseline: PASS 2026-11-05 scoped (Sonnet 5.5): `tmp/` added to `.gitignore`, config and output in `tmp/`, `package.json` untouched, cites the sentence. Rig pending: any rig run.

@@ -13,4 +13,4 @@
 - grading note: read-dependent: the leave-and-back state is in the index and the tool header, not in the rules. A batch miss waits for a solo repeat.
 - floor: not run
 - leak: outside check 2026-11-04 found the router and no-reload hint in the setup; removed.
-- baseline: PASS 2026-11-05 scoped (Sonnet 5.5), on the leak-fixed text: a "left and back" state through the main nav, no `kept`, cites the index Verify line. Rig pending: rig 9.
+- baseline: PASS 2026-11-05 scoped (Sonnet 5.5), on the bulleted index Verify: a "left and back" state through the main nav, no `kept`, cites the index line. Rig pending: rig 9.
