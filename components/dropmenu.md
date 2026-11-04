@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 11:34 PM"
+last_edit: "04/11/2026 - 10:15 AM"
 ---
 
 <section id="dropmenu-overview" class="nds-content-section nds-doc-overview">
@@ -498,7 +498,8 @@ Set these on the `.nds-dropmenu` wrapper. The menu inherits them.
 | `NDS.Dropmenu.getValue(el)` | Returns the `data-value` of the picked item in a picker, or `''` when none is picked or `el` is not a picker. `el` is the wrapper, an element in it, its `id` or a selector |
 | `NDS.Dropmenu.setValue(el, value)` | Picks the item with that `data-value` and returns `true`. It returns `false`, and changes nothing, when no item has the value or `el` is not a picker |
 | `NDS.Dropmenu.clear(el)` | Picks nothing: the hidden field is empty and the trigger label goes back to its placeholder. Returns `true`, or `false` when `el` is not a picker |
-| `wrapper.ndsDropmenu.getValue()`, `.setValue(value)`, `.clear()` | The same, on a picker that has started |
+| `NDS.Dropmenu.reset(el)` | Picks the item picked at load again, or nothing when there was none, as a form reset does. It fires no events. Returns `true`, or `false` when `el` is not a picker |
+| `wrapper.ndsDropmenu.getValue()`, `.setValue(value)`, `.clear()`, `.reset()` | The same, on a picker that has started |
 | `wrapper.ndsDropmenu.open()`, `.close()`, `.toggle(event)` | Opens or closes the menu. Pass the click `event` to `toggle()`: on a `data-anchor-cursor` menu, the menu then opens under the pointer |
 | `wrapper.ndsDropmenu.syncPosition()` | Places the open menu again |
 | `wrapper.ndsDropmenu.setSelection(item)` | Picks an item in a picker |

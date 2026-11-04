@@ -1010,12 +1010,14 @@
                 .filter(picker => picker.input);
         }
 
-        // On load and on a rollback: pick the URL's value in each picker, silently, so it sends no request.
+        // On load and on a rollback: pick the URL's value in each picker, or its first pick when the URL
+        // has none (a failed pick from the default). Silently, so it sends no request.
         _readPickerParams(params) {
             this._getPickers().forEach(({ dropmenu, name }) => {
                 const value = params.get(name);
                 const item = value && [...dropmenu.querySelectorAll('[data-value]')].find(el => el.getAttribute('data-value') === value);
                 if (item) dropmenu.ndsDropmenu?.setSelection(item, { silent: true });
+                else dropmenu.ndsDropmenu?.reset();
             });
         }
 

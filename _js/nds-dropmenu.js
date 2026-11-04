@@ -16,7 +16,8 @@
  *   NDS.Dropmenu.getValue(el)            a select-mode picker's value, its picked item's data-value ('' when none, or not a picker)
  *   NDS.Dropmenu.setValue(el, value)     pick the item with that data-value → true; false when no item has it or el is not a picker
  *   NDS.Dropmenu.clear(el)               pick nothing, label back to its placeholder → true; false when el is not a picker
- *   instance.getValue() / .setValue(value) / .clear()   the same, on a wired picker
+ *   NDS.Dropmenu.reset(el)               back to the load pick, as a form reset does, with no events → true; false when el is not a picker
+ *   instance.getValue() / .setValue(value) / .clear() / .reset()   the same, on a wired picker
  *   instance.setSelection(item)        pick an item in a select-mode picker
  *   instance.isOpen / .trigger / .dropmenu   read-only state; dropmenu is the wrapper
  * Events (bubble from the .nds-dropmenu wrapper):
@@ -439,26 +440,31 @@
             // The trigger's own text, before a pick replaces it: what a form reset with no first pick shows.
             const triggerLabel = this.trigger !== this.dropmenu && (this.trigger.querySelector('.nds-label') || this.trigger);
             const startLabel = triggerLabel ? triggerLabel.textContent : '';
+            // A pick drops the label's data-i18n (setSelection), or a late translation writes over it; this puts it back.
+            const labelMark = triggerLabel && triggerLabel.getAttribute('data-i18n');
+            const showStartLabel = () => {
+                if (!triggerLabel) return;
+                triggerLabel.textContent = startLabel;
+                if (labelMark) triggerLabel.setAttribute('data-i18n', labelMark);
+            };
             // destroy(): the field this built goes and the trigger reads as written. The pick stays
             // on its item (selected), so a re-create picks it again.
             this._undoSelect = () => {
                 if (builtHidden) hidden.remove();
-                if (triggerLabel) triggerLabel.textContent = startLabel;
+                showStartLabel();
             };
             // Nothing picked: the trigger shows its own text again. Quiet for a form reset.
             const clearPick = (quiet) => {
                 this._getOwnItems().forEach((entry) => removeState(entry, 'selected'));
-                if (triggerLabel) triggerLabel.textContent = startLabel;
+                showStartLabel();
                 if (quiet) { hidden.value = ''; return; }
                 NDS.setValue(hidden, '');
             };
             this._clearSelection = () => clearPick(false);
+            this._resetSelection = () => (initialItem ? this.setSelection(initialItem, { silent: true }) : clearPick(true));
             if (initialItem) this.setSelection(initialItem, { silent: true });
             // A form reset never touches a hidden input or a label: go back to the first pick.
-            NDS.field.onReset(hidden.form, () => {
-                if (initialItem) { this.setSelection(initialItem, { silent: true }); return; }
-                clearPick(true);
-            }, { signal });
+            NDS.field.onReset(hidden.form, this._resetSelection, { signal });
 
             this._menu.addEventListener('click', (e) => {
                 const item = e.target.closest('.nds-dropmenu-item');
@@ -491,7 +497,7 @@
             // would wipe the wrapper, menu included.
             if (this.trigger !== this.dropmenu) {
                 const triggerLabel = this.trigger.querySelector('.nds-label');
-                if (triggerLabel) triggerLabel.textContent = labelText;
+                if (triggerLabel) { triggerLabel.textContent = labelText; triggerLabel.removeAttribute('data-i18n'); }
                 else this.trigger.textContent = labelText;
             }
 
@@ -525,6 +531,12 @@
         clear() {
             if (!this._selectHidden) return false;
             this._clearSelection();
+            return true;
+        }
+
+        reset() {
+            if (!this._selectHidden) return false;
+            this._resetSelection();
             return true;
         }
 
@@ -1441,5 +1453,6 @@
         getValue: (el) => findPicker(el)?.getValue() ?? '',
         setValue: (el, value) => findPicker(el)?.setValue(value) ?? false,
         clear: (el) => findPicker(el)?.clear() ?? false,
+        reset: (el) => findPicker(el)?.reset() ?? false,
     };
 })();
