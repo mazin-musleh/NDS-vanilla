@@ -603,6 +603,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **[Filter](https://mazin-musleh.github.io/NDS-vanilla/components/filter.html)** — A Sort section: how a filter drives the Sort menu in the browser, or a Dropmenu picker on a server page, and the URL names they write.
 - **[Modal](https://mazin-musleh.github.io/NDS-vanilla/components/modal.html)** — A form in a modal is `form.nds-form`.
 - **[Hero](https://mazin-musleh.github.io/NDS-vanilla/ui-shell/hero.html)** — Share is optional: a No share option for a page with no public link, such as a console.
+- **[Hero](https://mazin-musleh.github.io/NDS-vanilla/ui-shell/hero.html)** — A main hero slide can hold a second action: an outline button (`nds-secondary-outline nds-oncolor nds-lg`) after its main button.
 - **[Empty](https://mazin-musleh.github.io/NDS-vanilla/components/empty.html)** — The placeholder holds the message only. A button such as "Add a request" goes outside it.
 - **[Page Layout](https://mazin-musleh.github.io/NDS-vanilla/layout/page-layout.html)** — A console has no side info. What side info holds on a standard page goes at the top of the first section.
 - **[Numbers](https://mazin-musleh.github.io/NDS-vanilla/utilities/numbers.html)** — A counter counts to a `data-counter` value a server sets before it comes into view.

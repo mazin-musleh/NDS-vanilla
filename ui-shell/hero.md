@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 08:01 PM"
+last_edit: "04/11/2026 - 09:55 PM"
 ---
 
 <section id="hero-overview" class="nds-content-section nds-doc-overview">
@@ -236,6 +236,11 @@ The hero is one region of the page. The other regions are on [Page Layout](../la
   </div>
 </section>
 </script>
+<script type="text/html" id="hero-main-action" data-canon>
+<a href="#" class="nds-btn nds-secondary-outline nds-oncolor nds-lg">
+  <span class="nds-label">Contact Us</span>
+</a>
+</script>
     </div>
   </div>
 </section>
@@ -273,7 +278,7 @@ The main hero is a section that holds one hero swiper. The navigation row is the
 | `.nds-swiper-slide.nds-content-wrapper` | One slide. Write `hidden` on every slide after the first | Yes |
 | `.nds-hero-image-wrapper` | The image and its tint. `--hero-overlay-opacity` in its `style` sets the tint for the slide | Yes |
 | `img.nds-hero-image` | The image, in a `picture` with one `source` for each screen size. Give it `alt=""`: the image is decoration. `object-position` in its `style` picks the part of the image that stays in view | Yes |
-| `.nds-section-body` | The title, the description and a `.nds-section-action`. The first slide's title is the page's `h1`, the others are `h2` | Yes |
+| `.nds-section-body` | The title, the description and a `.nds-section-action` with one or two buttons. The first slide's title is the page's `h1`, the others are `h2` | Yes |
 {: .nds-table .nds-responsive}
 
 </div>
@@ -295,6 +300,7 @@ The structures are the shapes the site uses. For another mix of the head parts, 
 | Structure | Service (hint: A service page: a main button, Share and tags) | `canon #hero-service` | — | A service page: a main button and Share beside the title, and tags under it. Write `nds-aside` too when the page has a side info column |
 | Structure | Profile (id: profile) (hint: A page about one person, with an avatar) | `canon #hero-profile` | — | A page about one person or entity: a flat hero with an [Avatar](../components/avatar) before the name, and Share beside the head |
 | Structure | Main hero (hint: The home page slider of full-width images) | `canon #hero-main` | — | The home page: a slider of full-width images, each with a title and a button |
+| Second action | Second action (hint: An outline button beside each slide's button) | `canon #hero-main-action` | `.nds-hero .nds-section-action` | A second, lesser action on a slide, after its main button. Write it as `nds-secondary-outline nds-oncolor nds-lg` |
 | Background | Tint (default) (not: profile) (hint: A light brand tint with an inner shadow) | — | `.nds-hero-section.nds-sub` | A light tint of the brand primary, with a shadow inside its edges |
 | Background | Image (not: profile) | `--hero-image: url('../assets/img/riyadhcenter_ai.webp')` | `.nds-hero-section.nds-sub` | A photo on the end side, which fades into the tint toward the title. For a page with its own photo |
 | Background | Flat (not: profile) (hint: The page background, with no tint, shadow or image) | `.nds-flat` | `.nds-hero-section.nds-sub` | The page background, with no tint, shadow or image. For an article or a form, where the content starts right under the title |

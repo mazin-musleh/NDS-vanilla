@@ -16,7 +16,6 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
 - **Editable table cells (rig 4, 2026-11-03).** No canon for a field in a table cell (its label, its size). The row alignment is done: `nds-baseline` keeps a row's cells in line when a field's message grows the row, and `form-row-align` names it (2026-11-04).
 - **File Upload image preview for a photo picker.** The old catalog card promised one; it never existed.
 - **Timeline: alternating sides (rig 10 run 3, 2026-11-04).** A desktop timeline with events left and right of the line has no option; the vertical dot Stepper puts them on one side.
-- **Main hero: a second action (rig 10 run 3, 2026-11-04).** The canon shows one `nds-section-action` button; a second `nds-secondary-outline nds-oncolor` one renders, but no Variants row lists it.
 - **Share: the device share sheet (rig 10 run 2, 2026-11-04).** No option for `navigator.share` beside copy link.
 - **A warning for a part removed without `destroy()` (rig 9 run 2, 2026-11-04).** NDS keeps no list of live instances (backrefs only), so catching one needs instance tracking across ~23 components. Design first.
 - **Rig asks, checked against the docs 2026-10-27.** The rest were already covered or dropped (shop parts are off-mission).
