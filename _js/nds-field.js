@@ -49,11 +49,17 @@
             if (btn.tagName === 'BUTTON') btn.disabled = held;
         });
     });
+    // The fields that took readonly from a scope around them, not their own.
+    const scopeReadonlyFields = new WeakSet();
     // An input that stays interactive is readonly by design (Custom Select's display): leaving the state keeps it so.
+    // Leaving readonly keeps what a field holds on its own, or a scope around still holds, as disabled does.
     NDS.state.onToggle('readonly', SCOPE, (el, on) => {
-        el.querySelectorAll('input, textarea, select').forEach((input) => { if (!isInteractive(input)) input.readOnly = on; });
+        el.querySelectorAll('input, textarea, select').forEach((input) => { if (!isInteractive(input)) input.readOnly = on || !!input.closest(READONLY); });
         // The fields inside take and drop it too, whether markup or a script set the scope's: the pickers read it there.
-        el.querySelectorAll('.nds-form-container').forEach((container) => (on ? NDS.state.add : NDS.state.remove)(container, 'readonly'));
+        el.querySelectorAll('.nds-form-container').forEach((container) => {
+            if (on && !NDS.state.has(container, 'readonly')) { scopeReadonlyFields.add(container); NDS.state.add(container, 'readonly'); }
+            else if (!on && !container.parentElement.closest(READONLY) && scopeReadonlyFields.delete(container)) NDS.state.remove(container, 'readonly');
+        });
         el.querySelectorAll(PICKER).forEach((btn) => {
             const held = on || !!btn.closest(`${DISABLED}, ${READONLY}`);
             NDS.aria.disabled(btn, held);
