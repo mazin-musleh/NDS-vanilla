@@ -17,7 +17,6 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
 - **File Upload image preview for a photo picker.** The old catalog card promised one; it never existed.
 - **Timeline: alternating sides (rig 10 run 3, 2026-11-04).** A desktop timeline with events left and right of the line has no option; the vertical dot Stepper puts them on one side.
 - **Share: the device share sheet (rig 10 run 2, 2026-11-04).** No option for `navigator.share` beside copy link.
-- **A warning for a part removed without `destroy()` (rig 9 run 2, 2026-11-04).** NDS keeps no list of live instances (backrefs only), so catching one needs instance tracking across ~23 components. Design first.
 - **Rig asks, checked against the docs 2026-10-27.** The rest were already covered or dropped (shop parts are off-mission).
   - **Selection: a pick limit.** None today; Multiselect's `data-max-checked` only checks on submit. Owner call.
   - Parked: URL state for Multiselect and Tabs, Tabs hash sync (a framework router owns the URL); a compare pattern (an example, not a component).

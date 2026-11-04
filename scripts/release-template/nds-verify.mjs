@@ -26,7 +26,10 @@
 //         { "name": "none", "respond": { "/api/cart": [] } },  answers with this JSON; a number answers
 //                                                              with that status: { "/api/cart/9": 404 }
 //         { "name": "open menu", "run": "document.querySelector('.nds-btn').click()" },
-//         { "name": "rows", "run": "return document.querySelectorAll('tr').length" }   a return value is printed
+//         { "name": "rows", "run": "return document.querySelectorAll('tr').length" },  a return value is printed
+//         { "name": "left and back", "run": "…click to another view, then back…", "kept": true }
+//                                                    "kept": a kept-alive view (Vue's KeepAlive) is off the
+//                                                    page on purpose: list its parts, never fail on them
 //       ]
 //     }]
 //   }
@@ -34,7 +37,8 @@
 // Writes, per page: each state at each width and theme, and per state a sheet-<state>.png that
 // shows it under the reference. The reference takes the state's lang and direction, so an Arabic
 // page compares with a right-to-left reference in Arabic. Prints the audit findings, console errors (a CSP one names its
-// source), failed loads, sideways scroll and a wrong window.innerWidth; exits 1 when there is
+// source), failed loads, sideways scroll, a wrong window.innerWidth, and NDS parts still alive off the
+// page (a view that left without NDS.init.destroy: give a framework view a state whose run leaves it); exits 1 when there is
 // any. Prints each state's sheet and only what went wrong. Inspect every sheet: the script cannot
 // judge the look. With an NDS-PLAN.md (in the working folder, or the folder above this script), it ends with the rows
 // left under `whole plan` pacing, and, from the last open row on, a reminder to file NDS findings in NDS-REPORT.md.
@@ -264,11 +268,29 @@ async function shoot(url, { width, theme, cookies = [], storage = {}, fail, resp
         const at = (el) => el?.tagName ? ' [' + el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + [...el.classList].slice(0, 3).map((c) => '.' + c).join('') + ']' : '';
         return ((await init.audit()) || []).map((f) => \`\${f.severity} \${f.rule}\${at(f.element)}: \${f.message}\`);
     })()`)) ?? null : [];
+    // A part still alive on an element off the page left without NDS.init.destroy: its listeners hold it.
+    let leaks = [];
+    if (audit) {
+        await s('HeapProfiler.collectGarbage');
+        const { result: proto } = await s('Runtime.evaluate', { expression: 'Element.prototype' });
+        const { objects } = await s('Runtime.queryObjects', { prototypeObjectId: proto.objectId });
+        const { result } = await s('Runtime.callFunctionOn', { objectId: objects.objectId, returnByValue: true, functionDeclaration: `function () {
+            const out = [];
+            for (const el of this) {
+                let keys;
+                try { if (el.isConnected) continue; keys = Object.keys(el); } catch (e) { continue; } // a prototype
+                for (const k of keys) if (k.startsWith('nds') && typeof el[k]?.destroy === 'function')
+                    out.push(k + ' on ' + el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + [...el.classList].slice(0, 2).map((c) => '.' + c).join(''));
+            }
+            return out;
+        }` });
+        leaks = result.value || [];
+    }
     handlers.delete(sessionId);
     await send('Target.closeTarget', { targetId });
     await send('Target.disposeBrowserContext', { browserContextId }).catch(() => {});
     return { png: Buffer.from(data, 'base64'), status, revealed, innerWidth, overflow, ...locale, ran,
-        errors: [...errors.filter((e) => !/\[NDS\.[aA]udit\]|Content Security Policy/.test(String(e))), ...csp], findings };
+        errors: [...errors.filter((e) => !/\[NDS\.[aA]udit\]|Content Security Policy/.test(String(e))), ...csp], findings, leaks };
 }
 
 // --- run --------------------------------------------------------------------------------------
@@ -345,6 +367,8 @@ try {
                 if (r.findings === null) note('audit', 'unavailable (no NDS.init.audit)', shot);
                 (r.findings || []).forEach((f) => note('audit', f, shot));
                 r.errors.forEach((e) => note('error', e, shot));
+                // A kept-alive view is off the page on purpose: "kept": true lists its parts in the report instead.
+                if (r.leaks?.length) note(st.kept ? 'kept' : 'leak', `${r.leaks.length} NDS part(s) off the page but alive, so their view left without NDS.init.destroy(view): ${r.leaks.slice(0, 5).join(', ')}${r.leaks.length > 5 ? ', …' : ''}`, shot, st.kept ? returned : seen);
                 if (r.ran !== undefined) note('run returned', JSON.stringify(r.ran), shot, returned);
             }
             // Each distinct line once per state, with the shots it showed in.
