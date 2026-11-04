@@ -230,6 +230,9 @@ const lineStart = (text, at, back = 0) => {
 const DEPRECATIONS = readFileSync(join(REPO, 'DEPRECATIONS.md'), 'utf8');
 // The namespaces the loader registers (JSP-10 scopes to them).
 const REGISTERED = new Set(loaderNames());
+// The ones it inits after the reveal: no critical: true (JSP-11's hint).
+const DEFERRED = new Set([...readFileSync(join(REPO, '_js', 'nds-loader.js'), 'utf8').matchAll(/\{([^{}]*?\bname:\s*'([^']+)'[^{}]*?)\}/g)]
+    .filter((m) => !/\bcritical:\s*true/.test(m[1])).map((m) => m[2]));
 
 // Where each file ships ('main', 'delegated', …) and which file defines each namespace (PERSONA entry 11).
 const BUNDLE = {};
@@ -570,7 +573,7 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     }
 
     // JSP-10 a DOM walk at the top of a loader-registered module's IIFE, inside bundle eval.
-    if (REGISTERED.has(own)) {
+    if ([...own].some((n) => REGISTERED.has(n))) {
         for (const m of code.matchAll(/(?:document\.)?(querySelectorAll|getElementsByClassName|getElementsByTagName)\s*\(/g)) {
             if (blocksAround(bare, m.index).length !== 1 || !topLevel(m.index)) continue; // only the IIFE's own straight-line code
             const stmtEnd = code.indexOf(';', m.index);
@@ -583,10 +586,12 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
     // JSP-11 a forced layout read on the synchronous init() / constructor path (one helper deep).
     const READS = /\.getBoundingClientRect\s*\(|\.(?:offset|client|scroll)(?:Width|Height|Top|Left)\b(?!\s*=[^=])|\bgetComputedStyle\s*\(/g;
     const initBodies = [];
+    const later = (open, at) => innerFn(bare, at) !== open || /=>[^;{}]*$/.test(bare.slice(open, at)); // inside a callback: runs later
     for (const d of bare.matchAll(/(?:^|[\s;{}])(constructor|init)\s*\([^)]*\)\s*\{|\bfunction\s+init\s*\([^)]*\)\s*\{|\binit\s*[:=]\s*(?:function\s*)?\([^)]*\)\s*(?:=>\s*)?\{/gm)) {
         const open = d.index + d[0].length - 1;
         initBodies.push([open, d[1] || 'init']);
         for (const c of code.slice(open, blockEnd(bare, open)).matchAll(/(?<![\w$.])(?:this\.)?([\w$]+)\s*\(/g)) {
+            if (later(open, open + c.index)) continue;
             const h = new RegExp(`(?:^|[\\s;{}])(?:function\\s+)?${c[1]}\\s*\\([^)]*\\)\\s*\\{`, 'm').exec(bare);
             if (h && !/^(if|for|while|switch|catch|function|init|constructor)$/.test(c[1])) initBodies.push([h.index + h[0].length - 1, `${d[1] || 'init'} → ${c[1]}`]);
         }
@@ -596,9 +601,11 @@ function checkFile(file, source = readFileSync(file, 'utf8')) {
         const end = blockEnd(bare, open);
         for (const r of code.slice(open, end).matchAll(READS)) {
             const at = open + r.index;
-            if (innerFn(bare, at) !== open || seenRead.has(at)) continue; // a nested callback runs later
+            if (later(open, at) || seenRead.has(at)) continue;
             seenRead.add(at);
-            hit('JSP-11', at, `${r[0].replace(/\s*\($/, '()')} on the ${via} path`, 'a read on an element not yet in the page, or one JSA-02 already flags, is exempt');
+            hit('JSP-11', at, `${r[0].replace(/\s*\($/, '()')} on the ${via} path`, [...own].some((n) => DEFERRED.has(n))
+                ? 'deferred tier, after the reveal: a finding only when the element can sit in a section content-visibility skips'
+                : 'a read on an element not yet in the page, or one JSA-02 already flags, is exempt');
         }
     }
 
@@ -1261,6 +1268,9 @@ const CASES = [
     [`(function(){ NDS.onDomAdd('.x', (nodes) => refresh(nodes)); })();`, []], // no listener of its own
     [`(function(){ class A { constructor(el) { this.w = el.getBoundingClientRect().width; } } })();`, ['JSP-11?']],
     [`(function(){ class A { constructor(el) { this.off = NDS.onElementResize(el, () => { this.w = el.offsetWidth; }); } destroy() { this.off(); } } })();`, []], // measured later
+    [`(function(){ class A { constructor(el) { el.addEventListener('keydown', (e) => this._key(e)); } _key(e) { getComputedStyle(e.target); } } })();`, []], // a handler's helper
+    [`(function(){ document.querySelectorAll('.x').forEach((n) => n.setAttribute('a', '')); NDS.Theme = {}; })();`, ['JSP-10']], // a registered namespace
+    [`(function(){ class A { init() { NDS.onIdle(() => { this._find(); }); } _find() { getComputedStyle(document.body); } } })();`, []], // an idle callback's helper
     [`(function(){ class A { close() { this.cancel = NDS.onTransitionEnd(el, done); } } })();`, ['JSP-12']],
     [`(function(){ class A { close() { this.cancel?.(); this.cancel = NDS.onTransitionEnd(el, done); } } })();`, []],
     [`(function(){ class A { close() { if (!this.open) return; this.cancel = NDS.onTransitionEnd(el, done); } } })();`, []], // early return
