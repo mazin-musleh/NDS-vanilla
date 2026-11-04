@@ -2,13 +2,13 @@
 layout: page
 title: Share
 hero_title: Share - National Design System
-hero_description: A set of buttons that share a page link to X, LinkedIn, WhatsApp and other sites, or copy it to the clipboard
+hero_description: A set of buttons that share a page link to X, LinkedIn, WhatsApp and other sites, through the device's share sheet, or copy it to the clipboard
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 10:38 PM"
+last_edit: "05/11/2026 - 12:40 AM"
 ---
 
 <section id="share-overview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "04/11/2026 - 10:38 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-Share is a `.nds-share` wrapper of share buttons, in a [Dropmenu](../components/dropmenu) or in a row. Four buttons are built in: X, LinkedIn, WhatsApp and Copy Link. The script finds each one by its class. `data-share-href` adds any other target, such as Facebook or email. By default, every button shares the current page.
+Share is a `.nds-share` wrapper of share buttons, in a [Dropmenu](../components/dropmenu) or in a row. Five buttons are built in: X, LinkedIn, WhatsApp, Copy Link, and Device Share, which opens the device's own share sheet for any app on a phone. The script finds each one by its class. `data-share-href` adds any other target, such as Facebook or email. By default, every button shares the current page.
 
 Pick another component when:
 

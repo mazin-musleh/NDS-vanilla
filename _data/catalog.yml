@@ -291,8 +291,8 @@
   scss: _sass/components/_link.scss
 
 - title: "Share"
-  description: "Share buttons for X, LinkedIn, WhatsApp, other sites, and copy link, in a menu or a row"
-  use_when: "Share this page or one item on it: a share menu or a row of buttons for X, LinkedIn, WhatsApp, or any site with a share link, plus copy link."
+  description: "Share buttons for X, LinkedIn, WhatsApp, other sites, the device's share sheet, and copy link, in a menu or a row"
+  use_when: "Share this page or one item on it: a share menu or a row of buttons for X, LinkedIn, WhatsApp, or any site with a share link, the device's own share sheet (navigator.share) for any app on a phone, plus copy link."
   category: "Actions"
   tags: ["JS", "CSS"]
   url: "/components/share.html"
