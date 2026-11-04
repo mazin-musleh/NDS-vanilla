@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 11:00 PM"
+last_edit: "04/11/2026 - 11:29 PM"
 ---
 
 <section id="stepper-overview" class="nds-content-section nds-doc-overview">
@@ -209,7 +209,7 @@ Most classes go on `.nds-stepper`. The Card rows put `nds-card` on the stepper, 
 | Action (any) | At end (hint: Beside the title, on the end side. Vertical only) | `.nds-end` | `.nds-stepper.nds-vertical-md .nds-stepper-action` | Moves the action to the end of the step's first row, beside the text. A phone stacks it under the text. `--stepper-action-width` caps the column |
 | Card | None (default) | — | — | No card. The stepper has no surface of its own |
 | Card | Stepper (hint: The whole stepper in one card) | `.nds-card` | `.nds-stepper` | The whole stepper in one [Card](../components/card). The usual use is a radial stepper, with the ring and the step on one surface. See Card under Behavior |
-| Card | Step (hint: Each step in a card, with the line removed. Not radial) | `.nds-card` | `.nds-stepper:not(.nds-radial) .nds-stepper-step` | Each step in its own card, with the circle inside it. See Card under Behavior. Put the class on every step |
+| Card | Step (hint: Each step in a card, with the line removed. Not radial or alternate) | `.nds-card` | `.nds-stepper:not(.nds-radial):not(.nds-alternate) .nds-stepper-step` | Each step in its own card, with the circle inside it. See Card under Behavior. Put the class on every step |
 | Card | Content (hint: The text in a card beside the circle, with the line kept. Not radial) | `.nds-card` | `.nds-stepper:not(.nds-radial) .nds-stepper-content` | The text of each step in a card beside its circle. The line stays. Put the class on every step's content |
 | Stroke | Stroke (hint: A border in the card's own color) | `.nds-stroke` | `.nds-stepper.nds-card` | A border around the stepper card |
 | Stroke | Stroke (hint: A border in the card's own color) | `.nds-stroke` | `.nds-stepper-step.nds-card` | On every step card: the card's own border color in place of the step state color |
