@@ -310,6 +310,22 @@
 }
 
 // ==============================================
+// BASELINE VARIANT
+// ==============================================
+// Cells line up on their first text line, so a field's message grows the row
+// downward and leaves the other cells where they are.
+
+.nds-table.nds-baseline td {
+    vertical-align: baseline;
+
+    // No text, no baseline: center them on the cell's text line instead.
+    > :is(.nds-checkbox, .nds-radio, .nds-switch, .nds-table-actions, .nds-icon-only, .nds-avatar) {
+        display: inline-flex;
+        vertical-align: middle;
+    }
+}
+
+// ==============================================
 // TABLE LOADING STATE
 // ==============================================
 // Processing skeleton — both loading entry points (filter's

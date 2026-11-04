@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 04:39 PM"
+last_edit: "04/11/2026 - 09:24 PM"
 ---
 
 <section id="table-overview" class="nds-content-section nds-doc-overview">
@@ -524,6 +524,8 @@ Every option goes on the outer `<table>`, never on a table in a sub-row.
 | Interactive | Interactive (hint: Rows highlight on hover) | `.nds-interactive` | `#tbl-rec-requests` | |
 | Center | Center (hint: Cell text is centered) | `.nds-center` | `#tbl-requests` | Centers the text in every cell. For short values, such as a score sheet |
 | Center | Center (hint: Cell text is centered) | `.nds-center` | `#tbl-rec-requests` | |
+| Baseline | Baseline (hint: Cells line up on their first text line) | `.nds-baseline` | `#tbl-requests` | For a table with fields in its cells: a field that shows its message grows the row downward, and the other cells stay in line. A row with two lines of text lines up on its first line |
+| Baseline | Baseline (hint: Cells line up on their first text line) | `.nds-baseline` | `#tbl-rec-requests` | |
 | Sub-rows | Several open (hint: Detail rows stay open together) | `[data-state~="always-open"]` | `#tbl-rec-requests` | Opens more than one detail row at a time. Records only |
 | Total row | Total row (hint: A total under the rows) | canon `#tbl-total` | `#tbl-requests` | A `<tfoot>` row after the body, such as the sum of a column. The label may span the first columns with `colspan`. Shown on Standard. It works on any table |
 | Loading | Loading (hint: Skeleton bars in place of the rows) | `.nds-loading` | `#tbl-requests` | Shows skeleton bars in place of the cells while new rows load. `data-state="loading"` does the same |
@@ -718,6 +720,7 @@ Keep Selection only when the page has a bulk action that acts on the selected ro
 - Set `--min-width` no wider than the room the page gives the table. Below it the box scrolls, so a larger value hides the last columns, such as the actions, on every desktop. The audit's `table-min-width` check finds one.
 - Write `data-sort-value` on a cell whose text sorts wrong: a date that is not in the table's date format (one with a month name, or a Hijri date), an amount with a currency, a status that has an order. Write a date there as `YYYY-MM-DD`. A table whose dates use another order carries its own `data-date-format`: see [Date](../components/date).
 - Put a total in a `<tfoot>`, never as the last body row: sorting would move it, and Export would add it to the data.
+- Add `nds-baseline` to a table with fields in its cells. Without it, a field that shows its message moves the other fields in its row. The audit's `form-row-align` check finds one.
 - Use selection only with a bulk action that acts on the selected rows.
 - Give each row checkbox an `aria-label` that names the row: "Select REQ-2026-118".
 - Give each icon-only button an `aria-label`, such as the sub-row toggle and the row menu.

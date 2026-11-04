@@ -355,7 +355,9 @@
                 // Fields that start apart sit in a row that centers them: a message under one moves the others (rig 4's table).
                 if (spread(fields) > 2) context.report(parent,
                     `Fields side by side start their inputs ${Math.round(spread(inputs))}px apart: the row centers its fields, so a taller one, such as a field showing its message, moves the others.`,
-                    'Align the fields in the row to the top, so a message under one field leaves the others in place: on an nds-flex row, --align: flex-start.');
+                    parent.matches('.nds-table tr')
+                        ? 'Add nds-baseline to the table, so a message under one field leaves the others in place.'
+                        : 'Align the fields in the row to the top, so a message under one field leaves the others in place: on an nds-flex row, --align: flex-start.');
                 else context.report(parent,
                     `Fields side by side start their inputs ${Math.round(spread(inputs))}px apart: something above one input, such as an Info line under its label or a label on two lines, pushes it down.`,
                     'Put help text in a Hint under the field or a Help tooltip beside the label, or give every field in the row an Info line. Keep the labels short enough for one line.');

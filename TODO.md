@@ -9,16 +9,11 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
 ### v2.0.0 release
 
 - **NDS IQ v4.0 on release day** (plan and status in `plans/iq-v4.md`; `IQv3.2` is already tagged and pushed, off main). [ ] `python scripts/publish-iq.py --apply` BEFORE the build and `mkrelease.py` (`verify()` checks the published copy and the guides' v4.0 render), `git push origin main IQv4.0`, then `nds-iq-eval` `evolve`. [ ] Optional, owner go: the S101 behavior run.
-- **v2.0.0 is the window for breaking improvements.** A major is the one time a wrong name or a split API can be fixed rather than aliased. For each find: add a sub-item here with the problem, the fix and its migration line, then decide build or drop with the owner. Every landed break gets a Migrating entry in `CHANGELOG.md`.
-  - **One footer actions pattern for Panel, Modal and Dropmenu (2026-11-01).** Three names, three behaviors today: Panel's `.nds-panel-footer` is a row that never stacks, so three `nds-full` buttons cut a long label on a phone (the cookie panel works around it with `nds-wrap` and natural-width buttons); Modal's footer is `.nds-card-actions`, which stacks full width on a phone with the main action on top (`_modal.scss:96`); Dropmenu's is `.nds-dropmenu-footer > hr.nds-divider + .nds-dropmenu-action`. Find one standard: the class name, when the row wraps or stacks (by the container's width, per `_sass/sass.md`), full or natural width, the main action's place, and a knob for each. Check how major libraries do footer actions first, then the parts that copy a footer today (cookies, accessibility, editor and table menus).
-    - [x] Built 2026-11-01: rows wrap by button size; `nds-col` / new `nds-col-sm` stack. Form's `.nds-form-actions` joined. See `plans/action-row.md`.
-  - **Consistency pass, plan and status in `plans/v2-consistency.md`**: all batches committed (batch 7 = `dca722a0`).
-    - [x] `nds-compact` on `.nds-content-layout` stays (owner, 2026-11-02): it feels smaller because the edges contain the content.
 
 ### Parked features (owner calls; after v2.0.0 unless noted)
 
 - **Chat component (2026-10-16), later.** Found in the Student Portal mockup (https://seu-exam-support.netlify.app/) with Date Tile and Meta, which shipped. Think it through first: the real uses, how it fits with other components, and what it replaces. The portal's support panel (`dialog#support-panel` in `examples/student-portal.md`) is where it would land.
-- **Editable table cells (rig 4, 2026-11-03).** No canon for a field in a table cell. Rig 4 put fields in cells, and an error message under one makes the row taller, so the table re-centers the other inputs 30px lower. `form-row-align` flags it, and names the centering; design the in-cell field and its error once (top alignment, or an error that does not grow the row).
+- **Editable table cells (rig 4, 2026-11-03).** No canon for a field in a table cell (its label, its size). The row alignment is done: `nds-baseline` keeps a row's cells in line when a field's message grows the row, and `form-row-align` names it (2026-11-04).
 - **File Upload image preview for a photo picker.** The old catalog card promised one; it never existed.
 - **Rig asks, checked against the docs 2026-10-27.** The rest were already covered or dropped (shop parts are off-mission).
   - **Selection: a pick limit.** None today; Multiselect's `data-max-checked` only checks on submit. Owner call.
