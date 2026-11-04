@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "05/11/2026 - 12:51 AM"
 ---
 
 <section id="selection-overview" class="nds-content-section nds-doc-overview">
@@ -119,89 +119,91 @@ Pick another component when:
     </div>
   </div>
 </div>
-<table class="nds-table">
-  <thead>
-    <tr>
-      <th>
-        <div class="nds-form-container nds-checkbox">
-          <div class="nds-form-control">
-            <input type="checkbox" class="nds-checkbox-input" aria-label="Select all requests">
+<div class="nds-table-wrapper">
+  <table class="nds-table">
+    <thead>
+      <tr>
+        <th>
+          <div class="nds-form-container nds-checkbox">
+            <div class="nds-form-control">
+              <input type="checkbox" class="nds-checkbox-input" aria-label="Select all requests">
+            </div>
           </div>
-        </div>
-      </th>
-      <th>Reference</th>
-      <th>Service</th>
-    </tr>
-  </thead>
-  <tbody id="selection-requests" class="nds-paged-content" style="--per-page: 4;">
-    <tr class="nds-page-item">
-      <td>
-        <div class="nds-form-container nds-checkbox">
-          <div class="nds-form-control">
-            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-1001">
+        </th>
+        <th>Reference</th>
+        <th>Service</th>
+      </tr>
+    </thead>
+    <tbody id="selection-requests" class="nds-paged-content" style="--per-page: 4;">
+      <tr class="nds-page-item">
+        <td>
+          <div class="nds-form-container nds-checkbox">
+            <div class="nds-form-control">
+              <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-1001">
+            </div>
           </div>
-        </div>
-      </td>
-      <td>REQ-1001</td>
-      <td>Passport Renewal</td>
-    </tr>
-    <tr class="nds-page-item">
-      <td>
-        <div class="nds-form-container nds-checkbox">
-          <div class="nds-form-control">
-            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-1002">
+        </td>
+        <td>REQ-1001</td>
+        <td>Passport Renewal</td>
+      </tr>
+      <tr class="nds-page-item">
+        <td>
+          <div class="nds-form-container nds-checkbox">
+            <div class="nds-form-control">
+              <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-1002">
+            </div>
           </div>
-        </div>
-      </td>
-      <td>REQ-1002</td>
-      <td>Driving Licence</td>
-    </tr>
-    <tr class="nds-page-item">
-      <td>
-        <div class="nds-form-container nds-checkbox">
-          <div class="nds-form-control">
-            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-1003">
+        </td>
+        <td>REQ-1002</td>
+        <td>Driving Licence</td>
+      </tr>
+      <tr class="nds-page-item">
+        <td>
+          <div class="nds-form-container nds-checkbox">
+            <div class="nds-form-control">
+              <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-1003">
+            </div>
           </div>
-        </div>
-      </td>
-      <td>REQ-1003</td>
-      <td>Commercial Registration</td>
-    </tr>
-    <tr class="nds-page-item">
-      <td>
-        <div class="nds-form-container nds-checkbox">
-          <div class="nds-form-control">
-            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-1004">
+        </td>
+        <td>REQ-1003</td>
+        <td>Commercial Registration</td>
+      </tr>
+      <tr class="nds-page-item">
+        <td>
+          <div class="nds-form-container nds-checkbox">
+            <div class="nds-form-control">
+              <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-1004">
+            </div>
           </div>
-        </div>
-      </td>
-      <td>REQ-1004</td>
-      <td>Building Permit</td>
-    </tr>
-    <tr class="nds-page-item">
-      <td>
-        <div class="nds-form-container nds-checkbox">
-          <div class="nds-form-control">
-            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-1005">
+        </td>
+        <td>REQ-1004</td>
+        <td>Building Permit</td>
+      </tr>
+      <tr class="nds-page-item">
+        <td>
+          <div class="nds-form-container nds-checkbox">
+            <div class="nds-form-control">
+              <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-1005">
+            </div>
           </div>
-        </div>
-      </td>
-      <td>REQ-1005</td>
-      <td>Health Card</td>
-    </tr>
-    <tr class="nds-page-item">
-      <td>
-        <div class="nds-form-container nds-checkbox">
-          <div class="nds-form-control">
-            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-1006">
+        </td>
+        <td>REQ-1005</td>
+        <td>Health Card</td>
+      </tr>
+      <tr class="nds-page-item">
+        <td>
+          <div class="nds-form-container nds-checkbox">
+            <div class="nds-form-control">
+              <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-1006">
+            </div>
           </div>
-        </div>
-      </td>
-      <td>REQ-1006</td>
-      <td>Work Visa</td>
-    </tr>
-  </tbody>
-</table>
+        </td>
+        <td>REQ-1006</td>
+        <td>Work Visa</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 <nav class="nds-pagination" data-auto-pagination="selection-requests" aria-label="Pagination" data-i18n-aria-label="pagination.pagination"></nav>
 </script>
     </div>

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 10:02 PM"
+last_edit: "05/11/2026 - 12:51 AM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -212,6 +212,11 @@ When the framework renders `<html>` too, as the Next.js App Router does, put `su
 {: .nds-block-title}
 
 NDS adds classes to some elements, such as `nds-dropmenu` on a picker's field and `nds-external` on a link. When a class binding changes, React's `className`, Vue's `class` and a Svelte `class` attribute that holds an expression write the whole attribute again and remove those classes. Svelte's `class:name` directive and Angular's `[class]` and `[class.name]` bindings change one class at a time and keep them. On an element that NDS writes to, keep the bound classes fixed, use a binding that changes one class, or put the changing class on a wrapper. The same holds for an attribute that NDS writes, such as `data-state` or `hidden`: do not bind it.
+
+### Tables
+{: .nds-block-title}
+
+Keep the `.nds-table-wrapper` that the [Table](../components/table) canon writes around each table. A table with no wrapper is moved into one that the script adds. The framework then puts the next table it renders for that spot inside that wrapper, and the table can vanish when the view changes. A wrapper in the template stays where the framework put it.
 
 ### Field Values
 {: .nds-block-title}

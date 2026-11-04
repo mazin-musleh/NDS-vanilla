@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 09:24 PM"
+last_edit: "05/11/2026 - 12:51 AM"
 ---
 
 <section id="table-overview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "04/11/2026 - 09:24 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-A table is a `<table class="nds-table">` with a `<thead>`, a `<tbody>`, and an optional `<tfoot>` for a total. Markup turns on the rest: sort buttons in the header, row checkboxes, a column menu, and detail rows under a row. Tables work with [Pagination](../components/pagination), [Filter](../components/filter), [Selection](../components/selection) and [Export](../components/export) on the same rows.
+A table is a `<table class="nds-table">` in a `.nds-table-wrapper`, with a `<thead>`, a `<tbody>`, and an optional `<tfoot>` for a total. Markup turns on the rest: sort buttons in the header, row checkboxes, a column menu, and detail rows under a row. Tables work with [Pagination](../components/pagination), [Filter](../components/filter), [Selection](../components/selection) and [Export](../components/export) on the same rows.
 
 Pick another component when:
 
@@ -37,63 +37,65 @@ Pick another component when:
     </div>
     <div class="nds-section-body">
 <script type="text/html" id="tbl-standard" data-canon data-variants="table-variants-table">
-<table id="tbl-requests" class="nds-table">
-  <thead>
-    <tr>
-      <th>Reference</th>
-      <th>Service</th>
-      <th>Submitted</th>
-      <th data-align="center">Status</th>
-      <th data-align="end">Fee</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>REQ-2026-118</td>
-      <td>Commercial registration</td>
-      <td>22/07/2026</td>
-      <td>
-        <span class="nds-tag nds-sm" data-status="warning">
-          <span class="nds-label">Pending</span>
-        </span>
-      </td>
-      <td><span class="nds-number-format" data-currency="SAR">1200</span></td>
-    </tr>
-    <tr>
-      <td>REQ-2026-117</td>
-      <td>Building permit</td>
-      <td>21/07/2026</td>
-      <td>
-        <span class="nds-tag nds-sm" data-status="success">
-          <span class="nds-label">Approved</span>
-        </span>
-      </td>
-      <td><span class="nds-number-format" data-currency="SAR">4500</span></td>
-    </tr>
-    <tr>
-      <td>REQ-2026-116</td>
-      <td>Passport renewal</td>
-      <td>20/07/2026</td>
-      <td>
-        <span class="nds-tag nds-sm" data-status="success">
-          <span class="nds-label">Approved</span>
-        </span>
-      </td>
-      <td><span class="nds-number-format" data-currency="SAR">300</span></td>
-    </tr>
-    <tr>
-      <td>REQ-2026-115</td>
-      <td>Vehicle registration</td>
-      <td>18/07/2026</td>
-      <td>
-        <span class="nds-tag nds-sm" data-status="error">
-          <span class="nds-label">Rejected</span>
-        </span>
-      </td>
-      <td><span class="nds-number-format" data-currency="SAR">150</span></td>
-    </tr>
-  </tbody>
-</table>
+<div class="nds-table-wrapper">
+  <table id="tbl-requests" class="nds-table">
+    <thead>
+      <tr>
+        <th>Reference</th>
+        <th>Service</th>
+        <th>Submitted</th>
+        <th data-align="center">Status</th>
+        <th data-align="end">Fee</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>REQ-2026-118</td>
+        <td>Commercial registration</td>
+        <td>22/07/2026</td>
+        <td>
+          <span class="nds-tag nds-sm" data-status="warning">
+            <span class="nds-label">Pending</span>
+          </span>
+        </td>
+        <td><span class="nds-number-format" data-currency="SAR">1200</span></td>
+      </tr>
+      <tr>
+        <td>REQ-2026-117</td>
+        <td>Building permit</td>
+        <td>21/07/2026</td>
+        <td>
+          <span class="nds-tag nds-sm" data-status="success">
+            <span class="nds-label">Approved</span>
+          </span>
+        </td>
+        <td><span class="nds-number-format" data-currency="SAR">4500</span></td>
+      </tr>
+      <tr>
+        <td>REQ-2026-116</td>
+        <td>Passport renewal</td>
+        <td>20/07/2026</td>
+        <td>
+          <span class="nds-tag nds-sm" data-status="success">
+            <span class="nds-label">Approved</span>
+          </span>
+        </td>
+        <td><span class="nds-number-format" data-currency="SAR">300</span></td>
+      </tr>
+      <tr>
+        <td>REQ-2026-115</td>
+        <td>Vehicle registration</td>
+        <td>18/07/2026</td>
+        <td>
+          <span class="nds-tag nds-sm" data-status="error">
+            <span class="nds-label">Rejected</span>
+          </span>
+        </td>
+        <td><span class="nds-number-format" data-currency="SAR">150</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 </script>
 <script type="text/html" id="tbl-total" data-canon>
 <tfoot>
@@ -213,291 +215,297 @@ Pick another component when:
     </div>
   </div>
 </div>
-<table id="tbl-rec-requests" class="nds-table" data-export-name="service-requests">
-  <thead>
-    <tr>
-      <th>
-        <div class="nds-form-container nds-checkbox">
-          <div class="nds-form-control">
-            <input type="checkbox" class="nds-checkbox-input" aria-label="Select all requests">
+<div class="nds-table-wrapper">
+  <table id="tbl-rec-requests" class="nds-table" data-export-name="service-requests">
+    <thead>
+      <tr>
+        <th>
+          <div class="nds-form-container nds-checkbox">
+            <div class="nds-form-control">
+              <input type="checkbox" class="nds-checkbox-input" aria-label="Select all requests">
+            </div>
           </div>
-        </div>
-      </th>
-      <th data-columns-lock>
-        <div class="nds-col-header">
-          <span class="nds-label">Reference</span>
-          <div class="nds-col-actions">
-            <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" type="button" aria-label="Sort by reference">
-              <i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i>
+        </th>
+        <th data-columns-lock>
+          <div class="nds-col-header">
+            <span class="nds-label">Reference</span>
+            <div class="nds-col-actions">
+              <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" type="button" aria-label="Sort by reference">
+                <i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </th>
+        <th>
+          <div class="nds-col-header">
+            <span class="nds-label">Service</span>
+            <div class="nds-col-actions">
+              <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" type="button" aria-label="Sort by service">
+                <i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </th>
+        <th>
+          <div class="nds-col-header">
+            <span class="nds-label">Submitted</span>
+            <div class="nds-col-actions">
+              <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" type="button" aria-label="Sort by submitted date">
+                <i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </th>
+        <th data-align="center">
+          <div class="nds-col-header">
+            <span class="nds-label">Status</span>
+            <div class="nds-col-actions">
+              <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" type="button" aria-label="Sort by status">
+                <i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </th>
+        <th data-align="end">
+          <div class="nds-col-header">
+            <span class="nds-label">Fee</span>
+            <div class="nds-col-actions">
+              <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" type="button" aria-label="Sort by fee">
+                <i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </th>
+        <th class="nds-actions-column" data-export-skip>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="tbl-rec-rows" class="nds-paged-content" data-filter-items="tr" style="--per-page: 5;">
+      <tr class="nds-page-item">
+        <td>
+          <div class="nds-form-container nds-checkbox">
+            <div class="nds-form-control">
+              <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-2026-118">
+            </div>
+          </div>
+        </td>
+        <td>REQ-2026-118</td>
+        <td>
+          <span class="nds-tag nds-gray nds-sm">
+            <span class="nds-label" data-filter="service">Commercial registration</span>
+          </span>
+        </td>
+        <td data-sort-value="2026-07-22">22/07/2026</td>
+        <td data-sort-value="1">
+          <span class="nds-tag nds-sm" data-status="warning">
+            <span class="nds-label" data-filter="status" data-filter-value="pending">Pending</span>
+          </span>
+        </td>
+        <td data-sort-value="1200"><span class="nds-number-format" data-currency="SAR">1200</span></td>
+        <td class="nds-actions-column">
+          <div class="nds-table-actions">
+            <button class="nds-btn nds-subtle nds-md nds-icon-only" type="button" data-sub-toggle aria-controls="tbl-rec-sub-118" aria-expanded="false" aria-label="Show details of REQ-2026-118">
+              <i class="hgi hgi-stroke hgi-list-view" aria-hidden="true"></i>
             </button>
-          </div>
-        </div>
-      </th>
-      <th>
-        <div class="nds-col-header">
-          <span class="nds-label">Service</span>
-          <div class="nds-col-actions">
-            <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" type="button" aria-label="Sort by service">
-              <i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-      </th>
-      <th>
-        <div class="nds-col-header">
-          <span class="nds-label">Submitted</span>
-          <div class="nds-col-actions">
-            <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" type="button" aria-label="Sort by submitted date">
-              <i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-      </th>
-      <th data-align="center">
-        <div class="nds-col-header">
-          <span class="nds-label">Status</span>
-          <div class="nds-col-actions">
-            <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" type="button" aria-label="Sort by status">
-              <i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-      </th>
-      <th data-align="end">
-        <div class="nds-col-header">
-          <span class="nds-label">Fee</span>
-          <div class="nds-col-actions">
-            <button class="nds-btn nds-subtle nds-sort-btn nds-icon-only" type="button" aria-label="Sort by fee">
-              <i class="nds-icon nds-hgi-sorting-05 nds-sort-icon" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-      </th>
-      <th class="nds-actions-column" data-export-skip>Actions</th>
-    </tr>
-  </thead>
-  <tbody id="tbl-rec-rows" class="nds-paged-content" data-filter-items="tr" style="--per-page: 5;">
-    <tr class="nds-page-item">
-      <td>
-        <div class="nds-form-container nds-checkbox">
-          <div class="nds-form-control">
-            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-2026-118">
-          </div>
-        </div>
-      </td>
-      <td>REQ-2026-118</td>
-      <td>
-        <span class="nds-tag nds-gray nds-sm">
-          <span class="nds-label" data-filter="service">Commercial registration</span>
-        </span>
-      </td>
-      <td data-sort-value="2026-07-22">22/07/2026</td>
-      <td data-sort-value="1">
-        <span class="nds-tag nds-sm" data-status="warning">
-          <span class="nds-label" data-filter="status" data-filter-value="pending">Pending</span>
-        </span>
-      </td>
-      <td data-sort-value="1200"><span class="nds-number-format" data-currency="SAR">1200</span></td>
-      <td class="nds-actions-column">
-        <div class="nds-table-actions">
-          <button class="nds-btn nds-subtle nds-md nds-icon-only" type="button" data-sub-toggle aria-controls="tbl-rec-sub-118" aria-expanded="false" aria-label="Show details of REQ-2026-118">
-            <i class="hgi hgi-stroke hgi-list-view" aria-hidden="true"></i>
-          </button>
-          <div class="nds-dropmenu">
-            <button class="nds-btn nds-subtle nds-md nds-icon-only nds-dropmenu-trigger" type="button" aria-label="Actions for REQ-2026-118">
-              <i class="nds-icon nds-hgi-more-vertical" aria-hidden="true"></i>
-            </button>
-            <div class="nds-dropmenu-menu" hidden>
-              <div class="nds-dropmenu-scroll">
-                <button class="nds-btn nds-subtle nds-dropmenu-item" type="button">
-                  <i class="nds-icon nds-hgi-edit-02" aria-hidden="true"></i>
-                  <span class="nds-label">Edit</span>
-                </button>
-                <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive" type="button">
-                  <i class="nds-icon nds-hgi-delete-02" aria-hidden="true"></i>
-                  <span class="nds-label">Delete</span>
-                </button>
+            <div class="nds-dropmenu">
+              <button class="nds-btn nds-subtle nds-md nds-icon-only nds-dropmenu-trigger" type="button" aria-label="Actions for REQ-2026-118">
+                <i class="nds-icon nds-hgi-more-vertical" aria-hidden="true"></i>
+              </button>
+              <div class="nds-dropmenu-menu" hidden>
+                <div class="nds-dropmenu-scroll">
+                  <button class="nds-btn nds-subtle nds-dropmenu-item" type="button">
+                    <i class="nds-icon nds-hgi-edit-02" aria-hidden="true"></i>
+                    <span class="nds-label">Edit</span>
+                  </button>
+                  <button class="nds-btn nds-subtle nds-dropmenu-item nds-destructive" type="button">
+                    <i class="nds-icon nds-hgi-delete-02" aria-hidden="true"></i>
+                    <span class="nds-label">Delete</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </td>
-    </tr>
-    <tr id="tbl-rec-sub-118" class="nds-sub" hidden>
-      <td colspan="7">
-        <table class="nds-table nds-compact">
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Processing fee</td>
-              <td><span class="nds-number-format" data-currency="SAR">25</span></td>
-            </tr>
-            <tr>
-              <td>Registration charge</td>
-              <td><span class="nds-number-format" data-currency="SAR">1020</span></td>
-            </tr>
-            <tr>
-              <td>VAT (15%)</td>
-              <td><span class="nds-number-format" data-currency="SAR">155</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    <tr class="nds-page-item">
-      <td>
-        <div class="nds-form-container nds-checkbox">
-          <div class="nds-form-control">
-            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-2026-117">
+        </td>
+      </tr>
+      <tr id="tbl-rec-sub-118" class="nds-sub" hidden>
+        <td colspan="7">
+          <div class="nds-table-wrapper">
+            <table class="nds-table nds-compact">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Processing fee</td>
+                  <td><span class="nds-number-format" data-currency="SAR">25</span></td>
+                </tr>
+                <tr>
+                  <td>Registration charge</td>
+                  <td><span class="nds-number-format" data-currency="SAR">1020</span></td>
+                </tr>
+                <tr>
+                  <td>VAT (15%)</td>
+                  <td><span class="nds-number-format" data-currency="SAR">155</span></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </div>
-      </td>
-      <td>REQ-2026-117</td>
-      <td>
-        <span class="nds-tag nds-gray nds-sm">
-          <span class="nds-label" data-filter="service">Building permit</span>
-        </span>
-      </td>
-      <td data-sort-value="2026-07-21">21/07/2026</td>
-      <td data-sort-value="2">
-        <span class="nds-tag nds-sm" data-status="success">
-          <span class="nds-label" data-filter="status" data-filter-value="approved">Approved</span>
-        </span>
-      </td>
-      <td data-sort-value="4500"><span class="nds-number-format" data-currency="SAR">4500</span></td>
-      <td class="nds-actions-column">
-        <div class="nds-table-actions">
-          <button class="nds-btn nds-subtle nds-md nds-icon-only" type="button" data-sub-toggle aria-controls="tbl-rec-sub-117" aria-expanded="false" aria-label="Show details of REQ-2026-117">
-            <i class="hgi hgi-stroke hgi-list-view" aria-hidden="true"></i>
-          </button>
-        </div>
-      </td>
-    </tr>
-    <tr id="tbl-rec-sub-117" class="nds-sub" hidden>
-      <td colspan="7">
-        <table class="nds-table nds-compact">
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Application fee</td>
-              <td><span class="nds-number-format" data-currency="SAR">500</span></td>
-            </tr>
-            <tr>
-              <td>Site inspection</td>
-              <td><span class="nds-number-format" data-currency="SAR">3500</span></td>
-            </tr>
-            <tr>
-              <td>Permit issue</td>
-              <td><span class="nds-number-format" data-currency="SAR">500</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-    <tr class="nds-page-item">
-      <td>
-        <div class="nds-form-container nds-checkbox">
-          <div class="nds-form-control">
-            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-2026-116">
+        </td>
+      </tr>
+      <tr class="nds-page-item">
+        <td>
+          <div class="nds-form-container nds-checkbox">
+            <div class="nds-form-control">
+              <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-2026-117">
+            </div>
           </div>
-        </div>
-      </td>
-      <td>REQ-2026-116</td>
-      <td>
-        <span class="nds-tag nds-gray nds-sm">
-          <span class="nds-label" data-filter="service">Passport renewal</span>
-        </span>
-      </td>
-      <td data-sort-value="2026-07-20">20/07/2026</td>
-      <td data-sort-value="2">
-        <span class="nds-tag nds-sm" data-status="success">
-          <span class="nds-label" data-filter="status" data-filter-value="approved">Approved</span>
-        </span>
-      </td>
-      <td data-sort-value="300"><span class="nds-number-format" data-currency="SAR">300</span></td>
-      <td class="nds-actions-column"></td>
-    </tr>
-    <tr class="nds-page-item">
-      <td>
-        <div class="nds-form-container nds-checkbox">
-          <div class="nds-form-control">
-            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-2026-115">
+        </td>
+        <td>REQ-2026-117</td>
+        <td>
+          <span class="nds-tag nds-gray nds-sm">
+            <span class="nds-label" data-filter="service">Building permit</span>
+          </span>
+        </td>
+        <td data-sort-value="2026-07-21">21/07/2026</td>
+        <td data-sort-value="2">
+          <span class="nds-tag nds-sm" data-status="success">
+            <span class="nds-label" data-filter="status" data-filter-value="approved">Approved</span>
+          </span>
+        </td>
+        <td data-sort-value="4500"><span class="nds-number-format" data-currency="SAR">4500</span></td>
+        <td class="nds-actions-column">
+          <div class="nds-table-actions">
+            <button class="nds-btn nds-subtle nds-md nds-icon-only" type="button" data-sub-toggle aria-controls="tbl-rec-sub-117" aria-expanded="false" aria-label="Show details of REQ-2026-117">
+              <i class="hgi hgi-stroke hgi-list-view" aria-hidden="true"></i>
+            </button>
           </div>
-        </div>
-      </td>
-      <td>REQ-2026-115</td>
-      <td>
-        <span class="nds-tag nds-gray nds-sm">
-          <span class="nds-label" data-filter="service">Vehicle registration</span>
-        </span>
-      </td>
-      <td data-sort-value="2026-07-18">18/07/2026</td>
-      <td data-sort-value="3">
-        <span class="nds-tag nds-sm" data-status="error">
-          <span class="nds-label" data-filter="status" data-filter-value="rejected">Rejected</span>
-        </span>
-      </td>
-      <td data-sort-value="150"><span class="nds-number-format" data-currency="SAR">150</span></td>
-      <td class="nds-actions-column"></td>
-    </tr>
-    <tr class="nds-page-item">
-      <td>
-        <div class="nds-form-container nds-checkbox">
-          <div class="nds-form-control">
-            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-2026-114">
+        </td>
+      </tr>
+      <tr id="tbl-rec-sub-117" class="nds-sub" hidden>
+        <td colspan="7">
+          <div class="nds-table-wrapper">
+            <table class="nds-table nds-compact">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Application fee</td>
+                  <td><span class="nds-number-format" data-currency="SAR">500</span></td>
+                </tr>
+                <tr>
+                  <td>Site inspection</td>
+                  <td><span class="nds-number-format" data-currency="SAR">3500</span></td>
+                </tr>
+                <tr>
+                  <td>Permit issue</td>
+                  <td><span class="nds-number-format" data-currency="SAR">500</span></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </div>
-      </td>
-      <td>REQ-2026-114</td>
-      <td>
-        <span class="nds-tag nds-gray nds-sm">
-          <span class="nds-label" data-filter="service">Birth certificate</span>
-        </span>
-      </td>
-      <td data-sort-value="2026-07-16">16/07/2026</td>
-      <td data-sort-value="2">
-        <span class="nds-tag nds-sm" data-status="success">
-          <span class="nds-label" data-filter="status" data-filter-value="approved">Approved</span>
-        </span>
-      </td>
-      <td data-sort-value="100"><span class="nds-number-format" data-currency="SAR">100</span></td>
-      <td class="nds-actions-column"></td>
-    </tr>
-    <tr class="nds-page-item">
-      <td>
-        <div class="nds-form-container nds-checkbox">
-          <div class="nds-form-control">
-            <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-2026-113">
+        </td>
+      </tr>
+      <tr class="nds-page-item">
+        <td>
+          <div class="nds-form-container nds-checkbox">
+            <div class="nds-form-control">
+              <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-2026-116">
+            </div>
           </div>
-        </div>
-      </td>
-      <td>REQ-2026-113</td>
-      <td>
-        <span class="nds-tag nds-gray nds-sm">
-          <span class="nds-label" data-filter="service">Commercial registration</span>
-        </span>
-      </td>
-      <td data-sort-value="2026-07-15">15/07/2026</td>
-      <td data-sort-value="1">
-        <span class="nds-tag nds-sm" data-status="warning">
-          <span class="nds-label" data-filter="status" data-filter-value="pending">Pending</span>
-        </span>
-      </td>
-      <td data-sort-value="1200"><span class="nds-number-format" data-currency="SAR">1200</span></td>
-      <td class="nds-actions-column"></td>
-    </tr>
-  </tbody>
-</table>
+        </td>
+        <td>REQ-2026-116</td>
+        <td>
+          <span class="nds-tag nds-gray nds-sm">
+            <span class="nds-label" data-filter="service">Passport renewal</span>
+          </span>
+        </td>
+        <td data-sort-value="2026-07-20">20/07/2026</td>
+        <td data-sort-value="2">
+          <span class="nds-tag nds-sm" data-status="success">
+            <span class="nds-label" data-filter="status" data-filter-value="approved">Approved</span>
+          </span>
+        </td>
+        <td data-sort-value="300"><span class="nds-number-format" data-currency="SAR">300</span></td>
+        <td class="nds-actions-column"></td>
+      </tr>
+      <tr class="nds-page-item">
+        <td>
+          <div class="nds-form-container nds-checkbox">
+            <div class="nds-form-control">
+              <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-2026-115">
+            </div>
+          </div>
+        </td>
+        <td>REQ-2026-115</td>
+        <td>
+          <span class="nds-tag nds-gray nds-sm">
+            <span class="nds-label" data-filter="service">Vehicle registration</span>
+          </span>
+        </td>
+        <td data-sort-value="2026-07-18">18/07/2026</td>
+        <td data-sort-value="3">
+          <span class="nds-tag nds-sm" data-status="error">
+            <span class="nds-label" data-filter="status" data-filter-value="rejected">Rejected</span>
+          </span>
+        </td>
+        <td data-sort-value="150"><span class="nds-number-format" data-currency="SAR">150</span></td>
+        <td class="nds-actions-column"></td>
+      </tr>
+      <tr class="nds-page-item">
+        <td>
+          <div class="nds-form-container nds-checkbox">
+            <div class="nds-form-control">
+              <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-2026-114">
+            </div>
+          </div>
+        </td>
+        <td>REQ-2026-114</td>
+        <td>
+          <span class="nds-tag nds-gray nds-sm">
+            <span class="nds-label" data-filter="service">Birth certificate</span>
+          </span>
+        </td>
+        <td data-sort-value="2026-07-16">16/07/2026</td>
+        <td data-sort-value="2">
+          <span class="nds-tag nds-sm" data-status="success">
+            <span class="nds-label" data-filter="status" data-filter-value="approved">Approved</span>
+          </span>
+        </td>
+        <td data-sort-value="100"><span class="nds-number-format" data-currency="SAR">100</span></td>
+        <td class="nds-actions-column"></td>
+      </tr>
+      <tr class="nds-page-item">
+        <td>
+          <div class="nds-form-container nds-checkbox">
+            <div class="nds-form-control">
+              <input type="checkbox" class="nds-checkbox-input" aria-label="Select REQ-2026-113">
+            </div>
+          </div>
+        </td>
+        <td>REQ-2026-113</td>
+        <td>
+          <span class="nds-tag nds-gray nds-sm">
+            <span class="nds-label" data-filter="service">Commercial registration</span>
+          </span>
+        </td>
+        <td data-sort-value="2026-07-15">15/07/2026</td>
+        <td data-sort-value="1">
+          <span class="nds-tag nds-sm" data-status="warning">
+            <span class="nds-label" data-filter="status" data-filter-value="pending">Pending</span>
+          </span>
+        </td>
+        <td data-sort-value="1200"><span class="nds-number-format" data-currency="SAR">1200</span></td>
+        <td class="nds-actions-column"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 <nav class="nds-pagination" data-auto-pagination="tbl-rec-rows" aria-label="Requests pagination"></nav>
 </script>
     </div>
@@ -515,7 +523,7 @@ Every option goes on the outer `<table>`, never on a table in a sub-row.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
-| Structure | Standard (default) | — | — | A plain table. The script adds the scroll box and nothing else |
+| Structure | Standard (default) | — | — | A plain table in its scroll box, `.nds-table-wrapper`. The script adds nothing else |
 | Structure | Records (hint: Adds search, filter, sort, selection, pages and detail rows) | canon `#tbl-records` | — | The records screen most services need: a count, per page, a column menu, export, search, filter, sort buttons, row checkboxes, detail rows, a row menu and pages. Start from it and delete the parts you do not need |
 | Density | Standard (default) | — | — | 64px rows, for cells with tags, buttons or two lines |
 | Density | Compact | `.nds-compact` | `#tbl-requests` | 48px rows, for dense data with one line in each cell |
@@ -643,7 +651,7 @@ Keep Selection only when the page has a bulk action that acts on the selected ro
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Sideways Scroll</span>
-              <p class="nds-card-description">The script puts each table in a <code class="nds-inline-code lang-html">.nds-table-wrapper</code> that scrolls sideways when the columns do not fit. It checks again when the size changes or a hidden tab opens. A phone gets the same scroll: there is no stacked layout. While it scrolls, the keyboard can reach the scroll box, and a table with a <code class="nds-inline-code lang-html">&lt;caption&gt;</code> or a label names it for a screen reader.</p>
+              <p class="nds-card-description">The <code class="nds-inline-code lang-html">.nds-table-wrapper</code> around each table scrolls sideways when the columns do not fit, and the script adds one when a table has none. It checks again when the size changes or a hidden tab opens. A phone gets the same scroll: there is no stacked layout. While it scrolls, the keyboard can reach the scroll box, and a table with a <code class="nds-inline-code lang-html">&lt;caption&gt;</code> or a label names it for a screen reader.</p>
             </div>
           </div>
         </li>
@@ -747,7 +755,7 @@ Keep Selection only when the page has a bulk action that acts on the selected ro
 
 | Class | Element | Effect |
 |---|---|---|
-| `nds-table-wrapper` | the parent of `.nds-table` | The scroll box. The script adds it when the table has none. Write it yourself to choose where it goes |
+| `nds-table-wrapper` | the parent of `.nds-table` | The scroll box. The canon writes it around every table: keep it. The script adds one to a table that has none by moving the table into it, which a framework view does not expect. See Tables in [Init](../core/init) |
 | `nds-col-header` | `div` in a `th` | Holds the header label and its actions on one line |
 | `nds-col-actions` | `div` in `.nds-col-header` | Holds the header buttons, at 32px |
 | `nds-sort-btn` | `button` in `.nds-col-actions` | Makes its column sortable |

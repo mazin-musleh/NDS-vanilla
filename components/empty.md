@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 10:32 PM"
+last_edit: "05/11/2026 - 12:51 AM"
 ---
 
 <section id="empty-overview" class="nds-content-section nds-doc-overview">
@@ -44,27 +44,31 @@ Pick another component when:
 <ul class="nds-empty"></ul>
 </script>
 <script type="text/html" id="empty-table" data-canon>
-<table class="nds-table nds-empty">
-  <thead>
-    <tr>
-      <th>Request</th>
-      <th data-align="center">Status</th>
-      <th>Updated</th>
-    </tr>
-  </thead>
-</table>
+<div class="nds-table-wrapper">
+  <table class="nds-table nds-empty">
+    <thead>
+      <tr>
+        <th>Request</th>
+        <th data-align="center">Status</th>
+        <th>Updated</th>
+      </tr>
+    </thead>
+  </table>
+</div>
 </script>
 <script type="text/html" id="empty-tbody" data-canon>
-<table class="nds-table">
-  <thead>
-    <tr>
-      <th>Request</th>
-      <th data-align="center">Status</th>
-      <th>Updated</th>
-    </tr>
-  </thead>
-  <tbody class="nds-empty"></tbody>
-</table>
+<div class="nds-table-wrapper">
+  <table class="nds-table">
+    <thead>
+      <tr>
+        <th>Request</th>
+        <th data-align="center">Status</th>
+        <th>Updated</th>
+      </tr>
+    </thead>
+    <tbody class="nds-empty"></tbody>
+  </table>
+</div>
 </script>
 <script type="text/html" id="empty-action" data-canon>
 <template data-empty-action>

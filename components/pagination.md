@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 02:54 PM"
+last_edit: "05/11/2026 - 12:51 AM"
 ---
 
 <section id="pagination-overview" class="nds-content-section nds-doc-overview">
@@ -180,29 +180,31 @@ Pick another component when:
 <nav class="nds-pagination" data-auto-pagination="pg-cards" aria-label="Services pagination"></nav>
 </script>
 <script type="text/html" id="pg-table" data-canon>
-<table class="nds-table">
-  <thead>
-    <tr>
-      <th>Request</th>
-      <th>Service</th>
-      <th data-align="center">Status</th>
-    </tr>
-  </thead>
-  <tbody id="pg-rows" class="nds-paged-content" style="--per-page: 5;">
-    <tr class="nds-page-item"><td>20481</td><td>Passport renewal</td><td>Approved</td></tr>
-    <tr class="nds-page-item"><td>20482</td><td>National ID renewal</td><td>In review</td></tr>
-    <tr class="nds-page-item"><td>20483</td><td>Vehicle registration</td><td>Approved</td></tr>
-    <tr class="nds-page-item"><td>20484</td><td>Building permit</td><td>Returned</td></tr>
-    <tr class="nds-page-item"><td>20485</td><td>Birth certificate</td><td>Approved</td></tr>
-    <tr class="nds-page-item"><td>20486</td><td>Exit and re-entry visa</td><td>In review</td></tr>
-    <tr class="nds-page-item"><td>20487</td><td>Commercial registration</td><td>Approved</td></tr>
-    <tr class="nds-page-item"><td>20488</td><td>Traffic fine payment</td><td>Approved</td></tr>
-    <tr class="nds-page-item"><td>20489</td><td>Driver's license renewal</td><td>In review</td></tr>
-    <tr class="nds-page-item"><td>20490</td><td>Passport renewal</td><td>Returned</td></tr>
-    <tr class="nds-page-item"><td>20491</td><td>Building permit</td><td>Approved</td></tr>
-    <tr class="nds-page-item"><td>20492</td><td>Vehicle registration</td><td>In review</td></tr>
-  </tbody>
-</table>
+<div class="nds-table-wrapper">
+  <table class="nds-table">
+    <thead>
+      <tr>
+        <th>Request</th>
+        <th>Service</th>
+        <th data-align="center">Status</th>
+      </tr>
+    </thead>
+    <tbody id="pg-rows" class="nds-paged-content" style="--per-page: 5;">
+      <tr class="nds-page-item"><td>20481</td><td>Passport renewal</td><td>Approved</td></tr>
+      <tr class="nds-page-item"><td>20482</td><td>National ID renewal</td><td>In review</td></tr>
+      <tr class="nds-page-item"><td>20483</td><td>Vehicle registration</td><td>Approved</td></tr>
+      <tr class="nds-page-item"><td>20484</td><td>Building permit</td><td>Returned</td></tr>
+      <tr class="nds-page-item"><td>20485</td><td>Birth certificate</td><td>Approved</td></tr>
+      <tr class="nds-page-item"><td>20486</td><td>Exit and re-entry visa</td><td>In review</td></tr>
+      <tr class="nds-page-item"><td>20487</td><td>Commercial registration</td><td>Approved</td></tr>
+      <tr class="nds-page-item"><td>20488</td><td>Traffic fine payment</td><td>Approved</td></tr>
+      <tr class="nds-page-item"><td>20489</td><td>Driver's license renewal</td><td>In review</td></tr>
+      <tr class="nds-page-item"><td>20490</td><td>Passport renewal</td><td>Returned</td></tr>
+      <tr class="nds-page-item"><td>20491</td><td>Building permit</td><td>Approved</td></tr>
+      <tr class="nds-page-item"><td>20492</td><td>Vehicle registration</td><td>In review</td></tr>
+    </tbody>
+  </table>
+</div>
 <nav class="nds-pagination" data-auto-pagination="pg-rows" aria-label="Requests pagination"></nav>
 </script>
 <script type="text/html" id="pg-toolbar" data-canon>

@@ -63,6 +63,7 @@
     const loadStarts = new WeakMap();             // row → performance.now() when its sub-request began
     const subAbortControllers = new WeakMap();    // row → AbortController of its outstanding sub-request
     const subRows = new WeakMap();                // sub row → its parent row
+    const builtWrappers = new WeakSet();          // .nds-table-wrapper the script built (an authored one stays)
 
     class NdsTable {
         constructor(tableElement) {
@@ -198,9 +199,12 @@
         _setupWrapper() {
             if (this._table.parentElement.classList.contains('nds-table-wrapper')) {
                 this._wrapper = this._table.parentElement;
+                // A table a framework swapped into a built wrapper inherits it.
+                this._builtWrapper = builtWrappers.has(this._wrapper);
             } else {
                 this._builtWrapper = true;
                 this._wrapper = document.createElement('div');
+                builtWrappers.add(this._wrapper);
                 this._wrapper.className = 'nds-table-wrapper';
                 this._table.parentElement.insertBefore(this._wrapper, this._table);
                 this._wrapper.appendChild(this._table);
@@ -323,13 +327,19 @@
             this._debouncedCheck?.cancel();
             this._debouncedVisibleCheck?.cancel();
 
-            NDS.state.clear(this._wrapper);
-            this._setScrollFocus(false);
+            // A framework that swaps a keyed table puts the new one in this wrapper and removes this one: the wrapper is the new table's.
+            const handedOn = [...this._wrapper.children].some(child => child !== this._table && child.matches('table'));
+            if (!handedOn) {
+                NDS.state.clear(this._wrapper);
+                this._setScrollFocus(false);
+                // A wrapper this built goes, with what it still holds (never a table the page removed); an authored one keeps its own style.
+                if (this._builtWrapper) {
+                    builtWrappers.delete(this._wrapper);
+                    this._wrapper.replaceWith(...this._wrapper.childNodes);
+                } else if (this._ownMaxWidth) this._wrapper.style.removeProperty('--max-width');
+            }
             this._currentScrollState = null;
             this._needsScroll = false;
-            // A wrapper this built goes, the table back in its place; an authored one keeps its own style.
-            if (this._builtWrapper) this._wrapper.replaceWith(this._table);
-            else if (this._ownMaxWidth) this._wrapper.style.removeProperty('--max-width');
             dropColumnAlign(this._table);
             this._table.removeAttribute('data-nds-table-initialized');
             delete this._table.ndsTableResponsive;
