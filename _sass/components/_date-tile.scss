@@ -50,6 +50,17 @@
     &.nds-lg {
         @include date-tile-lg;
     }
+
+    // A solid fill and white text, for a primary-light surface such as a nds-brand section.
+    // The same fills as Featured Icon's nds-dark, so a row's tile and icon match.
+    &.nds-dark {
+        --_date-tile-bg: var(--date-tile-dark-bg, var(--background-primary));
+        --_date-tile-color: var(--text-oncolor-primary);
+
+        @include dark {
+            --_date-tile-bg: var(--date-tile-dark-bg, var(--colors-primary-700));
+        }
+    }
 }
 
 .nds-date-tile-weekday,
@@ -77,24 +88,39 @@
 [data-status="success"] {
     --date-tile-bg: var(--background-success-light);
     --date-tile-color: var(--text-success);
+    --date-tile-dark-bg: var(--background-success);
+
+    @include dark { --date-tile-dark-bg: var(--colors-green-700); }
 }
 
 [data-status="info"] {
     --date-tile-bg: var(--background-info-light);
     --date-tile-color: var(--text-info);
+    --date-tile-dark-bg: var(--background-info);
+
+    @include dark { --date-tile-dark-bg: var(--colors-blue-700); }
 }
 
 [data-status="warning"] {
     --date-tile-bg: var(--background-warning-light);
     --date-tile-color: var(--text-warning);
+    --date-tile-dark-bg: var(--background-warning);
+
+    @include dark { --date-tile-dark-bg: var(--colors-yellow-700); }
 }
 
 :is([data-status="error"], [data-status="critical"]) {
     --date-tile-bg: var(--background-error-light);
     --date-tile-color: var(--text-error);
+    --date-tile-dark-bg: var(--background-error);
+
+    @include dark { --date-tile-dark-bg: var(--colors-red-700); }
 }
 
 [data-status="neutral"] {
     --date-tile-bg: var(--background-neutral-light);
     --date-tile-color: var(--text-default);
+    --date-tile-dark-bg: var(--colors-neutral-600);
+
+    @include dark { --date-tile-dark-bg: var(--colors-neutral-700); }
 }

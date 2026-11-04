@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 08:58 PM"
+last_edit: "05/11/2026 - 12:09 AM"
 ---
 
 <section id="date-tile-overview" class="nds-content-section nds-doc-overview">
@@ -166,6 +166,7 @@ The Drawer row, Card header and Timeline structures show the tile beside the tex
 | Status | Warning | `[data-status="warning"]` | `.nds-date-tile` | A date that is close, such as a deadline this week |
 | Status | Error | `[data-status="error"]` | `.nds-date-tile` | A date that was missed or cancelled |
 | Status | Neutral | `[data-status="neutral"]` | `.nds-date-tile` | A date in the past |
+| Style | Dark (hint: A solid fill and white text) | `.nds-dark` | `.nds-date-tile` | A solid fill and white text. Use it on a primary-light surface, such as a `nds-brand` section, where the default fill does not show. A status gives its own solid fill |
 | Weekday | No weekday | `.nds-no-weekday` | `.nds-date-tile:not([data-date-end])` | Only the day number and the month, for a list where the weekday adds nothing, such as dates months apart. On a tile you write yourself, leaving out the weekday part does the same |
 | Loading | Loading (hint: Skeleton placeholders while the data loads) | `.nds-loading` | `.nds-drawer` | The tiles and the text of the rows show as skeleton blocks while the data loads. Remove the class when the data is in |
 | Loading | Loading (hint: Skeleton placeholders while the data loads) | `.nds-loading` | `.nds-card` | The tile and the other parts of the card show as skeleton blocks while the data loads. Remove the class when the data is in |
@@ -264,6 +265,7 @@ The Drawer row, Card header and Timeline structures show the tile beside the tex
 - Write the full date in `datetime`, in the `YYYY-MM-DD` form.
 - When you write the text yourself, use short names for the weekday and the month, such as "Sun" and "Dec". The tile is narrow.
 - Write the time and the place in the text beside the tile, not in the tile.
+- On a primary-light surface, such as a `nds-brand` section, add `nds-dark` or a `data-status`, such as `neutral`. The default fill is the same color as that surface. A tile in a card needs neither.
 - Put the tile in a drawer row, a card header or a timeline step. On its own, put it and its text in an element with `nds-flex nds-middle`.
 - In a timeline, leave `data-status` off the tile. A status on the tile wins over the step state.
 - Leave the size class off a tile in a drawer row. Below 400px of row width the drawer steps it down to SM. A size class, `nds-md` included, keeps the size you wrote.
@@ -294,6 +296,7 @@ The Drawer row, Card header and Timeline structures show the tile beside the tex
 | `nds-date-tile-month` | `<span>` in the tile | The month, in small text |
 | `nds-md` | `.nds-date-tile` | The same as no size class: 56px wide. In a drawer row it keeps that size below 400px |
 | `nds-no-weekday` | `.nds-date-tile` | Hides the weekday part |
+| `nds-dark` | `.nds-date-tile` | A solid fill and white text. A status gives its own solid fill |
 {: .nds-table .nds-responsive}
 
 ### Data Attributes
@@ -310,13 +313,14 @@ The Drawer row, Card header and Timeline structures show the tile beside the tex
 ### CSS Custom Properties
 {: .nds-block-title}
 
-Set these on the tile, or on a parent to reach every tile inside it. A `data-status` closer to the tile than the property wins over the two colors.
+Set these on the tile, or on a parent to reach every tile inside it. A `data-status` closer to the tile than the property wins over the colors.
 
 | Property | Default | Controls |
 |---|---|---|
 | `--date-tile-width` | `56px`, `48px` with `nds-sm`, `72px` with `nds-lg`. A range: `80px`, `64px`, `96px` | The tile's width. It wins over the size's width |
 | `--date-tile-bg` | `var(--background-primary-light)` | Fill |
-| `--date-tile-color` | `var(--text-primary-strong)` | Text color |
+| `--date-tile-color` | `var(--text-primary-strong)` | Text color. `nds-dark` keeps white text |
+| `--date-tile-dark-bg` | `var(--background-primary)` | Fill with `nds-dark` |
 {: .nds-table .nds-responsive}
 
 </div>
