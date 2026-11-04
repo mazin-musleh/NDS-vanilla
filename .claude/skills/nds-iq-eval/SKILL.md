@@ -15,6 +15,8 @@ Tests the consumer rules file in its draft, `_includes/NDS-IQ-draft.md`; `script
 - **Runners are fresh `general-purpose` agents with a `model` override, never forks.** A fork inherits this conversation and biases the test.
 - **A new sentence must fail the floor first** (see Floor). A stub PASS means the model already does it: fix the source instead.
 - **The harness states only what the field state would show.** Setup, prompt and seeded files carry world-state, never the graded answer. The four leak classes are defined in the `scenarios.md` preamble. Reuse field artifacts verbatim where they exist. Write a gate run's setup BLIND, before the sentence it grades. A pass that a leak audit voids goes back to UNMEASURED, never FAIL.
+- **A new scenario gets an outside leak check before its first run.** The author writes the fix, the scenario and the rubric, and grades the answer, so nothing else catches a leak. Give a fresh `sonnet` agent the scenario's `setup`, `prompt` and `rubric`, never the rules diff, the fix or the field story, and ask whether the setup or prompt gives the graded answer away (the four leak classes in `scenarios.md`), quoting the words that do. A yes is fixed before the run. ~20K tokens.
+- **A scenario PASS is not proof.** A rules change counts as proven only when a field rig run confirms it. Until then, report it as "scenario PASS, rig pending", and name the rig that would confirm it.
 - **Rules run on every template that ships `NDS-INDEX.md`; older ones are redirected.** Consumers on any release since 1.7.0 fetch raw main. A template with no `NDS-INDEX.md` (every 1.x) must send the agent to the frozen `IQv3.2` file: the `old` mode probes that redirect. So a rule leans only on what every template it serves ships (every one with `NDS-INDEX.md`, the oldest included). How to work goes in the rules; what NDS is (a doc, an index section, an audit rule) goes in the template, where it versions with the release.
 
 ## Token rules
@@ -91,7 +93,7 @@ The floor answers one question: does this sentence earn its place? A scenario th
      - doubt that stated intent matches real behavior → `behavior <id>`
    - Read the `scenarios.md` INDEX and pick scenarios from its gist column.
    - Pull the picked files' `rules:`, `setup:` and `prompt:` with one field-range shell extraction (awk from the label to the next `- ` label). Fields carry indented continuation lines, so a line-grep truncates them. Never Read a scenario file whole at run time; whole reads are for floor decisions, leak review and `evolve`.
-   - A changed rule that no scenario covers gets a drafted scenario with a rubric, flagged as new.
+   - A changed rule that no scenario covers gets a drafted scenario with a rubric, flagged as new, and its outside leak check (Principles) before the run.
 2. **Run.**
    - Spawn one fresh agent per model with the harness prompt. A sweep's models go in one parallel batch.
    - Build `{SCENARIOS}` inline in the Agent prompt from the extracted setup and prompt text, with no batch files on disk.
@@ -106,7 +108,7 @@ The floor answers one question: does this sentence earn its place? A scenario th
    - A surviving finding is presumed a SOURCE fix (Rules-file policy, Attribution).
    - Propose rules text only for a true procedure hole, a mistake-preventing policy or a mandatory structure, and as the minimal edit that extends an existing principle.
 5. **Report in the conversation.**
-   - Verdict first: n/N clean per model, stamped with each runner's self-reported model version. The alias `sonnet` serves different versions on different machines and dates.
+   - Verdict first: n/N clean per model, stamped with each runner's self-reported model version, and "rig pending" with the confirming rig until a field run backs the change. The alias `sonnet` serves different versions on different machines and dates.
    - Then numbered findings. Each gives the divergence, the sentence, the proposed fix, and apply / skip / discuss options, recommendation included.
    - A report file exists only on explicit ask, with a named reader. It is one undated file, replaced and never accumulated, and it is deleted once its content lands in its real home.
 6. **Evolve (explicit `evolve` only).**
