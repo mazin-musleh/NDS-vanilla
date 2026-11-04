@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 09:15 PM"
+last_edit: "04/11/2026 - 10:02 PM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -163,10 +163,13 @@ A `<Transition>` fades one element, and a page view renders two: the hero and th
 
 In Vue, a directive does both calls for a view or a branch. Its `unmounted` hook destroys a branch that is already off the page, and skips one that is still on it because its view is leaving. The `after-leave` event of the `<Transition>` then destroys the whole view. A view that `<KeepAlive>` keeps is only moved off the page, so it still has a parent and keeps its components.
 
+A `<template v-if>` or `<template v-for>` branch renders no element, so it cannot take the directive. Put the directive on each element inside it. Otherwise, the branch's components do not start when the branch renders after its view, for example when its data loads late.
+
 Put the directive on an element that holds a FAB, never on the FAB. A FAB moves to a dock on `<body>`, so it is still on the page when its view goes, and the directive skips it. `destroy` on the element that held it puts the FAB back, and it leaves with the view.
 
 <script type="text/html" id="init-vue-directive" data-canon data-lang="js">
 // v-nds: put it on the root element of a view or of a v-if or v-for branch
+// (a <template> branch has no element: put it on each element inside)
 export const vNds = {
   mounted: (el) => void window.NDS?.init.mount(el),
   // Still on the page: its view is leaving, and after-leave destroys it
