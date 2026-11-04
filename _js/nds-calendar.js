@@ -121,6 +121,8 @@
         NDS.onAttributeChange('.nds-calendar-events > li', ['data-filtered'], (items) => {
             new Set(items.map((item) => item.closest(SELECTOR)?.ndsCalendar)).forEach((calendar) => calendar?._sync());
         });
+        // A language change: titles, day names and Date Tiles in the new language.
+        document.addEventListener('nds:language:change', () => document.querySelectorAll(SELECTOR).forEach((el) => el.ndsCalendar?._sync()));
     }
 
     class NdsCalendar {

@@ -1116,18 +1116,19 @@
 
     // ── Public interface ───────────────────────────────────────────
 
-    // Re-render every chart instance when document direction or lang changes.
+    // Re-render every chart instance when document direction or language changes.
     // Lang switcher uses View Transitions; the shared NDS.onAttributeChange dispatch fires
     // before the new snapshot is captured, so the new render is animated cleanly.
+    // A language change waits for its pack: the chart's names are its words.
     let dirObserverReady = false;
     function setupDirObserver() {
         if (dirObserverReady) return;
         dirObserverReady = true;
-        NDS.onAttributeChange('html', ['dir', 'lang'], () => {
-            document.querySelectorAll('.nds-chart[data-nds-chart-initialized]').forEach(el => {
-                if (el.ndsChart) el.ndsChart.render();
-            });
+        const renderAll = () => document.querySelectorAll('.nds-chart[data-nds-chart-initialized]').forEach(el => {
+            if (el.ndsChart) el.ndsChart.render();
         });
+        NDS.onAttributeChange('html', ['dir'], renderAll);
+        document.addEventListener('nds:language:change', renderAll);
     }
 
     function setupCharts() {

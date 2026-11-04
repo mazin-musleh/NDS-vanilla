@@ -414,8 +414,8 @@
         langListening = true;
         // Hijri month names come from the pack: write a month-name format again once it lands.
         if (!strings.ready()) strings.load().then(() => fill());
-        // A host that switches the language in place: every <time> follows it.
-        NDS.onAttributeChange('html', ['lang'], () => strings.ready() ? fill() : strings.load().then(() => fill()));
+        // A host that switches the language in place: every <time> follows it, once the pack is in.
+        document.addEventListener('nds:language:change', () => fill());
     }
 
     NDS.Date.init = init;

@@ -64,7 +64,7 @@
 
     const getEscapedText = (key) => NDS.escapeHtml(strings.text(key));
     const buildCloseButton = () => `<div class="nds-panel-action">
-          <button type="button" class="nds-btn nds-subtle nds-icon-only" data-panel-close aria-label="${getEscapedText('close')}">
+          <button type="button" class="nds-btn nds-subtle nds-icon-only" data-panel-close aria-label="${getEscapedText('close')}" data-i18n-aria-label="cookies.close">
             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
           </button>
         </div>`;
@@ -72,13 +72,13 @@
     const scrollBody = (inner) => `<div class="nds-panel-body nds-scroll-more">
       <div class="nds-scroll-more-content nds-flex nds-col">${inner}
       </div>
-      <button type="button" class="nds-btn nds-subtle nds-show-more" aria-label="${getEscapedText('scroll_panel')}">
+      <button type="button" class="nds-btn nds-subtle nds-show-more" aria-label="${getEscapedText('scroll_panel')}" data-i18n-aria-label="cookies.scroll_panel">
         <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
       </button>
     </div>`;
     const buildCategory = (name, locked) => `<div class="nds-form-container nds-switch">
             <div class="nds-form-header">
-              <label for="nds-cookies-${name}"><span class="nds-label">${getEscapedText(name)}</span>${locked ? `<span class="nds-info">${getEscapedText(name + '_info')}</span>` : ''}</label>
+              <label for="nds-cookies-${name}"><span class="nds-label" data-i18n="cookies.${name}">${getEscapedText(name)}</span>${locked ? `<span class="nds-info" data-i18n="cookies.${name}_info">${getEscapedText(name + '_info')}</span>` : ''}</label>
             </div>
             <div class="nds-form-control">
               <div class="nds-switch-toggle">
@@ -89,48 +89,48 @@
           </div>`;
 
     function buildPanelMarkup() {
-        return `<dialog id="${PANEL_ID}" class="nds-panel nds-cookies" data-panel-side="bottom" data-panel-static aria-label="${getEscapedText('panel_label')}">
+        return `<dialog id="${PANEL_ID}" class="nds-panel nds-cookies" data-panel-side="bottom" data-panel-static aria-label="${getEscapedText('panel_label')}" data-i18n-aria-label="cookies.panel_label">
   <div class="nds-cookies-view" data-cookies-view="notice">
     <div class="nds-panel-header">
       <span class="nds-featured-icon nds-circle"><i class="nds-icon nds-hgi-cookie" aria-hidden="true"></i></span>
-      <div class="nds-panel-text"><span class="nds-panel-title">${getEscapedText('title')}</span></div>
+      <div class="nds-panel-text"><span class="nds-panel-title" data-i18n="cookies.title">${getEscapedText('title')}</span></div>
       ${buildCloseButton()}
     </div>
     ${scrollBody(`
-      <p>${getEscapedText('description')}</p>`)}
+      <p data-i18n="cookies.description">${getEscapedText('description')}</p>`)}
     <div class="nds-panel-footer nds-col">
-      <button type="button" class="nds-btn nds-primary" data-cookies-action="accept"><span class="nds-label">${getEscapedText('accept')}</span></button>
-      <button type="button" class="nds-btn nds-secondary-outline" data-cookies-action="reject"><span class="nds-label">${getEscapedText('reject')}</span></button>
-      <button type="button" class="nds-btn nds-subtle" data-cookies-action="manage"><span class="nds-label">${getEscapedText('manage')}</span></button>
+      <button type="button" class="nds-btn nds-primary" data-cookies-action="accept"><span class="nds-label" data-i18n="cookies.accept">${getEscapedText('accept')}</span></button>
+      <button type="button" class="nds-btn nds-secondary-outline" data-cookies-action="reject"><span class="nds-label" data-i18n="cookies.reject">${getEscapedText('reject')}</span></button>
+      <button type="button" class="nds-btn nds-subtle" data-cookies-action="manage"><span class="nds-label" data-i18n="cookies.manage">${getEscapedText('manage')}</span></button>
     </div>
   </div>
   <div class="nds-cookies-view" data-cookies-view="manage" hidden>
     <div class="nds-panel-header">
       <span class="nds-featured-icon nds-circle"><i class="nds-icon nds-hgi-cookie" aria-hidden="true"></i></span>
-      <div class="nds-panel-text"><span class="nds-panel-title">${getEscapedText('manage_title')}</span></div>
+      <div class="nds-panel-text"><span class="nds-panel-title" data-i18n="cookies.manage_title">${getEscapedText('manage_title')}</span></div>
       ${buildCloseButton()}
     </div>
     ${scrollBody(`
-      <p>${getEscapedText('manage_description')}</p>
-      <fieldset class="nds-form-group nds-switch-group" aria-label="${getEscapedText('types')}">
+      <p data-i18n="cookies.manage_description">${getEscapedText('manage_description')}</p>
+      <fieldset class="nds-form-group nds-switch-group" aria-label="${getEscapedText('types')}" data-i18n-aria-label="cookies.types">
         ${buildCategory('necessary', true)}
         ${categories.map(categoryName => buildCategory(categoryName)).join('')}
       </fieldset>`)}
     <div class="nds-panel-footer nds-col">
-      <button type="button" class="nds-btn nds-primary" data-cookies-action="save"><span class="nds-label">${getEscapedText('confirm')}</span></button>
-      <button type="button" class="nds-btn nds-secondary-outline" data-cookies-action="reject"><span class="nds-label">${getEscapedText('reject_all')}</span></button>
+      <button type="button" class="nds-btn nds-primary" data-cookies-action="save"><span class="nds-label" data-i18n="cookies.confirm">${getEscapedText('confirm')}</span></button>
+      <button type="button" class="nds-btn nds-secondary-outline" data-cookies-action="reject"><span class="nds-label" data-i18n="cookies.reject_all">${getEscapedText('reject_all')}</span></button>
     </div>
   </div>
   <div class="nds-cookies-view" data-cookies-view="done" hidden>
     <div class="nds-panel-header">
       <span class="nds-featured-icon nds-circle" data-status="success"><i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i></span>
-      <div class="nds-panel-text"><span class="nds-panel-title">${getEscapedText('done_title')}</span></div>
+      <div class="nds-panel-text"><span class="nds-panel-title" data-i18n="cookies.done_title">${getEscapedText('done_title')}</span></div>
       ${buildCloseButton()}
     </div>
     ${scrollBody(`
-      <p role="status">${getEscapedText('done')}</p>`)}
+      <p role="status" data-i18n="cookies.done">${getEscapedText('done')}</p>`)}
     <div class="nds-panel-footer nds-col">
-      <button type="button" class="nds-btn nds-subtle" data-cookies-action="undo"><span class="nds-label">${getEscapedText('undo')}</span></button>
+      <button type="button" class="nds-btn nds-subtle" data-cookies-action="undo"><span class="nds-label" data-i18n="cookies.undo">${getEscapedText('undo')}</span></button>
     </div>
   </div>
 </dialog>`;

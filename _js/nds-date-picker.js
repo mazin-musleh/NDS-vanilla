@@ -1281,6 +1281,13 @@
                     if (el) el.textContent = strings.text(map[key], null, lang);
                 }
             }
+            // The header's controls name themselves in the field's language too: a marker would take the page's.
+            var dropdown = this._elements.container && this._elements.container.querySelector(SELECTORS.dropdown);
+            var names = { '.nds-month-dropmenu > .nds-dropmenu-trigger': 'select_month', '.nds-year-dropmenu > .nds-dropmenu-trigger': 'select_year', '.prev-month': 'prev_month', '.next-month': 'next_month' };
+            for (var selector in names) {
+                var control = dropdown && dropdown.querySelector(selector);
+                if (control) control.setAttribute('aria-label', strings.text(names[selector], null, lang));
+            }
         },
 
         _renderCalendarDates: function () {
@@ -1896,18 +1903,23 @@
         // prior subscription before registering a new one — otherwise each
         // re-init stacks a fresh closure on the pool's array. The handle is
         // also released in destroy() so a calendar instance teardown drops
-        // its lang-attr subscriber instead of leaking it for the page lifetime.
+        // its language listener instead of leaking it for the page lifetime.
         _setupLanguageObserver: function () {
             if (this._offLangChange) this._offLangChange();
             var self = this;
-            this._offLangChange = NDS.onAttributeChange('html', ['lang'], function () {
+            // Once the page's new pack is in; a field with its own language waits for its pack below.
+            var handleLanguageChange = function () {
                 if (self._state.isInitialized) {
                     self._renderWeekdays();
                     self._renderButtonLabels();
                     self._syncDropdowns();
+                    // The day cells' names and the panel's controls are drawn by the render.
+                    self._render();
                     self._renderWhenStringsLand();
                 }
-            });
+            };
+            document.addEventListener('nds:language:change', handleLanguageChange);
+            this._offLangChange = function () { document.removeEventListener('nds:language:change', handleLanguageChange); };
         },
 
         // Reset state

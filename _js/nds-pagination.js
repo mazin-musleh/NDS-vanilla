@@ -798,16 +798,8 @@
     });
     // Escaped: the pack is site-editable, and these land in innerHTML.
     const getLabelHtml = (key, vars) => NDS.escapeHtml(strings.text(key, vars));
-    // Prev, next, more and jump carry markers. A page label holds its number, so it cannot:
-    // the ones generated before the pack landed are re-labelled once it does.
-    let relabelArmed = false;
-    function relabel() {
-        const defaults = strings.defaults;
-        document.querySelectorAll('.nds-pagination-item .nds-btn[aria-label]').forEach(btn => {
-            const pageNumber = btn.textContent.trim();
-            if (btn.getAttribute('aria-label') === NDS.i18n.format(defaults.page, { n: pageNumber })) btn.setAttribute('aria-label', strings.text('page', { n: pageNumber }));
-        });
-    }
+    // Every label carries its marker, a page label its number too: core writes them in the page's language.
+    const getPageLabel = (n) => `aria-label="${getLabelHtml('page', { n })}" data-i18n-aria-label="pagination.page" data-i18n-vars='{"n":${n}}'`;
     // url (when set) is a page→href function — the controls become navigable
     // anchors for no-JS, server-reload pagination (data-page-url). A disabled
     // prev/next anchor drops its href and keeps role="link" (an <a> with no href
@@ -827,8 +819,8 @@
     const buildPageItem = (i, activePage, url) => {
         const ariaCurrent = i === activePage ? ' aria-current="page"' : '';
         const inner = url
-            ? `<a class="nds-btn nds-subtle nds-indicator" href="${url(i)}"${ariaCurrent} aria-label="${getLabelHtml('page', { n: i })}"><span class="nds-label">${i}</span></a>`
-            : `<button type="button" class="nds-btn nds-subtle nds-indicator"${ariaCurrent} aria-label="${getLabelHtml('page', { n: i })}"><span class="nds-label">${i}</span></button>`;
+            ? `<a class="nds-btn nds-subtle nds-indicator" href="${url(i)}"${ariaCurrent} ${getPageLabel(i)}><span class="nds-label">${i}</span></a>`
+            : `<button type="button" class="nds-btn nds-subtle nds-indicator"${ariaCurrent} ${getPageLabel(i)}><span class="nds-label">${i}</span></button>`;
         return `<li class="nds-pagination-item page_${i}">${inner}</li>`;
     };
 
@@ -838,8 +830,8 @@
     function buildMenuItem(i, activePage, url) {
         const ariaCurrent = i === activePage ? ' aria-current="page"' : '';
         return url
-            ? `<a class="nds-btn nds-subtle nds-indicator nds-dropmenu-item" role="menuitem" href="${url(i)}"${ariaCurrent} aria-label="${getLabelHtml('page', { n: i })}"><span class="nds-label">${i}</span></a>`
-            : `<button type="button" class="nds-btn nds-subtle nds-indicator nds-dropmenu-item" role="menuitem" aria-label="${getLabelHtml('page', { n: i })}"${ariaCurrent}><span class="nds-label">${i}</span></button>`;
+            ? `<a class="nds-btn nds-subtle nds-indicator nds-dropmenu-item" role="menuitem" href="${url(i)}"${ariaCurrent} ${getPageLabel(i)}><span class="nds-label">${i}</span></a>`
+            : `<button type="button" class="nds-btn nds-subtle nds-indicator nds-dropmenu-item" role="menuitem" ${getPageLabel(i)}${ariaCurrent}><span class="nds-label">${i}</span></button>`;
     }
 
     // Build a pagination list. Above 5 pages, emits the collapsed shape directly
@@ -849,7 +841,6 @@
     // preserves the href/label markup this data-driven builder doesn't carry.
     // pageUrl (a "?page={page}" template) makes every control a navigable <a href>.
     function buildPaginationHtml(totalPages, activePage = 1, pageUrl = null) {
-        if (!relabelArmed) { relabelArmed = true; strings.load().then(relabel); }
         activePage = Math.max(1, Math.min(activePage, totalPages));
         const url = toUrlFunction(pageUrl);
         let html = '<ul class="nds-pagination-list">' + buildPrevItem(activePage === 1, url, activePage - 1);

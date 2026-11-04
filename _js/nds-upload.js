@@ -74,6 +74,17 @@
             { style: 'unit', unit: ['byte', 'kilobyte', 'megabyte', 'gigabyte'][i], unitDisplay: 'short', maximumFractionDigits: 2 });
     }
 
+    const fileSizes = new WeakMap();   // .nds-file-size → the bytes it shows
+    let languageBound = false;
+    // A language change: each size in the new language's unit words.
+    function addLanguageListener() {
+        if (languageBound) return;
+        languageBound = true;
+        document.addEventListener('nds:language:change', () => document.querySelectorAll('.nds-upload .nds-file-size').forEach((el) => {
+            if (fileSizes.has(el)) el.textContent = formatFileSize(fileSizes.get(el));
+        }));
+    }
+
     function sanitizeFileName(name) {
         if (!name) return 'unnamed';
         return name
@@ -142,6 +153,7 @@
             if (!container || container.hasAttribute('data-nds-upload-initialized')) return;
             if (container.closest('code')) return;
 
+            addLanguageListener();
             this.container = container;
             this._options = this._normalizeOptions(options);
             this._files = [];
@@ -708,7 +720,7 @@
             }
             // A saved file added as new File([], name) has no size to show.
             const fileSize = fileItem.querySelector('.nds-file-size');
-            if (fileSize && fileData.file.size) fileSize.textContent = formatFileSize(fileData.file.size);
+            if (fileSize && fileData.file.size) { fileSize.textContent = formatFileSize(fileData.file.size); fileSizes.set(fileSize, fileData.file.size); }
             if (removeBtn) removeBtn.setAttribute('data-file-id', fileData.id);
             if (errorMessage && fileData.error) errorMessage.textContent = fileData.error;
 

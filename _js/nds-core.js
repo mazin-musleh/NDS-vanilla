@@ -50,7 +50,8 @@
  *                                      set() marks a fixed word for core, re-writes one with {vars}
  *     data-i18n="section.key" · data-i18n-{aria-label|aria-description|title|alt|placeholder|label}
  *                                      a marker: core writes the word in the page language, unless
- *                                      a script or the author changed it since
+ *                                      a script or the author changed it since; on a lang change too
+ *     data-i18n-vars='{"n":3}'          the {vars} of an element's markers: plain values, never words
  *     NDS.i18n.translate(root?)         translate the markers in root now (mount/refresh call it)
  *     NDS.i18n.settled → Promise        the pack landed, failed, or 3 s passed; then <html data-nds-i18n>
  *     NDS.i18n.pack() → Promise         the page language's pack
@@ -65,6 +66,8 @@
  *   nds:template:ready    on the stamped root, bubbles — detail.id is the summoned id.
  *                         Fires after NDS.init.refresh wires the arrivals, so page JS
  *                         that needs the markup binds on document and waits for it
+ *   nds:language:change   on <html>, bubbles — detail.lang. lang changed, the pack landed and
+ *                         the markers read the new words: a component redraws what it formats itself
  * Hooks:
  *   data-state    the token list NDS.state owns — space separated, matched with ~=
  *   data-status   the single value NDS.status owns
@@ -218,9 +221,9 @@
         // English page loads no file. Ignores the override: an override is no sign the file landed.
         _fromFiles(component, lang) {
             lang = this.resolveLang(lang);
-            if (lang === 'en') return null;
             const pack = this._files[lang];
-            if (pack === undefined) return undefined;
+            // English loads its file only on a switch to English, for the words only markup holds.
+            if (pack === undefined) return lang === 'en' ? null : undefined;
             return pack && Object.prototype.hasOwnProperty.call(pack, component) ? pack[component] : null;
         },
 
@@ -290,9 +293,14 @@
                 set(el, attribute, key, vars) {
                     const value = translate(key, vars);
                     write(el, attribute, value);
-                    // A fixed word becomes a marker, so core owns it from here, as markup would.
+                    // The word becomes a marker, so core owns it from here, as markup would; core keeps its vars.
                     const mark = attribute === 'text' ? 'data-i18n' : 'data-i18n-' + attribute;
-                    if (!vars && mark in i18nMarks) { el.setAttribute(mark, component + '.' + key); return; }
+                    if (mark in i18nMarks) {
+                        if (vars) el.setAttribute('data-i18n-vars', JSON.stringify(Object.assign(i18n._readVars(el) || {}, vars)));
+                        el.setAttribute(mark, component + '.' + key);
+                        i18n._written.set(el, Object.assign(i18n._written.get(el) || {}, { [attribute]: { wrote: read(el, attribute), was: value } }));
+                        return;
+                    }
                     if (hasLanded()) return;
                     if (!queue.length) i18n.load(component).then(() => queue.splice(0).forEach(([e, attribute, was, key, variables]) => {
                         if (read(e, attribute) === was) write(e, attribute, translate(key, variables));
@@ -311,7 +319,7 @@
                 value = value[rules.select(vars && vars.n)] || value.other;
             }
             if (typeof value !== 'string' || !vars) return value;
-            return value.replace(/\{(\w+)\}/g, (match, key) => (key in vars ? vars[key] : match));
+            return value.replace(/\{(\w+)\}/g, (match, key) => (Object.prototype.hasOwnProperty.call(vars, key) ? vars[key] : match));
         },
         _plural: Object.create(null),
 
@@ -342,23 +350,36 @@
 
         _seeds: Object.create(null),   // section → the JS defaults its getStrings() call registered
         _written: new WeakMap(),       // element → { target: { wrote: core's last write, was: the markup word it replaced } }
+        // data-i18n-vars: the {vars} of an element's markers, one JSON object. A bad value is none.
+        _readVars(el) {
+            try { const vars = JSON.parse(el.getAttribute('data-i18n-vars')); return vars && typeof vars === 'object' && !Array.isArray(vars) ? vars : null; } catch { return null; }
+        },
         _warned: new Set(),
         _warnOnce(message) { if (!this._warned.has(message)) { this._warned.add(message); console.warn('[NDS.i18n] ' + message); } },
 
         // The word a marker names, through text()'s chain: the override, the pack, the script's
-        // English. Also that English (the JS default): the guard's baseline. word null: leave the markup.
-        _resolveWord(ref) {
-            const match = /^([a-z][a-z0-9-]*)\.([A-Za-z0-9_]+)$/.exec(ref);
+        // English, filled with the vars set() kept. Also the guard's baseline: whether core knows the
+        // English, and the word in every language it holds. word null: leave the markup.
+        _resolveWord(ref, vars) {
+            const match = /^([a-z][a-z0-9-]*)\.([A-Za-z0-9_-]+)$/.exec(ref);
             if (!match) {
                 this._warnOnce(`marker "${ref}" is not section.key: a 1.x marker; write the section too, such as accessibility.${ref}`);
                 return { word: null };
             }
             const [, section, key] = match;
-            const hasOwn = (object) => !!object && Object.prototype.hasOwnProperty.call(object, key);
+            const hasOwn = (object, name = key) => !!object && Object.prototype.hasOwnProperty.call(object, name);
             const data = this._getSection(section), seed = this._seeds[section];
             const value = hasOwn(data) ? data[key] : hasOwn(seed) ? seed[key] : undefined;
-            const english = hasOwn(seed) ? seed[key] : undefined;
-            if (typeof value === 'string' && !/\{\w+\}/.test(value)) return { word: value, english };
+            const readKey = (pack) => (hasOwn(pack, section) && hasOwn(pack[section]) ? pack[section][key] : undefined);
+            // A plural or a {vars} word is whole once set()'s vars fill it.
+            const fill = (word) => (vars ? this.format(word, vars) : word);
+            const isWord = (word) => typeof word === 'string' && !/\{\w+\}/.test(word);
+            const english = fill(hasOwn(seed) ? seed[key] : readKey(this._files.en));
+            // A word from any language core holds is still NDS's: markup served in Arabic switches to English.
+            const packs = [...Object.values(this._files), ...Object.values(window.NDS_I18N_LANGS || {}), window.NDS_I18N];
+            const known = [english, ...packs.map((pack) => fill(readKey(pack)))].filter(isWord);
+            const word = fill(value);
+            if (isWord(word)) return { word, knowsEnglish: isWord(english), known };
             // A missing word is no error: the pack may not be in yet, or the section's script not
             // loaded, and the markup's English shows. check-i18n catches a misspelled section.
             if (value !== undefined) this._warnOnce(`${ref} has {vars} or plural forms: write it with set(), not a marker`);
@@ -366,10 +387,11 @@
         },
 
         // One element's markers. The guard: core skips a word someone changed. Untouched by core,
-        // that is a word that no longer reads its English (when core knows the English); touched,
+        // that is a word that reads it in no language core holds (when core knows the English); touched,
         // a word that reads neither what core wrote nor the markup word it replaced. It never adds an absent attribute.
         // force: the marker itself changed, so its new word always lands.
         _mark(el, force) {
+            const vars = this._readVars(el);
             for (const name in i18nMarks) {
                 const ref = el.getAttribute(name);
                 if (ref === null) continue;
@@ -377,9 +399,9 @@
                     this._warnOnce(`${name} with no value: a 1.x marker; name its word, ${name}="section.key"`);
                     continue;
                 }
-                const { word: word, english } = this._resolveWord(ref.trim());
-                if (word === null) continue;
                 const target = i18nMarks[name];
+                const { word, knowsEnglish, known } = this._resolveWord(ref.trim(), vars);
+                if (word === null) continue;
                 const isText = target === 'text';
                 if (isText && el.firstElementChild) {
                     this._warnOnce(`${ref}: data-i18n goes on an element that holds only the word`);
@@ -390,7 +412,7 @@
                 const prev = seen[target];
                 const current = isText ? el.textContent : el.getAttribute(target);
                 // prev.was: the markup word core replaced. A morph (Livewire, Turbo, htmx) puts it back, and it is still NDS's.
-                if (!force && (prev ? current !== prev.wrote && current !== prev.was : typeof english === 'string' && current.trim() !== english)) continue;
+                if (!force && (prev ? current !== prev.wrote && current !== prev.was : knowsEnglish && !known.includes(current.trim()))) continue;
                 if (current.trim() !== word) {
                     if (!isText) el.setAttribute(target, word);
                     else {
@@ -426,8 +448,19 @@
                 this.translate();
                 document.documentElement.setAttribute('data-nds-i18n', '');
                 NDS.onDomAdd(I18N_MARK_SELECTOR, elements => elements.forEach(el => this._mark(el)));
-                NDS.onAttributeChange(I18N_MARK_SELECTOR, Object.keys(i18nMarks), elements => elements.forEach(el => this._mark(el, true)));
+                NDS.onAttributeChange(I18N_MARK_SELECTOR, [...Object.keys(i18nMarks), 'data-i18n-vars'], elements => elements.forEach(el => this._mark(el, true)));
                 this.pack().then(() => this.translate());
+            });
+        },
+
+        // A language change without a reload: the app sets lang and dir. Once the new pack is in,
+        // core writes every marker again, then tells the components that format their own words.
+        _switchLanguage() {
+            const lang = this.resolveLang();
+            (lang === 'en' ? this._loadFile('en') : this.pack(lang)).then(() => {
+                if (this.resolveLang() !== lang) return;
+                this.translate();
+                document.documentElement.dispatchEvent(new CustomEvent('nds:language:change', { bubbles: true, detail: { lang } }));
             });
         },
     };
@@ -853,6 +886,8 @@
         }
         return subscribe(attributeSubscribers, { sel: selector, attrs: new Set(attributes), fn });
     };
+    // Wired at load, not in NDS.i18n.start(): a host that mounts its views by hand gets the switch too.
+    NDS.onAttributeChange('html', ['lang'], () => NDS.i18n._switchLanguage());
 
     // ── State Management (data-state) ─────────────────────────────────
     // Space-separated token management for data-state attribute
@@ -1072,12 +1107,14 @@
     // The badge text is unreadable to AT whenever the icon is aria-hidden (the
     // convention for .nds-icon), and aria-hidden can't be undone on a descendant —
     // so the count is mirrored into the button's accessible name instead. The base
-    // name is taken from the button's own visible label, captured once before any
-    // count lands, so no translated string is needed here: "Columns" → "Columns (2)".
+    // name is the button's visible label, read each time so a language change carries,
+    // so no translated string is needed here: "Columns" → "Columns (2)". An icon-only
+    // button's is its aria-label from before any count landed.
     // The count is data-count, drawn by CSS: as text it joins the visible label ("2Columns"),
     // which then no longer matches the name (WCAG 2.5.3).
     // Usage: NDS.setBadge(filterBtn, 3);
-    const badgeBases = new WeakMap();   // button → its accessible name before any count landed
+    const badgeBases = new WeakMap();   // icon-only button → its accessible name before any count landed
+    const badgeNames = new WeakMap();   // labelled button → the aria-label setBadge wrote
     NDS.setBadge = (btn, count) => {
         const icon = btn && btn.querySelector('i, .nds-icon');
         if (!icon) return;
@@ -1095,17 +1132,35 @@
             badge.remove();
         }
 
-        if (!badgeBases.has(btn)) {
-            const label = btn.querySelector('.nds-label');
-            // Icon-only buttons carry their name on aria-label — read it before we overwrite it.
-            badgeBases.set(btn, (label ? label.textContent : btn.getAttribute('aria-label') || '').trim());
+        const label = btn.querySelector('.nds-label');
+        if (label) {
+            // No count: the label names the button, in whatever language it reads now.
+            if (!count) {
+                if (badgeNames.has(btn) && btn.getAttribute('aria-label') === badgeNames.get(btn)) btn.removeAttribute('aria-label');
+                badgeNames.delete(btn);
+                return;
+            }
+            // Keeps the visible label inside the accessible name (WCAG 2.5.3).
+            const name = `${label.textContent.trim()} (${count})`;
+            btn.setAttribute('aria-label', name);
+            badgeNames.set(btn, name);
+            return;
         }
-        // Keeps the visible label inside the accessible name (WCAG 2.5.3).
+        // Icon-only buttons carry their name on aria-label — read it before we overwrite it.
+        if (!badgeBases.has(btn)) badgeBases.set(btn, (btn.getAttribute('aria-label') || '').trim());
         const base = badgeBases.get(btn);
-        if (base) {
-            btn.setAttribute('aria-label', count ? `${base} (${count})` : base);
-        }
+        if (base) btn.setAttribute('aria-label', count ? `${base} (${count})` : base);
     };
+    // A language change: each counted button's name in the new words; an icon-only one takes its marker's.
+    document.addEventListener('nds:language:change', () => document.querySelectorAll('.nds-badge[data-count]').forEach((badge) => {
+        const btn = badge.closest('button, a');
+        // Only a count setBadge wrote: a badge in the page's markup is the author's.
+        if (!btn || !(badgeNames.has(btn) || badgeBases.has(btn))) return;
+        const ref = btn.getAttribute('data-i18n-aria-label');
+        const word = ref && NDS.i18n._resolveWord(ref.trim()).word;
+        if (word) badgeBases.set(btn, word);
+        NDS.setBadge(btn, badge.dataset.count);
+    }));
 
     // ── Chip Builder ─────────────────────────────────────────────────
     // Removable .nds-chip button: label + cancel icon + click-to-remove.

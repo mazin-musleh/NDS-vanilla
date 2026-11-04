@@ -490,7 +490,7 @@
 
             const label = document.createElement('span');
             label.className = 'nds-label';
-            label.textContent = strings.text('reset');
+            strings.set(label, 'text', 'reset');
             btn.appendChild(label);
 
             const action = document.createElement('div');
@@ -584,7 +584,8 @@
             labelText.className = 'nds-label';
             // Prefer the visible header text — data-export-label exists precisely
             // because the exported name differs from the displayed one.
-            labelText.textContent = getCellText(th) || th.dataset.exportLabel || strings.text('column', { n: index + 1 });
+            const name = getCellText(th) || th.dataset.exportLabel;
+            if (name) labelText.textContent = name; else strings.set(labelText, 'text', 'column', { n: index + 1 });
             label.appendChild(labelText);
             header.appendChild(label);
 

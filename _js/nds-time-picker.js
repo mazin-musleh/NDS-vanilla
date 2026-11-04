@@ -720,7 +720,9 @@
         // ---- lifecycle ---------------------------------------------------
 
         _setupLanguageObserver() {
-            this._offLangChange = NDS.onAttributeChange('html', ['lang'], () => this._relocalize());
+            const handleLanguageChange = () => this._relocalize();
+            document.addEventListener('nds:language:change', handleLanguageChange);
+            this._offLangChange = () => document.removeEventListener('nds:language:change', handleLanguageChange);
             // Built before the pack landed: its AM/PM went out in English.
             if (!strings.ready()) this._relocalize();
         }

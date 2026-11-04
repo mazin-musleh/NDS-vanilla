@@ -137,7 +137,7 @@
         if (initDone) return;
         initDone = true;
         setInterval(() => { if (!document.hidden) syncWeather(); }, 15 * 60 * 1000);
-        NDS.onAttributeChange('html', ['lang'], syncWeather);
+        document.addEventListener('nds:language:change', syncWeather);
     }
 
     NDS.Weather = { init };

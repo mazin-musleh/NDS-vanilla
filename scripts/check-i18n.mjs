@@ -54,7 +54,7 @@ for (const f of jsFiles) {
 // 2. Markers in canons, includes, layouts and the markup scripts build. A word a script declares:
 // the markup matches it. A word only markers use: the markup is its English, the same everywhere.
 const MARK = /\b(data-i18n(?:-(?:aria-label|aria-description|title|alt|placeholder|label))?)="([^"]*)"/g;
-const REF = /^([a-z][a-z0-9-]*)\.([A-Za-z0-9_]+)$/;
+const REF = /^([a-z][a-z0-9-]*)\.([A-Za-z0-9_-]+)$/;
 const ENTITY = { amp: '&', lt: '<', gt: '>', quot: '"', '#39': "'", nbsp: ' ' };
 const squash = (s) => s.replace(/&(amp|lt|gt|quot|#39|nbsp);/g, (_, e) => ENTITY[e]).replace(/\s+/g, ' ').trim();
 const MARKUP_DIRS = ['foundations', 'components', 'ui-shell', 'utilities', 'layout', 'core', 'guides', 'templates', 'examples'];

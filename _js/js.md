@@ -19,6 +19,10 @@ The `data-state`/`data-status` flag rule lives in `_sass/sass.md` (SCSS Standard
 
 `nds-js-audit` checks the first three as JSA-23 (the first two in full-tree runs too) and gates the fourth in its shared rule conventions.
 
+## Language Change
+
+**Every word a component writes follows `lang` on `<html>`, with no reload.** A fixed word or a `{vars}` word gets its marker: `strings.set()`, or `data-i18n` (and `data-i18n-vars`) in built HTML. What the component formats itself (an `Intl` date, number or unit) is drawn again on `nds:language:change`, never on the `lang` attribute: the event fires once the new pack is in. A field with its own language writes its words itself, since a marker takes the page's. A shown message (a field error, a toast) may stay until it shows again. `scripts/check-lang-switch.mjs ALL=1` fails on a word that stays.
+
 ## Writing JS
 
 **Every `_js/` change follows `.claude/skills/nds-js-audit/PERSONA.md`, not only a new component.** Read entries 10 (method names) and 12 (every name) before you name a function, method or local. `js_processor.rb` fails on a naming finding: it catches a slip, it is not where the rule is learned.

@@ -755,6 +755,13 @@
     });
     // Escaped: the pack is site-editable, and these land in innerHTML.
     const getLabelHtml = (key) => NDS.escapeHtml(strings.text(key));
+    // Each word carries its marker: core writes it again when the pack lands or the language changes.
+    const getLabelSpan = (key) => `<span class="nds-label" data-i18n="editor.${key}">${getLabelHtml(key)}</span>`;
+    // A command's name and its tooltip: title is the tooltip's marked message source.
+    const getCommandName = (key) => {
+        const label = getLabelHtml(key);
+        return `aria-label="${label}" data-i18n-aria-label="editor.${key}" title="${label}" data-i18n-title="editor.${key}"`;
+    };
 
 
     let uid = 0; // minted label ids for adopted fields whose textarea has no id
@@ -763,18 +770,17 @@
     // own content is the trigger; nds-tooltip.js generates the balloon).
     function buildCommandButton(command, extraClass = '') {
         const definition = toolbarCommands[command];
-        const label = getLabelHtml(command);
         const icon = definition.icon;
         // inlineIcon: paint from the mask-based UI-icon sheet (.nds-icon) rather
         // than the HGI font — for glyphs not (yet) in the font, e.g. pilcrow.
         const iconHtml = definition.inlineIcon
             ? `<i class="nds-icon nds-${icon}" aria-hidden="true"></i>`
             : `<i class="hgi hgi-stroke hgi-${icon}" aria-hidden="true"></i>`;
-        return `<button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only nds-tooltip${extraClass}" data-cmd="${command}"${definition.toggle ? ' aria-pressed="false"' : ''} aria-label="${label}" data-tooltip-message="${label}" data-tooltip-hover="500">${iconHtml}</button>`;
+        return `<button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only nds-tooltip${extraClass}" data-cmd="${command}"${definition.toggle ? ' aria-pressed="false"' : ''} ${getCommandName(command)} data-tooltip-hover="500">${iconHtml}</button>`;
     }
 
-    function buildTextField(id, labelText, type, dataAttribute, placeholder, extraClass = '') {
-        return `<div class="nds-form-container nds-input${extraClass}"><div class="nds-form-header"><label for="${id}"><span class="nds-label">${labelText}</span></label></div>`
+    function buildTextField(id, labelKey, type, dataAttribute, placeholder, extraClass = '') {
+        return `<div class="nds-form-container nds-input${extraClass}"><div class="nds-form-header"><label for="${id}">${getLabelSpan(labelKey)}</label></div>`
             + `<div class="nds-form-control"><input type="${type}" id="${id}" class="nds-input"${placeholder ? ` placeholder="${placeholder}"` : ''} autocomplete="off" ${dataAttribute} /></div>`
             + '<div class="nds-form-footer" data-feedback-target hidden></div></div>';
     }
@@ -783,19 +789,19 @@
         return `<div class="nds-dropmenu" data-editor-link-dropmenu>${buildCommandButton('link', ' nds-dropmenu-trigger')}`
             + '<div class="nds-dropmenu-menu nds-editor-link-menu" hidden><div class="nds-dropmenu-scroll">'
             + '<div class="nds-dropmenu-group nds-form-group">'
-            + buildTextField(`${idBase}-link-text`, getLabelHtml('text'), 'text', 'data-editor-link-text')
-            + buildTextField(`${idBase}-link-url`, getLabelHtml('url'), 'url', 'data-editor-link-url', 'https://')
-            + `<div class="nds-form-container nds-checkbox"><div class="nds-form-header"><label for="${idBase}-link-external"><span class="nds-label">${getLabelHtml('external')}</span></label></div>`
+            + buildTextField(`${idBase}-link-text`, 'text', 'text', 'data-editor-link-text')
+            + buildTextField(`${idBase}-link-url`, 'url', 'url', 'data-editor-link-url', 'https://')
+            + `<div class="nds-form-container nds-checkbox"><div class="nds-form-header"><label for="${idBase}-link-external">${getLabelSpan('external')}</label></div>`
             + `<div class="nds-form-control"><input type="checkbox" id="${idBase}-link-external" class="nds-checkbox-input" data-editor-link-external /></div></div>`
-            + `<div class="nds-form-container nds-checkbox"><div class="nds-form-header"><label for="${idBase}-link-noexternal"><span class="nds-label">${getLabelHtml('no_badge')}</span></label></div>`
+            + `<div class="nds-form-container nds-checkbox"><div class="nds-form-header"><label for="${idBase}-link-noexternal">${getLabelSpan('no_badge')}</label></div>`
             + `<div class="nds-form-control"><input type="checkbox" id="${idBase}-link-noexternal" class="nds-checkbox-input" data-editor-link-noexternal /></div></div>`
-            + `<div class="nds-form-container nds-checkbox"><div class="nds-form-header"><label for="${idBase}-link-colored"><span class="nds-label">${getLabelHtml('colored')}</span></label></div>`
+            + `<div class="nds-form-container nds-checkbox"><div class="nds-form-header"><label for="${idBase}-link-colored">${getLabelSpan('colored')}</label></div>`
             + `<div class="nds-form-control"><input type="checkbox" id="${idBase}-link-colored" class="nds-checkbox-input" data-editor-link-colored /></div></div>`
             + '</div></div>'
             + '<div class="nds-dropmenu-footer"><hr class="nds-divider"><div class="nds-dropmenu-action">'
-            + `<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-editor-link-cancel><span class="nds-label">${getLabelHtml('cancel')}</span></button>`
-            + `<button type="button" class="nds-btn nds-destructive nds-secondary-outline nds-dropmenu-item" data-editor-link-unlink hidden><span class="nds-label">${getLabelHtml('unlink')}</span></button>`
-            + `<button type="button" class="nds-btn nds-primary nds-dropmenu-item" data-editor-link-confirm data-dropmenu-primary data-no-auto-close><span class="nds-label">${getLabelHtml('insert')}</span></button>`
+            + `<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-editor-link-cancel>${getLabelSpan('cancel')}</button>`
+            + `<button type="button" class="nds-btn nds-destructive nds-secondary-outline nds-dropmenu-item" data-editor-link-unlink hidden>${getLabelSpan('unlink')}</button>`
+            + `<button type="button" class="nds-btn nds-primary nds-dropmenu-item" data-editor-link-confirm data-dropmenu-primary data-no-auto-close>${getLabelSpan('insert')}</button>`
             + '</div></div></div></div>';
     }
 
@@ -805,28 +811,28 @@
         return `<div class="nds-dropmenu" data-editor-image-dropmenu>${buildCommandButton('image', ' nds-dropmenu-trigger')}`
             + '<div class="nds-dropmenu-menu nds-editor-image-menu" hidden><div class="nds-dropmenu-scroll">'
             + '<div class="nds-dropmenu-group nds-form-group nds-editor-image-form">'
-            + buildTextField(`${idBase}-image-url`, getLabelHtml('from_link'), 'url', 'data-editor-image-url', 'https://')
-            + `<div class="nds-divider" data-editor-image-or>${getLabelHtml('or')}</div>`
+            + buildTextField(`${idBase}-image-url`, 'from_link', 'url', 'data-editor-image-url', 'https://')
+            + `<div class="nds-divider" data-editor-image-or data-i18n="editor.or">${getLabelHtml('or')}</div>`
             // Canonical single-file nds-upload (no dropzone) — NDS.Upload owns
             // picking, extension enforcement, and the file chip; the editor
             // only listens for nds:upload:select.
             + '<div class="nds-form-container nds-upload" data-state="single" data-allowed-types="jpg,jpeg,png,gif,webp,svg" data-max-file-size="2097152" data-editor-image-upload>'
             + '<div class="nds-form-control nds-center">'
             + `<input type="file" id="${idBase}-image-file" class="nds-upload-input" data-editor-image-file />`
-            + `<div class="nds-form-action"><button type="button" class="nds-btn nds-neutral nds-md nds-upload-browse"><i class="hgi hgi-stroke hgi-folder-01"></i><span class="nds-label">${getLabelHtml('upload')}</span></button></div>`
+            + `<div class="nds-form-action"><button type="button" class="nds-btn nds-neutral nds-md nds-upload-browse"><i class="hgi hgi-stroke hgi-folder-01"></i>${getLabelSpan('upload')}</button></div>`
             + '</div>'
             + '<div class="nds-file-list"></div>'
             + '</div>'
-            + `<div class="nds-divider">${getLabelHtml('attrs')}</div>`
-            + buildTextField(`${idBase}-image-alt`, getLabelHtml('alt'), 'text', 'data-editor-image-alt', '', ' nds-md')
+            + `<div class="nds-divider" data-i18n="editor.attrs">${getLabelHtml('attrs')}</div>`
+            + buildTextField(`${idBase}-image-alt`, 'alt', 'text', 'data-editor-image-alt', '', ' nds-md')
             + '<div class="nds-form-group nds-row">'
-            + buildTextField(`${idBase}-image-width`, getLabelHtml('width'), 'text', 'inputmode="numeric" data-editor-image-width', 'auto', ' nds-md')
-            + buildTextField(`${idBase}-image-height`, getLabelHtml('height'), 'text', 'inputmode="numeric" data-editor-image-height', 'auto', ' nds-md')
+            + buildTextField(`${idBase}-image-width`, 'width', 'text', 'inputmode="numeric" data-editor-image-width', 'auto', ' nds-md')
+            + buildTextField(`${idBase}-image-height`, 'height', 'text', 'inputmode="numeric" data-editor-image-height', 'auto', ' nds-md')
             + '</div>'
             + '</div></div>'
             + '<div class="nds-dropmenu-footer"><hr class="nds-divider"><div class="nds-dropmenu-action">'
-            + `<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-editor-image-cancel><span class="nds-label">${getLabelHtml('cancel')}</span></button>`
-            + `<button type="button" class="nds-btn nds-primary nds-dropmenu-item" data-editor-image-confirm data-dropmenu-primary data-no-auto-close><span class="nds-label">${getLabelHtml('insert')}</span></button>`
+            + `<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-editor-image-cancel>${getLabelSpan('cancel')}</button>`
+            + `<button type="button" class="nds-btn nds-primary nds-dropmenu-item" data-editor-image-confirm data-dropmenu-primary data-no-auto-close>${getLabelSpan('insert')}</button>`
             + '</div></div></div></div>';
     }
 
@@ -845,11 +851,11 @@
     function removeDropmenuHtml() {
         return `<div class="nds-dropmenu" data-editor-remove-dropmenu>${buildCommandButton('remove', ' nds-dropmenu-trigger nds-destructive')}`
             + '<div class="nds-dropmenu-menu nds-editor-remove-menu" hidden><div class="nds-dropmenu-scroll">'
-            + `<div class="nds-dropmenu-group"><span class="nds-label">${getLabelHtml('remove_prompt')}</span></div>`
+            + `<div class="nds-dropmenu-group">${getLabelSpan('remove_prompt')}</div>`
             + '<div data-editor-remove-levels></div>'
             + '</div>'
             + '<div class="nds-dropmenu-footer"><hr class="nds-divider"><div class="nds-dropmenu-action">'
-            + `<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-editor-remove-cancel><span class="nds-label">${getLabelHtml('cancel')}</span></button>`
+            + `<button type="button" class="nds-btn nds-subtle nds-dropmenu-item" data-editor-remove-cancel>${getLabelSpan('cancel')}</button>`
             + '</div></div></div></div>';
     }
 
@@ -860,8 +866,7 @@
             const flush = () => { if (cluster) { start += `<div class="nds-btn-group">${cluster}</div>`; cluster = ''; } };
             for (const command of NDS.splitList(group)) {
                 if (command === 'source') {
-                    const label = getLabelHtml('source');
-                    end = `<button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only nds-tooltip" data-source-toggle aria-pressed="false" aria-label="${label}" data-tooltip-message="${label}" data-tooltip-hover="500"><i class="hgi hgi-stroke hgi-source-code" aria-hidden="true"></i></button>`;
+                    end = `<button type="button" class="nds-btn nds-secondary-outline nds-md nds-icon-only nds-tooltip" data-source-toggle aria-pressed="false" ${getCommandName('source')} data-tooltip-hover="500"><i class="hgi hgi-stroke hgi-source-code" aria-hidden="true"></i></button>`;
                 } else if (command === 'link') {
                     flush(); // the dropmenu wrapper sits outside any button group
                     start += buildLinkDropmenu(idBase);

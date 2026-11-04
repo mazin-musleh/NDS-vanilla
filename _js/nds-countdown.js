@@ -55,7 +55,7 @@
     const offsets = new WeakMap(); // server now − visitor now, fixed at wire time
     const endedSwap = new WeakMap(); // the content an ended message replaced, for setTarget() to put back
     let timer = null;
-    let visibilityBound = false;
+    let documentBound = false;
     const zoneFormats = new Map();
     const unitFormats = new Map();
 
@@ -205,12 +205,7 @@
             swap.parent.insertBefore(swap.done, swap.next);
             endedSwap.delete(el);
         }
-        let lang = el.closest('[lang]')?.lang || 'en';
-        // Intl throws on a malformed tag (ar_SA), which would stop every countdown after this one.
-        try { Intl.getCanonicalLocales(lang); } catch {
-            console.warn(`NDS Countdown: lang "${lang}" is not a language tag; using en`, el);
-            lang = 'en';
-        }
+        const lang = readLang(el);
         const units = [];
         el.querySelectorAll('[data-unit]').forEach((box) => {
             const unit = box.getAttribute('data-unit');
@@ -237,6 +232,15 @@
         render(el, it);
         if (items.has(el)) schedule();
         return true;
+    }
+
+    function readLang(el) {
+        const lang = el.closest('[lang]')?.lang || 'en';
+        // Intl throws on a malformed tag (ar_SA), which would stop every countdown after this one.
+        try { Intl.getCanonicalLocales(lang); return lang; } catch {
+            console.warn(`NDS Countdown: lang "${lang}" is not a language tag; using en`, el);
+            return 'en';
+        }
     }
 
     // What a countdown needs before its first run, from init() or from a setTarget() that came first:
@@ -266,19 +270,25 @@
     }
 
     // A page with no countdown at load never runs init(), so setTarget() binds this too.
-    function addVisibilityListeners() {
-        if (visibilityBound) return;
-        visibilityBound = true;
+    function addDocumentListeners() {
+        if (documentBound) return;
+        documentBound = true;
         document.addEventListener('visibilitychange', () => { document.hidden ? stopTimer() : tick(); });
+        // A language change: each unit word in the new language, and the widths its forms reserve.
+        document.addEventListener('nds:language:change', () => items.forEach((it, el) => {
+            it.lang = readLang(el);
+            it.units.forEach((x) => { if (x.label) x.label.setAttribute('data-countdown-sizes', getWordForms(it.lang, x.unit)); });
+            render(el, it);
+        }));
     }
 
     function init() {
         document.querySelectorAll(SELECTOR).forEach(setupCountdown);
-        addVisibilityListeners();
+        addDocumentListeners();
     }
 
     NDS.Countdown = {
         init,
-        setTarget(el, target) { el = NDS.resolveElement(el); if (el) { addVisibilityListeners(); prepare(el); track(el, target); } }
+        setTarget(el, target) { el = NDS.resolveElement(el); if (el) { addDocumentListeners(); prepare(el); track(el, target); } }
     };
 })();

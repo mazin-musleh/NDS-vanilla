@@ -16,6 +16,7 @@ node scripts/find-unused-icons.mjs              # UI icons nothing references
 python scripts/hgi-font-slices.py               # HGI content font → 25-icon slices in assets/fonts/hgi/ + their @font-face list (hgi-font-update.py --apply runs it)
 node scripts/check-date.mjs                     # NDS.Date vs Intl: every day 2018–2037 round-trips gregory ↔ hijri; ENGINE=webkit for Safari
 node scripts/check-i18n.mjs [--build]           # every _i18n/ pack holds each English word (JS defaults + markers), markers match it, no Arabic in _js/; --build writes assets/i18n/ + _data/i18n.json (js_processor.rb runs it)
+node scripts/check-lang-switch.mjs [ALL=1]      # lang + dir switched live on <html> vs a fresh load in that language, both ways: every word NDS wrote (text, marker attributes, svg), open picker panels, Arabic-served markup; default 5 pages, ALL=1 every components/ + examples/ page (~10 min); after any i18n or component word change
 python scripts/check-docs.py [page.md]          # one-source doc pages vs the nds-doc rules (no build needed)
 python scripts/publish-iq.py [--apply]          # NDS IQ draft → the file installs download: dry run; --apply commits + tags IQvX.Y, never pushes
 python scripts/rig.py new|stage|reset|cost ...  # field rigs: a legacy app a fresh agent ports with the draft rules — guide in .claude/skills/nds-iq-eval/RIGS.md
