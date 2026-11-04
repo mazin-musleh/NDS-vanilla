@@ -38,6 +38,7 @@ dependency to write a zip.
 
 import argparse
 import html
+import json
 import os
 import re
 import shutil
@@ -187,6 +188,13 @@ def verify(out, version, rules=None):
     changelog = z.read(root + 'CHANGELOG.md').decode('utf8', 'ignore')
     if f'## [{version}]' not in changelog:
         sys.exit(f'CHANGELOG.md has no [{version}] section.')
+
+    # The rules read a bundle's Version: line to pick its docs; only a js_processor.rb run after the bump writes it.
+    stale = sorted(os.path.basename(n) for n in names
+                   if n.startswith(root + '_site/assets/js/') and n.endswith('.min.js')
+                   and (m := re.search(rb'Version: (\S+)', z.read(n)[:400])) and m.group(1).decode() != version)
+    if stale:
+        sys.exit(f'Bundle banners do not say {version}: {stale}. Run ruby _plugins/js_processor.rb.')
 
     # Anchor files for the canon NDS-INDEX.md routes reads to. The _source/ ones no
     # longer ship — the consumer populates them from the tag's source zip — so
@@ -382,6 +390,11 @@ def main():
     args = ap.parse_args()
 
     version = args.preview or read_version()
+    if not args.preview:
+        for f in ('package.json', 'package-lock.json'):
+            with open(os.path.join(ROOT, f), encoding='utf8') as fh:
+                if json.load(fh).get('version') != version:
+                    sys.exit(f'{f} version is not {version}: bump it with _config.yml.')
     print(f'\nPackaging v{version}\n')
 
     if not args.no_build:
