@@ -386,6 +386,14 @@
             'Stack them with the layout the docs give: fields in one form.nds-form, other parts each in an .nds-block. A block puts its space below itself, so the upper one needs it: the last block in a box gets none.', undefined, touching.length);
     } });
 
+    // Beside the title chains the hero to the content layout as siblings: a host tag between them breaks it (rig 9: an Angular component's tag).
+    addRule({ id: 'hero-aside-split', group: 'structure', docs: 'ui-shell/sideinfo.html', check(context) {
+        const hero = context.find('.nds-hero-section.nds-aside')[0];
+        if (!hero || !context.find('.nds-sideinfo-section .nds-sideinfo').length || hero.nextElementSibling?.matches('.nds-content-layout')) return;
+        context.report(hero, 'the hero has nds-aside, but the element right after it is not .nds-content-layout, so the side info cannot move up beside the title.',
+            'Put .nds-content-layout right after the hero. In Angular, give the component that renders the hero an attribute selector, such as section[appSubHero], so no host tag sits between them.');
+    } });
+
     // A heading that repeats the page title tells the reader nothing new (rig 7: a receipt card named like its page).
     addRule({ id: 'title-repeat', group: 'page', check(context) {
         const normalize = text => text.replace(/\s+/g, ' ').trim().toLowerCase();
