@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 08:18 AM"
+last_edit: "04/11/2026 - 07:11 PM"
 ---
 
 <section id="themes-overview" class="nds-content-section nds-doc-overview">
@@ -195,6 +195,8 @@ A stylesheet theme is your own CSS file that sets the color tokens at `:root`. L
 </script>
 
 A theme option can load a stylesheet theme on click: `data-theme-css` names the CSS file, and `data-theme-js` names a script. The [event themes](../events/) are stylesheet themes that load from one script tag.
+
+A stylesheet theme can also place your brand art, such as a pattern, a divider or a footer graphic. Put it on the root of a section or the footer: a background image on `.nds-content-section` or `.nds-footer`, or an image in their `::before` or `::after`, with `pointer-events: none`. NDS draws nothing in those two pseudo-elements. Never restyle a part inside a component. A banner photo goes in the hero's own image markup. The event themes place their art this way.
 
 ### Dark Areas
 {: .nds-block-title #dark-areas}

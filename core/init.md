@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 12:02 AM"
+last_edit: "04/11/2026 - 07:11 PM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -151,6 +151,39 @@ A view the framework loads later, such as a `React.lazy` one or a route's code s
 Build rows with the framework, not with the `<template>` pattern in [Usage](#init-markup). The framework owns every node it renders.
 
 For the same reason, do not let a [Filter](../components/filter) `data-ajax` request swap in HTML: it replaces the results container. Answer with JSON, or stop the request in `nds:filter:request` and send your own. Then render the results with the framework.
+
+### Kept and Animated Views
+{: .nds-block-title}
+
+A view that the framework keeps while it is hidden, such as one in Vue's `<KeepAlive>`, keeps its components. Do not call `destroy` when it hides, or `mount` when it shows again.
+
+A view that leaves with an animation, such as one in Vue's `<Transition>`, stays on the page until the animation ends. Its unmount hooks run when the animation starts, so a `destroy` there stops its components while the user still sees them. Call `destroy` when the animation ends instead. Keep the animation: NDS needs no change to it.
+
+In Vue, a directive does both calls for a view or a branch. Its `unmounted` hook destroys a branch that is already off the page, and skips one that is still on it because its view is leaving. The `after-leave` event of the `<Transition>` then destroys the whole view. A view that `<KeepAlive>` keeps is only moved off the page, so it still has a parent and keeps its components.
+
+<script type="text/html" id="init-vue-directive" data-canon data-lang="js">
+// v-nds: put it on the root element of a view or of a v-if or v-for branch
+export const vNds = {
+  mounted: (el) => void window.NDS?.init.mount(el),
+  // Still on the page: its view is leaving, and after-leave destroys it
+  unmounted: (el) => { if (!el.isConnected) window.NDS?.init.destroy(el); },
+};
+
+// The <Transition>'s after-leave handler. A kept view still has a parent.
+export function destroyLeftView(el) {
+  if (!el.parentNode) window.NDS?.init.destroy(el);
+}
+</script>
+
+<script type="text/html" id="init-vue-transition" data-canon data-lang="html">
+<RouterView v-slot="{ Component }">
+  <Transition name="fade" mode="out-in" @after-leave="destroyLeftView">
+    <KeepAlive :include="['SitesView']">
+      <component :is="Component" />
+    </KeepAlive>
+  </Transition>
+</RouterView>
+</script>
 
 ### HTML Swaps
 {: .nds-block-title}

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "04/11/2026 - 07:11 PM"
 hideFeedback: true
 ---
 
@@ -287,6 +287,8 @@ Each structure is the whole page section, form included. Submit validates the fo
 | Structure | Survey (default) | — | — | A Yes or No question about the page, with reasons for each answer. Content pages |
 | Structure | Rating | canon `#uf-rating` | — | A star score for a service, with a comment. Service pages |
 | Statistic | No statistic | remove | `.nds-user-feedback-statistic` | Leave it out when you have no real numbers to show |
+| Gender | No gender question | remove | `.nds-gender` | Leave it out when your service does not report answers by gender |
+| Agreement | No agreement line | remove | `.nds-user-feedback-agreement` | Leave it out when the site has no participation statement or rules page. Keep it with links to the real pages |
 | Memory | Ask every visit (hint: No cookie saves the answer) | `[data-no-persist]` | `.nds-user-feedback` | No cookie: the widget asks again on every visit |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #user-feedback-variants-table .nds-table .nds-responsive}
@@ -427,6 +429,7 @@ To send the data another way, listen for `nds:user-feedback:submit` and call `pr
 - Leave the widget off task pages, such as a checkout, a multi-step form or a confirmation screen. The visitor's attention belongs on the task.
 - Write reasons that fit the page, four to six in each list.
 - Remove the statistic when you have no real numbers to show. In Rating, write the real average in the question and in `data-rating`.
+- The gender question and the agreement line are sample content. Keep each one only when it is true for your service, and link the agreement line to your real pages.
 - Keep the `.nds-note` after the legend, not inside it. The group's name then stays short, and a screen reader still reads the note through `aria-describedby`.
 - Do not make the widget the only way to report a problem. Link to a support form too.
 - On a page built with the NDS layouts, the layout adds the Survey. Set `feedback_type: rating` in the front matter for Rating, or `hideFeedback: true` for none. `rating: true` is a different key: the hero's rating menu.

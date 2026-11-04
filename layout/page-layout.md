@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.8.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 04:08 PM"
+last_edit: "04/11/2026 - 07:11 PM"
 ---
 
 <section id="page-layout-overview" class="nds-content-section nds-doc-overview">
@@ -668,6 +668,7 @@ A console has no side info, because the side menu holds the side column. What a 
 - Put every page section in `nds-content`.
 - Write the layout classes in the HTML that the browser paints first. A class that a script adds after the app starts shows one frame at the wrong shape.
 - In an app whose layout class depends on the route, set the class with a script that runs at once, as the first child of `body`, before the framework starts. A mount effect runs too late.
+- In a single-page app, set the class again on each route change, such as from the router's after-navigation hook. The script in `body` covers only the first page. A link from a minimal page, such as a sign-in with `nds-page-bg`, to a full page otherwise keeps the old class.
 - Give a framework's mount element between `body` and `main` (`#root`, `#app`, `app-root`) `display: contents`. If the app styles that element, give it `flex: 1; display: flex; flex-direction: column` instead. Without one of them, `main` does not grow, and the footer moves up the screen. Write it where the first paint sees it: a `style` attribute on the element, or a stylesheet that loads before the body. A stylesheet with `data-nds-defer` does not hold the first paint. Under a strict Content Security Policy, use the stylesheet.
 - Return a fragment, not a wrapper `div`, from a framework component in the content layout or in `nds-content`. In the content layout, a wrapper takes a grid column: with a side menu, the whole page shrinks to the side menu's width. In `nds-content`, a wrapper gets no width of its own, so narrow content moves away from the page edges.
 - In an app with a hash router (`#/page`), the skip link's `#main-content` reads as a route. Handle its click instead: `preventDefault()`, then focus `#main-content`, which needs `tabindex="-1"` for that.
