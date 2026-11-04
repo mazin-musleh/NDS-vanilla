@@ -9,7 +9,7 @@ lang: en
 direction: ltr
 content_class: nds-stripe
 sidemenu_mode: false
-last_edit: "03/11/2026 - 04:30 PM"
+last_edit: "04/11/2026 - 11:30 AM"
 ---
 
 <!-- Layout rules: how an event opens depends on what the user does with it.
@@ -154,170 +154,176 @@ last_edit: "03/11/2026 - 04:30 PM"
                 <div class="nds-drawer nds-divided">
                     <!-- Each row's meta line is time, place, seats, in that order: the page script reads them so.
                          The seats fact takes Meta's status: warning for a few seats left, error for Full. A full event's row has data-full (from the server on a real site) and still opens, to show its details -->
-                    <ul id="event-list" class="nds-drawer-list nds-calendar-events" aria-label="Events" data-filter-items="li">
-                        <li data-summary="A hands-on day on mapping a service from the user's side, with real service journeys from across government.">
-                            <button type="button" class="nds-btn nds-subtle" data-panel-toggle="event-panel">
-                                <time class="nds-date-tile" datetime="2026-10-25T09:00"></time>
-                                <span class="nds-drawer-item">
-                                    <span class="nds-drawer-item-head">
-                                        <span class="nds-tag" data-filter="type">
-                                            <span class="nds-label">Workshop</span>
+                    <div class="nds-scroll-more">
+                        <ul id="event-list" class="nds-drawer-list nds-calendar-events nds-scroll-more-content" aria-label="Events" data-filter-items="li">
+                            <li data-summary="A hands-on day on mapping a service from the user's side, with real service journeys from across government.">
+                                <button type="button" class="nds-btn nds-subtle" data-panel-toggle="event-panel">
+                                    <time class="nds-date-tile" datetime="2026-10-25T09:00"></time>
+                                    <span class="nds-drawer-item">
+                                        <span class="nds-drawer-item-head">
+                                            <span class="nds-tag" data-filter="type">
+                                                <span class="nds-label">Workshop</span>
+                                            </span>
+                                            <span class="nds-label">Service design workshop</span>
                                         </span>
-                                        <span class="nds-label">Service design workshop</span>
-                                    </span>
-                                    <span class="nds-meta">
-                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>9:00 AM</span>
-                                        <span class="nds-meta-item" data-filter="place" data-filter-value="In person"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Riyadh, Hall 2</span>
-                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>8 seats left</span>
-                                    </span>
-                                </span>
-                            </button>
-                        </li>
-                        <li data-summary="How to find, download and cite the ministry's open datasets, with a live walk through the data portal.">
-                            <button type="button" class="nds-btn nds-subtle" data-panel-toggle="event-panel">
-                                <time class="nds-date-tile" datetime="2026-10-26T13:00"></time>
-                                <span class="nds-drawer-item">
-                                    <span class="nds-drawer-item-head">
-                                        <span class="nds-tag" data-filter="type">
-                                            <span class="nds-label">Webinar</span>
+                                        <span class="nds-meta">
+                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>9:00 AM</span>
+                                            <span class="nds-meta-item" data-filter="place" data-filter-value="In person"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Riyadh, Hall 2</span>
+                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>8 seats left</span>
                                         </span>
-                                        <span class="nds-label">Open data for researchers</span>
                                     </span>
-                                    <span class="nds-meta">
-                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>1:00 PM</span>
-                                        <span class="nds-meta-item" data-filter="place" data-filter-value="Online"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Online</span>
-                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>120 seats left</span>
-                                    </span>
-                                </span>
-                            </button>
-                        </li>
-                        <li data-full data-summary="Write letters, forms and web pages that people understand on the first read.">
-                            <button type="button" class="nds-btn nds-subtle" data-panel-toggle="event-panel">
-                                <time class="nds-date-tile" datetime="2026-10-27T10:00"></time>
-                                <span class="nds-drawer-item">
-                                    <span class="nds-drawer-item-head">
-                                        <span class="nds-tag" data-filter="type">
-                                            <span class="nds-label">Workshop</span>
+                                </button>
+                            </li>
+                            <li data-summary="How to find, download and cite the ministry's open datasets, with a live walk through the data portal.">
+                                <button type="button" class="nds-btn nds-subtle" data-panel-toggle="event-panel">
+                                    <time class="nds-date-tile" datetime="2026-10-26T13:00"></time>
+                                    <span class="nds-drawer-item">
+                                        <span class="nds-drawer-item-head">
+                                            <span class="nds-tag" data-filter="type">
+                                                <span class="nds-label">Webinar</span>
+                                            </span>
+                                            <span class="nds-label">Open data for researchers</span>
                                         </span>
-                                        <span class="nds-label">Plain language for public writers</span>
-                                    </span>
-                                    <span class="nds-meta">
-                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>10:00 AM</span>
-                                        <span class="nds-meta-item" data-filter="place" data-filter-value="In person"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Riyadh, Room 4</span>
-                                        <span class="nds-meta-item" data-status="error"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>Full</span>
-                                    </span>
-                                </span>
-                            </button>
-                        </li>
-                        <li data-summary="A step-by-step look at applying for, renewing and changing a business license on the e-services portal.">
-                            <button type="button" class="nds-btn nds-subtle" data-panel-toggle="event-panel">
-                                <time class="nds-date-tile" datetime="2026-10-28T18:00"></time>
-                                <span class="nds-drawer-item">
-                                    <span class="nds-drawer-item-head">
-                                        <span class="nds-tag" data-filter="type">
-                                            <span class="nds-label">Webinar</span>
+                                        <span class="nds-meta">
+                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>1:00 PM</span>
+                                            <span class="nds-meta-item" data-filter="place" data-filter-value="Online"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Online</span>
+                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>120 seats left</span>
                                         </span>
-                                        <span class="nds-label">Applying for a business license online</span>
                                     </span>
-                                    <span class="nds-meta">
-                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>6:00 PM</span>
-                                        <span class="nds-meta-item" data-filter="place" data-filter-value="Online"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Online</span>
-                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>300 seats left</span>
-                                    </span>
-                                </span>
-                            </button>
-                        </li>
-                        <li data-summary="Test a web page with a screen reader the way its users do, and fix what you find.">
-                            <button type="button" class="nds-btn nds-subtle" data-panel-toggle="event-panel">
-                                <time class="nds-date-tile" datetime="2026-10-29T10:00"></time>
-                                <span class="nds-drawer-item">
-                                    <span class="nds-drawer-item-head">
-                                        <span class="nds-tag" data-filter="type">
-                                            <span class="nds-label">Workshop</span>
+                                </button>
+                            </li>
+                            <li data-full data-summary="Write letters, forms and web pages that people understand on the first read.">
+                                <button type="button" class="nds-btn nds-subtle" data-panel-toggle="event-panel">
+                                    <time class="nds-date-tile" datetime="2026-10-27T10:00"></time>
+                                    <span class="nds-drawer-item">
+                                        <span class="nds-drawer-item-head">
+                                            <span class="nds-tag" data-filter="type">
+                                                <span class="nds-label">Workshop</span>
+                                            </span>
+                                            <span class="nds-label">Plain language for public writers</span>
                                         </span>
-                                        <span class="nds-label">Accessibility testing with screen readers</span>
-                                    </span>
-                                    <span class="nds-meta">
-                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>10:00 AM</span>
-                                        <span class="nds-meta-item" data-filter="place" data-filter-value="In person"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Jeddah, Training Center</span>
-                                        <span class="nds-meta-item" data-status="warning"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>3 seats left</span>
-                                    </span>
-                                </span>
-                            </button>
-                        </li>
-                        <li data-summary="Ask the team behind the new e-services portal anything, from signing in to tracking a request.">
-                            <button type="button" class="nds-btn nds-subtle" data-panel-toggle="event-panel">
-                                <time class="nds-date-tile" datetime="2026-11-03T11:00"></time>
-                                <span class="nds-drawer-item">
-                                    <span class="nds-drawer-item-head">
-                                        <span class="nds-tag" data-filter="type">
-                                            <span class="nds-label">Webinar</span>
+                                        <span class="nds-meta">
+                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>10:00 AM</span>
+                                            <span class="nds-meta-item" data-filter="place" data-filter-value="In person"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Riyadh, Room 4</span>
+                                            <span class="nds-meta-item" data-status="error"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>Full</span>
                                         </span>
-                                        <span class="nds-label">Questions and answers: the new e-services portal</span>
                                     </span>
-                                    <span class="nds-meta">
-                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>11:00 AM</span>
-                                        <span class="nds-meta-item" data-filter="place" data-filter-value="Online"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Online</span>
-                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>200 seats left</span>
-                                    </span>
-                                </span>
-                            </button>
-                        </li>
-                        <li data-summary="Pick the right chart for your numbers, and make it readable in reports and on screen.">
-                            <button type="button" class="nds-btn nds-subtle" data-panel-toggle="event-panel">
-                                <time class="nds-date-tile" datetime="2026-11-08T10:00"></time>
-                                <span class="nds-drawer-item">
-                                    <span class="nds-drawer-item-head">
-                                        <span class="nds-tag" data-filter="type">
-                                            <span class="nds-label">Workshop</span>
+                                </button>
+                            </li>
+                            <li data-summary="A step-by-step look at applying for, renewing and changing a business license on the e-services portal.">
+                                <button type="button" class="nds-btn nds-subtle" data-panel-toggle="event-panel">
+                                    <time class="nds-date-tile" datetime="2026-10-28T18:00"></time>
+                                    <span class="nds-drawer-item">
+                                        <span class="nds-drawer-item-head">
+                                            <span class="nds-tag" data-filter="type">
+                                                <span class="nds-label">Webinar</span>
+                                            </span>
+                                            <span class="nds-label">Applying for a business license online</span>
                                         </span>
-                                        <span class="nds-label">Data visualization basics</span>
-                                    </span>
-                                    <span class="nds-meta">
-                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>10:00 AM</span>
-                                        <span class="nds-meta-item" data-filter="place" data-filter-value="In person"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Riyadh, Hall 2</span>
-                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>12 seats left</span>
-                                    </span>
-                                </span>
-                            </button>
-                        </li>
-                        <li id="event-forum" data-summary="Leaders and teams from across government share what they built this year, and what comes next. Talks in the morning, workshops after lunch.">
-                            <button type="button" class="nds-btn nds-subtle" data-panel-toggle="event-panel">
-                                <time class="nds-date-tile" datetime="2026-11-10T09:00"></time>
-                                <span class="nds-drawer-item">
-                                    <span class="nds-drawer-item-head">
-                                        <span class="nds-tag" data-filter="type">
-                                            <span class="nds-label">Conference</span>
+                                        <span class="nds-meta">
+                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>6:00 PM</span>
+                                            <span class="nds-meta-item" data-filter="place" data-filter-value="Online"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Online</span>
+                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>300 seats left</span>
                                         </span>
-                                        <span class="nds-label">Digital Government Forum 2026</span>
                                     </span>
-                                    <span class="nds-meta">
-                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>9:00 AM</span>
-                                        <span class="nds-meta-item" data-filter="place" data-filter-value="In person"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>King Abdulaziz Center, Riyadh</span>
-                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>350 seats left</span>
-                                    </span>
-                                </span>
-                            </button>
-                        </li>
-                        <li data-summary="Simple steps that keep a small business safe online: passwords, phishing, backups and payments.">
-                            <button type="button" class="nds-btn nds-subtle" data-panel-toggle="event-panel">
-                                <time class="nds-date-tile" datetime="2026-11-11T14:00"></time>
-                                <span class="nds-drawer-item">
-                                    <span class="nds-drawer-item-head">
-                                        <span class="nds-tag" data-filter="type">
-                                            <span class="nds-label">Webinar</span>
+                                </button>
+                            </li>
+                            <li data-summary="Test a web page with a screen reader the way its users do, and fix what you find.">
+                                <button type="button" class="nds-btn nds-subtle" data-panel-toggle="event-panel">
+                                    <time class="nds-date-tile" datetime="2026-10-29T10:00"></time>
+                                    <span class="nds-drawer-item">
+                                        <span class="nds-drawer-item-head">
+                                            <span class="nds-tag" data-filter="type">
+                                                <span class="nds-label">Workshop</span>
+                                            </span>
+                                            <span class="nds-label">Accessibility testing with screen readers</span>
                                         </span>
-                                        <span class="nds-label">Cyber safety for small businesses</span>
+                                        <span class="nds-meta">
+                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>10:00 AM</span>
+                                            <span class="nds-meta-item" data-filter="place" data-filter-value="In person"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Jeddah, Training Center</span>
+                                            <span class="nds-meta-item" data-status="warning"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>3 seats left</span>
+                                        </span>
                                     </span>
-                                    <span class="nds-meta">
-                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>2:00 PM</span>
-                                        <span class="nds-meta-item" data-filter="place" data-filter-value="Online"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Online</span>
-                                        <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>150 seats left</span>
+                                </button>
+                            </li>
+                            <li data-summary="Ask the team behind the new e-services portal anything, from signing in to tracking a request.">
+                                <button type="button" class="nds-btn nds-subtle" data-panel-toggle="event-panel">
+                                    <time class="nds-date-tile" datetime="2026-11-03T11:00"></time>
+                                    <span class="nds-drawer-item">
+                                        <span class="nds-drawer-item-head">
+                                            <span class="nds-tag" data-filter="type">
+                                                <span class="nds-label">Webinar</span>
+                                            </span>
+                                            <span class="nds-label">Questions and answers: the new e-services portal</span>
+                                        </span>
+                                        <span class="nds-meta">
+                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>11:00 AM</span>
+                                            <span class="nds-meta-item" data-filter="place" data-filter-value="Online"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Online</span>
+                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>200 seats left</span>
+                                        </span>
                                     </span>
-                                </span>
-                            </button>
-                        </li>
-                    </ul>
+                                </button>
+                            </li>
+                            <li data-summary="Pick the right chart for your numbers, and make it readable in reports and on screen.">
+                                <button type="button" class="nds-btn nds-subtle" data-panel-toggle="event-panel">
+                                    <time class="nds-date-tile" datetime="2026-11-08T10:00"></time>
+                                    <span class="nds-drawer-item">
+                                        <span class="nds-drawer-item-head">
+                                            <span class="nds-tag" data-filter="type">
+                                                <span class="nds-label">Workshop</span>
+                                            </span>
+                                            <span class="nds-label">Data visualization basics</span>
+                                        </span>
+                                        <span class="nds-meta">
+                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>10:00 AM</span>
+                                            <span class="nds-meta-item" data-filter="place" data-filter-value="In person"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Riyadh, Hall 2</span>
+                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>12 seats left</span>
+                                        </span>
+                                    </span>
+                                </button>
+                            </li>
+                            <li id="event-forum" data-summary="Leaders and teams from across government share what they built this year, and what comes next. Talks in the morning, workshops after lunch.">
+                                <button type="button" class="nds-btn nds-subtle" data-panel-toggle="event-panel">
+                                    <time class="nds-date-tile" datetime="2026-11-10T09:00"></time>
+                                    <span class="nds-drawer-item">
+                                        <span class="nds-drawer-item-head">
+                                            <span class="nds-tag" data-filter="type">
+                                                <span class="nds-label">Conference</span>
+                                            </span>
+                                            <span class="nds-label">Digital Government Forum 2026</span>
+                                        </span>
+                                        <span class="nds-meta">
+                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>9:00 AM</span>
+                                            <span class="nds-meta-item" data-filter="place" data-filter-value="In person"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>King Abdulaziz Center, Riyadh</span>
+                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>350 seats left</span>
+                                        </span>
+                                    </span>
+                                </button>
+                            </li>
+                            <li data-summary="Simple steps that keep a small business safe online: passwords, phishing, backups and payments.">
+                                <button type="button" class="nds-btn nds-subtle" data-panel-toggle="event-panel">
+                                    <time class="nds-date-tile" datetime="2026-11-11T14:00"></time>
+                                    <span class="nds-drawer-item">
+                                        <span class="nds-drawer-item-head">
+                                            <span class="nds-tag" data-filter="type">
+                                                <span class="nds-label">Webinar</span>
+                                            </span>
+                                            <span class="nds-label">Cyber safety for small businesses</span>
+                                        </span>
+                                        <span class="nds-meta">
+                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>2:00 PM</span>
+                                            <span class="nds-meta-item" data-filter="place" data-filter-value="Online"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Online</span>
+                                            <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>150 seats left</span>
+                                        </span>
+                                    </span>
+                                </button>
+                            </li>
+                        </ul>
+                        <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+                            <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
+                            <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="nds-empty-placeholder nds-calendar-empty" data-filter-target="event-list">
                     <i class="nds-icon nds-hgi-desert" aria-hidden="true"></i>

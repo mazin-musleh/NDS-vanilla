@@ -56,7 +56,7 @@
     padding: var(--spacing-lg) 0;
 }
 
-// A day with events, in every view: above the picked day's bar.
+// A day with events, in every view.
 .nds-calendar-day-dot {
     position: absolute;
     inset-block-end: var(--spacing-xs);
@@ -101,9 +101,6 @@
     --btn-bg-active: var(--button-background-primary-pressed);
     --btn-bg-selected: var(--button-background-primary-default);
     --btn-color: var(--text-oncolor-primary);
-    --btn-indicator-color: var(--button-indicator-primary);
-    --btn-indicator-active: var(--button-indicator-primary);
-    --btn-indicator-selected: var(--button-indicator-primary);
 
     // The gray fails on the fill: the button's own color.
     .nds-calendar-day-second {
@@ -130,7 +127,27 @@
     display: none;
 }
 
+// The events beside the month from 860px. The calendar is its own container and cannot query
+// itself: auto-fit opens the second column at that width.
 .nds-calendar[data-view="month"] {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, calc((860px - var(--_calendar-gap)) / 2)), 1fr));
+    align-items: start;
+
+    > .nds-toolbar {
+        grid-column: 1 / -1;
+    }
+
+    // The empty message takes the events' cell, not Empty's full row.
+    &[data-state~="empty"] > .nds-drawer {
+        display: none;
+    }
+
+    > .nds-calendar-empty {
+        grid-column: -2 / -1;
+        align-self: center;
+    }
+
     .nds-calendar-weekday {
         display: block;
         text-align: center;
@@ -195,6 +212,11 @@
 
 @include calendar-rows-breakout('.nds-calendar:not([data-view="grid"])');
 
+// The list's Scroll More only scrolls beside the month: not the Drawer's 400px cap.
+.nds-calendar > .nds-drawer {
+    --drawer-max-height: none;
+}
+
 // Under the grid's width Grid draws as rows.
 @container nds-calendar (width < 860px) {
     @include calendar-last-shown('.nds-calendar[data-nds-calendar-initialized]');
@@ -238,9 +260,9 @@
 }
 
 @container nds-calendar (width >= 860px) {
-    // Rows and Month: the list in two columns, read across then down. The two events of a row share
-    // its height, so their dividers line up and each button fills it.
-    .nds-calendar:not([data-view="grid"]) .nds-calendar-events {
+    // Rows: the list in two columns, read across then down. The two events of a row share
+    // its height, so their dividers line up and each button fills it. Month's list is its own column.
+    .nds-calendar:not([data-view="grid"], [data-view="month"]) .nds-calendar-events {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         column-gap: var(--spacing-3xl);
@@ -250,8 +272,17 @@
         }
     }
 
+    // Month: the list takes the days' height and scrolls in it, as Scroll More's nds-fit.
+    .nds-calendar[data-view="month"] > .nds-drawer {
+        align-self: stretch;
+
+        > .nds-scroll-more > .nds-scroll-more-content {
+            contain: size;
+        }
+    }
+
     // A last row of two: its first event drops the divider too.
-    .nds-calendar[data-nds-calendar-initialized]:not([data-view="grid"]) .nds-drawer.nds-divided .nds-calendar-events > li:nth-last-child(2 of [data-calendar-day]:not([data-filtered])):nth-child(odd of [data-calendar-day]:not([data-filtered])) {
+    .nds-calendar[data-nds-calendar-initialized]:not([data-view="grid"], [data-view="month"]) .nds-drawer.nds-divided .nds-calendar-events > li:nth-last-child(2 of [data-calendar-day]:not([data-filtered])):nth-child(odd of [data-calendar-day]:not([data-filtered])) {
         border-block-end: none;
         padding-bottom: 0;
     }

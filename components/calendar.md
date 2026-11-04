@@ -2,13 +2,13 @@
 layout: page
 title: Calendar
 hero_title: Calendar - National Design System
-hero_description: "A calendar shows the events of one week or one month: as day columns, as a list, or under a month of days"
+hero_description: "A calendar shows the events of one week or one month: as day columns, as a list, or beside a month of days"
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "04/11/2026 - 11:30 AM"
 ---
 
 <section id="calendar-overview" class="nds-content-section nds-doc-overview">
@@ -72,106 +72,112 @@ Pick another component when:
   </div>
   <div class="nds-calendar-days" role="group" aria-label="Days" data-i18n-aria-label="calendar.days"></div>
   <div class="nds-drawer nds-divided">
-    <ul class="nds-drawer-list nds-calendar-events" aria-label="Training sessions">
-      <li>
-        <a href="#" class="nds-btn nds-subtle">
-          <time class="nds-date-tile" datetime="2026-10-18T09:00"></time>
-          <span class="nds-drawer-item">
-            <span class="nds-drawer-item-head">
-              <span class="nds-label">Service design workshop</span>
+    <div class="nds-scroll-more">
+      <ul class="nds-drawer-list nds-calendar-events nds-scroll-more-content" aria-label="Training sessions">
+        <li>
+          <a href="#" class="nds-btn nds-subtle">
+            <time class="nds-date-tile" datetime="2026-10-18T09:00"></time>
+            <span class="nds-drawer-item">
+              <span class="nds-drawer-item-head">
+                <span class="nds-label">Service design workshop</span>
+              </span>
+              <span class="nds-meta">
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>9:00 AM</span>
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Room 2</span>
+              </span>
             </span>
-            <span class="nds-meta">
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>9:00 AM</span>
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Room 2</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nds-btn nds-subtle">
+            <time class="nds-date-tile" datetime="2026-10-18T13:00"></time>
+            <span class="nds-drawer-item">
+              <span class="nds-drawer-item-head">
+                <span class="nds-label">Product team meeting</span>
+              </span>
+              <span class="nds-meta">
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>1:00 PM</span>
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Online</span>
+              </span>
             </span>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nds-btn nds-subtle">
-          <time class="nds-date-tile" datetime="2026-10-18T13:00"></time>
-          <span class="nds-drawer-item">
-            <span class="nds-drawer-item-head">
-              <span class="nds-label">Product team meeting</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nds-btn nds-subtle">
+            <time class="nds-date-tile" datetime="2026-10-20T10:00"></time>
+            <span class="nds-drawer-item">
+              <span class="nds-drawer-item-head">
+                <span class="nds-label">Web accessibility for developers and designers</span>
+              </span>
+              <span class="nds-meta">
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>10:00 AM</span>
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Training center</span>
+              </span>
             </span>
-            <span class="nds-meta">
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>1:00 PM</span>
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Online</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nds-btn nds-subtle">
+            <time class="nds-date-tile" datetime="2026-10-22T08:30"></time>
+            <span class="nds-drawer-item">
+              <span class="nds-drawer-item-head">
+                <span class="nds-label">Release review</span>
+              </span>
+              <span class="nds-meta">
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>8:30 AM</span>
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Room 1</span>
+              </span>
             </span>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nds-btn nds-subtle">
-          <time class="nds-date-tile" datetime="2026-10-20T10:00"></time>
-          <span class="nds-drawer-item">
-            <span class="nds-drawer-item-head">
-              <span class="nds-label">Web accessibility for developers and designers</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nds-btn nds-subtle">
+            <time class="nds-date-tile" datetime="2026-10-22T12:00"></time>
+            <span class="nds-drawer-item">
+              <span class="nds-drawer-item-head">
+                <span class="nds-label">Open questions session</span>
+              </span>
+              <span class="nds-meta">
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>12:00 PM</span>
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Online</span>
+              </span>
             </span>
-            <span class="nds-meta">
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>10:00 AM</span>
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Training center</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nds-btn nds-subtle">
+            <time class="nds-date-tile" datetime="2026-10-22T15:00"></time>
+            <span class="nds-drawer-item">
+              <span class="nds-drawer-item-head">
+                <span class="nds-label">Survey results</span>
+              </span>
+              <span class="nds-meta">
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>3:00 PM</span>
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Room 3</span>
+              </span>
             </span>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nds-btn nds-subtle">
-          <time class="nds-date-tile" datetime="2026-10-22T08:30"></time>
-          <span class="nds-drawer-item">
-            <span class="nds-drawer-item-head">
-              <span class="nds-label">Release review</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nds-btn nds-subtle">
+            <time class="nds-date-tile" datetime="2026-10-27T11:00"></time>
+            <span class="nds-drawer-item">
+              <span class="nds-drawer-item-head">
+                <span class="nds-label">Partner meeting</span>
+              </span>
+              <span class="nds-meta">
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>11:00 AM</span>
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Room 2</span>
+              </span>
             </span>
-            <span class="nds-meta">
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>8:30 AM</span>
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Room 1</span>
-            </span>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nds-btn nds-subtle">
-          <time class="nds-date-tile" datetime="2026-10-22T12:00"></time>
-          <span class="nds-drawer-item">
-            <span class="nds-drawer-item-head">
-              <span class="nds-label">Open questions session</span>
-            </span>
-            <span class="nds-meta">
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>12:00 PM</span>
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Online</span>
-            </span>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nds-btn nds-subtle">
-          <time class="nds-date-tile" datetime="2026-10-22T15:00"></time>
-          <span class="nds-drawer-item">
-            <span class="nds-drawer-item-head">
-              <span class="nds-label">Survey results</span>
-            </span>
-            <span class="nds-meta">
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>3:00 PM</span>
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Room 3</span>
-            </span>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nds-btn nds-subtle">
-          <time class="nds-date-tile" datetime="2026-10-27T11:00"></time>
-          <span class="nds-drawer-item">
-            <span class="nds-drawer-item-head">
-              <span class="nds-label">Partner meeting</span>
-            </span>
-            <span class="nds-meta">
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>11:00 AM</span>
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Room 2</span>
-            </span>
-          </span>
-        </a>
-      </li>
-    </ul>
+          </a>
+        </li>
+      </ul>
+      <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+        <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
+        <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+      </button>
+    </div>
   </div>
   <div class="nds-empty-placeholder nds-calendar-empty">
     <i class="nds-icon nds-hgi-desert" aria-hidden="true"></i>
@@ -247,127 +253,133 @@ Pick another component when:
   </div>
   <div class="nds-calendar-days" role="group" aria-label="Days" data-i18n-aria-label="calendar.days"></div>
   <div class="nds-drawer nds-divided">
-    <ul id="calendar-sessions" class="nds-drawer-list nds-calendar-events" aria-label="Training sessions" data-filter-items="li">
-      <li>
-        <a href="#" class="nds-btn nds-subtle">
-          <time class="nds-date-tile" datetime="2026-10-18T09:00"></time>
-          <span class="nds-drawer-item">
-            <span class="nds-drawer-item-head">
-            <span class="nds-tag" data-filter="type">
-              <span class="nds-label">Workshop</span>
+    <div class="nds-scroll-more">
+      <ul id="calendar-sessions" class="nds-drawer-list nds-calendar-events nds-scroll-more-content" aria-label="Training sessions" data-filter-items="li">
+        <li>
+          <a href="#" class="nds-btn nds-subtle">
+            <time class="nds-date-tile" datetime="2026-10-18T09:00"></time>
+            <span class="nds-drawer-item">
+              <span class="nds-drawer-item-head">
+              <span class="nds-tag" data-filter="type">
+                <span class="nds-label">Workshop</span>
+              </span>
+                <span class="nds-label">Service design workshop</span>
+              </span>
+              <span class="nds-meta">
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>9:00 AM</span>
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Room 2</span>
+              </span>
             </span>
-              <span class="nds-label">Service design workshop</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nds-btn nds-subtle">
+            <time class="nds-date-tile" datetime="2026-10-18T13:00"></time>
+            <span class="nds-drawer-item">
+              <span class="nds-drawer-item-head">
+              <span class="nds-tag" data-filter="type">
+                <span class="nds-label">Meeting</span>
+              </span>
+                <span class="nds-label">Product team meeting</span>
+              </span>
+              <span class="nds-meta">
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>1:00 PM</span>
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Online</span>
+              </span>
             </span>
-            <span class="nds-meta">
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>9:00 AM</span>
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Room 2</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nds-btn nds-subtle">
+            <time class="nds-date-tile" datetime="2026-10-20T10:00"></time>
+            <span class="nds-drawer-item">
+              <span class="nds-drawer-item-head">
+              <span class="nds-tag" data-filter="type">
+                <span class="nds-label">Course</span>
+              </span>
+                <span class="nds-label">Web accessibility for developers and designers</span>
+              </span>
+              <span class="nds-meta">
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>10:00 AM</span>
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Training center</span>
+              </span>
             </span>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nds-btn nds-subtle">
-          <time class="nds-date-tile" datetime="2026-10-18T13:00"></time>
-          <span class="nds-drawer-item">
-            <span class="nds-drawer-item-head">
-            <span class="nds-tag" data-filter="type">
-              <span class="nds-label">Meeting</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nds-btn nds-subtle">
+            <time class="nds-date-tile" datetime="2026-10-22T08:30"></time>
+            <span class="nds-drawer-item">
+              <span class="nds-drawer-item-head">
+              <span class="nds-tag" data-filter="type">
+                <span class="nds-label">Meeting</span>
+              </span>
+                <span class="nds-label">Release review</span>
+              </span>
+              <span class="nds-meta">
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>8:30 AM</span>
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Room 1</span>
+              </span>
             </span>
-              <span class="nds-label">Product team meeting</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nds-btn nds-subtle">
+            <time class="nds-date-tile" datetime="2026-10-22T12:00"></time>
+            <span class="nds-drawer-item">
+              <span class="nds-drawer-item-head">
+              <span class="nds-tag" data-filter="type">
+                <span class="nds-label">Meeting</span>
+              </span>
+                <span class="nds-label">Open questions session</span>
+              </span>
+              <span class="nds-meta">
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>12:00 PM</span>
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Online</span>
+              </span>
             </span>
-            <span class="nds-meta">
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>1:00 PM</span>
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Online</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nds-btn nds-subtle">
+            <time class="nds-date-tile" datetime="2026-10-22T15:00"></time>
+            <span class="nds-drawer-item">
+              <span class="nds-drawer-item-head">
+              <span class="nds-tag" data-filter="type">
+                <span class="nds-label">Meeting</span>
+              </span>
+                <span class="nds-label">Survey results</span>
+              </span>
+              <span class="nds-meta">
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>3:00 PM</span>
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Room 3</span>
+              </span>
             </span>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nds-btn nds-subtle">
-          <time class="nds-date-tile" datetime="2026-10-20T10:00"></time>
-          <span class="nds-drawer-item">
-            <span class="nds-drawer-item-head">
-            <span class="nds-tag" data-filter="type">
-              <span class="nds-label">Course</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="nds-btn nds-subtle">
+            <time class="nds-date-tile" datetime="2026-10-27T11:00"></time>
+            <span class="nds-drawer-item">
+              <span class="nds-drawer-item-head">
+              <span class="nds-tag" data-filter="type">
+                <span class="nds-label">Meeting</span>
+              </span>
+                <span class="nds-label">Partner meeting</span>
+              </span>
+              <span class="nds-meta">
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>11:00 AM</span>
+                <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Room 2</span>
+              </span>
             </span>
-              <span class="nds-label">Web accessibility for developers and designers</span>
-            </span>
-            <span class="nds-meta">
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>10:00 AM</span>
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Training center</span>
-            </span>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nds-btn nds-subtle">
-          <time class="nds-date-tile" datetime="2026-10-22T08:30"></time>
-          <span class="nds-drawer-item">
-            <span class="nds-drawer-item-head">
-            <span class="nds-tag" data-filter="type">
-              <span class="nds-label">Meeting</span>
-            </span>
-              <span class="nds-label">Release review</span>
-            </span>
-            <span class="nds-meta">
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>8:30 AM</span>
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Room 1</span>
-            </span>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nds-btn nds-subtle">
-          <time class="nds-date-tile" datetime="2026-10-22T12:00"></time>
-          <span class="nds-drawer-item">
-            <span class="nds-drawer-item-head">
-            <span class="nds-tag" data-filter="type">
-              <span class="nds-label">Meeting</span>
-            </span>
-              <span class="nds-label">Open questions session</span>
-            </span>
-            <span class="nds-meta">
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>12:00 PM</span>
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Online</span>
-            </span>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nds-btn nds-subtle">
-          <time class="nds-date-tile" datetime="2026-10-22T15:00"></time>
-          <span class="nds-drawer-item">
-            <span class="nds-drawer-item-head">
-            <span class="nds-tag" data-filter="type">
-              <span class="nds-label">Meeting</span>
-            </span>
-              <span class="nds-label">Survey results</span>
-            </span>
-            <span class="nds-meta">
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>3:00 PM</span>
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Room 3</span>
-            </span>
-          </span>
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nds-btn nds-subtle">
-          <time class="nds-date-tile" datetime="2026-10-27T11:00"></time>
-          <span class="nds-drawer-item">
-            <span class="nds-drawer-item-head">
-            <span class="nds-tag" data-filter="type">
-              <span class="nds-label">Meeting</span>
-            </span>
-              <span class="nds-label">Partner meeting</span>
-            </span>
-            <span class="nds-meta">
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-clock-01" aria-hidden="true"></i>11:00 AM</span>
-              <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-location-01" aria-hidden="true"></i>Room 2</span>
-            </span>
-          </span>
-        </a>
-      </li>
-    </ul>
+          </a>
+        </li>
+      </ul>
+      <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+        <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
+        <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+      </button>
+    </div>
   </div>
   <div class="nds-empty-placeholder nds-calendar-empty" data-filter-target="calendar-sessions">
     <i class="nds-icon nds-hgi-desert" aria-hidden="true"></i>
@@ -402,7 +414,7 @@ Every option goes on `.nds-calendar`, except No view switch, which removes `.nds
 | Structure | With Filter | canon `#calendar-filter` | — | The same calendar with a [Filter](../components/filter) by event type, and a row of the applied filters. Each event has a tag that names its type |
 | View | Grid (default) | — | — | A column per day, so busy and free days show at a glance. A calendar under 860px wide shows Rows |
 | View | Rows | `[data-view="rows"]` | `.nds-calendar` | A list of the week's events, with a date tile on each. The full title, time and place show at every width |
-| View | Month | `[data-view="month"]` | `.nds-calendar` | A month of day buttons over a list of the month's events. It fits a phone |
+| View | Month | `[data-view="month"]` | `.nds-calendar` | A month of day buttons with a list of the month's events: beside the days from 860px, under them on a narrower calendar. It fits a phone |
 | View switch | No view switch | `remove` | `.nds-calendar-views` | Delete the `.nds-calendar-views` group. The calendar then keeps the view in `data-view`, and Grid without it. To offer two views, delete the button of the view you leave out |
 | Calendar | Gregorian (default) | — | — | Gregorian dates in the title and on the day buttons |
 | Calendar | Hijri | `[data-calendar="hijri"]` | `.nds-calendar` | Hijri dates in the title, on the day buttons, on each event's Date Tile and in what a screen reader hears. The month view shows a Hijri month. Keep `datetime` in Gregorian |
@@ -428,12 +440,12 @@ Every option goes on `.nds-calendar`, except No view switch, which removes `.nds
 ### Views
 {: .nds-block-title}
 
-Grid shows a column for each day, and each day stacks its events. Rows shows the events as one list, each with its date tile. Month shows a month of days over the list. `data-calendar-view="grid"`, `"rows"` and `"month"` on a button switch the view, and the script marks the current one as pressed. When the view changes, the calendar keeps the picked day in view, else today, else the first day shown.
+Grid shows a column for each day, and each day stacks its events. Rows shows the events as one list, each with its date tile. Month shows a month of days beside the list. `data-calendar-view="grid"`, `"rows"` and `"month"` on a button switch the view, and the script marks the current one as pressed. When the view changes, the calendar keeps the picked day in view, else today, else the first day shown.
 
 ### Month View
 {: .nds-block-title}
 
-The month view shows the days of one month as buttons, with the weekday names over them. The month's events show as rows under the days. A dot under a day's number marks a day with events. The first and last rows hold days of the month before and after, in gray. A press on one of them moves to its month and picks the day. A Hijri calendar shows a Hijri month, from its first day to its 29th or 30th.
+The month view shows the days of one month as buttons, with the weekday names over them. The month's events show as rows beside the days, or under them in a calendar narrower than 860px. Beside the days, the list takes their height and scrolls in it, with the [Scroll More](../components/scroll-more) fade and Show more button. The empty message takes the place of the list. A dot under a day's number marks a day with events. The first and last rows hold days of the month before and after, in gray. A press on one of them moves to its month and picks the day. A Hijri calendar shows a Hijri month, from its first day to its 29th or 30th.
 
 ### Step Buttons
 {: .nds-block-title}
@@ -602,7 +614,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Narrow Calendars</span>
-              <p class="nds-card-description">The calendar's own width sets its layout, not the screen's. <code class="nds-inline-code lang-css">--calendar-max-width</code> caps it. Under 860px, Grid shows as Rows and the switch offers Rows and Month. From 860px, Rows and Month show the events in two columns, read across and then down. Under 480px, the days show one letter and a smaller day number.</p>
+              <p class="nds-card-description">The calendar's own width sets its layout, not the screen's. <code class="nds-inline-code lang-css">--calendar-max-width</code> caps it. Under 860px, Grid shows as Rows and the switch offers Rows and Month. From 860px, Rows shows the events in two columns, read across and then down, and Month shows its events beside the days. Under 480px, the days show one letter and a smaller day number.</p>
             </div>
           </div>
         </li>
@@ -651,7 +663,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 | `nds-calendar-day` | `button` | Written by the script, one per day |
 | `nds-calendar-day-dot` | `span` in a day button | Written by the script: the dot under the day's number, on a day with events |
 | `nds-calendar-title-second`, `nds-calendar-day-second` | `span` | Written by the script with `data-calendar-second`: the week under the title, and the day number on each day button |
-| `nds-calendar-events` | `ul.nds-drawer-list` | The events, one `<li>` each |
+| `nds-calendar-events` | `ul.nds-drawer-list.nds-scroll-more-content` in a `.nds-scroll-more` | The events, one `<li>` each. The Scroll More scrolls the list in the month view only |
 | `nds-calendar-empty` | `div` | Shows while the week, the month or the picked day has no events. The canon gives it the `nds-empty-placeholder` look and the message of [Empty](../components/empty). A screen reader hears its text for an empty week or day, so write words that fit your events, such as "No sessions this week" |
 | `nds-calendar-empty-filtered` | an element in `.nds-calendar-empty`, written with `hidden` | Shows in place of the other messages while a Filter hides every event of the week, the month or the day. The script hides it again when an event shows. See With Filter |
 | `nds-calendar-empty-day` | an element in `.nds-calendar-empty`, written with `hidden` | Shows in place of the other messages while the picked day has no events, such as a `data-calendar-action="all"` button. A filter that hides the day's events shows the filtered parts instead |

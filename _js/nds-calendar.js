@@ -1,5 +1,5 @@
 /* NDS.Calendar — public surface
- * Rides: (none — base component)
+ * Rides: nds-scroll-more (measured again after each change, as a list fitted to the month keeps its size)
  * Requires:
  *   .nds-calendar needs .nds-calendar-events — there are no events
  * Methods:
@@ -183,7 +183,7 @@
             this._dayButtons = Array.from({ length: MAX_DAYS }, () => {
                 const btn = document.createElement('button');
                 btn.type = 'button';
-                btn.className = 'nds-btn nds-subtle nds-indicator nds-calendar-day';
+                btn.className = 'nds-btn nds-subtle nds-calendar-day';
                 const [name, initial, number, second, dot] = makeParts(['name', 'initial', 'number', 'second', 'dot']);
                 // The description names the second date in full and the count; the bare marks would read as noise.
                 [initial, second, dot].forEach((span) => NDS.aria.hidden(span, true));
@@ -355,8 +355,6 @@
                 btn.setAttribute('aria-description', NDS.Date.getDayLabel(date, { calendar, locale: lang })
                     + (secondCalendar ? ', ' + NDS.Date.format(date, { calendar: secondCalendar, locale: lang, format: 'D MMMM YYYY', era: true }) : '')
                     + (count ? ', ' + strings.text('events', { n: count }, lang) : ''));
-                // The bar marks a day in a row of seven; a month's grid shows the pick by its fill.
-                btn.classList.toggle('nds-indicator', !isMonth);
                 NDS.aria.pressed(btn, picked);
                 NDS.state[picked ? 'add' : 'remove'](btn, 'selected');
                 NDS.state[date < this._start || date > this._end ? 'add' : 'remove'](btn, 'other-month');
@@ -378,6 +376,13 @@
             }
             this._fillTiles(calendar, lang);
             this._syncEmpty();
+            // A list fitted to the month keeps its size as events hide: Scroll More would not measure again.
+            // Not before it starts: its own first measure comes after layout.
+            const list = el.querySelector('.nds-calendar-events.nds-scroll-more-content');
+            if (list?.parentElement.hasAttribute('data-nds-scroll-more-initialized')) {
+                list.scrollTop = 0;
+                NDS.ScrollMore.refresh(list.parentElement);
+            }
         }
 
         _syncViewButtons() {
