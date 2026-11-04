@@ -261,7 +261,8 @@ async function shoot(url, { width, theme, cookies = [], storage = {}, fail, resp
     const findings = audit ? (await evaluate(`(async () => {
         const init = window.NDS?.init || window.NDS?.Init; // NDS.Init before 2.0
         if (!init?.audit) return null;
-        return ((await init.audit()) || []).map((f) => \`\${f.severity} \${f.rule}: \${f.message}\`);
+        const at = (el) => el?.tagName ? ' [' + el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + [...el.classList].slice(0, 3).map((c) => '.' + c).join('') + ']' : '';
+        return ((await init.audit()) || []).map((f) => \`\${f.severity} \${f.rule}\${at(f.element)}: \${f.message}\`);
     })()`)) ?? null : [];
     handlers.delete(sessionId);
     await send('Target.closeTarget', { targetId });
@@ -349,7 +350,7 @@ try {
             // Each distinct line once per state, with the shots it showed in.
             const where = (hits) => hits.size === cols.length ? 'every shot' : [...hits].join(', ');
             for (const [key, hits] of returned) report.push(`${at} ${key} (${where(hits)})`);
-            for (const [key, hits] of seen) problems.push(`${at} ${key.slice(0, 160)} (${where(hits)})`);
+            for (const [key, hits] of seen) problems.push(`${at} ${key} (${where(hits)})`);
             rows.push({ name: st.name, cells, ref });
         }
         // One sheet per state, the reference row above it (a sheet of every state shrinks too far
