@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 10:28 PM"
+last_edit: "04/11/2026 - 10:38 PM"
 ---
 
 <section id="share-overview" class="nds-content-section nds-doc-overview">
@@ -206,6 +206,9 @@ Custom Link is two rows of one choice: write both attributes on `.nds-share`. Ic
 | Structure | Menu (default) | — | — | A button that opens a menu of the share buttons. Use it where space is short, such as a hero or a toolbar |
 | Structure | Inline | canon `#share-inline` | — | The share buttons in a row, visible at all times. Use it at the end of an article |
 | Structure | Inline Icons | canon `#share-inline-icons` | — | The row with icons only, for a card or a narrow space. Each button keeps its `aria-label`, and its `title` shows as a tooltip on hover |
+| Size | LG (default) | — | — | 40px buttons. It needs no class |
+| Size | MD | `.nds-md` | `.nds-share > .nds-btn` | 32px buttons, for a card or a toolbar. Write it on the trigger, or on every button in the row |
+| Size | SM | `.nds-sm` | `.nds-share > .nds-btn` | 24px buttons, for a dense list or a table row. Write it on the trigger, or on every button in the row |
 | Custom Link | Custom Link (hint: Share another page, not the current one) | `[data-share-url="https://www.example.gov.sa/news/eid-service-hours"]` | `.nds-share` | Shares the link and title of another page, such as a news card or a search result |
 | Custom Link | Custom Link (hint: Share another page, not the current one) | `[data-share-title="Service Hours During Eid"]` | `.nds-share` | The title that X and WhatsApp send with the link |
 | Icon Only Trigger | Icon Only Trigger (hint: Hide the trigger's label) | `.nds-icon-only` | `.nds-dropmenu-trigger` | The trigger shows the share icon only, with a tooltip on hover. Its `aria-label` names what is shared |
@@ -353,7 +356,7 @@ Custom Link is two rows of one choice: write both attributes on `.nds-share`. Ic
 - Keep `data-copy-label` on the Copy Link item, with no value. The label confirms the copy to a sighted user in the page's language, and a screen reader says the same word.
 - Keep the `nds-share-*` class on each built-in button. The script finds each one by its class. Leave out a button you do not need.
 - Give a custom target an icon, a label and an `aria-label`, like the built-in buttons.
-- The Inline buttons take any [Button](../components/button) style, such as `nds-subtle`. Use one style for all of them.
+- The Inline buttons take any [Button](../components/button) style, such as `nds-subtle`, and size, such as `nds-sm`. Use one style and one size for all of them.
 
 </div>
   </div>
