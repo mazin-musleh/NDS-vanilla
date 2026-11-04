@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "20/10/2026 - 05:08 PM"
+last_edit: "04/11/2026 - 09:19 PM"
 ---
 
 <section id="toolbar-overview" class="nds-content-section nds-doc-overview">
@@ -157,17 +157,17 @@ A count and an export group on the first row, a search box on the second, and th
     <tr>
       <td>1041</td>
       <td>Ministry of Interior</td>
-      <td><span class="nds-tag nds-green nds-sm"><span class="nds-label">Completed</span></span></td>
+      <td><span class="nds-tag nds-sm" data-status="success"><span class="nds-label">Completed</span></span></td>
     </tr>
     <tr>
       <td>1042</td>
       <td>Ministry of Health</td>
-      <td><span class="nds-tag nds-blue nds-sm"><span class="nds-label">In Review</span></span></td>
+      <td><span class="nds-tag nds-sm" data-status="info"><span class="nds-label">In Review</span></span></td>
     </tr>
     <tr>
       <td>1043</td>
       <td>Ministry of Education</td>
-      <td><span class="nds-tag nds-yellow nds-sm"><span class="nds-label">Pending</span></span></td>
+      <td><span class="nds-tag nds-sm" data-status="warning"><span class="nds-label">Pending</span></span></td>
     </tr>
   </tbody>
 </table>

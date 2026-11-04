@@ -438,7 +438,7 @@
         const elements = context.find('.nds-tag[data-status]')
             .filter(tag => tag.querySelector(':scope > :is(i, svg, img, .nds-icon)') && tag.getClientRects().length);
         if (elements.length) context.report(elements[0], `a status tag with an icon, "${elements[0].textContent.trim().slice(0, 30)}"${elements.length > 1 ? ` (${elements.length} tags; the first is shown)` : ''}: it shows its dot and the icon, two markers.`,
-            'Drop the icon: the dot and the label name the status. For an icon, use a standard tag with a color class.', undefined, elements.length);
+            'Drop the icon: the dot and the label name the status, so color is not the only cue.', undefined, elements.length);
     } });
 
     // The value line's own type is the small unit; only an element child shows as the value (rig 2: bare text).
@@ -1115,6 +1115,26 @@
             const plain = tags.filter(tag => !NDS.status.get(tag));
             if (plain.length && plain.length < tags.length) context.report(plain[0], `a table column shows a status tag on some rows and a standard tag on others (${plain.length} of ${tags.length} standard).`,
                 'Give every tag in the column data-status. A state that needs no color takes "neutral".', undefined, plain.length);
+        }
+    } });
+
+    // A column of standard tags in several colors shows a state: a status tag shows it (rig 10: proposal states as colored tags with icons).
+    addRule({ id: 'tag-state-color', group: 'structure', docs: 'components/tag.html', check(context) {
+        const COLOR = /^nds-(blue|green|red|yellow)$/;
+        const columns = new Map();
+        context.find('td .nds-tag:not([data-status])').forEach(tag => {
+            const td = tag.closest('td');
+            if (td.querySelectorAll('.nds-tag').length > 1) return; // a tag group is categories
+            const table = td.closest('table');
+            if (!columns.has(table)) columns.set(table, new Map());
+            const byCell = columns.get(table);
+            if (!byCell.has(td.cellIndex)) byCell.set(td.cellIndex, []);
+            byCell.get(td.cellIndex).push(tag);
+        });
+        for (const byCell of columns.values()) for (const tags of byCell.values()) {
+            const colors = new Set(tags.map(tag => [...tag.classList].find(name => COLOR.test(name)) || 'default'));
+            if (colors.size > 1) context.report(tags[0], `a table column shows standard tags in ${colors.size} colors: colors that change by row show a state.`,
+                'Give every tag in the column data-status: success, info, warning, error or neutral. Drop their icons and color classes. The label names the state.', undefined, tags.length);
         }
     } });
 
