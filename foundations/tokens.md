@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.2.0"
 updated: "1.12.x"
-last_edit: "18/10/2026 - 07:55 PM"
+last_edit: "05/11/2026 - 09:50 AM"
 ---
 
 <section id="tokens-overview" class="nds-content-section nds-doc-overview">

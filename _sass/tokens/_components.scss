@@ -125,7 +125,7 @@
     // ── featured-icons ──
     --featuredicons-icon-oncolor: var(--colors-base-white);
     --featuredicons-icon-success: var(--icon-success);
-    --featuredicons-icon-default: var(--colors-base-black);
+    --featuredicons-icon-default: var(--icon-default);
     --featuredicons-icon-error: var(--icon-error);
     --featuredicons-background-error-light: var(--background-error-light);
     --featuredicons-background-info-light: var(--background-info-light);
@@ -135,7 +135,7 @@
     --featuredicons-background-default-light: var(--colors-neutral-50);
     --featuredicons-background-neutral-light: var(--background-neutral-light);
     --featuredicons-icon-primary: var(--colors-primary-600);
-    --featuredicons-icon-neutral: var(--colors-neutral-700);
+    --featuredicons-icon-neutral: var(--icon-neutral);
     --featuredicons-icon-info: var(--icon-info);
     --featuredicons-icon-warning: var(--icon-warning);
 
@@ -358,9 +358,7 @@
     --form-datecell-background-in-range-hovered: var(--colors-primary-400);
 
     // ── featured-icons ──
-    --featuredicons-icon-default: var(--colors-neutral-100);
     --featuredicons-icon-primary: var(--colors-primary-400);
-    --featuredicons-icon-neutral: var(--colors-neutral-300);
     --featuredicons-background-default-light: var(--colors-alpha-white-10);
 
     // ── forms ──

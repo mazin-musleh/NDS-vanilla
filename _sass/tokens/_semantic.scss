@@ -279,8 +279,9 @@
     --focus-inner: var(--colors-base-black);
 
     // ── Icon ──
+    --icon-default: var(--colors-neutral-100);
     --icon-primary: var(--colors-primary-400);
-    --icon-neutral: var(--colors-neutral-600);
+    --icon-neutral: var(--colors-neutral-300);
     --icon-success: var(--colors-green-400);
     --icon-info: var(--colors-blue-400);
     --icon-warning: var(--colors-yellow-400);
