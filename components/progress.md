@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 08:31 PM"
+last_edit: "05/11/2026 - 09:13 AM"
 ---
 
 <section id="progress-overview" class="nds-content-section nds-doc-overview">
@@ -318,10 +318,21 @@ Set these in the `style` of the circle or the bar. `--progress-size` wins over t
 | `--progress-value` | `0` | The fill, 0 to 100. The script sets it from `data-value` |
 | `--progress-color` | `var(--background-primary)` | The fill color |
 | `--progress-size` | `64px` | Circle only. The diameter |
-| `--progress-track-color` | `var(--colors-neutral-100)` | Circle only. The ring behind the fill. In dark mode, `var(--colors-alpha-white-10)`. The bar track has no knob |
+| `--progress-track-color` | `var(--background-neutral-light)` | The ring behind the circle's fill, or the track of the bar |
 | `--progress-circumference` | `62.83` | Circle only. The ring length for an SVG circle with `r="10"`. Change it only with a different radius |
 | `--progress-height` | `8px` | Bar only. The track height |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+Set a token at `:root`, or on a wrapper to reach every progress indicator inside it. Give a token with a Dark mode value a dark override too: see [Tokens](../foundations/tokens). The neutral fill is the color of `.nds-neutral`. The neutral ring in a [Stepper](../components/stepper) uses it too.
+
+The default fill reads `--background-primary`. The status fills read `--background-success` and `--background-error`. The track reads `--background-neutral-light`. These are global tokens, so a change to one also changes other components.
+
+Source: the `progress` group in `_sass/tokens/_components.scss`.
+
+{{ site.data.tokens.components.progress.html }}
 
 ### JavaScript
 {: .nds-block-title}

@@ -7,7 +7,7 @@
 @use '../mixins' as *;
 
 @mixin progress-circle-base($size: 24px, $rotate: -90deg) {
-  --_progress-track-color: var(--progress-track-color, var(--colors-neutral-100));
+  --_progress-track-color: var(--progress-track-color, var(--background-neutral-light));
   --_progress-color: var(--progress-color, var(--background-primary));
 
   position: relative;
@@ -97,10 +97,6 @@
 
   @include progress-circle-base(var(--_progress-size), -90deg);
   @include progress-circle-text(var(--_progress-size));
-
-  @include dark {
-    --_progress-track-color: var(--progress-track-color, var(--colors-alpha-white-10));
-  }
 
   // CSS counter for automatic number display (clamped to 100)
   counter-reset: progress-counter min(var(--_progress-value), 100);
@@ -240,16 +236,12 @@
   .nds-progress-track {
     width: 100%;
     height: var(--_progress-height);
-    background-color: var(--colors-neutral-100);
+    background-color: var(--progress-track-color, var(--background-neutral-light));
     border-radius: var(--radius-full);
     position: relative;
     display: flex;
     align-items: center;
     overflow: hidden;
-
-    @include dark {
-      background-color: var(--colors-alpha-white-10);
-    }
   }
 
   // ─── Fill ───
