@@ -31,6 +31,8 @@
 #   use for it. Never conclude NDS lacks something until every use_when here has
 #   been read. A template is a DGA-official page, so a match there outranks a
 #   hand-composed page or an example. use_when renders nowhere on the site.
+#   Agents often read only the start of a line: write the job and the words developers
+#   use first, then which entry to pick instead. Build detail goes last, or in the page.
 #
 # Tags (tech):   JS, CSS, API, Data
 # Tags (status): Experimental, New, Beta, Deprecated
@@ -104,7 +106,7 @@
 
 - title: "Page Layout"
   description: "The body structure every page shares, with the classes that switch chrome shape"
-  use_when: "Build the page skeleton before any content: the body structure, the chrome regions, and the classes that switch between the home, content page, minimal, and console shapes. Read this when you start a new page, pick a chrome shape, or mount a framework app inside NDS markup. It also covers the two ways a page gets its chrome: a layout injects the header, hero, and footer, or the page writes them itself. For a whole page in one file, copy the Home Page Template."
+  use_when: "Build the page skeleton before any content: the body structure, the chrome regions, and the classes that switch between the home, content page, minimal, and console shapes. For a whole page in one file, copy the Home Page Template. Read this when you start a new page, pick a chrome shape, or mount a framework app inside NDS markup. It also covers the two ways a page gets its chrome: a layout injects the header, hero, and footer, or the page writes them itself."
   category: "Layout"
   tags: ["CSS"]
   url: "/layout/page-layout.html"
@@ -128,7 +130,7 @@
 
 - title: "Status Section"
   description: "Whole-page or inline outcome message with a status icon, a title, and one action"
-  use_when: "Report one outcome on its own page or as a section: page not found, 404, 500, access denied, no permission, sign in required, request submitted, thank-you or confirmation page, payment failed, order received, form sent. A centered icon or illustration over a title, a short message, and a way out. For a message inside a form or a page region use Alert; for a status icon on its own use Feedback Icons. For a full 404 or error page, copy the 404 Template."
+  use_when: "Report one outcome on its own page or as a section: 404, 500, access denied, sign in required, request submitted. For a message inside a form or a page region use Alert; for a status icon on its own use Feedback Icons; for a full 404 or error page, copy the 404 Template. It also fits page not found, no permission, a thank-you or confirmation page, payment failed, order received, and form sent. A centered icon or illustration over a title, a short message, and a way out."
   category: "Layout"
   tags: ["CSS"]
   url: "/layout/status-section.html"
@@ -195,7 +197,7 @@
 
 - title: "Main Navigation"
   description: "Primary navigation bar with branding, mega-menu dropdowns, search and language actions, and a mobile drawer"
-  use_when: "The primary navigation bar of a site: branding, top-level links, mega-menu dropdowns in column, row or multi-column layouts, the site search, the language switch, and the mobile hamburger drawer. Use for main nav, top nav, navbar, site navigation, primary menu, mega menu, or language switcher requests. For section navigation inside a page tree use Side Menu. For the government branding strip above it use Top Bar."
+  use_when: "The primary navigation bar of a site: main nav, top nav, navbar, mega menu, language switcher. For section navigation inside a page tree use Side Menu. For the government branding strip above it use Top Bar. It holds branding, top-level links, mega-menu dropdowns in column, row or multi-column layouts, the site search, the language switch, and the mobile hamburger drawer. Use it for site navigation or primary menu requests too."
   category: "UI Shell"
   tags: ["JS", "CSS", "API"]
   url: "/ui-shell/main-nav.html"
@@ -319,7 +321,7 @@
 
 - title: "Drawer"
   description: "Collapsible navigation lists with accordion groups"
-  use_when: "A vertical list container for sidebar navigation, submenus, quick links (an arrow on each row shows it is a link), and inline notifications, in compact or expanded layouts. Its rows can sit in columns: `nds-grid` on the list. A row that opens a panel on the page is a button. Also a tree view of nested items, such as folders or categories: add `.nds-lined` to show depth and `data-state=\"always-open\"` to keep branches open. Also a short list the user opens one item at a time, such as their latest requests, with a Date Tile and a Meta line. For a surface that slides in over the page use Panels; for the main collapsible sidebar use Side Menu."
+  use_when: "A vertical list of rows: quick links, submenus, tree views, inline notifications, latest requests. For a surface that slides in over the page use Panels; for the main collapsible sidebar use Side Menu. It fits sidebar navigation and quick links (an arrow on each row shows it is a link), in compact or expanded layouts. Its rows can sit in columns: `nds-grid` on the list. A row that opens a panel on the page is a button. For a tree view of nested items, such as folders or categories, add `.nds-lined` to show depth and `data-state=\"always-open\"` to keep branches open. For a short list the user opens one item at a time, such as their latest requests, use a Date Tile and a Meta line."
   category: "Navigation"
   tags: ["JS", "CSS", "API"]
   url: "/components/drawer.html"
@@ -400,7 +402,7 @@
 
 - title: "Alert"
   description: "Contextual messages for status, warnings, and notifications, in the page or as a toast"
-  use_when: "An inline status message sitting in the page: success, error, warning, or info banner, form-level feedback, a dismissible notice. Also a toast or snackbar that floats over the page after an action such as save or delete, made with NDS.Alert.create(). For a blocking message over the page use Modal. For a page or view the user cannot use (sign in first, no permission, not found, or a load that failed with nothing else to show) use Status Section, never an alert in its place. Inside a tab panel, use an alert: the other tabs still work."
+  use_when: "An inline status message in the page: success, error, warning, or info banner, or a toast. For a blocking message over the page use Modal. For a page or view the user cannot use (sign in first, no permission, not found, or a load that failed with nothing else to show) use Status Section, never an alert in its place. It also fits form-level feedback and a dismissible notice. A toast or snackbar floats over the page after an action such as save or delete, made with NDS.Alert.create(). Inside a tab panel, use an alert: the other tabs still work."
   category: "Feedback"
   tags: ["JS", "CSS", "API"]
   url: "/components/alert.html"
@@ -470,7 +472,7 @@
 
 - title: "Calendar"
   description: "The events of one week, as seven day columns or a list of rows, or of one month under its days"
-  use_when: "Show dated events one week or one month at a time: a class timetable, a training or event schedule, appointments, shifts, an academic week or month. Grid shows a column per day; Rows shows a list the user filters by tapping a day; Month shows a month of days, each with a dot when it has events, over the list. Gregorian or Hijri, with any first day of the week. For picking a date use Date Picker; for a dated list with no week to move through use Drawer rows with a Date Tile; for steps in order use Timeline."
+  use_when: "Show dated events one week or one month at a time: timetable, event schedule, appointments, shifts. For picking a date use Date Picker; for a dated list with no week to move through use Drawer rows with a Date Tile; for steps in order use Timeline. It fits a class timetable, a training schedule, and an academic week or month. Grid shows a column per day; Rows shows a list the user filters by tapping a day; Month shows a month of days, each with a dot when it has events, over the list. Gregorian or Hijri, with any first day of the week."
   category: "Content"
   tags: ["JS", "CSS", "API"]
   url: "/components/calendar.html"
@@ -479,7 +481,7 @@
 
 - title: "Cards"
   description: "Versatile content containers for articles, profiles, and actions"
-  use_when: "A boxed content container: article teasers, profile cards, service tiles, dashboard panels. Pick it for items that carry several details, such as an image, tags, a rating, a price or actions. A link card (the whole card one link) is only a navigation tile, such as a system's icon and name; a card that carries an action, a price or tags keeps action buttons. For a list of page links, use a Drawer: its arrows show each row is a link. For a set of cards, use List: each card is a list item, and the list sets the look they share. A set of link cards stays a Grid."
+  use_when: "A boxed container for one item with several details: article teaser, profile, service tile, panel. For a set of cards, use List: each card is a list item, and the list sets the look they share. For a list of page links, use a Drawer: its arrows show each row is a link. A set of link cards stays a Grid. Pick a card for items that carry several details, such as an image, tags, a rating, a price or actions. A link card (the whole card one link) is only a navigation tile, such as a system's icon and name; a card that carries an action, a price or tags keeps action buttons."
   category: "Content"
   tags: ["CSS"]
   url: "/components/card.html"
@@ -512,7 +514,7 @@
 
 - title: "Date"
   description: "Show, parse, print and convert dates in Gregorian and Hijri (Umm al-Qura), in the site's timezone and date format"
-  use_when: "Read a date from text, print a date, convert between Gregorian and Hijri, or get today's date in the site's timezone. Use it for any date handled in JavaScript, to show a <time> in Hijri with data-calendar (an issue or expiry date in both calendars), and to set the site's timezone and date format on <html>. For a date field the user fills in use Date Picker; to sort a list by date use Sort."
+  use_when: "Read, print or convert a date in JavaScript, Gregorian or Hijri, in the site's timezone. For a date field the user fills in use Date Picker; to sort a list by date use Sort. Use it for any date handled in JavaScript, to get today's date, to show a <time> in Hijri with data-calendar (an issue or expiry date in both calendars), and to set the site's timezone and date format on <html>."
   category: "Content"
   tags: ["JS", "API"]
   url: "/components/date.html"
@@ -559,7 +561,7 @@
 
 - title: "Image"
   description: "A photo cropped to fill a set shape, with a focal point and an optional overlay"
-  use_when: "A photo that must fit a set shape: gallery tiles, list and news thumbnails, a row of photos of different sizes that must line up. .nds-image is a box with one img: --image-ratio sets the shape (default 4 / 3), --image-pos-x and --image-pos-y the focal point, --image-radius the corners, --image-overlay-opacity a dim layer (0 to 1). For the Image Popup Viewer, put nds-image on .nds-ipv-image-card and keep nds-ipv-thumbnail on the img. A card's photo is the card's image header, with the same knobs; a person's photo is Avatar; a photo shown whole in an article is a plain img in Prose."
+  use_when: "A photo that must fit a set shape: gallery tiles, list and news thumbnails, a row of photos. A card's photo is the card's image header, with the same knobs; a person's photo is Avatar; a photo shown whole in an article is a plain img in Prose. It fits a row of photos of different sizes that must line up. .nds-image is a box with one img: --image-ratio sets the shape (default 4 / 3), --image-pos-x and --image-pos-y the focal point, --image-radius the corners, --image-overlay-opacity a dim layer (0 to 1). For the Image Popup Viewer, put nds-image on .nds-ipv-image-card and keep nds-ipv-thumbnail on the img."
   category: "Content"
   tags: ["CSS"]
   url: "/components/image.html"
@@ -567,7 +569,7 @@
 
 - title: "List"
   description: "A set of like items in a grid or in rows that fill, each a card that shares the list's look"
-  use_when: "Any set of like items, each a card: services, features, benefits, courses, news, results, people, KPI tiles. The list is a ul of li.nds-card items, and each item holds any card parts: an icon, an image, an avatar, tags, a price or actions. One class on the list sets the box (flat, stroke, shadow), the item layout and the size of every item. Lay it out as a grid (nds-grid: equal columns, lines between items) or as flex rows (nds-flex: rows that fill, a featured item). For one item alone use Cards; for a name and its value use Definition List; for a carousel use Swiper; for navigation tiles (link cards) use a Grid; for a list of page links use Drawer."
+  use_when: "Any set of like items, each a card: services, features, benefits, courses, news, people, KPI tiles. For one item alone use Cards; for a name and its value use Definition List; for a carousel use Swiper; for navigation tiles (link cards) use a Grid; for a list of page links use Drawer. It fits results too. The list is a ul of li.nds-card items, and each item holds any card parts: an icon, an image, an avatar, tags, a price or actions. One class on the list sets the box (flat, stroke, shadow), the item layout and the size of every item. Lay it out as a grid (nds-grid: equal columns, lines between items) or as flex rows (nds-flex: rows that fill, a featured item)."
   category: "Content"
   tags: ["CSS"]
   url: "/components/list.html"
@@ -634,7 +636,7 @@
 
 - title: "Timeline"
   description: "Dated events in order, such as a request's history, with the events done, the current one and the ones to come"
-  use_when: "Dated events in order: a request or case history, status tracking, an activity log or audit trail, shipment or order tracking, an event agenda, project milestones, a career history. Built on the Stepper markup and script, with a dot or an icon on each event. For the steps of a flow the user moves through, such as a form, use Stepper; for dated items with no order between them, use Drawer rows with a Date Tile."
+  use_when: "Dated events in order: a request or case history, status tracking, an activity log, order tracking. For the steps of a flow the user moves through, such as a form, use Stepper; for dated items with no order between them, use Drawer rows with a Date Tile. It also fits an audit trail, shipment tracking, an event agenda, project milestones, and a career history. Built on the Stepper markup and script, with a dot or an icon on each event."
   category: "Content"
   tags: ["JS", "CSS", "API"]
   url: "/components/timeline.html"
@@ -661,7 +663,7 @@
 
 - title: "Custom Select"
   description: "Styled single-choice dropdown with custom option markup and a JS API, built on dropmenu"
-  use_when: "A styled single-choice dropdown built on Dropmenu, for any select a native one cannot style: custom option markup, icons or descriptions in options, and a JS API (NDS.CustomSelect.create, .setValue, .clear, plus a change event). The default for any in-form choice field, whatever the option count — small fixed lists included. For type-ahead search use Autocomplete; for several choices use Multiselect; use Selects only when the dev, knowing this default, wants the browser's native control."
+  use_when: "The default single-choice dropdown for any in-form choice field, whatever the option count. For type-ahead search use Autocomplete; for several choices use Multiselect; use Selects only when the dev, knowing this default, wants the browser's native control. Built on Dropmenu, for any select a native one cannot style: custom option markup, icons or descriptions in options, and a JS API (NDS.CustomSelect.create, .setValue, .clear, plus a change event). Small fixed lists use it too."
   category: "Forms"
   tags: ["JS", "CSS", "API"]
   url: "/components/custom-select.html"
@@ -751,7 +753,7 @@
 
 - title: "Selects"
   description: "Native dropdown menus for choosing from a list"
-  use_when: "A single-choice dropdown rendered by the browser itself — only when the dev explicitly wants the native control (the OS picker on mobile). In-form choice fields default to Custom Select, whatever the option count: a native select beside styled NDS fields breaks the form's look. If the dev suggests a plain select to keep things simple, offer Custom Select first; use native only if the dev still wants it. For type-ahead search use Autocomplete; for several choices use Multiselect."
+  use_when: "A single-choice dropdown rendered by the browser, only when the dev explicitly wants the native control (the OS picker on mobile). In-form choice fields default to Custom Select, whatever the option count: a native select beside styled NDS fields breaks the form's look. For type-ahead search use Autocomplete; for several choices use Multiselect. If the dev suggests a plain select to keep things simple, offer Custom Select first; use native only if the dev still wants it."
   category: "Forms"
   tags: ["JS", "CSS"]
   url: "/components/form.html#select"
@@ -977,7 +979,7 @@
 
 - title: "Audit"
   description: "A check you run on a built page that lists NDS markup and CSS that fail with no error, and every name an NDS release changed"
-  use_when: "Check a page you built or upgraded: a filter that binds to nothing, an id a target names that does not exist, a missing skip link, a language file that did not load, and old class, attribute or custom property names in the markup and in your own CSS. It returns the findings as an array, for a test or an AI coding agent. For the list of changed names by release use Migration."
+  use_when: "Check a page you built or upgraded for silent NDS failures and old names. For the list of changed names by release use Migration. It finds a filter that binds to nothing, an id a target names that does not exist, a missing skip link, a language file that did not load, and old class, attribute or custom property names in the markup and in your own CSS. It returns the findings as an array, for a test or an AI coding agent."
   category: "Core"
   tags: ["JS", "API"]
   url: "/core/audit.html"
@@ -1037,7 +1039,7 @@
 
 - title: "Home Page Template"
   description: "Organization home page with a main hero slider, headline figures, a services card deck, a news row, and a partner logo strip."
-  use_when: "The public home or landing page of a portal, ministry, authority, or platform — the page the domain root serves. Carries the main hero slider (not a sub hero), a row of headline figures that count up, a services card deck the visitor pages through, a three-across news row, and a partner logo strip. Use for home page, landing page, portal home, or main page. Copy the hero from here rather than composing it: the main hero is a swiper and needs its full navigation block."
+  use_when: "The public home or landing page of a portal, ministry, authority, or platform: the page the domain root serves. For a signed-in user's first page, see the Student Portal example; for an admin area's first page, the Console. Carries the main hero slider (not a sub hero), a row of headline figures that count up, a services card deck the visitor pages through, a three-across news row, and a partner logo strip. Use for home page, landing page, portal home, or main page. Copy the hero from here rather than composing it: the main hero is a swiper and needs its full navigation block."
   icon: '<i class="hgi hgi-stroke hgi-home-01"></i>'
   category: "Content"
   tags: ["DGA", "Hero", "Swiper", "Cards", "Grid", "Statistic"]
@@ -1045,7 +1047,7 @@
 
 - title: "Form Template"
   description: "Multi-step form layout with grouped text inputs, side stepper (vertical on desktop, radial on mobile), and a flat sub-hero."
-  use_when: "Any multi-step form or wizard: service application, request submission, onboarding, or checkout. For a sign-in or a short sign-up, use the Sign In example. A long sign-up in several steps belongs here, with its password field from Password. Carries a national ID and code check with a resend button, the grouped input types, a review step, a success step, and a progress stepper that runs vertically beside the form on desktop and as a radial dial on mobile. The stepper column is the side info arrangement, through nds-has-sideinfo on the content layout."
+  use_when: "A form in several steps, with a review before it sends: service application, request submission, onboarding, checkout. For one long form on one page, see the Job Apply example; for booking a time slot, Book an Appointment; for a sign-in or a short sign-up, the Sign In example. A long sign-up in several steps belongs here, with its password field from Password. Carries a national ID and code check with a resend button, the grouped input types, a review step, a success step, and a progress stepper that runs vertically beside the form on desktop and as a radial dial on mobile. The stepper column is the side info arrangement, through nds-has-sideinfo on the content layout."
   icon: '<i class="hgi hgi-stroke hgi-file-edit"></i>'
   category: "Form"
   tags: ["DGA", "Forms", "Stepper", "Side Info", "Grid"]
@@ -1053,7 +1055,7 @@
 
 - title: "Service Page Template"
   description: "Government digital service with side info, breadcrumbs, and structured content layout."
-  use_when: "The landing page for a single government service: what it is, who is eligible, the steps, the fees, and the start-service action. Its side-info column is nds-has-sideinfo on the content layout; the breadcrumb, hero tags and rating menu sit in the sub hero, and a star-rating strip closes the page. The page source sets them in front matter: the Front Matter table on Page Layout maps each key to its markup."
+  use_when: "The landing page for a single government service: what it is, who is eligible, the steps, the fees, and the start-service action. For a program, course or scheme with no start-service action, see the Academic Program example. Its side-info column is nds-has-sideinfo on the content layout; the breadcrumb, hero tags and rating menu sit in the sub hero, and a star-rating strip closes the page. The page source sets them in front matter: the Front Matter table on Page Layout maps each key to its markup."
   icon: '<i class="hgi hgi-stroke hgi-menu-square"></i>'
   category: "Service"
   tags: ["DGA", "Tabs", "Side Info", "Rating"]
@@ -1061,7 +1063,7 @@
 
 - title: "Contact Us Template"
   description: "Contact page with two-column form, country-code prefix, select, textarea, file upload, and a side info card with emergency contacts."
-  use_when: "A contact or enquiry page: a two-column message form with a country-code phone prefix, a Custom Select, a textarea, and a file upload, beside a card listing phone, email, and emergency contacts. Use for contact us, feedback, support request, or get-in-touch pages. The contacts card is the side info column (nds-has-sideinfo)."
+  use_when: "A contact or enquiry page: a two-column message form beside a card of phone, email, and emergency contacts. For messages inside a signed-in account, see the Support Inbox example; for a hub of help channels, the Help & Support Template. Use for contact us, feedback, support request, or get-in-touch pages. The form has a country-code phone prefix, a Custom Select, a textarea, and a file upload. The contacts card is the side info column (nds-has-sideinfo)."
   icon: '<i class="hgi hgi-stroke hgi-mail-01"></i>'
   category: "Service"
   tags: ["DGA", "Forms", "Upload", "Side Info", "Grid"]
@@ -1069,7 +1071,7 @@
 
 - title: "Content Template"
   description: "Long-form editorial layout with article-style sections, numbered sub-sections, and a sticky on-this-page table of contents for in-page navigation."
-  use_when: "Any long-form editorial page: policy, terms of use, privacy notice, regulation, or a written guide. For one news article or press release, see the News Article example. Carries article sections, numbered sub-sections, and a sticky on-this-page table of contents. The table of contents is the side info column (nds-has-sideinfo)."
+  use_when: "A long written page people read: policy, terms of use, privacy notice, regulation, or a written guide. For one news article or press release, see the News Article example. Carries article sections, numbered sub-sections, and a sticky on-this-page table of contents. The table of contents is the side info column (nds-has-sideinfo)."
   icon: '<i class="hgi hgi-stroke hgi-book-open-01"></i>'
   category: "Content"
   tags: ["DGA", "Side Info", "Article", "TOC"]
@@ -1085,7 +1087,7 @@
 
 - title: "About The Entity Template"
   description: "Entity landing hub with a flat sub-hero and a responsive grid of topic cards, each with a featured icon, title, and navigation arrow."
-  use_when: "A hub page that routes to its own sub-pages through a grid of icon cards. Use for topic hubs such as About Us, Departments, Sectors, Initiatives, Our Work, or any parent page that links to its sub-pages. For links to outside sites, use the Social Media Template; for help channels, Help & Support; for a set of items that link nowhere, such as features, use List. Copy the card markup from here rather than composing it: each card carries its featured icon in its own header block."
+  use_when: "A hub page that routes to its own sub-pages through a grid of icon cards: About Us, Departments, Sectors. For links to outside sites, use the Social Media Template; for help channels, Help & Support; for a set of items that link nowhere, such as features, use List. Use for topic hubs such as Initiatives, Our Work, or any parent page that links to its sub-pages. Copy the card markup from here rather than composing it: each card carries its featured icon in its own header block."
   icon: '<i class="hgi hgi-stroke hgi-information-diamond"></i>'
   category: "Content"
   tags: ["DGA", "Grid", "Cards", "Featured Icons"]
@@ -1200,7 +1202,7 @@
 
 - title: "Job Apply"
   description: "A job post with its application on the same page: the role, then one long form in groups, with each field picked by the kind of answer."
-  use_when: "A job, grant, program, scholarship or volunteer post that people read and apply to on the same page, or any long one-page application form. The facts are the side info column (nds-has-sideinfo), with a Countdown to the closing date whose end hides the way to apply (data-countdown-hide). The main column stacks the role in prose and the form with nds-block; the form is split into groups, each an nds-block with a block title over a grid of fields. Each field fits a kind of answer: Radio for one of a few visible options, Custom Select for one of a longer list, Multiselect for several from a fixed list, Tag Input for free values, a range Slider for a rough range, Date Picker for a day, Editor for formatted text (a short toolbar for a letter; the full set is for page content), Upload for a file sent with the form, one Checkbox for an agreement. After a passing submit, a Status Section replaces the content. For a flow in steps, see the Form Template; for a list of posts with filters, the Services List."
+  use_when: "A post people read and apply to on the same page: a job, grant, program, scholarship or volunteer post, or any long one-page application form. For a flow in steps, see the Form Template; for a list of posts with filters, the Services List. The facts are the side info column (nds-has-sideinfo), with a Countdown to the closing date whose end hides the way to apply (data-countdown-hide). The main column stacks the role in prose and the form with nds-block; the form is split into groups, each an nds-block with a block title over a grid of fields. Each field fits a kind of answer: Radio for one of a few visible options, Custom Select for one of a longer list, Multiselect for several from a fixed list, Tag Input for free values, a range Slider for a rough range, Date Picker for a day, Editor for formatted text (a short toolbar for a letter; the full set is for page content), Upload for a file sent with the form, one Checkbox for an agreement. After a passing submit, a Status Section replaces the content."
   icon: '<i class="hgi hgi-stroke hgi-job-search"></i>'
   category: "Form"
   tags: ["Multiselect", "Tag Input", "Slider", "Editor", "Upload"]
@@ -1209,7 +1211,7 @@
 
 - title: "Track My Request"
   description: "One request the user already sent: its history, what to do now, and the final answer, in four states."
-  use_when: "A page for one request, application, case, ticket or order the user already sent: track a request, application status, case details, order tracking. The history is a Timeline (a vertical dot Stepper, newest on top); the summary is the side info column (nds-has-sideinfo) with a Print button that prints it alone. When the user must act, a warning Alert sits at the top of the main column with the action right under it (here a File Upload and Send), never a link to another page. With nothing to do, an info Alert says what happens next and when. A final answer is a status Card with data-status (success or error), first in the main column, above the history: the history stays, so it is a card, not a Status Section. Then the User Feedback rating closes the page, after the last edit line (feedback_type: rating). The page runs NDS.SessionTimeout.init(), as every signed-in page does. A Demo only select in the hero previews the four states; the server renders one. For a flow the user is filling in, see the Form Template; for a life event's services, the Journey Page Template."
+  use_when: "A page for one request, application, case, ticket or order the user already sent: track a request, application status, case details, order tracking. For a flow the user is filling in, see the Form Template; for a life event's services, the Journey Page Template. The history is a Timeline (a vertical dot Stepper, newest on top); the summary is the side info column (nds-has-sideinfo) with a Print button that prints it alone. When the user must act, a warning Alert sits at the top of the main column with the action right under it (here a File Upload and Send), never a link to another page. With nothing to do, an info Alert says what happens next and when. A final answer is a status Card with data-status (success or error), first in the main column, above the history: the history stays, so it is a card, not a Status Section. Then the User Feedback rating closes the page, after the last edit line (feedback_type: rating). The page runs NDS.SessionTimeout.init(), as every signed-in page does. A Demo only select in the hero previews the four states; the server renders one."
   icon: '<i class="hgi hgi-stroke hgi-search-list-01"></i>'
   category: "Service"
   tags: ["Timeline", "Upload", "User Feedback", "Session Timeout"]
@@ -1227,7 +1229,7 @@
 
 - title: "Book an Appointment"
   description: "Book a visit on one page, revealed in the order booking sites use: a service and a branch, then a day beside its free times, then your details, with a live summary that holds the Book button."
-  use_when: "A page where people book a time slot: an appointment at a branch or office, a visit, an inspection, a consultation, a test or an exam seat. One form in groups (nds-block with a block title over a grid), each shown once the one before it is done: Service and branch, then Date and time, then Your details after a time is picked. Autocomplete for the service over a list loaded once (data-fetch=\"once\"): a click or the Down Arrow shows every service (data-min-chars=\"0\"), typing in the field filters them, and only a pick counts (data-strict); the script keeps the picked item for its code and length, and the summary shows the length; Custom Select for the branch, each option with its address (nds-description); Date Picker for the day (data-min-date and data-max-date bound the booking window), its info naming the opening days, hours and time zone; beside it the free times as one Radio row (nds-horizontal), where a taken time is a disabled radio. After each change of service, branch or day the page asks the server for the free times, with the date field in its loading state; a day with no free time (closed or full) clears the date and says why. A guest gives a name, an ID and a mobile number; on a signed-in page these come from the account as a Definition List, never fields. The summary is the side info column (nds-has-sideinfo, sticky, without nds-top so it follows the form on a phone), filled from the form's change events. It holds the Book button (form=\"book-form\"), shown only once a time is picked, since a hidden field is not checked. After a passing submit, a status Card goes first in the main column with the booking number, Add to calendar (an .ics file) and Get directions: the booking stays on the page, so it is a card, not a Status Section. The form gives way to a Before you come list, and the summary keeps the booking number with Change and Cancel. Change brings the form back with the booking in it and keeps the number; Cancel asks first in a Modal. The script's two server calls (free times, booking) are demo fakes whose comments give the request and the answer. For a flow in steps, see the Form Template; for dated events people browse, the Events Calendar."
+  use_when: "A page where people book a time slot: an appointment at a branch or office, a visit, an inspection, a consultation, a test or an exam seat. For a flow in steps, see the Form Template; for dated events people browse, the Events Calendar. One form in groups, each shown once the one before it is done: service and branch, then date and time, then your details. Autocomplete for the service, Custom Select for the branch, Date Picker for the day, the free times as one Radio row, and a live summary in the side info column (nds-has-sideinfo) that holds the Book button. After a passing submit, a status Card goes first in the main column, and the summary keeps the booking number with Change and Cancel. A guest gives a name, an ID and a mobile number; on a signed-in page these come from the account as a Definition List, never fields. The page's opening comment gives the rules."
   icon: '<i class="hgi hgi-stroke hgi-appointment-02"></i>'
   category: "Form"
   tags: ["Autocomplete", "Custom Select", "Date Picker", "Radio", "Modal"]
@@ -1236,7 +1238,7 @@
 
 - title: "Open Data"
   description: "One dataset's page in open data portal order: what the data is, the rows as a table or a chart, the data dictionary, the files, the API and how to cite it, with the facts and related datasets beside them."
-  use_when: "A page for one dataset, report or statistic people view, download or read from code: an open data portal, a statistics release, a dataset detail page. The hero holds the title, a Meta line with the publisher and the last update (hero_meta), the summary and the keywords as tags (hero_tags). The main column stacks section wrappers with nds-block: About this dataset in prose; the data in a Content Switcher with two views of the same rows, a sortable compact Table with an Export group (CSV, Excel, PDF) in its Toolbar and the total in a <tfoot> row, and a bar Chart a page script draws from that table, so the views never disagree; the data dictionary as a compact Table; the files as a compact Table with download links, the one download list; a Code block with one tab per language and a sample answer for the API; how to cite in a card with a Copy button. The side info column (nds-has-sideinfo, not sticky, no card) holds groups with titles: the dataset facts as a Definition List (time and area covered, updates, licence, ID, contact, views, downloads), related datasets as Drawer links, and a Report a problem button. A formatted number cell carries data-sort-value and data-export-value. For a list of datasets with search and filters, see the Services List."
+  use_when: "A page for one dataset, report or statistic people view, download or read from code: an open data portal, a statistics release, a dataset detail page. For a list of datasets with search and filters, see the Services List. The hero holds the title, a Meta line with the publisher and the last update (hero_meta), the summary and the keywords as tags (hero_tags). The main column stacks section wrappers with nds-block: about the dataset; the rows in a Content Switcher, as a sortable compact Table with an Export group and a total in a <tfoot>, and as a Chart a page script draws from that table; the data dictionary; the files as a compact Table with download links; a Code block for the API; how to cite in a card with a Copy button. The side info column (nds-has-sideinfo, not sticky, no card) holds the facts as a Definition List, related datasets as Drawer links, and a Report a problem button. A formatted number cell carries data-sort-value and data-export-value. The page's opening comment gives the rules."
   icon: '<i class="hgi hgi-stroke hgi-database-01"></i>'
   category: "Content"
   tags: ["Table", "Chart", "Content Switcher", "Export", "Code"]
@@ -1245,7 +1247,7 @@
 
 - title: "News Article"
   description: "One news article in the order news sites use: a byline under the headline, prose with a quote and a photo gallery, Share and the author after it, related and most read news beside it, and more news."
-  use_when: "A page for one article people read: news, a press release, an announcement, a blog post, a media center story. A flat hero (nds-flat) holds the headline, the byline as a Meta line under it (hero_meta: published and updated dates with <time datetime>, author, reading time), then the summary; the hero's Share is off (hide_share_page). The body is one nds-prose element, as a CMS writes it: the lead image as a 16:9 Image in a figure with a caption and a photo credit, a dateline at the start of the first paragraph, plain headings from h2, a small Quote (nds-sm) next to the text it supports, and a gallery of Image Popup Viewer thumbnails (Image tiles of one shape, each with a title and the zoom badge). After the body, a divider (nds-divider nds-4xl), then Share as the Inline structure (a row of MD buttons), then the author as a Persona. The side info column (nds-has-sideinfo, not sticky) holds what news sites put beside an article, each block a group with a title and no card: related news and most read as Drawer links (no indicator) with a date or a read count. More news is a Swiper of image cards in a breakout body, each with a Meta line and one link, on a striped section (nds-stripe on .nds-content). A schema.org NewsArticle JSON-LD block repeats the headline, dates, author and image for search engines. For a long page with a table of contents, see the Content Template."
+  use_when: "A page for one article people read: news, a press release, an announcement, a blog post, a media center story. For a long page with a table of contents, see the Content Template. A flat hero (nds-flat) holds the headline, the byline as a Meta line (hero_meta), then the summary; the hero's Share is off (hide_share_page). The body is one nds-prose element, as a CMS writes it: the lead Image in a figure, a small Quote (nds-sm), and a gallery of Image Popup Viewer thumbnails. After the body come Share as a row of buttons and the author as a Persona. The side info column (nds-has-sideinfo, not sticky) holds related news and most read as Drawer links, each a group with a title and no card. More news is a Swiper of image cards in a breakout body, on a striped section (nds-stripe on .nds-content). A schema.org NewsArticle JSON-LD block repeats the facts for search engines. The page's opening comment gives the rules."
   icon: '<i class="hgi hgi-stroke hgi-news"></i>'
   category: "Content"
   tags: ["Prose", "Quote", "Image Popup Viewer", "Share", "Swiper"]
@@ -1254,7 +1256,7 @@
 
 - title: "Account Settings"
   description: "A signed-in user's account in tabs of calm rows: each setting a row with its value and a Change button, each change in a small Modal, a new email or mobile confirmed with a code."
-  use_when: "A page where a signed-in user changes their own account: profile, account settings, preferences, security, notification settings, privacy and data. One area per Tab with an icon (nds-divided): Profile (your details and contact, each an nds-block with a block title), Security, Notifications, Your data. Each group is a Definition List (nds-divided): a label, the current value under it, and a Change button in nds-definition-action. No field shows until the user asks. Facts from a government record have no Change button, and a line says where to change them. Change opens a small Modal holding a data-ajax form with that one setting, Save and Cancel; the row shows the new value once the server confirms. A new email or mobile number gets a code: its Modal sends it, and one shared code Modal takes it (OTP, with a Cooldown resend button). A new password uses the Password field with rule chips and a retype field (data-password-match), plus a hidden username field for password managers. Deleting the account asks first in a Modal. The page runs NDS.SessionTimeout.init() and hides the hero's Share. For a signed-in home page, see the Student Portal."
+  use_when: "A page where a signed-in user changes their own account: profile, account settings, preferences, security, notification settings, privacy and data. For a signed-in home page, see the Student Portal. One area per Tab with an icon (nds-divided). Each group is a Definition List (nds-divided): a label, the current value under it, and a Change button in nds-definition-action. No field shows until the user asks. Change opens a small Modal holding a data-ajax form with that one setting. A new email or mobile number gets a code (OTP, with a Cooldown resend button). A new password uses the Password field with rule chips and a retype field (data-password-match), plus a hidden username field for password managers. Deleting the account asks first in a Modal. The page runs NDS.SessionTimeout.init() and hides the hero's Share. The page's opening comment gives the rules."
   icon: '<i class="hgi hgi-stroke hgi-user-settings-01"></i>'
   category: "Form"
   tags: ["Tabs", "Checkbox", "Password", "Definition List", "Session Timeout"]
@@ -1263,7 +1265,7 @@
 
 - title: "Support Inbox"
   description: "A signed-in user's messages, read like letters: Inbox and Sent tabs, unread rows, one panel to read and reply, and a panel to write a new message."
-  use_when: "A page of messages between a user and a government body: an inbox, notifications with replies, support tickets, official letters, messages from a service. Inbox and Sent are Tabs, and the Inbox label carries the unread count. Each message is a Drawer row (a button) with a New tag while unread, a preview line and a Meta line (sender, time). Every row opens ONE shared Panel that a page script fills from the row (a real site loads the message by its id); opening marks it read. A message people can answer has a reply form in the panel; an automatic one shows an info Alert that says where to ask instead. New message opens a second Panel with a form: Custom Select for the topic, a Textarea, and an Upload in Button mode. An empty list is an Empty placeholder (nds-empty with data-empty-message) that leaves when a row is added. The page runs NDS.SessionTimeout.init(). Not a live chat. For dated events in a panel, see the Events Calendar."
+  use_when: "A page of messages between a user and a government body: an inbox, notifications with replies, support tickets, official letters, messages from a service. Not a live chat. For a public message form, see the Contact Us Template; for dated events in a panel, the Events Calendar. Inbox and Sent are Tabs, and the Inbox label carries the unread count. Each message is a Drawer row (a button) with a New tag while unread, a preview line and a Meta line (sender, time). Every row opens ONE shared Panel that a page script fills from the row (a real site loads the message by its id); opening marks it read. A message people can answer has a reply form in the panel; an automatic one shows an info Alert that says where to ask instead. New message opens a second Panel with a form: Custom Select for the topic, a Textarea, and an Upload in Button mode. An empty list is an Empty placeholder (nds-empty with data-empty-message) that leaves when a row is added. The page runs NDS.SessionTimeout.init()."
   icon: '<i class="hgi hgi-stroke hgi-mail-open-01"></i>'
   category: "Service"
   tags: ["Drawer", "Panel", "Tabs", "Empty", "Session Timeout"]
