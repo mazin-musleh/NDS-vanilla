@@ -254,6 +254,7 @@
     --text-primary-strong: var(--colors-primary-400);
     --text-primary: var(--colors-primary-400);
     --text-secondary: var(--colors-secondary-400);
+    --text-tertiary: var(--colors-tertiary-300); // 400 is 4.25:1 on a card, under AA for text
     --text-success: var(--colors-green-400);
     --text-info: var(--colors-blue-400);
     --text-warning: var(--colors-yellow-400);
@@ -262,14 +263,19 @@
     // ── Border ──
     --border-primary-light: var(--colors-primary-400);
     --border-secondary-light: var(--colors-secondary-400);
+    --border-tertiary: var(--colors-tertiary-400);
     --border-tertiary-light: var(--colors-tertiary-400);
     --border-neutral-light: var(--colors-neutral-400);
     --border-neutral-primary: var(--colors-neutral-600);
     --border-neutral-secondary: var(--colors-neutral-700);
     --border-neutral-tertiary: var(--colors-neutral-750);
+    --border-success: var(--colors-green-500);
     --border-success-light: var(--colors-green-400);
+    --border-info: var(--colors-blue-500);
     --border-info-light: var(--colors-blue-400);
+    --border-warning: var(--colors-yellow-500);
     --border-warning-light: var(--colors-yellow-400);
+    --border-error: var(--colors-red-500);
     --border-error-light: var(--colors-red-400);
     --border-disabled: var(--colors-neutral-600);
     --divider-color: var(--colors-alpha-white-10);
@@ -282,6 +288,7 @@
     --icon-default: var(--colors-neutral-100);
     --icon-primary: var(--colors-primary-400);
     --icon-neutral: var(--colors-neutral-300);
+    --icon-tertiary: var(--colors-tertiary-400);
     --icon-success: var(--colors-green-400);
     --icon-info: var(--colors-blue-400);
     --icon-warning: var(--colors-yellow-400);

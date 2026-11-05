@@ -181,7 +181,7 @@
 
         // Error: show feedback (auto-shows X via data-status), show error message
         &[data-status="error"] {
-            border-color: var(--border-error);
+            border-color: var(--feedback-icon-fill-error); // the disc beside it: same red in both modes
 
             --_file-progress: none;
             --_file-feedback: flex;
