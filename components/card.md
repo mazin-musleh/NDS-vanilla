@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 12:02 PM"
+last_edit: "05/11/2026 - 09:39 PM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -19,6 +19,8 @@ last_edit: "05/11/2026 - 12:02 PM"
     <div class="nds-section-body nds-prose" markdown="1">
 
 A card holds one unit in a set, such as a service tile, a product, an article preview or a dashboard number. The optional header holds an icon, an image or an avatar. In a panel card, it holds the title too. The content holds a title and text, and optional actions go after it. The whole card can be one link. To let the text expand in place, see [Expandable Content](../utilities/expandable).
+
+Pick the options by what the card holds. The header can be an icon, an image or an avatar, or the card can have no header. The content can add tags, a rating, a price, or a status tag in the corner. The layout can be Row. The builder and the Variants table in this page's source list every option.
 
 Pick another component when:
 

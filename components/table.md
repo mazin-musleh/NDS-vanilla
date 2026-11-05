@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 12:02 PM"
+last_edit: "05/11/2026 - 09:39 PM"
 ---
 
 <section id="table-overview" class="nds-content-section nds-doc-overview">
@@ -19,6 +19,8 @@ last_edit: "05/11/2026 - 12:02 PM"
     <div class="nds-section-body nds-prose" markdown="1">
 
 A table is a `<table class="nds-table">` in a `.nds-table-wrapper`, with a `<thead>`, a `<tbody>`, and an optional `<tfoot>` for a total. Markup turns on the rest: sort buttons in the header, row checkboxes, a column menu, and detail rows under a row. Tables work with [Pagination](../components/pagination), [Filter](../components/filter), [Selection](../components/selection) and [Export](../components/export) on the same rows.
+
+Pick the options by the data. Records adds a count, search, filters, a column menu, export and pages. Compact fits one short line in each cell. Interactive fits a row that opens something. A Total row holds the sum of a column. The builder and the Variants table in this page's source list every option.
 
 Pick another component when:
 
@@ -555,6 +557,24 @@ Every option goes on the outer `<table>`, never on a table in a sub-row.
 {: .nds-block-title}
 
 A `.nds-sort-btn` in a header cell makes its column sortable. Each click moves the column through ascending, descending and the first order. [Sort](../components/sort) does the work, and sets `aria-sort` on the header cell. The script writes `data-state="sorted-asc"` or `"sorted-desc"` on the sorted header cell, which turns the icon. Write it in the markup when the server sends the rows already sorted: the script marks the column and does not reorder the rows. A sub-row stays under its row, and a paged table goes back to page 1.
+
+### A Row That Opens a Page
+{: .nds-block-title}
+
+A `<tr>` cannot be a link, so put a real link in the row's identifier cell and add `nds-interactive` to the table. The link serves the keyboard and screen readers. A small page script serves a click anywhere else in the row:
+
+```js
+document.getElementById('requests-rows').addEventListener('click', function (e) {
+  // A control in the row, a sub-row or a text selection keeps its own click.
+  if (e.target.closest('a, button, input, label, select, textarea, .nds-sub')) return;
+  if (String(window.getSelection())) return;
+  var row = e.target.closest('tr');
+  var link = row && row.querySelector('a.nds-link');
+  if (link) link.click();
+});
+```
+
+The listener sits on the `<tbody>`, so rows that the page adds later work too.
 
 ### Row Selection
 {: .nds-block-title}

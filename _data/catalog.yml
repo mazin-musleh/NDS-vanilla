@@ -1141,15 +1141,6 @@
 
 # ── Examples — composed pages ─────────────────────────────────────────────
 
-- title: "Training Academy"
-  description: "A training center's home page with four lists, each showing its items a different way."
-  use_when: "Pick how a list section shows its items, by how much each item holds. Places to go, an icon and a name each: link cards as navigation tiles, the only use of a whole-card link. Items with several details to compare, such as an image, tags, a rating and a price: full cards with action buttons. A short list the user opens one item at a time, newest first: Drawer rows with a Date Tile and a Meta line; a plain list of page links is a Drawer with an arrow on each row. An icon, a title and one line: a List. Use for any home or landing page made of list sections: categories, featured products, courses or services, announcements or news, features. For a full catalog with search and filters, see Services List; for records the user sorts or pages, see Manage Records. Full chrome with a sub hero, striped sections (nds-stripe on .nds-content), and no side menu. The page's opening comment gives these rules."
-  icon: '<i class="hgi hgi-stroke hgi-school"></i>'
-  category: "Content"
-  tags: ["List", "Drawer", "Date Tile", "Cards", "Rating"]
-  url: "/examples/training-academy.html"
-  new: true
-
 - title: "Student Portal"
   description: "A student's home page with grades, today's classes, requests, exams and services."
   use_when: "A personal home page that a signed-in user opens first. Use for a student, employee, patient, citizen or member portal, a my-account page, or any user dashboard. Each section maps to any portal: a profile with a status Alert and a Definition List; key numbers as metric tiles, a trend chart and a progress ring; today's schedule as a Timeline beside the person's requests in a Table; upcoming and past dated items in a Content Switcher, with a countdown, beside key dates in Scroll More; quick actions as cards whose arrow button opens a modal; a swiper of link cards to other systems, as navigation tiles; a service catalog where a closed service is a disabled card; a FAB that opens a help panel. The page runs NDS.SessionTimeout.init(), as every signed-in page does. Full chrome with a sub hero, striped sections (nds-stripe on .nds-content), and no side menu. The page's opening comment gives its layout rules."
@@ -1161,7 +1152,7 @@
 
 - title: "Services List"
   description: "Filterable government services catalog with search and category filters."
-  use_when: "A browsable catalog of items shown as cards, with keyword search, category filters, and pagination. Use for any service directory, product listing, document library, resource index, or list-all-X page. The plain content-page shape: full chrome, sub hero, no side columns. For a list section inside another page, with no search, see Training Academy."
+  use_when: "A browsable catalog of items shown as cards, with keyword search, category filters, and pagination. Use for any service directory, product listing, document library, resource index, or list-all-X page. The plain content-page shape: full chrome, sub hero, no side columns. For a list section inside another page, with no search, use List."
   icon: '<i class="hgi hgi-stroke hgi-grid-view"></i>'
   category: "Service"
   tags: ["Filter", "Search", "Pagination"]

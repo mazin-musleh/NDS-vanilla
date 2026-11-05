@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 04:30 PM"
+last_edit: "05/11/2026 - 09:39 PM"
 ---
 
 <section id="list-overview" class="nds-content-section nds-doc-overview">
@@ -19,6 +19,8 @@ last_edit: "03/11/2026 - 04:30 PM"
     <div class="nds-section-body nds-prose" markdown="1">
 
 A list shows a set of like items, such as services, features, courses or people, in a [grid](../layout/grid) of equal columns, or in [flex](../layout/flex) rows that the items grow to fill. The list is a `ul` with `nds-grid` or `nds-flex`, and each item is a [card](../components/card). An item holds any card parts: a [featured icon](../components/featured-icon), an image, an avatar, tags, a price or actions. Classes on the list give every item the same look: the size, the item layout (stacked or row), and either no box (`nds-flat`) or a card box (`nds-stroke`, `nds-shadow`).
+
+Pick the options by what each item holds. Items can be Person (an avatar, a name, a role and a status) or Course (an image, a price, a level and an action). The layout can be Row for a long list, or Centered for three or four items. The builder and the Variants table in this page's source list every option.
 
 Pick another component when:
 
@@ -649,7 +651,6 @@ List has no script of its own. With `nds-divided`, the [grid](../layout/grid) sc
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- [Training Academy](../examples/training-academy): the "Why train with us" section, with subtle icons in three columns.
 - [Services List](../examples/services-list): service cards with tags and actions, filtered and split into pages.
 - [Admin Console Demo](../examples/console-demo): the team directory, row cards with an avatar, a status tag and a Meta line.
 
