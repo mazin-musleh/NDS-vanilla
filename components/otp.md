@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 12:54 PM"
+last_edit: "05/11/2026 - 08:30 AM"
 ---
 
 <section id="otp-overview" class="nds-content-section nds-doc-overview">
@@ -275,6 +275,7 @@ For another code length, copy a box and give it a unique `id`. The script number
 - Put `autofocus` on the first box only when the code is the one task on the page, such as a verification step.
 - After you send a new code, empty the boxes with `NDS.Otp.clear()`, so the user cannot send the old code.
 - For the label, info text and feedback, see [Forms](../components/form). They work the same on every field.
+- The field colors come from the form tokens: see [Forms](../components/form), Tokens.
 
 </div>
   </div>

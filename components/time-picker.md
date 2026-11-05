@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "05/11/2026 - 08:30 AM"
 ---
 
 <section id="time-picker-overview" class="nds-content-section nds-doc-overview">
@@ -289,6 +289,7 @@ Any other character stays as written. `ss` adds a Second list, and `A` or `a` ad
 - Give the clock button an `aria-label`, such as "Pick a time". It shows only an icon.
 - Do not put a time picker inside another dropmenu. The panel is a dropmenu itself.
 - For the label, info text, feedback and the required mark, see [Forms](../components/form). They work the same on every field.
+- The field colors come from the form tokens: see [Forms](../components/form), Tokens.
 
 </div>
   </div>

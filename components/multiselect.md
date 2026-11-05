@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "05/11/2026 - 08:30 AM"
 ---
 
 <section id="multiselect-overview" class="nds-content-section nds-doc-overview">
@@ -397,6 +397,7 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
 - Add `data-search` for a list longer than about 15 options.
 - Say a count rule in the label, such as "Interests (2 to 4)", not in the placeholder.
 - For the label, info text, feedback and the required mark, see [Forms](../components/form). They work the same on every field.
+- The field colors come from the form tokens: see [Forms](../components/form), Tokens.
 
 </div>
   </div>
