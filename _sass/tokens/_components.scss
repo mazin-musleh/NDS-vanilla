@@ -134,7 +134,7 @@
     --featuredicons-background-primary-light: var(--background-primary-light);
     --featuredicons-background-default-light: var(--colors-neutral-50);
     --featuredicons-background-neutral-light: var(--background-neutral-light);
-    --featuredicons-icon-primary: var(--colors-primary-600);
+    --featuredicons-icon-primary: var(--icon-primary);
     --featuredicons-icon-neutral: var(--icon-neutral);
     --featuredicons-icon-info: var(--icon-info);
     --featuredicons-icon-warning: var(--icon-warning);
@@ -203,7 +203,7 @@
     --rating-star-brand-hovered: var(--colors-primary-500);
 
     // ── slider ──
-    --slider-track-bg: var(--colors-neutral-100);          // ponytail: palette-direct, no semantic twin for neutral-100
+    --slider-track-bg: var(--background-neutral-light);
     --slider-track-fill: var(--background-primary);
     --slider-thumb-bg: var(--background-primary);
     --slider-thumb-bg-hovered: var(--controls-primary-hovered);
@@ -329,10 +329,6 @@
     --button-background-secondary-selected: var(--colors-neutral-600);
     --button-indicator-pressed: var(--background-surface-oncolor);
     --button-indicator-selected: var(--background-surface-oncolor);
-    --button-status-success-text: var(--colors-green-400);
-    --button-status-error-text: var(--colors-red-400);
-    --button-status-info-text: var(--colors-blue-400);
-    --button-status-warning-text: var(--colors-yellow-400);
 
     // ── checkbox (darker for white checkmark contrast) ──
     --checkbox-primary-hovered: var(--colors-primary-700);
@@ -358,7 +354,6 @@
     --form-datecell-background-in-range-hovered: var(--colors-primary-400);
 
     // ── featured-icons ──
-    --featuredicons-icon-primary: var(--colors-primary-400);
     --featuredicons-background-default-light: var(--colors-alpha-white-10);
 
     // ── forms ──
@@ -388,9 +383,8 @@
     --radio-neutral-hovered: var(--colors-neutral-300);
     --radio-neutral-pressed: var(--colors-neutral-300);
 
-    // ── slider (neutral track flips to a 10% white wash; fill stays primary, hover lightens) ──
-    --slider-track-bg: var(--colors-alpha-white-10);
-    --slider-thumb-bg-hovered: var(--colors-primary-400);   // dark: hover lightens to 400 (light mode darkens to 800) for contrast on a dark bg
+    // ── slider (fill stays primary, hover lightens) ──
+    --slider-thumb-bg-hovered: var(--colors-primary-400);   // dark: hover lightens to 400 for contrast on a dark bg
 
     // ── stepper ──
     --stepper-button-completed: var(--colors-primary-500);
@@ -403,9 +397,8 @@
     --stepper-line-upcoming: var(--colors-neutral-600);
 
     // ── swiper ──
-    // --background-neutral-* aren't remapped for dark, so the neutral (inactive)
-    // states need explicit dark grays here; hover = +1 lighter to stand out on
-    // dark. Active = brand primary at a lighter dark step (primary-500,
+    // The neutral (inactive) states use solid dark grays; hover = +1 lighter to
+    // stand out on dark. Active = brand primary at a lighter dark step (primary-500,
     // ~status-green-600 lightness so it pops); hover = +1 darker.
     --swiper-bullet-background-default: var(--colors-neutral-700);
     --swiper-bullet-background-hovered: var(--colors-neutral-600);
