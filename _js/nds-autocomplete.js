@@ -2,6 +2,8 @@
  * Rides: nds-dropmenu (menu shell, open/close, positioning, outside-click)
  *      · nds-forms (loading chrome via data-state="loading", the field's clear button)
  *      · nds-empty (the "no results" placeholder)
+ * Requires:
+ *   .nds-form-container[data-value-field] needs .nds-form-control > input[type="hidden"][name] — a pick has nowhere to keep its value
  * Methods:
  *   NDS.Autocomplete.init()                 arm the delegated focusin builder
  *   NDS.Autocomplete.create(el, options)     build one field now; options {filter, renderItem, items}.
@@ -22,11 +24,15 @@
  *   <template class="nds-autocomplete-row"> in the container: each row's parts, [data-field] slots filled as text
  *   data-query-param (q) · data-results-path · data-fetch="each|once"
  *   data-empty-message · data-empty-icon · data-strict (typed text must match a pick)
+ *   data-value-field (result field a pick writes into the named hidden input in the .nds-form-control)
  * Gotchas:
  *   - data-strict adds a hidden NAMELESS .nds-autocomplete-value carrier at build: a pick
  *     fills it, typing or clear empties it, and NDS.Form.validate() rejects text that
  *     doesn't match it ("Choose from the suggestions"). It never changes what submits.
  *     Text already in the field when it builds (server-prefilled) counts as picked.
+ *   - data-value-field: text that is no pick empties the hidden input (typing, clear, setValue with new text); a form
+ *     reset puts back the value from the build. Its writes fire no event: the text input's do. With data-strict,
+ *     text beside an empty hidden input fails, prefilled or not.
  *   - Activates on an input[autocomplete="on"] inside .nds-form-container[data-url], built
  *     on the field's FIRST FOCUS. A field given `items` needs no data-url: create() builds it.
  *   - `items` is an array, or a function read on each search (a list that follows the page language).
@@ -61,6 +67,9 @@
     // ==============================================
 
     const DEBOUNCE_MS = 300;
+
+    const findValueInput = (container) => (container.hasAttribute('data-value-field')
+        ? container.querySelector('.nds-form-control > input[type="hidden"][name]') : null);
 
 
 
@@ -99,6 +108,10 @@
             // Config from container attributes
             this._url = containerElement.getAttribute('data-url');
             this._nameField = containerElement.getAttribute('data-display-field') || 'Title';
+            this._valueField = containerElement.getAttribute('data-value-field');
+            this._valueInput = findValueInput(containerElement);
+            // A hidden input's value is its default: a form reset never brings it back.
+            this._startValue = this._valueInput?.value;
             // A row with more than the name (a second line, a Meta line): authored once, filled per result.
             this._rowTemplate = containerElement.querySelector(':scope > template.nds-autocomplete-row');
             // 0 is a real value: the whole list on a click, before any typing.
@@ -145,9 +158,7 @@
                 this._carrier = document.createElement('input');
                 this._carrier.type = 'hidden';
                 this._carrier.className = 'nds-autocomplete-value';
-                // Text already in the field (server-written, or a host's restored pick) counts as picked,
-                // so focusing it without a change doesn't turn it invalid.
-                this._carrier.value = this._input.value.trim();
+                this._syncCarrier();
                 this._formControl.appendChild(this._carrier);
             }
 
@@ -245,6 +256,7 @@
                 var value = this._input.value.trim();
                 this._selectedItem = null;
                 if (this._carrier) this._carrier.value = '';
+                if (this._valueInput) this._valueInput.value = '';
 
                 if (value.length >= this._minChars) {
                     this._debouncedFetch(value);
@@ -300,7 +312,8 @@
             NDS.field.onReset(this._input.form, () => {
                 this._selectedItem = null;
                 this._results = [];
-                if (this._carrier) this._carrier.value = this._input.value.trim();
+                if (this._valueInput) this._valueInput.value = this._startValue;
+                this._syncCarrier();
                 this._close();
             }, { signal });
 
@@ -563,6 +576,7 @@
 
             this._selectedItem = itemData;
             if (this._carrier) this._carrier.value = text;
+            if (this._valueInput) this._valueInput.value = String(itemData[this._valueField] ?? '');
 
             // Trigger input/change events so forms JS updates state. Fetching on
             // the value we just picked would reopen the menu — suppress just this
@@ -587,6 +601,12 @@
             }
         }
 
+        // Text already in the field (server-written, or a host's restored pick) counts as picked, so focusing
+        // it without a change doesn't turn it invalid. A field that posts a value must hold one too.
+        _syncCarrier() {
+            if (this._carrier) this._carrier.value = !this._valueInput || this._valueInput.value ? this._input.value.trim() : '';
+        }
+
         // Write text and fire the pair without the fetch an input event starts: it would reopen the menu.
         _writeText(text) {
             this._suppressFetch = true;
@@ -600,22 +620,30 @@
 
         // The text is not a pick: the carrier keeps the last one, so a data-strict field reports it as typed text.
         setValue(value) {
+            const text = value == null ? '' : String(value);
+            // New text has no value to post, so the last pick's text must not pass again either.
+            if (this._valueInput && text !== this._input.value) {
+                this._valueInput.value = '';
+                if (this._carrier) this._carrier.value = '';
+            }
             this._selectedItem = null;
             this._results = [];
             this._close();
-            this._writeText(value == null ? '' : String(value));
+            this._writeText(text);
             return true;
         }
 
         clear() {
             this.setValue('');
             if (this._carrier) this._carrier.value = '';
+            if (this._valueInput) this._valueInput.value = '';
             return true;
         }
 
         _handleClear() {
             this._selectedItem = null;
             if (this._carrier) this._carrier.value = '';
+            if (this._valueInput) this._valueInput.value = '';
             this._results = [];
             this._activeIndex = -1;
 
@@ -797,12 +825,14 @@
 
     // The field's check: NDS.validation runs it at submit, validate(el) is its public face.
     // data-strict: typed text must match a picked suggestion. The carrier holds the last pick and exists
-    // only on a built field; no carrier, so its text is the prefilled pick. Empty text is required's business.
+    // only on a built field; no carrier, so its text is the prefilled pick, if a field that posts a value holds
+    // one. Empty text is required's business.
     const checkField = (container) => {
         const carrier = container.querySelector('.nds-autocomplete-value');
-        const input = container.ndsAutocomplete?._input;
+        const input = container.ndsAutocomplete?._input || container.querySelector('input[autocomplete="on"]');
         const text = input ? input.value.trim() : '';
-        const valid = !carrier || text === '' || carrier.value === text;
+        const valueInput = container.hasAttribute('data-strict') ? findValueInput(container) : null;
+        const valid = text === '' || (carrier ? carrier.value === text : !valueInput || !!valueInput.value);
         return { valid, message: valid ? '' : strings.text('pick_suggestion'), picked: !!(carrier && carrier.value) };
     };
     // Taginput in assist mode shares the container and owns its own rejection at add time.
@@ -827,7 +857,10 @@
             const { instance, input } = find(el);
             if (instance) return instance.setValue(value);
             if (!input) return false;
-            NDS.setValue(input, value == null ? '' : String(value));
+            const text = value == null ? '' : String(value);
+            const valueInput = findValueInput(input.closest('.nds-form-container'));
+            if (valueInput && text !== input.value) valueInput.value = '';
+            NDS.setValue(input, text);
             return true;
         },
         clear: (el) => {

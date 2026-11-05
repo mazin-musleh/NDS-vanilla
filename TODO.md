@@ -12,8 +12,7 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
 
 ### Field report bugs (2026-11-05, on 2.0.0-rc.5)
 
-- **Autocomplete canon `#autocomplete-js` leaves a stale id.** It sets the hidden id on `nds:autocomplete:select` and never clears it. Reproduced on a Strict field: pick, then delete the text → `validate()` returns valid and the old id still posts. Fix the canon: drop the id on `nds:autocomplete:clear` and when the text leaves the pick. `nds:autocomplete:clear` fires only for the clear button, so the canon needs the `input` listener too.
-  - Owner call: a value option on Autocomplete (a named hidden input it keeps in step) so a page writes no script. Additive. Until then, `components/custom-select.md` could also name a Dropmenu picker with Search, which posts the id with no page code.
+- **Autocomplete: a click on a server-saved pick lists only that item.** `_showAll` counts a pick from `_selectedItem`, which a server-written text never sets, so it searches for the text. `components/autocomplete.md` says a field that holds a pick lists every item, with the pick active. Read in the code, not run in a browser. Fix the code or the sentence.
 - **Catalog sends every sign-up to a 4-field card.** The Form Template's `use_when` in `_data/catalog.yml` says to use the Registration or Sign In example for an account, and Registration's says "any full-screen auth flow". A sign-up with about 20 fields over several steps needs the Form Template. Scope both lines by size.
 
 ### Parked features (owner calls; after v2.0.0 unless noted)

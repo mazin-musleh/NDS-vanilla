@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 07:11 PM"
+last_edit: "05/11/2026 - 02:10 PM"
 ---
 
 <section id="autocomplete-overview" class="nds-content-section nds-doc-overview">
@@ -66,6 +66,9 @@ Pick another component when:
   </span>
 </template>
 </script>
+<script type="text/html" id="autocomplete-value" data-canon>
+<input type="hidden" name="service-id">
+</script>
     </div>
   </div>
 </section>
@@ -88,6 +91,8 @@ The canon carries `data-fetch="once"` because the demo data is a static file. Fo
 | Row | Meta line (hint: The service group under each name) | canon `#autocomplete-row` | `.nds-form-container` | Each row shows more fields of its result under the name, here a Meta line. The match is marked in the name only |
 | Strict | Strict (hint: Accepts only a value picked from the list) | `[data-strict]` | `.nds-form-container` | The form accepts only text the user picked from the list, and the menu shows "No results" when nothing matches. Not for a search field, where any text is a valid search |
 | Custom empty message | Custom empty message (hint: Replaces the "No results" text) | `[data-empty-message="No matching services"]` | `.nds-form-container[data-strict]` | Replaces the "No results" text that a strict field shows when nothing matches |
+| Posted value | Result id (hint: Posts the picked result's id) | `[data-value-field="Id"]` | `.nds-form-container` | A pick writes the result's `Id` into the named hidden input. Write this row and the next. Write Strict too when the server needs the id |
+| Posted value | Result id (hint: Posts the picked result's id) | `canon #autocomplete-value` | `.nds-form-control` | The named hidden input that holds the id |
 | Required | Required (hint: Press Validate with the field empty) | `[data-required]` | `.nds-form-container` | The form needs text in the field. Use it when the field is required |
 | Field states | Label, info, feedback, required | — | — | Shared by every form field. See [Forms](../components/form) |
 {: #autocomplete-variants-table .nds-table .nds-responsive}
@@ -114,6 +119,11 @@ With `data-fetch="each"`, the default, the script requests `data-url` with the t
 `data-strict` on the container makes the form accept only a picked result. At submit, the field shows "Choose from the suggestions" when its text is not the last pick. Typed text that matches a result exactly still fails until the user picks it. An empty field passes, so add `data-required` to the container when the field is required. Text that the server writes into the field counts as picked, so it still passes after the user focuses the field.
 
 When nothing matches, a strict field's menu stays open and shows "No results", in Arabic on an Arabic page. A screen reader reads the message. Without `data-strict`, any typed text is valid, so the menu closes instead.
+
+### Posted Value
+{: .nds-block-title}
+
+By default, the form posts the text in the field. To post another field of the result, such as its id, add `data-value-field` to the container and write a named hidden input in the `.nds-form-control`. Text that is not a pick empties the hidden input, so a changed or emptied field never posts an old id. Leave `name` off the text input when the server takes the id alone. To show a saved pick, write its text in the text input's `value` and its id in the hidden input's `value`.
 
 ### Search Box
 {: .nds-block-title}
@@ -238,7 +248,8 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
 - Lower `data-min-chars` only when a short query gives a useful list. With `each`, a lower number sends more requests.
 - Use `data-min-chars="0"` with `data-fetch="once"` and `data-strict` when the user picks one item of a short list, such as a service: a click shows them all, and typing narrows them. Do not add a search box to the menu: the field is the search box.
 - Use a row template for a fact the user picks by, such as how long a service takes or its department. Keep it to one line under the name.
-- Use `data-strict` when the server accepts only a known value, such as a city code. Leave it off a search field.
+- Use `data-strict` when the form accepts only a picked result. Leave it off a search field.
+- Use `data-value-field` with `data-strict` when the server takes a code or an id, such as a city code. `data-strict` alone still posts the text.
 - Write the placeholder or the info text as a hint of what to type, such as "Type part of a service name".
 - For the label, info text, feedback and the required mark, see [Forms](../components/form). They work the same on every field.
 
@@ -271,6 +282,7 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
 |---|---|---|
 | `data-url` | `.nds-form-container` | The URL that returns the JSON results. Required, unless `create()` gets the `items` option. It may hold a query string: the script then adds the typed text after `&` |
 | `data-display-field` | `.nds-form-container` | The result field that each row shows and that a pick writes into the input. The default is `Title` |
+| `data-value-field` | `.nds-form-container` | The result field that a pick writes into the named hidden input in the `.nds-form-control`. Typing, the clear button, `clear()` and `setValue()` with new text empty that input. A form reset puts back the value it held when the field started. These writes fire no event of their own: the text input fires `input` and `change`. With `data-strict`, text beside an empty hidden input fails |
 | `data-field` | an element in the `.nds-autocomplete-row` template | The result field the script writes into it, as text. In the `data-display-field` field, the match is marked. A field with no value removes its element, or the whole `.nds-meta-item` around it. `renderItem()`, when you pass it, replaces the template |
 | `data-fetch` | `.nds-form-container` | `each` (the default) requests the URL on each search. `once` requests it once and filters in the browser |
 | `data-min-chars` | `.nds-form-container` | The fewest characters that start a search. The default is `3`. Shorter text closes the menu. `0` shows the whole list on a click or the Down Arrow, and again when the user deletes the text. On a field that holds a pick, the list shows every item, with the pick active |
@@ -321,7 +333,7 @@ The `NDS.Autocomplete` script loads after the page shows. Until it loads, each c
 | `NDS.Autocomplete.clear(el)` | Empties the field and forgets the pick |
 | `container.ndsAutocomplete.getValue()`, `.setValue(text)`, `.clear()` | The same, on a field that has started |
 | `NDS.Autocomplete.destroy(container)` | The same as `instance.destroy()` for the field in `container` |
-| `instance.destroy()` | Removes the menu, the listeners and the hidden input. A `role` or `aria-*` attribute you wrote on the input stays. The field starts again on its next focus |
+| `instance.destroy()` | Removes the menu, the listeners and `.nds-autocomplete-value`. A hidden input you wrote stays, with its value. A `role` or `aria-*` attribute you wrote on the input stays. The field starts again on its next focus |
 {: .nds-table .nds-responsive}
 
 | Option | Default | Effect |
@@ -341,9 +353,13 @@ The `NDS.Autocomplete` script loads after the page shows. Until it loads, each c
 <script type="text/html" id="autocomplete-js" data-canon data-lang="js">
 var field = document.querySelector('#service-search').closest('.nds-form-container');
 
-// Fill a hidden input with the picked service's id
+// Keep the picked service for page code. A pick fires input, then select. Typing, the clear button, clear() and setValue() fire input alone. A form reset fires neither, so reset the variable there too
+var service = null;
+field.querySelector('.nds-input').addEventListener('input', function () {
+  service = null;
+});
 field.addEventListener('nds:autocomplete:select', function (e) {
-  document.querySelector('#service-id').value = e.detail.item.Id;
+  service = e.detail.item;
 });
 
 // Match the start of the name only, and show the category in each row
