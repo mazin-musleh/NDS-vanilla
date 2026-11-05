@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 07:45 PM"
+last_edit: "05/11/2026 - 03:30 PM"
 ---
 
 <section id="helpers-overview" class="nds-content-section nds-doc-overview">
@@ -225,8 +225,7 @@ The canon is a request confirmation on an Arabic page. Each Class chip adds its 
     <div class="nds-section-body nds-prose" markdown="1">
 
 - [Form Template](../templates/form-template): an error note with `nds-block` above a multi-step form.
-- [Registration](../examples/registration): centered notes, and `nds-flush` on a section.
-- [Sign In](../examples/sign-in): `nds-flush` on a section.
+- [Sign In](../examples/sign-in): centered notes, and `nds-flush` on a section.
 - [FAQ Template](../templates/faq-template): `nds-flush` on tab panels.
 - [Help and Support Template](../templates/help-support-template): `nds-color-primary` on definition list titles.
 

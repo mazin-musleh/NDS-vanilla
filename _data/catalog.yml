@@ -1045,7 +1045,7 @@
 
 - title: "Form Template"
   description: "Multi-step form layout with grouped text inputs, side stepper (vertical on desktop, radial on mobile), and a flat sub-hero."
-  use_when: "Any multi-step form or wizard: service application, request submission, onboarding, or checkout. To create an account or sign in, use the Registration or Sign In example instead. Carries the grouped input types and a progress stepper that runs vertically beside the form on desktop and as a radial dial on mobile. The stepper column is the side info arrangement, through nds-has-sideinfo on the content layout."
+  use_when: "Any multi-step form or wizard: service application, request submission, onboarding, or checkout. For a sign-in or a short sign-up, use the Sign In example. A long sign-up in several steps belongs here, with its password field from Password. Carries the grouped input types and a progress stepper that runs vertically beside the form on desktop and as a radial dial on mobile. The stepper column is the side info arrangement, through nds-has-sideinfo on the content layout."
   icon: '<i class="hgi hgi-stroke hgi-file-edit"></i>'
   category: "Form"
   tags: ["DGA", "Forms", "Stepper", "Side Info", "Grid"]
@@ -1167,17 +1167,9 @@
   tags: ["Filter", "Search", "Pagination"]
   url: "/examples/services-list.html"
 
-- title: "Registration"
-  description: "Sign-up form with field validation, a matching password check, and an OTP step."
-  use_when: "A standalone create-account or sign-up flow, with field validation, a confirm-password match check, and an OTP verification step. The page carries no topbar, header, or footer (the minimal chrome shape), so use it for any full-screen auth flow. Its steps are sibling cards swapped in place with plain `[hidden]`."
-  icon: '<i class="hgi hgi-stroke hgi-file-validation"></i>'
-  category: "Form"
-  tags: ["Forms", "OTP", "Validation"]
-  url: "/examples/registration.html"
-
 - title: "Sign In"
   description: "National single sign-on with a credentials fallback, one-time code, and account settings."
-  use_when: "A standalone login page: national single sign-on as the primary path, a username and password fallback, an OTP step, and a resend button with a cooldown timer. No topbar, header, or footer (the minimal chrome shape). Its steps are sibling cards swapped in place with plain `[hidden]`: the pattern for any same-page switch between auth forms, such as sign-in and create-account."
+  use_when: "A standalone login page, or the start of a short sign-up with other fields: national single sign-on as the primary path, a username and password fallback, an OTP step, and a resend button with a cooldown timer, and a change-password step with rule chips and a retype field. No topbar, header, or footer (the minimal chrome shape). Its steps are sibling cards swapped in place with plain `[hidden]`: the pattern for any same-page switch between auth forms, such as sign-in and create-account."
   icon: '<i class="hgi hgi-stroke hgi-login-circle-01"></i>'
   category: "Form"
   tags: ["Forms", "OTP", "Cooldown Button", "Alert"]

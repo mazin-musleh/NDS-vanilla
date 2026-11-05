@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 03:50 PM"
+last_edit: "05/11/2026 - 03:30 PM"
 ---
 
 <section id="password-overview" class="nds-content-section nds-doc-overview">
@@ -455,7 +455,6 @@ The full API is in the banner of `_js/nds-password.js`.
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- [Create your account](../examples/registration): a password field with a retype field in a sign-up form.
 - [Sign in](../examples/sign-in): the change-password step, with rule chips and a retype field.
 - [Forms](../components/form): labels, feedback and validation for every field.
 

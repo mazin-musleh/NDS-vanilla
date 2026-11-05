@@ -58,7 +58,7 @@ breadcrumb: [["Examples", "/examples"]]
           </div>
 
           <p class="nds-note nds-center">
-            New here? <a href="{{ '/examples/registration/' | relative_url }}">Create an account</a>
+            New here? <a href="{{ '/templates/form-template/' | relative_url }}">Create an account</a>
           </p>
         </div>
 

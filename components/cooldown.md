@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 12:30 AM"
+last_edit: "05/11/2026 - 03:30 PM"
 ---
 
 <section id="cooldown-overview" class="nds-content-section nds-doc-overview">
@@ -276,7 +276,6 @@ The full API is in the banner of `_js/nds-cooldown.js`.
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- [Registration](../examples/registration): a resend code button.
 - [Sign In](../examples/sign-in): a captcha refresh and an OTP resend.
 - [Form Template](../templates/form-template): an OTP resend button inside a form.
 

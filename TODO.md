@@ -10,10 +10,6 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
 
 - **NDS IQ v4.0 on release day** (plan and status in `plans/iq-v4.md`; `IQv3.2` is already tagged and pushed, off main). [ ] `python scripts/publish-iq.py --apply` BEFORE the build and `mkrelease.py` (`verify()` checks the published copy and the guides' v4.0 render), `git push origin main IQv4.0`, then `nds-iq-eval` `evolve`. [ ] Optional, owner go: the S101 behavior run.
 
-### Field report bugs (2026-11-05, on 2.0.0-rc.5)
-
-- **Catalog sends every sign-up to a 4-field card.** The Form Template's `use_when` in `_data/catalog.yml` says to use the Registration or Sign In example for an account, and Registration's says "any full-screen auth flow". A sign-up with about 20 fields over several steps needs the Form Template. Scope both lines by size.
-
 ### Parked features (owner calls; after v2.0.0 unless noted)
 
 - **Chat component (2026-10-16), later.** Found in the Student Portal mockup (https://seu-exam-support.netlify.app/) with Date Tile and Meta, which shipped. Think it through first: the real uses, how it fits with other components, and what it replaces. The portal's support panel (`dialog#support-panel` in `examples/student-portal.md`) is where it would land.

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 12:02 PM"
+last_edit: "05/11/2026 - 03:30 PM"
 ---
 
 <section id="alert-overview" class="nds-content-section nds-doc-overview">
@@ -397,7 +397,7 @@ NDS.Alert.dismissAll('#messages');
 
 - [Sign In](../examples/sign-in): a tinted error alert above the form, and toasts.
 - [Admin Console Demo](../examples/console-demo): an inline alert in a dashboard.
-- [Form Template](../templates/form-template), [Contact Us Template](../templates/contact-us-template), [Registration](../examples/registration) and [Manage Records](../examples/manage-records): toasts after a submit.
+- [Form Template](../templates/form-template), [Contact Us Template](../templates/contact-us-template) and [Manage Records](../examples/manage-records): toasts after a submit.
 
 </div>
   </div>

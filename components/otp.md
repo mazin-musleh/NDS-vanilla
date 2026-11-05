@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 12:02 PM"
+last_edit: "05/11/2026 - 03:30 PM"
 ---
 
 <section id="otp-overview" class="nds-content-section nds-doc-overview">
@@ -356,7 +356,6 @@ The full API is in the banner of `_js/nds-otp.js`.
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- [Create your account](../examples/registration): a 4-digit code step after sign-up, with a resend button.
 - [Sign in](../examples/sign-in): a 5-digit code step after the password, with a resend button.
 - [Cooldown Button](../components/cooldown): the resend button that counts down before the user can ask again.
 

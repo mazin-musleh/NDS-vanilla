@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 01:32 PM"
+last_edit: "05/11/2026 - 03:30 PM"
 lang: en
 direction: ltr
 ---
@@ -673,7 +673,6 @@ The full API is in the banner of `_js/nds-form.js`.
 
 - [Form Template](../templates/form-template): a full application form, with a phone field and submit validation.
 - [Contact Us Template](../templates/contact-us-template): a contact form with a phone field and a textarea.
-- [Create your account](../examples/registration): a sign-up form with email and password fields.
 - [Sign in](../examples/sign-in): a sign-in form with a password field.
 
 </div>

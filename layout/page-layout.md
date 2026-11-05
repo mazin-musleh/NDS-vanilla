@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.8.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 09:16 PM"
+last_edit: "05/11/2026 - 03:30 PM"
 ---
 
 <section id="page-layout-overview" class="nds-content-section nds-doc-overview">
@@ -772,7 +772,7 @@ The page layout has no script, methods or events.
 - [Academic Program](../examples/program): card view, with the side menu as a bar above the content on phones.
 - [Content Template](../templates/content-template) and [Faculty CV](../examples/faculty-cv): the article shape.
 - [Contact Us Template](../templates/contact-us-template) and [Form Template](../templates/form-template): side info beside a form.
-- [Registration](../examples/registration): the minimal shape over a page image.
+- [Sign In](../examples/sign-in): the minimal shape over a page image.
 - [Manage Records](../examples/manage-records): the console shape with a data table.
 
 </div>
