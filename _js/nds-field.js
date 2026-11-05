@@ -128,7 +128,8 @@
     // The container's states from its input: disabled, readonly, required.
     function sync(input, formControl) {
         const container = formControl.closest('.nds-form-container');
-        if (!container) return;
+        // An input setup has not marked reads "not required", and would take the container's mark off.
+        if (!container || !initializedInputs.has(input)) return;
         // A disable a scope around the container holds is that scope's, never the container's own. Readonly is
         // still copied: the date and time pickers read it from the container.
         if (!container.parentElement?.closest(DISABLED)) input.disabled ? NDS.state.add(container, 'disabled') : NDS.state.remove(container, 'disabled');

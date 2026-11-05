@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 12:02 PM"
+last_edit: "05/11/2026 - 01:32 PM"
 lang: en
 direction: ltr
 ---
@@ -544,7 +544,7 @@ The eye button switches the field between hidden and plain text, and its label b
 | `data-ajax` | `form.nds-form` | The script stops the page from reloading after a passing submit. Send the request from `nds:form:valid` |
 | `data-no-pending` | `form.nds-form` with `method="post"` | A sent form takes submits again at once, and its button shows no spinner. For a form whose answer is a download or no page |
 | `novalidate` | `form.nds-form` | The script sets it at start, so the browser shows no popups |
-| `data-required` | `.nds-form-container` | Marks the field required. The script adds `required` and `aria-required="true"` to the input at start. It also sets or removes this attribute when the input's `required` changes, at the next edit or `NDS.Form.refresh()` call |
+| `data-required` | `.nds-form-container` | Marks the field required. The script adds `required` and `aria-required="true"` to the input at start. Once the field has started, it also sets or removes this attribute when the input's `required` changes, at the next edit or `NDS.Form.refresh()` call |
 | `data-state` | `.nds-form-container` | Write `disabled` or `readonly`, or call `setState()`: the script sets that property on every input inside. `disabled` also disables the action buttons. The script writes them too when an input is disabled or readonly. The script sets `focus`, `active` and `typing` while the user is on the field, and removes them on blur and release. It sets `open` while a native select's list is open |
 | `data-state="loading"` | `.nds-form-container` or `.nds-form-group` | Shows the spinner in place of the action buttons. The `nds-loading` class does the same. Write either in the HTML or from a script (`NDS.state.add()`, the attribute, `classList`), and remove it the same way. Put it on the container, not on `.nds-form-control` or the input |
 | `data-status` | `.nds-form-container` | The script sets it with each message: `error`, `help` or `neutral`. Only `error` draws the red outline. `clearStatus()` and any edit to the field remove it |

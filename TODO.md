@@ -10,6 +10,12 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
 
 - **NDS IQ v4.0 on release day** (plan and status in `plans/iq-v4.md`; `IQv3.2` is already tagged and pushed, off main). [ ] `python scripts/publish-iq.py --apply` BEFORE the build and `mkrelease.py` (`verify()` checks the published copy and the guides' v4.0 render), `git push origin main IQv4.0`, then `nds-iq-eval` `evolve`. [ ] Optional, owner go: the S101 behavior run.
 
+### Field report bugs (2026-11-05, on 2.0.0-rc.5)
+
+- **Autocomplete canon `#autocomplete-js` leaves a stale id.** It sets the hidden id on `nds:autocomplete:select` and never clears it. Reproduced on a Strict field: pick, then delete the text → `validate()` returns valid and the old id still posts. Fix the canon: drop the id on `nds:autocomplete:clear` and when the text leaves the pick. `nds:autocomplete:clear` fires only for the clear button, so the canon needs the `input` listener too.
+  - Owner call: a value option on Autocomplete (a named hidden input it keeps in step) so a page writes no script. Additive. Until then, `components/custom-select.md` could also name a Dropmenu picker with Search, which posts the id with no page code.
+- **Catalog sends every sign-up to a 4-field card.** The Form Template's `use_when` in `_data/catalog.yml` says to use the Registration or Sign In example for an account, and Registration's says "any full-screen auth flow". A sign-up with about 20 fields over several steps needs the Form Template. Scope both lines by size.
+
 ### Parked features (owner calls; after v2.0.0 unless noted)
 
 - **Chat component (2026-10-16), later.** Found in the Student Portal mockup (https://seu-exam-support.netlify.app/) with Date Tile and Meta, which shipped. Think it through first: the real uses, how it fits with other components, and what it replaces. The portal's support panel (`dialog#support-panel` in `examples/student-portal.md`) is where it would land.
