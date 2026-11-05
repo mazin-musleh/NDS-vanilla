@@ -12,7 +12,6 @@ Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGEL
 
 ### Field report bugs (2026-11-05, on 2.0.0-rc.5)
 
-- **Autocomplete: a click on a server-saved pick lists only that item.** `_showAll` counts a pick from `_selectedItem`, which a server-written text never sets, so it searches for the text. `components/autocomplete.md` says a field that holds a pick lists every item, with the pick active. Read in the code, not run in a browser. Fix the code or the sentence.
 - **Catalog sends every sign-up to a 4-field card.** The Form Template's `use_when` in `_data/catalog.yml` says to use the Registration or Sign In example for an account, and Registration's says "any full-screen auth flow". A sign-up with about 20 fields over several steps needs the Form Template. Scope both lines by size.
 
 ### Parked features (owner calls; after v2.0.0 unless noted)

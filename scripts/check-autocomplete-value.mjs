@@ -15,11 +15,11 @@ const field = (id, attrs, text = '', value = '') => `<form class="nds-form" id="
 <div class="nds-form-action"><button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear" hidden><i class="nds-icon nds-hgi-cancel-01"></i></button></div></div></div></form>`;
 const VALUE = 'data-value-field="Id" data-strict';
 const FIXTURE = `<section id="fixture" class="nds-content-section"><div class="nds-section-body">
-${field('pick', VALUE)}${field('saved', VALUE, 'Beta', '8')}${field('textonly', VALUE, 'Beta')}${field('zero', VALUE)}${field('plain', 'data-strict', '', 'mine')}${field('loose', 'data-value-field="Id"')}${field('page', '')}
+${field('pick', VALUE)}${field('saved', VALUE, 'Beta', '8')}${field('textonly', VALUE, 'Beta')}${field('zero', VALUE)}${field('plain', 'data-strict', '', 'mine')}${field('loose', 'data-value-field="Id"')}${field('page', '')}${field('unpicked', 'data-value-field="Id"', 'Beta')}
 </div></section>`;
 const SETUP = `<script type="module">
 const items = [{ Id: 7, Title: 'Alpha' }, { Id: 8, Title: 'Beta' }, { Id: 0, Title: 'Zero' }];
-for (const id of ['pick', 'saved', 'zero', 'plain', 'loose', 'page']) await NDS.Autocomplete.create(document.getElementById(id), { items });
+for (const id of ['pick', 'saved', 'zero', 'plain', 'loose', 'page', 'unpicked']) await NDS.Autocomplete.create(document.getElementById(id), { items });
 window.pageService = null;
 const pageField = document.getElementById('page');
 document.getElementById('page-input').addEventListener('input', () => { window.pageService = null; });
@@ -63,6 +63,19 @@ const empty = async (id) => {
     await page.keyboard.press('Escape');   // data-min-chars="0" lists everything again, over the next field
 };
 
+// A click with data-min-chars="0": what the menu lists, and the row it marks.
+const clickList = async (id) => {
+    await page.click(`#${id}-input`);
+    await page.locator(`#${id} [role="option"]`).first().waitFor({ timeout: SLOW });
+    const shown = await page.evaluate((fieldId) => {
+        const rows = [...document.querySelectorAll(`#${fieldId} [role="option"]`)];
+        return { rows: rows.map((row) => row.textContent.trim()), active: rows.find((row) => row.matches('[data-state~="active"]'))?.textContent.trim() ?? null };
+    }, id);
+    await page.keyboard.press('Escape');
+    return shown;
+};
+const listsAll = (shown) => shown.rows.length === 3 && shown.active === 'Beta';
+
 let r;
 await choose('pick', 'Alpha');
 r = await read('pick');
@@ -88,6 +101,8 @@ await choose('pick', 'Beta');
 await page.evaluate(() => NDS.Autocomplete.setValue('#pick', 'Beta'));
 r = await read('pick');
 ok('setValue with the same text keeps the pick', isField(r, 'Beta', '8', 'pick', true), r);
+r = await clickList('pick');
+ok('a click on a pick lists every item, the pick active', listsAll(r), r);
 await page.evaluate(() => NDS.Autocomplete.setValue('#pick', 'Other'));
 r = await read('pick');
 ok('setValue with new text empties it', isField(r, 'Other', '', 'pick', false), r);
@@ -102,6 +117,8 @@ ok('clear() empties it', isField(r, '', '', 'pick', true), r);
 
 r = await read('saved');
 ok('a saved pick stays valid with its value', isField(r, 'Beta', '8', 'saved', true), r);
+r = await clickList('saved');
+ok('a click on a saved pick lists every item, the pick active', listsAll(r), r);
 await choose('saved', 'Alpha');
 r = await read('saved');
 ok('a pick replaces the saved value', isField(r, 'Alpha', '7', 'saved', true), r);
@@ -109,6 +126,10 @@ await page.evaluate(() => document.getElementById('saved-form').reset());
 await page.waitForTimeout(100);
 r = await read('saved');
 ok('a form reset puts back text and value', isField(r, 'Beta', '8', 'saved', true), r);
+r = await clickList('saved');
+ok('a click after a form reset lists every item, the pick active', listsAll(r), r);
+r = await clickList('unpicked');
+ok('text with no value is a search, not a pick', r.rows.length === 1 && r.active === null, r);
 
 r = await read('textonly');
 ok('text with no value fails before the field starts', isField(r, 'Beta', '', 'textonly', false), r);

@@ -144,11 +144,10 @@
             // in-flight suggestion fetch when a newer keystroke supersedes it.
             this.abortController = new AbortController();
             this.fetchAbortController = null;
-            this._selectedItem = null;
             this._dropmenu = null;
 
             // data-strict: typed text must match a picked suggestion. The pick
-            // is runtime state (_selectedItem), invisible to forms' submit
+            // is runtime state (_pickedText), invisible to forms' submit
             // validation — mirror it into a hidden NAMELESS carrier the strict
             // check reads. Nameless on purpose: it must never change what the
             // form submits.
@@ -158,9 +157,9 @@
                 this._carrier = document.createElement('input');
                 this._carrier.type = 'hidden';
                 this._carrier.className = 'nds-autocomplete-value';
-                this._syncCarrier();
                 this._formControl.appendChild(this._carrier);
             }
+            this._syncPick();
 
             this.init();
             containerElement.setAttribute('data-nds-autocomplete-initialized', 'true');
@@ -254,8 +253,7 @@
                 if (this._keyHeld) return;
 
                 var value = this._input.value.trim();
-                this._selectedItem = null;
-                if (this._carrier) this._carrier.value = '';
+                this._setPick('');
                 if (this._valueInput) this._valueInput.value = '';
 
                 if (value.length >= this._minChars) {
@@ -310,17 +308,16 @@
 
             // A form reset: the restored text counts as picked, as at build, and old results go.
             NDS.field.onReset(this._input.form, () => {
-                this._selectedItem = null;
                 this._results = [];
                 if (this._valueInput) this._valueInput.value = this._startValue;
-                this._syncCarrier();
+                this._syncPick();
                 this._close();
             }, { signal });
 
             // Open on focus if results exist; a request that failed tries again.
             this._input.addEventListener('focus', () => {
                 if (this._fetchFailed) this._onInput();
-                else if (this._results.length > 0 && !this._dropmenu.isOpen && !this._selectedItem) {
+                else if (this._results.length > 0 && !this._dropmenu.isOpen && !this._pickedText) {
                     this._renderResults(this._results, this._input.value.trim());
                 }
             }, { signal });
@@ -354,7 +351,7 @@
         // whole list when the text is the pick, with the pick active (as a native select).
         async _showAll() {
             const text = this._input.value.trim();
-            const picked = !!this._selectedItem && String(this._selectedItem[this._nameField] || '') === text;
+            const picked = !!text && this._pickedText === text;
             await this._search(picked ? '' : text);
             // By name: with data-fetch="each" every answer holds new objects.
             const index = picked ? this._results.slice(0, 20).findIndex((item) => String(item[this._nameField] || '') === text) : -1;
@@ -574,8 +571,7 @@
         _selectItem(itemData) {
             var text = String(itemData[this._nameField] || '');
 
-            this._selectedItem = itemData;
-            if (this._carrier) this._carrier.value = text;
+            this._setPick(text);
             if (this._valueInput) this._valueInput.value = String(itemData[this._valueField] ?? '');
 
             // Trigger input/change events so forms JS updates state. Fetching on
@@ -603,8 +599,13 @@
 
         // Text already in the field (server-written, or a host's restored pick) counts as picked, so focusing
         // it without a change doesn't turn it invalid. A field that posts a value must hold one too.
-        _syncCarrier() {
-            if (this._carrier) this._carrier.value = !this._valueInput || this._valueInput.value ? this._input.value.trim() : '';
+        _syncPick() {
+            this._setPick(!this._valueInput || this._valueInput.value ? this._input.value.trim() : '');
+        }
+
+        _setPick(text) {
+            this._pickedText = text;
+            if (this._carrier) this._carrier.value = text;
         }
 
         // Write text and fire the pair without the fetch an input event starts: it would reopen the menu.
@@ -624,9 +625,8 @@
             // New text has no value to post, so the last pick's text must not pass again either.
             if (this._valueInput && text !== this._input.value) {
                 this._valueInput.value = '';
-                if (this._carrier) this._carrier.value = '';
+                this._setPick('');
             }
-            this._selectedItem = null;
             this._results = [];
             this._close();
             this._writeText(text);
@@ -635,14 +635,13 @@
 
         clear() {
             this.setValue('');
-            if (this._carrier) this._carrier.value = '';
+            this._setPick('');
             if (this._valueInput) this._valueInput.value = '';
             return true;
         }
 
         _handleClear() {
-            this._selectedItem = null;
-            if (this._carrier) this._carrier.value = '';
+            this._setPick('');
             if (this._valueInput) this._valueInput.value = '';
             this._results = [];
             this._activeIndex = -1;
