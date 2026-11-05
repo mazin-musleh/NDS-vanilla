@@ -1028,7 +1028,7 @@
 
 - title: "Life Journeys Template"
   description: "Life journeys hub: a first-visit intro modal and how-it-works alert, and tabs for current, available and completed journeys with progress rings."
-  use_when: "The landing hub of a set of life journeys: services grouped around a life event such as having a baby, starting a business, or getting a building permit. A first visit gets a three-step intro modal and a how-it-works alert; a returning user also gets current and completed journey tabs, each card with a progress ring. The page marks each conditional part with a comment. Its cards open two internal pages of the same set, reached only from the hub: Details opens the Journey page (templates/life-journey-page-template.md): the journey's services in a stepper with the user's progress, which a completed card opens with ?status=completed and a rating survey. Start, Continue and a step's Start service open the Journey Service page (templates/journey-service-template.md): the journey itself, laid out like a service page, where the user starts it or continues from the last completed service."
+  use_when: "The landing hub of a set of life journeys: services grouped around a life event such as having a baby, starting a business, or getting a building permit. A first visit gets a three-step intro modal and a how-it-works alert; a returning user also gets current and completed journey tabs, each card with a progress ring. The page marks each conditional part with a comment. Its cards open two internal pages of the same set, reached only from the hub: Details opens the Journey page (templates/life-journey-page-template.md): the journey's services in a stepper with the user's progress, which a completed card opens with ?status=completed and a rating survey. Start, Continue and a step's Start service open the Journey Service page (templates/journey-service-template.md): the journey itself, laid out like a service page, with a Start journey action."
   icon: '<i class="hgi hgi-stroke hgi-route-01"></i>'
   category: "Service"
   tags: ["DGA", "Alert", "Tabs", "Cards", "Grid"]
@@ -1045,7 +1045,7 @@
 
 - title: "Form Template"
   description: "Multi-step form layout with grouped text inputs, side stepper (vertical on desktop, radial on mobile), and a flat sub-hero."
-  use_when: "Any multi-step form or wizard: service application, request submission, onboarding, or checkout. For a sign-in or a short sign-up, use the Sign In example. A long sign-up in several steps belongs here, with its password field from Password. Carries the grouped input types and a progress stepper that runs vertically beside the form on desktop and as a radial dial on mobile. The stepper column is the side info arrangement, through nds-has-sideinfo on the content layout."
+  use_when: "Any multi-step form or wizard: service application, request submission, onboarding, or checkout. For a sign-in or a short sign-up, use the Sign In example. A long sign-up in several steps belongs here, with its password field from Password. Carries a national ID and code check with a resend button, the grouped input types, a review step, a success step, and a progress stepper that runs vertically beside the form on desktop and as a radial dial on mobile. The stepper column is the side info arrangement, through nds-has-sideinfo on the content layout."
   icon: '<i class="hgi hgi-stroke hgi-file-edit"></i>'
   category: "Form"
   tags: ["DGA", "Forms", "Stepper", "Side Info", "Grid"]
@@ -1069,7 +1069,7 @@
 
 - title: "Content Template"
   description: "Long-form editorial layout with article-style sections, numbered sub-sections, and a sticky on-this-page table of contents for in-page navigation."
-  use_when: "Any long-form editorial page: policy, terms of use, privacy notice, regulation, news article, press release, or a written guide. Carries article sections, numbered sub-sections, and a sticky on-this-page table of contents. The table of contents is the side info column (nds-has-sideinfo)."
+  use_when: "Any long-form editorial page: policy, terms of use, privacy notice, regulation, or a written guide. For one news article or press release, see the News Article example. Carries article sections, numbered sub-sections, and a sticky on-this-page table of contents. The table of contents is the side info column (nds-has-sideinfo)."
   icon: '<i class="hgi hgi-stroke hgi-book-open-01"></i>'
   category: "Content"
   tags: ["DGA", "Side Info", "Article", "TOC"]
@@ -1077,7 +1077,7 @@
 
 - title: "Help & Support Template"
   description: "Help hub with a flat sub-hero and a responsive grid of support-channel cards, each with a featured icon, description, availability, and response time."
-  use_when: "A support hub that routes people to help channels such as phone, email, live chat, or a ticket form. Each card carries an icon, description, availability hours, and response time."
+  use_when: "A support hub that routes people to help channels such as a contact form, FAQs, live chat, a call center, an office visit, or an issue report. Each card carries an icon, description, availability hours, and response time."
   icon: '<i class="hgi hgi-stroke hgi-help-circle"></i>'
   category: "Content"
   tags: ["DGA", "Grid", "Cards", "Featured Icons"]
@@ -1085,7 +1085,7 @@
 
 - title: "About The Entity Template"
   description: "Entity landing hub with a flat sub-hero and a responsive grid of topic cards, each with a featured icon, title, and navigation arrow."
-  use_when: "Any page whose job is to route onward through a grid of icon cards. Use for topic hubs such as About Us, Departments, Sectors, Initiatives, Our Work, or any parent page that links to its sub-pages. For a set of items that link nowhere, such as features, use List. Copy the card markup from here rather than composing it: each card carries its featured icon in its own header block."
+  use_when: "A hub page that routes to its own sub-pages through a grid of icon cards. Use for topic hubs such as About Us, Departments, Sectors, Initiatives, Our Work, or any parent page that links to its sub-pages. For links to outside sites, use the Social Media Template; for help channels, Help & Support; for a set of items that link nowhere, such as features, use List. Copy the card markup from here rather than composing it: each card carries its featured icon in its own header block."
   icon: '<i class="hgi hgi-stroke hgi-information-diamond"></i>'
   category: "Content"
   tags: ["DGA", "Grid", "Cards", "Featured Icons"]
@@ -1117,15 +1117,15 @@
 
 - title: "KPIs Template"
   description: "Performance dashboard combining KPI counter tiles, pie, donut, line, and bar charts, and responsive data tables for portal and service statistics."
-  use_when: "A read-only reporting page: KPI counter tiles, pie, donut, line, and bar charts, and data tables. Use for performance reports, portal statistics, open-data pages, annual figures, or any analytics view. Pick the Manage Records example instead when people must edit the data."
+  use_when: "A read-only reporting page: KPI counter tiles, pie, donut, line, and bar charts, and data tables. Use for performance reports, portal statistics, open-data overviews, annual figures, or any analytics view. Pick the Manage Records example instead when people must edit the data, and the Open Data example for one dataset's page."
   icon: '<i class="hgi hgi-stroke hgi-analytics-up"></i>'
   category: "Dashboard"
   tags: ["DGA", "Charts", "Tables", "Statistics", "Grid"]
   url: "/templates/kpis-template.html"
 
 - title: "Search Template"
-  description: "Search results layout with keyword highlighting, filter/sort dropmenus, and paginated card list."
-  use_when: "A search results page: the matched keyword highlighted inside each result, filter and sort dropmenus, and a paginated list of result cards."
+  description: "Search results layout with the query in the heading, filter/sort dropmenus, and paginated card list."
+  use_when: "A search results page for a typed query: the query in the Results heading, filter and sort dropmenus, and a paginated list of result cards. For a catalog people browse, see the Services List."
   icon: '<i class="hgi hgi-stroke hgi-search-01"></i>'
   category: "Service"
   tags: ["DGA", "Search", "Filter", "Pagination"]
@@ -1133,7 +1133,7 @@
 
 - title: "404 Template"
   description: "Custom error page with illustration and back-to-home action."
-  use_when: "An error or dead-end page: 404 not found, 500, maintenance, or access denied. A centered illustration, a message, and a back-to-home action. It is a status section, not the empty-state component, with its own centered wrapper and no content layout. It has no status set, so it shows the illustration. For any other outcome page - request submitted, payment failed, access granted - keep this shape, set data-status on the section, and swap the illustration for a feedback icon in nds-section-icon. See the Status Section layout page."
+  use_when: "An error or dead-end page: 404 not found, 500, maintenance, or access denied. A centered illustration, a message, and a back-to-home action. It is a status section, not the empty-state component, with its own centered wrapper, and no hero, side info or side menu. It has no status set, so it shows the illustration. For any other outcome page - request submitted, payment failed, access granted - keep this shape, set data-status on the section, and swap the illustration for a feedback icon in nds-section-icon. See the Status Section layout page."
   icon: '<i class="hgi hgi-stroke hgi-alert-02"></i>'
   category: "Service"
   tags: ["DGA", "Empty State"]
@@ -1188,7 +1188,7 @@
   use_when: "A detail page for one program or offering: overview text, stat tiles, tabbed sections, expandable blocks, and detail tables. Sits in a card-view content layout beside a side menu, through nds-card-view and nds-has-sidemenu. It is the only example whose side menu becomes a top dropdown bar on mobile, through nds-top on the aside. Use for courses, training programs, grant schemes, initiatives, or any about-this-thing page too long for a card."
   icon: '<i class="hgi hgi-stroke hgi-mortarboard-02"></i>'
   category: "Content"
-  tags: ["Expandable", "Accordion"]
+  tags: ["Expandable", "Tabs"]
   url: "/examples/program.html"
 
 - title: "Manage Records"
@@ -1218,10 +1218,10 @@
 
 - title: "Track My Request"
   description: "One request the user already sent: its history, what to do now, and the final answer, in four states."
-  use_when: "A page for one request, application, case, ticket or order the user already sent: track a request, application status, case details, order tracking. The history is a Timeline (a vertical dot Stepper, newest on top); the summary is the side info column (nds-has-sideinfo) with a Print button that prints it alone. When the user must act, a warning Alert sits at the top of the main column with the action right under it (here a File Upload and Send), never a link to another page. With nothing to do, an info Alert says what happens next and when. A final answer is a Status Section with data-status (success or error), first on the page, above the history; then the User Feedback rating closes the page, after the last edit line (feedback_type: rating). The page runs NDS.SessionTimeout.init(), as every signed-in page does. A Demo only select in the hero previews the four states; the server renders one. For a flow the user is filling in, see the Form Template; for a life event's services, the Journey Page Template."
+  use_when: "A page for one request, application, case, ticket or order the user already sent: track a request, application status, case details, order tracking. The history is a Timeline (a vertical dot Stepper, newest on top); the summary is the side info column (nds-has-sideinfo) with a Print button that prints it alone. When the user must act, a warning Alert sits at the top of the main column with the action right under it (here a File Upload and Send), never a link to another page. With nothing to do, an info Alert says what happens next and when. A final answer is a status Card with data-status (success or error), first in the main column, above the history: the history stays, so it is a card, not a Status Section. Then the User Feedback rating closes the page, after the last edit line (feedback_type: rating). The page runs NDS.SessionTimeout.init(), as every signed-in page does. A Demo only select in the hero previews the four states; the server renders one. For a flow the user is filling in, see the Form Template; for a life event's services, the Journey Page Template."
   icon: '<i class="hgi hgi-stroke hgi-search-list-01"></i>'
   category: "Service"
-  tags: ["Timeline", "Status Section", "Upload", "User Feedback", "Session Timeout"]
+  tags: ["Timeline", "Upload", "User Feedback", "Session Timeout"]
   url: "/examples/track-request.html"
   new: true
 
@@ -1236,10 +1236,10 @@
 
 - title: "Book an Appointment"
   description: "Book a visit on one page, revealed in the order booking sites use: a service and a branch, then a day beside its free times, then your details, with a live summary that holds the Book button."
-  use_when: "A page where people book a time slot: an appointment at a branch or office, a visit, an inspection, a consultation, a test or an exam seat. One form in groups (nds-block with a block title over a grid), each shown once the one before it is done: Service and branch, then Date and time, then Your details after a time is picked. Autocomplete for the service over a list loaded once (data-fetch=\"once\"): a click or the Down Arrow shows every service (data-min-chars=\"0\"), typing in the field filters them, and only a pick counts (data-strict); the script keeps the picked item for its code and length, and the summary shows the length; Custom Select for the branch, each option with its address (nds-description); Date Picker for the day (data-min-date and data-max-date bound the booking window), its info naming the opening days, hours and time zone; beside it the free times as one Radio row (nds-horizontal), where a taken time is a disabled radio. After each change of service, branch or day the page asks the server for the free times, with the date field in its loading state; a day with no free time (closed or full) clears the date and says why. A guest gives a name, an ID and a mobile number; on a signed-in page these come from the account as a Definition List, never fields. The summary is the side info column (nds-has-sideinfo, sticky, without nds-top so it follows the form on a phone), filled from the form's change events. It holds the Book button (form=\"book-form\"), shown only once a time is picked, since a hidden field is not checked. After a passing submit, a Status Section goes first on the page with the booking number, Add to calendar (an .ics file) and Get directions; the form gives way to a Before you come list, and the summary keeps the booking number with Change and Cancel. Change brings the form back with the booking in it and keeps the number; Cancel asks first in a Modal. The script's two server calls (free times, booking) are demo fakes whose comments give the request and the answer. For a flow in steps, see the Form Template; for dated events people browse, the Events Calendar."
+  use_when: "A page where people book a time slot: an appointment at a branch or office, a visit, an inspection, a consultation, a test or an exam seat. One form in groups (nds-block with a block title over a grid), each shown once the one before it is done: Service and branch, then Date and time, then Your details after a time is picked. Autocomplete for the service over a list loaded once (data-fetch=\"once\"): a click or the Down Arrow shows every service (data-min-chars=\"0\"), typing in the field filters them, and only a pick counts (data-strict); the script keeps the picked item for its code and length, and the summary shows the length; Custom Select for the branch, each option with its address (nds-description); Date Picker for the day (data-min-date and data-max-date bound the booking window), its info naming the opening days, hours and time zone; beside it the free times as one Radio row (nds-horizontal), where a taken time is a disabled radio. After each change of service, branch or day the page asks the server for the free times, with the date field in its loading state; a day with no free time (closed or full) clears the date and says why. A guest gives a name, an ID and a mobile number; on a signed-in page these come from the account as a Definition List, never fields. The summary is the side info column (nds-has-sideinfo, sticky, without nds-top so it follows the form on a phone), filled from the form's change events. It holds the Book button (form=\"book-form\"), shown only once a time is picked, since a hidden field is not checked. After a passing submit, a status Card goes first in the main column with the booking number, Add to calendar (an .ics file) and Get directions: the booking stays on the page, so it is a card, not a Status Section. The form gives way to a Before you come list, and the summary keeps the booking number with Change and Cancel. Change brings the form back with the booking in it and keeps the number; Cancel asks first in a Modal. The script's two server calls (free times, booking) are demo fakes whose comments give the request and the answer. For a flow in steps, see the Form Template; for dated events people browse, the Events Calendar."
   icon: '<i class="hgi hgi-stroke hgi-appointment-02"></i>'
   category: "Form"
-  tags: ["Autocomplete", "Custom Select", "Date Picker", "Radio", "Status Section", "Modal"]
+  tags: ["Autocomplete", "Custom Select", "Date Picker", "Radio", "Modal"]
   url: "/examples/book-appointment.html"
   new: true
 
@@ -1266,13 +1266,13 @@
   use_when: "A page where a signed-in user changes their own account: profile, account settings, preferences, security, notification settings, privacy and data. One area per Tab with an icon (nds-divided): Profile (your details and contact, each an nds-block with a block title), Security, Notifications, Your data. Each group is a Definition List (nds-divided): a label, the current value under it, and a Change button in nds-definition-action. No field shows until the user asks. Facts from a government record have no Change button, and a line says where to change them. Change opens a small Modal holding a data-ajax form with that one setting, Save and Cancel; the row shows the new value once the server confirms. A new email or mobile number gets a code: its Modal sends it, and one shared code Modal takes it (OTP, with a Cooldown resend button). A new password uses the Password field with rule chips and a retype field (data-password-match), plus a hidden username field for password managers. Deleting the account asks first in a Modal. The page runs NDS.SessionTimeout.init() and hides the hero's Share. For a signed-in home page, see the Student Portal."
   icon: '<i class="hgi hgi-stroke hgi-user-settings-01"></i>'
   category: "Form"
-  tags: ["Tabs", "Switch", "Password", "Definition List", "Session Timeout"]
+  tags: ["Tabs", "Checkbox", "Password", "Definition List", "Session Timeout"]
   url: "/examples/account-settings.html"
   new: true
 
 - title: "Support Inbox"
   description: "A signed-in user's messages, read like letters: Inbox and Sent tabs, unread rows, one panel to read and reply, and a panel to write a new message."
-  use_when: "A page of messages between a user and a government body: an inbox, notifications with replies, support tickets, official letters, messages from a service. Inbox and Sent are Tabs, and the Inbox label carries the unread count. Each message is a Drawer row (a button) with a featured icon, a New tag while unread, a preview line and a Meta line (sender, time). Every row opens ONE shared Panel that a page script fills from the row (a real site loads the message by its id); opening marks it read. A message people can answer has a reply form in the panel; an automatic one shows an info Alert that says where to ask instead. New message opens a second Panel with a form: Custom Select for the topic, a Textarea, and an Upload in Button mode. An empty list is an Empty placeholder (nds-empty with data-empty-message) that leaves when a row is added. The page runs NDS.SessionTimeout.init(). Not a chat: for live back-and-forth, see the parked Chat component; for dated events in a panel, the Events Calendar."
+  use_when: "A page of messages between a user and a government body: an inbox, notifications with replies, support tickets, official letters, messages from a service. Inbox and Sent are Tabs, and the Inbox label carries the unread count. Each message is a Drawer row (a button) with a New tag while unread, a preview line and a Meta line (sender, time). Every row opens ONE shared Panel that a page script fills from the row (a real site loads the message by its id); opening marks it read. A message people can answer has a reply form in the panel; an automatic one shows an info Alert that says where to ask instead. New message opens a second Panel with a form: Custom Select for the topic, a Textarea, and an Upload in Button mode. An empty list is an Empty placeholder (nds-empty with data-empty-message) that leaves when a row is added. The page runs NDS.SessionTimeout.init(). Not a live chat. For dated events in a panel, see the Events Calendar."
   icon: '<i class="hgi hgi-stroke hgi-mail-open-01"></i>'
   category: "Service"
   tags: ["Drawer", "Panel", "Tabs", "Empty", "Session Timeout"]
