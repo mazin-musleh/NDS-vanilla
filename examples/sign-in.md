@@ -500,30 +500,23 @@ breadcrumb: [["Examples", "/examples"]]
                 number to confirm it.</p>
               </div>
 
-              <div class="nds-form-container" data-required>
+              <div class="nds-form-container nds-formatted" data-format="phone" data-required data-groups="00 000 0000">
                 <div class="nds-form-header">
                   <label for="mobile-number">
                     <span class="nds-label">Mobile number</span>
                   </label>
                 </div>
                 <div class="nds-form-control">
-                  <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
-                  <input type="tel" id="mobile-number" name="mobile-number" class="nds-input" inputmode="numeric"
-                    pattern="05[0-9]{8}" maxlength="10" placeholder="05XXXXXXXX" value="0501234419" autocomplete="tel"
-                    data-error-message="Enter a 10-digit number that starts with 05">
+                  <div class="nds-form-action nds-prefix">
+                    <span class="nds-btn nds-subtle"><span class="nds-label">+966</span></span>
+                    <input type="hidden" name="country-code" value="+966">
+                  </div>
+                  <input type="tel" id="mobile-number" name="mobile-number" class="nds-input" value="501234419" placeholder="5X XXX XXXX" autocomplete="tel-national" inputmode="numeric">
                   <div class="nds-form-action">
                     <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input">
                       <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
                     </button>
                   </div>
-                </div>
-                <div class="nds-form-footer" data-feedback-target>
-                  <span class="nds-feedback nds-outline" data-status="neutral" data-permanent>
-                    <span class="nds-feedback-icon">
-                      <i class="nds-icon" aria-hidden="true"></i>
-                    </span>
-                    <span class="nds-feedback-message">Saudi mobile numbers start with 05 and have 10 digits</span>
-                  </span>
                 </div>
               </div>
             </div>
@@ -766,7 +759,7 @@ breadcrumb: [["Examples", "/examples"]]
         show('account');
         if (otpFlow !== 'mobile') return;
         toast('success', 'Mobile number saved',
-          'Codes now go to ' + document.getElementById('mobile-number').value + '.');
+          'Codes now go to ' + NDS.FormattedInput.getValue(document.getElementById('mobile-number')) + '.');
       });
     });
 
@@ -808,7 +801,7 @@ breadcrumb: [["Examples", "/examples"]]
     // A new number is only saved once a code sent to it comes back verified,
     // so this hands over to the OTP card instead of saving straight away.
     mobileForm.addEventListener('nds:form:valid', function () {
-      var value = document.getElementById('mobile-number').value;
+      var value = NDS.FormattedInput.getValue(document.getElementById('mobile-number'));
       withLoading(mobileForm.querySelector('button[type="submit"]'), 1500, function () {
         otpFlow = 'mobile';
         show('otp');
