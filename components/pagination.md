@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 12:51 AM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="pagination-overview" class="nds-content-section nds-doc-overview">
@@ -580,6 +580,15 @@ After a page change, the script scrolls the content back into view when its top 
 | `--pagination-margin-top` | `var(--spacing-2xl)` | Space above the nav |
 | `--pagination-scroll-offset` | `120px` | Space between the main navigation and the content after a page change scrolls. Set it on `.nds-pagination` |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_pagination.scss`.
+
+{{ site.data.tokens.reads.pagination.html }}
 
 ### JavaScript
 {: .nds-block-title}

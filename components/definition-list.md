@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 07:28 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="dl-overview" class="nds-content-section nds-doc-overview">
@@ -281,6 +281,15 @@ Set these on the list. `nds-sm` sets the icon size, the title and value sizes, t
 | `--col-gap` | `var(--spacing-xl)` | Gap between a title and its value in the table layout. The row layout uses `var(--spacing-sm)` |
 | `--gap` | — | Sets both gaps when `--row-gap` and `--col-gap` are not set |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_definition-list.scss`.
+
+{{ site.data.tokens.reads.definition-list.html }}
 
 </div>
   </div>

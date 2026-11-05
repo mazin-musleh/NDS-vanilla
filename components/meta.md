@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 08:58 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="meta-overview" class="nds-content-section nds-doc-overview">
@@ -284,6 +284,15 @@ Set these on the line, or on a parent to reach every line inside it.
 | `--meta-gap` | `var(--spacing-xs) var(--spacing-lg)` | Space between the rows, then between the facts in a row |
 | `--meta-color` | `var(--text-secondary-paragraph)` | Text and icon color. A fact with `data-status` keeps its status color |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_meta.scss`.
+
+{{ site.data.tokens.reads.meta.html }}
 
 </div>
   </div>

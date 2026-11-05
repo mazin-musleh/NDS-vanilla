@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 12:18 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="swiper-overview" class="nds-content-section nds-doc-overview">
@@ -484,6 +484,12 @@ Set a token at `:root`, or on a wrapper to reach every swiper inside it. Give a 
 Source: the `swiper` group in `_sass/tokens/_components.scss`.
 
 {{ site.data.tokens.components.swiper.html }}
+
+It also reads these shared tokens. A change to one also changes other components.
+
+Source: the `var()` reads in `_sass/components/_swiper.scss`.
+
+{{ site.data.tokens.reads.swiper.html }}
 
 ### JavaScript
 {: .nds-block-title}

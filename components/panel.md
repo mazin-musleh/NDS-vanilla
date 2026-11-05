@@ -6,7 +6,7 @@ hero_description: A panel is a surface that slides in from an edge of the screen
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 10:52 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 lang: en
 direction: ltr
 ---
@@ -363,6 +363,15 @@ Set these on the `.nds-panel` element.
 | `--panel-radius` | `0`, `var(--radius-lg)` on a sheet | Corner radius. A sheet rounds only the two corners that face the page |
 | `--panel-z` | `999` | Stack order of a plain or static panel. The main navigation is `1000`. A modal panel is above everything |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_panel.scss`.
+
+{{ site.data.tokens.reads.panel.html }}
 
 ### JavaScript
 {: .nds-block-title}

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="tooltip-overview" class="nds-content-section nds-doc-overview">
@@ -298,6 +298,12 @@ Set a token at `:root`, or on a wrapper to reach every tooltip inside it. Give a
 Source: the `tooltip` group in `_sass/tokens/_components.scss`.
 
 {{ site.data.tokens.components.tooltip.html }}
+
+It also reads these shared tokens. A change to one also changes other components.
+
+Source: the `var()` reads in `_sass/components/_tooltip.scss`.
+
+{{ site.data.tokens.reads.tooltip.html }}
 
 ### JavaScript
 {: .nds-block-title}

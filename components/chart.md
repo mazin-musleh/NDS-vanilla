@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 10:16 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="chart-overview" class="nds-content-section nds-doc-overview">
@@ -314,6 +314,15 @@ Set them on the chart or on any parent.
 | `--chart-tooltip-border` | `--border-neutral-secondary` | The tooltip border. |
 | `--chart-radius` | `--radius-md` | The tooltip corner radius. |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_chart.scss`.
+
+{{ site.data.tokens.reads.chart.html }}
 
 ### Options
 {: .nds-block-title}

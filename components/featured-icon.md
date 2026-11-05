@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 10:30 AM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="featured-icon-overview" class="nds-content-section nds-doc-overview">
@@ -223,6 +223,12 @@ Set a token at `:root`, or on a wrapper to reach every featured icon inside it. 
 Source: the `featured-icons` group in `_sass/tokens/_components.scss`.
 
 {{ site.data.tokens.components.featured-icons.html }}
+
+It also reads these shared tokens. A change to one also changes other components.
+
+Source: the `var()` reads in `_sass/components/_featured-icon.scss`.
+
+{{ site.data.tokens.reads.featured-icon.html }}
 
 </div>
   </div>

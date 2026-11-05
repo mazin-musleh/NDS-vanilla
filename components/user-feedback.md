@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 07:11 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 hideFeedback: true
 ---
 
@@ -482,6 +482,15 @@ The field rules (`data-required`, `data-min-checked`) and `data-feedback-target`
 |---|---|---|
 | `--userfeedback-scroll-offset` | `120px` | Space between the sticky navigation and the widget after the scroll. Set it on `.nds-user-feedback` |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_user-feedback.scss`.
+
+{{ site.data.tokens.reads.user-feedback.html }}
 
 ### JavaScript
 {: .nds-block-title}

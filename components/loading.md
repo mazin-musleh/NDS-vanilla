@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 04:36 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="loading-overview" class="nds-content-section nds-doc-overview">
@@ -237,6 +237,15 @@ Set these on the loading container, or on a parent.
 | `--loading-border` | `3px` | Spinner stroke width. It wins over the size classes |
 | `--loading-opacity` | `0.15` | Opacity of the children while the container loads |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_loading.scss`.
+
+{{ site.data.tokens.reads.loading.html }}
 
 ### JavaScript
 {: .nds-block-title}

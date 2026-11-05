@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 03:47 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="alert-overview" class="nds-content-section nds-doc-overview">
@@ -315,6 +315,15 @@ A toast with a `duration` closes itself after that many milliseconds, and a ring
 {: .nds-table .nds-responsive}
 
 An alert is a card, so the card color properties (`--card-bg`, `--card-border-color` and `--card-title-color`) also apply. See [Cards](../components/card).
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_alert.scss`.
+
+{{ site.data.tokens.reads.alert.html }}
 
 ### JavaScript
 {: .nds-block-title}

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 12:30 AM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="code-overview" class="nds-content-section nds-doc-overview">
@@ -389,6 +389,15 @@ Set these on the block, on a parent, or on `:root`. The `--syntax-*` properties 
 | `--code-max-height` | `60svh` | Height of the code area. A longer block scrolls inside it |
 | `--code-bg` | `var(--background-stripe)` | Background of a Markdown or prompt block |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_code.scss`.
+
+{{ site.data.tokens.reads.code.html }}
 
 ### JavaScript
 {: .nds-block-title}

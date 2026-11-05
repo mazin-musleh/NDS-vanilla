@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.2"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 11:25 AM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="metric-overview" class="nds-content-section nds-doc-overview">
@@ -301,6 +301,15 @@ Set these on `.nds-card-metric`. There they win over the colors of `data-status`
 | `--metric-trend-color` | `var(--text-default)` | Color of the trend icon and the change |
 | `--metric-chart-color` | `var(--colors-primary-600)` | Color of the chart line and its area |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_metric.scss`.
+
+{{ site.data.tokens.reads.metric.html }}
 
 ### JavaScript
 {: .nds-block-title}

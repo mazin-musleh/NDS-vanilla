@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="toc-overview" class="nds-content-section nds-doc-overview">
@@ -312,6 +312,15 @@ Without `data-toc-source`, the script reads the links you write. Pick it for som
 | `--drawer-lined-block` | `0px` | Space cut from the top and the bottom of that line. The TOC sets it on `.nds-toc` |
 | `--drawer-indicator-width` | `3px` | Width of the active link's line. The TOC sets it on its `.nds-drawer`, so set a new value there |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_toc.scss`.
+
+{{ site.data.tokens.reads.toc.html }}
 
 ### JavaScript
 {: .nds-block-title}

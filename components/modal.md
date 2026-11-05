@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 10:19 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="modal-overview" class="nds-content-section nds-doc-overview">
@@ -496,6 +496,15 @@ Set these on `:root`. They style the overlay behind every modal and modal panel.
 | `--backdrop-bg` | `var(--background-overlay)` | The overlay color |
 | `--backdrop-blur` | `none` | A `backdrop-filter` for the page behind the overlay, such as `blur(4px)` |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_modal.scss`.
+
+{{ site.data.tokens.reads.modal.html }}
 
 ### JavaScript
 {: .nds-block-title}

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 04:08 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="tabs-overview" class="nds-content-section nds-doc-overview">
@@ -450,6 +450,15 @@ The first tab is open in the markup: its `aria-selected` is `true`, and every ot
 | `--tab-panel-padding-inline`, `--tab-panel-padding-block` | `--tab-panel-padding` | Padding of a panel on one axis. A Rail on a phone sets 8px at the sides |
 | `--scroll-fade` | `48px` | Width of the fade at the edges of a tab row that scrolls. Set it on `.nds-scroll-more` |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_tabs.scss`.
+
+{{ site.data.tokens.reads.tabs.html }}
 
 ### JavaScript
 {: .nds-block-title}

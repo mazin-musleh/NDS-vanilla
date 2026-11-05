@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'cgi'
+require 'set'
 
 # Parses the design-token SCSS partials at build time and exposes them as
 # `site.data.tokens.packs`, so foundations/tokens.md renders the token catalog
@@ -21,6 +22,9 @@ module NDS
     SOURCES = %w[_sass/tokens/_primitives.scss _sass/themes/_dga.scss
                  _sass/tokens/_semantic.scss _sass/tokens/_components.scss].freeze
     COMPONENTS = '_sass/tokens/_components.scss'
+    SEMANTIC = '_sass/tokens/_semantic.scss'
+    # A component file whose token group has another name.
+    OWN_GROUP = { 'buttons' => 'button', 'form' => 'forms', 'featured-icon' => 'featured-icons' }.freeze
 
     # `--name: value;` on its own line. Commented-out declarations start with `//`.
     DECL = /\A\s*(--[A-Za-z0-9-]+)\s*:\s*([^;]+);/
@@ -66,10 +70,42 @@ module NDS
       chains = { light: light, dark: light.merge(darks.transform_values { |d| d[:value] }) }
       components = lights.select { |d| d[:file] == COMPONENTS }.group_by { |d| d[:group] }
                          .to_h { |g, rows| [g, { 'html' => table(rows, darks, chains) }] }
-      site.data['tokens'] = { 'packs' => packs, 'components' => components }
+      site.data['tokens'] = { 'packs' => packs, 'components' => components,
+                              'reads' => reads(site, lights, darks, chains) }
     end
 
     private
+
+    # The shared tokens each component file reads, for its page: `site.data.tokens.reads.card.html`.
+    # ponytail: only that file's own var() reads; a mixin or a part it rides (Panel under Modal)
+    # is not followed. Follow them if a page's list misleads.
+    def reads(site, lights, darks, chains)
+      Dir[File.join(site.source, '_sass/components/_*.scss')].filter_map do |path|
+        name = File.basename(path, '.scss').delete_prefix('_')
+        src = File.read(path, encoding: 'UTF-8').gsub(%r{/\*.*?\*/}m, '').gsub(%r{(?<!:)//.*}, '')
+        used = src.scan(/var\((--[\w-]+)/).flatten.to_set
+        own = OWN_GROUP.fetch(name, name)
+        rows = lights.select do |d|
+          next false unless used.include?(d[:name])
+
+          d[:file] == SEMANTIC ? !d[:name].start_with?('--shadow-') : d[:file] == COMPONENTS && d[:group] != own
+        end
+        [name, { 'html' => table(rows, darks, chains, read_by(src)) }] unless rows.empty?
+      end.to_h
+    end
+
+    # What each token feeds in that file: the property or public knob a reader can look up.
+    # A private `--_x` is named by the knob it falls back through, or not at all.
+    def read_by(src)
+      map = Hash.new { |h, k| h[k] = [] }
+      src.scan(/(?<![\w$-])(--[\w-]+|[a-z][\w-]*)\s*:\s*([^;{}]*);/) do |prop, value|
+        knob = prop.start_with?('--_') ? value[/var\((--(?!_)[\w-]+)/, 1] : prop
+        next unless knob
+
+        value.scan(/var\((--[\w-]+)/).flatten.each { |t| map[t] |= [knob] unless t == knob }
+      end
+      map
+    end
 
     # Each declaration with its rule's selector, whether that rule is the dark block, and
     # (components) the `// ── name ──` group it sits under.
@@ -229,7 +265,7 @@ module NDS
 
     # A component page's table: token, a preview and value. A dark value sits under the light one:
     # a fourth column is pushed past the page's edge.
-    def table(rows, darks, chains)
+    def table(rows, darks, chains, read_by = {})
       shown = rows.map do |d|
         light, dark = %i[light dark].map { |m| resolve("var(#{d[:name]})", chains[m]) }
         [d, light, dark, (swatches(light, dark) if d[:value].match?(COLOR))]
@@ -242,10 +278,18 @@ module NDS
         # the line then shows what it paints in dark.
         shade = darks.dig(d[:name], :value) || (dark if dark != light)
         value += %(<br><small>Dark mode #{code(shade)}</small>) if shade
-        cells = [code(d[:name]), (s.to_s if any), value].compact
+        cells = [code(d[:name]) + used_by(read_by[d[:name]]), (s.to_s if any), value].compact
         %(    <tr>#{cells.map { |c| "<td>#{c}</td>" }.join}</tr>)
       end
       grid(head, body)
+    end
+
+    # ponytail: the first four only, so a widely read token keeps its row short.
+    def used_by(list)
+      return '' if list.nil? || list.empty?
+
+      more = list.size > 4 ? " and #{list.size - 4} more" : ''
+      %(<br><small>Read by #{list.first(4).map { |k| code(k) }.join(', ')}#{more}</small>)
     end
 
     # The scroll box is written here, so the doc can keep it at the card's width.

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 03:52 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -581,6 +581,15 @@ Set these on `.nds-card`, or on a parent to set every card inside it. The image 
 | `--image-overlay-color` | `var(--background-image-overlay)` | The overlay color |
 | `--image-radius` | `var(--radius-md)` | Corner radius of the image |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_card.scss`.
+
+{{ site.data.tokens.reads.card.html }}
 
 ### JavaScript
 {: .nds-block-title}

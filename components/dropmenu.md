@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 10:15 AM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="dropmenu-overview" class="nds-content-section nds-doc-overview">
@@ -483,6 +483,15 @@ Set these on the `.nds-dropmenu` wrapper. The menu inherits them.
 | `--menu-padding` | `var(--spacing-md)` | Space inside the menu |
 | `--dropmenu-slide` | `8px` | How far the menu slides as it opens. It slides the other way when the menu opens above the trigger |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_dropmenu.scss`.
+
+{{ site.data.tokens.reads.dropmenu.html }}
 
 ### JavaScript
 {: .nds-block-title}

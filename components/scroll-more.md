@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 11:52 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="scroll-more-overview" class="nds-content-section nds-doc-overview">
@@ -441,6 +441,15 @@ Set these on the wrapper.
 | `--scroll-divider` | `var(--divider-color)` | Color of the `nds-divided` hairline |
 | `--scroll-padding` | `var(--spacing-xs)` | Space at the end of the scroll, so the last item's border and focus ring are not clipped. The start stays flush. Set `0` to remove it |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_scroll-more.scss`.
+
+{{ site.data.tokens.reads.scroll-more.html }}
 
 ### JavaScript
 {: .nds-block-title}

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 01:58 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="calendar-overview" class="nds-content-section nds-doc-overview">
@@ -702,6 +702,15 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 | `--calendar-day-gap` | `var(--spacing-md)` | The space between the day buttons, and between the day columns in Grid |
 | `--calendar-max-width` | `none` | The calendar's widest size, such as `720px` for Rows and Month. Grid shows a column per day from `860px` |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_calendar.scss`.
+
+{{ site.data.tokens.reads.calendar.html }}
 
 ### JavaScript
 {: .nds-block-title}

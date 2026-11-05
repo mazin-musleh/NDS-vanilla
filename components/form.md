@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 01:11 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 lang: en
 direction: ltr
 ---
@@ -600,6 +600,12 @@ Set a token at `:root`, or on a wrapper to reach every field inside it. Give a t
 Source: the `forms` group in `_sass/tokens/_components.scss`.
 
 {{ site.data.tokens.components.forms.html }}
+
+It also reads these shared tokens. A change to one also changes other components.
+
+Source: the `var()` reads in `_sass/components/_form.scss`.
+
+{{ site.data.tokens.reads.form.html }}
 
 ### JavaScript
 {: .nds-block-title}

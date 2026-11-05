@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 05:53 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="quote-overview" class="nds-content-section nds-doc-overview">
@@ -205,6 +205,15 @@ Set these on `.nds-quote`, or on a parent. A value you set wins over the size cl
 | `--quote-text-LH` | `var(--typo-text-xl-LH)` (`lg` on MD, `md` on SM) | Quoted text line height |
 | `--quote-text-color` | `var(--text-primary-paragraph)` | Quoted text color |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_quote.scss`.
+
+{{ site.data.tokens.reads.quote.html }}
 
 </div>
   </div>

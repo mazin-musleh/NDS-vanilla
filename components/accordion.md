@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="accordion-overview" class="nds-content-section nds-doc-overview">
@@ -353,6 +353,15 @@ Set them on `.nds-accordion`, in its `style` attribute.
 | `--accordion-header-padding` | `var(--spacing-xl)`, `var(--spacing-lg)` with `nds-md`, `var(--spacing-md)` with `nds-sm` | Padding above and below the title in each heading button. With `nds-minimal`, padding above and below each panel instead |
 | `--accordion-scroll-offset` | `120px` | Space between the main navigation and an opened item's heading, when the page scrolls back to it |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_accordion.scss`.
+
+{{ site.data.tokens.reads.accordion.html }}
 
 ### JavaScript
 {: .nds-block-title}

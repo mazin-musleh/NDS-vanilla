@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="drawer-overview" class="nds-content-section nds-doc-overview">
@@ -600,6 +600,15 @@ Set them on `.nds-drawer`, in its `style` attribute.
 | `--drawer-btn-height` | `fit-content`, `100%` with `nds-fit` | Height of each item |
 | `--drawer-btn-gap` | `var(--spacing-md)` | Space between the icon, the label and the end of each item |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_drawer.scss`.
+
+{{ site.data.tokens.reads.drawer.html }}
 
 ### JavaScript
 {: .nds-block-title}

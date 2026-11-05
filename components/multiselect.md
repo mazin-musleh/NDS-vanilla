@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 08:30 AM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="multiselect-overview" class="nds-content-section nds-doc-overview">
@@ -440,6 +440,15 @@ A button with `data-multiselect-action="reset"` in the menu unchecks every optio
 | `data-label` | each checkbox | The chip text. Without it, the chip shows the option's `.nds-label` text |
 | `data-search-item` | each `.nds-checkbox` | The search box filters this row. Data-driven adds it when the dropmenu has `data-search` |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_multiselect.scss`.
+
+{{ site.data.tokens.reads.multiselect.html }}
 
 ### JavaScript
 {: .nds-block-title}

@@ -11,7 +11,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="editor-overview" class="nds-content-section nds-doc-overview">
@@ -375,6 +375,15 @@ Set these on `.nds-editor`.
 | `--editor-min-size` | `12rem` | Minimum height of the editing surface and the source view |
 | `--editor-max-size` | `70vh` | Maximum height. Past it, the text scrolls inside the field |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_editor.scss`.
+
+{{ site.data.tokens.reads.editor.html }}
 
 ### JavaScript
 {: .nds-block-title}

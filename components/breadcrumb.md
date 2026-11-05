@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="breadcrumb-overview" class="nds-content-section nds-doc-overview">
@@ -214,6 +214,15 @@ Pick another component when:
 |---|---|---|
 | `data-state="loading"` | `.nds-breadcrumb-nav` | The same as `nds-loading` |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_breadcrumb.scss`.
+
+{{ site.data.tokens.reads.breadcrumb.html }}
 
 ### JavaScript
 {: .nds-block-title}

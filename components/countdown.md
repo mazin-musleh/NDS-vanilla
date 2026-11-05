@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 04:30 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="countdown-overview" class="nds-content-section nds-doc-overview">
@@ -397,6 +397,15 @@ Set them on the root of Cards or Banner. Each one beats the size class.
 | `--countdown-value-size` | `var(--typo-display-sm-FS)` | The font size of the numbers |
 | `--countdown-value-line-height` | `var(--typo-display-sm-LH)` | The line height of the numbers |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_countdown.scss`.
+
+{{ site.data.tokens.reads.countdown.html }}
 
 ### JavaScript
 {: .nds-block-title}

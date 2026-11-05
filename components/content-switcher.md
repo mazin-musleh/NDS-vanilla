@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.6.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 03:28 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="switcher-overview" class="nds-content-section nds-doc-overview">
@@ -247,6 +247,15 @@ The first button is open in the markup: its `aria-selected` is `true`, and every
 | `--tab-panel-padding` | `0` at the sides, `var(--spacing-2xl)` above and below | Padding of a panel on both axes. A panel with `nds-card` keeps `var(--spacing-2xl)` at the sides |
 | `--tab-panel-padding-inline`, `--tab-panel-padding-block` | `--tab-panel-padding` | Padding of a panel on one axis |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_content-switcher.scss`.
+
+{{ site.data.tokens.reads.content-switcher.html }}
 
 ### JavaScript
 {: .nds-block-title}

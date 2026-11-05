@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "30/10/2026 - 11:52 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="chip-overview" class="nds-content-section nds-doc-overview">
@@ -236,6 +236,12 @@ Set a token at `:root`, or on a wrapper to reach every chip inside it. Give a to
 Source: the `chips` group in `_sass/tokens/_components.scss`.
 
 {{ site.data.tokens.components.chips.html }}
+
+It also reads these shared tokens. A change to one also changes other components.
+
+Source: the `var()` reads in `_sass/components/_chips.scss`.
+
+{{ site.data.tokens.reads.chips.html }}
 
 ### JavaScript
 {: .nds-block-title}

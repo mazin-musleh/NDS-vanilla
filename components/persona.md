@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "31/10/2026 - 05:53 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="persona-overview" class="nds-content-section nds-doc-overview">
@@ -238,6 +238,15 @@ Set these knobs in the `style` attribute of `.nds-persona`. The MD and SM classe
 {: .nds-table .nds-responsive}
 
 MD takes every text one step down the type scale, and SM two steps.
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_persona.scss`.
+
+{{ site.data.tokens.reads.persona.html }}
 
 </div>
   </div>

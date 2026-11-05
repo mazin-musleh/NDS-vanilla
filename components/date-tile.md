@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 12:09 AM"
+last_edit: "05/11/2026 - 12:02 PM"
 ---
 
 <section id="date-tile-overview" class="nds-content-section nds-doc-overview">
@@ -322,6 +322,15 @@ Set these on the tile, or on a parent to reach every tile inside it. A `data-sta
 | `--date-tile-color` | `var(--text-primary-strong)` | Text color. `nds-dark` keeps white text |
 | `--date-tile-dark-bg` | `var(--background-primary)` | Fill with `nds-dark` |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_date-tile.scss`.
+
+{{ site.data.tokens.reads.date-tile.html }}
 
 </div>
   </div>

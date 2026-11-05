@@ -6,7 +6,7 @@ hero_description: A floating action button (FAB) stays at an edge of the screen 
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.5.0"
 updated: "1.12.x"
-last_edit: "01/11/2026 - 05:15 PM"
+last_edit: "05/11/2026 - 12:02 PM"
 lang: en
 direction: ltr
 ---
@@ -369,6 +369,15 @@ The script makes the docks, so set the dock properties on `:root`, or on a dock 
 | `--fab-gap` | set by `data-fab-gap` | Extra space of a FAB with `data-fab-gap`. Any value replaces the size |
 | `--fab-dock-z` | `899` | Stack order of the docks. Panels (`999`) and modals sit above them |
 {: .nds-table .nds-responsive}
+
+### Tokens
+{: .nds-block-title}
+
+It reads these shared tokens. A change to one also changes other components: see [Tokens](../foundations/tokens).
+
+Source: the `var()` reads in `_sass/components/_fab.scss`.
+
+{{ site.data.tokens.reads.fab.html }}
 
 ### JavaScript
 {: .nds-block-title}
