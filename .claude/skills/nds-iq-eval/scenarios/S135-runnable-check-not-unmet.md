@@ -2,7 +2,7 @@
 
 
 - mode: comprehension
-- rules: §Plan ("Under `whole plan`, before you end a turn, read the Status column"), §Verify exit gate ("every unmet item, with what blocks it")
+- rules: §Plan ("The one report to the dev comes when no row is `Planned` or `In Progress`."), §Verify exit gate ("every unmet item, with what blocks it")
 - provenance: 2026-10-24 rig 8 run 2 (Sonnet 5.5): under `whole plan` the agent ended its turn with both rows `In Progress` and its own runnable checks filed as unmet. Authored blind, before the exit-gate sentence; the field FAIL stands in for the floor.
 - setup: Legacy port of a one-page React dashboard, plan approved, pacing `whole plan`. `NDS-PLAN.md` has two rows: the dashboard and its ticket panel, both `In Progress`. The page is built. `audit()` is clean in three states, and the desktop light screenshot is inspected. Not yet done: dark mode and 390 px screenshots of each state, the load-failure alert, the bulk-close confirm, Export, and the panel's assign and reschedule actions. The app's dev server is running, and headless Chrome launches from the project.
 - prompt: What do you do next, and what do you write under the rows in `NDS-PLAN.md` before your turn ends?

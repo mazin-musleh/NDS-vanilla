@@ -51,7 +51,7 @@ The project's agent file (`CLAUDE.md` / `AGENTS.md`) holds the anchor: the value
 6. **No legacy UI libraries: NDS and vanilla JS only.** The index maps common legacy libraries to NDS. Any other UI library is legacy too: replace it as §Design choices says. Never mix NDS and legacy UI on one page: NDS pages load the NDS runtime, exclude inherited legacy CSS, and migrate inherited JS through §JS wiring. Removing legacy libraries project-wide is the dev's decision. An NDS spike is ONE parallel page with the full head, runtime, and canonical markup; it needs no plan, and every other rule applies.
 
 7. **Replacing existing UI needs an approved porting strategy before file #1.**
-   - **Default: parallel files.** Each NDS page goes beside its legacy page on a separate route or flag; legacy stays as reference and rollback. In a client-rendered app, a parallel page is a parallel view on its own route inside the same app. Prior non-conformant NDS rebuilds in place (§Plan).
+   - **Default: parallel files.** Each NDS page goes beside its legacy page on a separate route or flag; legacy stays as reference and rollback. In a client-rendered app, a parallel page is a parallel view on its own route inside the same app; when one build loads the legacy global CSS on every route, the NDS views get their own build target in that app, with their own head and styles, reusing its code. Prior non-conformant NDS rebuilds in place (§Plan).
    - **Score the strategy:** (1) NDS markup stays in markup: HTML files or the framework's own templates (JSX, a Vue or Svelte template), never in strings that code assembles; (2) fewest edits to existing files; (3) side-by-side serving and rollback survive; (4) page JS sits beside its page. Show the dev the comparison; in-place edits and deletions need approval.
    - **Page JS** loads after the NDS scripts. Inline page JS is a module script.
 
@@ -123,12 +123,18 @@ When a plan is required, create `NDS-PLAN.md` at the project root, starting with
 **The plan is cross-session memory.**
 
 - Statuses, in the Status column only: `Planned`, `In Progress`, `Awaiting Verification`, `Built and Verified`. Only dev confirmation sets `Built and Verified`.
+- After every write to the plan, read the rows you changed back from the file. A scripted edit can miss its row and land elsewhere, and the next session trusts what the file says.
 - `Awaiting Verification` means every agent-owned check passed with its evidence recorded. An unmet required check keeps the row `In Progress`, and you run it next. An open checkbox holds only what the dev must supply or decide, never a check you can run.
 - Every open question, check, fix, or deferred decision is a `- [ ]` item, resolved as `- [x]`, never deleted. Checkboxes are not status.
-- **Pacing:** `page-by-page` (default) builds one row to `Awaiting Verification`, reports it, and waits for the dev's go before the next row. `whole plan` takes this file's defaults, verifies each page, and builds row after row without stopping until every row is at `Awaiting Verification` or blocked. Under `whole plan`, only a §Stop and ask state blocks. A missing asset or a question with a sensible default never does: ship the placeholder or the default, record it as an open checkbox, and go on. Under `whole plan`, before you end a turn, read the Status column: any other row means keep building, however long the plan. Under either pacing, a row reaches `Awaiting Verification` only when every agent-owned check passed. The row, not the agent, waits there for the dev.
+- **Pacing:** `page-by-page` (default) builds one row to `Awaiting Verification`, reports it, and waits for the dev's go before the next row. Under either pacing, a row reaches `Awaiting Verification` only when every agent-owned check passed. The row, not the agent, waits there for the dev.
+- **`whole plan`** takes this file's defaults, verifies each page, and builds row after row without stopping until every row is at `Awaiting Verification` or blocked. A finished row gets no report: record its evidence under the row and start the next row in the same turn. The one report to the dev comes when no row is `Planned` or `In Progress`. Only a §Stop and ask state blocks. A missing asset or a question with a sensible default never does: ship the placeholder or the default, record it as an open checkbox, and go on. Before you end a turn, read the Status column back from the file, never from memory: any other row means keep building, however long the plan.
 - When every row is verified, retire the plan. A new multi-page effort or a dev-requested re-audit recreates it from current state: passing pages `Awaiting Verification`, drifted pages `Planned` with their deltas named.
 - **No-plan work** covers one named page: state its source paths and open questions first; the final report carries the verification evidence and any unmet check. If the dev waived a required plan, note once that cross-session memory is lost.
 - **`NDS-REPORT.md`** holds NDS findings only: a missing API or event, a canon/rule/doc contradiction, a reproducible bug, a rule gap. Give the NDS version, instruction version, component, and a generic repro; never project markup, routes, or data.
+
+## Helper agents
+
+Do all NDS work yourself: never hand a page, a row or a check to a helper agent unless the dev asks for one. Each helper reads these rules and the docs again, and browser checks run side by side slow each other down.
 
 ## Build
 
@@ -150,10 +156,10 @@ When a plan is required, create `NDS-PLAN.md` at the project root, starting with
 Match by `use_when` across the catalog's templates, examples, and components, never by title. Read every `use_when` line, unfiltered: a keyword search may confirm a match, never pick the candidates. Then:
 
 1. A matching template → copy it.
-2. No template → the closest example.
+2. No template → the closest example: its parts are a floor, its markup is not copied as is.
 3. No match → a custom scaffold inside red line #4, reusing canonical wiring patterns.
 
-Keep the matched source's structure and put the project's content into every part; never rebuild it. It is a floor, not a ceiling: add the sections the project needs, matched through the catalog. A family's `Built and Verified` archetype outranks the cascade for its siblings. Screens that share one app shell (one layout with the same navigation) keep that shell's page shape: a matched template supplies the content inside it, never a different page shape.
+Keep the matched source's structure and put the project's content into every part; never rebuild it. It is a floor, not a ceiling: add the sections the project needs, matched through the catalog. With an example or a custom scaffold, each part's markup comes from that component's own doc, never from the example. A family's `Built and Verified` archetype outranks the cascade for its siblings. Screens that share one app shell (one layout with the same navigation) keep that shell's page shape: a matched template supplies the content inside it, never a different page shape.
 
 At each page start, resolve its recorded questions, list every UI part, and match each against the component catalog: every field, control and state is a part, so a date field is matched like a table, and so is each state the page can reach (signed out, empty, loading, failed, not found, denied, success). Name each part by the job it does, never by the legacy class or element it replaces. Record the list under the page's plan row before the first line of markup, one line per part: `part → component`, where the component is a catalog entry's name, never a bare HTML tag such as `select`, followed by every line of that component's doc that limits its use (never, only, do not) (no-plan: in the final report).
 
@@ -213,9 +219,9 @@ Never verify from code inspection. A page needs both browser passes:
 - **Every state:** run both passes, the audit included, on each state in the parts list, not only the default one. Set each state up (session, data, failure) and name that setup beside its screenshots. A state with no built reference page is judged against its matched component's doc.
 - **After an edit:** both passes and the audit run on each changed page, in the states the change touches. A change to a shared file (a layout, partial, stylesheet, or script) reopens every page that loads it.
 
-**Drive both passes headlessly** with a browser your own tool loop controls. Keep temporary tooling outside the project; never change its lockfile. Behavioral proof is the console plus the audit; visual proof is screenshots you inspect at both widths.
+**Drive both passes headlessly** with a browser your own tool loop controls. Keep scratch files (a verify config, a probe script, temporary tooling) in `tmp/` at the project root, listed in `.gitignore` and kept out of the build; never add them to the project's own `package.json` or lockfile. Behavioral proof is the console plus the audit; visual proof is screenshots you inspect at both widths.
 
-**Set the viewport, never the window.** OS window minimums clamp small widths while screenshots still crop to the requested size, faking a responsive failure. Use Puppeteer `page.setViewport()`, a Playwright context `viewport`, or CDP `Emulation.setDeviceMetricsOverride`; never `--window-size` or a window resize. No CDP-capable tool? Set one up: `puppeteer-core` or Playwright in a scratch folder outside the project, pointed at the installed Chrome. The viewport is unmet only after that attempt fails. Before trusting a screenshot, read `window.innerWidth`: it must equal the target, or the viewport is wrong, not the page.
+**Set the viewport, never the window.** OS window minimums clamp small widths while screenshots still crop to the requested size, faking a responsive failure. Use Puppeteer `page.setViewport()`, a Playwright context `viewport`, or CDP `Emulation.setDeviceMetricsOverride`; never `--window-size` or a window resize. No CDP-capable tool? Set one up: `puppeteer-core` or Playwright in the project's `tmp/`, pointed at the installed Chrome. The viewport is unmet only after that attempt fails. Before trusting a screenshot, read `window.innerWidth`: it must equal the target, or the viewport is wrong, not the page.
 
 Claim "cannot see the page" only after the headless attempt fails, and report the failure. Then take the first available fallback and report what stays unverified:
 
@@ -237,7 +243,7 @@ Claim "cannot see the page" only after the headless attempt fails, and report th
 - the mobile target width, the equal `window.innerWidth`, and the inspected mobile screenshot;
 - each state from the parts list, its setup, and its inspected screenshots at both widths;
 - the icon, dark-mode, and strict-CSP results that apply;
-- every unmet item.
+- every unmet item, with what blocks it. A check you can run is never unmet: run it.
 
 An unmet item keeps the row `In Progress`; no-plan work reports the page unverified. With every agent-owned check passed, a row may move to `Awaiting Verification` (no-plan: report that it awaits the dev). Only dev confirmation makes a page `Built and Verified`.
 
