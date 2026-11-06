@@ -386,7 +386,7 @@
 
         _setupChipStyle() {
             // Get chip classes from data-chip-class attribute on .nds-filter-applied
-            const chipClass = this._appliedContainer?.getAttribute('data-chip-class') || 'nds-primary nds-lg';
+            const chipClass = this._appliedContainer?.getAttribute('data-chip-class') || 'nds-primary';
             this._chipClass = chipClass;
         }
 

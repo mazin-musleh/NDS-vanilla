@@ -86,6 +86,9 @@
   // Disabled, the toolbar's buttons match the label, as a field's own buttons do (_form.scss).
   .nds-toolbar .nds-btn { --btn-color-disabled: var(--icon-default-disabled); }
 
+  // Groups sit beside the single link, image and source buttons, so they share one radius.
+  .nds-toolbar .nds-btn-group { --btn-group-radius: var(--radius-sm); }
+
   // Popover width via the dropmenu's own knob (the filter/date-picker
   // pattern); min() keeps it inside small viewports.
   [data-editor-link-dropmenu],

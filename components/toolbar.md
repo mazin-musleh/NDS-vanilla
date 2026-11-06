@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 12:02 PM"
+last_edit: "06/11/2026 - 02:53 AM"
 ---
 
 <section id="toolbar-overview" class="nds-content-section nds-doc-overview">
@@ -254,19 +254,6 @@ The toolbar of the [Editor](../components/editor).
             </div>
           </div>
         </li>
-        <li class="nds-card">
-          <div class="nds-card-header">
-            <div class="nds-card-featured-icon">
-              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-layout-bottom" aria-hidden="true"></i></span>
-            </div>
-          </div>
-          <div class="nds-card-content">
-            <div class="nds-card-text">
-              <span class="nds-card-title">Sub-Row Spacing</span>
-              <p class="nds-card-description">In a table sub-row, the bar leaves less space below it: <code class="nds-inline-code lang-css">var(--spacing-xl)</code> in place of <code class="nds-inline-code lang-css">var(--spacing-4xl)</code>.</p>
-            </div>
-          </div>
-        </li>
       </ul>
     </div>
   </div>
@@ -321,7 +308,7 @@ The toolbar of the [Editor](../components/editor).
 
 | Property | Default | Controls |
 |---|---|---|
-| `--toolbar-margin-block` | `0 var(--spacing-4xl)`, and `0 var(--spacing-xl)` in a table sub-row | The space above and below the bar, as `<above> <below>`. Set it on the bar or on a parent |
+| `--toolbar-margin-block` | `0 var(--spacing-xl)` | The space above and below the bar, as `<above> <below>`. Set it on the bar or on a parent |
 {: .nds-table .nds-responsive}
 
 ### Tokens

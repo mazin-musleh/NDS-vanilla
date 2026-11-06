@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 12:02 PM"
+last_edit: "06/11/2026 - 03:02 AM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -774,7 +774,7 @@ Sort is not a filter value. Decide by what the server returns. All matching item
 | `data-filter-action` | a button in a surface | `apply` applies the picked values and closes the menu. `clear` clears the menu's values and applies the result, with the menu open. `reset` clears every value and the search term |
 | `data-filter-count` | an element in a surface | The script writes the number of matching items into it |
 | `data-filter-query` | an element in a surface | The script writes the search term into it, in quotes. The search term then gets no chip |
-| `data-chip-class` | `.nds-filter-applied` | The classes of each chip. The default is `nds-primary nds-lg` |
+| `data-chip-class` | `.nds-filter-applied` | The classes of each chip. The default is `nds-primary` |
 | `data-target` | `.nds-auto-fill` | The `id` or `name` of the field a chip fills |
 | `data-autofill-apply` | `.nds-auto-fill` | A chip click also runs the search |
 | `data-filter-ignore` | a text field, or an element around it | The script does not use the field as the search field |
