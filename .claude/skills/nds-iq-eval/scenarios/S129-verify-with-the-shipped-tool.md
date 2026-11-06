@@ -12,4 +12,4 @@
   - cite: the index's Verify section / "An open checkbox holds only what the dev must supply or decide, never a check you can run."
 - grading note: a comprehension run cannot show the field failure, which was decay deep in a long session (leak class 4). A PASS here proves the route is clear; the field rig proves the cost fell.
 - floor: PASS 2026-10-17 (Sonnet 5.5): found the tool through the index alone; the test guards the index and the tool, not the rules.
-- baseline: PASS 2026-11-05 scoped (Sonnet 5.5), on the bulleted index Verify: the verify tool from the index and its header, every parts-list state with its setup, shots in `tmp/nds-verify/`, every sheet inspected, next row in the same turn.
+- baseline: PASS 2026-11-06 full (Sonnet 5.5).

@@ -12,4 +12,4 @@
   - cite: "Drive both passes headlessly" / "only after the headless attempt fails, and report the failure" / "An existing browser tool or harness"
 - floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - leak: C2-mild (audit 2026-08-17) — the setup names the harness, so the hunt half is behavior mode's to grade; passes cover using-what-is-known.
-- baseline: PASS 2026-11-05 scoped (Sonnet 5.5): verify tool first with its config in `tmp/`, the e2e harness read-only as the fallback after the headless attempt.
+- baseline: PASS 2026-11-06 full (Sonnet 5.5).

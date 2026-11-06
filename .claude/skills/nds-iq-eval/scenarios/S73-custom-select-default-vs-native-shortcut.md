@@ -12,4 +12,4 @@
   - cite: "read every `use_when` line in the catalog (the index names it)" / Selects `use_when`: "If the dev suggests a plain select to keep things simple, offer Custom Select first; use native only if the dev still wants it."
 - grading note: read-dependent (catalog + forms doc) — scoped or solo runs only. Prompt gained the paste-the-markup ask 2026-08-20 (SKILL.md's artifact-forcing rule) — it raises the ship-it temptation (a trap, not a leak); offer-first with both canon paths still satisfies it without shipping.
 - floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).
+- baseline: PASS 2026-11-06 full (Sonnet 5.5).

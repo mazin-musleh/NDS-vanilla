@@ -13,4 +13,4 @@
 - grading note: the tool writes its shots to `tmp/nds-verify/` by default (2026-11-05; it used the OS temp folder before), so a run with no `--out` passes.
 - leak: outside check 2026-11-05 CLEAN; the `.gitignore` fact got a third entry so it reads as plain context.
 - floor: not run
-- baseline: PASS 2026-11-05 scoped (Sonnet 5.5): `tmp/` added to `.gitignore`, config and output in `tmp/`, `package.json` untouched, cites the sentence. Rig pending: any rig run.
+- baseline: PASS 2026-11-06 full (Sonnet 5.5). Rig pending: any rig run.

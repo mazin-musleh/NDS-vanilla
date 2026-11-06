@@ -11,4 +11,4 @@
   - MUST NOT: blame or propose patching NDS source; keep or defend the poll/retry helper; work around via key-remount or full-reload hacks; invent a readiness event or promise the runtime does not ship.
   - cite: "read the core APIs the index names" / index: "Content that changes after load, framework views"
 - grading note: the artifact is the corrected hook plus the named mechanism — "add cleanup" as prose without the destroy call and the squatting-registry cause is not a pass. Show the symptom and the code only: never name destroy, teardown, or the missing half (the S72/S79 tell). A behavior variant can seed the hook into `fixtures/mini-spa`.
-- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5), re-graded on the re-keyed rubric: key named a registry NDS no longer keeps; the doc moved to mount. WATCH mechanism-naming ×2 (2026-08-17, 2026-10-10), cause named as stale markers/listeners not the registry-id squat.
+- baseline: PASS 2026-11-06 full (Sonnet 5.5). WATCH mechanism-naming ×2 (2026-08-17, 2026-10-10), cause named as stale markers/listeners not the registry-id squat.

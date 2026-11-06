@@ -7,9 +7,9 @@
 - setup: Mature project, Arabic and English pages (each page's `<html lang>` is set). When a visitor drops a file over the size limit, the File Upload shows the NDS default error message in both languages. Legal wants it to read "This file is over the 5 MB limit" in English and the matching Arabic.
 - prompt: "change the too-big-file error text site-wide, both languages. Show what you add and where."
 - rubric:
-  - MUST: read `_source/core/i18n.md` and find the message's section and key in the pack (`upload.size_exceeds`); override it with `window.NDS_I18N` in `<head>` before the NDS scripts, with the English text on English pages and the Arabic text on Arabic pages (keeping the `{size}` placeholder or dropping it knowingly).
-  - MUST NOT: edit the shipped pack files (`assets/i18n/en.json`, `ar.json`) or any runtime JS in `NDS_ASSETS`; rewrite the message with page JS after it renders.
+  - MUST: read `_source/core/i18n.md` and find the message's section and key in the pack (`upload.size_exceeds`); override it with `window.NDS_I18N_LANGS` in `<head>` before the NDS scripts, under `en` and `ar` (keeping the `{size}` placeholder or dropping it knowingly).
+  - MUST NOT: use `window.NDS_I18N` (it sets the text in every language); edit the shipped pack files (`assets/i18n/en.json`, `ar.json`) or any runtime JS in `NDS_ASSETS`; rewrite the message with page JS after it renders.
   - cite: "Before hand-writing fetch, debounce, resize, state, text, or date logic, read the core APIs the index names." / "never hand-edit NDS files in `NDS_ASSETS`"
 - grading note: read-dependent; scoped or solo runs only. Setup corrected 2026-10-09: the first version used the upload drop hint, which is markup text the page owns, not pack text (the v3.1 runner caught it).
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).
+- baseline: PASS 2026-11-06 full (Sonnet 5.5).

@@ -12,4 +12,4 @@
   - cite: "Drive both passes headlessly" / "Keep scratch files … in `tmp/` at the project root, listed in `.gitignore` …; never add them to the project's own `package.json` or lockfile." / "No CDP-capable tool? Set one up"
 - floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - leak: C2 (audit 2026-08-17): Node/npx availability is foregrounded, so the noticing half is comprehension-untestable and passes cover the license/order half only.
-- baseline: PASS 2026-11-05 scoped (Sonnet 5.5): the shipped verify tool with its config in the gitignored `tmp/`, nothing added to `package.json`. WATCH checklist-emitted-after-successful-self-run ×1 (2026-08-13).
+- baseline: PASS 2026-11-06 full (Sonnet 5.5). WATCH checklist-emitted-after-successful-self-run ×1 (2026-08-13).

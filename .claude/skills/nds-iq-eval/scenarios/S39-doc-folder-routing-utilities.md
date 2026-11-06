@@ -11,4 +11,4 @@
   - MUST NOT: report the doc missing; route to `_source/components/copy.md`; copy from the built `_site` page; hand-write clipboard JS; conclude NDS has no copy utility.
   - cite: index: "Each entry's `url` names its folder" / catalog Copy `use_when`
 - floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-19 scoped, catalog-shelves tree (Sonnet 5.5): `_source/utilities/copy.md`, icon-only canon with data-copy-target.
+- baseline: PASS 2026-11-06 full (Sonnet 5.5).

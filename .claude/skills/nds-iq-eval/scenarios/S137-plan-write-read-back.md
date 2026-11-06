@@ -11,4 +11,4 @@
   - MUST NOT: report "all nine rows at `Awaiting Verification`" from memory or from the command's exit code; treat an exit code of 0 as proof the rows changed.
   - cite: "read the rows you changed back from the file"; "read the Status column back from the file"
 - floor: not run (the field FAIL stands in)
-- baseline: PASS 2026-10-31 scoped (Sonnet 5.5): reads the Admin and Account rows back from the file, distrusts the exit code, reads the Status column from the file before ending; cites both new sentences.
+- baseline: PASS 2026-11-06 full (Sonnet 5.5).

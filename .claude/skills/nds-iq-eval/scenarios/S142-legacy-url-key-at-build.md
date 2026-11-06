@@ -11,4 +11,4 @@
   - MUST NOT: read `location.search` for `q` and call a Filter setter; ship the search input with no `name`.
   - cite: Filter doc: "`name=\"q\"` keeps a `q` key that links already use"
 - floor: not run
-- baseline: PASS 2026-11-02 scoped (Sonnet 5.5): `name="q"` on the search input from the doc row, no JS. WATCH field ×1 (2026-11-02, rig 8 run 6: the date group's `.nds-date-value` inputs left unnamed, so legacy `from`/`to` died).
+- baseline: PASS 2026-11-06 full (Sonnet 5.5). WATCH field ×1 (2026-11-02, rig 8 run 6: the date group's `.nds-date-value` inputs left unnamed, so legacy `from`/`to` died).

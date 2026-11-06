@@ -11,4 +11,4 @@
   - MUST NOT: hand the three options back as an open design question without reading the source; externalize or rewrite the head's inline script; reduce or reorder the head set; reach for `'unsafe-inline'`.
   - cite: "Read the source before you ask or answer an NDS question or wire page JS." / "Found → read the docs' CSP guidance and record what the head needs." / head.md: "Pick the first that fits: 1. A nonce, when your server builds each page … 2. A hash, when the page is a plain file, even one your own server sends …"
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5), re-graded on the re-keyed rubric: the loader copies the nonce on its own; the runner put it on the main script.
+- baseline: PASS 2026-11-06 full (Sonnet 5.5).

@@ -12,4 +12,4 @@
   - cite: the catalog Share `use_when` / the Share doc's Device Share
 - leak: outside check 2026-11-05 CLEAN (the setup quotes the brief's words).
 - floor: not run
-- baseline: PASS 2026-11-05 scoped (Sonnet 5.5): matched Share from the catalog line that now names the share sheet, sketched the Inline canon plus `#share-device-button` written `hidden`, no finding. Rig pending: rig 10.
+- baseline: PASS 2026-11-06 full (Sonnet 5.5). Rig pending: rig 10.

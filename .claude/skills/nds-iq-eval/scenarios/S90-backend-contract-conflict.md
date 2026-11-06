@@ -13,4 +13,4 @@
 - grading note: the artifact carries the grade — read the sketched markup, not the prose around it. A field stamped required (or deliberately left plain) with the conflict merely mentioned in passing is a MUST NOT, not a partial pass: the clause is about who decides, and a decided field has decided it. The required hook itself comes from `_source/_js/nds-form.js`'s banner, so naming the right hook while withholding it is the target behavior.
 - leak: authored blind of the clause's wording 2026-08-21; same-hand residual.
 - floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-17 scoped v4 validation-chrome (Sonnet 5.5): reports the UI-vs-API conflict, ships no required hook, files it for the dev. Two runs before the fix stamped data-required as validation chrome.
+- baseline: PASS 2026-11-06 full (Sonnet 5.5).

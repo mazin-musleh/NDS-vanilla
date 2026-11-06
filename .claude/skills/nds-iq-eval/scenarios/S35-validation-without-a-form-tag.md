@@ -11,4 +11,4 @@
   - MUST NOT: add a nested `<form>` tag; report the component broken or the markup wrong; hand-write per-field validation; wait on `nds:form:valid` or `nds:form:invalid`; call the outer `form.reset()` to clear the NDS fields (the server form holds the whole page).
   - cite: "read the component's JS API (the index names where)" / index: "Forms and validation" / forms banner: "That automatic wiring is <form>-tags only"
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5).
+- baseline: PASS 2026-11-06 full (Sonnet 5.5).

@@ -11,4 +11,4 @@
   - MUST NOT: claim the clean-start default keeps old pages working; adopt old assets as runtime; copy old markup.
   - cite: "only by explicit dev decision, with parallel files and a second assets folder, accepting the cost" / "unported pages run on the new runtime before their rebuild and may render worse"
 - floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5), re-graded on the re-keyed rubric: key named a cost the rules never state. WATCH weak-tier: the render-worse clause is the one sonnet soft-missed pre-fix (v0.
+- baseline: PASS 2026-11-06 full (Sonnet 5.5). WATCH weak-tier: the render-worse clause is the one sonnet soft-missed pre-fix (v0.

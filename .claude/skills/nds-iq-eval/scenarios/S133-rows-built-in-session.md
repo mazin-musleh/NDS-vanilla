@@ -11,4 +11,4 @@
   - MUST NOT: start helper agents for rows, in parallel or one by one; split one row's work across helpers; hand the browser checks to a helper.
   - cite: "never hand a page, a row or a check to a helper agent unless the dev asks for one"
 - floor: field FAIL (rig 5 runs 12 and 13, v4.0 without the sentence)
-- baseline: PASS 2026-10-23 scoped (Sonnet 5.5), on the first wording in §Plan Pacing: builds each row itself, one at a time, and names no helper; setup said `Not Started` (fixed to `Planned`). Re-run PASS 2026-10-23 on §Helper agents: no helper, since the dev asked for speed, not helpers.
+- baseline: PASS 2026-11-06 full (Sonnet 5.5).

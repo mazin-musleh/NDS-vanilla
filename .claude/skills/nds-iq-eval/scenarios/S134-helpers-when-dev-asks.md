@@ -11,4 +11,4 @@
   - MUST NOT: refuse the helpers or build every row itself; hand any row beyond the two the dev named to a helper.
   - cite: "unless the dev asks for one"
 - floor: not run (twin of S133)
-- baseline: PASS 2026-10-23 scoped (Sonnet 5.5): hands the two named rows to helpers, builds the rest, keeps the plan writes and the evidence check itself; flagged who writes the plan with helpers as UNDEFINED (its guess, the agent, is right).
+- baseline: PASS 2026-11-06 full (Sonnet 5.5).

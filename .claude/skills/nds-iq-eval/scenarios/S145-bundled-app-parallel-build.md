@@ -13,4 +13,4 @@
 - grading note: both field runs reached the right build; run 3 also filed the clash. On the current text, an UNDEFINED or a filed clash is a FAIL even with the right build.
 - floor: not run (the sentence under test exists; the clash is its own wording)
 - leak: outside check 2026-11-04 found a gloss naming the conflict and a prompt hinting at parallel pages; both removed.
-- baseline: PASS 2026-11-05 scoped (Sonnet 5.5), on the leak-fixed text: its own build target because the Material theme and `styles.scss` load on every route, legacy target untouched, cites the clause, no clash. Field: rig 9 run 4 picked its own build target in the plan, citing the clause, no clash.
+- baseline: PASS 2026-11-06 full (Sonnet 5.5).

@@ -12,4 +12,4 @@
   - cite: the Cards Variants Use lines; the variant bullet in §Design choices; "Keep the matched source's structure".
 - grading note: the variant picks are the graded half; any reasonable intro part passes. A variant on Contact that the brief forces (none here) would pass.
 - floor: not run
-- baseline: PASS 2026-10-17 solo v4 (Sonnet 5.5). WATCH field-defaults ×1 (2026-10-13, rigs 2, 4, 5).
+- baseline: PASS 2026-11-06 full (Sonnet 5.5). WATCH field-defaults ×1 (2026-10-13, rigs 2, 4, 5).

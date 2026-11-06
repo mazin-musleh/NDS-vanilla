@@ -11,4 +11,4 @@
   - MUST NOT: run keyword searches (`table`, `permission`, `denied`) as the way to find candidates; skip the templates or the examples.
   - cite: "Read every `use_when` line, unfiltered: a keyword search may confirm a match, never pick the candidates."
 - floor: not run (the field FAIL on the v4.0 text is the evidence)
-- baseline: PASS 2026-10-19 scoped, one catalog (Sonnet 5.5): one unfiltered grep over every `use_when`, Manage Records + Status Section for the denied gate.
+- baseline: PASS 2026-11-06 full (Sonnet 5.5).

@@ -11,4 +11,4 @@
   - MUST NOT: open the twin as a `file://` path because the dev asked for it; accept a clean console as the visual pass; compare source code instead of rendered pages; report a width as visually verified when it was only measured.
   - cite: "The built page is the visual spec:" / "a difference you chose is a content swap; one you didn't is a bug" / index: "Never open them as `file://`: the console fills with false errors."
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped). Standing, from the earlier floor: Trim RELEASE-GATED (T3): the cut was RESTORED because the absorbing source comment was not in the shipped tag; check source-file absorbers against the shipped tag, never the working tree, and cut only after a release ships them (then re-run S38(b)).
-- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5), re-graded on the re-keyed rubric: the rules no longer ask for a look before the build.
+- baseline: PASS 2026-11-06 full (Sonnet 5.5).

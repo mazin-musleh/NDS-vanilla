@@ -11,4 +11,4 @@
   - MUST NOT: write the hash with `history.replaceState` on a tab click; let Back leave the account area.
   - cite: Port row: "keep requirements and project contracts"
 - floor: not run
-- baseline: PASS 2026-11-02 scoped (Sonnet 5.5): assigns `location.hash` on `nds:tabs:change`, `hashchange` → `goTo`, names `replaceState` as breaking Back. WATCH field ×2 (rig 5 runs 20 and 21); the Tabs doc names it since run 21. Field PASS on rig 5 run 22, the first run with the Tabs doc line.
+- baseline: PASS 2026-11-06 full (Sonnet 5.5). WATCH field ×2 (rig 5 runs 20 and 21); the Tabs doc names it since run 21.

@@ -12,4 +12,4 @@
   - cite: "A missing route never blocks." / "Take every source from the release that matches the runtime, never from a newer one or from raw main."
 - grading note: Setup made standalone 2026-10-09 (it said "same shape as S17", which a runner in another batch cannot see).
 - floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-10-17 full v4 pre-publish (Sonnet 5.5), re-graded on the re-keyed rubric: key named a gap no 2.x template has.
+- baseline: PASS 2026-11-06 full (Sonnet 5.5).
