@@ -261,7 +261,7 @@ hideFeedback: true
         </div>
         <div class="nds-section-body">
             <div class="nds-grid" style="--max-track: 1fr 2fr; --mid-track: 1fr;">
-                <div class="nds-card nds-sm nds-stroke">
+                <div class="nds-card nds-sm nds-stroke" style="--card-gap: var(--spacing-4xl);">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle">
@@ -285,7 +285,7 @@ hideFeedback: true
                                 <div class="nds-stepper-base">
                                     <div class="nds-stepper-circle" data-step-text="1"></div>
                                 </div>
-                                <div class="nds-stepper-content nds-card">
+                                <div class="nds-stepper-content">
                                     <div class="nds-divider">8:00 – 8:50 AM</div>
                                     <div class="nds-stepper-text">
                                         <span class="nds-stepper-title">ACCT 301 · Managerial Accounting</span>
@@ -297,7 +297,7 @@ hideFeedback: true
                                 <div class="nds-stepper-base">
                                     <div class="nds-stepper-circle" data-step-text="2"></div>
                                 </div>
-                                <div class="nds-stepper-content nds-card">
+                                <div class="nds-stepper-content">
                                     <div class="nds-divider">10:00 – 11:15 AM</div>
                                     <div class="nds-stepper-text">
                                         <span class="nds-stepper-title">FIN 320 · Corporate Finance</span>
@@ -309,7 +309,7 @@ hideFeedback: true
                                 <div class="nds-stepper-base">
                                     <div class="nds-stepper-circle" data-step-text="3"></div>
                                 </div>
-                                <div class="nds-stepper-content nds-card">
+                                <div class="nds-stepper-content">
                                     <div class="nds-divider">1:00 – 2:15 PM</div>
                                     <div class="nds-stepper-text">
                                         <span class="nds-stepper-title">MGT 310 · Organizational Behavior</span>
@@ -320,7 +320,7 @@ hideFeedback: true
                         </div>
                     </div>
                 </div>
-                <div class="nds-card nds-sm nds-stroke">
+                <div class="nds-card nds-sm nds-stroke" style="--card-gap: var(--spacing-4xl);">
                     <div class="nds-card-header">
                         <div class="nds-card-featured-icon">
                             <span class="nds-featured-icon nds-circle">
@@ -434,7 +434,7 @@ hideFeedback: true
         </div>
         <div class="nds-section-body">
             <div class="nds-grid" style="--max-track: 2fr 1fr; --mid-track: 1fr;">
-                <div class="nds-card nds-sm nds-stroke">
+                <div class="nds-card nds-sm nds-stroke" style="--card-gap: var(--spacing-4xl);">
                     <div class="nds-card-header">
                         <div class="nds-card-text">
                             <div class="nds-card-corner">
@@ -458,7 +458,7 @@ hideFeedback: true
                                 </button>
                             </div>
                             <div class="nds-tab-content">
-                                <div class="nds-tab-panel" role="tabpanel" id="exam-finals-panel" aria-labelledby="exam-finals-tab" tabindex="0">
+                                <div class="nds-tab-panel nds-flex nds-col" role="tabpanel" id="exam-finals-panel" aria-labelledby="exam-finals-tab" tabindex="0">
                                     <span class="nds-meta">
                                         <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-hourglass" aria-hidden="true"></i><span class="nds-countdown" data-countdown="2026-12-13T09:00">First exam in <span class="nds-countdown-value" data-unit="d">--</span> days</span></span>
                                         <span class="nds-meta-item"><i class="hgi hgi-stroke hgi-calendar-03" aria-hidden="true"></i>Exam period: 13 – 17 Dec 2026</span>
@@ -551,7 +551,7 @@ hideFeedback: true
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="nds-tab-panel" role="tabpanel" id="exam-midterms-panel" aria-labelledby="exam-midterms-tab" tabindex="-1" hidden>
+                                <div class="nds-tab-panel nds-flex nds-col" role="tabpanel" id="exam-midterms-panel" aria-labelledby="exam-midterms-tab" tabindex="-1" hidden>
                                     <div class="nds-progress-bar" data-value="88" role="progressbar" aria-labelledby="midterm-average">
                                         <span class="nds-progress-label" id="midterm-average">Average: 70 of 80 marks, 88%</span>
                                         <div class="nds-progress-track">
