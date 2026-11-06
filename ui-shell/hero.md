@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "04/11/2026 - 09:55 PM"
+last_edit: "06/11/2026 - 02:01 PM"
 ---
 
 <section id="hero-overview" class="nds-content-section nds-doc-overview">
@@ -450,7 +450,7 @@ The main hero shows one slide at a time, and the Swiper script moves between the
 | `--hero-overlay-color` | `var(--background-image-overlay)` | The color of the tint on a main hero slide, for one slide that needs another color. On the sub hero, the tint is the section's own background |
 | `--background-image-overlay` | `var(--colors-primary-950)` | The default tint color, a theme token. A custom brand sets it to `var(--colors-neutral-950)`. Do not set it |
 | `--background-hero` | `var(--background-primary-strong)` | The color behind the main hero, a theme token. It shows until the first image loads |
-| `--background-sub-hero` | `var(--background-primary-light)` | The color of the sub hero, a theme token. It keeps a little brand color, so a dull brand's tint does not turn gray. A theme that sets this token gets its exact color. High contrast mode changes it |
+| `--background-sub-hero` | `var(--background-primary-light)` | The color of the sub hero, a theme token. High contrast mode changes it |
 {: .nds-table .nds-responsive}
 
 ### JavaScript

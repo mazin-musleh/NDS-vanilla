@@ -173,15 +173,6 @@
     --controls-text-error: var(--text-error);
 }
 
-// A dull brand's light tint is near gray and matches the top bar: raise its color to 0.012,
-// under DGA's own 0.0123, so DGA and bright brands are unchanged. A gray has no hue: c * 4 keeps it gray.
-@supports (color: oklch(from white l c h)) {
-    :root,
-    [data-theme~="dark"]:not(:root) {
-        --background-sub-hero: oklch(from var(--background-primary-light) l max(c, min(0.012, c * 4)) h);
-    }
-}
-
 /* ── Dark Mode — the same layer's dark half ──
    Sections run in the SAME ORDER as the light block above, so a token and its
    dark rebind sit at the same relative position in both halves.
