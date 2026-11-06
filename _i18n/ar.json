@@ -92,7 +92,9 @@
             "other": "{n} فعالية"
         },
         "previous_week": "الأسبوع السابق",
-        "next_week": "الأسبوع التالي",
+        "next_week": "الأسبوع القادم",
+        "this_week": "هذا الأسبوع",
+        "last_week": "الأسبوع الماضي",
         "previous_month": "الشهر السابق",
         "next_month": "الشهر التالي",
         "today": "اليوم",

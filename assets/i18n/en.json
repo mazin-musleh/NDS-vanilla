@@ -89,6 +89,8 @@
   "day_empty": "No events on this day",
   "previous_week": "Previous week",
   "next_week": "Next week",
+  "this_week": "This week",
+  "last_week": "Last week",
   "previous_month": "Previous month",
   "next_month": "Next month",
   "today": "Today",

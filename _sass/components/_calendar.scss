@@ -29,6 +29,11 @@
     color: var(--text-default);
 }
 
+.nds-calendar-week-tag {
+    margin-inline-start: var(--spacing-sm);
+    vertical-align: middle;
+}
+
 // The week in data-calendar-second, on its own line.
 .nds-calendar-title-second {
     display: block;
@@ -332,6 +337,11 @@
     // The tag still floats; a title line that wraps under it keeps a gap.
     > .nds-btn {
         padding: var(--spacing-sm);
+    }
+
+    // A card that a taller neighbor stretches keeps its text at the top.
+    .nds-drawer-item {
+        align-self: flex-start;
     }
 
     .nds-drawer-item-head .nds-tag {

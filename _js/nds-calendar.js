@@ -33,7 +33,8 @@
  *   data-calendar-view       on a button: grid | rows | month. The current one is pressed
  *   data-calendar-second     hijri | gregory: the title and each day button also show the dates
  *                            in that calendar
- *   .nds-calendar-title      the script writes the week's dates, or the month, into it
+ *   .nds-calendar-title      the script writes the week's dates, or the month, into it, and a tag
+ *                            for this week, next week or last week
  *   .nds-calendar-days       the script writes the weekday names, a button per day and a narrow
  *                            Grid's empty-day messages (.nds-calendar-day-none) into it
  *   .nds-calendar-events     a list: each <li> is an event, on the day of its first time[datetime]
@@ -94,6 +95,8 @@
         day_empty: 'No events on this day',
         previous_week: 'Previous week',
         next_week: 'Next week',
+        this_week: 'This week',
+        last_week: 'Last week',
         previous_month: 'Previous month',
         next_month: 'Next month',
     });
@@ -102,6 +105,9 @@
         prev: { week: 'previous_week', month: 'previous_month' },
         next: { week: 'next_week', month: 'next_month' },
     });
+
+    // The title's tag, by the days from this week's start to the shown week's.
+    const WEEK_TAGS = Object.freeze({ '-7': 'last_week', 0: 'this_week', 7: 'next_week' });
 
     let globalsWired = false;
 
@@ -322,6 +328,17 @@
             const title = el.querySelector('.nds-calendar-title');
             if (title) {
                 title.textContent = this._getTitle(calendar, lang, isMonth);
+                const tagKey = isMonth ? null : this._getWeekTagKey();
+                if (tagKey) {
+                    const tag = document.createElement('span');
+                    tag.className = 'nds-tag nds-xs nds-rounded nds-calendar-week-tag';
+                    tag.classList.toggle('nds-green', tagKey === 'this_week');
+                    const label = document.createElement('span');
+                    label.className = 'nds-label';
+                    label.textContent = strings.text(tagKey, null, lang);
+                    tag.append(label);
+                    title.append(tag);
+                }
                 if (secondCalendar) {
                     const sub = document.createElement('span');
                     sub.className = 'nds-calendar-title-second';
@@ -481,6 +498,11 @@
 
         // The month: "October 2026". A week, or a month in the second calendar: "18 – 24 Oct 2026";
         // the start names its month or year only when it differs from the end's.
+        _getWeekTagKey() {
+            const thisWeek = NDS.Date.getStartOfWeek(NDS.Date.getToday(), NDS.Date.getWeekStart(this._element));
+            return WEEK_TAGS[getDayCount(thisWeek, this._start)];
+        }
+
         _getTitle(calendar, lang, isMonth) {
             if (isMonth) return NDS.Date.format(this._start, { calendar, locale: lang, format: 'MMMM YYYY', era: true });
             const start = NDS.Date.toParts(this._start, calendar);

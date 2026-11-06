@@ -441,7 +441,19 @@
   "section": "calendar",
   "key": "next_week",
   "en": "Next week",
-  "ar": "الأسبوع التالي"
+  "ar": "الأسبوع القادم"
+ },
+ {
+  "section": "calendar",
+  "key": "this_week",
+  "en": "This week",
+  "ar": "هذا الأسبوع"
+ },
+ {
+  "section": "calendar",
+  "key": "last_week",
+  "en": "Last week",
+  "ar": "الأسبوع الماضي"
  },
  {
   "section": "calendar",

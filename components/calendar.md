@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 12:02 PM"
+last_edit: "06/11/2026 - 03:38 PM"
 ---
 
 <section id="calendar-overview" class="nds-content-section nds-doc-overview">
@@ -657,6 +657,7 @@ The With Filter structure adds a [Filter](../components/filter) on the events li
 |---|---|---|
 | `nds-calendar` | `div` | The calendar |
 | `nds-calendar-title` | `p` in the toolbar | The script writes the week's dates in it, such as "18 – 24 Oct 2026", or the month, such as "October 2026" |
+| `nds-calendar-week-tag` | `span.nds-tag` in the title | Written by the script beside the dates of this week (`nds-green`), next week or last week. Other weeks and the month view have none |
 | `nds-calendar-views` | `.nds-btn-group` | The Grid, Rows and Month buttons |
 | `nds-calendar-days` | `div` | The script writes the weekday names and a button per day in it. Give it `role="group"` and an `aria-label` |
 | `nds-calendar-weekday` | `span` | Written by the script: the weekday names over the month view's columns. Hidden in Grid and Rows, where each day button names its day |
