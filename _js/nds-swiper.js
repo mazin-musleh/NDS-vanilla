@@ -748,8 +748,11 @@
             if (this._slides.length === 0) return;
 
             // Measure actual step from DOM once (accounts for fractional widths + gap).
-            if (this._slides.length > 1 && !this._measuredStep) {
+            // Again at a new width: a resize's own scrollend can beat the ResizeObserver that clears it.
+            const width = this.wrapper.clientWidth;
+            if (this._slides.length > 1 && (!this._measuredStep || this._stepWidth !== width)) {
                 this._measuredStep = Math.abs(this._slides[1].offsetLeft - this._slides[0].offsetLeft);
+                this._stepWidth = width;
             }
 
             this.currentIndex = Math.max(0, Math.min(Math.round(this._getPosition()), this._maxIndex));
