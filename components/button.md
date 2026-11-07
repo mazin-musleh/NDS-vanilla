@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 12:02 PM"
+last_edit: "07/11/2026 - 11:48 AM"
 ---
 
 <section id="btn-overview" class="nds-content-section nds-doc-overview">
@@ -310,7 +310,7 @@ Set these on the button itself. There, a size property wins over the size classe
 | `--btn-gap` | `var(--spacing-md)` | Space between the icon and the label. `nds-md` sets `var(--spacing-sm)`, `nds-sm` sets `var(--spacing-xs)` |
 | `--btn-radius` | `var(--radius-sm)` | Corner radius |
 | `--btn-FS`, `--btn-LH` | from `--btn-size` | Label font size and line height |
-| `--btn-icon-size` | `size / 2 + 4px` | Icon size |
+| `--btn-icon-size` | `size / 2 + 4px`, `size / 2 + 2px` on a progress button | Icon size |
 | `--btn-bg`, `--btn-bg-hover`, `--btn-bg-active`, `--btn-bg-selected`, `--btn-bg-disabled` | set by the variant | Background in each state |
 | `--btn-color`, `--btn-color-hover`, `--btn-color-disabled` | set by the variant | Text and icon color |
 | `--btn-border`, `--btn-border-hover`, `--btn-border-active`, `--btn-border-selected`, `--btn-border-disabled` | set by the variant | Border color in each state |

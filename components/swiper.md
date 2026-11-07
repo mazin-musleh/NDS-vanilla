@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 12:02 PM"
+last_edit: "07/11/2026 - 11:48 AM"
 ---
 
 <section id="swiper-overview" class="nds-content-section nds-doc-overview">
@@ -96,6 +96,28 @@ Pick another component when:
     <div class="nds-swiper-pagination"></div>
   </div>
 </div>
+</script>
+<script type="text/html" id="swiper-pause" data-canon>
+<button type="button" class="nds-btn nds-secondary nds-icon-only nds-circle nds-md nds-progress nds-pause" aria-label="Pause slides" data-i18n-aria-label="swiper.pause_slides">
+  <i class="nds-icon nds-hgi-pause" aria-hidden="true"></i>
+  <span class="nds-progress-circle" aria-hidden="true">
+    <svg width="100%" height="100%" viewBox="0 0 24 24">
+      <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
+      <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2" stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
+    </svg>
+  </span>
+</button>
+</script>
+<script type="text/html" id="swiper-pause-hero" data-canon>
+<button type="button" class="nds-btn nds-secondary nds-icon-only nds-progress nds-pause" aria-label="Pause slides" data-i18n-aria-label="swiper.pause_slides">
+  <i class="nds-icon nds-hgi-pause" aria-hidden="true"></i>
+  <span class="nds-progress-circle" aria-hidden="true">
+    <svg width="100%" height="100%" viewBox="0 0 24 24">
+      <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
+      <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2" stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
+    </svg>
+  </span>
+</button>
 </script>
 <script type="text/html" id="swiper-hero" data-canon>
 <section class="nds-hero-section">
@@ -233,6 +255,10 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 | Bullets | SM | `.nds-sm` | `.nds-swiper-pagination` | 8px bullets |
 | Peek | Peek (hint: Shows the edge of the next slide) | `--peek: 40px` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | Shows 40px of the next slide, so the user sees there is more. Any length works |
 | Loop | Loop | `[data-swiper-loop]` | `.nds-swiper:not(.nds-spotlight)` | An endless row: the first slide follows the last |
+| Autoplay | Autoplay | `[data-swiper-autoplay="5000"]` | `.nds-swiper:is([data-swiper-loop], .nds-spotlight)` | The row moves by itself every 5000 ms. It needs Loop, or a spotlight, which always loops |
+| Pause button | Pause button | canon #swiper-pause | `.nds-swiper:not(.nds-hero) .nds-swiper-buttons` | A secondary button that pauses and plays the row, with a ring that counts down to the next move. It needs Autoplay |
+| Pause button | Pause button | canon #swiper-pause-hero | `.nds-hero .nds-swiper-buttons` | The same button at the size of the hero arrows |
+| Pause button | Pause button | — | `.nds-swiper[data-swiper-autoplay]` | Only on a row with autoplay |
 | Loading | Loading (hint: Skeleton placeholders) | `.nds-loading` | `.nds-swiper:not(.nds-hero):not(.nds-spotlight)` | Every card shows as a skeleton while its data loads. Remove the class when the data is in |
 {: #swiper-variants-table .nds-table .nds-responsive}
 
@@ -261,6 +287,11 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 {: .nds-block-title}
 
 `data-swiper-loop` makes the row endless in both directions. The script copies slides to both ends. Screen readers skip the copies and Tab never lands on them, but a click on one works. When the row stops on a copy, it jumps to the real slide with no visible move. The swiper ignores the attribute unless it has more slides than its largest slides per view. A loop never turns its arrows off, and it has no `at-start` or `at-end` state.
+
+### Autoplay
+{: .nds-block-title}
+
+`data-swiper-autoplay` moves a looping row one page at a time by itself. Its value is the wait in milliseconds, 5000 if you leave it empty. It needs `data-swiper-loop`, or a spotlight, which always loops. With no loop the row does not move, so a swiper with too few slides to loop has no autoplay. The row waits while the pointer is on it, a finger touches it, keyboard focus is in it, the tab is hidden or it is off screen. A user who asks for reduced motion gets a paused row. The optional `nds-pause` button stops and starts the row, and its pause icon turns to play while the row is paused. With `nds-progress` its ring counts down to the next move and stops whenever the row waits. The wait then goes on from where it stopped. A move the user makes starts the wait again.
 
 ### Middle Arrows
 {: .nds-block-title}
@@ -417,6 +448,10 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 - Put one element in each spotlight slide, such as an image or a card. The spotlight shrinks and grows that one element.
 - With `nds-middle` on a hero, keep the slide text away from the sides, or center it. The arrows sit over the edges of the slide.
 - Give each arrow an `aria-label` that names its direction.
+- Always write `data-swiper-loop` with `data-swiper-autoplay`.
+- WCAG asks for a way to stop content that moves by itself. Add the `nds-pause` button if your site must meet it.
+- Keep the autoplay wait at 5000 ms or more, so the user can read a slide before it moves.
+- Do not use autoplay on a row the user must read in order, such as steps or a form.
 
 </div>
   </div>
@@ -436,6 +471,7 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 |---|---|---|
 | `nds-oncolor` | `.nds-swiper` | Light bullets, arrows and section text, for a dark or image background. The Hero structure has it. It reaches subtle arrows only: add `nds-oncolor` to a primary or neutral arrow yourself |
 | `nds-swiper-buttons` | `div` in `.nds-swiper-navigation` | Holds the previous and next buttons |
+| `nds-pause` | `.nds-btn` | Makes the button pause and play an autoplay row. Write the pause icon in it: it turns to play while paused. Add `nds-progress` and the ring for the countdown. Style it as any button. It can sit anywhere in the swiper. The script hides it when the row has no autoplay |
 | `nds-prev`, `nds-next` | `.nds-btn` | Makes the button move one page, and gives it its arrow icon. Style it as any button. The buttons can sit anywhere in the swiper |
 | `nds-bullet` | `button` | A bullet. The script makes them in `.nds-swiper-pagination` |
 | `nds-swiper-clone` | `.nds-swiper-slide` | The script writes it on each copy it makes for a loop |
@@ -447,8 +483,10 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 | Attribute | Element | Effect |
 |---|---|---|
 | `data-swiper-loop` | `.nds-swiper` | An endless row. See Loop under Behavior |
+| `data-swiper-autoplay` | `.nds-swiper` | The wait between moves in milliseconds, 5000 when empty. It needs a loop. See Autoplay under Behavior |
 | `data-src`, `data-srcset` | `img`, `source` in a slide | The image source, loaded when the slide comes near the screen |
 | `hidden` | `.nds-swiper-navigation`, hero slides after the first | Hides them until the script shows them |
+| `aria-pressed` | `.nds-pause` | The script writes `true` when the row is paused by the button, `pause()` or reduced motion, and `false` on play |
 | `data-state` | `.nds-swiper` | The script writes `at-start` on the first page and `at-end` on the last, and both when there is one page. Use them to style the ends: `.nds-swiper[data-state~="at-end"]` |
 | `data-swiper-clone` | `.nds-swiper-clone` | The index of the real slide the copy repeats. Use it to update the copies of a slide you change at runtime |
 | `data-state` | `.nds-bullet`, spotlight `.nds-swiper-slide` | The script writes `active` on the current bullet. In a spotlight it also writes `active` on the open slide and its loop copies, and `after` on the slides after it |
@@ -469,6 +507,7 @@ Set these in the `style` of `.nds-swiper`. Set the bullet colors on the swiper o
 | `--gap` | `var(--spacing-xl)` | Space between slides |
 | `--padding` | `0px` | Space at each end of the row. In a breakout body it is the page padding, so the row runs to the screen edge and its first slide lines up with the content above it |
 | `--total` | `1` | Number of slides. The script writes it |
+| `--progress-duration` | the autoplay wait | Length of the ring on `.nds-pause`. The script writes it from `data-swiper-autoplay` |
 | `--swiper-bullet-default` | `var(--swiper-bullet-background-default)` | Bullet color |
 | `--swiper-bullet-default-hovered` | `var(--swiper-bullet-background-hovered)` | Bullet color on hover |
 | `--swiper-bullet-active` | `var(--swiper-bullet-background-active)` | Color of the current bullet |
@@ -507,6 +546,7 @@ A swiper far down the page sets up when its section is about to show, so the pag
 | `NDS.Swiper.destroy(el)` | Stops one swiper and puts its markup back as written. `NDS.init.destroy()` calls it |
 | `instance.next()`, `instance.prev()` | Moves one page |
 | `instance.goTo(index, { instant })` | Moves to a slide, no further than the last page. A looping swiper has no last page, so it moves to any slide. `instant: true` moves at once |
+| `instance.play()`, `instance.pause()` | Starts and stops an autoplay row, as the `nds-pause` button does. They do nothing on a row with no autoplay |
 | `instance.realIndex` | The current slide. Loop copies are not counted |
 | `instance.wrapper`, `instance.currentIndex`, `instance.lastIndex`, `instance.slidesPerView` | Read-only state. `currentIndex` counts loop copies |
 | `instance.toRealIndex(index)` | Returns the slide of a row index. A row index counts loop copies |

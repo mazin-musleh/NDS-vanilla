@@ -1891,6 +1891,12 @@
  },
  {
   "section": "swiper",
+  "key": "pause_slides",
+  "en": "Pause slides",
+  "ar": "إيقاف الشرائح مؤقتًا"
+ },
+ {
+  "section": "swiper",
   "key": "previous_slide",
   "en": "Previous slide",
   "ar": "الشريحة السابقة"

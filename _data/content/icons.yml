@@ -51,6 +51,8 @@ hgi:
   - nds-hgi-link-04
   - nds-hgi-link-square-02
   - nds-hgi-highlighter
+  - nds-hgi-pause
+  - nds-hgi-play
   # View
   - nds-hgi-eye
   - nds-hgi-view-off

@@ -12,6 +12,7 @@
  *   instance.realIndex              the current slide, clones not counted (currentIndex counts them)
  *   instance.toRealIndex(index)     a row index (clones counted) → its slide
  *   instance.goToFull(index, { instant })   move to a row index; every move runs through it
+ *   instance.play() / .pause()      start and stop an autoplay row
  *   instance.destroy()
  * Events:
  *   nds:swiper:change (bubbles)     detail.index = the real slide now at rest, after every move
@@ -31,6 +32,17 @@
  *                                                jump when the scroll rests on one. Needs
  *                                                more slides than the largest tier's count,
  *                                                else ignored. goTo() indices stay real
+ *   data-swiper-autoplay                         a looping row moves by itself every N ms
+ *                                                (default 5000); no loop, no autoplay.
+ *                                                Waits on hover, a touch, keyboard focus, a
+ *                                                hidden tab or off screen. Starts paused for
+ *                                                reduced motion
+ *   .nds-pause                                   optional button: pause and play. aria-pressed
+ *                                                while paused, with a play icon;
+ *                                                hidden with no autoplay.
+ *                                                With .nds-progress its ring counts down the
+ *                                                wait (the script writes --progress-duration)
+ *                                                and stops whenever the row waits
  *   on a slide's <img>: data-src · data-srcset   lazy sources, written to src/srcset when
  *                                                the slide nears the viewport; once the
  *                                                images on screen finish, the page either
@@ -66,6 +78,7 @@
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
     const strings = NDS.i18n.getStrings('swiper', {
         go_to_page: 'Go to page {n}',
+        pause_slides: 'Pause slides',
     });
 
     // ==============================================
@@ -170,6 +183,7 @@
             this._navigation = findOwnPart('.nds-swiper-navigation');
             this._prevButton = findOwnPart('.nds-prev');
             this._nextButton = findOwnPart('.nds-next');
+            this._pauseButton = findOwnPart('.nds-pause');
 
             this._isHero = container.classList.contains('nds-hero');
             this._spotlight = container.classList.contains('nds-spotlight');
@@ -273,6 +287,8 @@
             this._offDrawn = null;
             this.abortController = new AbortController();
             this._readKnobs();
+            this._isAutoplay = this._loop && this._container.hasAttribute('data-swiper-autoplay');
+            if (this._pauseButton) this._pauseButton.toggleAttribute('hidden', !this._isAutoplay);
             // An unencoded space in a srcset URL breaks the candidate. Before _setupLoop,
             // so the clones copy the repaired value.
             this._container.querySelectorAll('img[srcset], source[srcset]').forEach(el => {
@@ -320,6 +336,8 @@
             this._syncBoundaryClasses();
             this._syncSpotlight();
             this.lastIndex = this.currentIndex;
+
+            if (this._isAutoplay) this._setupAutoplay();
 
             this._container.setAttribute('data-nds-swiper-initialized', 'true');
         }
@@ -859,6 +877,97 @@
         }
 
         // ==============================================
+        // AUTOPLAY
+        // ==============================================
+
+        _setupAutoplay() {
+            const { signal } = this.abortController, container = this._container;
+            this._autoplayDelay = this._autoplayRemaining = parseInt(container.getAttribute('data-swiper-autoplay')) || 5000;
+            if (this._pauseButton) this._pauseButton.style.setProperty('--progress-duration', `${this._autoplayDelay}ms`);
+            this._autoplayHolds = new Set();
+            const addHoldListeners = (reason, onTypes, offTypes) => {
+                onTypes.forEach(type => container.addEventListener(type, () => this._setAutoplayHold(reason, true), { passive: true, signal }));
+                offTypes.forEach(type => container.addEventListener(type, () => this._setAutoplayHold(reason, false), { passive: true, signal }));
+            };
+            addHoldListeners('hover', ['pointerenter'], ['pointerleave']);
+            // A pan cancels the pointer while the finger stays down.
+            addHoldListeners('touch', ['touchstart'], ['touchend', 'touchcancel']);
+            // Keyboard focus only: a mouse click on a slide would stop the row until the next click elsewhere.
+            container.addEventListener('focusin', (e) => { if (e.target.matches(':focus-visible')) this._setAutoplayHold('focus', true); }, { signal });
+            container.addEventListener('focusout', (e) => { if (!container.contains(e.relatedTarget)) this._setAutoplayHold('focus', false); }, { signal });
+            document.addEventListener('visibilitychange', () => this._setAutoplayHold('tab', document.hidden), { signal });
+            this._offAutoplayView = NDS.onIntersect(container, (entry) => this._setAutoplayHold('view', !entry.isIntersecting));
+            if (this._pauseButton) this._addActivationListeners(this._pauseButton, () => {
+                if (this._autoplayHolds.has('pause')) this.play(); else this.pause();
+            });
+            this._syncPauseButton();
+            if (NDS.prefersReducedMotion) this.pause(); else this._syncAutoplay();
+        }
+
+        _setAutoplayHold(reason, isHeld) {
+            if (isHeld) this._autoplayHolds.add(reason); else this._autoplayHolds.delete(reason);
+            this._syncAutoplay();
+        }
+
+        _getAutoplayRing() {
+            return this._pauseButton?.querySelector('.nds-progress-track')?.getAnimations()[0];
+        }
+
+        // A hold stops the wait where it is, so the timer and the ring stay together.
+        _syncAutoplay() {
+            const ring = this._getAutoplayRing();
+            if (this._autoplayHolds.size) {
+                if (this._autoplayTimer) {
+                    clearTimeout(this._autoplayTimer);
+                    this._autoplayTimer = null;
+                    this._autoplayRemaining -= Date.now() - this._autoplayStart;
+                }
+                ring?.pause();
+                return;
+            }
+            ring?.play();
+            if (this._autoplayTimer) return;
+            this._autoplayStart = Date.now();
+            this._autoplayTimer = setTimeout(() => {
+                this._autoplayTimer = null;
+                // Reduced motion can turn on while the row plays. A play() after it is the user's or the site's own choice.
+                if (NDS.prefersReducedMotion && !this._isPlayChosen) { this.pause(); return; }
+                this.next();
+                this._resetAutoplayWait();
+            }, this._autoplayRemaining);
+        }
+
+        _resetAutoplayWait() {
+            clearTimeout(this._autoplayTimer);
+            this._autoplayTimer = null;
+            this._autoplayRemaining = this._autoplayDelay;
+            const ring = this._getAutoplayRing();
+            if (ring) ring.currentTime = 0;
+            this._syncAutoplay();
+        }
+
+        _syncPauseButton() {
+            if (!this._pauseButton) return;
+            NDS.aria.pressed(this._pauseButton, this._autoplayHolds.has('pause'));
+        }
+
+        play() {
+            this._ensureInit();
+            if (!this._autoplayHolds) return;
+            this._isPlayChosen = true;
+            this._setAutoplayHold('pause', false);
+            this._syncPauseButton();
+        }
+
+        pause() {
+            this._ensureInit();
+            if (!this._autoplayHolds) return;
+            this._isPlayChosen = false;
+            this._setAutoplayHold('pause', true);
+            this._syncPauseButton();
+        }
+
+        // ==============================================
         // LAZY LOADING
         // ==============================================
 
@@ -946,6 +1055,8 @@
             this._syncButtons();
             this._syncBoundaryClasses();
             this._syncSpotlight();
+            // Under a hold the move is the user's, so it gets the full wait. Autoplay's own move already restarted it.
+            if (this._autoplayHolds?.size) this._resetAutoplayWait();
             this._container.dispatchEvent(new CustomEvent('nds:swiper:change', {
                 bubbles: true, detail: { index: this.realIndex }
             }));
@@ -1033,6 +1144,16 @@
             if (this._navigation) this._navigation.toggleAttribute('hidden', this._navHadHidden);
             if (this._prevButton) this._prevButton.style.removeProperty('display');
             if (this._nextButton) this._nextButton.style.removeProperty('display');
+            if (this._pauseButton) {
+                this._pauseButton.removeAttribute('hidden');
+                this._pauseButton.removeAttribute('aria-pressed');
+                this._pauseButton.style.removeProperty('--progress-duration');
+            }
+            if (this._autoplayHolds) {
+                clearTimeout(this._autoplayTimer);
+                if (this._offAutoplayView) this._offAutoplayView();
+                this._autoplayHolds = null;
+            }
             activeSwipers.delete(this);
             resizeSwipers.delete(this);
             if (this._offResize) { this._offResize(); this._offResize = null; }

@@ -20,7 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Examples** — Nine new pages, such as Student Portal, Events Calendar and Open Data.
 - **Formatted Input** — Fields with a set shape and a check: phone, national ID, IBAN, VAT and vehicle plate. See the [Formatted Input](https://mazin-musleh.github.io/NDS-vanilla/components/formatted-input.html) page.
 - **Forms** — A reset restores every NDS field, a sent form cannot submit twice, and a label can carry a Help tooltip.
-- **Icons** — 19 more UI icons that paint with no font wait. See the [Icons](https://mazin-musleh.github.io/NDS-vanilla/foundations/icons.html) page.
+- **Icons** — 20 more UI icons that paint with no font wait. See the [Icons](https://mazin-musleh.github.io/NDS-vanilla/foundations/icons.html) page.
 - **Image** — Crops a photo to a set shape. See the [Image](https://mazin-musleh.github.io/NDS-vanilla/components/image.html) page.
 - **Internationalization** — NDS words follow the page language, and change with it without a reload. See the [Internationalization](https://mazin-musleh.github.io/NDS-vanilla/core/i18n.html) page.
 - **JavaScript API** — One set of methods to read, write and clear a field's value, and to destroy a component.
@@ -32,6 +32,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Print** — A printed page keeps its content and drops the page chrome. See the [Print](https://mazin-musleh.github.io/NDS-vanilla/utilities/print.html) page.
 - **Selection** — Select-all works on any list: table rows, cards or checkboxes.
 - **Session Timeout** — A warning modal with a countdown before an idle session ends. See the [Session Timeout](https://mazin-musleh.github.io/NDS-vanilla/ui-shell/session-timeout.html) page.
+- **Swiper** — Autoplay on a looping row, with an optional pause button. See the [Swiper](https://mazin-musleh.github.io/NDS-vanilla/components/swiper.html) page.
 - **Template zip** — A script runs browser checks on your own pages.
 - **Templates** — A Life Journeys hub for the services around a life event. See the [Life Journeys Template](https://mazin-musleh.github.io/NDS-vanilla/templates/life-journey-template.html).
 - **Time Picker** — A time field the user types into or picks from. See the [Time Picker](https://mazin-musleh.github.io/NDS-vanilla/components/time-picker.html) page.

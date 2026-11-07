@@ -824,6 +824,10 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
   // PROGRESS STATES
   // ==============================================
 
+  &.nds-progress {
+    --_btn-icon-size: var(--btn-icon-size, calc(var(--_btn-size) / 2 + 2px));
+  }
+
   .nds-progress-circle {
     display: block;
     position: absolute;

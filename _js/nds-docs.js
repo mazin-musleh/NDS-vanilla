@@ -428,6 +428,8 @@
                 order.forEach(function (group) { if (isChosen(group)) setChoice(root, active[group], 'insert'); });
                 if (dom) undo();
                 order.forEach(function (group) { if (isChosen(group)) setChoice(root, active[group], 'markup'); });
+                // A chosen option another choice just turned off (Pause button with Autoplay off) adds nothing: its part was in first, so it comes out.
+                if (dom) order.forEach(function (group) { if (isChosen(group) && isPart(active[group]) && !isApplicable(active[group])) getPartIds(active[group]).forEach(function (id) { removePart(root, id); }); });
                 // A JS part whose create({ k: v }) target a markup row just set lands on a second pass.
                 if (!dom) order.forEach(function (group) { if (isChosen(group)) setChoice(root, active[group], 'insert'); });
             });

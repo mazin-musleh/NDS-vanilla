@@ -419,6 +419,7 @@
  },
  "swiper": {
   "go_to_page": "Go to page {n}",
+  "pause_slides": "Pause slides",
   "previous_slide": "Previous slide",
   "next_slide": "Next slide"
  },

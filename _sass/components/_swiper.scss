@@ -209,6 +209,17 @@ $section-breakout: ':where(.nds-content-wrapper, .nds-hero-section, .nds-content
     touch-action: manipulation;
 }
 
+.nds-swiper .nds-pause {
+    touch-action: manipulation;
+    // Its bars fill the icon's box, so the default size touches the ring.
+    --btn-icon-size: calc(var(--_btn-size) / 2 - 2px);
+
+    // Paused, it offers play.
+    &[aria-pressed="true"] .nds-icon {
+        --nds-icon: var(--nds-icon-play);
+    }
+}
+
 // ==============================================
 // PAGINATION
 // ==============================================
@@ -320,7 +331,7 @@ $section-breakout: ':where(.nds-content-wrapper, .nds-hero-section, .nds-content
 // wash here, the same way content-switcher does for its tabs.
 // ponytail: subtle is the canonical arrow variant; a primary/neutral arrow
 // still adds nds-oncolor on the button itself.
-.nds-swiper.nds-oncolor :is(.nds-prev, .nds-next) {
+.nds-swiper.nds-oncolor :is(.nds-prev, .nds-next, .nds-pause) {
     --btn-bg: transparent;
     --btn-bg-hover: var(--button-background-transparent-hovered);
     --btn-bg-active: var(--button-background-transparent-pressed);
@@ -418,6 +429,13 @@ $section-breakout: ':where(.nds-content-wrapper, .nds-hero-section, .nds-content
 
         .nds-next {
             inset-inline-end: var(--_middle-inset);
+        }
+
+        // In the start gutter, below the arrow that holds its middle.
+        .nds-pause {
+            position: absolute;
+            inset-block-end: 0;
+            inset-inline-start: var(--_middle-inset);
         }
 
         .nds-swiper-pagination {
@@ -571,7 +589,7 @@ $section-breakout: ':where(.nds-content-wrapper, .nds-hero-section, .nds-content
     .nds-swiper {
         --_peek: 0px;
 
-        :is(.nds-swiper-navigation, .nds-swiper-pagination, .nds-prev, .nds-next) {
+        :is(.nds-swiper-navigation, .nds-swiper-pagination, .nds-prev, .nds-next, .nds-pause) {
             display: none !important;
         }
     }
