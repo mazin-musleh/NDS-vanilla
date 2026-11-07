@@ -307,7 +307,7 @@ sidemenu_mode: false
                 </div>
                 <div class="nds-section-body">
                     <!-- --gap is set here, not inherited, so an ancestor can never retune this list -->
-                    <ul id="faculty-publication-list" class="nds-list nds-grid nds-paged-content nds-stroke"
+                    <ul id="faculty-publication-list" class="nds-list nds-grid nds-paged-content nds-stroke nds-horizontal"
                         style="--per-page: 5; --gap: var(--spacing-xl);">
                         <li class="nds-page-item nds-card" style="--card-width: 100%;">
                             <div class="nds-card-content">
