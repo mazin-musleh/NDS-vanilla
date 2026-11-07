@@ -12,7 +12,7 @@ Determine hero sliders source:
 {%- assign hero_sliders = site.data.hero[hero_file_name] %}
 {%- endif %}
 <section class="nds-hero-section">
-    <div class="nds-swiper nds-hero nds-oncolor nds-full-width" data-swiper-loop style="--total: {{ hero_sliders | size }}">
+    <div class="nds-swiper nds-hero nds-oncolor nds-full-width" data-swiper-loop data-swiper-autoplay style="--total: {{ hero_sliders | size }}">
         <div class="nds-swiper-wrapper">
             {%- for slide in hero_sliders %}
             <div class="nds-swiper-slide nds-content-wrapper{%- if slide.class %} {{ slide.class }}{%- endif %}"{%- unless forloop.first %} hidden{%- endunless %}>
@@ -69,6 +69,15 @@ Determine hero sliders source:
             <div class="nds-swiper-buttons">
                 <button class="nds-btn nds-subtle nds-icon-only nds-prev" aria-label="Previous slide" data-i18n-aria-label="swiper.previous_slide"></button>
                 <button class="nds-btn nds-subtle nds-icon-only nds-next" aria-label="Next slide" data-i18n-aria-label="swiper.next_slide"></button>
+                <button type="button" class="nds-btn nds-secondary nds-icon-only nds-progress nds-pause" aria-label="Pause slides" data-i18n-aria-label="swiper.pause_slides">
+                    <i class="nds-icon nds-hgi-pause" aria-hidden="true"></i>
+                    <span class="nds-progress-circle" aria-hidden="true">
+                        <svg width="100%" height="100%" viewBox="0 0 24 24">
+                            <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
+                            <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2" stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
+                        </svg>
+                    </span>
+                </button>
             </div>
             <div class="nds-swiper-pagination"></div>
         </div>
