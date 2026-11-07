@@ -8,7 +8,7 @@ breadcrumb:
 hero_title: "Government Services"
 hero_description: "Browse all available government digital services"
 sidemenu_mode: false
-last_edit: "30/10/2026 - 11:14 AM"
+last_edit: "07/11/2026 - 10:00 PM"
 ---
 
 <section id="services-list" class="nds-content-section">
@@ -68,20 +68,20 @@ last_edit: "30/10/2026 - 11:14 AM"
                     <span class="nds-label" data-i18n="filter.applied_filters">Applied Filters:</span>
                     <div class="nds-chips"></div>
                 </div>
-                <div class="nds-auto-fill" data-target="filter-search" data-filter-target="services_list_content">
+                <div class="nds-auto-fill" data-target="filter-search" data-filter-target="services_list_content" data-autofill-apply>
                     <span class="nds-label">Most Searched:</span>
                     <div class="nds-chips">
                         <button class="nds-chip nds-neutral nds-rounded nds-item">
                             <i class="hgi hgi-stroke hgi-plus-sign"></i>
-                            <span class="nds-label">Tag 1</span>
+                            <span class="nds-label">Registration</span>
                         </button>
                         <button class="nds-chip nds-neutral nds-rounded nds-item">
                             <i class="hgi hgi-stroke hgi-plus-sign"></i>
-                            <span class="nds-label">Tag 2</span>
+                            <span class="nds-label">Certificate</span>
                         </button>
                         <button class="nds-chip nds-neutral nds-rounded nds-item">
                             <i class="hgi hgi-stroke hgi-plus-sign"></i>
-                            <span class="nds-label">Tag 3</span>
+                            <span class="nds-label">License</span>
                         </button>
                     </div>
                 </div>

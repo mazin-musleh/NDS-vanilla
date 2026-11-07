@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 07:40 PM"
+last_edit: "07/11/2026 - 09:50 PM"
 ---
 
 <section id="mainnav-overview" class="nds-content-section nds-doc-overview">
@@ -157,6 +157,23 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
                         <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                         <span class="nds-label" data-hidden="sm sr" data-i18n="filter.search">Search</span>
                       </button>
+                    </div>
+                    <div class="nds-auto-fill" data-target="main-search" data-autofill-apply>
+                      <span class="nds-label" data-i18n="form.suggestions">Suggestions:</span>
+                      <div class="nds-chips">
+                        <button type="button" class="nds-chip nds-neutral nds-rounded nds-item">
+                          <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
+                          <span class="nds-label">Renewal</span>
+                        </button>
+                        <button type="button" class="nds-chip nds-neutral nds-rounded nds-item">
+                          <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
+                          <span class="nds-label">License</span>
+                        </button>
+                        <button type="button" class="nds-chip nds-neutral nds-rounded nds-item">
+                          <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
+                          <span class="nds-label">Registration</span>
+                        </button>
+                      </div>
                     </div>
                   </form>
                 </div>
@@ -320,6 +337,23 @@ The [Header](../ui-shell/header) shows how the main navigation sits with the top
               <span class="nds-label" data-hidden="sm sr" data-i18n="filter.search">Search</span>
             </button>
           </div>
+          <div class="nds-auto-fill" data-target="main-search" data-autofill-apply>
+            <span class="nds-label" data-i18n="form.suggestions">Suggestions:</span>
+            <div class="nds-chips">
+              <button type="button" class="nds-chip nds-neutral nds-rounded nds-item">
+                <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
+                <span class="nds-label">Renewal</span>
+              </button>
+              <button type="button" class="nds-chip nds-neutral nds-rounded nds-item">
+                <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
+                <span class="nds-label">License</span>
+              </button>
+              <button type="button" class="nds-chip nds-neutral nds-rounded nds-item">
+                <i class="nds-icon nds-hgi-plus-sign" aria-hidden="true"></i>
+                <span class="nds-label">Registration</span>
+              </button>
+            </div>
+          </div>
         </form>
       </div>
     </div>
@@ -477,7 +511,7 @@ The canon carries the Services dropdown, the search action and the language acti
 | Dropdowns (any) | Columns (default) | canon `#mainnav-columns` | `.nds-nav-primary` | A menu of titled columns, `.nds-nav-columns`. Pick it to group many pages by topic. `nds-multi-col` spreads one long list over 3 columns |
 | Dropdowns (any) | Row list | canon `#mainnav-rows` | `.nds-nav-primary` | A menu of one row of links, `.nds-nav-row`. Pick it for a short flat list |
 | Many links | Many links (hint: The links do not fit, so the show more arrow appears) | canon `#mainnav-more` | `.nds-nav-primary` | Six more links. Shows how the bar scrolls the links that do not fit |
-| Actions (any) | Search (default) | canon `#mainnav-search` | `.nds-nav-actions` | A search box that opens below the bar |
+| Actions (any) | Search (default) | canon `#mainnav-search` | `.nds-nav-actions` | A search box that opens below the bar, with suggestion chips. A click on a chip runs the search |
 | Actions (any) | Notifications | canon `#mainnav-notifications` | `.nds-nav-actions` | A small `nds-fit` menu of messages, with a count badge |
 | Actions (any) | Guest (limit: 1 account) | canon `#mainnav-guest` | `.nds-nav-actions` | The sign-in link, for a visitor who is not signed in. Show Guest or User, never both |
 | Actions (any) | User (limit: 1 account) | canon `#mainnav-user` | `.nds-nav-actions` | The signed-in person's avatar, with a small `nds-fit` menu of account links |

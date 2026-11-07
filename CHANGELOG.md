@@ -54,6 +54,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Icons** — The content icon font is the current Hugeicons set, and a page loads only the parts it uses.
 - **JavaScript API** — Methods take an element, an id or a selector.
 - **Link** — Links are primary by default everywhere.
+- **Main Navigation** — The search box shows suggestion chips, and a click on one runs the search.
 - **Modal and Panels** — Both use the browser's native dialog, and panels stack.
 - **Page Layout** — A side menu page is flat on desktop, and the raised look is opt-in.
 - **Performance** — Faster start and response on busy phones, and sections far from the screen draw later.
