@@ -8,7 +8,7 @@ breadcrumb:
 hero_title: "Search Results"
 hero_description: "Find NDS pages matching your query"
 sidemenu_mode: false
-last_edit: "07/11/2026 - 09:42 PM"
+last_edit: "07/11/2026 - 09:57 PM"
 ---
 
 <section id="search-results" class="nds-content-section">
@@ -17,7 +17,7 @@ last_edit: "07/11/2026 - 09:42 PM"
             <h2 class="nds-section-title">Results <span data-filter-query data-filter-target="search_results_content"></span></h2>
         </div>
         <div class="nds-section-body">
-            <div class="nds-toolbar">
+            <div class="nds-toolbar" style="--toolbar-margin-block: var(--spacing-4xl);">
                 <div class="nds-toolbar-row">
                     <div class="nds-toolbar-start">
                         <span class="nds-toolbar-text" data-paged-target="search_results_content">Showing <b data-paged-from>1</b>&ndash;<b data-paged-to>{{ site.data.catalog | size | at_most: 10 }}</b> of <b data-paged-count>{{ site.data.catalog | size }}</b> result(s)</span>
@@ -108,7 +108,7 @@ last_edit: "07/11/2026 - 09:42 PM"
                     </div>
                 </div>
             </div>
-            <ul id="search_results_content" class="nds-list nds-paged-content nds-grid nds-flat nds-divided"
+            <ul id="search_results_content" class="nds-list nds-paged-content nds-grid nds-stroke"
                 style="--per-page: 10; --max-col: 1; --mid-col: 1; --min-col: 1;">
                 {% for item in site.data.catalog %}
                 {%- assign item_path = item.url | split: "#" | first %}
