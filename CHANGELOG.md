@@ -71,7 +71,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Dropmenu and Tooltip** — Fixes to placement, search and cleanup on destroy.
 - **Editor, Code, Copy and Export** — Fixes to paste, the toolbar, copy and exported files.
 - **Filter and Pagination** — Fixes to shared links, URLs and results that load by AJAX.
-- **Form fields** — Fixes to validation, keyboard use, read-only and disabled states, and screen reader names.
+- **Form fields** — Fixes to validation, keyboard use, suggestion chips, read-only and disabled states, and screen reader names.
 - **Main Navigation and Side Menu** — Fixes to closing, focus and the phone layout.
 - **Page layout and content** — Fixes to Page Layout, Section, Prose and Table of Contents.
 - **Swiper, Tabs, Accordion and Stepper** — Fixes to layout, looping and loading.

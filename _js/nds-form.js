@@ -754,7 +754,10 @@
                 NDS.setValue(target, itemText);
                 NDS.field.refresh(target, { validate: true });
                 if (container.hasAttribute('data-autofill-apply')) {
-                    target.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+                    // A synthetic Enter never submits a form, so a search box's button is clicked, as Autocomplete does.
+                    var searchBtn = target.closest('.nds-search-content')?.querySelector('.nds-search-btn');
+                    if (searchBtn) searchBtn.click();
+                    else target.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
                 }
             }
         }

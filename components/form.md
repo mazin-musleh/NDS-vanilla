@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 03:30 PM"
+last_edit: "07/11/2026 - 09:55 PM"
 lang: en
 direction: ltr
 ---
@@ -561,7 +561,7 @@ The eye button switches the field between hidden and plain text, and its label b
 | `autofocus` | the `<input>`, `<textarea>` or `<select>` | The script focuses the field again at start, without a scroll |
 | `data-loading-slot` | a button in `.nds-form-action` | The button that shows the spinner while the field loads. Without one, the script adds one |
 | `data-target` | `.nds-auto-fill` | The `id` or `name` of the input that a suggestion chip fills. A click on an `.nds-item` writes its text in the input. See [Filter](../components/filter) |
-| `data-autofill-apply` | `.nds-auto-fill` | A chip click also sends Enter to the input, so the search runs |
+| `data-autofill-apply` | `.nds-auto-fill` | A chip click also runs the search: it clicks the search box's `.nds-search-btn`, or sends Enter to the input when there is none |
 {: .nds-table .nds-responsive}
 
 ### Validation Messages
