@@ -261,6 +261,11 @@
       color: var(--_inline-desc, var(--_card-title-color));
     }
 
+    :where(.nds-alert-icon) {
+      align-self: flex-start;
+      margin-block: var(--spacing-xs);
+    }
+
     .nds-alert-content {
       flex-direction: row;
       flex-wrap: wrap;
