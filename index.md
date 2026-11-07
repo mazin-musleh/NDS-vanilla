@@ -8,8 +8,8 @@ direction: ltr
 # gzip -c <file> | wc -c, divided by 1024: nds-main.min.js, every other bundle but nds-audit, _site/.../nds.critical.min.css
 bundle_sizes:
   critical_css: 10 # nds.critical.min.css
-  core_js: 43 # nds-main.min.js (loads on every page)
-  total_js: 154 # every assets/js/*.min.js except nds-audit (full library, demand-loaded)
+  core_js: 64 # nds-main.min.js (loads on every page)
+  total_js: 190 # every assets/js/*.min.js except nds-audit (full library, demand-loaded)
 ---
 {%- assign templates = site.data.catalog | where_exp: "e", "e.url contains '/templates/'" %}
 {%- assign examples = site.data.catalog | where_exp: "e", "e.url contains '/examples/'" %}
@@ -362,7 +362,7 @@ bundle_sizes:
 <section id="architecture" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <div class="nds-section-action nds-wrap">
+            <div class="nds-section-action">
                 <div class="nds-progress-circle nds-lg" data-num="100" data-max="100" role="progressbar" aria-labelledby="home-performance-text">
                     <svg width="120" height="120" viewBox="0 0 24 24">
                         <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2" />

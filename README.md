@@ -14,7 +14,7 @@ NDS-vanilla is an independent build of the same design system in plain HTML, CSS
 - **Framework-free.** Plain HTML, CSS, and JavaScript, with zero runtime dependencies.
 - **More than components.** A layout system, page templates, live documentation, and a 4-tier design-token system (palette, primitives, semantic, component).
 - **DGA page templates.** Common government service pages as working code, built on the DGA tokens, typography, spacing, and interaction patterns.
-- **Fast.** A PageSpeed score of 100, with LCP, CLS, and INP passing. A ~43 KB gzipped core loads on every page; the rest of the ~154 KB library loads only where a page needs it. Critical CSS is ~10 KB.
+- **Fast.** A PageSpeed score of 100, with LCP, CLS, and INP passing. A ~64 KB gzipped core loads on every page; the rest of the ~190 KB library loads only where a page needs it. Critical CSS is ~10 KB.
 - **Bilingual and themeable.** Arabic (RTL) first, with full English (LTR) support. Light and dark mode, and re-branding from one OKLCH seed color, a predefined theme, or a stylesheet theme. One HTML attribute switches the theme, with no rebuild.
 
 > **Accessibility:** Components are tested by hand against WCAG 2.1 AA. An automated audit with axe-core and screen readers is planned. Known gaps are tracked in issues labeled `accessibility`.
