@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/11/2026 - 11:48 AM"
+last_edit: "07/11/2026 - 06:56 PM"
 ---
 
 <section id="swiper-overview" class="nds-content-section nds-doc-overview">
@@ -291,7 +291,7 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 ### Autoplay
 {: .nds-block-title}
 
-`data-swiper-autoplay` moves a looping row one page at a time by itself. Its value is the wait in milliseconds, 5000 if you leave it empty. It needs `data-swiper-loop`, or a spotlight, which always loops. With no loop the row does not move, so a swiper with too few slides to loop has no autoplay. The row waits while the pointer is on it, a finger touches it, keyboard focus is in it, the tab is hidden or it is off screen. A user who asks for reduced motion gets a paused row. The optional `nds-pause` button stops and starts the row, and its pause icon turns to play while the row is paused. With `nds-progress` its ring counts down to the next move and stops whenever the row waits. The wait then goes on from where it stopped. A move the user makes starts the wait again.
+`data-swiper-autoplay` moves a looping row one page at a time by itself. Its value is the wait in milliseconds, 5000 if you leave it empty. It needs `data-swiper-loop`, or a spotlight, which always loops. With no loop the row does not move, so a swiper with too few slides to loop has no autoplay. The row waits while the pointer is on it, a finger touches it, keyboard focus is in it, the tab is hidden or it is off screen. A user who asks for reduced motion gets a paused row. The optional `nds-pause` button stops and starts the row, and its pause icon turns to play while the row is paused. With `nds-progress` its ring counts down to the next move and stops whenever the row waits. The wait then goes on from where it stopped. Each new slide gets the full wait, half a second after it moves in. Pause empties the ring, and play goes on to the next slide at once.
 
 ### Middle Arrows
 {: .nds-block-title}

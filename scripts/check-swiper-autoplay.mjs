@@ -35,17 +35,22 @@ const check = (name, ok, detail = '') => {
 };
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
-async function open(attrs, { classes, slides, reduced, width = 1280 } = {}) {
+async function open(attrs, { classes, slides, reduced, hidden, width = 1280 } = {}) {
     const page = await browser.newPage({ viewport: { width, height: 800 }, reducedMotion: reduced ? 'reduce' : 'no-preference' });
     await page.goto(`${BASE}/playground.html`, { waitUntil: 'load' });
     await page.evaluate(() => NDS.init.ready);
-    await page.evaluate((html) => {
+    await page.evaluate(([html, hidden]) => {
+        // A background tab: the page is hidden before the swiper starts.
+        if (hidden) {
+            window.__hidden = true;
+            Object.defineProperty(document, 'hidden', { configurable: true, get: () => window.__hidden });
+        }
         const host = document.createElement('div');
         host.id = 'host';
         host.innerHTML = html;
         document.querySelector('main, .nds-content, body').prepend(host);
         NDS.init.mount(host);
-    }, fixture(attrs, classes, slides));
+    }, [fixture(attrs, classes, slides), hidden]);
     await page.waitForSelector('#sw[data-nds-swiper-initialized]', { state: 'attached' });
     await page.evaluate(() => {
         document.getElementById('sw').scrollIntoView({ block: 'center', behavior: 'instant' });
@@ -66,7 +71,7 @@ async function movesDuring(page, ms = DELAY * 3) {
 
 try {
     let page = await open(AUTO);
-    check('moves by itself', (await movesDuring(page)) >= 2);
+    check('moves by itself', (await movesDuring(page)) >= 1);
 
     // Hover
     await page.hover('#sw .nds-swiper-wrapper');
@@ -144,6 +149,13 @@ try {
     check('play() under reduced motion is the site\'s choice', (await movesDuring(page)) >= 1);
     await page.close();
 
+    // Opened in a background tab: waits until the tab is shown.
+    page = await open(AUTO, { hidden: true });
+    check('a hidden tab at start holds it', (await movesDuring(page)) === 0);
+    await page.evaluate(() => { window.__hidden = false; document.dispatchEvent(new Event('visibilitychange')); });
+    check('showing the tab starts it', (await movesDuring(page)) >= 1);
+    await page.close();
+
     // Keeps going past the last slide, always forward.
     page = await open(AUTO);
     await wait(1200);
@@ -201,14 +213,33 @@ try {
     await wait(400);
     r = await ring();
     check('the next wait starts a new ring', r.state === 'running' && r.time < 1500, JSON.stringify(r));
+    // A move with nothing holding the row (a swipe after the finger lifts, a script) restarts the wait too.
+    await wait(1200);
+    const before = await moves(page);
+    await page.evaluate(() => document.getElementById('sw').ndsSwiper.next());
+    await wait(1000);
+    r = await ring();
+    check('a move with no hold restarts the ring', r.state === 'running' && r.time < 1000, JSON.stringify(r));
+    // The ring waits on a new slide before it starts.
+    const landed = await page.evaluate(() => new Promise((resolve) => {
+        const el = document.getElementById('sw'), a = () => el.querySelector('.nds-progress-track').getAnimations()[0];
+        el.addEventListener('nds:swiper:change', () => setTimeout(() => resolve({ state: a().playState, time: a().currentTime }), 250), { once: true });
+        el.ndsSwiper.next();
+    }));
+    check('a new slide waits before its ring starts', landed.state === 'paused' && landed.time === 0, JSON.stringify(landed));
+    await wait(1600);
+    check('and the next slide gets the full wait', (await moves(page)) - before <= 2, `${(await moves(page)) - before} changes`);
     await page.click('#sw .nds-pause');
     await page.mouse.move(0, 0);
     const pausedRing = await ring();
     await wait(700);
     r = await ring();
-    check('the button stops the ring', r.state === 'paused' && r.time === pausedRing.time);
+    check('the button stops and empties the ring', r.state === 'paused' && r.time === 0 && pausedRing.time === 0, `${pausedRing.time} -> ${r.time}`);
     await page.locator('#sw').screenshot({ path: 'tmp/swiper-autoplay/ring-paused.png' });
+    const atPlay = await moves(page);
     await page.click('#sw .nds-pause');
+    await wait(700);
+    check('play goes to the next slide at once', (await moves(page)) > atPlay);
     await page.mouse.move(0, 0);
     await wait(900);
     check('the button starts the ring', (await ring()).state === 'running');

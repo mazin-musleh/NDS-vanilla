@@ -886,6 +886,7 @@
         _setupAutoplay() {
             const { signal } = this.abortController, container = this._container;
             this._autoplayDelay = this._autoplayRemaining = parseInt(container.getAttribute('data-swiper-autoplay')) || 5000;
+            this._autoplayIndex = this.realIndex;
             if (this._pauseButton) this._pauseButton.style.setProperty('--progress-duration', `${this._autoplayDelay}ms`);
             this._autoplayHolds = new Set();
             const addHoldListeners = (reason, onTypes, offTypes) => {
@@ -904,6 +905,8 @@
                 if (this._autoplayHolds.has('pause')) this.play(); else this.pause();
             });
             this._syncPauseButton();
+            // visibilitychange only reports a change, so a page opened in a background tab starts held.
+            if (document.hidden) this._autoplayHolds.add('tab');
             if (NDS.prefersReducedMotion) this.pause(); else this._syncAutoplay();
         }
 
@@ -935,8 +938,9 @@
                 this._autoplayTimer = null;
                 // Reduced motion can turn on while the row plays. A play() after it is the user's or the site's own choice.
                 if (NDS.prefersReducedMotion && !this._isPlayChosen) { this.pause(); return; }
+                // The move's own change restarts the wait, as any other move's does.
+                this._autoplayRemaining = this._autoplayDelay;
                 this.next();
-                this._resetAutoplayWait();
             }, this._autoplayRemaining);
         }
 
@@ -946,7 +950,10 @@
             this._autoplayRemaining = this._autoplayDelay;
             const ring = this._getAutoplayRing();
             if (ring) ring.currentTime = 0;
-            this._syncAutoplay();
+            // The slide lands before its wait starts.
+            clearTimeout(this._autoplaySettle);
+            this._autoplaySettle = setTimeout(() => this._setAutoplayHold('settle', false), 500);
+            this._setAutoplayHold('settle', true);
         }
 
         _syncPauseButton() {
@@ -958,6 +965,11 @@
             this._ensureInit();
             if (!this._autoplayHolds) return;
             this._isPlayChosen = true;
+            // Play goes on to the next slide at once, and that one gets the full wait.
+            if (this._autoplayHolds.has('pause')) {
+                this.next();
+                this._resetAutoplayWait();
+            }
             this._setAutoplayHold('pause', false);
             this._syncPauseButton();
         }
@@ -967,6 +979,10 @@
             if (!this._autoplayHolds) return;
             this._isPlayChosen = false;
             this._setAutoplayHold('pause', true);
+            // Play moves on at once, so the wait so far is dropped.
+            this._autoplayRemaining = this._autoplayDelay;
+            const ring = this._getAutoplayRing();
+            if (ring) ring.currentTime = 0;
             this._syncPauseButton();
         }
 
@@ -1058,8 +1074,11 @@
             this._syncButtons();
             this._syncBoundaryClasses();
             this._syncSpotlight();
-            // Under a hold the move is the user's, so it gets the full wait. Autoplay's own move already restarted it.
-            if (this._autoplayHolds?.size) this._resetAutoplayWait();
+            // Each slide gets the full wait, whoever moved it. Keyed on the slide: the loop's silent jump repeats it.
+            if (this._autoplayHolds && this.realIndex !== this._autoplayIndex) {
+                this._autoplayIndex = this.realIndex;
+                this._resetAutoplayWait();
+            }
             this._container.dispatchEvent(new CustomEvent('nds:swiper:change', {
                 bubbles: true, detail: { index: this.realIndex }
             }));
@@ -1154,6 +1173,7 @@
             }
             if (this._autoplayHolds) {
                 clearTimeout(this._autoplayTimer);
+                clearTimeout(this._autoplaySettle);
                 if (this._offAutoplayView) this._offAutoplayView();
                 this._autoplayHolds = null;
             }
