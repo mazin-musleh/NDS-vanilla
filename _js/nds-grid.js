@@ -13,13 +13,16 @@
  *   - Only a .nds-grid with .nds-divided, or a Drawer list in columns under .nds-drawer.nds-divided,
  *     is watched: a plain grid runs no script.
  *   - The rows are measured, not counted: a grid whose columns change with its width re-marks
- *     itself when its first item resizes.
+ *     itself when its first shown item resizes.
+ *   - An item hidden by Pagination ([hidden]) or Filter ([data-filtered]) is skipped: the last
+ *     row is the last one on screen, re-marked when either attribute changes.
  */
 // NDS Grid — the last visual row of a divided grid, which no selector can reach in an auto-fit grid
 (() => {
     'use strict';
 
     const SELECTOR = '.nds-grid.nds-divided, .nds-drawer.nds-divided .nds-drawer-list.nds-grid';
+    const ITEM_SELECTOR = SELECTOR.split(', ').map((grid) => `${grid} > *`).join(', ');
     const CLASS_NAME = 'nds-last-row';
 
     // Reads only; returns the class writes so the pooled ResizeObserver can
@@ -29,9 +32,18 @@
         if (!items.length) return;
         let first = items.length; // hidden/non-laid-out grid: no last row
         if (grid.offsetParent) {
-            const lastTop = items[items.length - 1].offsetTop;
-            first = items.length - 1;
-            while (first > 0 && items[first - 1].offsetTop === lastTop) first--;
+            // offsetParent is null on an item that is not drawn (a hidden page or filtered-out item).
+            let last = items.length - 1;
+            while (last >= 0 && !items[last].offsetParent) last--;
+            if (last >= 0) {
+                const lastTop = items[last].offsetTop;
+                first = last;
+                for (let i = last - 1; i >= 0; i--) {
+                    if (!items[i].offsetParent) continue;
+                    if (items[i].offsetTop !== lastTop) break;
+                    first = i;
+                }
+            }
         }
         return () => { for (let i = 0; i < items.length; i++) items[i].classList.toggle(CLASS_NAME, i >= first); };
     }
@@ -53,16 +65,24 @@
     const offs = new WeakMap();
     let releasing = false;
     function unwatch(grid) { offs.get(grid)?.(); offs.delete(grid); }
+    function rewatch(grid) { if (offs.has(grid)) { unwatch(grid); watch(grid); } }
+    // Attributes only, no layout read: a hidden item measures 0 and never resizes again.
+    function findFirstShown(grid) {
+        for (const item of grid.children) if (!item.hidden && !item.hasAttribute('data-filtered')) return item;
+        return null;
+    }
     function watch(grid) {
         if (offs.has(grid)) return;
-        const first = grid.firstElementChild;
+        const first = findFirstShown(grid);
         // A grid in a section nobody has scrolled to marks once it draws (NDS.onElementResize).
         offs.set(grid, first ? NDS.onElementResize(first, () => mark(grid)) : () => {});
         if (releasing) return;
         releasing = true;
         NDS.onDomRemove(SELECTOR, (grids) => grids.forEach(unwatch));
         // A re-observed first item delivers again, so the grid re-marks in the observer without forcing layout.
-        NDS.onChildrenChange(SELECTOR, (grids) => grids.forEach((gridEl) => { if (offs.has(gridEl)) { unwatch(gridEl); watch(gridEl); } }));
+        NDS.onChildrenChange(SELECTOR, (grids) => grids.forEach(rewatch));
+        // A page turn or a filter changes which items are drawn without adding or removing any.
+        NDS.onAttributeChange(ITEM_SELECTOR, ['hidden', 'data-filtered'], (items) => new Set(items.map((item) => item.parentElement)).forEach(rewatch));
     }
 
     function findGrids(container) {
