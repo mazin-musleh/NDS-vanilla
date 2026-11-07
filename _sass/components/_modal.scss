@@ -61,6 +61,8 @@
       --_modal-gutter-block: min(var(--spacing-lg), var(--_card-gap));
       margin: calc(-1 * var(--_modal-gutter-block)) calc(-1 * var(--_modal-gutter-inline));
       padding: var(--_modal-gutter-block) var(--_modal-gutter-inline);
+      // The card's width: 100% would keep the margins from widening the box, so it sat off center.
+      width: auto;
 
       // With Scroll More, its inner box is the one that scrolls: the side gutter moves there.
       &.nds-scroll-more {
