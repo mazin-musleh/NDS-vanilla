@@ -15,6 +15,7 @@ hero_float_actions: []
 # layout + layout_class name the page shape: the Front Matter table in layout/page-layout.md maps each key to its markup. This file's body is only the inner content.
 layout_class: nds-has-sideinfo
 sidemenu_mode: false
+last_edit: "07/11/2026 - 09:01 PM"
 ---
 
 <section id="faculty-profile" class="nds-content-section nds-sideinfo-section">

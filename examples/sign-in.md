@@ -9,6 +9,7 @@ page_bg: assets/img/riyadhcenter.webp
 bg_opacity_top: 60%
 bg_opacity_bottom: 90%
 breadcrumb: [["Examples", "/examples"]]
+last_edit: "05/11/2026 - 04:16 PM"
 ---
 {% assign brand_logo = page.brandLogo | default: site.brandLogo %}
 {% assign brand_width = page.headerBrandW | default: site.headerBrandW %}

@@ -10,6 +10,7 @@ breadcrumb:
 lang: en
 direction: ltr
 sidemenu_mode: false
+last_edit: "03/11/2026 - 10:23 PM"
 ---
 
 <!-- Layout rules: a booking on one page, in the order booking sites use (what, where, when, who), with a live summary beside it.
