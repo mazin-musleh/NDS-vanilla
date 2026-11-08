@@ -116,14 +116,13 @@ $a11y-filters: (
     --border-neutral-tertiary:           var(--_hc-fg);
     --border-primary:                    var(--_hc-fg);
 
-    // Primary-button bg/label tokens — consumed directly by pagination's
+    // Primary-button bg tokens — consumed directly by pagination's
     // active-page indicator, .nds-transparent labels, ellipsis-menu dots.
     // (The primary button itself overrides --btn-bg in the scoped rules
     // below, so these don't drive its background.)
     --button-background-primary-default: var(--_hc-fg);
     --button-background-primary-hovered: var(--_hc-fg);
     --button-background-primary-pressed: var(--_hc-fg);
-    --button-label-primary-default:      var(--_hc-fg);
 
     // Date-picker selected/endpoint fill + today ring follow the mono treatment;
     // the range bar drops its brand hue to a neutral wash (grouping info kept).

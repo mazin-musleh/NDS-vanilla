@@ -503,7 +503,7 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
       --btn-bg-active: var(--button-background-danger-secondary-pressed);
       --btn-bg-selected: var(--button-background-danger-secondary-selected);
       --btn-color: var(--button-label-danger-secondary-default);
-      --btn-loading-color: var(--button-background-danger-primary-default);
+      --btn-loading-color: var(--button-label-danger-secondary-default);
     }
 
     &.nds-secondary-outline {
@@ -518,7 +518,7 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
       --btn-border-active: var(--button-border-danger);
       --btn-border-selected: var(--button-border-danger);
       --btn-border-disabled: var(--border-neutral-secondary);
-      --btn-loading-color: var(--button-background-danger-primary-default);
+      --btn-loading-color: var(--button-label-danger-secondary-default);
     }
 
     &.nds-subtle {
@@ -528,7 +528,7 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
       --btn-bg-selected: var(--button-background-danger-secondary-selected);
       --btn-bg-disabled: transparent;
       --btn-color: var(--button-label-danger-secondary-default);
-      --btn-loading-color: var(--button-background-danger-primary-default);
+      --btn-loading-color: var(--button-label-danger-secondary-default);
     }
 
     &.nds-transparent {
@@ -575,7 +575,7 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
         --btn-bg-hover: var(--colors-red-100);
         --btn-bg-active: var(--colors-red-200);
         --btn-bg-selected: var(--colors-red-50);
-        --btn-color: var(--button-background-danger-primary-default);
+        --btn-color: var(--colors-red-600);
       }
 
       &.nds-secondary-outline {
@@ -585,7 +585,7 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
         --btn-bg-selected: var(--colors-red-50);
         --btn-bg-disabled: var(--button-background-transparent-default);
         --btn-color: var(--button-label-danger-primary-default-oncolor);
-        --btn-color-hover: var(--button-background-danger-primary-hovered);
+        --btn-color-hover: var(--colors-red-700);
         --btn-border: var(--colors-red-200);
         --btn-border-hover: var(--colors-red-200);
         --btn-border-active: var(--colors-red-200);
@@ -593,11 +593,11 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
         --btn-border-disabled: var(--border-neutral-secondary);
 
         &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
-          color: var(--button-background-danger-primary-selected);
+          color: var(--colors-red-800);
         }
 
         &:is(:active, [data-state~="pressed"]) {
-          color: var(--button-background-danger-primary-pressed);
+          color: var(--colors-red-900);
         }
       }
 
@@ -608,14 +608,14 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
         --btn-bg-selected: var(--colors-red-50);
         --btn-bg-disabled: transparent;
         --btn-color: var(--button-label-danger-primary-default-oncolor);
-        --btn-color-hover: var(--button-background-danger-primary-hovered);
+        --btn-color-hover: var(--colors-red-700);
 
         &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
-          color: var(--button-background-danger-primary-selected);
+          color: var(--colors-red-800);
         }
 
         &:is(:active, [data-state~="pressed"]) {
-          color: var(--button-background-danger-primary-pressed);
+          color: var(--colors-red-900);
         }
       }
 
