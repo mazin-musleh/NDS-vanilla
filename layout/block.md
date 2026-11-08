@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "02/11/2026 - 09:34 PM"
+last_edit: "08/11/2026 - 04:21 PM"
 ---
 
 <section id="block-overview" class="nds-content-section nds-doc-overview">
@@ -186,7 +186,7 @@ Pick another component when:
 |---|---|---|
 | `nds-block` | Any element | Full width, with a 32px gap below. No gap on the last child, and a divider right after it sets its own space instead |
 | `nds-block-title` | A heading at the top of a block | The block's title. No gap below it when it is the last child |
-| `nds-cq` | `.nds-block` | Makes a grid inside follow the block's width. Opt-in, because it traps `position: fixed` children, such as a modal or a dropmenu, inside the block. See [Grid](../layout/grid) |
+| `nds-cq` | `.nds-block` | Makes a grid inside follow the block's width. Opt-in, because the block no longer takes its width from its content. See [Grid](../layout/grid) |
 {: .nds-table .nds-responsive}
 
 ### CSS Custom Properties

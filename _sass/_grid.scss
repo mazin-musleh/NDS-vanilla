@@ -55,9 +55,8 @@
   /* Container query overrides — opt-in via a `.nds-cq` ancestor.
      Unnamed @container resolves to the nearest container ancestor; when none
      exists these rules are silently skipped and the @media rules above remain
-     the fallback. Opt-in (rather than putting `container-type` on every
-     section/block) avoids globally establishing containing blocks for
-     position:fixed descendants — a footgun for downstream consumers. */
+     the fallback. Opt-in: a container's width ignores its content, so one
+     that sizes to its content (an inline-block, a flex item without a width) collapses to 0. */
   @container (width <= 768px) {
     --_cols: var(--mid-col, var(--max-col, auto-fit));
     --_tracks: var(--mid-track, var(--max-track));
@@ -99,9 +98,7 @@
 
 // Container-query opt-in — grid's companion. Add to any ancestor to make
 // nested grids respond to that ancestor's width via the @container rules
-// above. Opt-in (not on every section/block) because container-type also
-// makes the element a containing block for position:fixed descendants,
-// which can trap modals/dropmenus/tooltips.
+// above. Opt-in: a container's width ignores its content (see above).
 .nds-cq {
   container-type: inline-size;
 }

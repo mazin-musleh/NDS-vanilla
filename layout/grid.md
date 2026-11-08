@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 04:30 PM"
+last_edit: "08/11/2026 - 04:21 PM"
 ---
 
 <section id="grid-overview" class="nds-content-section nds-doc-overview">
@@ -260,7 +260,7 @@ Each example is a whole grid. Change its values to fit your content: the knobs a
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Container-Aware (opt-in)</span>
-              <p class="nds-card-description">Add <code class="nds-inline-code lang-html">nds-cq</code> to any element around a grid, and the grid follows that element's width, such as a sidebar. It is opt-in, because it traps <code class="nds-inline-code lang-css">position: fixed</code> children, such as a modal, inside that element.</p>
+              <p class="nds-card-description">Add <code class="nds-inline-code lang-html">nds-cq</code> to any element around a grid, and the grid follows that element's width, such as a sidebar. It is opt-in, because that element no longer takes its width from its content.</p>
             </div>
           </div>
         </li>
@@ -283,7 +283,7 @@ Each example is a whole grid. Change its values to fit your content: the knobs a
 - Use either column values or track values on one grid, not both. A track value overrides the column count at the same screen size.
 - Do not use a grid for one column of content. Normal page flow already does that.
 - Do not build the page structure from grids inside grids. Use [Section](../layout/section) for page regions.
-- Add `nds-cq` only when a grid sits in a narrow column and must follow that column's width. It traps `position: fixed` children, such as a modal or a dropmenu, inside that element.
+- Add `nds-cq` only when a grid sits in a narrow column and must follow that column's width. Not on an element that takes its width from its content, such as an inline-block or a flex item with no width: it shrinks to nothing.
 - Set `--gap` with a spacing token, such as `var(--spacing-md)`.
 - Use `nds-divided` for items with no border or background of their own. Cards already have an edge.
 
