@@ -336,7 +336,7 @@ $section-breakout: ':where(.nds-content-wrapper, .nds-hero-section, .nds-content
     --btn-bg-active: var(--button-background-transparent-pressed);
     --btn-bg-selected: var(--button-background-transparent-selected);
     --btn-bg-disabled: transparent;
-    --btn-color: var(--button-label-transparent-default-oncolor);
+    --btn-color: var(--button-label-transparent-oncolor-default);
     --btn-color-disabled: var(--text-default-oncolor-disabled);
     --btn-loading-color: var(--text-oncolor-primary);
     --btn-loading-track: var(--colors-alpha-white-20);

@@ -88,8 +88,8 @@
     --btn-bg-hover: var(--button-background-transparent-hovered);
     --btn-bg-active: var(--button-background-transparent-pressed);
     --btn-bg-selected: var(--button-background-transparent-selected);
-    --btn-bg-disabled: var(--button-background-disabled-oncolor);
-    --btn-indicator-active: var(--button-background-disabled-oncolor);
+    --btn-bg-disabled: var(--button-background-oncolor-disabled);
+    --btn-indicator-active: var(--button-background-oncolor-disabled);
     --btn-color: var(--text-oncolor-primary);
   }
 
