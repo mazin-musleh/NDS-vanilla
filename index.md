@@ -622,16 +622,28 @@ bundle_sizes:
     </div>
 </section>
 
-<section id="opensource" class="nds-content-section nds-brand">
+<section id="support" class="nds-content-section nds-brand">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Get Started</h2>
-            <p class="nds-section-description">Everything you need to adopt NDS: download the template, install the agent instructions, build the UI page by page, and upgrade to new releases.</p>
+            <h2 class="nds-section-title">Professional Support</h2>
+            <p class="nds-section-description">Need help with NDS implementation, custom components, or a complete website or portal? Professional support and development services are available on request.</p>
         </div>
         <div class="nds-section-body">
-            <div class="nds-block">
-                <a href="{{ '/guides/get-started.html' | relative_url }}" class="nds-btn nds-primary">
-                    <span class="nds-label">Start Here</span>
+            <div class="nds-persona">
+                <div class="nds-avatar nds-image-border">
+                    <img src="{{ '/docs-assets/img/mazin-musleh.webp' | relative_url }}" alt="" width="240" height="240" loading="lazy">
+                </div>
+                <div class="nds-persona-info">
+                    <span class="nds-persona-name">{{ site.author }}</span>
+                    <span class="nds-persona-role nds-truncate">Frontend Developer</span>
+                </div>
+            </div>
+            <div class="nds-section-action">
+                <a href="{{ site.author_profile }}" target="_blank" rel="noopener" class="nds-btn nds-primary">
+                    <span class="nds-label">Message Me on LinkedIn</span>
+                </a>
+                <a href="{{ site.repository_url }}/issues/new" target="_blank" rel="noopener" class="nds-btn nds-secondary-outline">
+                    <span class="nds-label">Report an Issue</span>
                 </a>
             </div>
         </div>
