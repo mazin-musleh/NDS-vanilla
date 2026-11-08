@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "08/11/2026 - 03:35 PM"
+last_edit: "08/11/2026 - 08:37 PM"
 ---
 
 <section id="section-overview" class="nds-content-section nds-doc-overview">
@@ -285,7 +285,7 @@ A body with `nds-breakout` cancels the section's side padding, so its content ru
 
 ### Standard Action
 
-A `nds-section-action` after the head sits beside it on a desktop, at the top. Below 600px it takes its own row, and each button is full width. In the body, it keeps 32px of space above and below it, as a [block](../layout/block) does.
+A `nds-section-action` after the head sits beside it on a desktop, at the top. Below 600px it takes its own row, and each button is full width. In the body, at any depth, its buttons are full width below 600px too. As a direct child of the body, it keeps 32px of space above and below it, as a [block](../layout/block) does.
 
 ### Float Action
 

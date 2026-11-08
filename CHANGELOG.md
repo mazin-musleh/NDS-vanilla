@@ -58,6 +58,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Modal and Panels** — Both use the browser's native dialog, and panels stack.
 - **Page Layout** — A side menu page is flat on desktop, and the raised look is opt-in.
 - **Performance** — Faster start and response on busy phones, and sections far from the screen draw later.
+- **Section** — On phones, a section action's buttons are full width anywhere in the body.
 - **Tokens** — The secondary text color is darker, for better contrast.
 - **Top Bar** — The date, clock and weather follow the site's timezone and use Meta lines.
 
