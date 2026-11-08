@@ -57,6 +57,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Main Navigation** — The search box shows suggestion chips, and a click on one runs the search.
 - **Modal and Panels** — Both use the browser's native dialog, and panels stack.
 - **Page Layout** — A side menu page is flat on desktop, and the raised look is opt-in.
+- **Persona** — Less space between the name, role and description.
 - **Performance** — Faster start and response on busy phones, and sections far from the screen draw later.
 - **Section** — On phones, a section action's buttons are full width anywhere in the body.
 - **Tokens** — The secondary text color is darker, for better contrast.
