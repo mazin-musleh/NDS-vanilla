@@ -161,7 +161,7 @@ bundle exec jekyll build --config _config.yml,_config.local.yml
 
 ## Contributing
 
-Issues are welcome for bugs, feature requests, and feedback. A PR is fine for small fixes such as typos, broken links, and obvious bugs. For a feature or a larger change, [open an issue](https://github.com/mazin-musleh/NDS-vanilla/issues/new/choose) first so we can agree on the approach. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Issues are welcome for bugs, feature requests, and feedback: [open an issue](https://github.com/mazin-musleh/NDS-vanilla/issues/new/choose). Pull requests are not accepted. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Security
 

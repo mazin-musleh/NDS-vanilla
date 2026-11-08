@@ -642,7 +642,7 @@ bundle_sizes:
                 <a href="{{ site.author_profile }}" target="_blank" rel="noopener" class="nds-btn nds-primary">
                     <span class="nds-label">Message Me on LinkedIn</span>
                 </a>
-                <a href="{{ site.repository_url }}/issues/new" target="_blank" rel="noopener" class="nds-btn nds-secondary-outline">
+                <a href="{{ site.repository_url }}/issues/new/choose" target="_blank" rel="noopener" class="nds-btn nds-secondary-outline">
                     <span class="nds-label">Report an Issue</span>
                 </a>
             </div>
