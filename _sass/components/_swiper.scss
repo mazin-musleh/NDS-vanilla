@@ -58,10 +58,9 @@ $section-breakout: ':where(.nds-content-wrapper, .nds-hero-section, .nds-content
 
     // Inside a breakout body the row runs to the breakout's edge and the gutter is
     // the breakout's pull-back (_skeleton.scss), so slide one lines up with the
-    // content above. 100cqi is the section's content box; the wrapper masks a
-    // neighbour that ends in a gutter wider than the gap.
+    // content above. The wrapper masks a neighbour that ends in a gutter wider than the gap.
     #{$section-breakout} & {
-        --swiper-padding: var(--padding, min(var(--nds-viewport-padding), (var(--nds-content-max-width) + var(--nds-viewport-padding) - 100cqi) / 2));
+        --swiper-padding: var(--padding, min(var(--_wrapper-padding), var(--nds-viewport-padding)));
     }
 
     // Pre-init guards live in critical CSS, released by the init stamp or the

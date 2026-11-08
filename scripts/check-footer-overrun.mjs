@@ -1,4 +1,4 @@
-// Content that grows after load pushes the footer down. The service template's content is swapped
+// Content that grows after load pushes the footer down, and pulls it back when it shrinks. The service template's content is swapped
 // for the field report's shape (2026-11-04): one Side Info section, an Expandable of references,
 // an aside of two cards. Show more grows the section ~3x; Chrome once kept the stretched
 // .nds-content at its load height (sections are inline-size containers), so the footer stayed under
@@ -60,6 +60,14 @@ await step('click Show more', () => tall.locator('#fixture .nds-expandable butto
 await step('section grows', () => tall.waitForFunction((h) => document.querySelector('#fixture').getBoundingClientRect().bottom + scrollY > h * 1.5, before));
 const [section, content, footer] = await measure(tall);
 ok('grown content pushes the footer', content >= section && footer >= content, `section ${before} → ${section}, .nds-content ${content}, footer ${footer}`);
+
+// Read at once: another section's idle draw relayouts the column and hides a stale height.
+await step('click Show less', () => tall.locator('#fixture .nds-expandable button').first().click());
+const [s2, c2, f2] = await tall.evaluate(() => new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(() => {
+    const y = (s, edge) => Math.round(document.querySelector(s).getBoundingClientRect()[edge] + scrollY);
+    done([y('#fixture', 'bottom'), y('.nds-content', 'bottom'), y('.nds-footer', 'top')]);
+}))));
+ok('shrunk content pulls the footer back', s2 === before && c2 === s2 && f2 === c2, `section ${section} → ${s2} (load ${before}), .nds-content ${c2}, footer ${f2}`);
 
 const short = await open(SHORT);
 const [s, c, f] = await measure(short);

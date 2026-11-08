@@ -331,19 +331,18 @@ tbody[data-filter-items]:not([data-nds-filter-initialized], .nds-paged-content) 
     --_wrapper-padding: max(var(--nds-viewport-padding), calc((100% - var(--nds-content-max-width)) / 2));
     width: 100%;
     padding-inline: var(--_wrapper-padding);
-    // 100cqi = the content box: a .nds-breakout child's Swiper reads its pull-back from it.
-    container-type: inline-size;
 
     .nds-full-width {
         width: 100vw !important;
         margin-inline: calc(50% - 50vw);
     }
 
-    // Full gutter while the section is narrower than the max width (runs to the
-    // screen edge); eases to half a gutter past it, so it never exceeds max width + one gutter.
+    // Out by the section's gutter, capped at one viewport gutter: a layout that zeroes the gutter
+    // (side menu) keeps it in. The min() also caps the wrapper's own % term, which re-resolves here.
+    // The Swiper inside pads by the same value, so no section needs to be a size container.
     // Direct child only: a card's own .nds-breakout sits deeper.
     > .nds-breakout {
-        margin-inline: calc(min(var(--_wrapper-padding), (var(--nds-content-max-width) + var(--_wrapper-padding) - 100%) / 2) * -1);
+        margin-inline: calc(min(var(--_wrapper-padding), var(--nds-viewport-padding)) * -1);
     }
 }
 
