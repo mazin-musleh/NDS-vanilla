@@ -43,7 +43,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Changed
 - **Accessibility** — The panel loads on first use, and follows the page's language.
 - **Action rows** — Button rows in Card, Modal, Panel, Forms and Dropmenu wrap to the next line.
-- **Button** — Buttons fit their content, keep a minimum height, and take the sizes you set.
+- **Button** — Buttons fit their content, keep a minimum height, take the sizes you set, and destructive buttons have their own dark look.
 - **Cards** — Cards fill their container, row cards stack when narrow, and default text colors and phone spacing changed.
 - **Date Picker** — The calendar opens from its button and follows the language around it.
 - **Definition List** — The default size is the side info look, and LG is gone.

@@ -502,7 +502,7 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
       --btn-bg-hover: var(--button-background-danger-secondary-hovered);
       --btn-bg-active: var(--button-background-danger-secondary-pressed);
       --btn-bg-selected: var(--button-background-danger-secondary-selected);
-      --btn-color: var(--text-error);
+      --btn-color: var(--button-label-danger-secondary-default);
       --btn-loading-color: var(--button-background-danger-primary-default);
     }
 
@@ -512,7 +512,7 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
       --btn-bg-active: var(--button-background-danger-secondary-pressed);
       --btn-bg-selected: var(--button-background-danger-secondary-selected);
       --btn-bg-disabled: var(--button-background-transparent-default);
-      --btn-color: var(--text-error);
+      --btn-color: var(--button-label-danger-secondary-default);
       --btn-border: var(--button-border-danger);
       --btn-border-hover: var(--button-border-danger);
       --btn-border-active: var(--button-border-danger);
@@ -527,7 +527,7 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
       --btn-bg-active: var(--button-background-danger-secondary-hovered);
       --btn-bg-selected: var(--button-background-danger-secondary-selected);
       --btn-bg-disabled: transparent;
-      --btn-color: var(--text-error);
+      --btn-color: var(--button-label-danger-secondary-default);
       --btn-loading-color: var(--button-background-danger-primary-default);
     }
 
@@ -537,16 +537,25 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
       --btn-bg-active: var(--button-background-transparent-pressed);
       --btn-bg-selected: var(--button-background-transparent-selected);
       --btn-bg-disabled: var(--button-background-transparent-default);
-      --btn-color: var(--button-background-danger-primary-default);
-      --btn-color-hover: var(--button-background-danger-primary-hovered);
-      --btn-loading-color: var(--button-background-danger-primary-default);
+      --btn-color: var(--button-label-danger-transparent-default);
+      --btn-color-hover: var(--button-label-danger-transparent-hovered);
+      --btn-loading-color: var(--button-label-danger-transparent-default);
 
       &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
-        color: var(--button-background-danger-primary-selected);
+        color: var(--button-label-danger-transparent-selected);
       }
 
       &:is(:active, [data-state~="pressed"]) {
-        color: var(--button-background-danger-primary-pressed);
+        color: var(--button-label-danger-transparent-pressed);
+      }
+
+      // The white washes read as gray boxes on a dark page.
+      &:not(.nds-oncolor) {
+        @include dark {
+          --btn-bg-hover: transparent;
+          --btn-bg-active: transparent;
+          --btn-bg-selected: transparent;
+        }
       }
     }
   }
@@ -556,32 +565,31 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
   // ==============================================
 
   @at-root {
-    .nds-btn.nds-oncolor.nds-destructive,
-    :where(:root[data-theme~="dark"]) .nds-btn.nds-destructive,
-    .nds-btn.nds-destructive:where([data-theme~="dark"], [data-theme~="dark"] *) {
+    // A brand fill looks the same in light and dark, so these reds are palette-direct.
+    .nds-btn.nds-oncolor.nds-destructive {
       --btn-loading-color: var(--text-oncolor-primary);
       --btn-loading-track: var(--colors-alpha-white-20);
 
       &.nds-secondary {
-        --btn-bg: var(--button-background-danger-secondary-default);
-        --btn-bg-hover: var(--button-background-danger-secondary-hovered);
-        --btn-bg-active: var(--button-background-danger-secondary-pressed);
-        --btn-bg-selected: var(--button-background-danger-secondary-selected);
+        --btn-bg: var(--colors-red-50);
+        --btn-bg-hover: var(--colors-red-100);
+        --btn-bg-active: var(--colors-red-200);
+        --btn-bg-selected: var(--colors-red-50);
         --btn-color: var(--button-background-danger-primary-default);
       }
 
       &.nds-secondary-outline {
         --btn-bg: transparent;
-        --btn-bg-hover: var(--button-background-danger-secondary-hovered);
-        --btn-bg-active: var(--button-background-danger-secondary-pressed);
-        --btn-bg-selected: var(--button-background-danger-secondary-selected);
+        --btn-bg-hover: var(--colors-red-100);
+        --btn-bg-active: var(--colors-red-200);
+        --btn-bg-selected: var(--colors-red-50);
         --btn-bg-disabled: var(--button-background-transparent-default);
         --btn-color: var(--button-label-danger-primary-default-oncolor);
         --btn-color-hover: var(--button-background-danger-primary-hovered);
-        --btn-border: var(--button-border-danger);
-        --btn-border-hover: var(--button-border-danger);
-        --btn-border-active: var(--button-border-danger);
-        --btn-border-selected: var(--button-border-danger);
+        --btn-border: var(--colors-red-200);
+        --btn-border-hover: var(--colors-red-200);
+        --btn-border-active: var(--colors-red-200);
+        --btn-border-selected: var(--colors-red-200);
         --btn-border-disabled: var(--border-neutral-secondary);
 
         &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
@@ -595,9 +603,9 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
 
       &.nds-subtle {
         --btn-bg: transparent;
-        --btn-bg-hover: var(--button-background-danger-secondary-default);
-        --btn-bg-active: var(--button-background-danger-secondary-hovered);
-        --btn-bg-selected: var(--button-background-danger-secondary-selected);
+        --btn-bg-hover: var(--colors-red-50);
+        --btn-bg-active: var(--colors-red-100);
+        --btn-bg-selected: var(--colors-red-50);
         --btn-bg-disabled: transparent;
         --btn-color: var(--button-label-danger-primary-default-oncolor);
         --btn-color-hover: var(--button-background-danger-primary-hovered);
@@ -612,8 +620,12 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
       }
 
       &.nds-transparent {
+        --btn-bg-hover: transparent;
+        --btn-bg-active: transparent;
+        --btn-bg-selected: transparent;
         --btn-color: var(--button-label-danger-primary-default-oncolor);
         --btn-color-hover: var(--button-label-danger-primary-hovered-oncolor);
+        --btn-loading-color: var(--button-label-danger-primary-default-oncolor);
 
         &:is([data-state~="selected"], [data-state~="open"], [data-state~="active"], [data-state~="current"]) {
           color: var(--button-label-danger-primary-selected-oncolor);
