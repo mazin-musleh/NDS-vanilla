@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.12.x"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 12:02 PM"
+last_edit: "09/11/2026 - 05:59 PM"
 ---
 
 <section id="countdown-overview" class="nds-content-section nds-doc-overview">
@@ -175,7 +175,7 @@ Pick another component when:
 | Color | On color (hint: For a dark or photo background) | `.nds-oncolor` | `.nds-card-actions .nds-btn` | The button does not follow the card. Give it `.nds-oncolor` too |
 | Tinted | Tinted (hint: A light tint of the card color) | `.nds-color` | `.nds-card:not(.nds-oncolor)` | Fills each card with a light tint of its color. With no color class, the tint is the brand primary |
 | Layout | Row (default) | `.nds-horizontal` | `.nds-card` | One row, which wraps as the Banner row says |
-| Layout | Center (hint: Every part stacked and centered) | `.nds-center` | `.nds-card` | Stacks the icon, the text, the countdown and the button, each centered. Use it for a banner that stands alone, such as the top of a page |
+| Layout | Center (hint: Every part stacked and centered) (not: cards) | `.nds-center` | `.nds-card` | Stacks the icon, the text, the countdown and the button, each centered. Use it for a banner that stands alone, such as the top of a page |
 | Warning | Warning (hint: Turns red near the end) (demo: + duration) | `[data-countdown-warn="60"]` | `.nds-countdown` | The countdown turns red when 60 seconds are left. The builder picks Duration with it, 63 seconds, so the red shows after 3 seconds |
 | Ended | Ended message (hint: Text shown at zero) (id: ended) (demo: + passed) | canon `#countdown-ended` | `.nds-countdown` | The text replaces the countdown at zero. Without it, the zeros stay. The builder picks Passed with it, so the text shows at once |
 | End action | Hide at end (hint: The actions hide at zero) (not: inline, units, cards) (demo: + passed) | `[data-countdown-hide="countdown-apply"]` | `.nds-countdown` | At zero, the elements whose ids it lists get `hidden`, wherever they are on the page. Here it is the actions row, whose button has no use after the deadline. The builder picks Passed with it, so the row is gone at once |

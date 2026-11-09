@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 12:02 PM"
+last_edit: "09/11/2026 - 05:59 PM"
 ---
 
 <section id="modal-overview" class="nds-content-section nds-doc-overview">
@@ -189,11 +189,11 @@ Pick another component when:
 </dialog>
 </script>
 <script type="text/html" id="modal-lazy" data-canon>
-<button type="button" class="nds-btn nds-primary nds-lg" data-modal-target="terms-modal">
+<button type="button" class="nds-btn nds-primary nds-lg" data-modal-target="lazy-modal">
   <span class="nds-label">Open Modal</span>
 </button>
 <template class="nds-modal-template">
-  <dialog id="terms-modal" class="nds-modal nds-card nds-stroke" aria-labelledby="terms-modal-title">
+  <dialog id="lazy-modal" class="nds-modal nds-card nds-stroke" aria-labelledby="lazy-modal-title">
     <div class="nds-card-header">
       <div class="nds-card-featured-icon">
         <span class="nds-featured-icon nds-circle">
@@ -206,7 +206,7 @@ Pick another component when:
     </div>
     <div class="nds-card-content">
       <div class="nds-card-text">
-        <span class="nds-card-title" id="terms-modal-title">Terms of service</span>
+        <span class="nds-card-title" id="lazy-modal-title">Terms of service</span>
         <p class="nds-card-description">This modal joins the page on the first click.</p>
       </div>
     </div>

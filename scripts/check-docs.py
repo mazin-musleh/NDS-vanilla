@@ -80,7 +80,8 @@ def check(path):
             # data-form: the form is the component's own markup (user feedback validates its form).
             # data-escaped: the body is a Liquid capture of code that holds </script> (the document head).
             # data-generated: the body is build output (the token catalog's packs).
-            if bad in body and not (bad == '<form' and attr(attrs, 'data-form') is not None) \
+            # A JS canon's <form> is code (a React form), not demo markup.
+            if bad in body and not (bad == '<form' and (attr(attrs, 'data-form') is not None or (attr(attrs, 'data-lang') or 'html') != 'html')) \
                     and not (bad in ('{{', '{%') and (attr(attrs, 'data-escaped') is not None or attr(attrs, 'data-generated') is not None)):
                 errs.append(f'canon #{cid}: {why}')
         for i in [cid] + [i for i in re.findall(r'\sid="([^"]+)"', body) if cid not in alts or i not in base_ids]:
