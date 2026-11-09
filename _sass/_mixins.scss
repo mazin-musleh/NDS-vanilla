@@ -232,6 +232,20 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
   box-shadow: inset 0 0 0 3px var(--colors-base-black) !important;
 }
 
+// The first and last SHOWN button: a hidden one still counts for :first-child, and data-hidden
+// hides per breakpoint, so the content runs once per tier (sm, md, lg cover every width).
+// :where() keeps :first-child's specificity and drops `of S` where unsupported.
+@mixin btn-group-ends {
+  @each $bp, $tier in (sm: mobile, md: tablet, lg: desktop) {
+    $hide: ':not(.nds-hidden, [hidden], [data-filtered], [data-hidden~="#{$bp}"])';
+    $first: ':is(:first-child, :where(:nth-child(1 of #{$hide})))';
+    $last: ':is(:last-child, :where(:nth-last-child(1 of #{$hide})))';
+    @if $tier == mobile { @include mobile { @content($first, $last); } }
+    @else if $tier == tablet { @include tablet { @content($first, $last); } }
+    @else { @include desktop('min') { @content($first, $last); } }
+  }
+}
+
 // Joins a row of buttons into one strip: corners collapse inward, adjacent
 // buttons share a single 1px seam, and the two outer ends carry the radius.
 // Shared by .nds-btn-group and the content switcher's tab list, so a switcher
@@ -255,26 +269,31 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
       border-radius: 0;
     }
 
-    &:not(:last-child) {
-      border-inline-end-width: 0;
-    }
-
     &+.nds-btn {
       border-inline-start-width: 1px;
     }
 
-    &:first-child {
-      border-start-start-radius: var(--btn-group-radius);
-      border-end-start-radius: var(--btn-group-radius);
-    }
-
-    &:last-child {
-      border-start-end-radius: var(--btn-group-radius);
-      border-end-end-radius: var(--btn-group-radius);
-    }
-
     &:is(:hover, :focus) {
       z-index: 2;
+    }
+  }
+
+  // :where() keeps these at the old specificity, so the FAB dock still squares them.
+  &:where(:not(.nds-vertical)) .nds-btn {
+    @include btn-group-ends using ($first, $last) {
+      &:not(#{$last}) {
+        border-inline-end-width: 0;
+      }
+
+      &#{$first} {
+        border-start-start-radius: var(--btn-group-radius);
+        border-end-start-radius: var(--btn-group-radius);
+      }
+
+      &#{$last} {
+        border-start-end-radius: var(--btn-group-radius);
+        border-end-end-radius: var(--btn-group-radius);
+      }
     }
   }
 }

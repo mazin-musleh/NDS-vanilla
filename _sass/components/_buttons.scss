@@ -395,12 +395,14 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
   // would colour the group's outer side edge and leave the real seam plain.
   // Disabled is excluded on every seam rule: they all outrank the base disabled
   // rule, so without it a disabled button keeps an enabled-coloured inner edge.
-  .nds-btn-group:not(.nds-vertical) &:not(:first-child, #{$btn-disabled}) {
-    border-inline-start-color: var(--_btn-seam, var(--_btn-bg-hover));
-  }
+  @include btn-group-ends using ($first, $last) {
+    .nds-btn-group:not(.nds-vertical) &:not(#{$first}, #{$btn-disabled}) {
+      border-inline-start-color: var(--_btn-seam, var(--_btn-bg-hover));
+    }
 
-  .nds-btn-group.nds-vertical &:not(:first-child, #{$btn-disabled}) {
-    border-block-start-color: var(--_btn-seam, var(--_btn-bg-hover));
+    .nds-btn-group.nds-vertical &:not(#{$first}, #{$btn-disabled}) {
+      border-block-start-color: var(--_btn-seam, var(--_btn-bg-hover));
+    }
   }
 
   // ==============================================
@@ -935,10 +937,8 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
     }
   }
 
-  // Stack down instead of across. The seam moves from the inline axis to the
-  // block axis, so each rule below restores what the horizontal rule collapsed
-  // and collapses its own axis — the rounded corners move from the two ends of
-  // the row to the top and bottom of the column.
+  // Stack down instead of across: the seam and the rounded ends move to the block
+  // axis (the row's rules skip .nds-vertical, so nothing here undoes them).
   &.nds-vertical {
     flex-direction: column;
     // Every button takes the width of the widest one.
@@ -947,23 +947,24 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
     .nds-btn {
       padding-block: var(--_btn-padding);
 
-      &:not(:last-child) {
-        border-inline-end-width: 1px;
-        border-block-end-width: 0;
-      }
-
       &+.nds-btn {
         border-block-start-width: 1px;
       }
 
-      &:first-child {
-        border-start-end-radius: var(--btn-group-radius);
-        border-end-start-radius: 0;
-      }
+      @include btn-group-ends using ($first, $last) {
+        &:not(#{$last}) {
+          border-block-end-width: 0;
+        }
 
-      &:last-child {
-        border-end-start-radius: var(--btn-group-radius);
-        border-start-end-radius: 0;
+        &#{$first} {
+          border-start-start-radius: var(--btn-group-radius);
+          border-start-end-radius: var(--btn-group-radius);
+        }
+
+        &#{$last} {
+          border-end-start-radius: var(--btn-group-radius);
+          border-end-end-radius: var(--btn-group-radius);
+        }
       }
     }
   }
@@ -977,12 +978,14 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
 // in either mode), falling back to the shared divider tint for solid secondary —
 // a 10% wash reads as an internal seam rather than an outer edge, and it stays
 // legible over the alpha fill secondary takes on a dark surface.
-.nds-btn-group:not(.nds-vertical) .nds-btn:is(.nds-secondary, .nds-secondary-outline):not(:first-child, #{$btn-disabled}) {
-  border-inline-start-color: var(--_btn-seam, var(--btn-border, var(--divider-color)));
-}
+@include btn-group-ends using ($first, $last) {
+  .nds-btn-group:not(.nds-vertical) .nds-btn:is(.nds-secondary, .nds-secondary-outline):not(#{$first}, #{$btn-disabled}) {
+    border-inline-start-color: var(--_btn-seam, var(--btn-border, var(--divider-color)));
+  }
 
-.nds-btn-group.nds-vertical .nds-btn:is(.nds-secondary, .nds-secondary-outline):not(:first-child, #{$btn-disabled}) {
-  border-block-start-color: var(--_btn-seam, var(--btn-border, var(--divider-color)));
+  .nds-btn-group.nds-vertical .nds-btn:is(.nds-secondary, .nds-secondary-outline):not(#{$first}, #{$btn-disabled}) {
+    border-block-start-color: var(--_btn-seam, var(--btn-border, var(--divider-color)));
+  }
 }
 
 // ==============================================

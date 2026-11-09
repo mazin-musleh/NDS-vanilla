@@ -68,7 +68,7 @@ module DocsCanon
               '.nds-doc-preview .nds-full-width{width:auto!important;margin-inline:calc(var(--_wrapper-padding,0px)*-1)}' \
               '.nds-doc-options{--panel-height:30svh}' \
               '@media (width < 600px){.nds-doc-options{--panel-height:35svh}}' \
-              '.nds-doc-preview[data-screen]>:not(.nds-doc-view,.nds-doc-device){display:none!important}'               '.nds-doc-device{position:relative;flex:none;background:var(--background-surface-sunken);box-shadow:0 0 0 1px var(--border-neutral-secondary)}' '.nds-doc-screen{position:absolute;border:0;display:block;color-scheme:normal;background:var(--card-bg,var(--background-card))}'               ':root[data-theme~="dark"] [data-preview-dark]{display:none}' # a dark site has nothing to toggle to
+              '.nds-doc-preview[data-screen]>:not(.nds-doc-view,.nds-doc-device){display:none!important}'               '.nds-doc-device{position:relative;flex:none;background:var(--background-surface-sunken);box-shadow:0 0 0 1px var(--border-neutral-secondary)}' '.nds-doc-screen{position:absolute;border:0;display:block;color-scheme:normal;background:var(--card-bg,var(--background-card))}'               ':root[data-theme~="dark"] [data-preview-dark]{display:none}' ':root[data-theme~="dark"] [data-preview-dark]+.nds-btn{border-start-start-radius:var(--btn-group-radius);border-end-start-radius:var(--btn-group-radius)}' # a dark site has nothing to toggle to; display:none still counts as the group's first child
 
   PLAIN_CODE_RE = %r{<code class="language-plaintext highlighter-rouge">(.*?)</code>}m
   TABLE_LANG = { 'Method' => 'js', 'Option' => 'js', 'Event' => 'js', 'Action key' => 'js', 'Property' => 'css' }.freeze

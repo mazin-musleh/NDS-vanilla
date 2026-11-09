@@ -66,7 +66,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Fixed
 - **Accessibility and Digital Stamp** — Fixes to the panel's settings, reduced motion and contrast.
 - **Alert, Modal, Panels and Image Popup Viewer** — Fixes to focus, stacked layers and repeated open and close.
-- **Buttons, Cards, Chips and Tags** — Fixes to colors, sizes, loading and print.
+- **Buttons, Cards, Chips and Tags** — Fixes to colors, sizes, loading, print, and button group corners when some buttons are hidden.
 - **Chart** — Fixes to resizing, labels, curves and pie label colors in dark mode.
 - **Core and JavaScript API** — Fixes to starting and destroying components, framework use, history state and security.
 - **Dates, Top Bar and Weather** — Fixes to Hijri dates, the site timezone and refresh time.
