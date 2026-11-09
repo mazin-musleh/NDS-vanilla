@@ -143,8 +143,8 @@ bundle_sizes:
                 </a>
             </div>
             <h2 class="nds-section-title">DGA Page Templates</h2>
-            <p class="nds-section-brief">DGA page templates as working code.</p>
-            <p class="nds-section-description">Components follow the DGA design tokens, typography, spacing, and interaction patterns. The templates below cover common government service screens. Copy one, add your content, and adapt it to your project.</p>
+            <p class="nds-section-brief">DGA-compliant page templates, delivered as working code.</p>
+            <p class="nds-section-description">Built around DGA design tokens, typography, spacing, and interaction patterns, these templates provide practical starting points for common government service screens. Use them as-is or customize them to fit your project.</p>
         </div>
     </div>
     <div class="nds-section-body nds-breakout">
