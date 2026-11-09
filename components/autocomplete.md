@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 02:10 PM"
+last_edit: "09/11/2026 - 10:07 AM"
 ---
 
 <section id="autocomplete-overview" class="nds-content-section nds-doc-overview">
@@ -123,7 +123,7 @@ When nothing matches, a strict field's menu stays open and shows "No results", i
 ### Posted Value
 {: .nds-block-title}
 
-By default, the form posts the text in the field. To post another field of the result, such as its id, add `data-value-field` to the container and write a named hidden input in the `.nds-form-control`. Text that is not a pick empties the hidden input, so a changed or emptied field never posts an old id. Leave `name` off the text input when the server takes the id alone. To show a saved pick, write its text in the text input's `value` and its id in the hidden input's `value`.
+By default, the form posts the text in the field. To post another field of the result, such as its id, add `data-value-field` to the container and write a named hidden input in the `.nds-form-control`. Text that is not a pick empties the hidden input, so a changed or emptied field never posts an old id. Leave `name` off the text input when the server takes the id alone. To show a saved pick, write its text in the text input's `value` and its id in the hidden input's `value`. To pick a result from a script, such as a city that a postcode sets, call `NDS.Autocomplete.selectItem(el, item)`.
 
 ### Search Box
 {: .nds-block-title}
@@ -282,7 +282,7 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
 |---|---|---|
 | `data-url` | `.nds-form-container` | The URL that returns the JSON results. Required, unless `create()` gets the `items` option. It may hold a query string: the script then adds the typed text after `&` |
 | `data-display-field` | `.nds-form-container` | The result field that each row shows and that a pick writes into the input. The default is `Title` |
-| `data-value-field` | `.nds-form-container` | The result field that a pick writes into the named hidden input in the `.nds-form-control`. Typing, the clear button, `clear()` and `setValue()` with new text empty that input. A form reset puts back the value it held when the field started. These writes fire no event of their own: the text input fires `input` and `change`. With `data-strict`, text beside an empty hidden input fails |
+| `data-value-field` | `.nds-form-container` | The result field that a pick writes into the named hidden input in the `.nds-form-control`. `selectItem()` writes it too. Typing, the clear button, `clear()` and `setValue()` with new text empty that input. A form reset puts back the value it held when the field started. These writes fire no event of their own: the text input fires `input` and `change`. With `data-strict`, text beside an empty hidden input fails |
 | `data-field` | an element in the `.nds-autocomplete-row` template | The result field the script writes into it, as text. In the `data-display-field` field, the match is marked. A field with no value removes its element, or the whole `.nds-meta-item` around it. `renderItem()`, when you pass it, replaces the template |
 | `data-fetch` | `.nds-form-container` | `each` (the default) requests the URL on each search. `once` requests it once and filters in the browser |
 | `data-min-chars` | `.nds-form-container` | The fewest characters that start a search. The default is `3`. Shorter text closes the menu. `0` shows the whole list on a click or the Down Arrow, and again when the user deletes the text. On a field that holds a pick, the list shows every item, with the pick active |
@@ -330,8 +330,9 @@ The `NDS.Autocomplete` script loads after the page shows. Until it loads, each c
 | `NDS.Autocomplete.validate(el, options)` | Checks a `data-strict` field and returns `{ valid, message, picked }`. Pass `{ showMessage: false }` to check without a message |
 | `NDS.Autocomplete.getValue(el)` | Returns the text in the input, or `''` when the field is not found. `el` is the `.nds-form-container`, its input, its `id` or a selector |
 | `NDS.Autocomplete.setValue(el, text)` | Writes the text as a user does, with no fetch and no menu. Returns `true`, or `false` when the field is not found. A `data-strict` field accepts text that matches no pick, and validation reports it as it does for typed text |
+| `NDS.Autocomplete.selectItem(el, item)` | Picks `item`, a result object, as a user does: writes its `data-display-field` text and its `data-value-field` value, and fires `input`, `change` and `nds:autocomplete:select`. It does not move focus, and a search box does not submit. Returns `true`, or `false` when the field or `item` is missing |
 | `NDS.Autocomplete.clear(el)` | Empties the field and forgets the pick |
-| `container.ndsAutocomplete.getValue()`, `.setValue(text)`, `.clear()` | The same, on a field that has started |
+| `container.ndsAutocomplete.getValue()`, `.setValue(text)`, `.selectItem(item)`, `.clear()` | The same, on a field that has started |
 | `NDS.Autocomplete.destroy(container)` | The same as `instance.destroy()` for the field in `container` |
 | `instance.destroy()` | Removes the menu, the listeners and `.nds-autocomplete-value`. A hidden input you wrote stays, with its value. A `role` or `aria-*` attribute you wrote on the input stays. The field starts again on its next focus |
 {: .nds-table .nds-responsive}
@@ -346,7 +347,7 @@ The `NDS.Autocomplete` script loads after the page shows. Until it loads, each c
 | Event | Fired on | Detail |
 |---|---|---|
 | `nds:autocomplete:fetch` | `.nds-form-container`, and it bubbles | `{ query, results }`, after each list renders. `results` holds every match, not only the first 20 |
-| `nds:autocomplete:select` | `.nds-form-container`, and it bubbles | `{ item, text }`, after a pick. `item` is the whole result object. `text` is its `data-display-field` value, now in the input |
+| `nds:autocomplete:select` | `.nds-form-container`, and it bubbles | `{ item, text }`, after a pick, by a user or by `selectItem()`. `item` is the whole result object. `text` is its `data-display-field` value, now in the input |
 | `nds:autocomplete:clear` | `.nds-form-container`, and it bubbles | `{}`, after the clear button empties the field |
 {: .nds-table .nds-responsive}
 

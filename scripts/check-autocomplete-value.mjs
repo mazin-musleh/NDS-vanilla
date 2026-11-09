@@ -1,6 +1,6 @@
 // Autocomplete data-value-field: the named hidden input holds the pick's value, and only while the text is that
 // pick. A page that kept the id by hand once posted an old id for an emptied field (field report, 2026-11-05).
-// Also runs the doc's page-code pattern: a pick keeps the item, any other text drops it.
+// Also runs the doc's page-code pattern: a pick keeps the item, any other text drops it; and selectItem(), a script's pick.
 //
 //   node scripts/check-autocomplete-value.mjs [baseUrl]
 import { launch, log, step, STEP_MS } from './lib/browser.mjs';
@@ -15,7 +15,7 @@ const field = (id, attrs, text = '', value = '') => `<form class="nds-form" id="
 <div class="nds-form-action"><button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear" hidden><i class="nds-icon nds-hgi-cancel-01"></i></button></div></div></div></form>`;
 const VALUE = 'data-value-field="Id" data-strict';
 const FIXTURE = `<section id="fixture" class="nds-content-section"><div class="nds-section-body">
-${field('pick', VALUE)}${field('saved', VALUE, 'Beta', '8')}${field('textonly', VALUE, 'Beta')}${field('zero', VALUE)}${field('plain', 'data-strict', '', 'mine')}${field('loose', 'data-value-field="Id"')}${field('page', '')}${field('unpicked', 'data-value-field="Id"', 'Beta')}
+${field('pick', VALUE)}${field('saved', VALUE, 'Beta', '8')}${field('textonly', VALUE, 'Beta')}${field('zero', VALUE)}${field('plain', 'data-strict', '', 'mine')}${field('loose', 'data-value-field="Id"')}${field('page', '')}${field('unpicked', 'data-value-field="Id"', 'Beta')}${field('cold', VALUE)}
 </div></section>`;
 const SETUP = `<script type="module">
 const items = [{ Id: 7, Title: 'Alpha' }, { Id: 8, Title: 'Beta' }, { Id: 0, Title: 'Zero' }];
@@ -179,6 +179,23 @@ await choose('page', 'Beta');
 await page.evaluate(() => document.getElementById('page-form').reset());
 await page.waitForTimeout(100);
 ok('page code: a form reset fires no input', (await held()) === 8, await held());
+
+// selectItem(): a script's pick, on a started field and on one nothing has focused.
+await page.evaluate(() => NDS.Autocomplete.setValue('#pick', 'Other'));
+r = await page.evaluate(() => NDS.Autocomplete.selectItem('#pick', { Id: 8, Title: 'Beta' }));
+ok('selectItem() returns true', r === true, r);
+r = await read('pick');
+ok('selectItem() writes text and value and passes strict', isField(r, 'Beta', '8', 'pick', true), r);
+r = await page.evaluate(() => [NDS.Autocomplete.selectItem('#pick', null), NDS.Autocomplete.selectItem('#nope', { Id: 1 })]);
+ok('selectItem() is false with no item or no field', r[0] === false && r[1] === false, r);
+await page.evaluate(() => NDS.Autocomplete.selectItem('#page', { Id: 7, Title: 'Alpha' }));
+ok('page code: selectItem() keeps the item', (await held()) === 7, await held());
+await page.evaluate(() => NDS.Autocomplete.selectItem('#cold', { Id: 7, Title: 'Alpha' }));
+r = await read('cold');
+ok('selectItem() before the field starts writes text and value', isField(r, 'Alpha', '7', 'cold', true), r);
+await page.evaluate(() => NDS.Autocomplete.create('#cold', { items: [] }));
+r = await read('cold');
+ok('a selectItem() before start counts as a pick once it starts', isField(r, 'Alpha', '7', 'cold', true), r);
 
 await browser.close();
 log(failed ? `${failed} failed` : 'all passed');

@@ -14,10 +14,12 @@
  *                                            '' on a missed ref. Also container.ndsAutocomplete.getValue()
  *   NDS.Autocomplete.setValue(el, text)      write the text like a user, with no fetch and no menu; false on a missed ref.
  *                                            Also container.ndsAutocomplete.setValue(text)
+ *   NDS.Autocomplete.selectItem(el, item)    pick a result object as a user does, without the focus; false on a missed ref or no item.
+ *                                            Also container.ndsAutocomplete.selectItem(item)
  *   NDS.Autocomplete.clear(el)               empty the field and forget the pick. Also container.ndsAutocomplete.clear()
  * Events (bubble from the .nds-form-container):
  *   nds:autocomplete:fetch    detail {query, results} — after every result set is rendered
- *   nds:autocomplete:select   detail {item, text} — a suggestion was picked
+ *   nds:autocomplete:select   detail {item, text} — a suggestion was picked, or selectItem() ran
  *   nds:autocomplete:clear    detail {} — the field's clear button was used
  * Hooks (all on the .nds-form-container):
  *   data-url · data-display-field (result field to display, default "Title") · data-min-chars (3; 0 = a click shows the whole list)
@@ -235,13 +237,13 @@
 
             // Track held keys to prevent fetch spam (e.g. holding backspace)
             this._keyHeld = false;
-            // Set only while _selectItem dispatches its own input event (below)
+            // Set only while _writeText dispatches its own input event (below)
             this._suppressFetch = false;
 
             const { signal } = this.abortController;
 
             // Input handler. The only input event that must NOT fetch is the one
-            // _selectItem dispatches to sync forms after writing the picked value,
+            // _writeText dispatches to sync forms after writing the picked value,
             // and it flags that itself — every other input event fetches, whether
             // the user typed it or the consumer dispatched it.
             this._onInput = () => {
@@ -297,7 +299,7 @@
                 e.preventDefault();
                 e.stopPropagation();
                 var index = parseInt(btn.getAttribute('data-index'), 10);
-                if (this._results[index]) this._selectItem(this._results[index]);
+                if (this._results[index]) this._pickFromMenu(this._results[index]);
             }, { signal });
 
             // Clear button: Forms empties the field from its page-wide click listener, after this one,
@@ -568,18 +570,8 @@
         // SELECTION
         // ==============================================
 
-        _selectItem(itemData) {
-            var text = String(itemData[this._nameField] || '');
-
-            this._setPick(text);
-            if (this._valueInput) this._valueInput.value = String(itemData[this._valueField] ?? '');
-
-            // Trigger input/change events so forms JS updates state. Fetching on
-            // the value we just picked would reopen the menu — suppress just this
-            // one dispatch (setValue is synchronous, so the flag can't leak).
-            this._writeText(text);
-
-            this._close();
+        _pickFromMenu(itemData) {
+            const text = this._setPickedItem(itemData);
             this._input.focus();
 
             this._dispatchEvent('nds:autocomplete:select', {
@@ -595,6 +587,16 @@
                     searchBtn.click();
                 }
             }
+        }
+
+        // The pick's text and value, with input/change for forms JS but no fetch: it would reopen the menu.
+        _setPickedItem(item) {
+            const text = String(item[this._nameField] || '');
+            this._setPick(text);
+            if (this._valueInput) this._valueInput.value = String(item[this._valueField] ?? '');
+            this._writeText(text);
+            this._close();
+            return text;
         }
 
         // Text already in the field (server-written, or a host's restored pick) counts as picked, so focusing
@@ -630,6 +632,14 @@
             this._results = [];
             this._close();
             this._writeText(text);
+            return true;
+        }
+
+        // A script's pick: as a user's, without the focus or a search box's submit.
+        selectItem(item) {
+            if (!item) return false;
+            this._results = [];
+            this._dispatchEvent('nds:autocomplete:select', { item, text: this._setPickedItem(item) });
             return true;
         }
 
@@ -689,7 +699,7 @@
                     e.stopPropagation();
                     if (isOpen && this._activeIndex >= 0 && this._activeIndex < this._results.length) {
                         e.preventDefault();
-                        this._selectItem(this._results[this._activeIndex]);
+                        this._pickFromMenu(this._results[this._activeIndex]);
                     } else if (isOpen) {
                         this._close();
                     }
@@ -860,6 +870,19 @@
             const valueInput = findValueInput(input.closest('.nds-form-container'));
             if (valueInput && text !== input.value) valueInput.value = '';
             NDS.setValue(input, text);
+            return true;
+        },
+        // A field not started holds the pick in its markup, as a saved pick: it counts when the field builds.
+        selectItem: (el, item) => {
+            const { instance, input } = find(el);
+            if (instance) return instance.selectItem(item);
+            if (!input || !item) return false;
+            const container = input.closest('.nds-form-container');
+            const text = String(item[container.getAttribute('data-display-field') || 'Title'] || '');
+            const valueInput = findValueInput(container);
+            if (valueInput) valueInput.value = String(item[container.getAttribute('data-value-field')] ?? '');
+            NDS.setValue(input, text);
+            container.dispatchEvent(new CustomEvent('nds:autocomplete:select', { detail: { item, text }, bubbles: true }));
             return true;
         },
         clear: (el) => {
