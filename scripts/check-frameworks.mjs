@@ -16,7 +16,7 @@
 //             React a sibling added before a bare FAB crashes the app, a wrapper of its own does not.
 //   HYDRATION React and Vue hydrate server HTML from their own server renderers: NDS starting at
 //             load breaks it; data-no-auto-init + initialize() after hydration does not.
-//             React rendering <html> too (Next.js) drops the reveal stamp, so the page stays hidden.
+//             React rendering <html> too (Next.js) drops the reveal stamp, so the top bar and nav stay hidden.
 //   INFO rows print a class-binding result the doc does not claim yet; they never fail the run.
 //
 //   node scripts/check-frameworks.mjs [baseUrl]
@@ -447,7 +447,8 @@ async function docRun(v, o) {
     }
     const r = await page.evaluate(() => ({ shown: getComputedStyle(document.querySelector('.nds-content-layout')).visibility === 'visible',
         renderedAgain: !document.getElementById('probe').__server,
-        clock: !!document.querySelector('time.nds-clock').textContent.trim() }));
+        clock: !!document.querySelector('time.nds-clock').textContent.trim(),
+        stamped: document.documentElement.hasAttribute('data-nds-loaded') }));
     await page.close();
     return { ndsFirst, ...r };
 }
@@ -455,7 +456,7 @@ async function docRun(v, o) {
 for (const v of REACT) {
     const R = 'React ' + major(v);
     let r = await docRun(v, { whole: true });
-    ok(`${R} renders <html>: NDS starting at load leaves the page hidden (the doc's warning holds)`, r.renderedAgain && !r.shown, JSON.stringify(r));
+    ok(`${R} renders <html>: NDS starting at load loses the page stamp (the doc's warning holds)`, r.renderedAgain && !r.stamped, JSON.stringify(r));
     r = await docRun(v, { whole: true, manual: true });
     ok(`${R} renders <html>: with data-no-auto-init the page shows after hydration`, !r.renderedAgain && r.shown && r.clock, JSON.stringify(r));
     r = await docRun(v, { whole: true, manual: true, late: true });

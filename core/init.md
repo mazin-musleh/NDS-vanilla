@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 12:51 AM"
+last_edit: "09/11/2026 - 01:28 PM"
 ---
 
 <section id="init-overview" class="nds-content-section nds-doc-overview">
@@ -167,7 +167,17 @@ A `<template v-if>` or `<template v-for>` branch renders no element, so it canno
 
 Put the directive on an element that holds a FAB, never on the FAB. A FAB moves to a dock on `<body>`, so it is still on the page when its view goes, and the directive skips it. `destroy` on the element that held it puts the FAB back, and it leaves with the view.
 
-<script type="text/html" id="init-vue-directive" data-canon data-lang="js">
+<script type="text/html" id="init-vue-transition" data-canon data-lang="html" data-preview="none" data-js="init-vue-directive" data-tab-label="Transition">
+<RouterView v-slot="{ Component }">
+  <Transition name="fade" mode="out-in" @after-leave="destroyLeftView">
+    <KeepAlive :include="['SitesView']">
+      <component :is="Component" />
+    </KeepAlive>
+  </Transition>
+</RouterView>
+</script>
+
+<script type="text/html" id="init-vue-directive" data-canon data-lang="js" data-tab-label="Directive">
 // v-nds: put it on the root element of a view or of a v-if or v-for branch
 // (a <template> branch has no element: put it on each element inside)
 export const vNds = {
@@ -182,16 +192,6 @@ export function destroyLeftView(el) {
 }
 </script>
 
-<script type="text/html" id="init-vue-transition" data-canon data-lang="html">
-<RouterView v-slot="{ Component }">
-  <Transition name="fade" mode="out-in" @after-leave="destroyLeftView">
-    <KeepAlive :include="['SitesView']">
-      <component :is="Component" />
-    </KeepAlive>
-  </Transition>
-</RouterView>
-</script>
-
 ### HTML Swaps
 {: .nds-block-title}
 
@@ -200,13 +200,13 @@ A library or your own script that replaces or morphs server HTML in place, such 
 ### Hydration
 {: .nds-block-title}
 
-A framework that hydrates server HTML, such as Next.js or Nuxt, needs that HTML unchanged until hydration ends. When NDS starts first, it changes some of it: the clock writes the time, and Main Navigation sets classes. React then throws the server HTML away and renders it again, without what NDS wrote. When React renders `<html>` too, as the Next.js App Router does, it also removes `data-nds-loaded`, the mark that shows the page, so the page stays hidden. Which one starts first can change from one load to the next: Next.js loads its own scripts with `async`.
+A framework that hydrates server HTML, such as Next.js or Nuxt, needs that HTML unchanged until hydration ends. When NDS starts first, it changes some of it: the clock writes the time, and Main Navigation sets classes. React then throws the server HTML away and renders it again, without what NDS wrote. When React renders `<html>` too, as the Next.js App Router does, it also removes `data-nds-loaded`, the mark that shows the page, so the top bar and main navigation stay hidden. Which one starts first can change from one load to the next: Next.js loads its own scripts with `async`.
 
 Write `data-no-auto-init` on `<html>`. Once hydration ends, remove that attribute and call `window.NDS?.init.initialize()`: in React from an effect in the root component, in Vue from `onMounted` in the root component. When NDS has not loaded yet, the `?.` skips the call, and NDS starts when it loads, because the attribute is gone.
 
 A framework that streams the page hydrates it in parts. The root component's effect can then run before a later part hydrates, such as a Next.js `loading.tsx` boundary or a lazy client component. Start NDS in such a part from an effect inside it, with `NDS.init.mount(el)` on its own root. `initialize()` from the root then covers only what has hydrated.
 
-When the framework renders `<html>` too, as the Next.js App Router does, put `suppressHydrationWarning` on `<html>`. The head inline script writes the saved theme to its `data-theme` before hydration, and React reports that in development. React 18 also reports the `data-nds-defer` that the script removes from each preload link, so put the same prop on those links.
+When the framework renders `<html>` too, as the Next.js App Router does, put `suppressHydrationWarning` on `<html>`. The head inline script writes the saved theme to its `data-theme` before hydration, and React reports that in development. React 18 also reports the `rel` that the script changes on each preload link, so put the same prop on those links.
 
 ### Classes
 {: .nds-block-title}

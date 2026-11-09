@@ -10,14 +10,7 @@
     })();
     (function () {
         document.querySelectorAll('link[rel="preload"][data-nds-defer]').forEach(function (preload) {
-            var link = document.createElement('link');
-            for (var i = 0; i < preload.attributes.length; i++) {
-                var attribute = preload.attributes[i];
-                if (attribute.name !== 'rel' && attribute.name !== 'as') link.setAttribute(attribute.name, attribute.value);
-            }
-            link.rel = 'stylesheet';
-            preload.removeAttribute('data-nds-defer');
-            preload.parentNode.insertBefore(link, preload.nextSibling);
+            preload.rel = 'stylesheet';
         });
     })();
 </script>

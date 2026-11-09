@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "1.12.x"
-last_edit: "03/11/2026 - 08:21 PM"
+last_edit: "09/11/2026 - 01:28 PM"
 ---
 
 <section id="head-overview" class="nds-content-section nds-doc-overview">
@@ -91,14 +91,7 @@ Copy the head as one block. The JS Library tab holds the main script: put it jus
     })();
     (function () {
       document.querySelectorAll('link[rel="preload"][data-nds-defer]').forEach(function (preload) {
-        var link = document.createElement('link');
-        for (var i = 0; i < preload.attributes.length; i++) {
-          var attribute = preload.attributes[i];
-          if (attribute.name !== 'rel' && attribute.name !== 'as') link.setAttribute(attribute.name, attribute.value);
-        }
-        link.rel = 'stylesheet';
-        preload.removeAttribute('data-nds-defer');
-        preload.parentNode.insertBefore(link, preload.nextSibling);
+        preload.rel = 'stylesheet';
       });
     })();
   </script>
@@ -163,7 +156,7 @@ The last choice under a strict Content Security Policy, after a nonce and a hash
 ### Framework Navigation
 {: .nds-block-title}
 
-The inline script runs once, at page load. The stylesheet links it adds and the `data-nds-loaded` stamp are not in the server HTML. A framework that compares `<head>` with the server HTML on each navigation removes them, while the gate stays, so the page hides itself until a full reload. Turbo, htmx boost and Blazor enhanced navigation work this way. Mark those links and the stamp as permanent, in the way your framework offers. If it removes them anyway, run the stylesheet loop again after each navigation and put the stamp back. A framework that renders the head in the browser creates the inline script without running it. The Next.js App Router does this for a not-found page under several root layouts. There, your startup code runs the stylesheet loop and adds the main script itself. Components on a new view are covered on [Init](../core/init).
+The inline script runs once, at page load. The stylesheets it turns on and the `data-nds-loaded` stamp are not in the server HTML. A framework that compares `<head>` with the server HTML on each navigation removes them, while the gate stays, so the page hides itself until a full reload. Turbo, htmx boost and Blazor enhanced navigation work this way. Mark those links and the stamp as permanent, in the way your framework offers. If it removes them anyway, run the stylesheet loop again after each navigation and put the stamp back. A framework that renders the head in the browser creates the inline script without running it. The Next.js App Router does this for a not-found page under several root layouts. There, your startup code runs the stylesheet loop and adds the main script itself. Components on a new view are covered on [Init](../core/init).
 
 </div>
   </div>
@@ -305,7 +298,7 @@ The inline script runs once, at page load. The stylesheet links it adds and the 
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-nds-defer` | a `<link rel="preload" as="style">` | The inline script adds a stylesheet link for it, with the same attributes, and removes the mark from the preload |
+| `data-nds-defer` | a `<link rel="preload" as="style">` | The inline script turns the preload into a stylesheet in place, so it keeps its order in `<head>` |
 | `data-nds-defer="main"` | the main CSS preload | The same, and it marks the main CSS. The loader waits for that sheet to apply before it shows the page, and finds the folder of the other NDS sheets from its URL |
 | `data-theme` | `<html>` | The inline script adds the theme saved under `nds-theme` in `localStorage` to it, before the first paint. The theme switcher writes that key |
 | `data-timezone` | `<html>` | Write it yourself: the site's timezone, as an IANA name such as `Asia/Riyadh`. Without it, NDS uses the visitor's timezone. See [Date](../components/date) |

@@ -163,6 +163,7 @@ html[data-nds-loaded] :where(
 // crit's sizing tokens the slides mis-size — so at main-load it hides until
 // crit, independent of data-nds-loaded. Closes the main-before-crit gap where a
 // pre-data-nds-loaded swiper would otherwise paint un-styled.
-:where(.nds-hero-section .nds-section-action, .nds-footer, .nds-content-layout, .nds-swiper.nds-hero){
+// `html` outranks the hide gate whatever the order: React 19 hoists the stylesheets above it.
+html :where(.nds-hero-section .nds-section-action, .nds-footer, .nds-content-layout, .nds-swiper.nds-hero){
     visibility: var(--nds-crit-reveal, hidden);
 }
