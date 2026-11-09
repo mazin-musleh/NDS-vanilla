@@ -103,6 +103,25 @@
 // string, not five copies.
 $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"]):not(.nds-loading, .nds-progress, [data-status])';
 
+// White fill, black label: on-color primary/neutral, and neutral in dark.
+@mixin btn-oncolor-fill {
+  --btn-bg: var(--button-background-oncolor-default);
+  --btn-bg-hover: var(--button-background-oncolor-hovered);
+  --btn-bg-active: var(--button-background-oncolor-pressed);
+  --btn-bg-selected: var(--button-background-oncolor-selected);
+  --btn-bg-disabled: var(--button-background-oncolor-disabled);
+  --btn-color-disabled: var(--text-default-oncolor-disabled);
+  --btn-color: var(--colors-base-black);
+  --btn-loading-color: var(--colors-base-black);
+  --btn-loading-track: var(--colors-alpha-black-10);
+  // The hover wash is white on white here, so a group seam would vanish.
+  --_btn-seam: color-mix(in srgb, var(--_btn-color) 20%, transparent);
+
+  &:is(.focus, :focus-visible, [data-state~="focused"]) {
+    @include btn-focus-oncolor;
+  }
+}
+
 // ==============================================
 // BASE BUTTON STYLES
 // ==============================================
@@ -389,20 +408,13 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
   // ==============================================
 
   &.nds-oncolor:is(.nds-primary, .nds-neutral) {
-    --btn-bg: var(--button-background-oncolor-default);
-    --btn-bg-hover: var(--button-background-oncolor-hovered);
-    --btn-bg-active: var(--button-background-oncolor-pressed);
-    --btn-bg-selected: var(--button-background-oncolor-selected);
-    --btn-bg-disabled: var(--button-background-oncolor-disabled);
-    --btn-color-disabled: var(--text-default-oncolor-disabled);
-    --btn-color: var(--colors-base-black);
-    --btn-loading-color: var(--colors-base-black);
-    --btn-loading-track: var(--colors-alpha-black-10);
-    // The hover wash is white on white here, so a group seam would vanish.
-    --_btn-seam: color-mix(in srgb, var(--_btn-color) 20%, transparent);
+    @include btn-oncolor-fill;
+  }
 
-    &:is(.focus, :focus-visible, [data-state~="focused"]) {
-      @include btn-focus-oncolor;
+  // Dark neutral is the on-color fill: the dark-gray fill is lost on a dark page.
+  &.nds-neutral {
+    @include dark {
+      @include btn-oncolor-fill;
     }
   }
 

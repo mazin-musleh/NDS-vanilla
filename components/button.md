@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "07/11/2026 - 11:48 AM"
+last_edit: "09/11/2026 - 08:11 PM"
 ---
 
 <section id="btn-overview" class="nds-content-section nds-doc-overview">
@@ -107,7 +107,7 @@ A row on `.nds-btn` changes every button in a group. A row on `.nds-btn:first-ch
 | Structure | More (hint: Three dots, for a menu of more actions) | canon `#btn-more` | — | A square button with three dots, for a menu of more actions. The label is hidden and names the button for screen readers |
 | Structure | User | canon `#btn-user` | — | A user's photo and name, such as the account button in a header. The avatar takes the icon size. Add Menu for a button that opens the account menu |
 | Variant | Primary (default) | `.nds-primary` | `.nds-btn` | The main action in a view. Use one per view |
-| Variant | Neutral | `.nds-neutral` | `.nds-btn` | A strong action next to the primary one |
+| Variant | Neutral | `.nds-neutral` | `.nds-btn` | A strong action next to the primary one. In dark mode it takes the on-color look |
 | Variant | Secondary | `.nds-secondary` | `.nds-btn` | A supporting action, with a light fill |
 | Variant | Secondary outline | `.nds-secondary-outline` | `.nds-btn` | A supporting action, with a border and no fill |
 | Variant | Subtle | `.nds-subtle` | `.nds-btn` | A low-emphasis action, such as cancel or dismiss. The fill shows on hover |
