@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "05/11/2026 - 12:02 PM"
+last_edit: "09/11/2026 - 08:21 PM"
 ---
 
 <section id="chart-overview" class="nds-content-section nds-doc-overview">
@@ -307,7 +307,7 @@ Set them on the chart or on any parent.
 | `--chart-band-edge-color` | `--border-neutral-primary` | The dashed line at each end of the `yaxis.band`, drawn over the series. |
 | `--chart-text` | `--text-primary-paragraph` | The axis labels and titles, and the crosshair. |
 | `--chart-label` | `--text-default` | The values above the bars, the legend and the tooltip text. |
-| `--chart-pie-label-1` to `--chart-pie-label-6` | `--text-oncolor-primary`, black on slices 3 and 4 | The percentage on each slice. Change it when you change its slice color. |
+| `--chart-pie-label-1` to `--chart-pie-label-6` | `--text-oncolor-primary`, black on slices 3 and 4, and on 5 and 6 in dark mode | The percentage on each slice. Change it when you change its slice color. |
 | `--chart-dot-fill` | `--colors-base-white` | The inside of the line dots and the default slice border color. |
 | `--chart-area-opacity` | `0.15` | How strong the Area fill is at the top. |
 | `--chart-tooltip-bg` | `--background-menu` | The tooltip background. |

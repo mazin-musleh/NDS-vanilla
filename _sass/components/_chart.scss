@@ -69,6 +69,9 @@
         --_chart-type-color-4: var(--colors-primary-200);
         --_chart-type-color-5: var(--colors-primary-300);
         --_chart-type-color-6: var(--colors-primary-100);
+        // Slices 5 and 6 turn light in dark, so their labels go dark.
+        --_chart-pie-label-5: var(--chart-pie-label-5, var(--colors-base-black));
+        --_chart-pie-label-6: var(--chart-pie-label-6, var(--colors-base-black));
     }
 }
 
