@@ -526,6 +526,102 @@ bundle_sizes:
     </div>
 </section>
 
+<section id="frameworks" class="nds-content-section">
+    <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+            <h2 class="nds-section-title">Framework Support</h2>
+            <p class="nds-section-description">NDS works with the frameworks and HTML libraries your team already uses, without requiring a change to your existing stack.</p>
+            <p>
+                <a href="{{ '/core/init.html#init-frameworks' | relative_url }}" class="nds-color">Read the Framework Views guide</a>
+            </p>
+        </div>
+        <div class="nds-section-body">
+            <div class="nds-block">
+                <ul class="nds-list nds-grid nds-shadow nds-horizontal" style="--max-col: 2; --mid-col: 1; --min-col: 1;">
+                    <li class="nds-card">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-checkmark-badge-01" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Tested Frameworks</span>
+                                <p class="nds-card-description">NDS is browser-tested with React 18 and 19, Vue 3.4 and 3.5, Svelte 4 and 5, and Angular 17 and 19, as well as htmx and Turbo page swaps.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nds-card">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-layers-02" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Mount and Destroy</span>
+                                <p class="nds-card-description">Use <code>NDS.init.mount()</code> to initialize components in framework-rendered views. Call <code>NDS.init.destroy()</code> when a view is removed to clean up event listeners, open menus, and modal backdrops.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nds-card">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-refresh" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">HTML Swaps</span>
+                                <p class="nds-card-description">NDS supports dynamic HTML updates through Turbo, htmx, and Livewire. Call the same mount and destroy methods around content swaps to ensure newly rendered components work correctly and removed content is properly cleaned up.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nds-card">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-server-stack-01" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Server Rendering and Hydration</span>
+                                <p class="nds-card-description">NDS works with server-rendered applications using Next.js and Nuxt. Set <code>data-no-auto-init</code> on <code>&lt;html&gt;</code> to prevent automatic initialization before hydration completes.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nds-card">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-link-04" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Two-Way Binding</span>
+                                <p class="nds-card-description">NDS fields dispatch native <code>input</code> and <code>change</code> events when their values change, keeping framework bindings in sync. React <code>onChange</code>, Vue <code>v-model</code>, Angular <code>ngModel</code>, and Svelte <code>bind:value</code> receive updated values through their native integration mechanisms.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nds-card">
+                        <div class="nds-card-header">
+                            <div class="nds-card-featured-icon">
+                                <span class="nds-featured-icon nds-circle"><i class="hgi hgi-stroke hgi-translate" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                        <div class="nds-card-content">
+                            <div class="nds-card-text">
+                                <span class="nds-card-title">Framework-Native Translations</span>
+                                <p class="nds-card-description">NDS updates translated text within existing text nodes, preserving framework-managed DOM structures. This allows <code>data-i18n</code> markers in JSX, Vue, and Angular templates to remain compatible with subsequent framework renders.</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section id="dev-environment" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
