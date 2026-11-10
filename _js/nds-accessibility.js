@@ -1497,7 +1497,8 @@
         get isReady() { return initDone && !arming && !!panel; },
         // Started, by a press or by the loader: the loader then skips its own init().
         get isStarted() { return initDone; },
-        get state() { return structuredClone(state); },
+        // JSON, not structuredClone: state is stored JSON, and structuredClone needs Chrome 98.
+        get state() { return JSON.parse(JSON.stringify(state)); },
     };
 })();
 

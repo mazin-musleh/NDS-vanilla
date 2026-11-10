@@ -32,7 +32,7 @@ Label each finding **already produced this run** with one ponytail tag, so the r
 
 Only what the catalog does NOT already cover. Each finding: `file:line`, the cut, the replacement (**name** the stdlib/native feature), severity (LOW by default; HIGH only when the reimplementation is a real correctness risk).
 
-- **`PONY-STD`** `stdlib:` — a genuine stdlib reimplementation: hand-rolled `Array.from`/`flat`/`at`, manual deep clone where `structuredClone` fits, hand-rolled UUID/clamp/range. (Distinct from JSD-05, which promotes an *NDS* helper to core — `PONY-STD` is "the language already ships this.")
+- **`PONY-STD`** `stdlib:` — a genuine stdlib reimplementation: hand-rolled `Array.from`/`flat`/`at`, manual deep clone where `structuredClone` fits, hand-rolled UUID/clamp/range. Not when a comment says the native form would raise the browser floor (`guides/get-started.md` → Browser Support). (Distinct from JSD-05, which promotes an *NDS* helper to core — `PONY-STD` is "the language already ships this.")
 - **`PONY-NAT`** `native:` — a shim/polyfill for an evergreen-native feature (a `requestIdleCallback` fallback that's no longer needed, `closest`/`matches` polyfill, smooth-scroll shim), or manual work the platform does (`AbortController`, `URLSearchParams`, `Intl`, `navigator.clipboard`).
 - **`PONY-YAG`** `yagni:` — an abstraction with ONE implementation (a strategy/registry map with one entry, a factory for one product, a wrapper that only delegates, an options object every caller passes identically), a config/flag no caller sets to a non-default, **a public method with zero readers**.
 - **`PONY-DEL`** `delete:` — a dead file/export/flag, a code path nothing reaches.

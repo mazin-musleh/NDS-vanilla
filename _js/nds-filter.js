@@ -1431,7 +1431,7 @@
                 // Its own open and close only: a menu inside it (a Date Picker's calendar) bubbles the same events.
                 dropmenu.addEventListener('nds:dropmenu:opened', (e) => {
                     if (e.target !== dropmenu) return;
-                    this._appliedFilters = structuredClone(this.criteria.filters);
+                    this._appliedFilters = JSON.parse(JSON.stringify(this.criteria.filters));
                 }, { signal });
                 dropmenu.addEventListener('nds:dropmenu:closed', (e) => {
                     if (e.target !== dropmenu) return;
@@ -2651,7 +2651,7 @@
         // path that omits one call can't silently desync the URL from the chips.
         _commitAppliedUi() {
             // Committed while the menu is open (its Reset): this is now what closing puts back.
-            if (this._appliedFilters) this._appliedFilters = structuredClone(this.criteria.filters);
+            if (this._appliedFilters) this._appliedFilters = JSON.parse(JSON.stringify(this.criteria.filters));
             this.syncUrlParams();
             this._syncFilterButtonBadge();
             this._syncAppliedChips();
@@ -3060,7 +3060,8 @@
 
         getCriteria() {
             // Deep clone — a caller's snapshot must not alias the live filter arrays.
-            return structuredClone(this.criteria);
+            // JSON, not structuredClone: criteria is plain strings, and structuredClone needs Chrome 98.
+            return JSON.parse(JSON.stringify(this.criteria));
         }
 
         /**
