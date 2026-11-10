@@ -44,7 +44,7 @@ last_edit: "06/11/2026 - 03:29 AM"
                         <p class="nds-alert-description">Your record has no warnings or suspensions.</p>
                     </div>
                     <div class="nds-alert-actions">
-                        <button type="button" class="nds-btn nds-subtle" data-modal-target="standing-modal">
+                        <button type="button" class="nds-btn nds-subtle nds-sm" data-modal-target="standing-modal">
                             <span class="nds-label">Academic standing</span>
                         </button>
                     </div>
