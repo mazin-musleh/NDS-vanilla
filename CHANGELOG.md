@@ -62,6 +62,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Section** — On phones, a section action's buttons are full width anywhere in the body.
 - **Tokens** — The secondary text color is darker, for better contrast.
 - **Top Bar** — The date, clock and weather follow the site's timezone and use Meta lines.
+- **Toolbar** — Less space below the bar.
 
 ### Fixed
 - **Accessibility and Digital Stamp** — Fixes to the panel's settings, reduced motion and contrast.

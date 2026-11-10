@@ -78,7 +78,7 @@
     // Knob: the bar's block margins, "<start> <end>". A toolbar hugs its content
     // and clears nothing above it; set --toolbar-margin-block on the bar (or an
     // ancestor) to change either edge.
-    --_toolbar-margin-block: var(--toolbar-margin-block, 0 var(--spacing-xl));
+    --_toolbar-margin-block: var(--toolbar-margin-block, 0 var(--spacing-2xl));
 
     margin-block: var(--_toolbar-margin-block);
     width: 100%;

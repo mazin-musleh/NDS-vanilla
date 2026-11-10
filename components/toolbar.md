@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "1.12.x"
-last_edit: "06/11/2026 - 02:53 AM"
+last_edit: "10/11/2026 - 06:00 PM"
 ---
 
 <section id="toolbar-overview" class="nds-content-section nds-doc-overview">
@@ -308,7 +308,7 @@ The toolbar of the [Editor](../components/editor).
 
 | Property | Default | Controls |
 |---|---|---|
-| `--toolbar-margin-block` | `0 var(--spacing-xl)` | The space above and below the bar, as `<above> <below>`. Set it on the bar or on a parent |
+| `--toolbar-margin-block` | `0 var(--spacing-2xl)` | The space above and below the bar, as `<above> <below>`. Set it on the bar or on a parent |
 {: .nds-table .nds-responsive}
 
 ### Tokens
