@@ -381,10 +381,6 @@ bundle_sizes:
             <div>
                 <h2 class="nds-section-title">Architecture & Performance</h2>
                 <p class="nds-section-description">Built for speed and wide browser support.</p>
-                <p>
-                    <a href="https://pagespeed.web.dev/analysis/https-mazin-musleh-github-io-NDS-vanilla/dcadcl0kfx?form_factor=mobile"
-                        target="_blank" class="nds-color">View the PageSpeed Insights report</a>
-                </p>
             </div>
         </div>
         <div class="nds-section-body">
@@ -529,11 +525,13 @@ bundle_sizes:
 <section id="frameworks" class="nds-content-section">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
+            <div class="nds-section-action nds-wrap">
+                <a href="{{ '/core/init.html#init-frameworks' | relative_url }}" class="nds-btn nds-secondary-outline">
+                    <span class="nds-label">Frameworks guide</span>
+                </a>
+            </div>
             <h2 class="nds-section-title">Framework Support</h2>
             <p class="nds-section-description">NDS works with the frameworks and HTML libraries your team already uses, without requiring a change to your existing stack.</p>
-            <p>
-                <a href="{{ '/core/init.html#init-frameworks' | relative_url }}" class="nds-color">Read the Framework Views guide</a>
-            </p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
