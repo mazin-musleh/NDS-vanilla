@@ -378,10 +378,8 @@ bundle_sizes:
                     </div>
                 </div>
             </div>
-            <div>
-                <h2 class="nds-section-title">Architecture & Performance</h2>
-                <p class="nds-section-description">Built for speed and wide browser support.</p>
-            </div>
+            <h2 class="nds-section-title">Architecture & Performance</h2>
+            <p class="nds-section-description">Built for speed and wide browser support.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
