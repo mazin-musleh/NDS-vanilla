@@ -376,6 +376,11 @@ $section-breakout: ':where(.nds-content-wrapper, .nds-hero-section, .nds-content
     .nds-next {
         order: 1;
     }
+
+    // After next, as in the default row; left alone it lands between prev and the bullets.
+    .nds-pause {
+        order: 2;
+    }
 }
 
 // ==============================================
