@@ -43,6 +43,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Changed
 - **Accessibility** — The panel loads on first use, and follows the page's language.
 - **Action rows** — Button rows in Card, Modal, Panel, Forms and Dropmenu wrap to the next line.
+- **Browser support** — Filter and the Digital Stamp work in browsers from 2021.
 - **Button** — Buttons fit their content, keep a minimum height, take the sizes you set, destructive buttons match the design and have their own dark look, and neutral buttons take the on-color look in dark mode.
 - **Cards** — Cards fill their container, row cards stack when narrow, and default text colors and phone spacing changed.
 - **Date Picker** — The calendar opens from its button and follows the language around it.
