@@ -48,8 +48,9 @@
     // else (localhost, a .com.sa, a preview host) is gov.
     function getHostDomain() {
         const labels = location.hostname.split('.');
-        if (labels.length < 2 || labels.at(-1) !== 'sa') return 'gov';
-        const second = labels.at(-2);
+        // Index, not .at(): .at() needs Chrome 92.
+        if (labels.length < 2 || labels[labels.length - 1] !== 'sa') return 'gov';
+        const second = labels[labels.length - 2];
         if (domains.includes(second)) return second;
         return second === 'com' || second === 'net' ? 'gov' : 'sa';
     }
