@@ -28,7 +28,7 @@ sidemenu_mode: false
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <span class="nds-card-title">Get Started</span>
-                            <p class="nds-card-description">Install the template, set up NDS IQ, build pages gate by gate with browser verification, and upgrade when a new release ships.</p>
+                            <p class="nds-card-description">Install the template, set up NDS IQ, build page by page with browser verification, and upgrade when a new release ships.</p>
                         </div>
                         <div class="nds-card-tags">
                             <span class="nds-tag nds-blue"><span class="nds-label">Workflow</span></span>
