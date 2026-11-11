@@ -529,7 +529,7 @@ bundle_sizes:
                 </a>
             </div>
             <h2 class="nds-section-title">Framework Support</h2>
-            <p class="nds-section-description">NDS works with the frameworks and HTML libraries your team already uses, without requiring a change to your existing stack.</p>
+            <p class="nds-section-description">NDS is plain HTML, CSS and JavaScript, so it is designed to work with any framework. No change to your stack is needed.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
@@ -543,7 +543,7 @@ bundle_sizes:
                         <div class="nds-card-content">
                             <div class="nds-card-text">
                                 <span class="nds-card-title">Tested Frameworks</span>
-                                <p class="nds-card-description">NDS is browser-tested with React 18 and 19, Vue 3.4 and 3.5, Svelte 4 and 5, and Angular 17 and 19, as well as htmx and Turbo page swaps.</p>
+                                <p class="nds-card-description">NDS is browser-tested with React 18 and 19, Vue 3.4 and 3.5, Svelte 4 and 5, and Angular 17 and 19. The tests also cover server-rendered React and Vue pages, and htmx and Turbo swaps and morphs.</p>
                             </div>
                         </div>
                     </li>
@@ -556,7 +556,7 @@ bundle_sizes:
                         <div class="nds-card-content">
                             <div class="nds-card-text">
                                 <span class="nds-card-title">Mount and Destroy</span>
-                                <p class="nds-card-description">Use <code>NDS.init.mount()</code> to initialize components in framework-rendered views. Call <code>NDS.init.destroy()</code> when a view is removed to clean up event listeners, open menus, and modal backdrops.</p>
+                                <p class="nds-card-description">Call <code>NDS.init.mount()</code> when a framework renders a view, and <code>NDS.init.destroy()</code> before it removes one. Destroy clears the view's listeners, open menus and modal backdrops.</p>
                             </div>
                         </div>
                     </li>
@@ -569,7 +569,7 @@ bundle_sizes:
                         <div class="nds-card-content">
                             <div class="nds-card-text">
                                 <span class="nds-card-title">HTML Swaps</span>
-                                <p class="nds-card-description">NDS supports dynamic HTML updates through Turbo, htmx, and Livewire. Call the same mount and destroy methods around content swaps to ensure newly rendered components work correctly and removed content is properly cleaned up.</p>
+                                <p class="nds-card-description">Turbo, htmx and Livewire swaps use the same two calls: destroy the old content before the swap, and mount the new content after it.</p>
                             </div>
                         </div>
                     </li>
@@ -582,7 +582,7 @@ bundle_sizes:
                         <div class="nds-card-content">
                             <div class="nds-card-text">
                                 <span class="nds-card-title">Server Rendering and Hydration</span>
-                                <p class="nds-card-description">NDS works with server-rendered applications using Next.js and Nuxt. Set <code>data-no-auto-init</code> on <code>&lt;html&gt;</code> to prevent automatic initialization before hydration completes.</p>
+                                <p class="nds-card-description">NDS works with server-rendered apps in Next.js and Nuxt. Set <code>data-no-auto-init</code> on <code>&lt;html&gt;</code> so NDS waits until hydration ends.</p>
                             </div>
                         </div>
                     </li>
@@ -595,7 +595,7 @@ bundle_sizes:
                         <div class="nds-card-content">
                             <div class="nds-card-text">
                                 <span class="nds-card-title">Two-Way Binding</span>
-                                <p class="nds-card-description">NDS fields dispatch native <code>input</code> and <code>change</code> events when their values change, keeping framework bindings in sync. React <code>onChange</code>, Vue <code>v-model</code>, Angular <code>ngModel</code>, and Svelte <code>bind:value</code> receive updated values through their native integration mechanisms.</p>
+                                <p class="nds-card-description">NDS fields fire native <code>input</code> and <code>change</code> events when their value changes, so React <code>onChange</code>, Vue <code>v-model</code>, Angular <code>ngModel</code> and Svelte <code>bind:value</code> stay in sync.</p>
                             </div>
                         </div>
                     </li>
@@ -608,7 +608,7 @@ bundle_sizes:
                         <div class="nds-card-content">
                             <div class="nds-card-text">
                                 <span class="nds-card-title">Framework-Native Translations</span>
-                                <p class="nds-card-description">NDS updates translated text within existing text nodes, preserving framework-managed DOM structures. This allows <code>data-i18n</code> markers in JSX, Vue, and Angular templates to remain compatible with subsequent framework renders.</p>
+                                <p class="nds-card-description">NDS changes only the text inside existing text nodes, so the framework's DOM stays as it rendered it. <code>data-i18n</code> markers in JSX, Vue and Angular templates keep working after the framework renders again.</p>
                             </div>
                         </div>
                     </li>
