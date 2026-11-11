@@ -366,7 +366,7 @@ module DocsCanon
   def self.actions(id, panel)
     reset = %(<button type="button" class="nds-btn nds-secondary-outline nds-icon-only nds-md" data-builder-reset aria-label="Reset"><i class="nds-icon nds-hgi-refresh" aria-hidden="true"></i></button>)
     toggle = panel ? %(data-panel-toggle="#{id}-options") : %(data-builder-toggle aria-controls="#{id}-options" aria-expanded="false")
-    options = %(<button type="button" class="nds-btn nds-secondary-outline nds-md" #{toggle}><i class="hgi hgi-stroke hgi-filter-horizontal" aria-hidden="true"></i><span class="nds-label" data-hidden="sm sr">Options</span></button>)
+    options = %(<button type="button" class="nds-btn nds-neutral nds-md" #{toggle}><i class="hgi hgi-stroke hgi-filter-horizontal" aria-hidden="true"></i><span class="nds-label" data-hidden="sm sr">Options</span></button>)
     %(<div class="nds-section-action nds-btn-group nds-horizontal" data-builder-for="#{id}">#{options}#{reset}</div>)
   end
 
