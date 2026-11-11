@@ -17,7 +17,7 @@
 # category: the group inside the shelf. Components: Actions · Navigation · Overlays
 #   · Feedback · Content · Forms · Data. Any other library shelf: the shelf's own
 #   name. Templates and examples: Service · Form · Content · Dashboard. Events: Theme.
-#   It feeds the Library filter, the card tags, the side menu and llms.txt.
+#   It feeds the card tags, the side menu and llms.txt.
 #
 # Order: the Library list sorts its cards A–Z by title itself. Everywhere else, file
 #   order is display order, here and in _data/sidemenu/sidemenu.yml. Inside a library

@@ -355,7 +355,7 @@ bundle_sizes:
 
 <section id="components" class="nds-content-section">
     <div class="nds-section-wrapper">
-{% include library-list.html title="Library" description="Everything NDS ships, from design tokens to the JavaScript API. Filter by type or group, or search by name." %}
+{% include library-list.html title="Library" description="Everything NDS ships, from design tokens to the JavaScript API. Filter by type, or search by name." %}
     </div>
 </section>
 

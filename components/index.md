@@ -10,6 +10,6 @@ sidemenu_mode: false
 
 <section id="components" class="nds-content-section nds-demo-section">
     <div class="nds-section-wrapper">
-{% include library-list.html title="Full List" description="Filter by type or group, or search by name." %}
+{% include library-list.html title="Full List" description="Filter by type, or search by name." %}
     </div>
 </section>
