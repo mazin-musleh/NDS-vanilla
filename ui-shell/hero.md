@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "1.12.x"
-last_edit: "06/11/2026 - 02:01 PM"
+last_edit: "11/11/2026 - 06:25 PM"
 ---
 
 <section id="hero-overview" class="nds-content-section nds-doc-overview">
@@ -190,7 +190,7 @@ The hero is one region of the page. The other regions are on [Page Layout](../la
   <div class="nds-swiper nds-hero nds-oncolor nds-full-width" data-swiper-loop>
     <div class="nds-swiper-wrapper">
       <div class="nds-swiper-slide nds-content-wrapper">
-        <div class="nds-hero-image-wrapper" style="--hero-overlay-opacity: 0.6;">
+        <div class="nds-hero-image-wrapper" style="--hero-overlay-opacity: 0.6; --hero-image-position: 50% 50%;">
           <picture>
             <source media="(max-width: 768px)" srcset="../assets/img/riyadhcenter_IQ_sm.webp">
             <source media="(max-width: 1646px)" srcset="../assets/img/riyadhcenter_IQ_md.webp">
@@ -208,7 +208,7 @@ The hero is one region of the page. The other regions are on [Page Layout](../la
         </div>
       </div>
       <div class="nds-swiper-slide nds-content-wrapper" hidden>
-        <div class="nds-hero-image-wrapper" style="--hero-overlay-opacity: 0.7;">
+        <div class="nds-hero-image-wrapper" style="--hero-overlay-opacity: 0.7; --hero-image-position: 50% 50%;">
           <picture>
             <source media="(max-width: 768px)" data-srcset="../docs-assets/img/home_hero_bg_sm.webp">
             <source media="(max-width: 1646px)" data-srcset="../docs-assets/img/home_hero_bg_md.webp">
@@ -276,8 +276,8 @@ The main hero is a section that holds one hero swiper. The navigation row is the
 | `section.nds-hero-section` | The main hero, with no `nds-sub` | Yes |
 | `.nds-swiper.nds-hero` | The slides. Write `nds-oncolor` and `nds-full-width` with it | Yes |
 | `.nds-swiper-slide.nds-content-wrapper` | One slide. Write `hidden` on every slide after the first | Yes |
-| `.nds-hero-image-wrapper` | The image and its tint. `--hero-overlay-opacity` in its `style` sets the tint for the slide | Yes |
-| `img.nds-hero-image` | The image, in a `picture` with one `source` for each screen size. Give it `alt=""`: the image is decoration. `object-position` in its `style` picks the part of the image that stays in view | Yes |
+| `.nds-hero-image-wrapper` | The image and its tint. `--hero-overlay-opacity` in its `style` sets the tint for the slide, and `--hero-image-position` the part of the image in view | Yes |
+| `img.nds-hero-image` | The image, in a `picture` with one `source` for each screen size. Give it `alt=""`: the image is decoration | Yes |
 | `.nds-section-body` | The title, the description and a `.nds-section-action` with one or two buttons. The first slide's title is the page's `h1`, the others are `h2` | Yes |
 {: .nds-table .nds-responsive}
 
@@ -442,7 +442,7 @@ The main hero shows one slide at a time, and the Swiper script moves between the
 |---|---|---|
 | `--hero-height` | `550px` | The height of the main hero. Set it in the `style` of the section |
 | `--hero-image` | None | The photo of the sub hero, as `url('…')`. Set it in the `style` of the section |
-| `--hero-image-position` | `left center` | The part of the photo that stays in view, as a `background-position`, such as `50% 30%`. Set it in the `style` of the section, with `--hero-image` |
+| `--hero-image-position` | `50% 50%` on a slide, `left center` on the sub hero | The part of the image that stays in view, such as `50% 30%`. On the main hero, set it in the `style` of each `.nds-hero-image-wrapper`. On the sub hero, set it in the `style` of the section, with `--hero-image` |
 | `--hero-image-fade-angle` | `90deg`, or `270deg` on a left-to-right page | The direction of the photo's fade. Another angle fades it from the top or a corner |
 | `--hero-image-fade-from` | `0%` | Where the fade starts. Up to this point, the photo is solid |
 | `--hero-image-fade-to` | `70%` | Where the photo is gone |

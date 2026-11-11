@@ -16,7 +16,7 @@ Determine hero sliders source:
         <div class="nds-swiper-wrapper">
             {%- for slide in hero_sliders %}
             <div class="nds-swiper-slide nds-content-wrapper{%- if slide.class %} {{ slide.class }}{%- endif %}"{%- unless forloop.first %} hidden{%- endunless %}>
-                <div class="nds-hero-image-wrapper" {%- if slide.overlay %} style="--hero-overlay-opacity:{{ slide.overlay }};"{%- endif %}>
+                <div class="nds-hero-image-wrapper" {%- if slide.overlay or slide.position %} style="{%- if slide.overlay %}--hero-overlay-opacity:{{ slide.overlay }};{%- endif %}{%- if slide.position %} --hero-image-position:{{ slide.position }};{%- endif %}"{%- endif %}>
                     {%- if forloop.first %}
                     <picture>
                         {%- if slide.src_small %}
@@ -26,7 +26,6 @@ Determine hero sliders source:
                         <source media="(max-width: 1646px)" srcset="{{ slide.src_mid | relative_url }}">
                         {%- endif %}
                         <img src="{{ slide.src | relative_url }}" class="nds-hero-image" alt=""
-                            {%- if slide.position %} style="object-position: {{ slide.position }};"{%- endif %}
                             fetchpriority="high">
                     </picture>
                     {%- else %}
@@ -37,8 +36,7 @@ Determine hero sliders source:
                         {%- if slide.src_mid %}
                         <source media="(max-width: 1646px)" data-srcset="{{ slide.src_mid | relative_url }}">
                         {%- endif %}
-                        <img data-src="{{ slide.src | relative_url }}" class="nds-hero-image" alt=""
-                            {%- if slide.position %} style="object-position: {{ slide.position }};"{%- endif %}>
+                        <img data-src="{{ slide.src | relative_url }}" class="nds-hero-image" alt="">
                     </picture>
                     {%- endif %}
                 </div>
