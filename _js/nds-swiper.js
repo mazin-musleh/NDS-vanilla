@@ -442,7 +442,8 @@
                 // computes a zero offset, scrolls nowhere, and still spends the
                 // landing. Wait for a real step.
                 this._detectCurrentSlide();
-                if (this._loopPending && this._measuredStep) {
+                // A hero's [hidden] slides collapse the offsets until its reveal, which does the landing.
+                if (this._loopPending && this._measuredStep && !this._slides.some(slide => slide.hidden)) {
                     this._loopPending = false;
                     this._jumpTo(this._headCount);
                     this._detectCurrentSlide();
@@ -597,14 +598,10 @@
         // ==============================================
 
         _setupLoop() {
-            // Two pages plus one clone on each side, and never fewer than six SLIDES.
-            // The floor is absolute because the relative formula strands a short row: a
-            // two-slide loop caps its budget at two, so the edge stays two swipes away
-            // and a pan has no room to re-anchor in — it only shifts once the row is a
-            // whole cycle out. A row shorter than the budget repeats its own cycle to
-            // reach it; the wrap math is cycle-relative, so the clone index just wraps.
+            // One page of clones on each side: the mid-swipe re-anchor below keeps a run of
+            // flicks off the edge. A row shorter than a page repeats its own cycle; the clone index wraps.
             const realCount = this._realCount;
-            const count = Math.max(2 * Math.max(this._slidesMax, this._slidesMid, this._slidesMin) + 1, 6);
+            const count = Math.max(this._slidesMax, this._slidesMid, this._slidesMin);
             const clone = (i) => {
                 const clone = this._slides[i].cloneNode(true);
                 clone.classList.add('nds-swiper-clone');
@@ -754,6 +751,8 @@
                 this._measuredStep = Math.abs(this._slides[1].offsetLeft - this._slides[0].offsetLeft);
                 this._stepWidth = width;
             }
+            // Until the loop lands, the row sits on the first slide: scroll anchoring moves it as the clones go in.
+            if (this._loopPending) return;
 
             this.currentIndex = Math.max(0, Math.min(Math.round(this._getPosition()), this._maxIndex));
         }
