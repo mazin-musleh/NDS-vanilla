@@ -330,6 +330,11 @@ def verify(out, version, rules=None):
     with open(rules, encoding='utf8') as f:
         block = f.read()
     rev = check_rules(block, os.path.relpath(rules, ROOT).replace(os.sep, '/'))
+    # A warning, not a stop: the draft may run ahead on purpose. Publishing after the build ships the old rules.
+    with open(os.path.join(ROOT, '_includes', 'NDS-IQ-draft.md'), encoding='utf8') as f:
+        if f.read() != block:
+            print(f'\n  WARNING: the NDS IQ draft differs from the published v{rev}. If this release '
+                  'ships new rules, run python scripts/publish-iq.py --apply first, then build again.')
 
     guides = {}
     for name in ('get-started', 'integration-quality'):
