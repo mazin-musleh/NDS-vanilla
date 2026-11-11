@@ -37,12 +37,12 @@ Quick links:
 
 | Area | What you get |
 |---|---|
-| **Components** | 90+ UI components: buttons, forms, modals, charts, date pickers (Gregorian and Hijri), panels, navigation, and more. |
+| **Components** | 110+ components: buttons, forms, modals, charts, date pickers (Gregorian and Hijri), panels, navigation, and more. |
 | **Layout** | A section model and a responsive grid to compose pages. |
 | **UI shell** | The page chrome: top bar, header, main navigation, hero, side menu, side info, and footer. |
 | **Utilities** | Small helpers: copy, share, number formats, text truncation, dividers, and more. |
-| **Page templates** | 16 DGA page templates, such as service, FAQ, contact, search, and KPIs. |
-| **Examples** | 8 full pages, such as an admin console, a registration flow, and a services list. |
+| **Page templates** | 16 DGA page templates, such as Life Journeys, service, FAQ, contact, search, and KPIs. |
+| **Examples** | 15 full pages, such as a student portal, an admin console, and appointment booking. |
 | **Theming** | Light and dark mode, OKLCH-seed palettes, and predefined or stylesheet themes. |
 | **Event themes** | Seasonal skins for Foundation Day, Hajj, and National Day. One script tag applies each one. |
 
@@ -70,7 +70,7 @@ Every page is Arabic (RTL) first, with English (LTR) support. The docs show a li
 
 [NDS IQ](https://mazin-musleh.github.io/NDS-vanilla/guides/integration-quality.html) is a versioned instruction system that gives AI coding agents a consistent way to build with NDS. It lives in this repository, not in the release zip. The Get Started setup prompt downloads it to your project root and points your `AGENTS.md` or `CLAUDE.md` at it. Claude Code, Cursor, Codex, and other agents then read the same file. The [Get Started guide](https://mazin-musleh.github.io/NDS-vanilla/guides/get-started.html) covers setup, the workflow, and upgrades.
 
-**Working on NDS itself?** The project rules live in [AGENTS.md](AGENTS.md), which Cursor, Codex, Aider, and other agents read. [CLAUDE.md](CLAUDE.md) imports it for Claude Code. Claude Code also gets project skills in [.claude/skills/](.claude/skills/): docs, JS and CSS audits, performance measurement, icons, font updates, releases, and NDS IQ evaluation. No setup is needed.
+**Working on NDS itself?** The project rules live in [AGENTS.md](AGENTS.md), which Cursor, Codex, Aider, and other agents read. [CLAUDE.md](CLAUDE.md) imports it for Claude Code. Claude Code also gets project skills in [.claude/skills/](.claude/skills/): docs, JS and CSS audits, performance measurement, icons, font updates, event packs, releases, and NDS IQ evaluation. No setup is needed.
 
 ## Quick start (local development)
 
@@ -178,7 +178,7 @@ This is an independent implementation, based on the public DGA design specificat
 **The default visual identity is for Saudi Arabia government entities only.** If you are not a Saudi government organization, replace all of the following before you go live:
 
 - **Logos and marks**: [`assets/img/dga-logo-icon.svg`](assets/img/dga-logo-icon.svg), [`2030-vision.svg`](assets/img/2030-vision.svg), and [`palm_swords.svg`](assets/img/palm_swords.svg) are official government trademarks.
-- **Design tokens**: the DGA brand in [`_sass/themes/_dga.scss`](_sass/themes/_dga.scss) and the typography and spacing primitives in [`_sass/tokens/_primitives.scss`](_sass/tokens/_primitives.scss) are the DGA identity. Re-theme them to your brand through the 4-tier token system (see [AGENTS.md](AGENTS.md#design-tokens-critical)).
+- **Design tokens**: the DGA brand in [`_sass/themes/_dga.scss`](_sass/themes/_dga.scss) and the typography and spacing primitives in [`_sass/tokens/_primitives.scss`](_sass/tokens/_primitives.scss) are the DGA identity. Re-theme them to your brand through the 4-tier token system (see [_sass/sass.md](_sass/sass.md)).
 - **Digital-stamp component**: the DGA digital stamp in the top bar ([`_includes/topbar.html`](_includes/topbar.html), styled in [`_sass/components/_digital-stamp.scss`](_sass/components/_digital-stamp.scss)) is a Saudi government compliance feature. Remove it, or replace it with your own.
 - **Copy**: `.gov.sa` email domains, "Digital Government Authority" labels, and Saudi-specific demo content in `_data/` and the demo pages.
 
