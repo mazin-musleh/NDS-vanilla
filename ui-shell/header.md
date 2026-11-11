@@ -7,7 +7,7 @@ breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.12.x"
+updated: "2.0.0"
 last_edit: "13/10/2026 - 12:21 AM"
 ---
 

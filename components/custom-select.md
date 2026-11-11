@@ -6,8 +6,8 @@ hero_description: A form field that opens a styled list, where the user picks on
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
-since: "1.12.x"
-updated: "1.12.x"
+since: "2.0.0"
+updated: "2.0.0"
 last_edit: "01/11/2026 - 05:15 PM"
 ---
 

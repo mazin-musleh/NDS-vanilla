@@ -7,7 +7,7 @@ breadcrumb: [["Utilities", "/components/?shelf=Utilities"]]
 lang: en
 direction: ltr
 since: "1.4.0"
-updated: "1.12.x"
+updated: "2.0.0"
 last_edit: "20/10/2026 - 05:08 PM"
 ---
 

@@ -119,7 +119,7 @@ The floor answers one question: does this sentence earn its place? A scenario th
 
 ## Harness prompt (comprehension)
 
-Keep it canonical, so runs stay comparable. Defaults: `{SRC}` = `{ROOT}` = `C:\Projects\NDS-vanilla`, `{SITE}` = `C:\Projects\NDS-vanilla\_site`, `{VERIFY}` = `C:\Projects\NDS-vanilla\scripts\release-template\nds-verify.mjs` (the zip root's copy), and `{ROOT_VERSION}` = the version the next release takes (2.0.0 while `_config.yml` reads 1.12.x-dev). `old` mode swaps all five (`{VERIFY}` = `{ROOT}\nds-verify.mjs`, absent: no 1.x zip ships it). Fill `{SCENARIOS}` with setup + prompt only, never the rubric.
+Keep it canonical, so runs stay comparable. Defaults: `{SRC}` = `{ROOT}` = `C:\Projects\NDS-vanilla`, `{SITE}` = `C:\Projects\NDS-vanilla\_site`, `{VERIFY}` = `C:\Projects\NDS-vanilla\scripts\release-template\nds-verify.mjs` (the zip root's copy), and `{ROOT_VERSION}` = the version the next release takes (the next number while `_config.yml` reads `X.Y.x-dev`). `old` mode swaps all five (`{VERIFY}` = `{ROOT}\nds-verify.mjs`, absent: no 1.x zip ships it). Fill `{SCENARIOS}` with setup + prompt only, never the rubric.
 
 ```
 You are simulating an AI coding agent working inside a CONSUMER web project

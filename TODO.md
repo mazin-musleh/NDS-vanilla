@@ -2,16 +2,14 @@
 
 Standing file: it always exists. At every release commit, remove the items that release shipped and carry the open ones forward. Never delete the file itself. This is the one open list.
 
-Cleaned 2026-10-25: finished items and their release notes left (all in `CHANGELOG.md` Unreleased); git history holds the investigation notes.
+Cleaned 2026-11-12 at v2.0.0: shipped items left (all in `CHANGELOG.md` 2.0.0); git history holds the investigation notes.
 
 ## Open
 
-### v2.0.0 release
+- **Chrome: `nds-cq` by hand on a Side Info section**, as the only section, with content that grows, keeps a stale height (the same in 1.12). `min-height: stretch` is no fix: Safari sticks tall.
+- **NDS IQ: optional S101 behavior run** (owner go).
 
-- **NDS IQ v4.0 on release day** (plan and status in `plans/iq-v4.md`; `IQv3.2` is already tagged and pushed, off main). [ ] `python scripts/publish-iq.py --apply` BEFORE the build and `mkrelease.py` (`verify()` checks the published copy and the guides' v4.0 render), `git push origin main IQv4.0`. Eval done 2026-11-06 (133 scenarios, none failed; `last-evaluated.md` matches the draft): a rules edit before publish needs a `scoped` run and `evolve`. [ ] Optional, owner go: the S101 behavior run.
-- **Content that shrinks after load keeps its open height (field report, rc.6): fixed, uncommitted.** No section is a size container now: a `nds-breakout` body pulls out by the section's gutter capped at one page gutter (none beside a side menu), and its Swiper pads by the same value, and `.nds-content` stretches again (`93bfae23`'s start + `min-height: 100%` stuck tall in Safari). `check-footer-overrun.mjs` has the Show less step. Known Chrome bug left: `nds-cq` by hand on a Side Info section, as the only section, with content that grows (the same in 1.12). `min-height: stretch` is no fix: Safari sticks tall.
-
-### Parked features (owner calls; after v2.0.0 unless noted)
+### Parked features (owner calls)
 
 - **Chat component (2026-10-16), later.** Found in the Student Portal with Date Tile and Meta, which shipped. Think it through first: the real uses, how it fits with other components, and what it replaces. The portal's support panel (`dialog#support-panel` in `examples/student-portal.md`) is where it would land.
 - **Editable table cells (rig 4, 2026-11-03).** No canon for a field in a table cell (its label, its size). The row alignment is done: `nds-baseline` keeps a row's cells in line when a field's message grows the row, and `form-row-align` names it (2026-11-04).

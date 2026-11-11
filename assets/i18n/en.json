@@ -1,5 +1,5 @@
 {
- "_": "NDS 1.12.x-dev · every English word of NDS components, by section and key · to add a language, copy it into window.NDS_I18N_LANGS.<lang> and translate the words",
+ "_": "NDS 2.0.0 · every English word of NDS components, by section and key · to add a language, copy it into window.NDS_I18N_LANGS.<lang> and translate the words",
  "accessibility": {
   "panel_title": "Accessibility Tools",
   "panel_label": "Accessibility settings",

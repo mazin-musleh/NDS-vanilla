@@ -5,7 +5,7 @@ hero_title: Text Fields - National Design System
 hero_description: Form fields the user types in, with the label, messages and submit validation that every NDS field shares
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
-updated: "1.12.x"
+updated: "2.0.0"
 last_edit: "07/11/2026 - 09:55 PM"
 lang: en
 direction: ltr

@@ -6,8 +6,8 @@ hero_description: The current weather for one or more places, from their coordin
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
-since: "1.12.x"
-updated: "1.12.x"
+since: "2.0.0"
+updated: "2.0.0"
 last_edit: "02/11/2026 - 03:47 PM"
 ---
 

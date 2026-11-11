@@ -6,8 +6,8 @@ hero_description: A warning that opens before an idle session ends, counts down 
 breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en
 direction: ltr
-since: "1.12.x"
-updated: "1.12.x"
+since: "2.0.0"
+updated: "2.0.0"
 last_edit: "31/10/2026 - 08:31 PM"
 ---
 

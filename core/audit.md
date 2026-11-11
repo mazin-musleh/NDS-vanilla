@@ -6,8 +6,8 @@ hero_description: A check you run on a built page that lists NDS markup and CSS 
 breadcrumb: [["Core", "/components/?shelf=Core"]]
 lang: en
 direction: ltr
-since: "1.12.x"
-updated: "1.12.x"
+since: "2.0.0"
+updated: "2.0.0"
 last_edit: "05/11/2026 - 12:35 AM"
 ---
 

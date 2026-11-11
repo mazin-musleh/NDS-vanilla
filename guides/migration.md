@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Migration
-since: "1.12.x"
+since: "2.0.0"
 last_edit: "23/10/2026 - 03:54 PM"
 lang: en
 direction: ltr

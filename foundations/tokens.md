@@ -7,7 +7,7 @@ breadcrumb: [["Foundations", "/components/?shelf=Foundations"]]
 lang: en
 direction: ltr
 since: "1.2.0"
-updated: "1.12.x"
+updated: "2.0.0"
 last_edit: "05/11/2026 - 11:25 AM"
 ---
 

@@ -6,8 +6,8 @@ hero_description: A live count of the time left until a deadline or the end of a
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
-since: "1.12.x"
-updated: "1.12.x"
+since: "2.0.0"
+updated: "2.0.0"
 last_edit: "09/11/2026 - 05:59 PM"
 ---
 

@@ -7,7 +7,7 @@ breadcrumb: [["Layout", "/components/?shelf=Layout"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "1.12.x"
+updated: "2.0.0"
 last_edit: "03/11/2026 - 01:45 PM"
 ---
 

@@ -6,8 +6,8 @@ hero_description: The current time, in the site's timezone, that changes on the 
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
-since: "1.12.x"
-updated: "1.12.x"
+since: "2.0.0"
+updated: "2.0.0"
 last_edit: "01/11/2026 - 08:07 PM"
 ---
 

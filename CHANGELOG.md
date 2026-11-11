@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-11-12
+
 ### Added
 - **Audit** — Checks a page for silent failures and for names a release renamed or removed. See the [Audit](https://mazin-musleh.github.io/NDS-vanilla/core/audit.html) page.
 - **Calendar** — Events by week or month, with Gregorian or Hijri dates. See the [Calendar](https://mazin-musleh.github.io/NDS-vanilla/components/calendar.html) page.
@@ -214,4 +216,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 The 1.x releases (1.0.0 to 1.12.0) are in [CHANGELOG-v1.md](https://github.com/mazin-musleh/NDS-vanilla/blob/main/CHANGELOG-v1.md).
 
-[Unreleased]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.12.0...HEAD
+[Unreleased]: https://github.com/mazin-musleh/NDS-vanilla/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.12.0...v2.0.0

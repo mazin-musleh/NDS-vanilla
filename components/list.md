@@ -6,8 +6,8 @@ hero_description: A set of like items in a grid or in rows that fill, each a car
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
-since: "1.12.x"
-updated: "1.12.x"
+since: "2.0.0"
+updated: "2.0.0"
 last_edit: "05/11/2026 - 09:39 PM"
 ---
 

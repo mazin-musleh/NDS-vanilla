@@ -6,8 +6,8 @@ hero_description: A photo cropped to fill a set shape, with a focal point and an
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
-since: "1.12.x"
-updated: "1.12.x"
+since: "2.0.0"
+updated: "2.0.0"
 last_edit: "25/10/2026 - 09:51 PM"
 ---
 

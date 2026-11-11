@@ -6,8 +6,8 @@ hero_description: Shows, reads and writes dates in the two calendars of Saudi Ar
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
-since: "1.12.x"
-updated: "1.12.x"
+since: "2.0.0"
+updated: "2.0.0"
 last_edit: "01/11/2026 - 10:48 PM"
 ---
 

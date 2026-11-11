@@ -6,8 +6,8 @@ hero_description: A timeline lists dated events in order, such as the history of
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
-since: "1.12.x"
-updated: "1.12.x"
+since: "2.0.0"
+updated: "2.0.0"
 last_edit: "04/11/2026 - 11:00 PM"
 ---
 

@@ -6,8 +6,8 @@ hero_description: Meta is a line of short facts, each with an icon, such as a ti
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
-since: "1.12.x"
-updated: "1.12.x"
+since: "2.0.0"
+updated: "2.0.0"
 last_edit: "05/11/2026 - 12:02 PM"
 ---
 

@@ -6,8 +6,8 @@ hero_description: The shared functions that NDS components use, and that your pa
 breadcrumb: [["Core", "/components/?shelf=Core"]]
 lang: en
 direction: ltr
-since: "1.12.x"
-updated: "1.12.x"
+since: "2.0.0"
+updated: "2.0.0"
 last_edit: "31/10/2026 - 11:09 PM"
 ---
 

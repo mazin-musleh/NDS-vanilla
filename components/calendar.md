@@ -6,8 +6,8 @@ hero_description: "A calendar shows the events of one week or one month: as day 
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
-since: "1.12.x"
-updated: "1.12.x"
+since: "2.0.0"
+updated: "2.0.0"
 last_edit: "06/11/2026 - 03:38 PM"
 ---
 

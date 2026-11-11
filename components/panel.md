@@ -5,7 +5,7 @@ hero_title: Panels - National Design System
 hero_description: A panel is a surface that slides in from an edge of the screen, for settings, filters or details the user opens on demand.
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.5.0"
-updated: "1.12.x"
+updated: "2.0.0"
 last_edit: "05/11/2026 - 12:02 PM"
 lang: en
 direction: ltr
