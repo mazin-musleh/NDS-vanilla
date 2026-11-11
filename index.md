@@ -149,7 +149,7 @@ bundle_sizes:
     </div>
     <div class="nds-section-body nds-breakout">
         <div class="nds-block">
-            <div class="nds-swiper" data-swiper-loop style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:0px">
+            <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:0px">
                 <div class="nds-swiper-wrapper">
                     {% for tpl in templates %}
                     <div class="nds-swiper-slide">
@@ -639,7 +639,7 @@ bundle_sizes:
                         <div class="nds-card-content">
                             <div class="nds-card-text">
                                 <span class="nds-card-title">AI Integration</span>
-                                <p class="nds-card-description">NDS is designed to work with AI coding agents, with <a href="{{ '/guides/integration-quality.html' | relative_url }}">NDS IQ</a> providing the instructions and <a href="{{ '/guides/get-started.html' | relative_url }}">Get Started</a> guiding the setup and workflow.</p>
+                                <p class="nds-card-description">The NDS source is built to be worked on with AI coding agents. The repo includes its project rules and step-by-step workflows for common jobs, so an agent follows the same standards and runs the same checks as a developer.</p>
                             </div>
                         </div>
                     </li>
