@@ -392,6 +392,11 @@
             display: contents;
         }
 
+        // An empty week shows the message alone, as wide Grid drops its columns: rows of nothing look broken.
+        &[data-state~="empty"] .nds-calendar-days {
+            display: none;
+        }
+
         // Empty spans the row already; after the days.
         > .nds-calendar-empty {
             order: 99;
