@@ -729,6 +729,30 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
   }
 }
 
+// A drawer's rows as skeletons: label and description bars, no fill or caret.
+// On the drawer, and on a drawer inside a loading card.
+@mixin skeleton-drawer-rows {
+  .nds-drawer-list .nds-btn {
+    // The active row's fill, line and the submenu caret are not placeholders.
+    --btn-bg-selected: transparent;
+    --btn-bg-active: transparent;
+
+    &::before,
+    &::after {
+      opacity: 0;
+    }
+
+    :is(.nds-label, .nds-description) {
+      flex: 0 1 auto;
+      @include skeleton-bar;
+    }
+
+    > .nds-icon {
+      visibility: hidden;
+    }
+  }
+}
+
 // On the element that carries .nds-loading, for a component that draws its own
 // skeleton: the skeleton is the feedback, so the spinner and the child dim go.
 // Clicks stay blocked by the base rule.

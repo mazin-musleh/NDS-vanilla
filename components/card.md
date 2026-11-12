@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.0"
-last_edit: "12/11/2026 - 12:00 PM"
+last_edit: "12/11/2026 - 10:37 PM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -56,7 +56,7 @@ Pick another component when:
   </div>
 </div>
 </script>
-<script type="text/html" id="card-image" data-canon>
+<script type="text/html" id="card-image" data-canon data-demo-width="480px">
 <div class="nds-card nds-stroke">
   <div class="nds-card-header">
     <div class="nds-card-image" style="--image-pos-x:50%; --image-pos-y:10%;">

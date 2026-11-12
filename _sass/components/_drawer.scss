@@ -467,26 +467,7 @@
 .nds-drawer.nds-loading {
     @include skeleton-pulse;
     @include loading-skeleton-host;
-
-    .nds-drawer-list .nds-btn {
-        // The active row's fill, line and the submenu caret are not placeholders.
-        --btn-bg-selected: transparent;
-        --btn-bg-active: transparent;
-
-        &::before,
-        &::after {
-            opacity: 0;
-        }
-
-        :is(.nds-label, .nds-description) {
-            flex: 0 1 auto;
-            @include skeleton-bar;
-        }
-
-        > .nds-icon {
-            visibility: hidden;
-        }
-    }
+    @include skeleton-drawer-rows;
 
     .nds-tag {
         border-color: transparent;

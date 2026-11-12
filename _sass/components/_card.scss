@@ -842,11 +842,12 @@
 // before the page stamp (html:not([data-nds-loaded])): the
 // no-JS-component default for the visible pre-stamp window (regions
 // revealed at main-CSS load).
-:is(:is(.nds-grid, .nds-paged-content, .nds-swiper).nds-loading,
-  .nds-grid[data-filter-items]:not([data-nds-filter-initialized]),
-  .nds-paged-content:not([data-paged-initialized])) .nds-card,
-.nds-card.nds-loading,
-html:not([data-nds-loaded]) .nds-card {
+// One branch, so each nested rule prints the list once; every case takes the loading grid's weight.
+.nds-card:is(.nds-loading,
+  :is(.nds-grid, .nds-paged-content, .nds-swiper).nds-loading *,
+  .nds-grid[data-filter-items]:not([data-nds-filter-initialized]) *,
+  .nds-paged-content:not([data-paged-initialized]) *,
+  html:not([data-nds-loaded]) *) {
   // Shown cards only: restyling a card that carries the pulse costs ~5x, and a
   // paged list hides ~100 of them before the reveal (~100 ms at CPU ×6.6).
   &:not([hidden]) {
@@ -872,14 +873,20 @@ html:not([data-nds-loaded]) .nds-card {
     aspect-ratio: var(--image-ratio, 2/1);
     border-radius: var(--image-radius, var(--radius-md));
     overflow: hidden;
-    @include skeleton-fill;
+    // Not skeleton-fill: its fit-content width beats the row's image width and stacks the card.
+    background: var(--nds-skeleton-fill);
 
     img {
       visibility: hidden;
     }
   }
 
-  :is(.nds-tag, .nds-chip, .nds-btn):not(.nds-tab, .nds-accordion-btn) {
+  // A drawer's rows keep the drawer's own skeleton, not one block each.
+  .nds-drawer {
+    @include skeleton-drawer-rows;
+  }
+
+  :is(.nds-tag, .nds-chip, .nds-btn):not(.nds-tab, .nds-accordion-btn, .nds-drawer-list .nds-btn) {
     border-color: transparent;
     border-radius: var(--nds-skeleton-radius);
     @include skeleton-fill;
@@ -899,6 +906,25 @@ html:not([data-nds-loaded]) .nds-card {
 
   .nds-date-tile {
     @include skeleton-date-tile;
+  }
+
+  // A status chip as one disc, no ring. Not skeleton-fill: the chip keeps its own size.
+  .nds-feedback-icon {
+    --feedback-ring: transparent;
+    background: var(--nds-skeleton-fill);
+
+    > i {
+      visibility: hidden;
+    }
+  }
+
+  // A progress ring as its empty grey track: a stroke cannot take the gradient fill.
+  .nds-progress-circle {
+    --progress-color: transparent;
+
+    .nds-progress-info {
+      visibility: hidden;
+    }
   }
 
   // One bar per fact; its icon goes with the text color.

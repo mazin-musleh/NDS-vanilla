@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Fixed
+- **Cards** — While a card loads, a row card with an image stays a row, a drawer in the card shows its own skeleton rows, a status card's icon turns grey, and a progress ring shows only its empty track.
+
 ## [2.0.0] - 2026-11-12
 
 ### Added
