@@ -142,6 +142,9 @@ jobs:
         with:
           path: _site
           key: ${{ steps.key.outputs.prefix }}${{ github.run_id }}
+      - name: Take the social cover from main
+        # Site artwork, not template content: a new cover needs no release.
+        run: cp docs-assets/img/nds-cover.webp _site/docs-assets/img/nds-cover.webp
 
       - name: Build main at /next/
         # preview: true marks every page noindex (_includes/seo-meta.html).
