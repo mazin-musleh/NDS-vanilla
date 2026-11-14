@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "2.0.0"
 updated: "2.0.0"
-last_edit: "05/11/2026 - 12:35 AM"
+last_edit: "14/11/2026 - 10:48 AM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -277,7 +277,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `filter-unclaimed` | structure | error | `data-filter-items` that no filter claimed, so it stays in its skeleton |
 | `filter-no-target` | structure | error | A `.nds-filter` with no `data-filter-target` |
 | `paged-no-nav` | structure | error | A `.nds-paged-content` with no pagination nav |
-| `icon-unregistered` | structure | error | An `nds-hgi-*` icon that is not in the registered set |
+| `icon-unregistered` | structure | error | An `nds-hgi-*` icon that is not in the registered set. While the icon style sheet is missing, one finding names it instead of one per icon |
 | `font-icon-unknown` | structure | error | A font icon (`hgi hgi-stroke hgi-*`) whose name the HGI stroke rounded set lacks, so it shows nothing. It runs once the HGI style sheet has loaded |
 | `icon-tag` | structure | error | A UI icon (`nds-icon nds-hgi-*`) on a tag other than `<i>`. The icon styles apply to `<i>` only, so it shows nothing |
 | `icon-only-btn` | structure | warn | A button in a field's `.nds-form-action` with an icon, no text and no `nds-icon-only`: it keeps its text padding and renders wider than tall |

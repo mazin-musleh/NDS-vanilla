@@ -23,6 +23,7 @@
  *     download zero bytes of it.
  *   - The icon check reads a ::before computed mask, so it only means something
  *     once the nds-icons sheet has applied; the post-init sweep runs late enough.
+ *     Without the sheet, the rule reports it once instead of every icon.
  *   - Icon names inside JS strings are invisible to this DOM sweep; check
  *     those against icons.yml by hand.
  *   - The migration rows are _data/migrations.yml, baked in by js_processor.rb. A JS call or an
@@ -501,7 +502,14 @@
             context.report(el, '.nds-paged-content has no pagination nav — it stays skeleton-held and its data-paged-* slots never stamp.', 'Unpaged lists use a plain container + data-filter-count.'));
     } });
 
+    // The icon sheet holds every name: without it each icon reports, and the one cause drowns.
+    const isIconSheetApplied = () => !!getComputedStyle(document.documentElement).getPropertyValue('--nds-icon-cancel').trim();
     addRule({ id: 'icon-unregistered', severity: 'error', docs: 'foundations/icons.html', check(context) {
+        if (!isIconSheetApplied()) {
+            // The loader adds the icon sheet once main CSS loads: with main missing, css-missing names the cause.
+            if (isMainSheetApplied()) context.report(null, 'the NDS icon sheet is not applied, so no inline icon paints.', 'Check that nds-icons.min.css is reachable beside nds-main.min.css.');
+            return;
+        }
         context.find('i.nds-icon[class*="nds-hgi-"]').forEach(el => {
             // An unknown name leaves --nds-icon unset, and the mask falls back to transparent.
             if (getComputedStyle(el).getPropertyValue('--nds-icon').trim()) return;

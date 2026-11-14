@@ -40,7 +40,8 @@
 // that shows it under the reference. A page's first state is also shot in the other themes, at the widest width.
 // A page taller than a sheet gets more, one slice each: sheet-<state>-2.png and on. The reference takes the state's lang and direction, so an Arabic
 // page compares with a right-to-left reference in Arabic. Prints the audit findings, console errors (a CSP one names its
-// source), failed loads, sideways scroll, a wrong window.innerWidth, and NDS parts still alive off the
+// source), failed loads, sideways scroll, a wrong window.innerWidth, parts still loading after the page settled,
+// a dialog open at load with no state to close it, and NDS parts still alive off the
 // page (a view that left without NDS.init.destroy: give a framework view a state whose run leaves it); exits 1 when there is
 // any. Prints each state's sheet and only what went wrong. Inspect every sheet: the script cannot
 // judge the look.
@@ -275,6 +276,12 @@ async function shoot(url, { width, theme, cookies = [], storage = {}, fail, resp
     const locale = await evaluate(`({ lang: document.documentElement.lang, dir: getComputedStyle(document.documentElement).direction })`);
     const innerWidth = await evaluate('innerWidth');
     const overflow = await evaluate('document.documentElement.scrollWidth - innerWidth');
+    // A skeleton or spinner still on once the page settled: data that never came, or a stuck state.
+    const loading = await evaluate(`[...document.querySelectorAll('.nds-loading, [data-state~="loading"]')]
+        .filter((el) => el.checkVisibility ? el.checkVisibility() : el.offsetParent)
+        .map((el) => el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + [...el.classList].slice(0, 2).map((c) => '.' + c).join(''))`);
+    // A dialog open at load (a welcome or consent prompt) covers the page: the shot shows only it.
+    const covered = !run && await evaluate(`!!document.querySelector('dialog[open]')`);
     // The console's CSP lines name no source and carry a fresh nonce per load; the event names the script.
     const csp = (await evaluate('window.__ndsCsp || []')) || [];
     // The stretch moves parts that follow the viewport (the FAB tucks or returns): a shot taken
@@ -309,7 +316,7 @@ async function shoot(url, { width, theme, cookies = [], storage = {}, fail, resp
     handlers.delete(sessionId);
     await send('Target.closeTarget', { targetId });
     await send('Target.disposeBrowserContext', { browserContextId }).catch(() => {});
-    return { png: Buffer.from(data, 'base64'), status, revealed, innerWidth, overflow, ...locale, ran,
+    return { png: Buffer.from(data, 'base64'), status, revealed, innerWidth, overflow, loading, covered, ...locale, ran,
         errors: [...errors.filter((e) => !/\[NDS\.[aA]udit\]|Content Security Policy/.test(String(e))), ...csp], findings, leaks };
 }
 
@@ -392,6 +399,8 @@ try {
                 if (!r.status || r.status >= 400) problems.push(`${at} ${shot}: HTTP ${r.status}`);
                 if (!r.revealed) problems.push(`${at} ${shot}: the page never revealed (no data-nds-loaded)`);
                 if (r.overflow > 1) note('layout', `the page is ${r.overflow}px wider than the viewport (sideways scroll)`, shot);
+                if (r.loading?.length) note('loading', `${r.loading.length} part(s) still loading after the page settled: ${r.loading.slice(0, 5).join(', ')}${r.loading.length > 5 ? ', …' : ''}. Fix the data or state that holds them, or name the state if it shows loading on purpose`, shot);
+                if (r.covered) note('covered', 'a dialog is open after load, so the shot shows only it: add a state whose run closes it, to check the page under it', shot);
                 if (r.findings === null) note('audit', 'unavailable (no NDS.init.audit)', shot);
                 (r.findings || []).forEach((f) => note('audit', f, shot));
                 r.errors.forEach((e) => note('error', e, shot));
@@ -414,7 +423,7 @@ try {
         const slice = 1400;
         const pngHeight = (file) => readFileSync(join(dir, file)).readUInt32BE(20) * scale;
         for (const r of rows) {
-            const { cols } = r, shown = cols.map((c, i) => i);
+            const { cols } = r, shown = [...cols.keys()];
             const head = shown.map((i) => `<th>${cols[i].w}px ${cols[i].t}</th>`).join('');
             const row = (x, part) => `<tr><th>${x.name}</th>${shown.map((i) =>
                 `<td><div style="width:${cols[i].w * scale}px"><img src="${x.cells[i]}" style="width:100%; margin-top:-${part * slice}px"></div></td>`).join('')}</tr>`;
