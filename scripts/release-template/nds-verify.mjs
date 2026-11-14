@@ -40,7 +40,7 @@
 // that shows it under the reference. A page's first state is also shot in the other themes, at the widest width.
 // A page taller than a sheet gets more, one slice each: sheet-<state>-2.png and on. The reference takes the state's lang and direction, so an Arabic
 // page compares with a right-to-left reference in Arabic. Prints the audit findings, console errors (a CSP one names its
-// source), failed loads, sideways scroll, parts cut off past the screen edge, text below AA contrast, a wrong window.innerWidth, parts still loading after the page settled,
+// source), failed loads, sideways scroll, parts cut off past the screen edge, controls another part lies over, text below AA contrast, a wrong window.innerWidth, parts still loading after the page settled,
 // a dialog open at load with no state to close it, and NDS parts still alive off the
 // page (a view that left without NDS.init.destroy: give a framework view a state whose run leaves it); exits 1 when there is
 // any. Prints each state's sheet and only what went wrong. Inspect every sheet: the script cannot
@@ -341,6 +341,41 @@ async function shoot(url, { width, theme, cookies = [], storage = {}, fail, resp
         }
         return out;
     })()`);
+    // A control another part lies over, at its center or near a corner. A fixed or sticky part (the FAB, a
+    // sticky bar) floats on purpose, and a point an ancestor clips (a swiper's next slide) is hidden, not covered.
+    const blocked = await evaluate(`(() => {
+        const name = (el) => el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + [...el.classList].slice(0, 2).map((c) => '.' + c).join('');
+        const isFloating = (el) => { for (let a = el; a; a = a.parentElement) if (/fixed|sticky/.test(getComputedStyle(a).position)) return true; return false; };
+        const isClipped = (el, x, y) => { for (let a = el.parentElement; a; a = a.parentElement) {
+            if (getComputedStyle(a).overflow === 'visible') continue;
+            const r = a.getBoundingClientRect();
+            if (x < r.left || x > r.right || y < r.top || y > r.bottom) return true;
+        } return false; };
+        // In a box that scrolls, the user can move it out from under an overlay (Scroll More's button over the last row).
+        const isInScroller = (el) => { for (let a = el.parentElement; a; a = a.parentElement) {
+            const s = getComputedStyle(a);
+            if ((/auto|scroll/.test(s.overflowY) && a.scrollHeight > a.clientHeight) || (/auto|scroll/.test(s.overflowX) && a.scrollWidth > a.clientWidth)) return a !== document.scrollingElement;
+        } return false; };
+        const out = [];
+        for (const el of document.querySelectorAll('a[href], button, [role="button"], input:not([type="hidden"]), select, textarea, summary')) {
+            if (out.length >= 50) break;
+            if (el.closest('[inert], [disabled], [aria-hidden="true"]') || !el.checkVisibility({ opacityProperty: true, visibilityProperty: true })) continue;
+            const r = el.getBoundingClientRect(), lines = el.getClientRects();
+            if (r.width < 4 || r.height < 4 || isInScroller(el)) continue;
+            // A link that wraps: its box spans both lines, so test the middle of each line instead.
+            const points = lines.length > 1 ? [...lines].map((l) => [l.left + l.width / 2, l.top + l.height / 2, true])
+                : [[0.5, 0.5], [0.25, 0.25], [0.75, 0.25], [0.25, 0.75], [0.75, 0.75]].map(([fx, fy]) => [r.left + r.width * fx, r.top + r.height * fy, fx === 0.5]);
+            for (const [x, y, isMiddle] of points) {
+                if (x < 0 || y < 0 || x > innerWidth || y > innerHeight || isClipped(el, x, y)) continue;
+                const top = document.elementFromPoint(x, y);
+                // Its own part, an ancestor (el takes no taps), or its label all reach it.
+                if (!top || el.contains(top) || top.contains(el) || top.closest('label')?.control === el || isFloating(top)) continue;
+                out.push(name(el) + ' under ' + name(top) + (isMiddle ? '' : ' (in part)'));
+                break;
+            }
+        }
+        return out;
+    })()`);
     // Past the screen edge with no way to scroll to it: <main> clips sideways, so the overflow check above passes.
     const clipped = await evaluate(`(() => {
         const out = [];
@@ -395,7 +430,7 @@ async function shoot(url, { width, theme, cookies = [], storage = {}, fail, resp
     handlers.delete(sessionId);
     await send('Target.closeTarget', { targetId });
     await send('Target.disposeBrowserContext', { browserContextId }).catch(() => {});
-    return { png: Buffer.from(data, 'base64'), status, revealed, innerWidth, overflow, loading, covered, clipped, faint, ...locale, ran,
+    return { png: Buffer.from(data, 'base64'), status, revealed, innerWidth, overflow, loading, covered, clipped, faint, blocked, ...locale, ran,
         errors: [...errors.filter((e) => !/\[NDS\.[aA]udit\]|Content Security Policy/.test(String(e))), ...csp], findings, leaks };
 }
 
@@ -481,6 +516,7 @@ try {
                 if (r.loading?.length) note('loading', `${r.loading.length} part(s) still loading after the page settled: ${r.loading.slice(0, 5).join(', ')}${r.loading.length > 5 ? ', …' : ''}. Fix the data or state that holds them, or name the state if it shows loading on purpose`, shot);
                 if (r.clipped?.length) note('layout', `${r.clipped.length} part(s) reach past the screen edge and are cut off, with no way to scroll to them: ${r.clipped.slice(0, 5).join(', ')}${r.clipped.length > 5 ? ', …' : ''}`, shot);
                 if (r.faint?.length) note('contrast', `${r.faint.length} text(s) fall below WCAG AA contrast against the color behind them (4.5:1, or 3:1 for large text): ${r.faint.slice(0, 5).join(', ')}${r.faint.length > 5 ? ', …' : ''}`, shot);
+                if (r.blocked?.length) note('layout', `${r.blocked.length} control(s) lie under another part, so it hides them and takes their taps: ${r.blocked.slice(0, 5).join(', ')}${r.blocked.length > 5 ? ', …' : ''}`, shot);
                 if (r.covered) note('covered', 'a dialog is open after load, so the shot shows only it: add a state whose run closes it, to check the page under it', shot);
                 if (r.findings === null) note('audit', 'unavailable (no NDS.init.audit)', shot);
                 (r.findings || []).forEach((f) => note('audit', f, shot));
