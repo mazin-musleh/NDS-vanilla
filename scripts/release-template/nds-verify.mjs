@@ -155,9 +155,13 @@ chrome.stdio[4].on('data', (chunk) => {
         } else handlers.get(msg.sessionId)?.(msg.method, msg.params);
     }
 });
+// A call Chrome never answers (an evaluate on a promise that never settles, a page frozen by a dialog)
+// fails after CALL_MS instead of holding the run forever. ponytail: one limit for every call.
+const CALL_MS = 60000;
 const send = (method, params = {}, sessionId) => new Promise((resolve, reject) => {
     const id = nextId++;
-    pending.set(id, { resolve, reject });
+    const timer = setTimeout(() => { pending.delete(id); reject(new Error(`${method} got no answer in ${CALL_MS / 1000} s`)); }, CALL_MS);
+    pending.set(id, { resolve: (v) => { clearTimeout(timer); resolve(v); }, reject: (e) => { clearTimeout(timer); reject(e); } });
     chrome.stdio[3].write(JSON.stringify({ id, method, params, sessionId }) + '\0');
 });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -169,7 +173,9 @@ const SETTLED = `(async () => {
 })()`;
 
 // One fresh tab in its own context per shot: no cookie or storage leaks into a shot running beside it.
-async function shoot(url, { width, theme, cookies = [], storage = {}, fail, respond = {}, run, audit, shot = true }) {
+// A shot that fails names its page, width and theme, so a stopped run says where it stopped.
+const shoot = (url, o) => shootOnce(url, o).catch((e) => { throw new Error(`${url} at ${o.width}px ${o.theme}: ${e.message}`); });
+async function shootOnce(url, { width, theme, cookies = [], storage = {}, fail, respond = {}, run, audit, shot = true }) {
     // A request the state fails or answers is expected: its console line is no error.
     const faked = [fail, ...Object.keys(respond)].filter(Boolean);
     const answer = (requestUrl) => {
@@ -193,6 +199,11 @@ async function shoot(url, { width, theme, cookies = [], storage = {}, fail, resp
         else if (method === 'Runtime.exceptionThrown') errors.push(p.exceptionDetails.exception?.description || p.exceptionDetails.text);
         else if (method === 'Runtime.consoleAPICalled' && p.type === 'error') errors.push(p.args.map((a) => a.value ?? a.description).join(' '));
         else if (method === 'Log.entryAdded' && p.entry.level === 'error' && !faked.some((f) => p.entry.url?.includes(f))) errors.push(p.entry.text + (p.entry.url ? ` (${p.entry.url})` : ''));
+        // An alert, confirm or leave-page prompt freezes the page and every call after it: accept it, name it.
+        else if (method === 'Page.javascriptDialogOpening') {
+            errors.push(`${p.type} dialog opened: "${p.message}"`);
+            s('Page.handleJavaScriptDialog', { accept: true }).catch(() => {});
+        }
         else if (method === 'Fetch.requestPaused') {
             const a = answer(p.request.url);
             s(a.errorReason ? 'Fetch.failRequest' : 'Fetch.fulfillRequest', { requestId: p.requestId, ...a }).catch(() => {}); // the request may have ended first
@@ -572,6 +583,9 @@ try {
         }
     }
     await pool(sheets);
+} catch (e) {
+    // The report still gets written: a run that stops says why, never ends silent.
+    problems.push(`run stopped: ${e.message}`);
 } finally {
     server.close();
     // Chrome still holds profile files for a moment after kill(): on Windows the delete fails, so wait it out.
