@@ -40,7 +40,7 @@
 // that shows it under the reference. A page's first state is also shot in the other themes, at the widest width.
 // A page taller than a sheet gets more, one slice each: sheet-<state>-2.png and on. The reference takes the state's lang and direction, so an Arabic
 // page compares with a right-to-left reference in Arabic. Prints the audit findings, console errors (a CSP one names its
-// source), failed loads, sideways scroll, a wrong window.innerWidth, parts still loading after the page settled,
+// source), failed loads, sideways scroll, parts cut off past the screen edge, a wrong window.innerWidth, parts still loading after the page settled,
 // a dialog open at load with no state to close it, and NDS parts still alive off the
 // page (a view that left without NDS.init.destroy: give a framework view a state whose run leaves it); exits 1 when there is
 // any. Prints each state's sheet and only what went wrong. Inspect every sheet: the script cannot
@@ -282,6 +282,26 @@ async function shoot(url, { width, theme, cookies = [], storage = {}, fail, resp
         .map((el) => el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + [...el.classList].slice(0, 2).map((c) => '.' + c).join(''))`);
     // A dialog open at load (a welcome or consent prompt) covers the page: the shot shows only it.
     const covered = !run && await evaluate(`!!document.querySelector('dialog[open]')`);
+    // Past the screen edge with no way to scroll to it: <main> clips sideways, so the overflow check above passes.
+    const clipped = await evaluate(`(() => {
+        const out = [];
+        const isAny = (el, test) => { for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) if (test(getComputedStyle(a))) return true; return false; };
+        for (const el of document.body.querySelectorAll('*')) {
+            const r = el.getBoundingClientRect(), past = Math.round(Math.max(r.right - innerWidth, -r.left));
+            if (past <= 1 || r.width <= 1 || r.height <= 1 || out.length > 200) continue;
+            if (!(el.checkVisibility ? el.checkVisibility({ visibilityProperty: true }) : el.offsetParent)) continue;
+            // Off the edge on purpose: inside a scroller (a table, a swiper), or fixed (a closed panel waits off-screen).
+            const style = getComputedStyle(el);
+            if (style.position === 'fixed' || isAny(el, (s) => /auto|scroll/.test(s.overflowX) || s.position === 'fixed')) continue;
+            out.push([el, past]);
+        }
+        const name = (el) => el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + [...el.classList].slice(0, 2).map((c) => '.' + c).join('');
+        // The outermost only: what it holds is cut because it is. Its deepest part that reaches as far is the cause.
+        return out.filter(([el]) => !out.some(([o]) => o !== el && o.contains(el))).map(([el, px]) => {
+            const cause = out.filter(([o, p]) => p === px && el.contains(o)).pop()[0];
+            return name(el) + ' by ' + px + 'px' + (cause === el ? '' : ' (widened by ' + name(cause) + ')');
+        });
+    })()`);
     // The console's CSP lines name no source and carry a fresh nonce per load; the event names the script.
     const csp = (await evaluate('window.__ndsCsp || []')) || [];
     // The stretch moves parts that follow the viewport (the FAB tucks or returns): a shot taken
@@ -316,7 +336,7 @@ async function shoot(url, { width, theme, cookies = [], storage = {}, fail, resp
     handlers.delete(sessionId);
     await send('Target.closeTarget', { targetId });
     await send('Target.disposeBrowserContext', { browserContextId }).catch(() => {});
-    return { png: Buffer.from(data, 'base64'), status, revealed, innerWidth, overflow, loading, covered, ...locale, ran,
+    return { png: Buffer.from(data, 'base64'), status, revealed, innerWidth, overflow, loading, covered, clipped, ...locale, ran,
         errors: [...errors.filter((e) => !/\[NDS\.[aA]udit\]|Content Security Policy/.test(String(e))), ...csp], findings, leaks };
 }
 
@@ -400,6 +420,7 @@ try {
                 if (!r.revealed) problems.push(`${at} ${shot}: the page never revealed (no data-nds-loaded)`);
                 if (r.overflow > 1) note('layout', `the page is ${r.overflow}px wider than the viewport (sideways scroll)`, shot);
                 if (r.loading?.length) note('loading', `${r.loading.length} part(s) still loading after the page settled: ${r.loading.slice(0, 5).join(', ')}${r.loading.length > 5 ? ', …' : ''}. Fix the data or state that holds them, or name the state if it shows loading on purpose`, shot);
+                if (r.clipped?.length) note('layout', `${r.clipped.length} part(s) reach past the screen edge and are cut off, with no way to scroll to them: ${r.clipped.slice(0, 5).join(', ')}${r.clipped.length > 5 ? ', …' : ''}`, shot);
                 if (r.covered) note('covered', 'a dialog is open after load, so the shot shows only it: add a state whose run closes it, to check the page under it', shot);
                 if (r.findings === null) note('audit', 'unavailable (no NDS.init.audit)', shot);
                 (r.findings || []).forEach((f) => note('audit', f, shot));
