@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ## [Unreleased]
 
 ### Changed
-- **Template zip** — The browser check shoots dark mode once per page, at desktop width, so a run is faster. It marks a sheet that matches the last run, and finds a Chrome installed for one user, and Chromium.
+- **Template zip** — The browser check shoots dark mode once per page, at desktop width, so a run is faster. It finds a Chrome installed for one user, and Chromium.
 
 ### Fixed
 - **Template zip** — The browser check names the element of each audit finding, with its fix.

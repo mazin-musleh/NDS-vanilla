@@ -43,11 +43,10 @@
 // source), failed loads, sideways scroll, a wrong window.innerWidth, and NDS parts still alive off the
 // page (a view that left without NDS.init.destroy: give a framework view a state whose run leaves it); exits 1 when there is
 // any. Prints each state's sheet and only what went wrong. Inspect every sheet: the script cannot
-// judge the look. A sheet whose shots match the last run pixel for pixel
-// (an NDS clock or countdown aside) is marked as the same. With an NDS-PLAN.md (in the working folder, or the folder above this script), it ends with the rows
+// judge the look.
+// With an NDS-PLAN.md (in the working folder, or the folder above this script), it ends with the rows
 // left under `whole plan` pacing, and, from the last open row on, a reminder to file NDS findings in NDS-REPORT.md.
 import { spawn } from 'node:child_process';
-import { createHash } from 'node:crypto';
 import { createServer } from 'node:http';
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { cpus, tmpdir } from 'node:os';
@@ -126,8 +125,6 @@ const profile = mkdtempSync(join(tmpdir(), 'nds-verify-profile-'));
 // --do-not-de-elevate stops it (Chrome and Edge 156); the next two cover older builds.
 const chrome = spawn(CHROME, ['--headless=new', '--remote-debugging-pipe', `--user-data-dir=${profile}`,
     '--do-not-de-elevate', '--disable-features=AutoDeElevate', '--edge-skip-compat-layer-relaunch',
-    // The same pixels on every run: without these a sticky or fixed part lands a pixel off in some shots.
-    '--run-all-compositor-stages-before-draw', '--disable-threaded-scrolling', '--disable-threaded-animation', '--disable-checker-imaging',
     '--no-first-run', '--no-default-browser-check', '--hide-scrollbars', 'about:blank'],
     { stdio: ['ignore', 'ignore', 'ignore', 'pipe', 'pipe'] });
 
@@ -283,19 +280,7 @@ async function shoot(url, { width, theme, cookies = [], storage = {}, fail, resp
     // The stretch moves parts that follow the viewport (the FAB tucks or returns): a shot taken
     // mid-slide differs from run to run.
     await evaluate(SETTLED);
-    // An endless animation (a spinner, a skeleton pulse) is caught at another frame on each run: hold its first.
-    await evaluate(`document.getAnimations().forEach((a) => { if (a.effect?.getTiming().iterations === Infinity) { a.pause(); a.currentTime = 0; } })`);
-    const clip = { x: 0, y: 0, width, height, scale: 1 };
-    const { data } = await s('Page.captureScreenshot', { format: 'png', clip });
-    // What "same as the last run" compares: the shot with the NDS parts that show the time hidden,
-    // or a clock would change every run. ponytail: a site's own live text still reads as changed.
-    const live = await evaluate(`(() => {
-        window.__ndsLive = [...document.querySelectorAll('.nds-clock, .nds-countdown')].map((el) => [el, el.style.visibility]);
-        window.__ndsLive.forEach(([el]) => { el.style.visibility = 'hidden'; });
-        return window.__ndsLive.length;
-    })()`);
-    const still = live ? (await s('Page.captureScreenshot', { format: 'png', optimizeForSpeed: true, clip })).data : data;
-    if (live) await evaluate(`window.__ndsLive.forEach(([el, was]) => { el.style.visibility = was; })`);
+    const { data } = await s('Page.captureScreenshot', { format: 'png', clip: { x: 0, y: 0, width, height, scale: 1 } });
     // After the shot: the audit loads its own bundle into the page.
     const findings = audit ? (await evaluate(`(async () => {
         const init = window.NDS?.init || window.NDS?.Init; // NDS.Init before 2.0
@@ -324,12 +309,11 @@ async function shoot(url, { width, theme, cookies = [], storage = {}, fail, resp
     handlers.delete(sessionId);
     await send('Target.closeTarget', { targetId });
     await send('Target.disposeBrowserContext', { browserContextId }).catch(() => {});
-    return { png: Buffer.from(data, 'base64'), hash: createHash('sha1').update(still).digest('hex'), status, revealed, innerWidth, overflow, ...locale, ran,
+    return { png: Buffer.from(data, 'base64'), status, revealed, innerWidth, overflow, ...locale, ran,
         errors: [...errors.filter((e) => !/\[NDS\.[aA]udit\]|Content Security Policy/.test(String(e))), ...csp], findings, leaks };
 }
 
 // --- run --------------------------------------------------------------------------------------
-const SAME = ' (same as the last run)';
 const slug = (t) => t.replace(/^\/+|\/+$/g, '').replace(/[^\w.-]+/g, '-') || 'home';
 const problems = [];
 const report = [];
@@ -369,10 +353,6 @@ try {
     const sheets = [], told = new Set();
     for (const pg of PAGES) {
         const dir = join(OUT, slug(pg.path));
-        // Each state's shots as hashes: a state that matches the last run needs no second look.
-        const hashFile = join(dir, 'shots.json'), now = {};
-        let before = {};
-        try { before = JSON.parse(readFileSync(hashFile, 'utf8')); } catch {}
         // A page's last run goes; with --only, the other pages' sheets stay.
         rmSync(dir, { recursive: true, force: true });
         mkdirSync(dir, { recursive: true });
@@ -423,10 +403,8 @@ try {
             const where = (hits) => hits.size === cols.length ? 'every shot' : [...hits].join(', ');
             for (const [key, hits] of returned) report.push(`${at} ${key} (${where(hits)})`);
             for (const [key, hits] of seen) problems.push(`${at} ${key} (${where(hits)})`);
-            now[st.name] = [...(refs || []), ...shots].map((r) => r.hash).join(' ');
-            rows.push({ name: st.name, cells, ref, cols, same: before[st.name] === now[st.name] });
+            rows.push({ name: st.name, cells, ref, cols });
         }
-        writeFileSync(hashFile, JSON.stringify(now));
         // One sheet per state, the reference row above it (a sheet of every state shrinks too far
         // to read): a column per shot, shown at 3/8 size. Agents skipped sheets when each held four
         // shots (rigs 4, 5, 9, 10).
@@ -456,7 +434,7 @@ try {
                     const sheet = await shoot(`${LOCAL}/__out/${slug(pg.path)}/${name}.html`, { width: sheetWidth, theme: 'light' });
                     writeFileSync(join(dir, `${name}.png`), sheet.png);
                 });
-                report.push(`${pg.path} [${r.name}${parts > 1 ? `, part ${part + 1} of ${parts}` : ''}] sheet: ${join(dir, `${name}.png`)}${r.same ? SAME : ''}`);
+                report.push(`${pg.path} [${r.name}${parts > 1 ? `, part ${part + 1} of ${parts}` : ''}] sheet: ${join(dir, `${name}.png`)}`);
             }
         }
     }
@@ -471,10 +449,8 @@ try {
 writeFileSync(join(OUT, 'report.txt'), report.join('\n') + '\n\nProblems:\n' + (problems.join('\n') || 'none') + '\n');
 console.log(report.join('\n'));
 console.log(`\n${problems.length ? `${problems.length} problem(s):\n${problems.join('\n')}` : 'No problems found by script.'}`);
-const sheetLines = report.filter((line) => line.includes('] sheet: '));
-const sameCount = sheetLines.filter((line) => line.endsWith(SAME)).length, sheetCount = sheetLines.length - sameCount;
-console.log(`\nOutput: ${OUT}\nNow open ${sameCount ? `the ${sheetCount} changed` : `all ${sheetCount}`} sheet-*.png listed above and compare each state with the reference row above it.\n` +
-    (sameCount ? `${sameCount} sheet(s) match the last run pixel for pixel: open one again only if you did not inspect it then.\n` : '') +
+const sheetCount = report.filter((line) => line.includes('] sheet: ')).length;
+console.log(`\nOutput: ${OUT}\nNow open all ${sheetCount} sheet-*.png listed above and compare each state with the reference row above it.\n` +
     `A sheet shrinks each shot: for detail, open the state's own <state>-<width>-<theme>.png beside its reference-…-<width>-<theme>.png, never another browser.`);
 // Agents stop a `whole plan` run after its first page (rigs 4 and 5), and keep NDS findings in the
 // plan instead of the report (rigs 4, 8 and 3): say both where they stop.

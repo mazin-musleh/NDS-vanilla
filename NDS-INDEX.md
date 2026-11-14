@@ -55,7 +55,7 @@ Each doc, example and template has a built page at the same path under `_site/`,
 - Each state, at desktop and mobile width: it checks `window.innerWidth`, runs the audit and collects console errors. Each audit finding names its element and its fix. It exits 1 on any finding.
 - It writes one sheet per state to `tmp/nds-verify/`, and more for a long page, one slice each: the state under its reference, in the state's language and direction. A page's first state also shows dark mode, at desktop width. Inspect every sheet and exercise the behavior: the script cannot judge the look.
 - It names each NDS part still alive on an element that left the page: its view left without `NDS.init.destroy(view)`. For a framework view, add a state whose script leaves the view and comes back. Give a kept-alive view's state `"kept": true`: its parts are listed, never failed.
-- After a fix, re-check only the pages it touched with `--only`. A sheet marked `(same as the last run)` matches it pixel for pixel, an NDS clock or countdown aside: open it again only if you did not inspect it then.
+- After a fix, re-check only the pages it touched with `--only`.
 - If it cannot run (no Node 18, no Chrome, Edge or Chromium), run both passes as the rules' Verify section says.
 
 ## Audit
