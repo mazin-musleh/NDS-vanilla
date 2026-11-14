@@ -74,6 +74,25 @@
                 <div class="nds-footer-copyright">
                     <span>All Rights Reserved {{ site.title }} &copy; {{ site.time | date: '%Y' }}</span>
                 </div>
+                {%- if footer_data.bottom.policy and footer_data.bottom.policy.size > 0 %}
+                <div class="nds-footer-policy">
+                    {%- for link in footer_data.bottom.policy %}
+                    {%- assign link_url = link.url %}
+                    {%- unless link.url contains "http" or link.url contains "mailto:" or link.url contains "#" %}
+                    {%- assign link_url = link.url | relative_url %}
+                    {%- endunless %}
+                    <a class="nds-link" href="{{ link_url }}">
+                        <span class="nds-label">{{ link.label }}</span>
+                    </a>
+                    {%- endfor %}
+                </div>
+                {%- endif %}
+                {%- comment %} Docs pages only: pages consumers start from must not ship this line {%- endcomment %}
+                {%- unless page.path contains 'templates/' or page.path contains 'examples/' %}
+                <div>
+                    <span>Open source under the <a class="nds-link" href="{{ site.repository_url }}/blob/main/LICENSE">MIT license</a>.<br>Plain HTML, CSS, and JavaScript, with no framework. An independent project, not affiliated with the DGA.</span>
+                </div>
+                {%- endunless %}
                 <div class="nds-footer-versions">
                     {%- if site.version and site.latest_release %}
                     {%- if site.version == site.latest_release %}
@@ -99,19 +118,6 @@
                         <span class="nds-label">{{ site.nds_iq.title }} v{{ _iq_v }}</span>
                     </a>
                 </div>
-                {%- if footer_data.bottom.policy and footer_data.bottom.policy.size > 0 %}
-                <div class="nds-footer-policy">
-                    {%- for link in footer_data.bottom.policy %}
-                    {%- assign link_url = link.url %}
-                    {%- unless link.url contains "http" or link.url contains "mailto:" or link.url contains "#" %}
-                    {%- assign link_url = link.url | relative_url %}
-                    {%- endunless %}
-                    <a class="nds-link" href="{{ link_url }}">
-                        <span class="nds-label">{{ link.label }}</span>
-                    </a>
-                    {%- endfor %}
-                </div>
-                {%- endif %}
             </div>
         </div>
         {%- assign footer_logos_file = page.footerlogos | default: site.footerlogos | default: "footerlogos" %}
