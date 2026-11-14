@@ -69,6 +69,7 @@ jobs:
     env:
       # Site chrome, not template content: the live site takes these from main, so an edit needs no release.
       # Keep each one free of anything that exists only on main, or the release build breaks.
+      # index.md: its lists come from the release's _data; only its bundle_sizes go live early.
       SITE_FILES: >-
         _includes/footer.html
         _includes/google-analytics.html
@@ -76,6 +77,7 @@ jobs:
         _includes/website-jsonld.html
         _includes/breadcrumb-jsonld.html
         robots.txt
+        index.md
     steps:
       - name: Checkout main
         uses: actions/checkout@v4

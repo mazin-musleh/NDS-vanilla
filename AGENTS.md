@@ -133,7 +133,7 @@ A row carries the dead name, its replacement, when it was deprecated, and where 
 
 **Releases, release notes and the changelog follow the `nds-release` skill.** Never hand-roll the template zip — `python scripts/mkrelease.py` builds it.
 
-**The live site is the latest release tag; `/next/` is main.** Site chrome goes live from main with no release: the files in `SITE_FILES` (`.github/workflows/jekyll.yml`: footer, analytics, SEO meta, JSON-LD, `robots.txt`) are copied into the release build on every push. Such a file must use nothing that exists only on main, or the live build breaks. Its edits get no CHANGELOG line.
+**The live site is the latest release tag; `/next/` is main.** Site chrome goes live from main with no release: the files in `SITE_FILES` (`.github/workflows/jekyll.yml`: footer, analytics, SEO meta, JSON-LD, `robots.txt`, the home page) are copied into the release build on every push. Such a file must use nothing that exists only on main, or the live build breaks. Its edits get no CHANGELOG line.
 
 **`NDS-INDEX.md` maps a consumer agent's needs to this release's files; the rules name none.** It ships at the template zip root. A commit that moves a doc page, changes the canon format, or changes a chrome shape's page updates it in the same commit. `verify()` fails the release on any path it names that is missing.
 
