@@ -40,7 +40,7 @@
 // that shows it under the reference. A page's first state is also shot in the other themes, at the widest width.
 // A page taller than a sheet gets more, one slice each: sheet-<state>-2.png and on. The reference takes the state's lang and direction, so an Arabic
 // page compares with a right-to-left reference in Arabic. Prints the audit findings, console errors (a CSP one names its
-// source), failed loads, sideways scroll, parts cut off past the screen edge, a wrong window.innerWidth, parts still loading after the page settled,
+// source), failed loads, sideways scroll, parts cut off past the screen edge, text below AA contrast, a wrong window.innerWidth, parts still loading after the page settled,
 // a dialog open at load with no state to close it, and NDS parts still alive off the
 // page (a view that left without NDS.init.destroy: give a framework view a state whose run leaves it); exits 1 when there is
 // any. Prints each state's sheet and only what went wrong. Inspect every sheet: the script cannot
@@ -282,6 +282,65 @@ async function shoot(url, { width, theme, cookies = [], storage = {}, fail, resp
         .map((el) => el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + [...el.classList].slice(0, 2).map((c) => '.' + c).join(''))`);
     // A dialog open at load (a welcome or consent prompt) covers the page: the shot shows only it.
     const covered = !run && await evaluate(`!!document.querySelector('dialog[open]')`);
+    // Text below WCAG AA contrast against the solid color behind it, in any theme. A canvas reads any CSS
+    // color format. Text over an image or a gradient is skipped: its background is not one color.
+    const faint = await evaluate(`(() => {
+        const ctx = Object.assign(document.createElement('canvas'), { width: 1, height: 1 }).getContext('2d', { willReadFrequently: true });
+        const toRgba = (color) => {
+            ctx.clearRect(0, 0, 1, 1); ctx.fillStyle = '#000'; ctx.fillStyle = color; ctx.fillRect(0, 0, 1, 1);
+            const d = ctx.getImageData(0, 0, 1, 1).data; return [d[0], d[1], d[2], d[3] / 255];
+        };
+        const over = (top, under) => [0, 1, 2].map((i) => top[i] * top[3] + under[i] * (1 - top[3])).concat(1);
+        const luminance = (c) => { const v = c.slice(0, 3).map((x) => (x /= 255) <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4); return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2]; };
+        // The page canvas under every transparent layer: Chrome paints it dark under a dark color scheme.
+        const canvas = /dark/.test(getComputedStyle(document.documentElement).colorScheme) ? [18, 18, 18, 1] : [255, 255, 255, 1];
+        const backgrounds = new Map();
+        const backgroundOf = (el) => {
+            if (!el) return canvas;
+            if (backgrounds.has(el)) return backgrounds.get(el);
+            const style = getComputedStyle(el), own = toRgba(style.backgroundColor);
+            let result = null;
+            if (style.backgroundImage === 'none') {
+                const under = own[3] < 1 ? backgroundOf(el.parentElement) : own;
+                result = under && over(own, under);
+            }
+            backgrounds.set(el, result);
+            return result;
+        };
+        // A picture laid under the text (a hero photo is an <img>, not a background) hides the real background:
+        // look for one in the box whose solid color the text sits on.
+        const hostOf = (el) => { for (let a = el; a; a = a.parentElement) { const s = getComputedStyle(a); if (s.backgroundImage !== 'none' || toRgba(s.backgroundColor)[3] >= 1) return a; } return document.documentElement; };
+        const pictures = new Map();
+        const picturesIn = (host) => pictures.get(host) || pictures.set(host, [...host.querySelectorAll('*')].filter((x) =>
+            /^(IMG|VIDEO|CANVAS|PICTURE|IFRAME)$/.test(x.tagName) || getComputedStyle(x).backgroundImage !== 'none')).get(host);
+        const isOverPicture = (el, rect) => picturesIn(hostOf(el)).some((x) => {
+            if (x.contains(el) || el.contains(x)) return false;
+            const r = x.getBoundingClientRect();
+            return r.width > 1 && r.left < rect.right && r.right > rect.left && r.top < rect.bottom && r.bottom > rect.top;
+        });
+        const name = (el) => el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + [...el.classList].slice(0, 2).map((c) => '.' + c).join('');
+        const seen = new Set(), out = [];
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        for (let node; (node = walker.nextNode());) {
+            const el = node.parentElement;
+            if (!el || seen.has(el) || !node.nodeValue.trim()) continue;
+            seen.add(el);
+            // Pale on purpose: disabled, or a skeleton that hides its glyphs.
+            if (el.closest('script, style, template, [disabled], [aria-disabled="true"], .nds-loading, [data-state~="loading"]')) continue;
+            const rect = el.getBoundingClientRect();
+            if (rect.width <= 1 || rect.height <= 1 || !el.checkVisibility({ opacityProperty: true, visibilityProperty: true })) continue;
+            const style = getComputedStyle(el), text = toRgba(style.color);
+            if (!text[3] || style.textShadow !== 'none') continue;
+            const back = backgroundOf(el);
+            if (!back || isOverPicture(el, rect)) continue;
+            const a = luminance(over(text, back)), b = luminance(back);
+            const ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+            // WCAG AA: 3:1 for large text (24px, or 18.66px bold), 4.5:1 for the rest.
+            const size = parseFloat(style.fontSize), isLarge = size >= 24 || (size >= 18.66 && +style.fontWeight >= 700);
+            if (ratio < (isLarge ? 3 : 4.5)) out.push(name(el) + ' ' + ratio.toFixed(1) + ':1 ' + JSON.stringify(node.nodeValue.trim().slice(0, 30)));
+        }
+        return out;
+    })()`);
     // Past the screen edge with no way to scroll to it: <main> clips sideways, so the overflow check above passes.
     const clipped = await evaluate(`(() => {
         const out = [];
@@ -336,7 +395,7 @@ async function shoot(url, { width, theme, cookies = [], storage = {}, fail, resp
     handlers.delete(sessionId);
     await send('Target.closeTarget', { targetId });
     await send('Target.disposeBrowserContext', { browserContextId }).catch(() => {});
-    return { png: Buffer.from(data, 'base64'), status, revealed, innerWidth, overflow, loading, covered, clipped, ...locale, ran,
+    return { png: Buffer.from(data, 'base64'), status, revealed, innerWidth, overflow, loading, covered, clipped, faint, ...locale, ran,
         errors: [...errors.filter((e) => !/\[NDS\.[aA]udit\]|Content Security Policy/.test(String(e))), ...csp], findings, leaks };
 }
 
@@ -421,6 +480,7 @@ try {
                 if (r.overflow > 1) note('layout', `the page is ${r.overflow}px wider than the viewport (sideways scroll)`, shot);
                 if (r.loading?.length) note('loading', `${r.loading.length} part(s) still loading after the page settled: ${r.loading.slice(0, 5).join(', ')}${r.loading.length > 5 ? ', …' : ''}. Fix the data or state that holds them, or name the state if it shows loading on purpose`, shot);
                 if (r.clipped?.length) note('layout', `${r.clipped.length} part(s) reach past the screen edge and are cut off, with no way to scroll to them: ${r.clipped.slice(0, 5).join(', ')}${r.clipped.length > 5 ? ', …' : ''}`, shot);
+                if (r.faint?.length) note('contrast', `${r.faint.length} text(s) fall below WCAG AA contrast against the color behind them (4.5:1, or 3:1 for large text): ${r.faint.slice(0, 5).join(', ')}${r.faint.length > 5 ? ', …' : ''}`, shot);
                 if (r.covered) note('covered', 'a dialog is open after load, so the shot shows only it: add a state whose run closes it, to check the page under it', shot);
                 if (r.findings === null) note('audit', 'unavailable (no NDS.init.audit)', shot);
                 (r.findings || []).forEach((f) => note('audit', f, shot));
