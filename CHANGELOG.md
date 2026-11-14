@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Template zip** — The browser check shoots dark mode once per page, at desktop width, so a run is faster. It names text below WCAG AA contrast, a part cut off past the screen edge, a control another part lies over, a part still loading after the page settled, and a dialog open at load that hides the page. `--text` runs every check with no shots or sheets; the index names when an edit can take it: a behavior-only edit, and every page a shared file reaches, with the full run on one page per shape. It finds a Chrome installed for one user, and Chromium.
 
 ### Fixed
-- **Template zip** — The browser check names the element of each audit finding, with its fix.
+- **Template zip** — The browser check names the element of each audit finding, with its fix. A page that stops answering, or opens an alert, no longer holds the run forever: the run stops after 60 s with a report (`NDS_CALL_MS` raises the limit).
 - **Cards** — While a card loads, a row card with an image stays a row, a drawer in the card shows its own skeleton rows, a status card's icon turns grey, and a progress ring shows only its empty track.
 - **Prose** — A video or an embedded frame is never wider than the text, and a long line in a `pre` scrolls sideways.
 - **Audit** — Reports the removed Side Info size classes `nds-sm`, `nds-md` and `nds-lg`. A missing icon style sheet gives one finding, not one per icon.

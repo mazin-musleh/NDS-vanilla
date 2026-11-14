@@ -156,11 +156,12 @@ chrome.stdio[4].on('data', (chunk) => {
     }
 });
 // A call Chrome never answers (an evaluate on a promise that never settles, a page frozen by a dialog)
-// fails after CALL_MS instead of holding the run forever. ponytail: one limit for every call.
-const CALL_MS = 60000;
+// fails after CALL_MS instead of holding the run forever. ponytail: one limit for every call; NDS_CALL_MS raises it.
+const CALL_MS = +process.env.NDS_CALL_MS || 60000;
 const send = (method, params = {}, sessionId) => new Promise((resolve, reject) => {
     const id = nextId++;
-    const timer = setTimeout(() => { pending.delete(id); reject(new Error(`${method} got no answer in ${CALL_MS / 1000} s`)); }, CALL_MS);
+    const timer = setTimeout(() => { pending.delete(id);
+        reject(new Error(`${method} got no answer in ${CALL_MS / 1000} s. If it is only slow (a long state run), set NDS_CALL_MS higher`)); }, CALL_MS);
     pending.set(id, { resolve: (v) => { clearTimeout(timer); resolve(v); }, reject: (e) => { clearTimeout(timer); reject(e); } });
     chrome.stdio[3].write(JSON.stringify({ id, method, params, sessionId }) + '\0');
 });
@@ -474,6 +475,7 @@ const reference = (ref, w, t, { lang, dir }) => {
     if (!refShot.has(key)) refShot.set(key, shoot(`${LOCAL}/${ref.replace(/^\/+/, '')}?${q}`, { width: w, theme: t }));
     return refShot.get(key);
 };
+let stopped = false;
 try {
     // The pages first: each state's reference takes the lang and direction its page showed.
     const states = PAGES.flatMap((pg) => (pg.states || [{ name: 'default' }]).map((st, n) => ({ pg, st, cols: colsOf(n === 0) })));
@@ -586,6 +588,7 @@ try {
 } catch (e) {
     // The report still gets written: a run that stops says why, never ends silent.
     problems.push(`run stopped: ${e.message}`);
+    stopped = true;
 } finally {
     server.close();
     // Chrome still holds profile files for a moment after kill(): on Windows the delete fails, so wait it out.
@@ -597,7 +600,9 @@ writeFileSync(join(OUT, 'report.txt'), report.join('\n') + '\n\nProblems:\n' + (
 console.log(report.join('\n'));
 console.log(`\n${problems.length ? `${problems.length} problem(s):\n${problems.join('\n')}` : 'No problems found by script.'}`);
 const sheetCount = report.filter((line) => line.includes('] sheet: ')).length;
-if (TEXT) console.log(`\nText only: no shots and no sheets. The sheets in ${OUT} are from the last full run.`);
+// A stopped run may list sheets it never wrote: send the agent back to the problem, not to the sheets.
+if (stopped) console.log('\nThe run stopped before it finished: fix the "run stopped" problem above, then run again.');
+else if (TEXT) console.log(`\nText only: no shots and no sheets. The sheets in ${OUT} are from the last full run.`);
 else console.log(`\nOutput: ${OUT}\nNow open all ${sheetCount} sheet-*.png listed above and compare each state with the reference row above it.\n` +
     `A sheet shrinks each shot: for detail, open the state's own <state>-<width>-<theme>.png beside its reference-…-<width>-<theme>.png, never another browser.`);
 // Agents stop a `whole plan` run after its first page (rigs 4 and 5), and keep NDS findings in the
