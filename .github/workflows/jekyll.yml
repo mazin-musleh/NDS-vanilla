@@ -66,6 +66,16 @@ jobs:
   # Build job — the site root is the latest release tag, /next/ is main.
   build:
     runs-on: ubuntu-latest
+    env:
+      # Site chrome, not template content: the live site takes these from main, so an edit needs no release.
+      # Keep each one free of anything that exists only on main, or the release build breaks.
+      SITE_FILES: >-
+        _includes/footer.html
+        _includes/google-analytics.html
+        _includes/seo-meta.html
+        _includes/website-jsonld.html
+        _includes/breadcrumb-jsonld.html
+        robots.txt
     steps:
       - name: Checkout main
         uses: actions/checkout@v4
@@ -85,9 +95,9 @@ jobs:
           done
           echo "No IQv tag matches _includes/NDS-IQ.md on main." >&2; exit 1
       - name: Name the saved release site
-        # One saved build per release + NDS IQ tag; a new release, a new IQ publish or a forced rebuild misses it.
+        # One saved build per release + NDS IQ tag + SITE_FILES content; any of them changing, or a forced rebuild, misses it.
         id: key
-        run: echo "prefix=release-site-${{ steps.release.outputs.tag }}-${{ steps.iq.outputs.tag }}-" >> "$GITHUB_OUTPUT"
+        run: echo "prefix=release-site-${{ steps.release.outputs.tag }}-${{ steps.iq.outputs.tag }}-$(cat $SITE_FILES | sha256sum | cut -c1-12)-" >> "$GITHUB_OUTPUT"
       - name: Restore the saved release site
         id: saved
         if: ${{ !inputs.rebuild_release }}
@@ -121,6 +131,9 @@ jobs:
         run: |
           git show "${{ steps.iq.outputs.tag }}:_includes/NDS-IQ.md" > _release/_includes/NDS-IQ.md
           git show "${{ steps.iq.outputs.tag }}:guides/integration-quality.md" > _release/guides/integration-quality.md
+      - name: Take the site-only files from main
+        if: ${{ !steps.saved.outputs.cache-matched-key }}
+        run: for f in $SITE_FILES; do cp "$f" "_release/$f"; done
       - name: Setup Ruby (release)
         if: ${{ !steps.saved.outputs.cache-matched-key }}
         uses: ruby/setup-ruby@14594264cd68ce8a2345dd349bc3d138a4ef85c8
