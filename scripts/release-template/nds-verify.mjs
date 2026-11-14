@@ -9,7 +9,7 @@
 // path). A text equal to a page's whole path picks that page only, so `--only /` is the home
 // page (in Git Bash: MSYS_NO_PATHCONV=1 node nds-verify.mjs … --only /). --jobs sets how many shots run at once (default: half the cores, 2 to 8).
 //
-// Needs Node 18+ and Chrome or Edge (or CHROME_PATH). Installs nothing: it drives the browser
+// Needs Node 18+ and Chrome, Edge or Chromium (or CHROME_PATH). Installs nothing: it drives the browser
 // over its own debugging pipe, headless, with a throwaway profile.
 //
 // config.json:
@@ -36,22 +36,26 @@
 //     }]
 //   }
 //
-// Writes, per page: each state at each width and theme, and per state a sheet-<state>.png that
-// shows it under the reference: every theme for the page's first state, the first theme for the rest.
+// Writes, per page: each state at each width in the first theme, and per state a sheet-<state>.png
+// that shows it under the reference. A page's first state is also shot in the other themes, at the widest width.
 // A page taller than a sheet gets more, one slice each: sheet-<state>-2.png and on. The reference takes the state's lang and direction, so an Arabic
 // page compares with a right-to-left reference in Arabic. Prints the audit findings, console errors (a CSP one names its
 // source), failed loads, sideways scroll, a wrong window.innerWidth, and NDS parts still alive off the
 // page (a view that left without NDS.init.destroy: give a framework view a state whose run leaves it); exits 1 when there is
 // any. Prints each state's sheet and only what went wrong. Inspect every sheet: the script cannot
-// judge the look. With an NDS-PLAN.md (in the working folder, or the folder above this script), it ends with the rows
+// judge the look. A sheet whose shots match the last run pixel for pixel
+// (an NDS clock or countdown aside) is marked as the same. With an NDS-PLAN.md (in the working folder, or the folder above this script), it ends with the rows
 // left under `whole plan` pacing, and, from the last open row on, a reminder to file NDS findings in NDS-REPORT.md.
 import { spawn } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { createServer } from 'node:http';
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { cpus, tmpdir } from 'node:os';
 import { dirname, extname, join, normalize, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// ponytail: a Node too old for top-level await fails on parse, before this line can run.
+if (+process.versions.node.split('.')[0] < 18) { console.error(`Node ${process.versions.node} is too old: nds-verify needs Node 18 or later.`); process.exit(2); }
 const HERE = dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
 const flag = (name) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : undefined; };
@@ -105,19 +109,25 @@ const LOCAL = `http://127.0.0.1:${server.address().port}`;
 
 // --- browser over the debugging pipe ---------------------------------------------------------
 const pf = process.env['ProgramFiles'] || 'C:/Program Files', pf86 = process.env['ProgramFiles(x86)'] || 'C:/Program Files (x86)';
+// A Chrome installed for one user only lives under LOCALAPPDATA.
+const local = process.env.LOCALAPPDATA;
 const CHROME = [process.env.CHROME_PATH,
     `${pf}/Google/Chrome/Application/chrome.exe`, `${pf86}/Google/Chrome/Application/chrome.exe`,
+    local && `${local}/Google/Chrome/Application/chrome.exe`,
     `${pf86}/Microsoft/Edge/Application/msedge.exe`, `${pf}/Microsoft/Edge/Application/msedge.exe`,
     '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-    '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',
-    '/usr/bin/google-chrome', '/usr/bin/chromium', '/usr/bin/chromium-browser', '/usr/bin/microsoft-edge',
+    '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge', '/Applications/Chromium.app/Contents/MacOS/Chromium',
+    '/usr/bin/google-chrome', '/usr/bin/google-chrome-stable', '/usr/bin/chromium', '/usr/bin/chromium-browser',
+    '/snap/bin/chromium', '/usr/bin/microsoft-edge',
 ].find((p) => p && existsSync(p));
-if (!CHROME) { console.error('No Chrome or Edge found: set CHROME_PATH.'); process.exit(2); }
+if (!CHROME) { console.error('No Chrome, Edge or Chromium found: set CHROME_PATH to the browser executable.'); process.exit(2); }
 const profile = mkdtempSync(join(tmpdir(), 'nds-verify-profile-'));
 // From an admin shell, Chrome and Edge relaunch themselves de-elevated and the relaunch loses the pipe.
 // --do-not-de-elevate stops it (Chrome and Edge 156); the next two cover older builds.
 const chrome = spawn(CHROME, ['--headless=new', '--remote-debugging-pipe', `--user-data-dir=${profile}`,
     '--do-not-de-elevate', '--disable-features=AutoDeElevate', '--edge-skip-compat-layer-relaunch',
+    // The same pixels on every run: without these a sticky or fixed part lands a pixel off in some shots.
+    '--run-all-compositor-stages-before-draw', '--disable-threaded-scrolling', '--disable-threaded-animation', '--disable-checker-imaging',
     '--no-first-run', '--no-default-browser-check', '--hide-scrollbars', 'about:blank'],
     { stdio: ['ignore', 'ignore', 'ignore', 'pipe', 'pipe'] });
 
@@ -149,6 +159,12 @@ const send = (method, params = {}, sessionId) => new Promise((resolve, reject) =
     chrome.stdio[3].write(JSON.stringify({ id, method, params, sessionId }) + '\0');
 });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+// Runs in the page: resolves once nothing moves. Endless animations (a skeleton pulse) never end, so they do not count.
+const SETTLED = `(async () => {
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    const finite = document.getAnimations().filter((a) => a.effect?.getTiming().iterations !== Infinity);
+    await Promise.race([Promise.allSettled(finite.map((a) => a.finished)), new Promise((r) => setTimeout(r, 3000))]);
+})()`;
 
 // One fresh tab in its own context per shot: no cookie or storage leaks into a shot running beside it.
 async function shoot(url, { width, theme, cookies = [], storage = {}, fail, respond = {}, run, audit }) {
@@ -207,9 +223,8 @@ async function shoot(url, { width, theme, cookies = [], storage = {}, fail, resp
         for (let i = 0; i < 100 && !document.documentElement.hasAttribute('data-nds-loaded'); i++) await new Promise((r) => setTimeout(r, 100));
         for (let i = 0; i < 50 && [...document.querySelectorAll('link[rel=stylesheet]')].some((l) => !l.sheet); i++) await new Promise((r) => setTimeout(r, 100));
         await document.fonts.ready;
-        // An entrance animation still running shifts the shot; endless ones (a skeleton pulse) never end.
-        const finite = document.getAnimations().filter((a) => a.effect?.getTiming().iterations !== Infinity);
-        await Promise.race([Promise.allSettled(finite.map((a) => a.finished)), new Promise((r) => setTimeout(r, 3000))]);
+        // An entrance animation still running shifts the shot.
+        await ${SETTLED};
     })()`);
     await sleep(400);
     // Never captureBeyondViewport: it shifts an RTL page sideways. The viewport stretches to the page
@@ -265,13 +280,28 @@ async function shoot(url, { width, theme, cookies = [], storage = {}, fail, resp
     const overflow = await evaluate('document.documentElement.scrollWidth - innerWidth');
     // The console's CSP lines name no source and carry a fresh nonce per load; the event names the script.
     const csp = (await evaluate('window.__ndsCsp || []')) || [];
-    const { data } = await s('Page.captureScreenshot', { format: 'png', clip: { x: 0, y: 0, width, height, scale: 1 } });
+    // The stretch moves parts that follow the viewport (the FAB tucks or returns): a shot taken
+    // mid-slide differs from run to run.
+    await evaluate(SETTLED);
+    // An endless animation (a spinner, a skeleton pulse) is caught at another frame on each run: hold its first.
+    await evaluate(`document.getAnimations().forEach((a) => { if (a.effect?.getTiming().iterations === Infinity) { a.pause(); a.currentTime = 0; } })`);
+    const clip = { x: 0, y: 0, width, height, scale: 1 };
+    const { data } = await s('Page.captureScreenshot', { format: 'png', clip });
+    // What "same as the last run" compares: the shot with the NDS parts that show the time hidden,
+    // or a clock would change every run. ponytail: a site's own live text still reads as changed.
+    const live = await evaluate(`(() => {
+        window.__ndsLive = [...document.querySelectorAll('.nds-clock, .nds-countdown')].map((el) => [el, el.style.visibility]);
+        window.__ndsLive.forEach(([el]) => { el.style.visibility = 'hidden'; });
+        return window.__ndsLive.length;
+    })()`);
+    const still = live ? (await s('Page.captureScreenshot', { format: 'png', optimizeForSpeed: true, clip })).data : data;
+    if (live) await evaluate(`window.__ndsLive.forEach(([el, was]) => { el.style.visibility = was; })`);
     // After the shot: the audit loads its own bundle into the page.
     const findings = audit ? (await evaluate(`(async () => {
         const init = window.NDS?.init || window.NDS?.Init; // NDS.Init before 2.0
         if (!init?.audit) return null;
         const at = (el) => el?.tagName ? ' [' + el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + [...el.classList].slice(0, 3).map((c) => '.' + c).join('') + ']' : '';
-        return ((await init.audit()) || []).map((f) => \`\${f.severity} \${f.rule}\${at(f.element)}: \${f.message}\`);
+        return ((await init.audit()) || []).map((f) => \`\${f.severity} \${f.rule}\${at(f.el)}: \${f.message}\${f.fix ? ' ' + f.fix : ''}\`);
     })()`)) ?? null : [];
     // A part still alive on an element off the page left without NDS.init.destroy: its listeners hold it.
     let leaks = [];
@@ -294,15 +324,19 @@ async function shoot(url, { width, theme, cookies = [], storage = {}, fail, resp
     handlers.delete(sessionId);
     await send('Target.closeTarget', { targetId });
     await send('Target.disposeBrowserContext', { browserContextId }).catch(() => {});
-    return { png: Buffer.from(data, 'base64'), status, revealed, innerWidth, overflow, ...locale, ran,
+    return { png: Buffer.from(data, 'base64'), hash: createHash('sha1').update(still).digest('hex'), status, revealed, innerWidth, overflow, ...locale, ran,
         errors: [...errors.filter((e) => !/\[NDS\.[aA]udit\]|Content Security Policy/.test(String(e))), ...csp], findings, leaks };
 }
 
 // --- run --------------------------------------------------------------------------------------
+const SAME = ' (same as the last run)';
 const slug = (t) => t.replace(/^\/+|\/+$/g, '').replace(/[^\w.-]+/g, '-') || 'home';
 const problems = [];
 const report = [];
-const cols = WIDTHS.flatMap((w) => THEMES.map((t) => ({ w, t })));
+// Another theme breaks on the site's own colors, not per state or width: only a page's first state
+// takes it, at the widest width.
+const WIDEST = Math.max(...WIDTHS);
+const colsOf = (first) => WIDTHS.flatMap((w) => THEMES.map((t) => ({ w, t }))).filter(({ w, t }) => t === THEMES[0] || (first && w === WIDEST));
 // Runs the jobs JOBS at a time; results keep the jobs' order.
 const pool = async (jobs) => {
     const out = [];
@@ -322,22 +356,28 @@ const reference = (ref, w, t, { lang, dir }) => {
 };
 try {
     // The pages first: each state's reference takes the lang and direction its page showed.
-    const states = PAGES.flatMap((pg) => (pg.states || [{ name: 'default' }]).map((st) => ({ pg, st })));
-    const shots = await pool(states.flatMap(({ pg, st }) =>
+    const states = PAGES.flatMap((pg) => (pg.states || [{ name: 'default' }]).map((st, n) => ({ pg, st, cols: colsOf(n === 0) })));
+    const shots = await pool(states.flatMap(({ pg, st, cols }) =>
         cols.map(({ w, t }) => () => shoot(BASE + (st.path || pg.path), { ...st, width: w, theme: t, audit: true }))));
-    states.forEach((s, i) => { s.shots = shots.slice(i * cols.length, (i + 1) * cols.length); });
+    // Each state takes its own count of shots, in order.
+    const deal = (list, all, key) => { let at = 0; list.forEach((s) => { s[key] = all.slice(at, at += s.cols.length); }); };
+    deal(states, shots, 'shots');
     const withRef = states.filter(({ pg }) => pg.reference);
-    const refs = await pool(withRef.flatMap(({ pg, shots: [first] }) =>
+    const refs = await pool(withRef.flatMap(({ pg, cols, shots: [first] }) =>
         cols.map(({ w, t }) => () => reference(pg.reference, w, t, { lang: first.lang || '', dir: first.dir === 'rtl' ? 'rtl' : 'ltr' }))));
-    withRef.forEach((s, i) => { s.refs = refs.slice(i * cols.length, (i + 1) * cols.length); });
+    deal(withRef, refs, 'refs');
     const sheets = [], told = new Set();
     for (const pg of PAGES) {
         const dir = join(OUT, slug(pg.path));
+        // Each state's shots as hashes: a state that matches the last run needs no second look.
+        const hashFile = join(dir, 'shots.json'), now = {};
+        let before = {};
+        try { before = JSON.parse(readFileSync(hashFile, 'utf8')); } catch {}
         // A page's last run goes; with --only, the other pages' sheets stay.
         rmSync(dir, { recursive: true, force: true });
         mkdirSync(dir, { recursive: true });
         const rows = [];
-        for (const { st, shots, refs } of states.filter((s) => s.pg === pg)) {
+        for (const { st, shots, refs, cols } of states.filter((s) => s.pg === pg)) {
             const at = `${pg.path} [${st.name}]`;
             let ref = null;
             if (refs) {
@@ -358,7 +398,8 @@ try {
             }
             const cells = [], seen = new Map(), returned = new Map();
             const note = (kind, text, shot, map = seen) => {
-                const key = `${kind}: ${String(text).replace(/nonce-[\w+/=-]+/g, 'nonce-…').slice(0, 300)}`;
+                // An audit line carries its fix: it runs longer than an error line.
+                const key = `${kind}: ${String(text).replace(/nonce-[\w+/=-]+/g, 'nonce-…').slice(0, kind === 'audit' ? 700 : 300)}`;
                 (map.get(key) || map.set(key, new Set()).get(key)).add(shot);
             };
             for (const [i, { w, t }] of cols.entries()) {
@@ -382,19 +423,20 @@ try {
             const where = (hits) => hits.size === cols.length ? 'every shot' : [...hits].join(', ');
             for (const [key, hits] of returned) report.push(`${at} ${key} (${where(hits)})`);
             for (const [key, hits] of seen) problems.push(`${at} ${key} (${where(hits)})`);
-            rows.push({ name: st.name, cells, ref });
+            now[st.name] = [...(refs || []), ...shots].map((r) => r.hash).join(' ');
+            rows.push({ name: st.name, cells, ref, cols, same: before[st.name] === now[st.name] });
         }
+        writeFileSync(hashFile, JSON.stringify(now));
         // One sheet per state, the reference row above it (a sheet of every state shrinks too far
-        // to read): a column per width and theme, shown at 3/8 size. Only a page's first state shows
-        // every theme; the rest show the first theme. Every shot was still checked above: agents skipped
-        // sheets when each held four shots (rigs 4, 5, 9, 10).
+        // to read): a column per shot, shown at 3/8 size. Agents skipped sheets when each held four
+        // shots (rigs 4, 5, 9, 10).
         const scale = 0.375;
         // A row shows 1400px of sheet, about 3,700px of page: a taller page takes more sheets, one slice each,
         // so the bottom is never cut and no sheet grows too tall to read.
         const slice = 1400;
         const pngHeight = (file) => readFileSync(join(dir, file)).readUInt32BE(20) * scale;
-        for (const [n, r] of rows.entries()) {
-            const shown = cols.map((c, i) => i).filter((i) => n === 0 || cols[i].t === THEMES[0]);
+        for (const r of rows) {
+            const { cols } = r, shown = cols.map((c, i) => i);
             const head = shown.map((i) => `<th>${cols[i].w}px ${cols[i].t}</th>`).join('');
             const row = (x, part) => `<tr><th>${x.name}</th>${shown.map((i) =>
                 `<td><div style="width:${cols[i].w * scale}px"><img src="${x.cells[i]}" style="width:100%; margin-top:-${part * slice}px"></div></td>`).join('')}</tr>`;
@@ -414,7 +456,7 @@ try {
                     const sheet = await shoot(`${LOCAL}/__out/${slug(pg.path)}/${name}.html`, { width: sheetWidth, theme: 'light' });
                     writeFileSync(join(dir, `${name}.png`), sheet.png);
                 });
-                report.push(`${pg.path} [${r.name}${parts > 1 ? `, part ${part + 1} of ${parts}` : ''}] sheet: ${join(dir, `${name}.png`)}`);
+                report.push(`${pg.path} [${r.name}${parts > 1 ? `, part ${part + 1} of ${parts}` : ''}] sheet: ${join(dir, `${name}.png`)}${r.same ? SAME : ''}`);
             }
         }
     }
@@ -429,8 +471,10 @@ try {
 writeFileSync(join(OUT, 'report.txt'), report.join('\n') + '\n\nProblems:\n' + (problems.join('\n') || 'none') + '\n');
 console.log(report.join('\n'));
 console.log(`\n${problems.length ? `${problems.length} problem(s):\n${problems.join('\n')}` : 'No problems found by script.'}`);
-const sheetCount = report.filter((line) => line.includes('] sheet: ')).length;
-console.log(`\nOutput: ${OUT}\nNow open all ${sheetCount} sheet-*.png listed above and compare each state with the reference row above it.\n` +
+const sheetLines = report.filter((line) => line.includes('] sheet: '));
+const sameCount = sheetLines.filter((line) => line.endsWith(SAME)).length, sheetCount = sheetLines.length - sameCount;
+console.log(`\nOutput: ${OUT}\nNow open ${sameCount ? `the ${sheetCount} changed` : `all ${sheetCount}`} sheet-*.png listed above and compare each state with the reference row above it.\n` +
+    (sameCount ? `${sameCount} sheet(s) match the last run pixel for pixel: open one again only if you did not inspect it then.\n` : '') +
     `A sheet shrinks each shot: for detail, open the state's own <state>-<width>-<theme>.png beside its reference-…-<width>-<theme>.png, never another browser.`);
 // Agents stop a `whole plan` run after its first page (rigs 4 and 5), and keep NDS findings in the
 // plan instead of the report (rigs 4, 8 and 3): say both where they stop.
