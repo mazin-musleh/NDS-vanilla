@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ## [Unreleased]
 
 ### Changed
-- **Template zip** — The browser check shoots dark mode once per page, at desktop width, so a run is faster. It names text below WCAG AA contrast, a part cut off past the screen edge, a control another part lies over, a part still loading after the page settled, and a dialog open at load that hides the page. It finds a Chrome installed for one user, and Chromium.
+- **Template zip** — The browser check shoots dark mode once per page, at desktop width, so a run is faster. It names text below WCAG AA contrast, a part cut off past the screen edge, a control another part lies over, a part still loading after the page settled, and a dialog open at load that hides the page. `--text` runs every check with no shots or sheets. It finds a Chrome installed for one user, and Chromium.
 
 ### Fixed
 - **Template zip** — The browser check names the element of each audit finding, with its fix.

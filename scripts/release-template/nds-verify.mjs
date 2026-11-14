@@ -1,6 +1,6 @@
 // NDS verify: both browser passes for every page and state, in one run.
 //
-//   node nds-verify.mjs <config.json> [--out <dir>] [--only <path>,…] [--jobs <n>]
+//   node nds-verify.mjs <config.json> [--out <dir>] [--only <path>,…] [--jobs <n>] [--text]
 //
 // --out is where the shots go: tmp/nds-verify/ in the folder you run it from by default, one
 // folder per page, replaced on each run. Keep tmp/ in .gitignore.
@@ -8,6 +8,8 @@
 // page alone (write `nds/cart`, not `/nds/cart`: Git Bash turns a leading slash into a Windows
 // path). A text equal to a page's whole path picks that page only, so `--only /` is the home
 // page (in Git Bash: MSYS_NO_PATHCONV=1 node nds-verify.mjs … --only /). --jobs sets how many shots run at once (default: half the cores, 2 to 8).
+// --text runs every check but takes no shots and writes no sheets, and leaves the last run's sheets in
+// place: the re-check after an edit that cannot change the look (an event handler, a request, data).
 //
 // Needs Node 18+ and Chrome, Edge or Chromium (or CHROME_PATH). Installs nothing: it drives the browser
 // over its own debugging pipe, headless, with a throwaway profile.
@@ -59,8 +61,10 @@ if (+process.versions.node.split('.')[0] < 18) { console.error(`Node ${process.v
 const HERE = dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
 const flag = (name) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : undefined; };
-const configPath = args.find((a, i) => !a.startsWith('--') && !args[i - 1]?.startsWith('--'));
-if (!configPath) { console.error('Usage: node nds-verify.mjs <config.json> [--out <dir>] [--only <path>,…] [--jobs <n>]'); process.exit(2); }
+const TEXT = args.includes('--text');
+// --text takes no value: the text after it is the config.
+const configPath = args.find((a, i) => !a.startsWith('--') && (!args[i - 1]?.startsWith('--') || args[i - 1] === '--text'));
+if (!configPath) { console.error('Usage: node nds-verify.mjs <config.json> [--out <dir>] [--only <path>,…] [--jobs <n>] [--text]'); process.exit(2); }
 const config = JSON.parse(readFileSync(configPath, 'utf8'));
 // The project's gitignored tmp/, not the OS temp folder, where every run left a new folder behind.
 const OUT = resolve(flag('--out') || join('tmp', 'nds-verify'));
@@ -165,7 +169,7 @@ const SETTLED = `(async () => {
 })()`;
 
 // One fresh tab in its own context per shot: no cookie or storage leaks into a shot running beside it.
-async function shoot(url, { width, theme, cookies = [], storage = {}, fail, respond = {}, run, audit }) {
+async function shoot(url, { width, theme, cookies = [], storage = {}, fail, respond = {}, run, audit, shot = true }) {
     // A request the state fails or answers is expected: its console line is no error.
     const faked = [fail, ...Object.keys(respond)].filter(Boolean);
     const answer = (requestUrl) => {
@@ -401,7 +405,7 @@ async function shoot(url, { width, theme, cookies = [], storage = {}, fail, resp
     // The stretch moves parts that follow the viewport (the FAB tucks or returns): a shot taken
     // mid-slide differs from run to run.
     await evaluate(SETTLED);
-    const { data } = await s('Page.captureScreenshot', { format: 'png', clip: { x: 0, y: 0, width, height, scale: 1 } });
+    const data = shot ? (await s('Page.captureScreenshot', { format: 'png', clip: { x: 0, y: 0, width, height, scale: 1 } })).data : '';
     // After the shot: the audit loads its own bundle into the page.
     const findings = audit ? (await evaluate(`(async () => {
         const init = window.NDS?.init || window.NDS?.Init; // NDS.Init before 2.0
@@ -463,20 +467,23 @@ try {
     // The pages first: each state's reference takes the lang and direction its page showed.
     const states = PAGES.flatMap((pg) => (pg.states || [{ name: 'default' }]).map((st, n) => ({ pg, st, cols: colsOf(n === 0) })));
     const shots = await pool(states.flatMap(({ pg, st, cols }) =>
-        cols.map(({ w, t }) => () => shoot(BASE + (st.path || pg.path), { ...st, width: w, theme: t, audit: true }))));
+        cols.map(({ w, t }) => () => shoot(BASE + (st.path || pg.path), { ...st, width: w, theme: t, audit: true, shot: !TEXT }))));
     // Each state takes its own count of shots, in order.
     const deal = (list, all, key) => { let at = 0; list.forEach((s) => { s[key] = all.slice(at, at += s.cols.length); }); };
     deal(states, shots, 'shots');
-    const withRef = states.filter(({ pg }) => pg.reference);
+    // --text: no sheets, so no reference shots.
+    const withRef = TEXT ? [] : states.filter(({ pg }) => pg.reference);
     const refs = await pool(withRef.flatMap(({ pg, cols, shots: [first] }) =>
         cols.map(({ w, t }) => () => reference(pg.reference, w, t, { lang: first.lang || '', dir: first.dir === 'rtl' ? 'rtl' : 'ltr' }))));
     deal(withRef, refs, 'refs');
     const sheets = [], told = new Set();
     for (const pg of PAGES) {
         const dir = join(OUT, slug(pg.path));
-        // A page's last run goes; with --only, the other pages' sheets stay.
-        rmSync(dir, { recursive: true, force: true });
-        mkdirSync(dir, { recursive: true });
+        // A page's last run goes; with --only, the other pages' sheets stay. --text keeps them all: they are the look it checked last.
+        if (!TEXT) {
+            rmSync(dir, { recursive: true, force: true });
+            mkdirSync(dir, { recursive: true });
+        }
         const rows = [];
         for (const { st, shots, refs, cols } of states.filter((s) => s.pg === pg)) {
             const at = `${pg.path} [${st.name}]`;
@@ -506,7 +513,7 @@ try {
             for (const [i, { w, t }] of cols.entries()) {
                 const r = shots[i];
                 const file = `${slug(st.name)}-${w}-${t}.png`;
-                writeFileSync(join(dir, file), r.png);
+                if (!TEXT) writeFileSync(join(dir, file), r.png);
                 cells.push(file);
                 const shot = `${w}px ${t}`;
                 if (r.innerWidth !== w) problems.push(`${at} ${shot}: innerWidth ${r.innerWidth}, not ${w}: the shot is not that width`);
@@ -539,7 +546,7 @@ try {
         // so the bottom is never cut and no sheet grows too tall to read.
         const slice = 1400;
         const pngHeight = (file) => readFileSync(join(dir, file)).readUInt32BE(20) * scale;
-        for (const r of rows) {
+        for (const r of TEXT ? [] : rows) {
             const { cols } = r, shown = [...cols.keys()];
             const head = shown.map((i) => `<th>${cols[i].w}px ${cols[i].t}</th>`).join('');
             const row = (x, part) => `<tr><th>${x.name}</th>${shown.map((i) =>
@@ -576,7 +583,8 @@ writeFileSync(join(OUT, 'report.txt'), report.join('\n') + '\n\nProblems:\n' + (
 console.log(report.join('\n'));
 console.log(`\n${problems.length ? `${problems.length} problem(s):\n${problems.join('\n')}` : 'No problems found by script.'}`);
 const sheetCount = report.filter((line) => line.includes('] sheet: ')).length;
-console.log(`\nOutput: ${OUT}\nNow open all ${sheetCount} sheet-*.png listed above and compare each state with the reference row above it.\n` +
+if (TEXT) console.log(`\nText only: no shots and no sheets. The sheets in ${OUT} are from the last full run.`);
+else console.log(`\nOutput: ${OUT}\nNow open all ${sheetCount} sheet-*.png listed above and compare each state with the reference row above it.\n` +
     `A sheet shrinks each shot: for detail, open the state's own <state>-<width>-<theme>.png beside its reference-…-<width>-<theme>.png, never another browser.`);
 // Agents stop a `whole plan` run after its first page (rigs 4 and 5), and keep NDS findings in the
 // plan instead of the report (rigs 4, 8 and 3): say both where they stop.
