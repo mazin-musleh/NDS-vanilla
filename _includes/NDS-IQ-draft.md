@@ -217,7 +217,7 @@ Never verify from code inspection. A page needs both browser passes:
 - **Behavioral:** load it, run the template's audit, and fix or name every finding. Exercise the wired behavior, including one request failure path. Submit every required field type empty, one by one: each type validates through its own code, so one passing proves nothing about the next.
 - **Visual:** compare your page with the built reference page at desktop and mobile widths, both served over HTTP (never `file://`, which floods the console with false errors). **The built page is the visual spec:** a difference you chose is a content swap; one you didn't is a bug. Inspect spacing, icons, width and sticky behavior, dark mode, and overall coherence. Measurements alone are not visual verification.
 - **Every state:** run both passes, the audit included, on each state in the parts list, not only the default one. Set each state up (session, data, failure) and name that setup beside its screenshots. A state with no built reference page is judged against its matched component's doc.
-- **After an edit:** the audit and the behavioral pass run on each changed page, in the states the change touches. The visual pass runs too, unless the edit is behavior only: an event handler, a request, or data handling that changes no markup, class, style, image or text the page shows. A behavior-only edit takes the text-only re-check the index names. A change to a shared file (a layout, partial, stylesheet, or script) reopens every page that loads it.
+- **After an edit:** both passes and the audit run on each changed page, in the states the change touches, unless the index names a lighter re-check for that kind of edit. A change to a shared file (a layout, partial, stylesheet, or script) reopens every page that loads it.
 
 **Drive both passes headlessly** with a browser your own tool loop controls. Keep scratch files (a verify config, a probe script, temporary tooling) in `tmp/` at the project root, listed in `.gitignore` and kept out of the build; never add them to the project's own `package.json` or lockfile. Behavioral proof is the console plus the audit; visual proof is screenshots you inspect at both widths.
 
@@ -242,7 +242,7 @@ Claim "cannot see the page" only after the headless attempt fails, and report th
 - the built reference page and the inspected desktop screenshot;
 - the mobile target width, the equal `window.innerWidth`, and the inspected mobile screenshot;
 - each state from the parts list, its setup, and its inspected screenshots at both widths;
-- after a behavior-only edit: the text-only re-check's result, with the screenshots inspected before the edit standing for the three items above;
+- for a page re-checked without screenshots (a lighter re-check the index names): that result, with the screenshots inspected before the edit standing for the three items above;
 - the icon, dark-mode, and strict-CSP results that apply;
 - every unmet item, with what blocks it. A check you can run is never unmet: run it.
 
