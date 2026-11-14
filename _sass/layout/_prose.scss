@@ -50,6 +50,20 @@
         margin-block: var(--spacing-xl);
     }
 
+    // CMS media carries its file's own pixel width, and a code line has no break.
+    // ponytail: an iframe keeps its height attribute; the host sets aspect-ratio for a player.
+    :where(video, iframe) {
+        max-width: 100%;
+    }
+
+    :where(video) {
+        height: auto;
+    }
+
+    :where(pre:not(.nds-code)) {
+        overflow-x: auto;
+    }
+
     // Wrapper weight: a component's own image (an avatar's circle) keeps its shape.
     :where(img) {
         border-radius: var(--radius-md);

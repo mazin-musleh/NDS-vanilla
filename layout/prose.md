@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.7.0"
 updated: "2.0.0"
-last_edit: "25/10/2026 - 09:42 PM"
+last_edit: "14/11/2026 - 09:04 AM"
 ---
 
 <section id="prose-overview" class="nds-content-section nds-doc-overview">
@@ -271,7 +271,8 @@ Some elements are styled on every page, with or without `nds-prose`. Others are 
 | `a` | Everywhere: the [Link](../components/link) style |
 | `hr` | Everywhere: the [Divider](../components/divider). Inside prose: a wider gap above and below |
 | `table` | Everywhere: the [Tables](../components/table) style. Inside prose: a gap below |
-| `p`, `figure`, `pre` | Inside prose: a gap below |
+| `p`, `figure`, `pre` | Inside prose: a gap below. A long line in a `pre` scrolls sideways |
+| `video`, `iframe` | Inside prose: full width at most. A `video` keeps its shape. An `iframe` keeps its `height`: set `aspect-ratio` on it for a player |
 | `blockquote` | Inside prose: a gap below, a 3px side border and secondary text color. A [Quote](../components/quote)'s `blockquote` keeps its own look |
 | `figcaption` | Small, secondary text below the image, inside prose or not. A Quote's author line keeps its own look |
 {: .nds-table .nds-responsive}

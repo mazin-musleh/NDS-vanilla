@@ -39,7 +39,8 @@
  *                          preventDefault() to send the request yourself (via NDS.request), and call
  *                          detail.rollback() if it fails (chips, badge and URL are already
  *                          committed by then)
- *   nds:filter:success     detail {success, form, isJson, data?, html?} — after a successful AJAX apply
+ *   nds:filter:success     detail {success, form, isJson, data?, html?, fullHtml?} — after a successful AJAX apply;
+ *                          fullHtml is the whole response, html the new container's
  *   nds:filter:error       detail {error, form} — cancelable; preventDefault() suppresses the toast
  *   nds:form:valid         detail {} — dispatched on nds-forms' behalf, so form-level
  *                          listeners work on a filter too

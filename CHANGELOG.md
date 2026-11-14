@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Fixed
 - **Cards** — While a card loads, a row card with an image stays a row, a drawer in the card shows its own skeleton rows, a status card's icon turns grey, and a progress ring shows only its empty track.
+- **Prose** — A video or an embedded frame is never wider than the text, and a long line in a `pre` scrolls sideways.
+- **Audit** — Reports the removed Side Info size classes `nds-sm`, `nds-md` and `nds-lg`.
 
 ## [2.0.0] - 2026-11-12
 

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.0"
-last_edit: "06/11/2026 - 03:02 AM"
+last_edit: "14/11/2026 - 09:04 AM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -853,7 +853,7 @@ In form mode, each setter submits the form. Setters in one script run share one 
 | `nds:filter:clear` | the same | `{ filter }`, on `clear()`, `reset()` and the menu's Reset |
 | `nds:filter:submit` | the same | `{ criteria, form }`, before a form submits with a page load, after its fields pass. `preventDefault()` stops it |
 | `nds:filter:request` | the same | `{ criteria, form, hiddenInputsContainer, rollback }`, before an AJAX request. `preventDefault()` stops the request. Add your own fields to `hiddenInputsContainer` here |
-| `nds:filter:success` | the same | `{ success, isJson, data, html, form }`, after an AJAX response. `data` is the JSON, `html` the new container's HTML, `form` the element the event fires on |
+| `nds:filter:success` | the same | `{ success, isJson, data, html, fullHtml, form }`, after an AJAX response. `data` is the JSON, `html` the new container's HTML, `fullHtml` the whole response, to update parts outside the container, `form` the element the event fires on |
 | `nds:filter:error` | the same | `{ error, form }`, after a network error, an error status, a timeout, or a response without the item container. `preventDefault()` stops the error toast |
 | `nds:form:valid`, `nds:form:invalid` | the same | As in [Forms](../components/form), for a submission form without `data-ajax` |
 {: .nds-table .nds-responsive}
