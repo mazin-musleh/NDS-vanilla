@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Fixed
 - **Template zip** — The browser check names the element of each audit finding, with its fix. A page that stops answering, or opens an alert, no longer holds the run forever: the run stops after 60 s with a report (`NDS_CALL_MS` raises the limit).
 - **Cards** — While a card loads, a row card with an image stays a row, a drawer in the card shows its own skeleton rows, a status card's icon turns grey, and a progress ring shows only its empty track.
+- **Panel** — A control at the side of a Scroll More body, as in Cookies and Accessibility, keeps its whole halo and focus ring.
 - **Prose** — A video or an embedded frame is never wider than the text, and a long line in a `pre` scrolls sideways.
 - **Audit** — Reports the removed Side Info size classes `nds-sm`, `nds-md` and `nds-lg`. A missing icon style sheet gives one finding, not one per icon.
 

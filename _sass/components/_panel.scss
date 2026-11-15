@@ -316,6 +316,14 @@
     @include action-row;
 }
 
+// A side gutter inside the scroll box, pulled back out by a margin so nothing moves: the box
+// clipped a control's halo and a focus ring at its edges. Sides only, as the show-more sits below.
+:is(.nds-panel-body.nds-scroll-more, .nds-panel-body > .nds-scroll-more) > .nds-scroll-more-content {
+    --_panel-gutter: min(var(--spacing-lg), var(--_panel-padding));
+    margin-inline: calc(-1 * var(--_panel-gutter));
+    padding-inline: var(--_panel-gutter);
+}
+
 // A .nds-scroll-more used in place of the body claims the same remaining height.
 .nds-panel > .nds-scroll-more {
     flex: 1 1 auto;
