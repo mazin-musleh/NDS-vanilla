@@ -21,6 +21,7 @@
  *   nds:autocomplete:fetch    detail {query, results} — after every result set is rendered
  *   nds:autocomplete:select   detail {item, text} — a suggestion was picked, or selectItem() ran
  *   nds:autocomplete:clear    detail {} — the field's clear button was used
+ *   nds:autocomplete:error    detail {query, error} — a data-url request failed; cancelable: preventDefault() stops the message
  * Hooks (all on the .nds-form-container):
  *   data-url · data-display-field (result field to display, default "Title") · data-min-chars (3; 0 = a click shows the whole list)
  *   <template class="nds-autocomplete-row"> in the container: each row's parts, [data-field] slots filled as text
@@ -44,6 +45,8 @@
  *     in the browser.
  *   - Inside a .nds-search-box, picking a suggestion clicks the .nds-search-btn.
  *   - No results shows the empty state only under data-strict; otherwise the menu closes.
+ *   - A failed request opens the menu on "Could not load suggestions" in every mode, unless a listener cancels
+ *     nds:autocomplete:error. The next focus or keystroke tries again.
  *   - setValue()/clear() are not a pick or the clear button: no nds:autocomplete:select or :clear. Under data-strict
  *     a text other than the last pick fails validation, as typed text does.
  *   - On a data-strict field not focused yet, a text written with setValue() counts as a pick when the field builds.
@@ -199,16 +202,12 @@
             // forward through, so consumers customize per field.
             var scroll = document.createElement('div');
             scroll.className = 'nds-dropmenu-scroll nds-empty';
-            const emptyMessage = this._container.getAttribute('data-empty-message');
-            if (emptyMessage) scroll.setAttribute('data-empty-message', emptyMessage);
-            else strings.set(scroll, 'data-empty-message', 'no_results');
-            scroll.setAttribute('data-empty-icon',
-                this._container.getAttribute('data-empty-icon') || 'nds-icon nds-hgi-search-01');
             menu.appendChild(scroll);
 
             this._formControl.appendChild(menu);
             this._menu = menu;
             this._scroll = scroll;
+            this._setEmptyText(false);
             this._menuId = menuId;
 
             // The form-control is the wrapper; open/close is programmatic, so no click-to-toggle.
@@ -381,7 +380,7 @@
                 if (error.name !== 'AbortError') {
                     console.warn('NDS Autocomplete: Fetch failed', error);
                     this._results = [];
-                    this._loadFailed();
+                    this._loadFailed(query, error);
                 }
             } finally {
                 // Only the current request clears loading. A superseding keystroke
@@ -397,7 +396,7 @@
             if (this._itemSource) this._cache = (typeof this._itemSource === 'function' ? this._itemSource() : this._itemSource) || [];
             if (!this._cache) {
                 // A call while the list loads waits for that request: aborting it restarted the download.
-                this._cacheRequest ||= this._fetchCache().finally(() => { this._cacheRequest = null; });
+                this._cacheRequest ||= this._fetchCache(query).finally(() => { this._cacheRequest = null; });
                 await this._cacheRequest;
                 if (!this._cache) return;
             }
@@ -416,7 +415,7 @@
             this._dispatchEvent('nds:autocomplete:fetch', { query: query, results: this._results });
         }
 
-        async _fetchCache() {
+        async _fetchCache(query) {
             this.fetchAbortController = new AbortController();
             var { signal } = this.fetchAbortController;
             this._setLoading(true);
@@ -428,7 +427,7 @@
                 if (error.name !== 'AbortError') {
                     // No cache: the next input retries.
                     console.warn('NDS Autocomplete: Fetch failed', error);
-                    this._loadFailed();
+                    this._loadFailed(query, error);
                 }
             } finally {
                 this._setLoading(false);
@@ -445,11 +444,27 @@
             return Array.isArray(list) ? list.filter(Boolean) : [];
         }
 
-        // Silent failure looked like "no suggestions": say so, and try again on the next focus.
-        _loadFailed() {
+        // Silent failure looked like "no suggestions": show and say so, and try again on the next focus.
+        _loadFailed(query, error) {
             this._fetchFailed = true;
-            this._close();
+            if (!this._dispatchEvent('nds:autocomplete:error', { query, error: error.message }, true)) { this._close(); return; }
+            this._scroll.innerHTML = '';
+            this._items = [];
+            this._activeIndex = -1;
+            this._input.removeAttribute('aria-activedescendant');
+            this._setEmptyText(true);
+            NDS.Empty.refresh(this._scroll);
             NDS.announce(strings.text('load_failed'));
+            this._open();
+        }
+
+        // The empty slot says "no results" (or the field's own message and icon), or that the request failed.
+        _setEmptyText(failed) {
+            const message = !failed && this._container.getAttribute('data-empty-message');
+            if (message) this._scroll.setAttribute('data-empty-message', message);
+            else strings.set(this._scroll, 'data-empty-message', failed ? 'load_failed' : 'no_results');
+            this._scroll.setAttribute('data-empty-icon', failed ? 'nds-icon nds-hgi-alert-circle'
+                : this._container.getAttribute('data-empty-icon') || 'nds-icon nds-hgi-search-01');
         }
 
         // ==============================================
@@ -474,6 +489,7 @@
             if (!data || data.length === 0) {
                 // Only strict needs "no results": elsewhere any typed text is valid.
                 if (!this._strict) { this._close(); return; }
+                this._setEmptyText(false);
                 NDS.Empty.refresh(this._scroll);
                 NDS.announce(strings.text('no_results'));
                 this._open();
@@ -770,10 +786,12 @@
         // EVENTS & CLEANUP
         // ==============================================
 
-        _dispatchEvent(name, detail) {
-            this._container.dispatchEvent(new CustomEvent(name, {
+        // False when a listener cancelled a cancelable event.
+        _dispatchEvent(name, detail, cancelable = false) {
+            return this._container.dispatchEvent(new CustomEvent(name, {
                 detail: detail,
-                bubbles: true
+                bubbles: true,
+                cancelable
             }));
         }
 

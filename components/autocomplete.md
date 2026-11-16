@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.0"
-last_edit: "09/11/2026 - 10:07 AM"
+last_edit: "16/11/2026 - 01:50 PM"
 ---
 
 <section id="autocomplete-overview" class="nds-content-section nds-doc-overview">
@@ -189,7 +189,7 @@ When the autocomplete is in a `.nds-search-box`, a pick also clicks the box's `.
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Debounced Fetching</span>
-              <p class="nds-card-description">A search starts 300 ms after the last keystroke. A new search cancels the request before it. A spinner replaces the clear button while a request runs. A request that fails is announced, and the next focus on the field tries it again. Results that arrive after the user left the field do not open the menu.</p>
+              <p class="nds-card-description">A search starts 300 ms after the last keystroke. A new search cancels the request before it. A spinner replaces the clear button while a request runs. When a request fails, the menu shows "Could not load suggestions" and a screen reader reads it. The next focus on the field tries the request again. Results that arrive after the user left the field do not open the menu.</p>
             </div>
           </div>
         </li>
@@ -349,6 +349,7 @@ The `NDS.Autocomplete` script loads after the page shows. Until it loads, each c
 | `nds:autocomplete:fetch` | `.nds-form-container`, and it bubbles | `{ query, results }`, after each list renders. `results` holds every match, not only the first 20 |
 | `nds:autocomplete:select` | `.nds-form-container`, and it bubbles | `{ item, text }`, after a pick, by a user or by `selectItem()`. `item` is the whole result object. `text` is its `data-display-field` value, now in the input |
 | `nds:autocomplete:clear` | `.nds-form-container`, and it bubbles | `{}`, after the clear button empties the field |
+| `nds:autocomplete:error` | `.nds-form-container`, and it bubbles | `{ query, error }`, after a `data-url` request fails. `error` is the error's message. `preventDefault()` stops the "Could not load suggestions" message, for a page that shows its own |
 {: .nds-table .nds-responsive}
 
 <script type="text/html" id="autocomplete-js" data-canon data-lang="js">
