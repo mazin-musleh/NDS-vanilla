@@ -145,10 +145,10 @@ Do all NDS work yourself: never hand a page, a row or a check to a helper agent 
 1. **Head:** copy the head canon as a unit. Rewrite asset URLs only; never remove or reorder entries. Under a CSP, apply the docs' CSP guidance to the head.
 2. **Page shape:** copy the shape's canon and swap the content; never recreate it from prose.
    - Layout state (the shape's classes) is in the first HTML the browser paints. A client-rendered app follows the page layout doc's framework rules for its layout classes and mount element.
-   - Set both `<html lang>` and `dir`: `rtl` for a right-to-left language (Arabic `ar`, Urdu `ur`, Persian `fa`), `ltr` for the rest. A single-language site ships without the language switcher; a site in two languages keeps it.
+   - Set both `<html lang>` and `dir`: `rtl` for a right-to-left language (Arabic `ar`, Urdu `ur`, Persian `fa`), `ltr` for the rest.
 3. **Brand:** the project logo replaces the template's; drop the brand text when the logo already carries the name.
 
-**Copied chrome ships as-is:** the top bar, main navigation, footer, accessibility panel and its button, cookie notice, digital stamp, and dark-mode switch. Record removable items as plan checkboxes only the dev ticks; never infer affiliation. The one exception is the digital stamp: it claims a government verification, so the plan review asks whether the site holds it, and it ships only if so. Before page #2, wire project-backed controls to real session, API, or route data; remove what the project cannot back. Never ship an invented identity or a dead widget: a copied link or control with no real target, such as a footer link with no page behind it, is removed even from chrome, with a plan checkbox naming it.
+**Copied chrome ships as-is:** every chrome part the page shape's canon carries. Record each part as a plan checkbox only the dev ticks to remove it; never infer affiliation. The one exception is the digital stamp: it claims a government verification, so the plan review asks whether the site holds it, and it ships only if so. Before page #2, wire project-backed controls to real session, API, or route data; remove what the project cannot back. Never ship an invented identity or a dead widget: a copied link or control with no real target, such as a footer link with no page behind it, is removed even from chrome, with a plan checkbox naming it.
 
 ### Composition cascade
 
@@ -179,7 +179,7 @@ A conflict between the existing UI and a backend contract is the dev's decision:
 
 **NDS UI outranks the legacy UI.** The existing UI sets the content, fields, order, and outcomes a page carries, never how they are presented, and never a component's feature set: a legacy page that lacked a control is missing a default, not drawing a scope boundary. Search, sorting, filtering, export, counts, validation chrome (how a check shows, never which fields it requires), and responsive behavior are NDS defaults, not questions; they never change business rules or backend contracts.
 
-Map every part a matched source ships to the project's data: a two-state field is a single-choice facet, a numeric field a range. Legacy filtering by one thing is no reason to ship one facet.
+Map every part a matched source ships to the project's data, each in the type its doc picks. Legacy filtering by one thing is no reason to ship one facet.
 
 - An existing page without a hero still gets the hero its page shape names.
 - A different required presentation picks a documented NDS variant first; it never changes a component's canonical anatomy.
