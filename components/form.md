@@ -6,7 +6,7 @@ hero_description: Form fields the user types in, with the label, messages and su
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
 updated: "2.0.0"
-last_edit: "07/11/2026 - 09:55 PM"
+last_edit: "16/11/2026 - 07:52 PM"
 lang: en
 direction: ltr
 ---
@@ -508,6 +508,8 @@ The eye button switches the field between hidden and plain text, and its label b
 - Set `input.value` from a script, then call `NDS.Form.refresh(input)`. Setting the value alone does not update the Clear button or the field's state.
 - To clear a form, call `form.reset()` or use a reset button. Each NDS field goes back to the value the page shipped with, and its message clears.
 - Give an icon-only action button an `aria-label`, such as "Clear input".
+- End a form that needs a confirmation before it sends, such as an application, a booking or a payment, with a review step. The [Form Template](../templates/form-template) shows one. Add input steps only when the flow needs them.
+- Keep a simple form, such as a contact form, on one screen. After it sends, show its status or go to the next page.
 - Test each required field type empty, one at a time. A text field, a custom select, a multiselect and a tag input each check their own required state, so one passing proves nothing about the others.
 
 </div>

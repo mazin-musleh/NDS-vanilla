@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.0"
-last_edit: "07/11/2026 - 09:50 PM"
+last_edit: "16/11/2026 - 07:52 PM"
 ---
 
 <section id="mainnav-overview" class="nds-content-section nds-doc-overview">
@@ -675,6 +675,7 @@ Below 960px, the actions move into the drawer, in one row at its bottom. An acti
 - Do not move a pinned action with your own script. The script moves it, and puts it back where you wrote it.
 - Give every icon-only action a `title`. It is the tooltip, and the action's name.
 - Set `width` and `height` on the logo, so the bar does not move when the logo loads.
+- Leave out the language action on a site with one language. A site with two languages keeps it.
 - A page with no header still needs a language switch. The [Sign In](../examples/sign-in) example puts it in the card header, next to the logo.
 - Some servers take the language switch or the sign-out only as a POST, as Django does. Then make the action a `<button type="submit">` with the same classes. Point its `form` attribute at a `<form method="post">` that holds the server's fields, such as a CSRF token. The button looks like the link and works with no script.
 

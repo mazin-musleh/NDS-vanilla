@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.0"
-last_edit: "14/11/2026 - 09:04 AM"
+last_edit: "16/11/2026 - 07:52 PM"
 ---
 
 <section id="filter-overview" class="nds-content-section nds-doc-overview">
@@ -714,6 +714,7 @@ Sort is not a filter value. Decide by what the server returns. All matching item
 
 - Filter in the browser when every item is on the page and the list is short, up to a few hundred items. For more, use form submission.
 - Pick the group type by the question. Checkbox: any of several values. Radio: exactly one, with All to undo it. Switch: on/off features. Slider: a number range.
+- Give a yes-or-no field a Radio group, so All undoes the pick. Give a number field a Slider.
 - Keep a Reset button (`data-filter-action="clear"`) next to Apply in the menu footer.
 - Keep `hidden` on the applied-chips row. The script shows it once a value is applied.
 - Keep legends to one or two words. `data-filter-legend` is the group's heading in the menu.
