@@ -2,7 +2,7 @@
 //
 //   node nds-verify.mjs <config.json> [--out <dir>] [--only <path>,…] [--jobs <n>] [--text]
 //
-// --out is where the shots go: tmp/nds-verify/ in the folder you run it from by default, one
+// --out is where the shots go: tmp/nds-verify/ in the folder you run it from by default (from inside this template folder: the folder above it), one
 // folder per page, replaced on each run. Keep tmp/ in .gitignore.
 // --only checks just the pages whose path holds one of the texts: after a fix, re-check that
 // page alone (write `nds/cart`, not `/nds/cart`: Git Bash turns a leading slash into a Windows
@@ -53,7 +53,7 @@ import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { cpus, tmpdir } from 'node:os';
-import { dirname, extname, join, normalize, resolve } from 'node:path';
+import { dirname, extname, isAbsolute, join, normalize, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 // ponytail: a Node too old for top-level await fails on parse, before this line can run.
@@ -67,7 +67,10 @@ const configPath = args.find((a, i) => !a.startsWith('--') && (!args[i - 1]?.sta
 if (!configPath) { console.error('Usage: node nds-verify.mjs <config.json> [--out <dir>] [--only <path>,…] [--jobs <n>] [--text]'); process.exit(2); }
 const config = JSON.parse(readFileSync(configPath, 'utf8'));
 // The project's gitignored tmp/, not the OS temp folder, where every run left a new folder behind.
-const OUT = resolve(flag('--out') || join('tmp', 'nds-verify'));
+// A run from inside this folder would write into NDS_ROOT, which is read-only: use the project's tmp/.
+const fromHere = relative(HERE, process.cwd());
+const inHere = !fromHere.startsWith('..') && !isAbsolute(fromHere);
+const OUT = resolve(flag('--out') || join(inHere ? dirname(HERE) : '.', 'tmp', 'nds-verify'));
 mkdirSync(OUT, { recursive: true });
 const ONLY = flag('--only')?.split(',').filter(Boolean);
 const JOBS = Math.max(1, Number(flag('--jobs')) || Math.min(8, Math.max(2, cpus().length >> 1)));
@@ -81,7 +84,7 @@ if (!PAGES.length) {
 }
 const SITE = resolve(process.env.NDS_SITE || join(HERE, '_site'));
 if (PAGES.some((p) => p.reference) && !existsSync(SITE)) {
-    console.error(`No built site at ${SITE}: run this copy from the template folder, or set NDS_SITE.`); process.exit(2);
+    console.error(`No built site at ${SITE}: run the template folder's copy of this script, or set NDS_SITE.`); process.exit(2);
 }
 const BASE = config.base.replace(/\/$/, '');
 const WIDTHS = config.widths || [1280, 390];
@@ -612,7 +615,9 @@ const plan = planPath ? readFileSync(planPath, 'utf8') : '';
 const rows = plan.split('\n').filter((l) => l.startsWith('|')).map((l) => l.split('|').map((c) => c.replace(/[*`]/g, '').trim()));
 const open = rows.filter((cells) => cells.includes('Planned') || cells.includes('In Progress'));
 const done = rows.filter((cells) => cells.includes('Awaiting Verification') || cells.includes('Built and Verified'));
-if (open.length && /pacing[^\n]*whole plan/i.test(plan)) console.log(`\nPacing is whole plan, and ${open.length} plan row(s) are still Planned or In Progress (next: ${open[0][1]}). ` +
+// The Pacing label's own value (`| Pacing | … |` or `Pacing: …`), not any line that names both.
+const pacing = plan.split('\n').map((l) => l.replace(/[*`_]/g, '').match(/^\s*(?:[-|]\s*)?pacing\s*[|:]\s*(.*)/i)).find(Boolean)?.[1] || '';
+if (open.length && /^whole[ -]plan\b/i.test(pacing.trim())) console.log(`\nPacing is whole plan, and ${open.length} plan row(s) are still Planned or In Progress (next: ${open[0][1]}). ` +
     'Unless the dev told you to stop, finish this page, then build the next row in this same turn: whole plan stops only when every row is Awaiting Verification or blocked.');
 // From the last open row on: agents mark that row done after this check, so "none open" never shows (rig 5 run 22).
 if (open.length <= 1 && done.length) console.log(`\n${open.length ? 'One plan row is still open: this may be the last page.' : 'Every plan row is Awaiting Verification.'} ` +
