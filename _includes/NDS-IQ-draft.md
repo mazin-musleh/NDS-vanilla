@@ -111,7 +111,7 @@ NDS is a UI layer; the host project (frontend and backend) serves it. NDS IQ nev
 
 **Plan entry gate.** Choose the work mode first. When a plan applies, list routes, layouts, shared partials, pages and views (one row per client-side view), and legacy UI libraries; map every page through the §Build cascade and record its page shape. Greenfield lists only the pages the dev named. No-plan work inspects only the named page, its shared layout, its global files, and the project contracts.
 
-Check response headers and middleware for a Content Security Policy once, project-wide. None → record `no CSP` and skip this file's CSP rules: ask the dev nothing about CSP. Found → read the docs' CSP guidance and record what the head needs. Recommend its grants in its order: a nonce, else a hash, and the blocking stylesheet last, since it slows the first paint.
+Check response headers and middleware for a Content Security Policy once, project-wide. None → record `no CSP` and skip this file's CSP rules: ask the dev nothing about CSP. Found → read the docs' CSP guidance and record what the head needs. Recommend its grants in the order it gives.
 
 - **Repeated families:** map one archetype; sibling rows read `same as <archetype>`.
 - **Prior NDS:** assess each page against current canon: conformant → `Awaiting Verification`; non-conformant → rebuild. Never silently resume an inherited plan.
@@ -142,10 +142,9 @@ Do all NDS work yourself: never hand a page, a row or a check to a helper agent 
 
 **Chrome first.** Build each required page shape once, then its pages. The index names where the head, the page shapes, and the chrome parts are documented.
 
-1. **Head:** copy the head canon as a unit. Rewrite asset URLs only; never remove or reorder entries. Keep the page title and hero preloads page-specific. Replace the favicon. Under a CSP, apply the docs' CSP guidance to the head.
+1. **Head:** copy the head canon as a unit. Rewrite asset URLs only; never remove or reorder entries. Keep the hero preloads page-specific. Under a CSP, apply the docs' CSP guidance to the head.
 2. **Page shape:** copy the shape's canon and swap the content; never recreate it from prose.
-   - Layout state (the shape's classes) is in the first HTML the browser paints. One app serving two shapes (public pages and a console admin) sets each route's classes for that route only, before the framework mounts; never in a mount effect, never on every route.
-   - A client-rendered app follows the page layout doc's framework rules for its mount element.
+   - Layout state (the shape's classes) is in the first HTML the browser paints. A client-rendered app follows the page layout doc's framework rules for its layout classes and mount element.
    - Set both `<html lang>` and `dir`: `rtl` for a right-to-left language (Arabic `ar`, Urdu `ur`, Persian `fa`), `ltr` for the rest. A single-language site ships without the language switcher; a site in two languages keeps it.
 3. **Brand:** the project logo replaces the template's; drop the brand text when the logo already carries the name.
 
@@ -182,7 +181,7 @@ A conflict between the existing UI and a backend contract is the dev's decision:
 
 Map every part a matched source ships to the project's data: a two-state field is a single-choice facet, a numeric field a range. Legacy filtering by one thing is no reason to ship one facet.
 
-- An existing page without a hero gets the sub hero; a heavy-text page gets its flat variant. The hero slider stays on home and hub pages.
+- An existing page without a hero still gets the hero its page shape names.
 - A different required presentation picks a documented NDS variant first; it never changes a component's canonical anatomy.
 - A form that needs a confirmation before it submits, such as an application, a booking or a payment, ends with a review step; add input steps only when the flow needs them. A simple form, such as a contact form, stays one screen and shows a status or redirects after it sends. A terminal confirmation is not an input step: keep the success step the source ships.
 - Greenfield only: remove a template section the brief does not cover; never invent content to fill one.
@@ -231,7 +230,7 @@ Claim "cannot see the page" only after the headless attempt fails, and report th
 
    [VERIFICATION CHECKLIST FOR DEV]
    - [ ] Check the console for NDS warnings and the audit's findings.
-   - [ ] Test responsiveness below 768px.
+   - [ ] Test responsiveness at mobile width.
    - [ ] Check expected spacing.
    - [ ] Check every icon renders as a glyph.
    - [ ] Check dark mode on page content.
