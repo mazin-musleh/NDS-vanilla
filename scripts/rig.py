@@ -3,7 +3,7 @@
 Run from the NDS repo root. The guide is .claude/skills/nds-iq-eval/RIGS.md.
 
   python scripts/rig.py new <rig> [dest]       copy a baseline, git init, tag it, npm install or a Django venv + seed
-  python scripts/rig.py stage <rig> <release>  unpack a mkrelease --preview zip to .nds/, add _source/, stamp <release>, copy the draft to NDS-IQ.md
+  python scripts/rig.py stage <rig> <release>  unpack a mkrelease --preview zip to .nds/, add _source/, stamp <release>-rc.<commit>, copy the draft to NDS-IQ.md
   python scripts/rig.py reset <rig> [--save]   commit the run to a runN-date branch, back to the baseline tag
 
 <rig> is a rig number (1 sawaed, 2 shop-licenses, 3 nakheel-clinics, 4 hiraf-store, 5 library-portal, 6 citydesk, 7 grants-desk, 8 ops-desk, 9 rafeeq, 10 turathna), which lives at ../nds-test-app-<N>,
@@ -146,6 +146,9 @@ def stage(dest, release):
     tarfile.open(fileobj=io.BytesIO(tar)).extractall(os.path.join(out, '_source'), filter='data')
     # The release commit's stamp: 1.12.x-dev and the docs' "1.12.x" become the release number.
     dev = re.search(r'^version:\s*"?([\w.]+)-dev', open('_config.yml', encoding='utf-8').read(), re.M).group(1)
+    # A bare number gets the commit, so each staged build names what it tested: 2.0.1-rc.57221cc.
+    sha = subprocess.run(['git', 'rev-parse', '--short', 'HEAD'], capture_output=True, text=True, check=True).stdout.strip()
+    stamp = release if '-' in release else f'{release}-rc.{sha}'
     n = 0
     for root, _, files in os.walk(out):
         for name in files:
@@ -156,7 +159,7 @@ def stage(dest, release):
                 s = open(p, encoding='utf-8', newline='').read()
             except UnicodeDecodeError:
                 continue
-            t = s.replace(f'{dev}-dev', release).replace(f'"{dev}"', f'"{release}"')
+            t = s.replace(f'{dev}-dev', stamp).replace(f'"{dev}"', f'"{stamp}"')
             if t != s:
                 open(p, 'w', encoding='utf-8', newline='').write(t)
                 n += 1
@@ -183,7 +186,7 @@ def stage(dest, release):
     ports(dest, baseline)
     # Put the dev site back: mkrelease's cleaner and compressor rewrote _site for the zip.
     run('bundle exec jekyll build')
-    print(f'staged {dest}: {n} files stamped {release}, {what}')
+    print(f'staged {dest}: {n} files stamped {stamp}, {what}')
     if baseline in APPS:
         print(f'start the app: cd {dest} && {APPS[baseline][0]}  ->  {APPS[baseline][1]}')
 

@@ -214,7 +214,7 @@ A run tests either the published rules and release, or the unreleased ones on ma
 ### Unreleased
 
 1. **Commit first.** Staging takes `_source/` from the committed tree, the way a release's source zip does. It takes `NDS-IQ.md` from the working draft.
-2. **Stage:** `python scripts/rig.py stage 5 2.0.0`. The number is the one the next release takes. The script builds the release zip with `mkrelease.py --preview`, unpacks it to the rig's `.nds/`, adds `_source/`, stamps the release number, and copies the draft to `NDS-IQ.md`. A last build puts the dev site back, so a running `jekyll serve` can stay up.
+2. **Stage:** `python scripts/rig.py stage 5 2.0.0`. The number is the one the next release takes. The script builds the release zip with `mkrelease.py --preview`, unpacks it to the rig's `.nds/`, adds `_source/`, stamps the release number with the commit (`2.0.1-rc.57221cc`, so each run names the build it tested; a number with its own suffix, such as `-rc.1`, stays as given), and copies the draft to `NDS-IQ.md`. A last build puts the dev site back, so a running `jekyll serve` can stay up.
 3. **Start the app** in its own terminal (the table above). Rig 1 has no app yet.
 4. **Start the agent:** open a new Claude Code session in the rig folder and paste:
 
