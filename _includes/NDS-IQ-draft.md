@@ -58,7 +58,7 @@ The project's agent file (`CLAUDE.md` / `AGENTS.md`) holds the anchor: the value
 ## Checks before claims
 
 Read the source before you ask or answer an NDS question or wire page JS. A claim needs its check first:
-- "NDS has no X" (yours, or the dev's "just use native X") → read every `use_when` line in the catalog (the index names it), as §Composition cascade says.
+- "NDS has no X" (yours, or the dev's "just use native X") → read every entry's fit line in the catalog (the index names the catalog and its field), as §Composition cascade says.
 - "I cannot see the page" → a failed headless attempt (§Verify).
 - "The page is done" → both browser passes and a clean audit (§Verify). The audit checks markup, never how the page looks.
 
@@ -89,7 +89,7 @@ If the dev says a found runtime is legacy, treat setup as new, with the latest r
 
 1. Read the opening `Version:` banners of the main NDS script and stylesheet in `NDS_ASSETS`. They must agree; otherwise stop and ask.
 2. Download that exact release's template zip from the release page and extract its contents flat into `NDS_ROOT`.
-3. Follow the Install section of `NDS_ROOT/NDS-INDEX.md`: it names the sources to add and what to copy into `NDS_ASSETS`. No `NDS-INDEX.md` in the extracted release → it predates this file: switch to `IQv3.2` as §Start here says.
+3. Follow the Install section of `NDS_ROOT/NDS-INDEX.md`: it names the sources to add and what to copy into `NDS_ASSETS`. No `NDS-INDEX.md` in the extracted release → §Start here.
 
 - An empty `NDS_ASSETS` proves nothing: search the project for NDS runtime files and the layouts that load them. Found → stop and ask. None → install the latest release and report it.
 - At session start, compare the runtime banner in `NDS_ROOT` with `NDS_ASSETS`. Older reference → download the runtime's release again; newer reference → stop and ask.
@@ -142,7 +142,7 @@ Do all NDS work yourself: never hand a page, a row or a check to a helper agent 
 
 **Chrome first.** Build each required page shape once, then its pages. The index names where the head, the page shapes, and the chrome parts are documented.
 
-1. **Head:** copy the head canon as a unit. Rewrite asset URLs only; never remove or reorder entries. Keep the hero preloads page-specific. Under a CSP, apply the docs' CSP guidance to the head.
+1. **Head:** copy the head canon as a unit. Rewrite asset URLs only; never remove or reorder entries. Under a CSP, apply the docs' CSP guidance to the head.
 2. **Page shape:** copy the shape's canon and swap the content; never recreate it from prose.
    - Layout state (the shape's classes) is in the first HTML the browser paints. A client-rendered app follows the page layout doc's framework rules for its layout classes and mount element.
    - Set both `<html lang>` and `dir`: `rtl` for a right-to-left language (Arabic `ar`, Urdu `ur`, Persian `fa`), `ltr` for the rest. A single-language site ships without the language switcher; a site in two languages keeps it.
@@ -152,7 +152,7 @@ Do all NDS work yourself: never hand a page, a row or a check to a helper agent 
 
 ### Composition cascade
 
-Match by `use_when` across the catalog's templates, examples, and components, never by title. Read every `use_when` line, unfiltered: a keyword search may confirm a match, never pick the candidates. Then:
+Match by each entry's fit line (the index names the field) across the catalog's templates, examples, and components, never by title. Read every fit line, unfiltered: a keyword search may confirm a match, never pick the candidates. Then:
 
 1. A matching template → copy it.
 2. No template → the closest example: its parts are a floor, its markup is not copied as is.
@@ -256,7 +256,7 @@ An unmet item keeps the row `In Progress`; no-plan work reports the page unverif
 
 1. **Compare versions:** the runtime banners in `NDS_ROOT` and `NDS_ASSETS`.
 2. **Replace the runtime:** replace `NDS_ROOT` with the latest release as in §Setup, then refresh `NDS_ASSETS` as its index says. Keep the project's favicon and every project-added file; deletions need dev approval. Work done under earlier rules passes §Plan's conformance check first.
-3. **Sweep the pages:** follow the Upgrade section of the new `NDS-INDEX.md`: read the migration notes between the two versions and run the audit's migration check on every page, not only the ones you touched. Add the affected work to `NDS-PLAN.md`, map it to pages, execute, and report. Also report useful new and changed features for the dev to choose.
+3. **Sweep the pages:** follow the Upgrade section of the new `NDS-INDEX.md` on every page, not only the ones you touched. Add the affected work to `NDS-PLAN.md`, map it to pages, execute, and report. Also report useful new and changed features for the dev to choose.
 4. **Update this file** (below).
 
 ## This file
