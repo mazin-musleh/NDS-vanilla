@@ -39,7 +39,7 @@
 //   }
 //
 // Writes, per page: each state at each width in the first theme, and per state a sheet-<state>.png
-// that shows it under the reference. A page's first state is also shot in the other themes, at the widest width.
+// that shows it under the reference; its title, and report.txt, name the page's NDS version and the run date. A page's first state is also shot in the other themes, at the widest width.
 // A page taller than a sheet gets more, one slice each: sheet-<state>-2.png and on. The reference takes the state's lang and direction, so an Arabic
 // page compares with a right-to-left reference in Arabic. Prints the audit findings, console errors (a CSP one names its
 // source), failed loads, sideways scroll, parts cut off past the screen edge, controls another part lies over, text below AA contrast, a wrong window.innerWidth, parts still loading after the page settled,
@@ -293,6 +293,9 @@ async function shootOnce(url, { width, theme, cookies = [], storage = {}, fail, 
     const status =await evaluate(`performance.getEntriesByType('navigation')[0]?.responseStatus || 0`);
     const revealed = await evaluate(`document.documentElement.hasAttribute('data-nds-loaded')`);
     const locale = await evaluate(`({ lang: document.documentElement.lang, dir: getComputedStyle(document.documentElement).direction })`);
+    // The runtime exposes no version: read the banner of the script the page loads, so a sheet names its release.
+    const version = await evaluate(`(async () => { const s = [...document.scripts].find((s) => /nds-main[^/]*\\.js/.test(s.src));
+        try { return s && (await (await fetch(s.src)).text()).match(/Version:\\s*(\\S+)/)?.[1] || ''; } catch { return ''; } })()`);
     const innerWidth = await evaluate('innerWidth');
     const overflow = await evaluate('document.documentElement.scrollWidth - innerWidth');
     // A skeleton or spinner still on once the page settled: data that never came, or a stuck state.
@@ -450,14 +453,14 @@ async function shootOnce(url, { width, theme, cookies = [], storage = {}, fail, 
     handlers.delete(sessionId);
     await send('Target.closeTarget', { targetId });
     await send('Target.disposeBrowserContext', { browserContextId }).catch(() => {});
-    return { png: Buffer.from(data, 'base64'), status, revealed, innerWidth, overflow, loading, covered, clipped, faint, blocked, ...locale, ran,
+    return { png: Buffer.from(data, 'base64'), status, revealed, innerWidth, overflow, loading, covered, clipped, faint, blocked, ...locale, version, ran,
         errors: [...errors.filter((e) => !/\[NDS\.[aA]udit\]|Content Security Policy/.test(String(e))), ...csp], findings, leaks };
 }
 
 // --- run --------------------------------------------------------------------------------------
 const slug = (t) => t.replace(/^\/+|\/+$/g, '').replace(/[^\w.-]+/g, '-') || 'home';
 const problems = [];
-const report = [];
+const report = [], DATE = new Date().toISOString().slice(0, 10);
 // Another theme breaks on the site's own colors, not per state or width: only a page's first state
 // takes it, at the widest width.
 const WIDEST = Math.max(...WIDTHS);
@@ -502,6 +505,8 @@ try {
             mkdirSync(dir, { recursive: true });
         }
         const rows = [];
+        const version = states.find((s) => s.pg === pg)?.shots[0]?.version || 'unknown';
+        report.push(`${pg.path}: NDS ${version}, run ${DATE}`);
         for (const { st, shots, refs, cols } of states.filter((s) => s.pg === pg)) {
             const at = `${pg.path} [${st.name}]`;
             let ref = null;
@@ -573,7 +578,7 @@ try {
             const parts = Math.max(1, Math.ceil(tallest / slice));
             for (let part = 0; part < parts; part++) {
                 const name = `sheet-${slug(r.name)}${part ? `-${part + 1}` : ''}`;
-                const title = `${pg.path}: ${r.name}${parts > 1 ? ` (part ${part + 1} of ${parts})` : ''}`;
+                const title = `${pg.path}: ${r.name}${parts > 1 ? ` (part ${part + 1} of ${parts})` : ''} · NDS ${version} · ${DATE}`;
                 // data-nds-loaded up front: the shot's reveal wait would otherwise run out its 10 s.
                 writeFileSync(join(dir, `${name}.html`), `<!doctype html><html data-nds-loaded><meta charset="utf-8"><style>
                     body { margin: 8px; font: 13px system-ui; background: #fff } table { border-collapse: collapse }
@@ -606,7 +611,7 @@ console.log(`\n${problems.length ? `${problems.length} problem(s):\n${problems.j
 const sheetCount = report.filter((line) => line.includes('] sheet: ')).length;
 // A stopped run may list sheets it never wrote: send the agent back to the problem, not to the sheets.
 if (stopped) console.log('\nThe run stopped before it finished: fix the "run stopped" problem above, then run again.');
-else if (TEXT) console.log(`\nText only: no shots and no sheets. The sheets in ${OUT} are from the last full run.`);
+else if (TEXT) console.log(`\nText only: no shots and no sheets. The sheets in ${OUT} are from the last full run: each title names its NDS version and date.`);
 else console.log(`\nOutput: ${OUT}\nNow open all ${sheetCount} sheet-*.png listed above and compare each state with the reference row above it.\n` +
     `A sheet shrinks each shot: for detail, open the state's own <state>-<width>-<theme>.png beside its reference-…-<width>-<theme>.png, never another browser.`);
 // Agents stop a `whole plan` run after its first page (rigs 4 and 5), and keep NDS findings in the
