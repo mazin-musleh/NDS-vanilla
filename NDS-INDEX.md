@@ -58,6 +58,7 @@ Each doc, example and template has a built page at the same path under `_site/`,
 - **Lighter re-checks after an edit.** `--text` runs every check in every state of the config, new states included, with no shots and no sheets, and keeps the last run's sheets: they stay the visual evidence. `--only` limits a run to the pages named.
   - A behavior-only edit (an event handler, a request, or data handling that changes no markup, class, style, image or text the page shows): `--text` on each changed page.
   - An edit to a shared file (a layout, partial, stylesheet, or script): `--text` on every page that loads it, plus the full run on one of those pages per page shape (the shapes above). A behavior-only edit to a shared file takes `--text` alone.
+  - A runtime upgrade is a shared-file edit: `--text` on every page, the full run on one page per page shape, and the full run on each page that uses a component a Changed or Fixed entry of the new `CHANGELOG.md` names, or that the migration sweep hit. Record which entry sent each page to the full run.
   - Any other edit: the full run on each changed page.
 - If it cannot run (no Node 18, no Chrome, Edge or Chromium), run both passes as the rules' Verify section says.
 
@@ -72,6 +73,7 @@ Each doc, example and template has a built page at the same path under `_site/`,
 - **Migration notes:** the `### Migrating from` sections in `CHANGELOG.md`.
 - **Migration check:** the audit's `migration` group, `NDS.audit.run({ group: 'migration' })`.
 - **Script calls:** the audit reads a page's markup and CSS, never your scripts. Search the project's scripts for the `name` of each `api` and `event` row in `_source/_data/migrations.yml` whose `since` is newer than your old version.
+- **Re-verify:** the runtime upgrade case in Verify's lighter re-checks.
 
 ## Legacy libraries
 
