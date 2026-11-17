@@ -214,7 +214,7 @@ A run tests either the published rules and release, or the unreleased ones on ma
 ### Unreleased
 
 1. **Commit first.** Staging takes `_source/` from the committed tree, the way a release's source zip does. It takes `NDS-IQ.md` from the working draft.
-2. **Stage:** `python scripts/rig.py stage 5 2.0.0`. The number is the one the next release takes. The script builds the release zip with `mkrelease.py --preview`, unpacks it to the rig's `.nds/`, adds `_source/`, stamps the release number with the commit (`2.0.1-rc.57221cc`, so each run names the build it tested; a number with its own suffix, such as `-rc.1`, stays as given), and copies the draft to `NDS-IQ.md`. A last build puts the dev site back, so a running `jekyll serve` can stay up.
+2. **Stage:** `python scripts/rig.py stage 5`. The script builds the release zip with `mkrelease.py --preview`, unpacks it to the rig's `.nds/`, adds `_source/`, stamps the development version with the commit (`2.0.x-dev.395ee8c3`, so each run names the build it tested), and copies the draft to `NDS-IQ.md`. A release number after the rig (`stage 5 2.1.0`) stamps `2.1.0-rc.<commit>` instead; one with its own suffix, such as `-rc.1`, stays as given. A last build puts the dev site back, so a running `jekyll serve` can stay up.
 3. **Start the app** in its own terminal (the table above). Rig 1 has no app yet.
 4. **Start the agent:** open a new Claude Code session in the rig folder and paste:
 
@@ -263,10 +263,10 @@ python scripts/rig.py reset 5 --save
 `stage` also takes a real project's path, to start its NDS work on the next release before it ships. Skip `new` and never `reset` it: the agent's work there is kept.
 
 1. Commit first, as for an unreleased run.
-2. `python scripts/rig.py stage <path> 2.0.0-rc.1`. Stamp a release candidate, never the bare number: a project stamped `2.0.0` reads as current once the real 2.0.0 ships, and its update check misses the fixes made since.
+2. `python scripts/rig.py stage <path>`. It stamps `2.0.x-dev.<commit>`. Never stamp a bare release number: a project stamped `2.0.0` reads as current once the real 2.0.0 ships, and its update check misses the fixes made since. A dev stamp reads older than any release after it.
 3. Start the agent with the unreleased-run prompt above, and review its report and plan the same way. Its findings never name the project.
 
-To stage a newer build, delete the project's `.nds/` by hand and stage the next candidate (`rc.2`). The agent's update check then offers the upgrade.
+To stage a newer build, move the project's `.nds/` aside by hand and stage again: the new commit names it. The agent's update check then offers the upgrade.
 
 ## Gotchas
 

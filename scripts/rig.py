@@ -3,7 +3,8 @@
 Run from the NDS repo root. The guide is .claude/skills/nds-iq-eval/RIGS.md.
 
   python scripts/rig.py new <rig> [dest]       copy a baseline, git init, tag it, npm install or a Django venv + seed
-  python scripts/rig.py stage <rig> <release>  unpack a mkrelease --preview zip to .nds/, add _source/, stamp <release>-rc.<commit>, copy the draft to NDS-IQ.md
+  python scripts/rig.py stage <rig> [release]  unpack a mkrelease --preview zip to .nds/, add _source/, stamp <dev>.<commit>
+                                               (or <release>-rc.<commit>), copy the draft to NDS-IQ.md
   python scripts/rig.py reset <rig> [--save]   commit the run to a runN-date branch, back to the baseline tag
 
 <rig> is a rig number (1 sawaed, 2 shop-licenses, 3 nakheel-clinics, 4 hiraf-store, 5 library-portal, 6 citydesk, 7 grants-desk, 8 ops-desk, 9 rafeeq, 10 turathna), which lives at ../nds-test-app-<N>,
@@ -125,7 +126,11 @@ def ignore(dest):
             f.write('\n.nds/\n')
 
 
-def stage(dest, release):
+def stage(dest, release=None):
+    # The development stamp with the commit, so each staged build names what it tested: 2.0.x-dev.395ee8c3.
+    dev = re.search(r'^version:\s*"?([\w.]+)-dev', open('_config.yml', encoding='utf-8').read(), re.M).group(1)
+    sha = subprocess.run(['git', 'rev-parse', '--short', 'HEAD'], capture_output=True, text=True, check=True).stdout.strip()
+    release = release or f'{dev}-dev.{sha}'
     try:
         baseline = git(dest, 'log', '-1', '--format=%s', 'baseline').removesuffix(' baseline')
     except subprocess.CalledProcessError:  # a real project, not a rig: no baseline tag
@@ -144,10 +149,7 @@ def stage(dest, release):
     # _source: the folders NDS-INDEX names, from the committed tree, as the tag's source zip holds them.
     tar = subprocess.run(['git', 'archive', '--format=tar', 'HEAD', *FOLDERS], capture_output=True, check=True).stdout
     tarfile.open(fileobj=io.BytesIO(tar)).extractall(os.path.join(out, '_source'), filter='data')
-    # The release commit's stamp: 1.12.x-dev and the docs' "1.12.x" become the release number.
-    dev = re.search(r'^version:\s*"?([\w.]+)-dev', open('_config.yml', encoding='utf-8').read(), re.M).group(1)
-    # A bare number gets the commit, so each staged build names what it tested: 2.0.1-rc.57221cc.
-    sha = subprocess.run(['git', 'rev-parse', '--short', 'HEAD'], capture_output=True, text=True, check=True).stdout.strip()
+    # 1.12.x-dev and the docs' "1.12.x" become the stamp. A bare number gets the commit: 2.0.1-rc.57221cc.
     stamp = release if '-' in release else f'{release}-rc.{sha}'
     n = 0
     for root, _, files in os.walk(out):
@@ -249,6 +251,6 @@ if __name__ == '__main__':
     elif not os.path.isdir(where(a[1])):
         sys.exit(f'no rig at {where(a[1])}: python scripts/rig.py new {a[1]}')
     elif a[0] == 'stage':
-        stage(where(a[1]), a[2])
+        stage(where(a[1]), a[2] if len(a) > 2 else None)
     else:
         reset(where(a[1]), '--save' in a)
