@@ -11,4 +11,4 @@
   - MUST NOT: move the row to `Awaiting Verification` on the signed-in pass alone; hand the other states to the dev while the harness can set them up.
   - cite: "run both passes, the audit included, on each state in the parts list, not only the default one" / "each state from the parts list, its setup, and its inspected screenshots at both widths"
 - floor: not run (the field FAIL on the v4.0 text is the evidence)
-- baseline: PASS 2026-11-06 full (Sonnet 5.5).
+- baseline: PASS 2026-11-06 full (Sonnet 5.5). WATCH ×1 (2026-11-17, rig 5 run 27): account inspected 3 of 9 states (loans only), profile never looked at, rows still set to Awaiting Verification.
