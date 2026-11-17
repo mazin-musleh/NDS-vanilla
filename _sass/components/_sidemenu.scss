@@ -42,16 +42,6 @@
     .nds-content-layout:is(.nds-compact, .nds-card-view) .nds-sidemenu {
         --drawer-max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-xl));
     }
-
-    // Flat on a default layout; .nds-compact and cardView keep the lift.
-    .nds-content-layout:not(.nds-compact, .nds-card-view) .nds-sidemenu {
-        box-shadow: none;
-    }
-
-    // Full width has no layout gutter, so the menu keeps its own there.
-    .nds-content-layout:not(.nds-compact, .nds-card-view, .nds-full-width) .nds-sidemenu {
-        padding-inline: 0;
-    }
 }
 
 /* ========================================

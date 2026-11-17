@@ -7,8 +7,8 @@ breadcrumb: [["Layout", "/components/?shelf=Layout"]]
 lang: en
 direction: ltr
 since: "1.8.0"
-updated: "2.0.0"
-last_edit: "05/11/2026 - 03:30 PM"
+updated: "2.0.x"
+last_edit: "17/11/2026 - 01:00 PM"
 ---
 
 <section id="page-layout-overview" class="nds-content-section nds-doc-overview">
@@ -476,7 +476,7 @@ Each shape is the markup of a live page, listed in the Overview. Side menu and S
 | Side column | Side info (not: home, article, minimal, console) (hint: Facts beside the first section's text) | `canon #layout-sideinfo` | `.nds-content` (start) | The first section, which holds the text and the side info. Write the service description in it, not in a second section. Written with `nds-has-sideinfo` |
 | Hero | Flat hero (not: article, minimal, home) (hint: No background or shadow, so the text starts right under the title) | `.nds-flat` | `.nds-hero-section.nds-sub` | A page with long text. The hero loses its background and shadow |
 | Card view | Card view (not: home, article, minimal) (hint: Each section shows as a raised card) | `.nds-card-view` | `.nds-content-layout:not(.nds-compact)` | Each section shows as a raised card, for record and profile pages. Not with Compact |
-| Compact | Compact (not: home, minimal) (hint: The side menu and the sections are raised on the page background) | `.nds-compact` | `.nds-content-layout:not(.nds-card-view)` | The raised look on a desktop: the side menu and the sections get a shadow on the page background. Not with Card view |
+| Compact | Compact (not: home, minimal) (hint: The side menu and the sections are raised on the page background) | `.nds-compact` | `.nds-content-layout:not(.nds-card-view)` | The raised look on a desktop: the sections get a shadow too, and the side menu and the sections sit on the page background and keep their side padding. Not with Card view |
 | Full width | Full width (not: minimal, console) (hint: The page reaches the screen edges) | `.nds-full-width` | `.nds-content-layout` | The header, the content and the footer reach the screen edges, for an admin page or a wide table |
 | Stripe | Stripe (id: stripe) (not: article, minimal) | `.nds-stripe` | `.nds-content:not(.nds-card-view .nds-content)` | Every second section gets the stripe color, from the second one |
 | Odd | Odd (hint: The stripe starts on the first section) | `.nds-odd` | `.nds-content.nds-stripe:not(.nds-card-view .nds-content)` | The stripe starts on the first section. Needs Stripe |
@@ -497,7 +497,7 @@ Each shape is the markup of a live page, listed in the Overview. Side menu and S
 
 `nds-has-sidemenu` on the content layout makes two columns at 960px and wider: the side menu, then the content. The menu column is `--nds-sidemenu-width` wide. Below 960px the layout has one column, and the side menu shows as a compact control. `nds-top` on the `aside` shows the menu as a bar above the content: see [Side Menu](../ui-shell/sidemenu). Without `nds-has-sidemenu` or `nds-has-sideinfo`, the layout hides an `aside` that is its direct child.
 
-On a desktop, a side menu page is flat. The side menu and the sections have no shadow, and the content layout has the `--background-default` color. A `--nds-viewport-padding` gap splits the menu from the content, so the menu and the sections have no side padding. A section with its own fill keeps its side padding: `nds-primary`, `nds-gradient-primary`, `nds-neutral` and `nds-brand`. Every section of a striped `nds-content` keeps it too. A full-width page has no page gutter, so its menu and sections keep their side padding and the layout has no gap.
+On a desktop, a side menu page is one surface: the content layout has the `--background-default` color, and only the side menu has a `--shadow-md` shadow. The menu keeps its side padding. A `--nds-viewport-padding` gap splits the menu from the content, so the sections have no side padding. A section with its own fill keeps its side padding: `nds-primary`, `nds-gradient-primary`, `nds-neutral` and `nds-brand`. Every section of a striped `nds-content` keeps it too. A full-width page has no page gutter, so its sections keep their side padding and the layout has no gap.
 
 ### Side Info
 
@@ -513,7 +513,7 @@ An article is one side info section that holds the whole text. The `aside` holds
 
 ### Compact
 
-`nds-compact` on the content layout gives a desktop page the raised look. The side menu and the sections get a `--shadow-md` shadow on the `--background-body` color, and keep their side padding. On a page with no side menu, only the sections get the shadow. Phones and tablets look the same with or without it.
+`nds-compact` on the content layout gives a desktop page the raised look. The sections get a `--shadow-md` shadow like the side menu, on the `--background-body` color, and the sections keep their side padding. On a page with no side menu, only the sections get the shadow. Phones and tablets look the same with or without it.
 
 ### Section Stripes
 
@@ -734,7 +734,7 @@ Set the first five on `.nds-content-layout`, and the last three on `body`.
 | Property | Default | Controls |
 |---|---|---|
 | `--layout-min-height` | `400px` | The content layout's minimum height. `nds-middle` sets `100dvh` |
-| `--layout-gap` | `0` | The gap between the side menu and the content. On a desktop, a flat side menu page sets `--nds-viewport-padding`, except at full width. Card view sets `--spacing-xl`. Always `0` on a phone |
+| `--layout-gap` | `0` | The gap between the side menu and the content. On a desktop, a side menu page sets `--nds-viewport-padding`, except at full width. Card view sets `--spacing-xl`. Always `0` on a phone |
 | `--content-padding-block` | `0` | The padding above and below `nds-content`. Card view sets `--spacing-xl` below 960px |
 | `--content-padding-inline` | `0` | The padding at the sides of `nds-content` |
 | `--content-gap` | `0` | The gap between the sections. Card view sets `--spacing-4xl` |

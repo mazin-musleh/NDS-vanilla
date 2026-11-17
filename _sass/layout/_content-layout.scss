@@ -187,8 +187,8 @@ main {
 
     /* ── Side menu layout ── */
 
-    // Flat by default: one surface, no shadows. .nds-compact lifts the menu and
-    // sections off the body color; cardView keeps its cards.
+    // One surface by default, with only the menu's shadow. .nds-compact lifts the
+    // sections off the body color too; cardView keeps its cards.
     &.nds-has-sidemenu:not(.nds-compact, .nds-card-view) {
         background-color: var(--background-default);
     }
