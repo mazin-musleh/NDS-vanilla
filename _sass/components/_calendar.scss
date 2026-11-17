@@ -211,6 +211,13 @@
     }
 }
 
+// Rows: a line between the days and the list, in the middle of the calendar's gap.
+.nds-calendar[data-view="rows"] > .nds-calendar-days {
+    padding-block-end: calc(var(--_calendar-gap) / 2);
+    margin-block-end: calc(var(--_calendar-gap) / -2);
+    border-block-end: 1px solid var(--divider-color);
+}
+
 // The list's Scroll More only scrolls beside the month: not the Drawer's 400px cap.
 .nds-calendar > .nds-drawer {
     --drawer-max-height: none;
