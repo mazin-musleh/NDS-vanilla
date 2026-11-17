@@ -155,6 +155,11 @@ def check_rules(block, name='_includes/NDS-IQ.md'):
         sys.exit(f'{name} lost its "Managed by NDS IQ" plan-stamp line — '
                  'consumer plan files are opened with it.')
 
+    # Every 1.x template (no NDS-INDEX.md) is served only by this redirect to the frozen IQv3.2.
+    if 'refs/tags/IQv3.2/_includes/NDS-IQ.md' not in block:
+        sys.exit(f'{name} lost its IQv3.2 redirect — templates with no NDS-INDEX.md '
+                 'would get rules that cannot serve them.')
+
     # The canonical anchor text lives INSIDE the file (Install section); both
     # a first install and a pasted-block migration copy the anchor from there.
     # These literals appear ONLY inside the anchor code block — a string the

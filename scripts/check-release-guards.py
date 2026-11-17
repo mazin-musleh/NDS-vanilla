@@ -152,6 +152,9 @@ CASES = [
     ('plan stamp phrase lost',
      lambda t: t.replace('Managed by NDS IQ', 'Managed by IQ'), VERSION, 'plan-stamp'),
 
+    ('the IQv3.2 redirect for 1.x templates is lost',
+     lambda t: t.replace('refs/tags/IQv3.2/', 'refs/heads/main/'), VERSION, 'IQv3.2 redirect'),
+
     ('anchor loses its read-gate line',
      lambda t: t.replace('Do no NDS work before that read.', ''), VERSION, 'anchor canon'),
 

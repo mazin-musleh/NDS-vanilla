@@ -264,6 +264,7 @@ The fixtures stay skeletal on purpose: a bigger fixture is a slower run with no 
   - names an `x.y.z` literal
   - names a release fact outside the anchor and URLs: `_source/`, `_site/`, an `nds-*` class or an `NDS.X` API
   - loses its `Managed by NDS IQ` plan stamp or its anchor-canon lines
+  - loses the `IQv3.2` redirect link that serves templates with no `NDS-INDEX.md`
 
   `verify()` adds: both guides still include it, and every path the rules, guides and index name exists in the zip (`_site/…`) or the repo tree (`_source/…`). After any edit to `check_rules()`, `verify()` or a sentence a guard keys on, run `python scripts/check-release-guards.py`. It breaks the draft or the index once per `check_rules()` case and the dead index path; the guide-include and dead `_site/` path guards have no case.
 
