@@ -153,6 +153,7 @@
         update_failed_description: 'Something went wrong applying the filter. The results shown are unchanged.',
         no_results: 'No results',
         no_results_description: 'No item matches the current filters.',
+        no_options: 'No options to filter by',
         clear: 'Clear filters',
         all: 'All',
         apply: 'Apply',
@@ -1814,6 +1815,46 @@
 
             // Setup the filter after generation
             this._setupManualFilter(actualElement, filterName);
+            const menu = actualElement.closest('.nds-dropmenu-menu');
+            if (menu) this._syncEmptyGroups(menu);
+        }
+
+        // A group with no options (no rows yet, or none with its mark) hides with one
+        // divider beside it, so the menu never shows bare lines. A menu left with no
+        // group says so. Recomputed on every build: refresh() can bring the options back.
+        _syncEmptyGroups(menu) {
+            const scroll = menu.querySelector('.nds-dropmenu-scroll') || menu;
+            const kids = [...scroll.children];
+            kids.forEach(el => {
+                if (!el.hasAttribute('data-filter-empty')) return;
+                el.hidden = false;
+                el.removeAttribute('data-filter-empty');
+            });
+            const hide = el => { el.hidden = true; el.setAttribute('data-filter-empty', ''); };
+            const isDivider = el => el?.matches('.nds-divider') && !el.hidden;
+            let groups = 0, shown = 0;
+            kids.forEach((el, i) => {
+                if (!el.matches('[data-filter]') && !el.querySelector('[data-filter]')) return;
+                groups++;
+                if (el.matches('input, select, textarea') || el.querySelector('input, select, textarea')) { shown++; return; }
+                hide(el);
+                const divider = isDivider(kids[i - 1]) ? kids[i - 1] : isDivider(kids[i + 1]) ? kids[i + 1] : null;
+                if (divider) hide(divider);
+            });
+            let note = scroll.querySelector(':scope > [data-filter-empty-note]');
+            if (groups && !shown) {
+                if (!note) {
+                    note = document.createElement('div');
+                    note.className = 'nds-empty-placeholder';
+                    note.setAttribute('data-filter-empty-note', '');
+                    note.innerHTML = '<i class="nds-icon nds-hgi-filter" aria-hidden="true"></i><span class="nds-empty-message"></span>';
+                    strings.set(note.lastChild, 'text', 'no_options');
+                    scroll.prepend(note);
+                }
+                note.hidden = false;
+            } else if (note) {
+                note.hidden = true;
+            }
         }
 
         _setupManualFilter(element, filterName) {
@@ -2333,7 +2374,8 @@
             const collectedValues = explicitValues || this._collectFilterValues(filterName);
 
             if (collectedValues.length === 0) {
-                if (!explicitValues) {
+                // No rows at all is an empty list, not a missing mark.
+                if (!explicitValues && this.items.length) {
                     console.warn(`NDS Filter: No values found for filter "${filterName}". Use data-filter-values or renderFilter() to provide values.`);
                 }
                 return;

@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Panel** — A control at the side of a Scroll More body, as in Cookies and Accessibility, keeps its whole halo and focus ring.
 - **Autocomplete** — A request that fails shows "Could not load suggestions" in the menu, not only to a screen reader. The next focus on the field tries again.
 - **Prose** — A video or an embedded frame is never wider than the text, and a long line in a `pre` scrolls sideways.
+- **Filter** — A group that builds its options from the items, and finds none, hides with its divider, so the menu no longer shows bare lines. A menu with no group left says "No options to filter by". A list with no items gives no console warning.
 - **Audit** — Reports the removed Side Info size classes `nds-sm`, `nds-md` and `nds-lg`. A missing icon style sheet gives one finding, not one per icon.
 
 ## [2.0.0] - 2026-11-12

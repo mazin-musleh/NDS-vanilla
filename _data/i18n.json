@@ -1327,6 +1327,12 @@
  },
  {
   "section": "filter",
+  "key": "no_options",
+  "en": "No options to filter by",
+  "ar": "لا توجد خيارات للتصفية"
+ },
+ {
+  "section": "filter",
   "key": "clear",
   "en": "Clear filters",
   "ar": "مسح التصفية"
