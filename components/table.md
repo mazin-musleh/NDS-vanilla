@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "2.0.0"
-last_edit: "05/11/2026 - 09:39 PM"
+updated: "2.0.x"
+last_edit: "17/11/2026 - 09:38 AM"
 ---
 
 <section id="table-overview" class="nds-content-section nds-doc-overview">
@@ -744,6 +744,7 @@ Keep Selection only when the page has a bulk action that acts on the selected ro
 - Put the identifier in the first column, and the status and actions in the last columns.
 - Keep header labels short. A long label widens its column on every row.
 - Write `data-align="center"` on the header of a column of short values, such as a status tag or a count, and `data-align="end"` on a column of amounts. The actions column is centered already.
+- On a right-to-left page, never write `dir="ltr"` or `dir="auto"` on a cell, a row or the table: the values jump to the left edge, out of line with the rest of the page. Wrap a value that reorders, such as a phone in groups or a leading `+`, in a `span dir="ltr"` inside the cell. See [Helpers](../utilities/helpers).
 - Add sort buttons only to columns that users compare, such as dates, amounts and status.
 - Set `--min-width` no wider than the room the page gives the table. Below it the box scrolls, so a larger value hides the last columns, such as the actions, on every desktop. The audit's `table-min-width` check finds one.
 - Write `data-sort-value` on a cell whose text sorts wrong: a date that is not in the table's date format (one with a month name, or a Hijri date), an amount with a currency, a status that has an order. Write a date there as `YYYY-MM-DD`. A table whose dates use another order carries its own `data-date-format`: see [Date](../components/date).

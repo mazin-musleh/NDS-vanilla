@@ -7,8 +7,8 @@ breadcrumb: [["Utilities", "/components/?shelf=Utilities"]]
 lang: en
 direction: ltr
 since: "1.7.0"
-updated: "2.0.0"
-last_edit: "05/11/2026 - 03:30 PM"
+updated: "2.0.x"
+last_edit: "17/11/2026 - 09:38 AM"
 ---
 
 <section id="helpers-overview" class="nds-content-section nds-doc-overview">
@@ -173,7 +173,7 @@ The canon is a request confirmation on an Arabic page. Each Class chip adds its 
 - Put one `nds-center` on a wrapper, not on every child. Text alignment inherits.
 - `nds-center` centers the element itself only when it is narrower than its parent, such as an element with a `max-width`.
 - A card with `nds-center` centers its content, not the card. To center the card, center its container: `nds-flex nds-center`.
-- Write `dir="ltr"` on a `span` around every left-to-right value inside Arabic text: phone numbers, IBANs, tracking codes, email addresses and URLs. Without it, a leading plus sign, a slash or a question mark moves to the wrong end. For right-to-left text in a left-to-right page, write `dir="rtl"` and `lang`. Browsers, screen readers and translation tools read the attributes, so NDS has no class for direction.
+- On a right-to-left page, write `dir="ltr"` on a `span` around a left-to-right value, never `dir="ltr"` or `dir="auto"` on the element that holds it, such as a table cell or row, a `dd`, a list item, a paragraph or a field: there it moves the value to the left edge, out of line with the rest of the page. NDS email, phone, URL and formatted fields already read left to right on the right side, so they take no `dir`. Inside a right-to-left sentence, wrap every left-to-right value. Alone in a cell or a detail value, wrap only a value the page would reorder: one that starts or ends with a sign or mark (`+966…`, `-5`, a trailing `/`), digits in groups (`050 123 4567`), or a time with AM or PM. An email, a URL, an IBAN, a code, a date or a plain number needs nothing. For right-to-left text in a left-to-right page, write `dir="rtl"` and `lang`. Browsers, screen readers and translation tools read the attributes, so NDS has no class for direction.
 - Do not use `nds-flush` for small spacing changes. It clears four properties with `!important`, so a later change is harder. Set the component's own custom property instead.
 - Do not build a layout from these classes. Use [Flex](../layout/flex) or [Grid](../layout/grid).
 - There are no margin or padding classes. Set `--gap` on the flex or grid that holds the items, or use a [spacing token](../foundations/tokens) in your own CSS.
