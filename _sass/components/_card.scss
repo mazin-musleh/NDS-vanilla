@@ -735,6 +735,11 @@
       }
     }
   }
+
+  // A card's status colours the icon and number, not the title; an alert keeps its own.
+  &:is(.nds-yellow, .nds-red, .nds-blue, .nds-green, [data-status]):not(.nds-alert) {
+    --_card-title-color-base: var(--text-display);
+  }
 }
 
 // ==============================================

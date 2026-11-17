@@ -7,8 +7,8 @@ breadcrumb: [["Layout", "/components/?shelf=Layout"]]
 lang: en
 direction: ltr
 since: "1.10.0"
-updated: "2.0.0"
-last_edit: "03/11/2026 - 10:32 PM"
+updated: "2.0.x"
+last_edit: "17/11/2026 - 08:17 PM"
 ---
 
 <section id="status-overview" class="nds-content-section nds-doc-overview">
@@ -98,12 +98,12 @@ Pick another component when:
 |---|---|---|---|---|
 | Structure | Icon (default) | — | — | A feedback chip above the title. Most outcome messages |
 | Structure | Illustration (id: illustration) | canon `#status-image` | — | A page with its own artwork, such as the 404 page. It takes no status |
-| Status | Success (default) (not: illustration) | — | `.nds-status-section` | The work completed. Green title, check mark |
-| Status | Info (not: illustration) | `[data-status="info"]` | `.nds-status-section` | A plain notice. Blue title, "i" |
-| Status | Warning (not: illustration) | `[data-status="warning"]` | `.nds-status-section` | The work needs attention. Yellow title, exclamation mark |
-| Status | Error (not: illustration) | `[data-status="error"]` | `.nds-status-section` | The work failed. Red title, cross |
-| Status | Critical (not: illustration) | `[data-status="critical"]` | `.nds-status-section` | A failure the user must act on now. Red title, exclamation mark |
-| Status | Help (not: illustration) | `[data-status="help"]` | `.nds-status-section` | A pointer to help. The title keeps its own color, and the chip shows a question mark |
+| Status | Success (default) (not: illustration) | — | `.nds-status-section` | The work completed. Green check mark |
+| Status | Info (not: illustration) | `[data-status="info"]` | `.nds-status-section` | A plain notice. Blue "i" |
+| Status | Warning (not: illustration) | `[data-status="warning"]` | `.nds-status-section` | The work needs attention. Yellow exclamation mark |
+| Status | Error (not: illustration) | `[data-status="error"]` | `.nds-status-section` | The work failed. Red cross |
+| Status | Critical (not: illustration) | `[data-status="critical"]` | `.nds-status-section` | A failure the user must act on now. Red exclamation mark |
+| Status | Help (not: illustration) | `[data-status="help"]` | `.nds-status-section` | A pointer to help. The chip shows a question mark |
 | Chip | Outline | `.nds-outline` | `.nds-feedback` | The chip shows an outlined icon instead of a solid disc. The ring stays |
 | Second action | Second action | canon `#status-second-action` | `.nds-section-action` | A second way out beside the main one, such as Try Again |
 {: #status-variants-table .nds-table .nds-responsive}
@@ -197,7 +197,7 @@ Pick another component when:
 
 | Attribute | Element | Effect |
 |---|---|---|
-| `data-status` | the `.nds-status-section` element | `success`, `info`, `warning`, `error`, `critical` or `help`. Sets the title color, and the icon and colors of the feedback chip inside the section. `error` and `critical` both color the title red. `help` leaves the title color as it is. The chip carries no status of its own. Leave it out on a section with an illustration |
+| `data-status` | the `.nds-status-section` element | `success`, `info`, `warning`, `error`, `critical` or `help`. Sets the icon and colors of the feedback chip inside the section; the title keeps its own color. The chip carries no status of its own. Leave it out on a section with an illustration |
 {: .nds-table .nds-responsive}
 
 ### CSS Custom Properties

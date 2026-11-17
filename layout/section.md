@@ -7,8 +7,8 @@ breadcrumb: [["Layout", "/components/?shelf=Layout"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "2.0.0"
-last_edit: "08/11/2026 - 08:37 PM"
+updated: "2.0.x"
+last_edit: "17/11/2026 - 08:17 PM"
 ---
 
 <section id="section-overview" class="nds-content-section nds-doc-overview">
