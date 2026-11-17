@@ -2,6 +2,7 @@
  * Rides: nds-scroll-more (measured again after each change, as a list fitted to the month keeps its size)
  * Requires:
  *   .nds-calendar needs .nds-calendar-events — there are no events
+ *   .nds-calendar needs .nds-calendar-empty — a week, month or day with no events shows a blank list
  * Methods:
  *   NDS.Calendar.init()                instance every .nds-calendar
  *   NDS.Calendar.create(el)             instance one calendar (the live one if it has one)

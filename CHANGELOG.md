@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ## [Unreleased]
 
 ### Added
+- **Audit** — Flags a calendar with no empty message.
 - **Autocomplete** — `nds:autocomplete:error` fires when a `data-url` request fails, with `{ query, error }`. `preventDefault()` stops the built-in message, for a page that shows its own.
 
 ### Changed
