@@ -8,11 +8,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 - **Audit** — Flags a calendar with no empty message.
+- **Cookies** — After a choice, the panel closes itself in 5 seconds, with a countdown ring on its close button. Keyboard focus pauses it; a click in the panel keeps it open.
 - **Autocomplete** — `nds:autocomplete:error` fires when a `data-url` request fails, with `{ query, error }`. `preventDefault()` stops the built-in message, for a page that shows its own.
 
 ### Changed
 - **Verify** — The browser check shoots dark mode once per page, at desktop width, so a run is faster. It names text below WCAG AA contrast, a part cut off past the screen edge, a control another part lies over, a part still loading after the page settled, and a dialog open at load that hides the page. `--text` runs every check with no shots or sheets; the index names when an edit can take it: a behavior-only edit, and every page a shared file reaches, with the full run on one page per shape. It finds a Chrome installed for one user, and Chromium.
 - **Page layout** — On a desktop, the side menu has its shadow and side padding again on a side menu page. The sections stay flat; `nds-compact` still raises them.
+- **Cookies** — On a desktop the buttons share one row; a phone still stacks them. The Notice view's third button reads "Manage". A page's own panel keeps its stack until its footers take `nds-col-sm` for `nds-col`.
 - **Status Section, Card** — A status colors the icon and the card number, not the title.
 - **Docs** — Filter, Forms and Main Navigation say which group a yes-or-no or a number field takes, when a form ends with a review step, and when to leave out the language action. The Student Portal catalog entry names its profile head: the avatar and the name.
 

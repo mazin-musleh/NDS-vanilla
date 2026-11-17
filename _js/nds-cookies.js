@@ -25,6 +25,8 @@
  *   - Closing without a choice stores none and hides the auto-open for 30 minutes under
  *     nds-cookies-dismissed. That key is never read as consent.
  *   - The auto-open never takes focus, and waits while another panel is open.
+ *   - The done view closes itself after 5 s. Keyboard focus pauses it; a click in the panel
+ *     keeps it open. A page's own panel shows the countdown when its close button carries the ring.
  *   - Before the auto-open, the panel is built (or a page's template unpacked) while the
  *     page is idle, hidden: #nds-cookies-panel exists before it first shows.
  */
@@ -34,6 +36,7 @@
     const PANEL_ID = 'nds-cookies-panel';
     const DISMISS_KEY = 'nds-cookies-dismissed';
     const DELAY = 6000;
+    const CLOSE_DELAY = 5000;
     const categories = ['performance', 'functional', 'targeting'];
 
     // English defaults; the assets/i18n/{lang}.json pack overrides them.
@@ -43,7 +46,7 @@
         description: 'This site uses cookies to make it easy to use and to improve your experience. If you continue to browse, you accept the Terms and Conditions of this site and its use of cookies.',
         accept: 'Accept',
         reject: 'Reject',
-        manage: 'Manage Cookies',
+        manage: 'Manage',
         close: 'Close',
         scroll_panel: 'Scroll panel',
         manage_title: 'Manage Cookies',
@@ -63,9 +66,9 @@
 
 
     const getEscapedText = (key) => NDS.escapeHtml(strings.text(key));
-    const buildCloseButton = () => `<div class="nds-panel-action">
+    const buildCloseButton = (ring = '') => `<div class="nds-panel-action">
           <button type="button" class="nds-btn nds-subtle nds-icon-only" data-panel-close aria-label="${getEscapedText('close')}" data-i18n-aria-label="cookies.close">
-            <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+            <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>${ring}
           </button>
         </div>`;
     // Scroll More, as in the a11y panel: a long view scrolls, and a button brings the rest up.
@@ -98,7 +101,7 @@
     </div>
     ${scrollBody(`
       <p data-i18n="cookies.description">${getEscapedText('description')}</p>`)}
-    <div class="nds-panel-footer nds-col">
+    <div class="nds-panel-footer nds-col-sm">
       <button type="button" class="nds-btn nds-primary" data-cookies-action="accept"><span class="nds-label" data-i18n="cookies.accept">${getEscapedText('accept')}</span></button>
       <button type="button" class="nds-btn nds-secondary-outline" data-cookies-action="reject"><span class="nds-label" data-i18n="cookies.reject">${getEscapedText('reject')}</span></button>
       <button type="button" class="nds-btn nds-subtle" data-cookies-action="manage"><span class="nds-label" data-i18n="cookies.manage">${getEscapedText('manage')}</span></button>
@@ -116,7 +119,7 @@
         ${buildCategory('necessary', true)}
         ${categories.map(categoryName => buildCategory(categoryName)).join('')}
       </fieldset>`)}
-    <div class="nds-panel-footer nds-col">
+    <div class="nds-panel-footer nds-col-sm">
       <button type="button" class="nds-btn nds-primary" data-cookies-action="save"><span class="nds-label" data-i18n="cookies.confirm">${getEscapedText('confirm')}</span></button>
       <button type="button" class="nds-btn nds-secondary-outline" data-cookies-action="reject"><span class="nds-label" data-i18n="cookies.reject_all">${getEscapedText('reject_all')}</span></button>
     </div>
@@ -125,11 +128,17 @@
     <div class="nds-panel-header">
       <span class="nds-featured-icon nds-circle" data-status="success"><i class="nds-icon nds-hgi-checkmark-circle-02" aria-hidden="true"></i></span>
       <div class="nds-panel-text"><span class="nds-panel-title" data-i18n="cookies.done_title">${getEscapedText('done_title')}</span></div>
-      ${buildCloseButton()}
+      ${buildCloseButton(`
+            <div class="nds-progress-circle">
+              <svg width="100%" height="100%" viewBox="0 0 24 24">
+                <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
+                <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2" stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
+              </svg>
+            </div>`)}
     </div>
     ${scrollBody(`
       <p role="status" data-i18n="cookies.done">${getEscapedText('done')}</p>`)}
-    <div class="nds-panel-footer nds-col">
+    <div class="nds-panel-footer nds-col-sm">
       <button type="button" class="nds-btn nds-subtle" data-cookies-action="undo"><span class="nds-label" data-i18n="cookies.undo">${getEscapedText('undo')}</span></button>
     </div>
   </div>
@@ -153,6 +162,48 @@
     let chose = false;
     let opener = null;
     let autoTimer = null;
+    let closeAbortController = null;
+
+    // The done view closes itself: keyboard focus pauses it, a click keeps it. No hover pause: the
+    // choosing click leaves the pointer on the panel. Only keyboard focus: a click leaves it on the close button.
+    function scheduleClose(panel) {
+        cancelClose();
+        const view = panel.querySelector('[data-cookies-view="done"]');
+        const ring = view.querySelector('.nds-progress-circle')?.closest('.nds-btn');
+        closeAbortController = new AbortController();
+        const { signal } = closeAbortController;
+        let timer = null, remaining = CLOSE_DELAY, start = 0;
+        const isHeld = () => !!panel.querySelector(':focus-visible');
+        const run = () => {
+            if (timer || isHeld()) return;
+            NDS.state.remove(view, 'paused');
+            start = Date.now();
+            timer = setTimeout(close, remaining);
+        };
+        const pause = () => {
+            NDS.state.add(view, 'paused');
+            if (!timer) return;
+            clearTimeout(timer);
+            timer = null;
+            remaining -= Date.now() - start;
+        };
+        panel.addEventListener('focusin', (e) => { if (e.target.matches(':focus-visible')) pause(); }, { signal });
+        panel.addEventListener('focusout', (e) => { if (!panel.contains(e.relatedTarget)) run(); }, { signal });
+        panel.addEventListener('click', (e) => { if (!e.target.closest('[data-cookies-action]')) cancelClose(); }, { signal });
+        signal.addEventListener('abort', () => {
+            clearTimeout(timer);
+            NDS.state.remove(view, 'paused');
+            ring?.classList.remove('nds-progress');
+        });
+        ring?.style.setProperty('--progress-duration', CLOSE_DELAY + 'ms');
+        ring?.classList.add('nds-progress');
+        if (isHeld()) pause(); else run();
+    }
+
+    function cancelClose() {
+        closeAbortController?.abort();
+        closeAbortController = null;
+    }
 
     function showView(panel, name) {
         panel.querySelectorAll('[data-cookies-view]').forEach(view => { view.hidden = view.dataset.cookiesView !== name; });
@@ -195,6 +246,7 @@
         const view = action === 'manage' ? 'manage' : action === 'undo' ? 'notice' : 'done';
         showView(panel, view);
         panel.querySelector('[data-cookies-view="' + view + '"] [data-panel-close]')?.focus();
+        if (view === 'done') scheduleClose(panel); else cancelClose();
     }
 
     function addDocumentListeners() {
@@ -206,6 +258,7 @@
         });
         document.addEventListener('nds:panel:closed', (e) => {
             if (e.detail.panel.id !== PANEL_ID) return;
+            cancelClose();
             // Closed with no choice: ask again later, not on every page.
             if (!chose && !NDS.consent.get()) NDS.cookie.set(DISMISS_KEY, '1', 30 / 1440);
             if (opener && document.contains(opener)) opener.focus({ preventScroll: true });

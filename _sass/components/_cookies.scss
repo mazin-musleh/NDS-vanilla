@@ -18,3 +18,13 @@
 .nds-cookies-view .nds-scroll-more-content {
     gap: var(--gap, var(--spacing-xl));
 }
+
+// The done view's countdown ring freezes with its timer, as a toast's does.
+.nds-cookies-view[data-state~="paused"] {
+    --_cookies-play: paused;
+}
+
+// Beats the button's countdown shorthand (0,4,2), which resets play-state.
+.nds-cookies-view .nds-btn.nds-progress .nds-progress-circle svg circle.nds-progress-track {
+    animation-play-state: var(--_cookies-play, running);
+}

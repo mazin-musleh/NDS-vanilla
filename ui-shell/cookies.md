@@ -7,8 +7,8 @@ breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "2.0.0"
-last_edit: "01/11/2026 - 11:34 PM"
+updated: "2.0.x"
+last_edit: "17/11/2026 - 10:52 PM"
 ---
 
 <section id="cookies-overview" class="nds-content-section nds-doc-overview">
@@ -18,7 +18,7 @@ last_edit: "01/11/2026 - 11:34 PM"
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-The consent panel is a bottom [Panel](../components/panel) on every page. It has three views. The Notice view holds Accept, Reject and Manage Cookies. The Manage view holds one switch for each cookie category. The Done view confirms the choice. You add no markup: the script builds the panel when it is first needed. A trigger button with `data-cookies-toggle` opens it again at any time.
+The consent panel is a bottom [Panel](../components/panel) on every page. It has three views. The Notice view holds Accept, Reject and Manage. The Manage view holds one switch for each cookie category. The Done view confirms the choice. You add no markup: the script builds the panel when it is first needed. A trigger button with `data-cookies-toggle` opens it again at any time.
 
 Pick another component when:
 
@@ -65,10 +65,10 @@ Pick another component when:
           <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
         </button>
       </div>
-      <div class="nds-panel-footer nds-col">
+      <div class="nds-panel-footer nds-col-sm">
         <button type="button" class="nds-btn nds-primary" data-cookies-action="accept"><span class="nds-label">Accept</span></button>
         <button type="button" class="nds-btn nds-secondary-outline" data-cookies-action="reject"><span class="nds-label">Reject</span></button>
-        <button type="button" class="nds-btn nds-subtle" data-cookies-action="manage"><span class="nds-label">Manage Cookies</span></button>
+        <button type="button" class="nds-btn nds-subtle" data-cookies-action="manage"><span class="nds-label">Manage</span></button>
       </div>
     </div>
     <div class="nds-cookies-view" data-cookies-view="manage" hidden>
@@ -135,7 +135,7 @@ Pick another component when:
           <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
         </button>
       </div>
-      <div class="nds-panel-footer nds-col">
+      <div class="nds-panel-footer nds-col-sm">
         <button type="button" class="nds-btn nds-primary" data-cookies-action="save"><span class="nds-label">Confirm My Choices</span></button>
         <button type="button" class="nds-btn nds-secondary-outline" data-cookies-action="reject"><span class="nds-label">Reject All</span></button>
       </div>
@@ -147,6 +147,12 @@ Pick another component when:
         <div class="nds-panel-action">
           <button type="button" class="nds-btn nds-subtle nds-icon-only" data-panel-close aria-label="Close">
             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+            <div class="nds-progress-circle">
+              <svg width="100%" height="100%" viewBox="0 0 24 24">
+                <circle class="nds-progress-bg" cx="12" cy="12" r="10" fill="none" stroke-width="2"></circle>
+                <circle class="nds-progress-track" cx="12" cy="12" r="10" fill="none" stroke-width="2" stroke-dasharray="62.83" stroke-dashoffset="62.83" stroke-linecap="round"></circle>
+              </svg>
+            </div>
           </button>
         </div>
       </div>
@@ -158,7 +164,7 @@ Pick another component when:
           <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
         </button>
       </div>
-      <div class="nds-panel-footer nds-col">
+      <div class="nds-panel-footer nds-col-sm">
         <button type="button" class="nds-btn nds-subtle" data-cookies-action="undo"><span class="nds-label">Undo</span></button>
       </div>
     </div>
@@ -208,7 +214,7 @@ When no choice is stored, the panel opens on the Notice view after six seconds. 
 
 ### Views
 
-Accept allows every category. Reject and Reject All allow only the necessary cookies. Manage Cookies opens the Manage view, where the switches show the stored choice. With no stored choice, every optional switch is off. After a choice, the Done view confirms it. Undo goes back to the Notice view, and the stored choice stays until the visitor makes a new one.
+Accept allows every category. Reject and Reject All allow only the necessary cookies. Manage opens the Manage view, where the switches show the stored choice. With no stored choice, every optional switch is off. After a choice, the Done view confirms it and closes itself after 5 seconds, with a countdown ring on the close button. Moving to it with the keyboard pauses the countdown, and a click in the panel keeps it open. Undo goes back to the Notice view, and the stored choice stays until the visitor makes a new one.
 
 ### Close
 
