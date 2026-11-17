@@ -1,6 +1,6 @@
 // NDS verify: both browser passes for every page and state, in one run.
 //
-//   node nds-verify.mjs <config.json> [--out <dir>] [--only <path>,…] [--jobs <n>] [--text]
+//   node nds-verify.mjs <config.json> [--out <dir>] [--only <path>,…] [--states <name>,…] [--jobs <n>] [--text]
 //
 // --out is where the shots go: tmp/nds-verify/ in the folder you run it from by default (from inside this template folder: the folder above it), one
 // folder per page, replaced on each run. Keep tmp/ in .gitignore.
@@ -8,6 +8,8 @@
 // page alone (write `nds/cart`, not `/nds/cart`: Git Bash turns a leading slash into a Windows
 // path). A text equal to a page's whole path picks that page only, so `--only /` is the home
 // page (in Git Bash: MSYS_NO_PATHCONV=1 node nds-verify.mjs … --only /). --jobs sets how many shots run at once (default: half the cores, 2 to 8).
+// --states runs just the states with those names, and replaces only their files: the re-check of an edit that
+// touches some states (a cell's markup shows in the table's states, not in a dialog's). The other states keep their sheets.
 // --text runs every check but takes no shots and writes no sheets, and leaves the last run's sheets in
 // place: the re-check after an edit that cannot change the look (an event handler, a request, data).
 //
@@ -51,7 +53,7 @@
 // left under `whole plan` pacing, and, from the last open row on, a reminder to file NDS findings in NDS-REPORT.md.
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { cpus, tmpdir } from 'node:os';
 import { dirname, extname, isAbsolute, join, normalize, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -64,7 +66,7 @@ const flag = (name) => { const i = args.indexOf(name); return i >= 0 ? args[i + 
 const TEXT = args.includes('--text');
 // --text takes no value: the text after it is the config.
 const configPath = args.find((a, i) => !a.startsWith('--') && (!args[i - 1]?.startsWith('--') || args[i - 1] === '--text'));
-if (!configPath) { console.error('Usage: node nds-verify.mjs <config.json> [--out <dir>] [--only <path>,…] [--jobs <n>] [--text]'); process.exit(2); }
+if (!configPath) { console.error('Usage: node nds-verify.mjs <config.json> [--out <dir>] [--only <path>,…] [--states <name>,…] [--jobs <n>] [--text]'); process.exit(2); }
 const config = JSON.parse(readFileSync(configPath, 'utf8'));
 // The project's gitignored tmp/, not the OS temp folder, where every run left a new folder behind.
 // A run from inside this folder would write into NDS_ROOT, which is read-only: use the project's tmp/.
@@ -73,6 +75,7 @@ const inHere = !fromHere.startsWith('..') && !isAbsolute(fromHere);
 const OUT = resolve(flag('--out') || join(inHere ? dirname(HERE) : '.', 'tmp', 'nds-verify'));
 mkdirSync(OUT, { recursive: true });
 const ONLY = flag('--only')?.split(',').filter(Boolean);
+const STATES = flag('--states')?.split(',').filter(Boolean);
 const JOBS = Math.max(1, Number(flag('--jobs')) || Math.min(8, Math.max(2, cpus().length >> 1)));
 // A whole path picks its page only: `/` would otherwise hold every page.
 const isWholePath = (o) => config.pages.some((p) => p.path === o);
@@ -485,7 +488,11 @@ const reference = (ref, w, t, { lang, dir }) => {
 let stopped = false;
 try {
     // The pages first: each state's reference takes the lang and direction its page showed.
-    const states = PAGES.flatMap((pg) => (pg.states || [{ name: 'default' }]).map((st, n) => ({ pg, st, cols: colsOf(n === 0) })));
+    // The first state keeps its other-theme shots when --states picks it.
+    const states = PAGES.flatMap((pg) => (pg.states || [{ name: 'default' }]).map((st, n) => ({ pg, st, cols: colsOf(n === 0) })))
+        .filter(({ st }) => !STATES || STATES.includes(st.name));
+    const unknown = STATES?.filter((n) => !states.some(({ st }) => st.name === n));
+    if (unknown?.length) throw new Error(`no state is named ${unknown.join(' or ')} on the pages checked`);
     const shots = await pool(states.flatMap(({ pg, st, cols }) =>
         cols.map(({ w, t }) => () => shoot(BASE + (st.path || pg.path), { ...st, width: w, theme: t, audit: true, shot: !TEXT }))));
     // Each state takes its own count of shots, in order.
@@ -498,11 +505,19 @@ try {
     deal(withRef, refs, 'refs');
     const sheets = [], told = new Set();
     for (const pg of PAGES) {
+        if (!states.some((s) => s.pg === pg)) continue;
         const dir = join(OUT, slug(pg.path));
         // A page's last run goes; with --only, the other pages' sheets stay. --text keeps them all: they are the look it checked last.
-        if (!TEXT) {
-            rmSync(dir, { recursive: true, force: true });
-            mkdirSync(dir, { recursive: true });
+        if (!TEXT && !STATES) rmSync(dir, { recursive: true, force: true });
+        if (!TEXT) mkdirSync(dir, { recursive: true });
+        // --states: only the named states' shots and sheets go, a sheet's old slices too.
+        // ponytail: a state named like another's slice ("x" and "x 2") loses that sheet; rename one if it bites.
+        if (!TEXT && STATES) for (const f of readdirSync(dir)) {
+            const mine = states.some(({ pg: p, st }) => {
+                const n = slug(st.name), rest = (pre) => f.startsWith(pre) ? f.slice(pre.length) : null;
+                return p === pg && (/^(-\d+)?\.(png|html)$/.test(rest(`sheet-${n}`) ?? '') || /^\d+-\w+\.png$/.test(rest(`${n}-`) ?? ''));
+            });
+            if (mine) rmSync(join(dir, f));
         }
         const rows = [];
         const version = states.find((s) => s.pg === pg)?.shots[0]?.version || 'unknown';
