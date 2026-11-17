@@ -14,9 +14,8 @@
     display: contents;
 }
 
-// The fields' stack: 16px apart, not flex's 8px.
-.nds-form.nds-flex,
-.nds-form > .nds-flex {
+// The fields' stack: 16px apart, not flex's 8px. A Scroll More in a form scrolls the fields.
+:is(.nds-form, .nds-form > *, .nds-form .nds-scroll-more-content).nds-flex {
     gap: var(--gap, var(--spacing-xl));
 }
 
