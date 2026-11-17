@@ -361,10 +361,11 @@ async function shootOnce(url, { width, theme, cookies = [], storage = {}, fail, 
         return out;
     })()`);
     // A control another part lies over, at its center or near a corner. A fixed or sticky part (the FAB, a
-    // sticky bar) floats on purpose, and a point an ancestor clips (a swiper's next slide) is hidden, not covered.
+    // sticky bar) or an open top-layer part (a menu, a dialog) floats on purpose, and a point an ancestor
+    // clips (a swiper's next slide) is hidden, not covered.
     const blocked = await evaluate(`(() => {
         const name = (el) => el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + [...el.classList].slice(0, 2).map((c) => '.' + c).join('');
-        const isFloating = (el) => { for (let a = el; a; a = a.parentElement) if (/fixed|sticky/.test(getComputedStyle(a).position)) return true; return false; };
+        const isFloating = (el) => { for (let a = el; a; a = a.parentElement) if (/fixed|sticky/.test(getComputedStyle(a).position) || a.matches(':popover-open, dialog[open]')) return true; return false; };
         const isClipped = (el, x, y) => { for (let a = el.parentElement; a; a = a.parentElement) {
             if (getComputedStyle(a).overflow === 'visible') continue;
             const r = a.getBoundingClientRect();
