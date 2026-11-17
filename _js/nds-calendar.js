@@ -140,6 +140,7 @@
             this._end = null;
             this._view = null;
             this._day = null;
+            this._anchor = null;
             this._dayCount = 7;
             this._isNarrow = false;
             this._buildDays();
@@ -250,10 +251,11 @@
             return { start, end: addDays(start, NDS.Date.getMonthLength({ year, month }, calendar) - 1) };
         }
 
-        // What a view switch keeps in view: the picked day, else today when shown, else the first day.
+        // What a view switch keeps in view: the picked day, else today when shown, else the date the range came from.
+        // Not the first day: a week's can sit in the month before, so Month → Grid → Month slipped a month.
         _getAnchor() {
             const today = NDS.Date.getToday();
-            return this._day || (today >= this._start && today <= this._end ? today : this._start);
+            return this._day || (today >= this._start && today <= this._end ? today : this._anchor);
         }
 
         // From the hooks. `first` is create(): it always syncs, and fires no change.
@@ -289,6 +291,8 @@
                 this._writeHooks();
                 return false;
             }
+            // Only a new range moves it: "all" passes the first day, which a week can share with the month before.
+            if (!isSameDay(start, this._start)) this._anchor = anchor;
             this._start = start;
             this._end = end;
             this._view = view;

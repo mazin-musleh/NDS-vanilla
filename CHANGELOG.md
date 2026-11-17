@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Prose** — A video or an embedded frame is never wider than the text, and a long line in a `pre` scrolls sideways.
 - **Filter** — A group that builds its options from the items, and finds none, hides with its divider, so the menu no longer shows bare lines. A menu with no group left says "No options to filter by". A list with no items gives no console warning.
 - **Images** — The placeholder image fits dark mode: its box is see-through grey, not light grey.
+- **Calendar** — A switch from Month to Grid or Rows and back keeps the same month. It no longer moves back a month, and the address no longer gets a new date.
 - **Audit** — Reports the removed Side Info size classes `nds-sm`, `nds-md` and `nds-lg`. A missing icon style sheet gives one finding, not one per icon.
 
 ## [2.0.0] - 2026-11-12
