@@ -354,6 +354,10 @@
     gap: var(--_card-gap);
     width: 100%;
     flex: 1;
+
+    // As a Scroll More host its children are the scroller and Show more: they take --scroll-gap,
+    // and the card gap moves to the parts inside the scroller.
+    &.nds-scroll-more { gap: var(--_scroll-gap); }
   }
 
   // A block, not a flex column or a grid: a .nds-card-corner written first floats, and the

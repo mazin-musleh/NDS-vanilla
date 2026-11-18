@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ## [Unreleased]
 
 ### Added
-- **Audit** — Flags a calendar with no empty message.
+- **Audit** — Flags a calendar with no empty message, and a modal whose content holds more than its title and description with no Scroll More.
 - **Cookies** — After a choice, the panel closes itself in 5 seconds, with a countdown ring on its close button. Keyboard focus pauses it; a click in the panel keeps it open.
 - **Autocomplete** — `nds:autocomplete:error` fires when a `data-url` request fails, with `{ query, error }`. `preventDefault()` stops the built-in message, for a page that shows its own.
 
@@ -16,12 +16,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Page layout** — On a desktop, the side menu has its shadow and side padding again on a side menu page. The sections stay flat; `nds-compact` still raises them.
 - **Cookies** — On a desktop the buttons share one row; a phone still stacks them. The Notice view's third button reads "Manage". A page's own panel keeps its stack until its footers take `nds-col-sm` for `nds-col`.
 - **Calendar** — In Rows, a line separates the days from the events.
+- **Modal** — Content beyond the title and description goes in a Scroll More: its edge fades while more is below, and the header and the actions stay in view.
 - **Status Section, Card** — A status colors the icon and the card number, not the title.
 - **Docs** — Filter, Forms and Main Navigation say which group a yes-or-no or a number field takes, when a form ends with a review step, and when to leave out the language action. The Student Portal catalog entry names its profile head: the avatar and the name.
 
 ### Fixed
 - **Verify** — The browser check names the element of each audit finding, with its fix. A page that stops answering, or opens an alert, no longer holds the run forever: the run stops after 60 s with a report (`NDS_CALL_MS` raises the limit). The whole-plan reminder fires only when the plan's Pacing value is `whole plan`, not when a page-by-page plan mentions an earlier whole-plan batch. Run from inside the template folder, the check writes its shots to the project's `tmp/`, not into the template.
-- **Cards** — While a card loads, a row card with an image stays a row, a drawer in the card shows its own skeleton rows, a status card's icon turns grey, and a progress ring shows only its empty track.
+- **Cards** — While a card loads, a row card with an image stays a row, a drawer in the card shows its own skeleton rows, a status card's icon turns grey, and a progress ring shows only its empty track. When the card content is a Scroll More, Show more sits right under the content, not a card gap below it; the parts inside keep the card gap.
 - **Panel** — A control at the side of a Scroll More body, as in Cookies and Accessibility, keeps its whole halo and focus ring.
 - **Autocomplete** — A request that fails shows "Could not load suggestions" in the menu, not only to a screen reader. The next focus on the field tries again.
 - **Prose** — A video or an embedded frame is never wider than the text, and a long line in a `pre` scrolls sideways.
