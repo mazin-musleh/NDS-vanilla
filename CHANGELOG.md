@@ -32,6 +32,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Calendar** — A switch from Month to Grid or Rows and back keeps the same month. It no longer moves back a month, and the address no longer gets a new date.
 - **Scroll More** — When the screen grows and the content fits again, Show more goes away. It had stayed when the content fit only without the button, as in a modal after a phone-to-desktop resize.
 - **Scroll More** — `--scroll-max-width` caps the width the way a max width does: on a screen narrower than the value, the row stays inside its container.
+- **File Upload** — With no upload address, a file that passes the checks shows the success check, as attached; its status stays `ready`. On a right-to-left page, a Latin file name keeps its extension last (`report-file.pdf`, not `pdf.report-file`).
 - **Swiper** — In Safari before 16.4 and Firefox before 128, a Swiper inside another no longer takes the outer one's slides per view and peek.
 - **Audit** — Reports the removed Side Info size classes `nds-sm`, `nds-md` and `nds-lg`. A missing icon style sheet gives one finding, not one per icon.
 

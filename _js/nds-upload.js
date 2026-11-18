@@ -55,7 +55,8 @@
  *   - XHR, not NDS.request: only xhr.upload reports progress. data-upload-timeout ends an
  *     upload as an error after that many milliseconds; without it (the default, 0) a dead
  *     connection leaves a file at 'uploading' and retry() refuses it — call abort(id).
- *   - With no upload URL the component only stages files (it warns once).
+ *   - With no upload URL the component only stages files (it warns once). A staged row
+ *     shows the success check while its status stays 'ready'.
  *   - A row is cloned from .nds-file-item-template when you ship one; otherwise from the
  *     component's own canonical markup.
  */
@@ -702,16 +703,20 @@
                 // The base truncates and the extension stays; a hover tooltip shows the whole name.
                 const name = sanitizeFileName(fileData.file.name);
                 const dot = name.lastIndexOf('.');
+                // A bdi takes the name's own direction, so on a right-to-left page a Latin name
+                // keeps its extension last; the row itself keeps the page's side.
+                const text = document.createElement('bdi');
                 const base = document.createElement('span');
                 base.className = 'nds-file-base';
                 base.textContent = dot > 0 ? name.slice(0, dot) : name;
-                fileName.replaceChildren(base);
+                text.append(base);
                 if (dot > 0) {
                     const extensionElement = document.createElement('span');
                     extensionElement.className = 'nds-file-ext';
                     extensionElement.textContent = name.slice(dot);
-                    fileName.append(extensionElement);
+                    text.append(extensionElement);
                 }
+                fileName.replaceChildren(text);
                 // title is the tooltip's message source; plain browser title without NDS.Tooltip.
                 fileName.title = name;
                 fileName.classList.add('nds-tooltip');
@@ -779,6 +784,11 @@
                 case 'processing':
                     NDS.state.add(fileItem, 'processing');
                     break;
+                // With no upload URL nothing uploads: a file that passed the checks is attached, so it
+                // looks complete. Only the look: its status stays 'ready' and no success event fires.
+                case 'ready':
+                    if (this._readConfig().uploadUrl) break;
+                    // falls through
                 case 'complete':
                     NDS.status.set(fileItem, 'success');
                     if (feedback) NDS.status.set(feedback, 'success');
@@ -787,7 +797,6 @@
                     NDS.status.set(fileItem, 'error');
                     if (feedback) NDS.status.set(feedback, 'error');
                     break;
-                // 'ready' - no state/status needed, CSS defaults apply
             }
         }
 

@@ -11,7 +11,7 @@ breadcrumb:
 lang: en
 direction: ltr
 sidemenu_mode: false
-last_edit: "04/11/2026 - 07:40 PM"
+last_edit: "18/11/2026 - 01:17 PM"
 ---
 <section id="contact-us" class="nds-content-section nds-sideinfo-section">
     <div class="nds-section-body">
@@ -475,19 +475,6 @@ last_edit: "04/11/2026 - 07:40 PM"
                 }
                 // Every NDS field, a custom select and a country code too, goes back with the form.
                 form.reset();
-            });
-        }
-
-        // No upload step on this form — mark each validated selection complete
-        // so the attached file shows the success state.
-        var upload = document.querySelector('.nds-upload');
-        if (upload) {
-            upload.addEventListener('nds:upload:select', function (e) {
-                var api = window.NDS && NDS.Upload && NDS.Upload.getInstance(upload);
-                if (!api) return;
-                (e.detail.fileData || []).forEach(function (f) {
-                    api.setFileStatus(f.id, 'complete');
-                });
             });
         }
     }

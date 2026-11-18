@@ -204,6 +204,12 @@
                 display: flex;
                 white-space: nowrap;
 
+                // The script's bdi holds the base and the extension in the name's own direction.
+                > bdi {
+                    display: flex;
+                    min-width: 0;
+                }
+
                 .nds-file-base {
                     min-width: 0;
                     overflow: hidden;

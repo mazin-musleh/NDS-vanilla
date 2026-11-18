@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "2.0.0"
-last_edit: "05/11/2026 - 12:02 PM"
+updated: "2.0.x"
+last_edit: "18/11/2026 - 01:16 PM"
 ---
 
 <section id="upload-overview" class="nds-content-section nds-doc-overview">
@@ -117,7 +117,7 @@ The script checks each file when the user adds it. `data-max-file-size` sets the
 ### Send with the Form
 {: .nds-block-title}
 
-With no `data-upload-url`, the files stay in the field until the form is sent. This fits small attachments that go in one request with the other fields. The script empties the file input after each pick, so a native form submit sends no files. Add `data-ajax` to the form, so Forms stops the native submit. Then, at `nds:form:valid`, add the files from `getAllFiles()` to the form data and send it yourself. The JavaScript example below does this.
+With no `data-upload-url`, the files stay in the field until the form is sent. This fits small attachments that go in one request with the other fields. A file that passes the checks shows the success check at once, as attached. Its status stays `ready`, and no `nds:upload:success` fires. The script empties the file input after each pick, so a native form submit sends no files. Add `data-ajax` to the form, so Forms stops the native submit. Then, at `nds:form:valid`, add the files from `getAllFiles()` to the form data and send it yourself. The JavaScript example below does this.
 
 ### Upload as You Go
 {: .nds-block-title}
@@ -468,7 +468,7 @@ The full API is in the banner of `_js/nds-upload.js`.
     </div>
     <div class="nds-section-body nds-prose" markdown="1">
 
-- [Contact Us Template](../templates/contact-us-template): an optional upload in Button mode. The page marks each file complete when the user adds it, because the field has no upload address.
+- [Contact Us Template](../templates/contact-us-template): an optional upload in Button mode that is sent with the form.
 - [Editor](../components/editor): the image form holds a Single upload with no drop zone.
 
 </div>
