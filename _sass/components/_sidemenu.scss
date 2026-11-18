@@ -55,8 +55,8 @@
 
 @include tablet(max) {
 
-    /* Side Menu Toggle Button */
-    .nds-sidemenu-toggle {
+    /* Side Menu Toggle Button (rail mode styles its own) */
+    .nds-sidemenu-toggle:not(.nds-rail *) {
         --_btn-size-base: 40px;
         --_toggle-transform: translateX(calc(var(--nds-sidemenu-width) * -1));
         border: unset;
@@ -72,7 +72,7 @@
         visibility: visible;
     }
 
-    .nds-sidemenu-toggle i {
+    .nds-sidemenu-toggle:not(.nds-rail *) i {
         font-size: 1.5rem;
         color: var(--text-oncolor-primary);
         scale: -1;
@@ -81,11 +81,11 @@
     }
 
     @include ltr {
-        .nds-sidemenu-toggle i {
+        .nds-sidemenu-toggle:not(.nds-rail *) i {
             scale: 1;
         }
 
-        .nds-sidemenu-toggle {
+        .nds-sidemenu-toggle:not(.nds-rail *) {
             --_toggle-transform: translateX(var(--nds-sidemenu-width));
             right: unset;
             left: 0;
@@ -96,7 +96,7 @@
     // ========================================
     // SLIDER MODE - Horizontal sliding (tablet/mobile)
     // ========================================
-    .nds-sidemenu:not(.nds-top) {
+    .nds-sidemenu:not(.nds-top, .nds-rail > *) {
         // Off the start edge: right in RTL, left in LTR.
         --_out: 100%;
         position: fixed;
@@ -263,5 +263,71 @@
         .nds-drawer[data-state~="closing"] {
             transform: translateY(-100%);
         }
+    }
+}
+
+/* ========================================
+   RAIL MODE - .nds-rail on the layout
+   The toggle folds the menu to its icons. Below 960px it is folded and opens over the page.
+   ======================================== */
+
+.nds-content-layout.nds-rail > .nds-sidemenu {
+    // The sticky toggle sits above the list: 40px and its gap.
+    --drawer-max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-3xl) - 48px);
+    position: relative;
+    transition: width var(--nds-transition);
+
+    > .nds-sidemenu-toggle:not([hidden]) {
+        // Sized, full and start-aligned like a link row, so the icons line up.
+        --_btn-size-base: 32px;
+        --btn-width: 100%;
+        --btn-height: 40px;
+        --btn-bg: var(--button-background-transparent-default);
+        --btn-bg-hover: var(--button-background-secondary-hovered);
+        --btn-bg-active: var(--button-background-secondary-pressed);
+        --btn-color: var(--text-default);
+        display: flex;
+        justify-content: flex-start;
+        position: sticky;
+        top: calc(var(--nds-nav-height) + var(--spacing-md));
+        z-index: 1;
+        margin-block-end: var(--spacing-md);
+    }
+
+    // The list keeps the open width and the narrower nav clips it, so nothing reflows while it slides.
+    > nav.nds-drawer {
+        top: calc(var(--nds-nav-height) + var(--spacing-md) + 48px);
+        overflow-x: clip;
+
+        > * {
+            width: calc(var(--nds-sidemenu-width) - 2 * var(--spacing-md));
+            max-width: none;
+        }
+    }
+}
+
+@mixin rail-folded {
+    width: var(--nds-sidemenu-rail-width);
+
+    // Groups and search come back when the menu opens.
+    .nds-drawer-list ul,
+    .nds-drawer > :is(.nds-drawer-search, .nds-empty-placeholder) {
+        display: none;
+    }
+}
+
+@include desktop(min) {
+    .nds-content-layout.nds-has-sidemenu.nds-rail {
+        transition: grid-template-columns var(--nds-transition);
+    }
+
+    .nds-rail[data-sidemenu-collapsed] > .nds-sidemenu {
+        @include rail-folded;
+    }
+}
+
+@include tablet(max) {
+    .nds-rail:not([data-sidemenu-open]) > .nds-sidemenu {
+        @include rail-folded;
     }
 }

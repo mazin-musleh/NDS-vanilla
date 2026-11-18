@@ -7,8 +7,8 @@ breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "2.0.0"
-last_edit: "03/11/2026 - 04:08 PM"
+updated: "2.0.x"
+last_edit: "18/11/2026 - 10:55 PM"
 ---
 
 <section id="sidemenu-overview" class="nds-content-section nds-doc-overview">
@@ -209,6 +209,90 @@ The main links of the site belong in the [Main Navigation](../ui-shell/main-nav)
   </div>
 </div>
 </script>
+<script type="text/html" id="sidemenu-rail" data-canon>
+<div class="nds-content-layout nds-has-sidemenu nds-rail">
+  <aside class="nds-sidemenu" aria-label="Sidebar" data-i18n-aria-label="sidemenu.sidebar">
+    <button class="nds-sidemenu-toggle nds-btn" aria-label="Sidebar Menu" data-i18n-aria-label="sidemenu.sidebar_menu" hidden>
+      <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
+      <span class="nds-label nds-truncate">Side menu</span>
+    </button>
+    <nav class="nds-drawer nds-divided">
+      <div class="nds-scroll-more nds-divided">
+        <ul class="nds-drawer-list nds-scroll-more-content">
+          <li>
+            <a class="nds-btn nds-subtle nds-indicator" href="#">
+              <i class="hgi hgi-stroke hgi-home-01" aria-hidden="true"></i>
+              <span class="nds-label">Overview</span>
+            </a>
+          </li>
+          <li>
+            <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
+              <i class="hgi hgi-stroke hgi-passport-01" aria-hidden="true"></i>
+              <span class="nds-label">Passports</span>
+              <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">3</span></span>
+            </button>
+            <ul>
+              <li data-state="active">
+                <a class="nds-btn nds-subtle nds-indicator" href="#">
+                  <span class="nds-label">Renew a Passport</span>
+                </a>
+              </li>
+              <li>
+                <a class="nds-btn nds-subtle nds-indicator" href="#">
+                  <span class="nds-label">Issue a Passport</span>
+                </a>
+              </li>
+              <li>
+                <a class="nds-btn nds-subtle nds-indicator" href="#">
+                  <span class="nds-label">Report a Lost Passport</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
+              <i class="hgi hgi-stroke hgi-airplane-01" aria-hidden="true"></i>
+              <span class="nds-label">Visas</span>
+              <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">2</span></span>
+            </button>
+            <ul>
+              <li>
+                <a class="nds-btn nds-subtle nds-indicator" href="#">
+                  <span class="nds-label">Visit Visa</span>
+                </a>
+              </li>
+              <li>
+                <a class="nds-btn nds-subtle nds-indicator" href="#">
+                  <span class="nds-label">Work Visa</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="nds-btn nds-subtle nds-indicator" href="#">
+              <i class="hgi hgi-stroke hgi-headset" aria-hidden="true"></i>
+              <span class="nds-label">Contact Us</span>
+            </a>
+          </li>
+        </ul>
+        <button class="nds-show-more nds-btn nds-subtle" aria-label="Show more" data-i18n-aria-label="scroll-more.show_more">
+          <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+        </button>
+      </div>
+    </nav>
+  </aside>
+  <div class="nds-content" id="main-content">
+    <section class="nds-content-section">
+      <div class="nds-section-wrapper">
+        <div class="nds-section-head">
+          <h2 class="nds-section-title">Renew a Passport</h2>
+          <p class="nds-section-description">Renew your passport online, with no visit to an office.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+</script>
 <script type="text/html" id="sidemenu-more" data-canon>
 <li>
   <a class="nds-btn nds-subtle nds-indicator" href="#">
@@ -346,9 +430,10 @@ The main links of the site belong in the [Main Navigation](../ui-shell/main-nav)
 |---|---|---|
 | `.nds-content-layout.nds-has-sidemenu` | The side menu, then `.nds-content`. Without `nds-has-sidemenu`, the layout hides the side menu. See [Page Layout](../layout/page-layout) | Yes |
 | `aside.nds-sidemenu` | The menu button and the drawer. Give it an `aria-label`. One per page | Yes |
-| `button.nds-sidemenu-toggle` | The button that opens the menu below 960px: an icon and a `.nds-label`. Write it with `hidden` and an `aria-label` | Yes |
+| `button.nds-sidemenu-toggle` | The button that opens the menu below 960px, and folds it in rail mode: an icon and a `.nds-label`. Write it with `hidden` and an `aria-label` | Yes |
 | `nav.nds-drawer` | The list: a `.nds-scroll-more` with the `ul.nds-drawer-list` and the show more button. See [Drawer](../components/drawer) | Yes |
 | `li` with an `a.nds-btn` | One link | Yes |
+| `i` in a top-level link or group button | The link's icon, before its `.nds-label`. In rail mode the folded menu shows only this icon | In rail mode |
 | `li` with a `button.nds-btn` and a `ul` | A group: the button opens the `ul` under it. A group can hold groups | No |
 | `span.nds-tag` | The number of links in a group, counting the links in its own groups. It sits in the group's button | No |
 | `.nds-content` | The page sections, right after the side menu, with `id="main-content"` for the skip link | Yes |
@@ -365,19 +450,20 @@ The main links of the site belong in the [Main Navigation](../ui-shell/main-nav)
     </div>
     <div class="nds-section-body" markdown="1">
 
-The Small screens options change the menu below 960px only.
+The Small screens options change the menu below 960px only. The Rail structure has its own small-screen mode, so these options and Peek button are off with it.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Two levels (default) | — | — | Links and groups of links. Fits most sites |
 | Structure | Three levels | canon `#sidemenu-grouped` | — | Groups inside a group. Use it only when one group holds many pages |
-| Small screens | Slide-in (default) (hint: Below 960px, the menu slides in from the side) | — | — | Below 960px, the menu slides in from the side over the page. Fits a long list |
-| Small screens | Top bar (hint: Below 960px, a bar above the content opens the menu) | `.nds-top` | `.nds-sidemenu` | Below 960px, a bar above the content shows the current page, and the menu drops down from it. Fits a short list |
-| Peek button | Peek (default) (hint: The button hides at the screen edge until the mouse comes near) | `.nds-peek` | `.nds-sidemenu-toggle:not(.nds-top .nds-sidemenu-toggle)` | In slide-in mode, the button stays mostly hidden at the screen edge. Not in top bar mode |
-| Peek button | Full button (hint: The button stays in full view) | — | `.nds-sidemenu-toggle:not(.nds-top .nds-sidemenu-toggle)` | The button stays in full view at the screen edge |
+| Structure | Rail (hint: The menu folds to its icons) | canon `#sidemenu-rail` | — | `nds-rail` on the layout. The menu button folds the menu to its icons. Below 960px, the menu stays folded, and the button opens it over the page. Give every top-level link an icon. Fits an app or admin console |
+| Small screens | Slide-in (default) (hint: Below 960px, the menu slides in from the side) | — | `.nds-sidemenu:not(.nds-rail > .nds-sidemenu)` | Below 960px, the menu slides in from the side over the page. Fits a long list |
+| Small screens | Top bar (hint: Below 960px, a bar above the content opens the menu) | `.nds-top` | `.nds-sidemenu:not(.nds-rail > .nds-sidemenu)` | Below 960px, a bar above the content shows the current page, and the menu drops down from it. Fits a short list |
+| Peek button | Peek (default) (hint: The button hides at the screen edge until the mouse comes near) | `.nds-peek` | `.nds-sidemenu-toggle:not(.nds-top .nds-sidemenu-toggle, .nds-rail .nds-sidemenu-toggle)` | In slide-in mode, the button stays mostly hidden at the screen edge. Not in top bar mode |
+| Peek button | Full button (hint: The button stays in full view) | — | `.nds-sidemenu-toggle:not(.nds-top .nds-sidemenu-toggle, .nds-rail .nds-sidemenu-toggle)` | The button stays in full view at the screen edge |
 | Lined | Lined (hint: A line beside each open group) | `.nds-lined` | `.nds-drawer` | A line beside each open group, so the levels are easy to see |
 | Search | Search (hint: A search box above the links) | `[data-search]` | `.nds-drawer` | A search box that filters the links and opens each group with a match. For a long menu. See [Drawer](../components/drawer) for its options |
-| Many links | Many links (hint: The list does not fit, so the show more arrow appears) | canon `#sidemenu-more` | `.nds-drawer-list` | 24 more links. Shows how the list scrolls when it is taller than the screen |
+| Many links | Many links (hint: The list does not fit, so the show more arrow appears) | canon `#sidemenu-more` | `.nds-drawer-list:not(.nds-rail .nds-drawer-list)` | 24 more links. Shows how the list scrolls when it is taller than the screen. Not with Rail: the links have no icons |
 {: #sidemenu-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -405,6 +491,13 @@ Below 960px, the side menu moves off screen, and the menu button shows at the sc
 {: .nds-block-title}
 
 In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the screen edge, so it does not cover the content. It shows for a moment when the page loads, and comes out when the mouse moves near it. Without `nds-peek`, the button always shows in full.
+
+### Rail Mode
+{: .nds-block-title}
+
+`nds-rail` on the `.nds-content-layout` puts the menu button at the top of the menu. On a desktop, a press folds the menu to its icons, and the content column grows. A second press opens it again. The browser keeps the choice for the next page. A folded icon shows its link's name on hover. A press on a group's icon opens the menu and that group.
+
+Below 960px, the menu is always folded beside the content. The button opens the full menu over the page. Escape, a click outside the menu, or a change of the screen width closes it.
 
 ### Search
 {: .nds-block-title}
@@ -543,6 +636,8 @@ In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the sc
 - Name each group by what its pages share. Do not mix pages of other topics in one group.
 - Use two levels for most sites. A third level hides pages two clicks deep.
 - Pick Top bar for a short list, and Slide-in for a long one that people scroll.
+- Pick Rail for an app or a console that people use for a long time, where the content needs the width.
+- In rail mode, give every top-level link and group an icon. A folded link with no icon is an empty button.
 - Add Search to a menu of about 20 links or more, as this site's menu has.
 - Do not write color classes on the menu button. Each mode styles it.
 - On a page with no side menu, remove the `aside` and `nds-has-sidemenu` together.
@@ -563,9 +658,12 @@ In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the sc
 
 | Attribute | Element | Effect |
 |---|---|---|
+| `data-sidemenu-collapsed` | `.nds-content-layout.nds-rail` | Write it to start the menu folded on a desktop. The script sets it when the user folds the menu, and removes it when the user opens it. The user's last choice, kept in `localStorage` as `nds-sidemenu-collapsed`, wins over the markup |
+| `data-sidemenu-open` | `.nds-content-layout.nds-rail` | Below 960px, the script sets it when the menu opens over the page, and removes it when the menu closes |
+| `title` | A top-level link or group button in rail mode | The script writes the link's name while the menu is folded, and removes it when the menu opens |
 | `data-state` | `aside.nds-sidemenu` in slide-in mode | The script sets `open` when the menu opens, adds `closing` when it closes, and removes both after the close |
 | `hidden` | `button.nds-sidemenu-toggle` | Write it in the markup. The script removes it when it starts |
-| `aria-expanded` | `button.nds-sidemenu-toggle` | The script writes `false` when it starts and the attribute is missing. It sets `true` when the menu opens, and `false` after the close |
+| `aria-expanded` | `button.nds-sidemenu-toggle` | The script writes `false` when it starts and the attribute is missing. It sets `true` when the menu opens, and `false` after the close. In rail mode, it is `true` while the menu is not folded |
 | `data-state="open"` | `button.nds-sidemenu-toggle` | The script sets it when the menu opens, and removes it after the close |
 | `hidden` | The menu button's `.nds-label` | The script sets it in slide-in mode, and removes it in top bar mode. Leave the label's text to the script: it writes the current page's name in it |
 | `data-state` | `nav.nds-drawer` in top bar mode | The script sets `open` when the menu opens, adds `closing` when it closes, and removes both after the close |
@@ -579,6 +677,7 @@ In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the sc
 | Property | Default | Controls |
 |---|---|---|
 | `--nds-sidemenu-width` | `260px` | The width of the side menu and of its layout column. Set it on `:root` |
+| `--nds-sidemenu-rail-width` | `56px` | The width of the folded menu and of its layout column in rail mode. Set it on `:root` |
 | `--nds-sidemenu-toggle-height` | `56px` | The height of the top bar. Set it on `:root` |
 | `--toggle-pos` | `40svh` | How far below the main navigation the slide-in menu button sits. Set it on `button.nds-sidemenu-toggle` |
 | `--drawer-max-height` | The screen height less the main navigation and `--spacing-3xl`, or `--spacing-xl` with `nds-compact` or card view on a desktop. `60svh` in top bar mode | The height of the list before it scrolls. Set it on `aside.nds-sidemenu`. The open slide-in menu fits the list to the screen and ignores it |

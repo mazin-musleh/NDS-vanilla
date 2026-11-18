@@ -15,7 +15,11 @@
  *   (none — class-driven markup: .nds-sidemenu holding a .nds-sidemenu-toggle button and
  *    a .nds-drawer. Add .nds-top for the top-sheet mode, and .nds-peek on the toggle to
  *    let it retract until the pointer comes near)
+ *   .nds-rail on the .nds-content-layout   the toggle folds the menu to its icons; below
+ *                              960px it is always folded and the toggle opens it over the page
+ *   data-sidemenu-collapsed    on a rail layout: start folded (the user's last choice wins)
  * Gotchas:
+ *   - Rail: the fold is kept in localStorage `nds-sidemenu-collapsed`; .nds-peek and .nds-top do nothing.
  *   - One sidemenu per page: init() takes the FIRST .nds-sidemenu it finds.
  *   - init() does not start the drawer: new markup needs NDS.init.refresh().
  *   - .nds-top scrolls its bar to the top and locks the page before it opens.
@@ -174,6 +178,79 @@
         signal.addEventListener('abort', offResize);
     }
 
+    const RAIL_KEY = 'nds-sidemenu-collapsed';
+
+    // Rail: the toggle folds the menu to its icons, kept per browser. Below 960px the
+    // menu is always folded, and the toggle opens it over the page.
+    function setupRail(menuState) {
+        const { accMenu: sidemenu, layout, toggleBtn, abortController: { signal } } = menuState;
+        const smallQuery = window.matchMedia(NDS.breakpoints['tablet-max']);
+        const topButtons = sidemenu.querySelectorAll('.nds-drawer-list > li > .nds-btn');
+        const isFolded = () => smallQuery.matches
+            ? !layout.hasAttribute('data-sidemenu-open')
+            : layout.hasAttribute('data-sidemenu-collapsed');
+
+        // A folded button shows its name on hover.
+        const syncRail = () => {
+            const folded = isFolded();
+            NDS.aria.expanded(toggleBtn, !folded);
+            topButtons.forEach(btn => {
+                const label = btn.querySelector('.nds-label')?.textContent.trim();
+                if (folded && label) btn.title = label;
+                else btn.removeAttribute('title');
+            });
+        };
+        const closeOverlay = () => {
+            if (!layout.hasAttribute('data-sidemenu-open')) return;
+            layout.removeAttribute('data-sidemenu-open');
+            sidemenu.style.removeProperty('z-index');
+            NDS.Backdrop.hide();
+            syncRail();
+        };
+        const setFolded = (folded) => {
+            if (!smallQuery.matches) {
+                layout.toggleAttribute('data-sidemenu-collapsed', folded);
+                try { localStorage.setItem(RAIL_KEY, folded ? '1' : '0'); } catch {}
+                return syncRail();
+            }
+            if (folded) return closeOverlay();
+            layout.setAttribute('data-sidemenu-open', '');
+            sidemenu.style.zIndex = 999;
+            // Escape and a click outside reach onClick.
+            NDS.Backdrop.show({ zIndex: 998, preventScroll: true, onClick: closeOverlay });
+            syncRail();
+        };
+
+        // The author's start state, then the user's last choice.
+        menuState.wasCollapsed = layout.hasAttribute('data-sidemenu-collapsed');
+        try {
+            const stored = localStorage.getItem(RAIL_KEY);
+            if (stored !== null && (stored === '1') !== menuState.wasCollapsed) {
+                // A stored fold lands at once: the slide is for a press.
+                const sliding = [layout, sidemenu];
+                sliding.forEach(el => { el.style.transition = 'none'; });
+                layout.toggleAttribute('data-sidemenu-collapsed', stored === '1');
+                requestAnimationFrame(() => requestAnimationFrame(() => sliding.forEach(el => el.style.removeProperty('transition'))));
+            }
+        } catch {}
+
+        toggleBtn.addEventListener('click', () => setFolded(!isFolded()), { signal });
+        // A group pressed while folded opens the menu; capture keeps an open group open.
+        menuState.drawer?.addEventListener('click', (e) => {
+            const btn = e.target.closest('.nds-drawer-list > li > button.nds-btn');
+            if (!btn || !isFolded()) return;
+            if (btn.getAttribute('aria-expanded') === 'true') e.stopPropagation();
+            setFolded(false);
+        }, { capture: true, signal });
+        smallQuery.addEventListener('change', () => { closeOverlay(); syncRail(); }, { signal });
+        signal.addEventListener('abort', () => {
+            closeOverlay();
+            layout.toggleAttribute('data-sidemenu-collapsed', menuState.wasCollapsed);
+            topButtons.forEach(btn => btn.removeAttribute('title'));
+        });
+        syncRail();
+    }
+
     function destroy() {
         if (currentInstance) {
             const { abortController, accMenu: sidemenu, animTarget: animationTarget, toggleBtn } = currentInstance;
@@ -220,6 +297,15 @@
         // Closed is the start state; open/close only write on a flip.
         menuState.ownExpanded = !toggleBtn.hasAttribute('aria-expanded');
         if (menuState.ownExpanded) NDS.aria.expanded(toggleBtn, false);
+        const layout = sidemenu.closest('.nds-content-layout');
+        if (layout?.classList.contains('nds-rail')) {
+            menuState.layout = layout;
+            menuState.wasHidden = toggleBtn.hidden;
+            toggleBtn.removeAttribute('hidden');
+            syncToggleLabel(sidemenu, toggleBtn, false);
+            setupRail(menuState);
+            return;
+        }
         // Escape and a click outside reach the backdrop's onClick.
         toggleBtn.addEventListener("click", () => {
             hasState(animationTarget, 'open') ? closeMenu(menuState) : openMenu(menuState);

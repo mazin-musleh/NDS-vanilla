@@ -45,6 +45,24 @@ main {
         }
     }
 
+    // Rail side menu: a folded column; below 960px it stays folded and the open menu covers the content.
+    &.nds-has-sidemenu.nds-rail {
+        @include tablet(max) {
+            grid-template-columns: var(--nds-sidemenu-rail-width) 1fr;
+            grid-template-rows: auto;
+
+            >.nds-content {
+                grid-row: auto;
+            }
+        }
+
+        @include desktop(min) {
+            &[data-sidemenu-collapsed] {
+                grid-template-columns: var(--nds-sidemenu-rail-width) 1fr;
+            }
+        }
+    }
+
     .nds-content {
         display: flex;
         flex-direction: column;
