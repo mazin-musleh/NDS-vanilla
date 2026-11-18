@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "2.0.0"
 updated: "2.0.x"
-last_edit: "16/11/2026 - 09:13 PM"
+last_edit: "18/11/2026 - 09:22 AM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -306,6 +306,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `card-link-nested` | practice | info | A link or a button inside a clickable card (`a.nds-card`, `button.nds-card`) |
 | `section-nested` | practice | info | A section inside a section. Divide a section body with `.nds-block` |
 | `card-actions-place` | practice | info | `.nds-card-actions` inside `.nds-card-content`, not after it, or a form's `.nds-form-actions` inside a modal's `.nds-card-content`, where the buttons scroll with the content |
+| `modal-scroll-more` | practice | info | A modal whose `.nds-card-content` holds anything besides a `.nds-card-text`, with no `.nds-scroll-more` on it or as its child. It checks the markup, not the overflow, since content can grow after the run |
 | `switch-reverse-end` | practice | info | A switch at the end of a line, in a section action or a toolbar end, without `nds-reverse`. It skips a stacked switch |
 | `tag-kind-mix` | practice | info | A table column whose one-tag cells mix status tags (`data-status`) and standard tags. A state takes a status tag on every row |
 | `dark-nested` | practice | info | `data-theme="dark"` inside a dark area, which is already dark |

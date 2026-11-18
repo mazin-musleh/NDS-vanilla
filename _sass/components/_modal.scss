@@ -73,6 +73,8 @@
         > .nds-scroll-more-content {
           margin-inline: calc(-1 * var(--_modal-gutter-inline));
           padding-inline: var(--_modal-gutter-inline);
+          // A flex column of fields keeps the content's own spacing; --gap still wins.
+          &.nds-flex { gap: var(--gap, var(--_card-gap)); }
         }
       }
     }

@@ -11,7 +11,7 @@ content_class: nds-stripe
 sidemenu_mode: false
 hide_share_page: true
 hideFeedback: true
-last_edit: "06/11/2026 - 03:29 AM"
+last_edit: "18/11/2026 - 10:00 AM"
 ---
 
 <!-- Layout rules:
@@ -1216,38 +1216,39 @@ last_edit: "06/11/2026 - 03:29 AM"
 <!-- Academic standing modal -->
 <dialog id="standing-modal" class="nds-modal nds-card nds-stroke" aria-labelledby="standing-modal-title">
     <div class="nds-card-header">
-        <div class="nds-card-featured-icon">
-            <span class="nds-featured-icon nds-circle" data-status="success">
-                <i class="nds-icon nds-hgi-checkmark-circle-01" aria-hidden="true"></i>
-            </span>
+        <div class="nds-card-text">
+            <span class="nds-card-title" id="standing-modal-title">Academic standing</span>
+            <p class="nds-card-description">Nothing on your record stops you from registering or graduating.</p>
         </div>
         <button type="button" class="nds-close nds-modal-close nds-btn nds-subtle nds-icon-only" aria-label="Close" data-i18n-aria-label="modal.close">
             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
         </button>
     </div>
-    <div class="nds-card-content">
-        <div class="nds-card-text">
-            <span class="nds-card-title" id="standing-modal-title">Academic standing</span>
-            <p class="nds-card-description">Nothing on your record stops you from registering or graduating.</p>
+    <div class="nds-card-content nds-scroll-more">
+        <div class="nds-scroll-more-content nds-flex nds-col">
+            <dl class="nds-definition-list nds-divided">
+                <div class="nds-definition-item">
+                    <dt><span class="nds-label">Academic warnings</span></dt>
+                    <dd>None</dd>
+                </div>
+                <div class="nds-definition-item">
+                    <dt><span class="nds-label">Registration holds</span></dt>
+                    <dd>None</dd>
+                </div>
+                <div class="nds-definition-item">
+                    <dt><span class="nds-label">Overdue fees</span></dt>
+                    <dd>None</dd>
+                </div>
+                <div class="nds-definition-item">
+                    <dt><span class="nds-label">Disciplinary notes</span></dt>
+                    <dd>None</dd>
+                </div>
+            </dl>
         </div>
-        <dl class="nds-definition-list nds-divided">
-            <div class="nds-definition-item">
-                <dt><span class="nds-label">Academic warnings</span></dt>
-                <dd>None</dd>
-            </div>
-            <div class="nds-definition-item">
-                <dt><span class="nds-label">Registration holds</span></dt>
-                <dd>None</dd>
-            </div>
-            <div class="nds-definition-item">
-                <dt><span class="nds-label">Overdue fees</span></dt>
-                <dd>None</dd>
-            </div>
-            <div class="nds-definition-item">
-                <dt><span class="nds-label">Disciplinary notes</span></dt>
-                <dd>None</dd>
-            </div>
-        </dl>
+        <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+            <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
+            <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+        </button>
     </div>
     <div class="nds-card-actions nds-col-sm">
         <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close>
@@ -1259,44 +1260,45 @@ last_edit: "06/11/2026 - 03:29 AM"
 <!-- Study plan modal -->
 <dialog id="plan-modal" class="nds-modal nds-card nds-stroke" aria-labelledby="plan-modal-title">
     <div class="nds-card-header">
-        <div class="nds-card-featured-icon">
-            <span class="nds-featured-icon nds-circle">
-                <i class="hgi hgi-stroke hgi-graduation-scroll" aria-hidden="true"></i>
-            </span>
+        <div class="nds-card-text">
+            <span class="nds-card-title" id="plan-modal-title">Study plan</span>
+            <p class="nds-card-description">96 of 132 credit hours done. 36 hours left.</p>
         </div>
         <button type="button" class="nds-close nds-modal-close nds-btn nds-subtle nds-icon-only" aria-label="Close" data-i18n-aria-label="modal.close">
             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
         </button>
     </div>
-    <div class="nds-card-content">
-        <div class="nds-card-text">
-            <span class="nds-card-title" id="plan-modal-title">Study plan</span>
-            <p class="nds-card-description">96 of 132 credit hours done. 36 hours left.</p>
-        </div>
-        <div class="nds-progress-bar nds-md" data-value="89" role="progressbar" aria-labelledby="plan-university">
-            <span class="nds-progress-label" id="plan-university">University requirements: 24 of 27 hours</span>
-            <div class="nds-progress-track">
-                <div class="nds-progress-fill"></div>
+    <div class="nds-card-content nds-scroll-more">
+        <div class="nds-scroll-more-content nds-flex nds-col">
+            <div class="nds-progress-bar nds-md" data-value="89" role="progressbar" aria-labelledby="plan-university">
+                <span class="nds-progress-label" id="plan-university">University requirements: 24 of 27 hours</span>
+                <div class="nds-progress-track">
+                    <div class="nds-progress-fill"></div>
+                </div>
+            </div>
+            <div class="nds-progress-bar nds-md" data-value="80" role="progressbar" aria-labelledby="plan-college">
+                <span class="nds-progress-label" id="plan-college">College requirements: 24 of 30 hours</span>
+                <div class="nds-progress-track">
+                    <div class="nds-progress-fill"></div>
+                </div>
+            </div>
+            <div class="nds-progress-bar nds-md" data-value="67" role="progressbar" aria-labelledby="plan-major">
+                <span class="nds-progress-label" id="plan-major">Major requirements: 42 of 63 hours</span>
+                <div class="nds-progress-track">
+                    <div class="nds-progress-fill"></div>
+                </div>
+            </div>
+            <div class="nds-progress-bar nds-md" data-value="50" role="progressbar" aria-labelledby="plan-electives">
+                <span class="nds-progress-label" id="plan-electives">Free electives: 6 of 12 hours</span>
+                <div class="nds-progress-track">
+                    <div class="nds-progress-fill"></div>
+                </div>
             </div>
         </div>
-        <div class="nds-progress-bar nds-md" data-value="80" role="progressbar" aria-labelledby="plan-college">
-            <span class="nds-progress-label" id="plan-college">College requirements: 24 of 30 hours</span>
-            <div class="nds-progress-track">
-                <div class="nds-progress-fill"></div>
-            </div>
-        </div>
-        <div class="nds-progress-bar nds-md" data-value="67" role="progressbar" aria-labelledby="plan-major">
-            <span class="nds-progress-label" id="plan-major">Major requirements: 42 of 63 hours</span>
-            <div class="nds-progress-track">
-                <div class="nds-progress-fill"></div>
-            </div>
-        </div>
-        <div class="nds-progress-bar nds-md" data-value="50" role="progressbar" aria-labelledby="plan-electives">
-            <span class="nds-progress-label" id="plan-electives">Free electives: 6 of 12 hours</span>
-            <div class="nds-progress-track">
-                <div class="nds-progress-fill"></div>
-            </div>
-        </div>
+        <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+            <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
+            <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+        </button>
     </div>
     <div class="nds-card-actions nds-col-sm">
         <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close>
@@ -1308,62 +1310,63 @@ last_edit: "06/11/2026 - 03:29 AM"
 <!-- Fees modal -->
 <dialog id="fees-modal" class="nds-modal nds-card nds-stroke nds-lg" aria-labelledby="fees-modal-title">
     <div class="nds-card-header">
-        <div class="nds-card-featured-icon">
-            <span class="nds-featured-icon nds-circle">
-                <i class="hgi hgi-stroke hgi-wallet-01" aria-hidden="true"></i>
-            </span>
+        <div class="nds-card-text">
+            <span class="nds-card-title" id="fees-modal-title">Fees and payments</span>
+            <p class="nds-card-description">First term 2026–2027. Pay the balance before 1 Nov 2026 to keep your registration.</p>
         </div>
         <button type="button" class="nds-close nds-modal-close nds-btn nds-subtle nds-icon-only" aria-label="Close" data-i18n-aria-label="modal.close">
             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
         </button>
     </div>
-    <div class="nds-card-content">
-        <div class="nds-card-text">
-            <span class="nds-card-title" id="fees-modal-title">Fees and payments</span>
-            <p class="nds-card-description">First term 2026–2027. Pay the balance before 1 Nov 2026 to keep your registration.</p>
+    <div class="nds-card-content nds-scroll-more">
+        <div class="nds-scroll-more-content nds-flex nds-col">
+            <table class="nds-table nds-empty" data-empty-message="Nothing to pay this term">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Due</th>
+                        <th data-align="center">Status</th>
+                        <th data-align="end">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tuition, 15 credit hours</td>
+                        <td>1 Sep 2026</td>
+                        <td>
+                            <span class="nds-tag nds-sm" data-status="success">
+                                <span class="nds-label">Paid</span>
+                            </span>
+                        </td>
+                        <td><span class="nds-number-format" data-currency="SAR">9000</span></td>
+                    </tr>
+                    <tr>
+                        <td>Student services fee</td>
+                        <td>1 Sep 2026</td>
+                        <td>
+                            <span class="nds-tag nds-sm" data-status="success">
+                                <span class="nds-label">Paid</span>
+                            </span>
+                        </td>
+                        <td><span class="nds-number-format" data-currency="SAR">500</span></td>
+                    </tr>
+                    <tr>
+                        <td>Second installment</td>
+                        <td>1 Nov 2026</td>
+                        <td>
+                            <span class="nds-tag nds-sm" data-status="warning">
+                                <span class="nds-label">Due</span>
+                            </span>
+                        </td>
+                        <td><span class="nds-number-format" data-currency="SAR">4500</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <table class="nds-table nds-empty" data-empty-message="Nothing to pay this term">
-            <thead>
-                <tr>
-                    <th>Item</th>
-                    <th>Due</th>
-                    <th data-align="center">Status</th>
-                    <th data-align="end">Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Tuition, 15 credit hours</td>
-                    <td>1 Sep 2026</td>
-                    <td>
-                        <span class="nds-tag nds-sm" data-status="success">
-                            <span class="nds-label">Paid</span>
-                        </span>
-                    </td>
-                    <td><span class="nds-number-format" data-currency="SAR">9000</span></td>
-                </tr>
-                <tr>
-                    <td>Student services fee</td>
-                    <td>1 Sep 2026</td>
-                    <td>
-                        <span class="nds-tag nds-sm" data-status="success">
-                            <span class="nds-label">Paid</span>
-                        </span>
-                    </td>
-                    <td><span class="nds-number-format" data-currency="SAR">500</span></td>
-                </tr>
-                <tr>
-                    <td>Second installment</td>
-                    <td>1 Nov 2026</td>
-                    <td>
-                        <span class="nds-tag nds-sm" data-status="warning">
-                            <span class="nds-label">Due</span>
-                        </span>
-                    </td>
-                    <td><span class="nds-number-format" data-currency="SAR">4500</span></td>
-                </tr>
-            </tbody>
-        </table>
+        <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+            <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
+            <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+        </button>
     </div>
     <div class="nds-card-actions nds-col-sm">
         <a href="#" class="nds-btn nds-primary nds-lg">
@@ -1378,56 +1381,57 @@ last_edit: "06/11/2026 - 03:29 AM"
 <!-- Letter request modal -->
 <dialog id="letter-modal" class="nds-modal nds-card nds-stroke" aria-labelledby="letter-modal-title">
     <div class="nds-card-header">
-        <div class="nds-card-featured-icon">
-            <span class="nds-featured-icon nds-circle">
-                <i class="hgi hgi-stroke hgi-message-edit-01" aria-hidden="true"></i>
-            </span>
+        <div class="nds-card-text">
+            <span class="nds-card-title" id="letter-modal-title">Request a letter</span>
+            <p class="nds-card-description">The letter comes to your university email as a PDF with a digital stamp.</p>
         </div>
         <button type="button" class="nds-close nds-modal-close nds-btn nds-subtle nds-icon-only" aria-label="Close" data-i18n-aria-label="modal.close">
             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
         </button>
     </div>
-    <div class="nds-card-content">
-        <div class="nds-card-text">
-            <span class="nds-card-title" id="letter-modal-title">Request a letter</span>
-            <p class="nds-card-description">The letter comes to your university email as a PDF with a digital stamp.</p>
+    <div class="nds-card-content nds-scroll-more">
+        <div class="nds-scroll-more-content nds-flex nds-col">
+            <fieldset class="nds-form-group nds-radio-group">
+                <legend class="nds-label">Letter type</legend>
+                <div class="nds-form-container nds-radio">
+                    <div class="nds-form-header">
+                        <label for="letter-enrollment">
+                            <span class="nds-label">Enrollment letter</span>
+                            <span class="nds-info">Says you are a student this term</span>
+                        </label>
+                    </div>
+                    <div class="nds-form-control">
+                        <input type="radio" id="letter-enrollment" name="letter-type" value="enrollment" class="nds-radio-input" checked>
+                    </div>
+                </div>
+                <div class="nds-form-container nds-radio">
+                    <div class="nds-form-header">
+                        <label for="letter-hours">
+                            <span class="nds-label">Completed hours</span>
+                            <span class="nds-info">Lists the credit hours you passed</span>
+                        </label>
+                    </div>
+                    <div class="nds-form-control">
+                        <input type="radio" id="letter-hours" name="letter-type" value="hours" class="nds-radio-input">
+                    </div>
+                </div>
+                <div class="nds-form-container nds-radio">
+                    <div class="nds-form-header">
+                        <label for="letter-graduation">
+                            <span class="nds-label">Expected graduation</span>
+                            <span class="nds-info">Gives the term you are expected to graduate</span>
+                        </label>
+                    </div>
+                    <div class="nds-form-control">
+                        <input type="radio" id="letter-graduation" name="letter-type" value="graduation" class="nds-radio-input">
+                    </div>
+                </div>
+            </fieldset>
         </div>
-        <fieldset class="nds-form-group nds-radio-group">
-            <legend class="nds-label">Letter type</legend>
-            <div class="nds-form-container nds-radio">
-                <div class="nds-form-header">
-                    <label for="letter-enrollment">
-                        <span class="nds-label">Enrollment letter</span>
-                        <span class="nds-info">Says you are a student this term</span>
-                    </label>
-                </div>
-                <div class="nds-form-control">
-                    <input type="radio" id="letter-enrollment" name="letter-type" value="enrollment" class="nds-radio-input" checked>
-                </div>
-            </div>
-            <div class="nds-form-container nds-radio">
-                <div class="nds-form-header">
-                    <label for="letter-hours">
-                        <span class="nds-label">Completed hours</span>
-                        <span class="nds-info">Lists the credit hours you passed</span>
-                    </label>
-                </div>
-                <div class="nds-form-control">
-                    <input type="radio" id="letter-hours" name="letter-type" value="hours" class="nds-radio-input">
-                </div>
-            </div>
-            <div class="nds-form-container nds-radio">
-                <div class="nds-form-header">
-                    <label for="letter-graduation">
-                        <span class="nds-label">Expected graduation</span>
-                        <span class="nds-info">Gives the term you are expected to graduate</span>
-                    </label>
-                </div>
-                <div class="nds-form-control">
-                    <input type="radio" id="letter-graduation" name="letter-type" value="graduation" class="nds-radio-input">
-                </div>
-            </div>
-        </fieldset>
+        <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+            <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
+            <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+        </button>
     </div>
     <div class="nds-card-actions nds-col-sm">
         <button type="button" class="nds-btn nds-primary nds-lg" data-modal-close>

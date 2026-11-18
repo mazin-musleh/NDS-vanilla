@@ -10,7 +10,7 @@ breadcrumb:
 lang: en
 direction: ltr
 sidemenu_mode: false
-last_edit: "03/11/2026 - 10:23 PM"
+last_edit: "18/11/2026 - 10:58 AM"
 ---
 
 <!-- Layout rules: a booking on one page, in the order booking sites use (what, where, when, who), with a live summary beside it.
@@ -375,7 +375,7 @@ last_edit: "03/11/2026 - 10:23 PM"
 <dialog id="cancel-modal" class="nds-modal nds-card nds-stroke nds-sm" aria-labelledby="cancel-modal-title">
     <div class="nds-card-header">
         <div class="nds-card-featured-icon">
-            <span class="nds-featured-icon nds-circle" data-status="error">
+            <span class="nds-featured-icon nds-circle nds-red">
                 <i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>
             </span>
         </div>

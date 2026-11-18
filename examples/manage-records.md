@@ -10,7 +10,7 @@ lang: en
 direction: ltr
 hide_share_page: true
 hideFeedback: true
-last_edit: "03/11/2026 - 04:15 PM"
+last_edit: "18/11/2026 - 10:58 AM"
 ---
 
 <section id="requests" class="nds-content-section">
@@ -955,7 +955,7 @@ last_edit: "03/11/2026 - 04:15 PM"
 <!-- Delete confirmation -->
 <dialog id="delete-modal" class="nds-modal nds-card nds-stroke nds-sm" aria-labelledby="delete-modal-title">
     <div class="nds-card-header">
-        <span class="nds-featured-icon nds-circle" data-status="error">
+        <span class="nds-featured-icon nds-circle nds-red">
             <i class="hgi hgi-stroke hgi-delete-02"></i>
         </span>
         <button class="nds-close nds-modal-close nds-btn nds-subtle nds-icon-only" aria-label="Close dialog" data-i18n-aria-label="modal.close_dialog">

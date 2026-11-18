@@ -1086,6 +1086,10 @@
         'a section inside a section', 'Divide the section body with .nds-block instead.');
     addPractice('card-actions-place', 'components/card.html', '.nds-card-content .nds-card-actions, .nds-modal .nds-card-content .nds-form-actions',
         'action buttons inside .nds-card-content: in a modal, only the content scrolls', 'Put the buttons in a .nds-card-actions after .nds-card-content. For a form, one form.nds-form wraps both.');
+    // Not by overflow: a phone, late data or a field error can make content taller after the run.
+    // Content of only .nds-card-text is a message; anything more can grow.
+    addPractice('modal-scroll-more', 'components/modal.html', ':is(.nds-modal, .nds-modal > form) > .nds-card-content:not(.nds-scroll-more, :has(> .nds-scroll-more)):has(> :not(.nds-card-text))',
+        'a modal whose content holds more than its title and description, with no Scroll More: when the content grows past the screen, nothing shows more is below', 'Use the modal\'s Header title structure: the title in the header, and .nds-card-content a .nds-scroll-more with a .nds-scroll-more-content and a Show more button.');
     addPractice('switch-reverse-end', 'components/switch.html', ':is(.nds-section-action, .nds-toolbar-end) > .nds-switch:not(.nds-reverse, .nds-stacked)',
         'a switch at the end of a line without nds-reverse: its label pushes it along as the text changes', 'Add nds-reverse, so the label goes first and the switch stays in place.');
     addPractice('dark-nested', 'foundations/themes.html', '[data-theme~="dark"]:not(html) [data-theme~="dark"]',

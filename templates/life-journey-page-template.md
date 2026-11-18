@@ -24,7 +24,7 @@ hero_float_actions:
         <div class="nds-form-header"><label for="journey-done-toggle"><span class="nds-note">Completed</span></label></div>
         <div class="nds-form-control"><div class="nds-switch-toggle"><input type="checkbox" id="journey-done-toggle" class="nds-switch-input"><div class="nds-switch-track"><div class="nds-switch-thumb"></div></div></div></div>
         </div>
-last_edit: "03/11/2026 - 04:30 PM"
+last_edit: "18/11/2026 - 10:00 AM"
 steps:
   - title: "Get the investment registration certificate"
     description: "The journey enables the investor to issue the investment registration certificate, which gives them the legal right to carry out investment activity inside the Kingdom. It is the first step to establish the legal entity."
@@ -295,57 +295,65 @@ related:
 <!-- Completed only: the journey survey. Open it when the user enters a completed journey they have not rated -->
 <dialog id="journey-survey" class="nds-modal nds-card nds-stroke" aria-labelledby="journey-survey-title">
     <div class="nds-card-header">
-        <span class="nds-card-title" id="journey-survey-title">Tell us what you think of this journey</span>
+        <div class="nds-card-text">
+            <span class="nds-card-title" id="journey-survey-title">Tell us what you think of this journey</span>
+            <p class="nds-card-description">Please don't include personal or financial information. Your feedback will be sent and recorded to improve the services.</p>
+        </div>
         <button type="button" class="nds-close nds-modal-close nds-btn nds-subtle nds-icon-only" aria-label="Close" data-i18n-aria-label="modal.close">
             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
         </button>
     </div>
-    <div class="nds-card-content">
-        <div class="nds-card-text">
-            <p class="nds-card-description">Please don't include personal or financial information. Your feedback will be sent and recorded to improve the services.</p>
-        </div>
-        <form class="nds-form nds-flex nds-col" data-ajax>
-            <div class="nds-alert nds-card nds-inline" data-status="info">
-                <span class="nds-feedback nds-alert-icon">
-                    <span class="nds-feedback-icon">
-                        <i class="nds-icon" aria-hidden="true"></i>
+    <form class="nds-form" data-ajax>
+        <div class="nds-card-content nds-scroll-more">
+            <div class="nds-scroll-more-content nds-flex nds-col">
+                <div class="nds-alert nds-card nds-inline" data-status="info">
+                    <span class="nds-feedback nds-alert-icon">
+                        <span class="nds-feedback-icon">
+                            <i class="nds-icon" aria-hidden="true"></i>
+                        </span>
                     </span>
-                </span>
-                <div class="nds-alert-content">
-                    <div class="nds-alert-text">
-                        <p class="nds-alert-description" id="journey-survey-hint">Rate your experience from (1) poor to (5) excellent</p>
+                    <div class="nds-alert-content">
+                        <div class="nds-alert-text">
+                            <p class="nds-alert-description" id="journey-survey-hint">Rate your experience from (1) poor to (5) excellent</p>
+                        </div>
                     </div>
                 </div>
+                {%- for question in page.survey %}
+                <fieldset class="nds-form-group" data-required aria-describedby="journey-survey-hint">
+                    <legend>
+                        <span class="nds-label">{{ question }}</span>
+                    </legend>
+                    <div class="nds-rating nds-md nds-brand" data-rating="0">
+                        <button class="nds-rating-star" type="button" aria-label="1 star"></button>
+                        <button class="nds-rating-star" type="button" aria-label="2 stars"></button>
+                        <button class="nds-rating-star" type="button" aria-label="3 stars"></button>
+                        <button class="nds-rating-star" type="button" aria-label="4 stars"></button>
+                        <button class="nds-rating-star" type="button" aria-label="5 stars"></button>
+                    </div>
+                    <div class="nds-form-footer" data-feedback-target hidden></div>
+                </fieldset>
+                {%- endfor %}
+                <div class="nds-form-container nds-textarea">
+                    <div class="nds-form-header">
+                        <label for="journey-survey-comment"><span class="nds-label">Do you have any suggestions to improve the life journey?</span></label>
+                    </div>
+                    <div class="nds-form-control">
+                        <textarea id="journey-survey-comment" name="comment" class="nds-textarea" placeholder="Enter your message..." rows="3"></textarea>
+                    </div>
+                </div>
+                <p>For more information you may review the <a href="#" class="nds-link">e-participation statement</a> and the <a href="#" class="nds-link">rules of engagement</a>.</p>
             </div>
-            {%- for question in page.survey %}
-            <fieldset class="nds-form-group" data-required aria-describedby="journey-survey-hint">
-                <legend>
-                    <span class="nds-label">{{ question }}</span>
-                </legend>
-                <div class="nds-rating nds-md nds-brand" data-rating="0">
-                    <button class="nds-rating-star" type="button" aria-label="1 star"></button>
-                    <button class="nds-rating-star" type="button" aria-label="2 stars"></button>
-                    <button class="nds-rating-star" type="button" aria-label="3 stars"></button>
-                    <button class="nds-rating-star" type="button" aria-label="4 stars"></button>
-                    <button class="nds-rating-star" type="button" aria-label="5 stars"></button>
-                </div>
-                <div class="nds-form-footer" data-feedback-target hidden></div>
-            </fieldset>
-            {%- endfor %}
-            <div class="nds-form-container nds-textarea">
-                <div class="nds-form-header">
-                    <label for="journey-survey-comment"><span class="nds-label">Do you have any suggestions to improve the life journey?</span></label>
-                </div>
-                <div class="nds-form-control">
-                    <textarea id="journey-survey-comment" name="comment" class="nds-textarea" placeholder="Enter your message..." rows="3"></textarea>
-                </div>
-            </div>
-            <p>For more information you may review the <a href="#" class="nds-link">e-participation statement</a> and the <a href="#" class="nds-link">rules of engagement</a>.</p>
+            <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+                <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
+                <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="nds-card-actions nds-col-sm">
             <button type="submit" class="nds-btn nds-primary nds-lg">
                 <span class="nds-label">Send</span>
             </button>
-        </form>
-    </div>
+        </div>
+    </form>
 </dialog>
 
 <script>

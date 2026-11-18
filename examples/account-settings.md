@@ -10,7 +10,7 @@ breadcrumb:
 lang: en
 direction: ltr
 sidemenu_mode: false
-last_edit: "02/11/2026 - 04:22 PM"
+last_edit: "18/11/2026 - 10:00 AM"
 ---
 
 <!-- Layout rules: a signed-in user's own account, read first and changed one thing at a time.
@@ -167,36 +167,37 @@ last_edit: "02/11/2026 - 04:22 PM"
 
 <dialog id="acc-email-modal" class="nds-modal nds-card nds-stroke nds-sm" aria-labelledby="acc-email-modal-title">
     <div class="nds-card-header">
-        <div class="nds-card-featured-icon">
-            <span class="nds-featured-icon nds-circle">
-                <i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>
-            </span>
+        <div class="nds-card-text">
+            <span class="nds-card-title" id="acc-email-modal-title">Change email</span>
+            <p class="nds-card-description">We send a code to the new address to check it is yours.</p>
         </div>
         <button type="button" class="nds-close nds-modal-close nds-btn nds-subtle nds-icon-only" aria-label="Close" data-i18n-aria-label="modal.close">
             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
         </button>
     </div>
     <form id="acc-email-form" class="nds-form" data-ajax>
-        <div class="nds-card-content">
-            <div class="nds-card-text">
-                <span class="nds-card-title" id="acc-email-modal-title">Change email</span>
-                <p class="nds-card-description">We send a code to the new address to check it is yours.</p>
-            </div>
-            <div class="nds-form-container" data-required>
-                <div class="nds-form-header">
-                    <label for="acc-new-email">
-                        <span class="nds-label">New email address</span>
-                    </label>
-                </div>
-                <div class="nds-form-control">
-                    <input type="email" id="acc-new-email" name="email" class="nds-input" autocomplete="email">
-                    <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear email" hidden>
-                            <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                        </button>
+        <div class="nds-card-content nds-scroll-more">
+            <div class="nds-scroll-more-content nds-flex nds-col">
+                <div class="nds-form-container" data-required>
+                    <div class="nds-form-header">
+                        <label for="acc-new-email">
+                            <span class="nds-label">New email address</span>
+                        </label>
+                    </div>
+                    <div class="nds-form-control">
+                        <input type="email" id="acc-new-email" name="email" class="nds-input" autocomplete="email">
+                        <div class="nds-form-action">
+                            <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear email" hidden>
+                                <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
+            <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+                <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
+                <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            </button>
         </div>
         <div class="nds-card-actions nds-col-sm">
             <button type="submit" class="nds-btn nds-primary nds-lg">
@@ -211,40 +212,41 @@ last_edit: "02/11/2026 - 04:22 PM"
 
 <dialog id="acc-mobile-modal" class="nds-modal nds-card nds-stroke nds-sm" aria-labelledby="acc-mobile-modal-title">
     <div class="nds-card-header">
-        <div class="nds-card-featured-icon">
-            <span class="nds-featured-icon nds-circle">
-                <i class="nds-icon nds-hgi-smart-phone-01" aria-hidden="true"></i>
-            </span>
+        <div class="nds-card-text">
+            <span class="nds-card-title" id="acc-mobile-modal-title">Change mobile number</span>
+            <p class="nds-card-description">We send a code by text message to the new number to check it is yours.</p>
         </div>
         <button type="button" class="nds-close nds-modal-close nds-btn nds-subtle nds-icon-only" aria-label="Close" data-i18n-aria-label="modal.close">
             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
         </button>
     </div>
     <form id="acc-mobile-form" class="nds-form" data-ajax>
-        <div class="nds-card-content">
-            <div class="nds-card-text">
-                <span class="nds-card-title" id="acc-mobile-modal-title">Change mobile number</span>
-                <p class="nds-card-description">We send a code by text message to the new number to check it is yours.</p>
-            </div>
-            <div class="nds-form-container nds-formatted" data-format="phone" data-required data-groups="00 000 0000">
-                <div class="nds-form-header">
-                    <label for="acc-new-phone">
-                        <span class="nds-label">New mobile number</span>
-                    </label>
-                </div>
-                <div class="nds-form-control">
-                    <div class="nds-form-action nds-prefix">
-                        <span class="nds-btn nds-subtle"><span class="nds-label">+966</span></span>
-                        <input type="hidden" name="country-code" value="+966">
+        <div class="nds-card-content nds-scroll-more">
+            <div class="nds-scroll-more-content nds-flex nds-col">
+                <div class="nds-form-container nds-formatted" data-format="phone" data-required data-groups="00 000 0000">
+                    <div class="nds-form-header">
+                        <label for="acc-new-phone">
+                            <span class="nds-label">New mobile number</span>
+                        </label>
                     </div>
-                    <input type="tel" id="acc-new-phone" name="phone" class="nds-input" placeholder="5X XXX XXXX" autocomplete="tel-national" inputmode="numeric">
-                    <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
-                            <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                        </button>
+                    <div class="nds-form-control">
+                        <div class="nds-form-action nds-prefix">
+                            <span class="nds-btn nds-subtle"><span class="nds-label">+966</span></span>
+                            <input type="hidden" name="country-code" value="+966">
+                        </div>
+                        <input type="tel" id="acc-new-phone" name="phone" class="nds-input" placeholder="5X XXX XXXX" autocomplete="tel-national" inputmode="numeric">
+                        <div class="nds-form-action">
+                            <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear input" data-i18n-aria-label="form.clear_input" hidden>
+                                <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
+            <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+                <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
+                <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            </button>
         </div>
         <div class="nds-card-actions nds-col-sm">
             <button type="submit" class="nds-btn nds-primary nds-lg">
@@ -260,53 +262,54 @@ last_edit: "02/11/2026 - 04:22 PM"
 <!-- One code step for both email and mobile: the script says where the code went -->
 <dialog id="acc-code-modal" class="nds-modal nds-card nds-stroke nds-sm" aria-labelledby="acc-code-modal-title">
     <div class="nds-card-header">
-        <div class="nds-card-featured-icon">
-            <span class="nds-featured-icon nds-circle">
-                <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
-            </span>
+        <div class="nds-card-text">
+            <span class="nds-card-title" id="acc-code-modal-title">Enter the code</span>
+            <p class="nds-card-description">We sent a 4-digit code to <strong id="acc-code-destination">the new address</strong>.</p>
         </div>
         <button type="button" class="nds-close nds-modal-close nds-btn nds-subtle nds-icon-only" aria-label="Close" data-i18n-aria-label="modal.close">
             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
         </button>
     </div>
     <form id="acc-code-form" class="nds-form" data-ajax>
-        <div class="nds-card-content">
-            <div class="nds-card-text nds-center">
-                <span class="nds-card-title" id="acc-code-modal-title">Enter the code</span>
-                <p class="nds-card-description">We sent a 4-digit code to <strong id="acc-code-destination">the new address</strong>.</p>
-            </div>
-            <fieldset class="nds-form-group nds-otp-group nds-md nds-center" data-required>
-                <legend><span class="nds-label">Verification code</span></legend>
-                <div class="nds-otp">
-                    <div class="nds-form-container nds-otp-container">
-                        <div class="nds-form-control">
-                            <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code" aria-label="Digit 1 of 4">
+        <div class="nds-card-content nds-scroll-more">
+            <div class="nds-scroll-more-content nds-flex nds-col">
+                <fieldset class="nds-form-group nds-otp-group nds-md nds-center" data-required>
+                    <legend><span class="nds-label">Verification code</span></legend>
+                    <div class="nds-otp">
+                        <div class="nds-form-container nds-otp-container">
+                            <div class="nds-form-control">
+                                <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" autocomplete="one-time-code" aria-label="Digit 1 of 4">
+                            </div>
+                        </div>
+                        <div class="nds-form-container nds-otp-container">
+                            <div class="nds-form-control">
+                                <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 2 of 4">
+                            </div>
+                        </div>
+                        <div class="nds-form-container nds-otp-container">
+                            <div class="nds-form-control">
+                                <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 3 of 4">
+                            </div>
+                        </div>
+                        <div class="nds-form-container nds-otp-container">
+                            <div class="nds-form-control">
+                                <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 4 of 4">
+                            </div>
                         </div>
                     </div>
-                    <div class="nds-form-container nds-otp-container">
-                        <div class="nds-form-control">
-                            <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 2 of 4">
-                        </div>
-                    </div>
-                    <div class="nds-form-container nds-otp-container">
-                        <div class="nds-form-control">
-                            <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 3 of 4">
-                        </div>
-                    </div>
-                    <div class="nds-form-container nds-otp-container">
-                        <div class="nds-form-control">
-                            <input type="text" inputmode="numeric" maxlength="1" pattern="[0-9]" aria-label="Digit 4 of 4">
-                        </div>
-                    </div>
+                    <input type="hidden" class="nds-otp-value" name="one-time-code">
+                </fieldset>
+                <div class="nds-center">
+                    <p class="nds-note">Didn't receive the code?</p>
+                    <button type="button" class="nds-btn nds-subtle nds-cooldown" id="acc-code-resend" data-cooldown="30" data-cooldown-label="Resend in {s}s" data-resend-label="Resend">
+                        <span class="nds-label">Resend code</span>
+                    </button>
                 </div>
-                <input type="hidden" class="nds-otp-value" name="one-time-code">
-            </fieldset>
-            <div class="nds-center">
-                <p class="nds-note">Didn't receive the code?</p>
-                <button type="button" class="nds-btn nds-subtle nds-cooldown" id="acc-code-resend" data-cooldown="30" data-cooldown-label="Resend in {s}s" data-resend-label="Resend">
-                    <span class="nds-label">Resend code</span>
-                </button>
             </div>
+            <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+                <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
+                <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            </button>
         </div>
         <div class="nds-card-actions nds-col-sm">
             <button type="submit" class="nds-btn nds-primary nds-lg">
@@ -321,40 +324,41 @@ last_edit: "02/11/2026 - 04:22 PM"
 
 <dialog id="acc-language-modal" class="nds-modal nds-card nds-stroke nds-sm" aria-labelledby="acc-language-modal-title">
     <div class="nds-card-header">
-        <div class="nds-card-featured-icon">
-            <span class="nds-featured-icon nds-circle">
-                <i class="nds-icon nds-hgi-translation" aria-hidden="true"></i>
-            </span>
+        <div class="nds-card-text">
+            <span class="nds-card-title" id="acc-language-modal-title">Language of messages</span>
+            <p class="nds-card-description">The language of the emails and text messages we send you.</p>
         </div>
         <button type="button" class="nds-close nds-modal-close nds-btn nds-subtle nds-icon-only" aria-label="Close" data-i18n-aria-label="modal.close">
             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
         </button>
     </div>
     <form id="acc-language-form" class="nds-form" data-ajax>
-        <div class="nds-card-content">
-            <div class="nds-card-text">
-                <span class="nds-card-title" id="acc-language-modal-title">Language of messages</span>
-                <p class="nds-card-description">The language of the emails and text messages we send you.</p>
+        <div class="nds-card-content nds-scroll-more">
+            <div class="nds-scroll-more-content nds-flex nds-col">
+                <fieldset class="nds-form-group nds-radio-group">
+                    <legend class="nds-label">Language</legend>
+                    <div class="nds-form-container nds-radio">
+                        <div class="nds-form-header">
+                            <label for="acc-lang-ar"><span class="nds-label">Arabic</span></label>
+                        </div>
+                        <div class="nds-form-control">
+                            <input type="radio" id="acc-lang-ar" name="language" value="ar" class="nds-radio-input" checked>
+                        </div>
+                    </div>
+                    <div class="nds-form-container nds-radio">
+                        <div class="nds-form-header">
+                            <label for="acc-lang-en"><span class="nds-label">English</span></label>
+                        </div>
+                        <div class="nds-form-control">
+                            <input type="radio" id="acc-lang-en" name="language" value="en" class="nds-radio-input">
+                        </div>
+                    </div>
+                </fieldset>
             </div>
-            <fieldset class="nds-form-group nds-radio-group">
-                <legend class="nds-label">Language</legend>
-                <div class="nds-form-container nds-radio">
-                    <div class="nds-form-header">
-                        <label for="acc-lang-ar"><span class="nds-label">Arabic</span></label>
-                    </div>
-                    <div class="nds-form-control">
-                        <input type="radio" id="acc-lang-ar" name="language" value="ar" class="nds-radio-input" checked>
-                    </div>
-                </div>
-                <div class="nds-form-container nds-radio">
-                    <div class="nds-form-header">
-                        <label for="acc-lang-en"><span class="nds-label">English</span></label>
-                    </div>
-                    <div class="nds-form-control">
-                        <input type="radio" id="acc-lang-en" name="language" value="en" class="nds-radio-input">
-                    </div>
-                </div>
-            </fieldset>
+            <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+                <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
+                <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            </button>
         </div>
         <div class="nds-card-actions nds-col-sm">
             <button type="submit" class="nds-btn nds-primary nds-lg">
@@ -369,102 +373,103 @@ last_edit: "02/11/2026 - 04:22 PM"
 
 <dialog id="acc-password-modal" class="nds-modal nds-card nds-stroke nds-sm" aria-labelledby="acc-password-modal-title">
     <div class="nds-card-header">
-        <div class="nds-card-featured-icon">
-            <span class="nds-featured-icon nds-circle">
-                <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
-            </span>
+        <div class="nds-card-text">
+            <span class="nds-card-title" id="acc-password-modal-title">Change password</span>
+            <p class="nds-card-description">Use at least 8 characters, with one number.</p>
         </div>
         <button type="button" class="nds-close nds-modal-close nds-btn nds-subtle nds-icon-only" aria-label="Close" data-i18n-aria-label="modal.close">
             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
         </button>
     </div>
     <form id="acc-password-form" class="nds-form" data-ajax>
-        <div class="nds-card-content">
-            <div class="nds-card-text">
-                <span class="nds-card-title" id="acc-password-modal-title">Change password</span>
-                <p class="nds-card-description">Use at least 8 characters, with one number.</p>
-            </div>
-            <!-- A password manager saves the new password under this account -->
-            <input type="text" name="username" value="1012345672" autocomplete="username" hidden>
-            <div class="nds-form-container" data-required>
-                <div class="nds-form-header">
-                    <label for="acc-current-password">
-                        <span class="nds-label">Current password</span>
-                    </label>
+        <div class="nds-card-content nds-scroll-more">
+            <div class="nds-scroll-more-content nds-flex nds-col">
+                <!-- A password manager saves the new password under this account -->
+                <input type="text" name="username" value="1012345672" autocomplete="username" hidden>
+                <div class="nds-form-container" data-required>
+                    <div class="nds-form-header">
+                        <label for="acc-current-password">
+                            <span class="nds-label">Current password</span>
+                        </label>
+                    </div>
+                    <div class="nds-form-control">
+                        <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
+                        <input type="password" id="acc-current-password" name="current-password" class="nds-input" autocomplete="current-password">
+                        <div class="nds-form-action">
+                            <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear password" data-i18n-aria-label="password.clear_password" hidden>
+                                <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                            </button>
+                            <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="form.show_password">
+                                <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="nds-form-control">
-                    <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
-                    <input type="password" id="acc-current-password" name="current-password" class="nds-input" autocomplete="current-password">
-                    <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle nds-clear nds-icon-only" type="button" aria-label="Clear password" data-i18n-aria-label="password.clear_password" hidden>
-                            <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                        </button>
-                        <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="form.show_password">
-                            <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
-                        </button>
+                <div class="nds-form-container nds-password" data-required>
+                    <div class="nds-form-header">
+                        <label for="acc-new-password">
+                            <span class="nds-label">New password</span>
+                        </label>
+                    </div>
+                    <div class="nds-form-control">
+                        <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
+                        <input type="password" id="acc-new-password" name="new-password" class="nds-input" autocomplete="new-password" minlength="8" aria-describedby="acc-new-password-rules">
+                        <div class="nds-form-action">
+                            <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password" data-i18n-aria-label="password.clear_password">
+                                <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                            </button>
+                            <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="form.show_password">
+                                <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="nds-form-footer" data-feedback-target>
+                        <div class="nds-password-rules" id="acc-new-password-rules">
+                            <span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="length">
+                                <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+                                <span class="nds-feedback-message">At least 8 characters</span>
+                            </span>
+                            <span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="digit">
+                                <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+                                <span class="nds-feedback-message">One number (0-9)</span>
+                            </span>
+                        </div>
+                        <span class="nds-password-status" role="status" aria-live="polite"></span>
+                    </div>
+                </div>
+                <div class="nds-form-container nds-password" data-required data-password-match="#acc-new-password">
+                    <div class="nds-form-header">
+                        <label for="acc-retype-password">
+                            <span class="nds-label">Retype new password</span>
+                        </label>
+                    </div>
+                    <div class="nds-form-control">
+                        <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
+                        <input type="password" id="acc-retype-password" name="retype-password" class="nds-input" autocomplete="new-password" aria-describedby="acc-retype-password-rules">
+                        <div class="nds-form-action">
+                            <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password" data-i18n-aria-label="password.clear_password">
+                                <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+                            </button>
+                            <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="form.show_password">
+                                <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="nds-form-footer" data-feedback-target>
+                        <div class="nds-password-rules" id="acc-retype-password-rules">
+                            <span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="match">
+                                <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
+                                <span class="nds-feedback-message">Matches the new password</span>
+                            </span>
+                        </div>
+                        <span class="nds-password-status" role="status" aria-live="polite"></span>
                     </div>
                 </div>
             </div>
-            <div class="nds-form-container nds-password" data-required>
-                <div class="nds-form-header">
-                    <label for="acc-new-password">
-                        <span class="nds-label">New password</span>
-                    </label>
-                </div>
-                <div class="nds-form-control">
-                    <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
-                    <input type="password" id="acc-new-password" name="new-password" class="nds-input" autocomplete="new-password" minlength="8" aria-describedby="acc-new-password-rules">
-                    <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password" data-i18n-aria-label="password.clear_password">
-                            <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                        </button>
-                        <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="form.show_password">
-                            <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="nds-form-footer" data-feedback-target>
-                    <div class="nds-password-rules" id="acc-new-password-rules">
-                        <span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="length">
-                            <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-                            <span class="nds-feedback-message">At least 8 characters</span>
-                        </span>
-                        <span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="digit">
-                            <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-                            <span class="nds-feedback-message">One number (0-9)</span>
-                        </span>
-                    </div>
-                    <span class="nds-password-status" role="status" aria-live="polite"></span>
-                </div>
-            </div>
-            <div class="nds-form-container nds-password" data-required data-password-match="#acc-new-password">
-                <div class="nds-form-header">
-                    <label for="acc-retype-password">
-                        <span class="nds-label">Retype new password</span>
-                    </label>
-                </div>
-                <div class="nds-form-control">
-                    <i class="nds-icon nds-hgi-lock-password" aria-hidden="true"></i>
-                    <input type="password" id="acc-retype-password" name="retype-password" class="nds-input" autocomplete="new-password" aria-describedby="acc-retype-password-rules">
-                    <div class="nds-form-action">
-                        <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden type="button" aria-label="Clear password" data-i18n-aria-label="password.clear_password">
-                            <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                        </button>
-                        <button class="nds-btn nds-subtle nds-toggle-password nds-icon-only" type="button" aria-label="Show password" data-i18n-aria-label="form.show_password">
-                            <i class="nds-icon nds-hgi-view-off" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="nds-form-footer" data-feedback-target>
-                    <div class="nds-password-rules" id="acc-retype-password-rules">
-                        <span class="nds-feedback nds-outline" data-permanent data-status="neutral" data-rule="match">
-                            <span class="nds-feedback-icon"><i class="nds-icon" aria-hidden="true"></i></span>
-                            <span class="nds-feedback-message">Matches the new password</span>
-                        </span>
-                    </div>
-                    <span class="nds-password-status" role="status" aria-live="polite"></span>
-                </div>
-            </div>
+            <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+                <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
+                <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            </button>
         </div>
         <div class="nds-card-actions nds-col-sm">
             <button type="submit" class="nds-btn nds-primary nds-lg">
@@ -479,48 +484,49 @@ last_edit: "02/11/2026 - 04:22 PM"
 
 <dialog id="acc-notify-modal" class="nds-modal nds-card nds-stroke nds-sm" aria-labelledby="acc-notify-modal-title">
     <div class="nds-card-header">
-        <div class="nds-card-featured-icon">
-            <span class="nds-featured-icon nds-circle">
-                <i class="nds-icon nds-hgi-notification-02" aria-hidden="true"></i>
-            </span>
+        <div class="nds-card-text">
+            <span class="nds-card-title" id="acc-notify-modal-title">Request updates</span>
+            <p class="nds-card-description">A step done, a document needed or a decision on one of your requests.</p>
         </div>
         <button type="button" class="nds-close nds-modal-close nds-btn nds-subtle nds-icon-only" aria-label="Close" data-i18n-aria-label="modal.close">
             <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
         </button>
     </div>
     <form id="acc-notify-form" class="nds-form" data-ajax>
-        <div class="nds-card-content">
-            <div class="nds-card-text">
-                <span class="nds-card-title" id="acc-notify-modal-title">Request updates</span>
-                <p class="nds-card-description">A step done, a document needed or a decision on one of your requests.</p>
+        <div class="nds-card-content nds-scroll-more">
+            <div class="nds-scroll-more-content nds-flex nds-col">
+                <fieldset class="nds-form-group nds-checkbox-group">
+                    <legend class="nds-label">Send them by</legend>
+                    <div class="nds-form-container nds-checkbox">
+                        <div class="nds-form-header">
+                            <label for="acc-channel-email"><span class="nds-label">Email</span></label>
+                        </div>
+                        <div class="nds-form-control">
+                            <input type="checkbox" id="acc-channel-email" name="channel" value="email" class="nds-checkbox-input" checked>
+                        </div>
+                    </div>
+                    <div class="nds-form-container nds-checkbox">
+                        <div class="nds-form-header">
+                            <label for="acc-channel-sms"><span class="nds-label">Text message</span></label>
+                        </div>
+                        <div class="nds-form-control">
+                            <input type="checkbox" id="acc-channel-sms" name="channel" value="sms" class="nds-checkbox-input" checked>
+                        </div>
+                    </div>
+                    <div class="nds-form-container nds-checkbox">
+                        <div class="nds-form-header">
+                            <label for="acc-channel-app"><span class="nds-label">The app</span></label>
+                        </div>
+                        <div class="nds-form-control">
+                            <input type="checkbox" id="acc-channel-app" name="channel" value="app" class="nds-checkbox-input">
+                        </div>
+                    </div>
+                </fieldset>
             </div>
-            <fieldset class="nds-form-group nds-checkbox-group">
-                <legend class="nds-label">Send them by</legend>
-                <div class="nds-form-container nds-checkbox">
-                    <div class="nds-form-header">
-                        <label for="acc-channel-email"><span class="nds-label">Email</span></label>
-                    </div>
-                    <div class="nds-form-control">
-                        <input type="checkbox" id="acc-channel-email" name="channel" value="email" class="nds-checkbox-input" checked>
-                    </div>
-                </div>
-                <div class="nds-form-container nds-checkbox">
-                    <div class="nds-form-header">
-                        <label for="acc-channel-sms"><span class="nds-label">Text message</span></label>
-                    </div>
-                    <div class="nds-form-control">
-                        <input type="checkbox" id="acc-channel-sms" name="channel" value="sms" class="nds-checkbox-input" checked>
-                    </div>
-                </div>
-                <div class="nds-form-container nds-checkbox">
-                    <div class="nds-form-header">
-                        <label for="acc-channel-app"><span class="nds-label">The app</span></label>
-                    </div>
-                    <div class="nds-form-control">
-                        <input type="checkbox" id="acc-channel-app" name="channel" value="app" class="nds-checkbox-input">
-                    </div>
-                </div>
-            </fieldset>
+            <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+                <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
+                <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+            </button>
         </div>
         <div class="nds-card-actions nds-col-sm">
             <button type="submit" class="nds-btn nds-primary nds-lg">
@@ -537,7 +543,7 @@ last_edit: "02/11/2026 - 04:22 PM"
 <dialog id="acc-delete-modal" class="nds-modal nds-card nds-stroke nds-sm" aria-labelledby="acc-delete-modal-title">
     <div class="nds-card-header">
         <div class="nds-card-featured-icon">
-            <span class="nds-featured-icon nds-circle" data-status="error">
+            <span class="nds-featured-icon nds-circle nds-red">
                 <i class="nds-icon nds-hgi-delete-02" aria-hidden="true"></i>
             </span>
         </div>

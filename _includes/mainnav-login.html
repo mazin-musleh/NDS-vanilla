@@ -1,9 +1,15 @@
-<form id="login-form" class="nds-form" novalidate>
-<div class="nds-card-content">
+<div class="nds-card-header">
     <div class="nds-card-text">
         <span class="nds-card-title" id="login-modal-title">Login</span>
         <p class="nds-card-description">Sign in to access your account</p>
     </div>
+    <button type="button" class="nds-close nds-modal-close nds-btn nds-subtle nds-icon-only" aria-label="Close" data-i18n-aria-label="modal.close">
+        <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
+    </button>
+</div>
+<form id="login-form" class="nds-form" novalidate>
+<div class="nds-card-content nds-scroll-more">
+    <div class="nds-scroll-more-content nds-flex nds-col">
     <div class="nds-form-container" id="login-email-field" data-required>
         <div class="nds-form-header">
             <label for="login-email">
@@ -55,6 +61,11 @@
             </span>
         </div>
     </div>
+    </div>
+    <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
+        <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
+        <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
+    </button>
 </div>
 <div class="nds-card-actions nds-col-sm">
     <button type="submit" class="nds-btn nds-primary nds-full" id="login-submit-btn">
