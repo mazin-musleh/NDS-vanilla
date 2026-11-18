@@ -57,9 +57,9 @@
 
     // Return 'vertical' | 'horizontal' | null.
     // If both axes overflow, prefer vertical (more common list case).
-    function detectAxis(content) {
-        const vertical = content.scrollHeight > content.clientHeight + config.scrollThreshold;
-        const horizontal = content.scrollWidth > content.clientWidth + config.scrollThreshold;
+    function detectAxis(content, spare = { vertical: 0, horizontal: 0 }) {
+        const vertical = content.scrollHeight > content.clientHeight + spare.vertical + config.scrollThreshold;
+        const horizontal = content.scrollWidth > content.clientWidth + spare.horizontal + config.scrollThreshold;
         if (vertical) return 'vertical';
         if (horizontal) return 'horizontal';
         return null;
@@ -86,13 +86,28 @@
         NDS.setScrollStop(content, on && !content.querySelector(NDS.focusableSel));
     }
 
+    // While overflowing, the button and the end padding take room the content gets back once
+    // they go: without it, a wrapper that grew to fit again kept its button. None when the
+    // content caps its own size, as it would not grow into the room.
+    function getSpareRoom(wrapper, content) {
+        const axis = wrapper.getAttribute('data-axis'), spare = { vertical: 0, horizontal: 0 };
+        if (!axis) return spare;
+        const box = getComputedStyle(wrapper), own = getComputedStyle(content);
+        if (axis === 'vertical' && own.maxHeight === 'none') {
+            spare.vertical = wrapper.clientHeight - parseFloat(box.paddingTop) - parseFloat(box.paddingBottom) - content.offsetHeight + parseFloat(own.paddingBlockEnd);
+        } else if (axis === 'horizontal' && own.maxWidth === 'none') {
+            spare.horizontal = wrapper.clientWidth - parseFloat(box.paddingLeft) - parseFloat(box.paddingRight) - content.offsetWidth + parseFloat(own.paddingInlineEnd);
+        }
+        return spare;
+    }
+
     // Reads only; returns the writes, so the pooled ResizeObserver runs every
     // wrapper's reads before any write (a write between reads forces a layout
     // per wrapper — 68ms@6.6x on a page with 34 of them).
     function measure(wrapper) {
         const content = wrapperSetups.get(wrapper)?.content || wrapper.querySelector(config.selectors.content);
         if (!content) return;
-        const axis = detectAxis(content);
+        const axis = detectAxis(content, getSpareRoom(wrapper, content));
         if (!axis) return wrapper.hasAttribute('data-axis') ? Object.assign(() => {
             wrapper.removeAttribute('data-axis');
             syncScrollStop(content, false);
