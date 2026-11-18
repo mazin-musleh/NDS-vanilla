@@ -870,7 +870,8 @@
         // base target: a link opens its page in the window, not in the frame.
         iframe.srcdoc = '<!doctype html><html ' + root + '><head><base target="_top">' + document.head.innerHTML +
             // No nav in the frame: a panel or sticky part starts at the screen top.
-            '<style>:root{color-scheme:normal!important;height:100%;scrollbar-width:none;--nds-nav-height:0px}html,body{background:transparent!important}body{margin:0;min-height:100%;padding:' + pad + ';' + lay + ';justify-content:flex-start}</style>' +
+            // No body min-height, as the card has none: the reset's 100dvh let nds-fit fill the screen.
+            '<style>:root{color-scheme:normal!important;height:100%;scrollbar-width:none;--nds-nav-height:0px}html,body{background:transparent!important}body{margin:0;min-height:0!important;padding:' + pad + ';' + lay + ';justify-content:flex-start}</style>' +
             '</head><body class="nds-doc-preview">' + parts + runtime + getDemoScripts() + '</body></html>';
     }
 
