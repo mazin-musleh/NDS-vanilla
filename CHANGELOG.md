@@ -30,6 +30,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Filter** — A group that builds its options from the items, and finds none, hides with its divider, so the menu no longer shows bare lines. A menu with no group left says "No options to filter by". A list with no items gives no console warning.
 - **Images** — The placeholder image fits dark mode: its box is see-through grey, not light grey.
 - **Calendar** — A switch from Month to Grid or Rows and back keeps the same month. It no longer moves back a month, and the address no longer gets a new date.
+- **Scroll More** — `--scroll-max-width` caps the width the way a max width does: on a screen narrower than the value, the row stays inside its container.
 - **Swiper** — In Safari before 16.4 and Firefox before 128, a Swiper inside another no longer takes the outer one's slides per view and peek.
 - **Audit** — Reports the removed Side Info size classes `nds-sm`, `nds-md` and `nds-lg`. A missing icon style sheet gives one finding, not one per icon.
 

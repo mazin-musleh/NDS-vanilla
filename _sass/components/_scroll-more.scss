@@ -29,7 +29,7 @@
     // Internal tokens with external fallbacks
     --_scroll-fade:       var(--scroll-fade, var(--_scroll-fade-base, var(--spacing-xl)));
     --_scroll-max-height: var(--scroll-max-height, none);
-    // 100%: fits its content, but never wider than its container, so wide content scrolls.
+    // 100%: no cap of its own; max-inline-size below always holds it to its container.
     --_scroll-max-width:  var(--scroll-max-width, 100%);
     --_scroll-gap:        var(--scroll-gap, 0);
     --_scroll-divider:    var(--scroll-divider, var(--divider-color));
@@ -53,7 +53,8 @@
     min-height: 0;
     gap: var(--_scroll-gap);
     max-block-size: var(--_scroll-max-height);
-    max-inline-size: var(--_scroll-max-width);
+    // A knob caps the width, never past the container: the row's content is always wider than both.
+    max-inline-size: min(var(--_scroll-max-width), 100%);
 
     &[data-axis="horizontal"] {
         flex-direction: row;
