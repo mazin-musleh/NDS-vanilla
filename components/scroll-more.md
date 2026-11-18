@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.x"
-last_edit: "18/11/2026 - 11:29 AM"
+last_edit: "18/11/2026 - 12:35 PM"
 ---
 
 <section id="scroll-more-overview" class="nds-content-section nds-doc-overview">
@@ -59,8 +59,8 @@ Pick another component when:
 </div>
 </script>
 <script type="text/html" id="sm-row" data-canon>
-<div class="nds-scroll-more">
-  <div class="nds-scroll-more-content nds-flex">
+<div class="nds-scroll-more" style="--scroll-max-width: 480px;">
+  <div class="nds-scroll-more-content nds-flex nds-middle">
     <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">All</span></button>
     <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">Healthcare</span></button>
     <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">Education</span></button>
@@ -74,8 +74,7 @@ Pick another component when:
     <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">Culture</span></button>
     <button type="button" class="nds-btn nds-subtle nds-sm"><span class="nds-label">Sports</span></button>
   </div>
-  <button type="button" class="nds-btn nds-subtle nds-md nds-show-more">
-    <span class="nds-label" data-i18n="scroll-more.show_more">Show more</span>
+  <button type="button" class="nds-btn nds-subtle nds-md nds-show-more" aria-label="Show more" data-i18n-aria-label="scroll-more.show_more">
     <i class="nds-icon nds-hgi-arrow-down-01" aria-hidden="true"></i>
   </button>
 </div>
@@ -240,7 +239,7 @@ Every row goes on the wrapper. The wrapper fits its content, but never grows wid
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Vertical list (default) | — | — | A list with `nds-fit`, 240px tall when alone. The button stands under it |
-| Structure | Horizontal row | canon `#sm-row` | — | A row of buttons or chips, as wide as its container. The button stands at the row's end, with its label written sideways |
+| Structure | Horizontal row | canon `#sm-row` | — | A row of buttons or chips, as wide as its container. The button stands at the row's end, as an arrow with no label |
 | Structure | Card track | canon `#sm-cards` | — | A row of cards wider than its container. The wrapper stops at the container's width, and the cards scroll inside it |
 | Structure | Fit (hint: A list that fills the height of its row) | canon `#sm-grid` | — | A vertical list with `nds-fit`, in a card beside a taller card. The list fills its card and scrolls in that height |
 | Divided | Divided | `.nds-divided` | `.nds-scroll-more` | A hairline between the content and the button, shown while the content overflows |
@@ -389,7 +388,7 @@ Every row goes on the wrapper. The wrapper fits its content, but never grows wid
     <div class="nds-section-body nds-prose" markdown="1">
 
 - Use Scroll More to fit a long list, a row of chips or a card track into a set area, with every item still in reach.
-- Give a vertical list a height limit: `nds-fit`, or a parent with a set height. Without one, the list never overflows and the button never shows.
+- Give a vertical list a height limit: `nds-fit`, `--scroll-max-height`, or a flex or grid parent with a set height. Without one, the list never overflows and the button never shows. A plain block parent with a set height does not hold the list: it grows past it.
 - For another height, set `--scroll-max-height` in your own stylesheet, not in a `style` attribute: a strict Content Security Policy blocks inline styles.
 - In a card beside a taller card, add `nds-fit`, so the list fills its card.
 - Keep the items the same size when you want even paging. The first item sets the step.
@@ -435,7 +434,7 @@ Set these on the wrapper.
 | Property | Default | Controls |
 |---|---|---|
 | `--scroll-max-height` | `none` | Height limit of the wrapper, for vertical overflow. With `nds-fit` it is the least height, `240px` when unset: the list grows past it to fill its parent |
-| `--scroll-max-width` | `100%` | Width limit of the wrapper, for horizontal overflow. The default stops it at its container's width |
+| `--scroll-max-width` | `100%` | Width limit of the wrapper, for horizontal overflow. The wrapper never grows past its container, whatever the value |
 | `--scroll-fade` | `16px` | Length of the edge fade |
 | `--scroll-gap` | `0` | Space between the content and the button |
 | `--scroll-divider` | `var(--divider-color)` | Color of the `nds-divided` hairline |
