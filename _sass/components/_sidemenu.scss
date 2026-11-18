@@ -36,7 +36,7 @@
 
 // A tall list: a longer fade reads better than Scroll More's 16px.
 .nds-sidemenu>nav.nds-drawer>.nds-scroll-more {
-    --scroll-fade: 48px;
+    --_scroll-fade-base: 48px;
 }
 
 @include desktop(min) {

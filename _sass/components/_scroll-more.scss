@@ -13,6 +13,7 @@
 // direct declaration beats any inherited value regardless of specificity.
 // :where() keeps the reset at zero specificity so a consumer's single-class
 // knob rule wins even though this sheet is re-inserted at the end of <head>.
+// Not @property inherits:false: Safari 16.4 / Firefox 128 miss the 2022 floor.
 :where(.nds-scroll-more) {
     --scroll-fade: initial;
     --scroll-max-height: initial;
@@ -20,11 +21,13 @@
     --scroll-gap: initial;
     --scroll-divider: initial;
     --scroll-padding: initial;
+    // The one private token: host components (side menu, tabs, accessibility) write it.
+    --_scroll-fade-base: initial;
 }
 
 .nds-scroll-more {
     // Internal tokens with external fallbacks
-    --_scroll-fade:       var(--scroll-fade, var(--spacing-xl));
+    --_scroll-fade:       var(--scroll-fade, var(--_scroll-fade-base, var(--spacing-xl)));
     --_scroll-max-height: var(--scroll-max-height, none);
     // 100%: fits its content, but never wider than its container, so wide content scrolls.
     --_scroll-max-width:  var(--scroll-max-width, 100%);

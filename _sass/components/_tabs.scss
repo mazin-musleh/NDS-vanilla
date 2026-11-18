@@ -446,7 +446,7 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
 // ==============================================
 
 .nds-tabs:not(.nds-vertical) > .nds-tab-list-container {
-  --scroll-fade: 48px;
+  --_scroll-fade-base: 48px;
   --scroll-divider: var(--divider-color);
   width: 100%;
   flex-direction: row;
