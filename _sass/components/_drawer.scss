@@ -387,7 +387,6 @@
 .nds-drawer > .nds-scroll-more {
     --scroll-max-height: var(--drawer-max-height, 400px);
     --scroll-divider: var(--_divider);
-    --scroll-fade: 48px;
 
     // Drawer is a flex column; let the scroll wrapper fill it so fit mode
     // (height: 100%) and max-height constraints resolve correctly.

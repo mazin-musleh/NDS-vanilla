@@ -34,6 +34,11 @@
     top: calc(var(--nds-nav-height) + var(--spacing-md));
 }
 
+// A tall list: a longer fade reads better than Scroll More's 16px.
+.nds-sidemenu>nav.nds-drawer>.nds-scroll-more {
+    --scroll-fade: 48px;
+}
+
 @include desktop(min) {
     .nds-content-layout.nds-card-view .nds-sidemenu {
         border-radius: var(--radius-md);

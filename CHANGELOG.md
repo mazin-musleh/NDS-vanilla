@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Page layout** — On a desktop, the side menu has its shadow and side padding again on a side menu page. The sections stay flat; `nds-compact` still raises them.
 - **Cookies** — On a desktop the buttons share one row; a phone still stacks them. The Notice view's third button reads "Manage". A page's own panel keeps its stack until its footers take `nds-col-sm` for `nds-col`.
 - **Calendar** — In Rows, a line separates the days from the events.
+- **Scroll More** — The edge fade is 16px, not 48px, so less of a small area fades. Tabs and the side menu keep 48px; `--scroll-fade` still sets it.
 - **Modal** — Content beyond the title and description goes in a Scroll More: its edge fades while more is below, and the header and the actions stay in view.
 - **Status Section, Card** — A status colors the icon and the card number, not the title.
 - **Docs** — Filter, Forms and Main Navigation say which group a yes-or-no or a number field takes, when a form ends with a review step, and when to leave out the language action. The Student Portal catalog entry names its profile head: the avatar and the name.

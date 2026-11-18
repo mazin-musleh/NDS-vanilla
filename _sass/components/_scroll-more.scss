@@ -24,7 +24,7 @@
 
 .nds-scroll-more {
     // Internal tokens with external fallbacks
-    --_scroll-fade:       var(--scroll-fade, 48px);
+    --_scroll-fade:       var(--scroll-fade, var(--spacing-xl));
     --_scroll-max-height: var(--scroll-max-height, none);
     // 100%: fits its content, but never wider than its container, so wide content scrolls.
     --_scroll-max-width:  var(--scroll-max-width, 100%);

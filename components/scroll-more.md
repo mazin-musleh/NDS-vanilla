@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "2.0.0"
-last_edit: "05/11/2026 - 12:02 PM"
+updated: "2.0.x"
+last_edit: "18/11/2026 - 11:29 AM"
 ---
 
 <section id="scroll-more-overview" class="nds-content-section nds-doc-overview">
@@ -436,7 +436,7 @@ Set these on the wrapper.
 |---|---|---|
 | `--scroll-max-height` | `none` | Height limit of the wrapper, for vertical overflow. With `nds-fit` it is the least height, `240px` when unset: the list grows past it to fill its parent |
 | `--scroll-max-width` | `100%` | Width limit of the wrapper, for horizontal overflow. The default stops it at its container's width |
-| `--scroll-fade` | `48px` | Length of the edge fade |
+| `--scroll-fade` | `16px` | Length of the edge fade |
 | `--scroll-gap` | `0` | Space between the content and the button |
 | `--scroll-divider` | `var(--divider-color)` | Color of the `nds-divided` hairline |
 | `--scroll-padding` | `var(--spacing-xs)` | Space at the end of the scroll, so the last item's border and focus ring are not clipped. The start stays flush. Set `0` to remove it |
