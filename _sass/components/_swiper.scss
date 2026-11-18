@@ -14,10 +14,13 @@ $section-breakout: ':where(.nds-content-wrapper, .nds-hero-section, .nds-content
 
 // Own value only: a nested swiper never takes its parent's, and JS reads the computed
 // value, so a class sets them as well as an inline style (strict CSP).
-@property --max-slides { syntax: '*'; inherits: false; }
-@property --mid-slides { syntax: '*'; inherits: false; }
-@property --min-slides { syntax: '*'; inherits: false; }
-@property --peek { syntax: '*'; inherits: false; }
+// :where() lets any rule on the swiper win. Not @property inherits:false: Safari 16.4 / Firefox 128 miss the 2022 floor.
+:where(.nds-swiper) {
+    --max-slides: initial;
+    --mid-slides: initial;
+    --min-slides: initial;
+    --peek: initial;
+}
 // Typed so the gutter mask's alpha can transition.
 @property --_swiper-fade-start { syntax: '<number>'; inherits: false; initial-value: 1; }
 @property --_swiper-fade-end { syntax: '<number>'; inherits: false; initial-value: 1; }
