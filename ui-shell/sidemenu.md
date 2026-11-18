@@ -518,6 +518,13 @@ The Small screens options change the menu below 960px only. A rail is the slide-
 | Lined | Lined (hint: A line beside each open group) | `.nds-lined` | `.nds-drawer` | A line beside each open group, so the levels are easy to see |
 | Search | Search (hint: A search box above the links) | `[data-search]` | `.nds-drawer` | A search box that filters the links and opens each group with a match. For a long menu. See [Drawer](../components/drawer) for its options |
 | Many links | Many links (hint: The list does not fit, so the show more arrow appears) | canon `#sidemenu-more` | `.nds-drawer-list:not(.nds-rail .nds-drawer-list)` | 24 more links. Shows how the list scrolls when it is taller than the screen. Not with Rail: its list is long already, and these links have no icons |
+| Color | None (default) | — | — | The menu background |
+| Color | Primary | `.nds-primary` | `.nds-sidemenu` | A deep primary background |
+| Color | Primary | `[data-theme="dark"]` | `.nds-sidemenu` | The links and buttons inside take their dark-mode colors |
+| Color | Gradient | `.nds-gradient-primary` | `.nds-sidemenu` | A gradient from deep primary to primary |
+| Color | Gradient | `[data-theme="dark"]` | `.nds-sidemenu` | The links and buttons inside take their dark-mode colors |
+| Color | Neutral | `.nds-neutral` | `.nds-sidemenu` | A dark neutral background |
+| Color | Neutral | `[data-theme="dark"]` | `.nds-sidemenu` | The links and buttons inside take their dark-mode colors |
 {: #sidemenu-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -734,6 +741,8 @@ Below 960px, a rail is the slide-in menu, with its menu button at the screen edg
 | `--nds-sidemenu-width` | `260px` | The width of the side menu and of its layout column. Set it on `:root` |
 | `--nds-sidemenu-rail-width` | `56px` | The width of the folded menu and of its layout column in rail mode on a desktop. Set it on `:root` |
 | `--nds-sidemenu-toggle-height` | `56px` | The height of the top bar. Set it on `:root` |
+| `--sidemenu-bg` | `var(--background-menu)` | The menu background. It takes a color or a gradient. A color class changes the default. Set it on `aside.nds-sidemenu` |
+| `--gradient-angle` | `-45deg`, `45deg` on an LTR page | The direction of the `nds-gradient-primary` background. Set it on `aside.nds-sidemenu` |
 | `--toggle-pos` | `40svh` | How far below the main navigation the slide-in menu button sits. Set it on `button.nds-sidemenu-toggle` |
 | `--drawer-max-height` | The screen height less the main navigation and `--spacing-3xl`, or `--spacing-xl` with `nds-compact` or card view on a desktop. `60svh` in top bar mode | The height of the list before it scrolls. Set it on `aside.nds-sidemenu`. The open slide-in menu fits the list to the screen and ignores it |
 {: .nds-table .nds-responsive}

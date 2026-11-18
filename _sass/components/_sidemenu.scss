@@ -13,12 +13,33 @@
     // --_sidemenu-top-offset: the part of the top bar still on screen, which pushes the menu down (JS).
     --drawer-max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-3xl) - var(--_sidemenu-top-offset, 0px));
     --btn-width: 40px;
+    // Shorthand, so the knob takes a gradient too. Colors retune the -base, so the knob wins.
+    --_sidemenu-bg-base: var(--background-menu);
+    --_sidemenu-bg: var(--sidemenu-bg, var(--_sidemenu-bg-base));
     width: var(--nds-sidemenu-width);
-    background-color: var(--background-menu);
+    background: var(--_sidemenu-bg);
     box-shadow: var(--shadow-md);
     padding: var(--spacing-md);
     min-height: fit-content;
     z-index: 1;
+
+    // The dark colors come with data-theme="dark" in the markup, which darkens the parts inside.
+    &.nds-primary {
+        --_sidemenu-bg-base: var(--background-primary-strong);
+    }
+
+    &.nds-neutral {
+        --_sidemenu-bg-base: var(--colors-neutral-900);
+    }
+
+    &.nds-gradient-primary {
+        --_gradient-angle: var(--gradient-angle, -45deg);
+        --_sidemenu-bg-base: linear-gradient(var(--_gradient-angle), var(--background-primary-strong), var(--background-primary));
+
+        @include ltr {
+            --_gradient-angle: var(--gradient-angle, 45deg);
+        }
+    }
 }
 
 .nds-sidemenu-toggle {
@@ -185,7 +206,7 @@
         top: var(--nds-nav-height);
         --nds-sidemenu-width: 100%;
         --drawer-max-height: 60svh;
-        background-color: unset;
+        background: none;
         padding: 0;
         border-radius: 0;
         z-index: 900;
@@ -250,7 +271,7 @@
             position: absolute;
             top: 100%;
             inset-inline: 0;
-            background-color: var(--background-menu);
+            background: var(--_sidemenu-bg);
             box-shadow: var(--shadow-md);
             padding: var(--spacing-md);
             border-radius: 0 0 var(--radius-md) var(--radius-md);
