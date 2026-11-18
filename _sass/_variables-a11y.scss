@@ -248,6 +248,11 @@ $a11y-filters: (
     background: var(--_hc-bg);
 }
 
+// Side menu colors and an author's --sidemenu-bg collapse to the mono palette, as sections do.
+:root[data-a11y~="high-contrast"] .nds-sidemenu {
+    --sidemenu-bg: var(--_hc-bg) !important;
+}
+
 // Footer (light theme): the plain footer flattens to the white page;
 // the .nds-brand variant inverts to a solid black band so it still reads
 // as a distinct footer. !important on background beats the neutral base

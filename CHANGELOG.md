@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 - **Audit** — Flags a calendar with no empty message, and a modal whose content holds more than its title and description with no Scroll More.
 - **Cookies** — After a choice, the panel closes itself in 5 seconds, with a countdown ring on its close button. Keyboard focus pauses it; a click in the panel keeps it open.
+- **Side Menu** — Primary, Gradient and Neutral colors, as on a section: the class with `data-theme="dark"`. `--sidemenu-bg` sets any background.
 - **Autocomplete** — `nds:autocomplete:error` fires when a `data-url` request fails, with `{ query, error }`. `preventDefault()` stops the built-in message, for a page that shows its own.
 
 ### Changed
