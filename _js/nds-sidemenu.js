@@ -139,6 +139,25 @@
         labelSpan.hidden = !isTopMode;
     }
 
+    // The top bar scrolls away under the sticky main nav. While part of it shows, it pushes the
+    // sticky list down that far, so the list's height leaves it out.
+    function setupTopOffset(sidemenu, signal) {
+        const topbar = document.querySelector('.nds-topbar');
+        const mainNav = document.querySelector('.nds-main-nav');
+        if (!topbar || !mainNav) return;
+        let offset = -1;
+        const syncOffset = () => {
+            if (offset === 0 && window.scrollY >= topbar.offsetHeight) return;
+            const next = Math.max(0, Math.round(NDS.getStickyHeaderBottom() - mainNav.offsetHeight));
+            if (next === offset) return;
+            offset = next;
+            sidemenu.style.setProperty('--_sidemenu-top-offset', offset + 'px');
+        };
+        requestAnimationFrame(syncOffset);
+        window.addEventListener('scroll', NDS.throttleToFrame(syncOffset), { passive: true, signal });
+        signal.addEventListener('abort', () => sidemenu.style.removeProperty('--_sidemenu-top-offset'));
+    }
+
     function setupScrollPeek(toggleBtn, abortController) {
         if (!toggleBtn.classList.contains('nds-peek')) return;
 
@@ -457,6 +476,7 @@
         // Closed is the start state; open/close only write on a flip.
         menuState.ownExpanded = !toggleBtn.hasAttribute('aria-expanded');
         if (menuState.ownExpanded) NDS.aria.expanded(toggleBtn, false);
+        setupTopOffset(sidemenu, abortController.signal);
         const layout = sidemenu.closest('.nds-content-layout');
         if (layout?.classList.contains('nds-rail')) {
             menuState.layout = layout;

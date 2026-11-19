@@ -10,7 +10,8 @@
    ======================================== */
 
 .nds-sidemenu {
-    --drawer-max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-3xl));
+    // --_sidemenu-top-offset: the part of the top bar still on screen, which pushes the menu down (JS).
+    --drawer-max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-3xl) - var(--_sidemenu-top-offset, 0px));
     --btn-width: 40px;
     width: var(--nds-sidemenu-width);
     background-color: var(--background-menu);
@@ -45,7 +46,7 @@
     }
 
     .nds-content-layout:is(.nds-compact, .nds-card-view) .nds-sidemenu {
-        --drawer-max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-xl));
+        --drawer-max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-xl) - var(--_sidemenu-top-offset, 0px));
     }
 }
 
@@ -273,7 +274,7 @@
 
 .nds-content-layout.nds-rail > .nds-sidemenu {
     // The sticky toggle sits above the list: 40px and its gap.
-    --drawer-max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-3xl) - 48px);
+    --drawer-max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-3xl) - 48px - var(--_sidemenu-top-offset, 0px));
     position: relative;
     transition: width var(--nds-transition);
 
