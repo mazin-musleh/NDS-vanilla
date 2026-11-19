@@ -294,14 +294,37 @@
         margin-block-end: var(--spacing-md);
     }
 
-    // The list keeps the open width and the narrower nav clips it, so nothing reflows while it slides.
+    // The list keeps the open width while it slides and the narrower nav clips it, so nothing
+    // reflows; once folded, it takes the rail's width, so a row's box and Show more fit.
     > nav.nds-drawer {
         top: calc(var(--nds-nav-height) + var(--spacing-md) + 48px);
         overflow-x: clip;
 
         > * {
-            width: calc(var(--nds-sidemenu-width) - 2 * var(--spacing-md));
+            width: var(--_rail-list-width, calc(var(--nds-sidemenu-width) - 2 * var(--spacing-md)));
             max-width: none;
+        }
+    }
+
+    // The icon eases to the rail's center as it folds; the rest fades.
+    > .nds-sidemenu-toggle,
+    .nds-drawer-list > li > .nds-btn {
+        overflow: clip;
+        transition: padding-inline-start var(--nds-transition);
+    }
+
+    .nds-drawer-list > li > .nds-btn {
+        > :not(i, .nds-tooltip-balloon),
+        &::after {
+            transition: opacity var(--nds-transition);
+        }
+
+        // One line, open or folded: a wrapped row would change height as it folds.
+        > .nds-label {
+            min-width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 }
@@ -314,6 +337,24 @@
     .nds-drawer > :is(.nds-drawer-search, .nds-empty-placeholder) {
         display: none;
     }
+
+    > .nds-sidemenu-toggle,
+    .nds-drawer-list > li > .nds-btn {
+        padding-inline-start: calc((var(--nds-sidemenu-rail-width) - 2 * var(--spacing-md) - var(--_btn-icon-size)) / 2 - 1px);
+    }
+
+    // Faded, not hidden: the label stays the icon's name.
+    .nds-drawer-list > li > .nds-btn {
+        > :not(i, .nds-tooltip-balloon),
+        &::after {
+            opacity: 0;
+        }
+    }
+}
+
+// Folded and done sliding: the list takes the rail's width.
+@mixin rail-settled {
+    --_rail-list-width: calc(var(--nds-sidemenu-rail-width) - 2 * var(--spacing-md));
 }
 
 @include desktop(min) {
@@ -324,10 +365,18 @@
     .nds-rail[data-sidemenu-collapsed] > .nds-sidemenu {
         @include rail-folded;
     }
+
+    .nds-rail[data-sidemenu-collapsed] > .nds-sidemenu:not([data-state~="closing"]) {
+        @include rail-settled;
+    }
 }
 
 @include tablet(max) {
     .nds-rail:not([data-sidemenu-open]) > .nds-sidemenu {
         @include rail-folded;
+    }
+
+    .nds-rail:not([data-sidemenu-open]) > .nds-sidemenu:not([data-state~="closing"]) {
+        @include rail-settled;
     }
 }

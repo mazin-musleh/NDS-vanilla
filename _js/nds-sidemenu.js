@@ -189,7 +189,39 @@
     function setupRail(menuState) {
         const { accMenu: sidemenu, layout, toggleBtn, drawer, abortController: { signal } } = menuState;
         const smallQuery = window.matchMedia(NDS.breakpoints['tablet-max']);
-        const topButtons = sidemenu.querySelectorAll('.nds-drawer-list > li > .nds-btn');
+        const ownTooltips = new Set();
+        const releaseTooltip = (btn) => {
+            if (!ownTooltips.delete(btn)) return;
+            NDS.Tooltip.destroy(btn);
+            btn.classList.remove('nds-tooltip');
+            delete btn.dataset.tooltipMessage;
+            delete btn.dataset.tooltipHover;
+            delete btn.dataset.position;
+        };
+        const releaseTooltips = () => ownTooltips.forEach(releaseTooltip);
+        // True when it made a new one.
+        const syncTooltip = (btn) => {
+            const label = btn.querySelector(':scope > .nds-label');
+            if (!label) return false;
+            const text = label.textContent.trim();
+            const isNeeded = isFolded() || label.scrollWidth > label.clientWidth;
+            if (btn.dataset.tooltipMessage === (isNeeded ? text : undefined)) return false;
+            releaseTooltip(btn);
+            if (!isNeeded || btn.classList.contains('nds-tooltip')) return false;
+            ownTooltips.add(btn);
+            btn.classList.add('nds-tooltip');
+            btn.dataset.tooltipMessage = text;
+            btn.dataset.tooltipHover = '500';
+            btn.dataset.position = 'end';
+            NDS.Tooltip.create(btn);
+            // The label already names the button: a description would read it twice.
+            const balloonId = btn.ndsTooltip?.balloon?.id;
+            if (balloonId) {
+                const rest = (btn.getAttribute('aria-describedby') || '').split(/\s+/).filter((id) => id && id !== balloonId);
+                rest.length ? btn.setAttribute('aria-describedby', rest.join(' ')) : btn.removeAttribute('aria-describedby');
+            }
+            return true;
+        };
         const isFolded = () => smallQuery.matches
             ? !layout.hasAttribute('data-sidemenu-open')
             : layout.hasAttribute('data-sidemenu-collapsed');
@@ -202,22 +234,12 @@
         let foldedItem = null;
 
         const dispatchRailEvent = (name) => sidemenu.dispatchEvent(new CustomEvent(`nds:sidemenu:${name}`, { bubbles: true }));
-        // A folded button shows its name on hover.
-        const syncTitles = () => {
-            const folded = isFolded();
-            topButtons.forEach(btn => {
-                const label = btn.querySelector('.nds-label')?.textContent.trim();
-                if (folded && label) btn.title = label;
-                else btn.removeAttribute('title');
-            });
-        };
         // The settled state with no slide: at start, and on a width change across 960px.
         const syncRail = () => {
             const folded = isFolded();
             clearState(sidemenu);
             if (!folded) addState(sidemenu, 'open', 'opened');
             NDS.aria.expanded(toggleBtn, !folded);
-            syncTitles();
         };
         const hideBackdrop = () => {
             if (!backdropShown) return;
@@ -248,6 +270,7 @@
 
         const slide = (expand, onDone) => {
             isBusy = true;
+            releaseTooltips();
             const slideEpoch = epoch;
             const duration = NDS.prefersReducedMotion ? 0 : NDS.transitionSpeed();
             const runLater = (fn) => { if (duration === 0) fn(); else timer = setTimeout(fn, duration); };
@@ -263,7 +286,6 @@
                     layout.removeAttribute('data-sidemenu-collapsed');
                     try { localStorage.setItem(RAIL_KEY, '0'); } catch {}
                 }
-                syncTitles();
                 const end = () => {
                     addState(sidemenu, 'opened');
                     dispatchRailEvent('expanded');
@@ -291,7 +313,6 @@
                     removeState(sidemenu, 'open', 'closing');
                     // Kept above the backdrop until it has faded.
                     sidemenu.style.removeProperty('z-index');
-                    syncTitles();
                     dispatchRailEvent('collapsed');
                     finish();
                 });
@@ -363,6 +384,17 @@
             e.stopPropagation();
             request(() => (isFolded() ? expand(btn) : NDS.Drawer.toggle(btn)));
         }, { capture: true, signal });
+        // A folded or cut-off name shows in a Tooltip. Checked at hover and focus, so a
+        // language or width change needs nothing.
+        drawer?.addEventListener('pointerover', (e) => {
+            const btn = e.target.closest('.nds-drawer-list > li > .nds-btn');
+            if (btn) syncTooltip(btn);
+        }, { signal });
+        drawer?.addEventListener('focusin', (e) => {
+            const btn = e.target.closest('.nds-drawer-list > li > .nds-btn');
+            // A new tooltip missed this focus: open it as its own focus listener would.
+            if (btn && syncTooltip(btn) && btn.matches(':focus-visible')) btn.ndsTooltip?.open();
+        }, { signal });
         smallQuery.addEventListener('change', () => {
             cancelSlide();
             syncRail();
@@ -373,7 +405,7 @@
             releaseFoldedItem(null);
             clearState(sidemenu);
             layout.toggleAttribute('data-sidemenu-collapsed', menuState.wasCollapsed);
-            topButtons.forEach(btn => btn.removeAttribute('title'));
+            releaseTooltips();
         });
         syncRail();
     }

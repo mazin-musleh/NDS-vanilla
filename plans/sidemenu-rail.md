@@ -30,10 +30,10 @@ Done 2026-11-19 (items 1–3 of the first list):
 - **State cycle** on the aside: `open opening` → `open` → `open opened`; `open closing` → none. Reduced motion lands on the end state. The layout flags still drive the CSS; no new `[data-state]` rule.
 - **Queue**: a press during a slide waits, last one wins. A fold closes an open group first (waits for `nds:drawer:hidden`); a group press while folded opens the menu, then the group. The group a fold closed keeps its button's `active` mark while folded (put back in a microtask after the drawer's `watchActive` clears it) and reopens after the menu opens; the queue waits for that `nds:drawer:shown` too. A press on another group drops the kept mark. Below 960px the aside keeps its z-index until the close ends.
 - **Events**: `nds:sidemenu:expanded` / `collapsed` on the aside, rail only, not at load or on a width change. Banner and doc API updated.
+- **Folded rows** (CSS): once the fold ends (no `closing`), the aside sets `--_rail-list-width` and the list takes the rail width, so a row's box and the Show more arrow fit. As it folds, the row's start padding eases to center the icon (18px each side at 56px) and the label, tag and arrow fade to 0 (kept in the accessibility tree). The rail canon has 9 more links so Scroll More shows.
+- **Labels** (owner call 2026-11-19): top-level labels are one line with an ellipsis in rail mode, open or folded, so no row changes height as it folds (Ant Design Menu, Material drawer). Folded rows and cut-off names show the full name in a Tooltip, made on hover or focus and dropped at each slide; its `aria-describedby` is removed (the label already names the row). Tooltip gained `data-position="start|end"` (writes `data-position-horizontal`) for this.
 - Harness: `tmp/rail-check.mjs` (scratch; LTR + RTL behavior, all ok). `doc-check.mjs ui-shell/sidemenu.md`: no findings.
 
 Open items from the first build:
-   - Folded, the Scroll More "show more" arrow sits in the middle of the full-width list and is clipped away. Move it to the icon side while folded.
-   - At 56px the icon is off center (21px start, 15px end).
    - The skeleton (`_sass/_skeleton.scss`) reserves the open width: a page stored folded jumps at the reveal. Check it with the throttled perf harness.
-   - RTL: behavior checked; the look (icon side, clip edge) has not been checked.
+   - RTL: behavior and the folded look checked.

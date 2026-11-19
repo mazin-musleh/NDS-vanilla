@@ -270,6 +270,60 @@ The main links of the site belong in the [Main Navigation](../ui-shell/main-nav)
           </li>
           <li>
             <a class="nds-btn nds-subtle nds-indicator" href="#">
+              <i class="hgi hgi-stroke hgi-calendar-03" aria-hidden="true"></i>
+              <span class="nds-label">Appointments</span>
+            </a>
+          </li>
+          <li>
+            <a class="nds-btn nds-subtle nds-indicator" href="#">
+              <i class="hgi hgi-stroke hgi-credit-card" aria-hidden="true"></i>
+              <span class="nds-label">Payments</span>
+            </a>
+          </li>
+          <li>
+            <a class="nds-btn nds-subtle nds-indicator" href="#">
+              <i class="hgi hgi-stroke hgi-file-01" aria-hidden="true"></i>
+              <span class="nds-label">Documents</span>
+            </a>
+          </li>
+          <li>
+            <a class="nds-btn nds-subtle nds-indicator" href="#">
+              <i class="hgi hgi-stroke hgi-task-01" aria-hidden="true"></i>
+              <span class="nds-label">Requests</span>
+            </a>
+          </li>
+          <li>
+            <a class="nds-btn nds-subtle nds-indicator" href="#">
+              <i class="hgi hgi-stroke hgi-message-01" aria-hidden="true"></i>
+              <span class="nds-label">Messages</span>
+            </a>
+          </li>
+          <li>
+            <a class="nds-btn nds-subtle nds-indicator" href="#">
+              <i class="hgi hgi-stroke hgi-notification-01" aria-hidden="true"></i>
+              <span class="nds-label">Notifications from Government Agencies</span>
+            </a>
+          </li>
+          <li>
+            <a class="nds-btn nds-subtle nds-indicator" href="#">
+              <i class="hgi hgi-stroke hgi-chart-histogram" aria-hidden="true"></i>
+              <span class="nds-label">Reports</span>
+            </a>
+          </li>
+          <li>
+            <a class="nds-btn nds-subtle nds-indicator" href="#">
+              <i class="hgi hgi-stroke hgi-user-group" aria-hidden="true"></i>
+              <span class="nds-label">Dependents</span>
+            </a>
+          </li>
+          <li>
+            <a class="nds-btn nds-subtle nds-indicator" href="#">
+              <i class="hgi hgi-stroke hgi-settings-01" aria-hidden="true"></i>
+              <span class="nds-label">Settings</span>
+            </a>
+          </li>
+          <li>
+            <a class="nds-btn nds-subtle nds-indicator" href="#">
               <i class="hgi hgi-stroke hgi-headset" aria-hidden="true"></i>
               <span class="nds-label">Contact Us</span>
             </a>
@@ -463,7 +517,7 @@ The Small screens options change the menu below 960px only. The Rail structure h
 | Peek button | Full button (hint: The button stays in full view) | — | `.nds-sidemenu-toggle:not(.nds-top .nds-sidemenu-toggle, .nds-rail .nds-sidemenu-toggle)` | The button stays in full view at the screen edge |
 | Lined | Lined (hint: A line beside each open group) | `.nds-lined` | `.nds-drawer` | A line beside each open group, so the levels are easy to see |
 | Search | Search (hint: A search box above the links) | `[data-search]` | `.nds-drawer` | A search box that filters the links and opens each group with a match. For a long menu. See [Drawer](../components/drawer) for its options |
-| Many links | Many links (hint: The list does not fit, so the show more arrow appears) | canon `#sidemenu-more` | `.nds-drawer-list:not(.nds-rail .nds-drawer-list)` | 24 more links. Shows how the list scrolls when it is taller than the screen. Not with Rail: the links have no icons |
+| Many links | Many links (hint: The list does not fit, so the show more arrow appears) | canon `#sidemenu-more` | `.nds-drawer-list:not(.nds-rail .nds-drawer-list)` | 24 more links. Shows how the list scrolls when it is taller than the screen. Not with Rail: its list is long already, and these links have no icons |
 {: #sidemenu-variants-table .nds-table .nds-responsive}
 
 </div>
@@ -495,7 +549,7 @@ In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the sc
 ### Rail Mode
 {: .nds-block-title}
 
-`nds-rail` on the `.nds-content-layout` puts the menu button at the top of the menu. On a desktop, a press folds the menu to its icons, and the content column grows. A second press opens it again. The browser keeps the choice for the next page. A folded icon shows its link's name on hover. A press on a group's icon opens the menu, then that group. A fold closes an open group first, and its icon stays marked. When the menu opens again, that group opens after it. A press while the menu slides waits until the slide ends.
+`nds-rail` on the `.nds-content-layout` puts the menu button at the top of the menu. On a desktop, a press folds the menu to its icons, and the content column grows. A second press opens it again. The browser keeps the choice for the next page. A top-level name stays on one line, and a long one ends in an ellipsis. A folded icon, or a cut-off name, shows the full name in a tooltip on hover or keyboard focus. A press on a group's icon opens the menu, then that group. A fold closes an open group first, and its icon stays marked. When the menu opens again, that group opens after it. A press while the menu slides waits until the slide ends.
 
 Below 960px, the menu is always folded beside the content. The button opens the full menu over the page. Escape, a click outside the menu, or a change of the screen width closes it.
 
@@ -660,7 +714,7 @@ Below 960px, the menu is always folded beside the content. The button opens the 
 |---|---|---|
 | `data-sidemenu-collapsed` | `.nds-content-layout.nds-rail` | Write it to start the menu folded on a desktop. The script sets it when the user folds the menu, and removes it when the user opens it. The user's last choice, kept in `localStorage` as `nds-sidemenu-collapsed`, wins over the markup |
 | `data-sidemenu-open` | `.nds-content-layout.nds-rail` | Below 960px, the script sets it when the menu opens over the page, and removes it when the menu closes |
-| `title` | A top-level link or group button in rail mode | The script writes the link's name while the menu is folded, and removes it when the menu opens |
+| `nds-tooltip`, `data-tooltip-message`, `data-tooltip-hover` | A top-level link or group button in rail mode | On hover or focus, when the menu is folded or the name is cut off, the script makes the button a [Tooltip](../components/tooltip) that shows the full name. It removes them when the menu slides, and when the name fits again |
 | `data-state` | `aside.nds-sidemenu` in rail mode | The script sets `open opening` when the menu starts to open, removes `opening` as it slides, and adds `opened` at the end. A fold adds `closing`, and removes every token at the end. A folded menu has none |
 | `data-state` | `aside.nds-sidemenu` in slide-in mode | The script sets `open` when the menu opens, adds `closing` when it closes, and removes both after the close |
 | `hidden` | `button.nds-sidemenu-toggle` | Write it in the markup. The script removes it when it starts |
