@@ -287,6 +287,25 @@
             pending = null;
             next?.();
         };
+        // Runs THEN after the group's slide. A search, a route or a re-init can drop that
+        // slide with no event, so a timer past its length ends the wait too.
+        const afterGroupSlide = (type, item, then) => {
+            const waitEpoch = epoch;
+            const submenu = item.querySelector(':scope > ul');
+            let isDone = false;
+            const end = () => {
+                if (isDone) return;
+                isDone = true;
+                clearTimeout(fallback);
+                drawer.removeEventListener(`nds:drawer:${type}`, handleEnd);
+                if (waitEpoch === epoch) then();
+            };
+            const handleEnd = (e) => { if (e.detail.item === item) end(); };
+            drawer.addEventListener(`nds:drawer:${type}`, handleEnd, { signal });
+            const style = submenu && getComputedStyle(submenu);
+            const slideMs = style ? ((parseFloat(style.transitionDuration) || 0) + (parseFloat(style.transitionDelay) || 0)) * 1000 : 0;
+            const fallback = setTimeout(end, slideMs + 100);
+        };
 
         const slide = (expand, onDone) => {
             isBusy = true;
@@ -353,13 +372,7 @@
             const groupBtn = openItem?.querySelector(':scope > .nds-btn');
             if (!groupBtn) return slide(false);
             isBusy = true;
-            const foldEpoch = epoch;
-            const handleHidden = (e) => {
-                if (e.detail.item !== openItem) return;
-                drawer.removeEventListener('nds:drawer:hidden', handleHidden);
-                if (foldEpoch === epoch) slide(false);
-            };
-            drawer.addEventListener('nds:drawer:hidden', handleHidden, { signal });
+            afterGroupSlide('hidden', openItem, () => slide(false));
             NDS.Drawer.toggle(groupBtn);
             // The folded icon keeps the mark. The drawer's watcher clears it in a microtask
             // queued during toggle(); this one runs after it, before the paint.
@@ -377,15 +390,8 @@
             const target = groupBtn || foldedItem?.querySelector(':scope > .nds-btn');
             releaseFoldedItem(target);
             if (!target || target.getAttribute('aria-expanded') === 'true') return;
-            const item = target.closest('li');
-            const reopenEpoch = epoch;
             isBusy = true;
-            const handleShown = (e) => {
-                if (e.detail.item !== item) return;
-                drawer.removeEventListener('nds:drawer:shown', handleShown);
-                if (reopenEpoch === epoch) finish();
-            };
-            drawer.addEventListener('nds:drawer:shown', handleShown, { signal });
+            afterGroupSlide('shown', target.closest('li'), () => finish());
             NDS.Drawer.toggle(target);
         };
         const expand = (groupBtn) => slide(true, () => reopenGroup(groupBtn));
@@ -435,6 +441,14 @@
             syncRail();
             if (!isFolded()) reopenGroup();
         }, { signal });
+        // Below 960px a width change closes the menu: its list height was measured for the old width.
+        let prevWidth = window.innerWidth;
+        const offResize = NDS.onResize(() => {
+            if (window.innerWidth === prevWidth) return;
+            prevWidth = window.innerWidth;
+            if (smallQuery.matches && !isFolded()) request(fold);
+        });
+        signal.addEventListener('abort', offResize);
         signal.addEventListener('abort', () => {
             cancelSlide();
             releaseFoldedItem(null);
