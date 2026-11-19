@@ -24,6 +24,15 @@
 .nds-sidemenu-toggle {
     --_toggle-pos: var(--toggle-pos, 40svh);
     display: none;
+
+    // Every mode: the icon's lines align to the reading start.
+    > i {
+        scale: -1;
+
+        @include ltr {
+            scale: 1;
+        }
+    }
 }
 
 /* ========================================
@@ -76,16 +85,11 @@
     .nds-sidemenu-toggle:not(.nds-rail *) i {
         font-size: 1.5rem;
         color: var(--text-oncolor-primary);
-        scale: -1;
         font-weight: var(--font-weight-semibold);
         margin: auto;
     }
 
     @include ltr {
-        .nds-sidemenu-toggle:not(.nds-rail *) i {
-            scale: 1;
-        }
-
         .nds-sidemenu-toggle:not(.nds-rail *) {
             --_toggle-transform: translateX(var(--nds-sidemenu-width));
             right: unset;
@@ -273,35 +277,30 @@
    ======================================== */
 
 .nds-content-layout.nds-rail > .nds-sidemenu {
-    // The sticky toggle sits above the nav: 40px and its gap. The search is inside the nav, in its height.
+    // The menu button sits in the sticky nav, above the list: 40px and its gap.
     --drawer-max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-3xl) - 48px - var(--_sidemenu-top-offset, 0px));
     position: relative;
     transition: width var(--nds-transition);
 
-    > .nds-sidemenu-toggle:not([hidden]) {
-        // Sized, full and start-aligned like a link row, so the icons line up.
+    .nds-sidemenu-toggle:not([hidden]) {
+        // At the start, over the icon column, so it stays put as the menu folds; 40px fills the folded rail.
         --_btn-size-base: 32px;
-        --btn-width: 100%;
+        --btn-width: 40px;
         --btn-height: 40px;
         --btn-bg: var(--button-background-transparent-default);
         --btn-bg-hover: var(--button-background-secondary-hovered);
         --btn-bg-active: var(--button-background-secondary-pressed);
         --btn-color: var(--text-default);
         display: flex;
-        justify-content: flex-start;
-        position: sticky;
-        top: calc(var(--nds-nav-height) + var(--spacing-md));
-        z-index: 1;
         margin-block-end: var(--spacing-md);
     }
 
     // The list keeps the open width while it slides and the narrower nav clips it, so nothing
     // reflows; once folded, it takes the rail's width, so a row's box and Show more fit.
     > nav.nds-drawer {
-        top: calc(var(--nds-nav-height) + var(--spacing-md) + 48px);
         overflow-x: clip;
 
-        > * {
+        > :not(.nds-sidemenu-toggle) {
             width: var(--_rail-list-width, calc(var(--nds-sidemenu-width) - 2 * var(--spacing-md)));
             max-width: none;
         }
@@ -313,7 +312,6 @@
     }
 
     // The icon eases to the rail's center as it folds; the rest fades.
-    > .nds-sidemenu-toggle,
     .nds-drawer-list > li > .nds-btn,
     .nds-drawer-search .nds-form-control {
         overflow: clip;
@@ -328,6 +326,10 @@
         > :not(i, .nds-tooltip-balloon),
         &::after {
             transition: opacity var(--_rail-slide, 0s);
+        }
+
+        &::before {
+            transition: width var(--_rail-slide, 0s);
         }
 
         // One line, open or folded: a wrapped row would change height as it folds.
@@ -349,7 +351,6 @@
         display: none;
     }
 
-    > .nds-sidemenu-toggle,
     .nds-drawer-list > li > .nds-btn {
         padding-inline-start: calc((var(--nds-sidemenu-rail-width) - 2 * var(--spacing-md) - var(--_btn-icon-size)) / 2 - 1px);
     }
@@ -362,17 +363,10 @@
         }
     }
 
-    // Primary while folded: it stands out, and covers the icons scrolling under it.
-    // :not([hidden]) as the rail's own toggle rule, or that one wins below 960px.
-    > .nds-sidemenu-toggle:not([hidden]) {
-        --btn-bg: var(--button-background-primary-default);
-        --btn-bg-hover: var(--button-background-primary-hovered);
-        --btn-bg-active: var(--button-background-primary-pressed);
-        --btn-color: var(--text-oncolor-primary);
-    }
-
-    // Faded, not hidden: the label stays the icon's name.
+    // Faded, not hidden: the label stays the icon's name. A thinner mark fits the narrow rail.
     .nds-drawer-list > li > .nds-btn {
+        --_btn-indicator-size: 3px;
+
         > :not(i, .nds-tooltip-balloon),
         &::after {
             opacity: 0;

@@ -293,7 +293,9 @@
 
         // The field styles Forms names: outline (none), lighter, darker (the default).
         const style = { outline: '', lighter: ' nds-lighter' }[drawer.getAttribute('data-search-style')] ?? ' nds-darker';
-        drawer.insertAdjacentHTML('afterbegin', `<div class="nds-form-container${style} nds-drawer-search">
+        // Right above the list, so a part written before it (the rail's menu button) stays on top.
+        const listTop = [...drawer.children].find(child => child.contains(list));
+        listTop.insertAdjacentHTML('beforebegin', `<div class="nds-form-container${style} nds-drawer-search">
                 <div class="nds-form-control">
                     <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                     <input type="text" class="nds-search-input">
@@ -308,8 +310,8 @@
                 <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                 <span class="nds-empty-message"></span>
             </div>`);
-        const box = drawer.firstElementChild;
-        const empty = box.nextElementSibling;
+        const empty = listTop.previousElementSibling;
+        const box = empty.previousElementSibling;
         const input = box.querySelector('.nds-search-input');
         strings.set(input, 'aria-label', 'search');
         strings.set(input, 'placeholder', 'search_placeholder');

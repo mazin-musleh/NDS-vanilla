@@ -11,11 +11,11 @@ direction: rtl
 
 <div class="nds-content-layout nds-has-sidemenu nds-rail">
   <aside class="nds-sidemenu" aria-label="Sidebar" data-i18n-aria-label="sidemenu.sidebar">
-    <button class="nds-sidemenu-toggle nds-btn" aria-label="Sidebar Menu" data-i18n-aria-label="sidemenu.sidebar_menu" hidden>
-      <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
-      <span class="nds-label nds-truncate">القائمة الجانبية</span>
-    </button>
     <nav class="nds-drawer nds-divided nds-lined" data-search>
+      <button class="nds-sidemenu-toggle nds-btn" aria-label="Sidebar Menu" data-i18n-aria-label="sidemenu.sidebar_menu" hidden>
+        <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
+        <span class="nds-label nds-truncate">القائمة الجانبية</span>
+      </button>
       <div class="nds-scroll-more nds-divided">
         <ul class="nds-drawer-list nds-scroll-more-content">
           <li>

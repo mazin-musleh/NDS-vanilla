@@ -19,7 +19,7 @@ Owner calls already made:
 Files:
 - `_sass/tokens/_primitives.scss`: `--nds-sidemenu-rail-width`.
 - `_sass/layout/_content-layout.scss`: rail grid; below 960px the column stays at the rail width; the desktop column animates `grid-template-columns`.
-- `_sass/components/_sidemenu.scss`: the slide-in and peek rules skip rail (`:not(.nds-rail …)`); the rail block (sticky toggle, `nav` clips a list fixed at the open width with `max-width: none` over Scroll More's cap, `rail-folded` mixin).
+- `_sass/components/_sidemenu.scss`: the slide-in and peek rules skip rail (`:not(.nds-rail …)`); the rail block (toggle scrolls with the page, `nav` clips a list fixed at the open width with `max-width: none` over Scroll More's cap, `rail-folded` mixin).
 - `_js/nds-sidemenu.js`: `setupRail()`. Flags on the layout: `data-sidemenu-collapsed` (desktop), `data-sidemenu-open` (below 960px, over the page with the Backdrop). Hover `title` on folded top buttons. A stored fold at load lands with no slide (inline `transition: none` for two frames). Banner Hooks and Gotchas updated.
 - `ui-shell/sidemenu.md`: Rail structure canon `#sidemenu-rail`, Parts row, Variants rows with `:not(.nds-rail …)` on Slide-in, Top bar, Peek and Many links, Behavior "Rail Mode", two Best Practices, API rows. `check-docs.py` passed.
 - `CHANGELOG.md`: one Added line.
