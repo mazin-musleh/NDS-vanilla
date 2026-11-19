@@ -253,7 +253,7 @@
         let pending = null;
         let epoch = 0;
         let timer = 0;
-        // The group a fold closed: its button keeps the active mark, and it reopens with the menu.
+        // The group a fold closed: it reopens with the menu.
         let foldedItem = null;
 
         const dispatchRailEvent = (name) => sidemenu.dispatchEvent(new CustomEvent(`nds:sidemenu:${name}`, { bubbles: true }));
@@ -362,23 +362,13 @@
             // Runs fold() again: a group a script opened in the meantime closes too.
             afterGroupSlide('hidden', openItem, fold);
             NDS.Drawer.toggle(groupBtn);
-            // The folded icon keeps the mark when the current page is in the group. The drawer's
-            // watcher clears it in a microtask queued during toggle(); this one runs after it, before the paint.
-            const holdsCurrent = !!openItem.querySelector(':scope > ul li[data-state~="active"]');
-            queueMicrotask(() => { if (holdsCurrent && foldedItem === openItem) addState(groupBtn, 'active'); });
-            // The first group keeps the mark; an always-open drawer's others lose theirs.
+            // The first group reopens with the menu; an always-open drawer's others stay closed.
             foldedItem ??= openItem;
         }
-        // Drops the kept mark, unless the drawer would keep it (an active <li>) or KEEP is that button.
-        const releaseFoldedItem = (keep) => {
-            const btn = foldedItem?.querySelector(':scope > .nds-btn');
-            if (btn && btn !== keep && !hasState(foldedItem, 'active')) removeState(btn, 'active');
-            foldedItem = null;
-        };
         // After the menu opens: the pressed group, or the one the fold closed.
         const reopenGroup = (groupBtn) => {
             const target = groupBtn || foldedItem?.querySelector(':scope > .nds-btn');
-            releaseFoldedItem(target);
+            foldedItem = null;
             if (!target || target.getAttribute('aria-expanded') === 'true') return;
             isBusy = true;
             afterGroupSlide('shown', target.closest('li'), () => finish());
@@ -448,7 +438,7 @@
         signal.addEventListener('abort', () => {
             cancelSlide();
             closeSlideIn();
-            releaseFoldedItem(null);
+            foldedItem = null;
             clearState(sidemenu);
             layout.toggleAttribute('data-sidemenu-collapsed', menuState.wasCollapsed);
             tooltips.releaseAll();

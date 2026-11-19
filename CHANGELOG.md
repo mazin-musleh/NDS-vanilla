@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 - **Audit** — Flags a calendar with no empty message, and a modal whose content holds more than its title and description with no Scroll More.
 - **Cookies** — After a choice, the panel closes itself in 5 seconds, with a countdown ring on its close button. Keyboard focus pauses it; a click in the panel keeps it open.
-- **Side Menu** — Rail mode: `nds-rail` on the layout folds the menu to its icons, and the browser keeps the choice. Below 960px it stays folded and opens over the page.
+- **Side Menu** — Rail mode: on a desktop, `nds-rail` on the layout folds the menu to its icons, and the browser keeps the choice. Below 960px it is the slide-in menu.
 - **Autocomplete** — `nds:autocomplete:error` fires when a `data-url` request fails, with `{ query, error }`. `preventDefault()` stops the built-in message, for a page that shows its own.
 
 ### Changed
@@ -17,12 +17,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Page layout** — On a desktop, the side menu has its shadow and side padding again on a side menu page. The sections stay flat; `nds-compact` still raises them.
 - **Cookies** — On a desktop the buttons share one row; a phone still stacks them. The Notice view's third button reads "Manage". A page's own panel keeps its stack until its footers take `nds-col-sm` for `nds-col`.
 - **Calendar** — In Rows, a line separates the days from the events.
+- **Drawer, Side Menu** — An open group's mark is neutral. Only the groups that hold the current page take the primary color.
 - **Scroll More** — The edge fade is 16px, not 48px, so less of a small area fades. Tabs and the side menu keep 48px; `--scroll-fade` still sets it.
 - **Modal** — Content beyond the title and description goes in a Scroll More: its edge fades while more is below, and the header and the actions stay in view.
 - **Status Section, Card** — A status colors the icon and the card number, not the title.
 - **Docs** — Filter, Forms and Main Navigation say which group a yes-or-no or a number field takes, when a form ends with a review step, and when to leave out the language action. The Student Portal catalog entry names its profile head: the avatar and the name.
 
 ### Fixed
+- **Drawer, Side Menu** — A closed group that holds the current page keeps its mark when another group opens. In dark mode, the current page's mark takes the primary color too.
 - **Verify** — The browser check names the element of each audit finding, with its fix. A page that stops answering, or opens an alert, no longer holds the run forever: the run stops after 60 s with a report (`NDS_CALL_MS` raises the limit). The whole-plan reminder fires only when the plan's Pacing value is `whole plan`, not when a page-by-page plan mentions an earlier whole-plan batch. Run from inside the template folder, the check writes its shots to the project's `tmp/`, not into the template.
 - **Cards** — While a card loads, a row card with an image stays a row, a drawer in the card shows its own skeleton rows, a status card's icon turns grey, and a progress ring shows only its empty track. When the card content is a Scroll More, Show more sits right under the content, not a card gap below it; the parts inside keep the card gap.
 - **Panel** — A control at the side of a Scroll More body, as in Cookies and Accessibility, keeps its whole halo and focus ring.

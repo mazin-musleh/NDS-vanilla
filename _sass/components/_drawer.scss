@@ -145,8 +145,12 @@
 
     &.nds-menu-btn {
         --btn-bg: var(--button-background-transparent-default);
-        --btn-indicator-selected: var(--background-primary);
         --btn-bg-selected: var(--button-background-transparent-default);
+
+        // An open group's mark is neutral; the primary color marks the current page's path only.
+        &[data-state~="current"] {
+            --btn-indicator-selected: var(--background-primary);
+        }
 
         .nds-label{
             font-weight: var(--font-weight-semibold);
@@ -157,10 +161,11 @@
     // variant overrides (e.g. .nds-toc .nds-drawer) can win without needing
     // to replicate the whole :not/:is chain.
     &:where(:not(.nds-menu-btn, :active, .nds-oncolor)):where([data-state~="active"], [data-state~="selected"]) {
+        --btn-indicator-color: var(--background-primary);
+        --btn-indicator-selected: var(--background-primary);
+
         :where(:root:not([data-theme~="dark"])) & {
             --btn-color: var(--text-primary-strong);
-            --btn-indicator-color: var(--background-primary);
-            --btn-indicator-selected: var(--background-primary);
         }
     }
 }

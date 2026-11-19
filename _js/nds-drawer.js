@@ -26,7 +26,8 @@
  *   - Opening a submenu closes its siblings — one open branch per level — unless always-open.
  *   - toggle() takes the BUTTON, not the <li>.
  *   - An <li> marked data-state="active" opens every ancestor branch at init; moving the
- *     mark later (a client-side route) marks its button and opens its branch too.
+ *     mark later (a client-side route) marks its button and opens its branch too. A closed
+ *     branch that holds the mark keeps data-state="active" on its button.
  */
 
 (function () {
@@ -56,9 +57,17 @@
         if (state) addState(element, state);
     }
 
-    // A closed toggle keeps its highlight while its <li> is the current page.
+    const holdsCurrent = (listItem) => hasState(listItem, 'active') || !!listItem.querySelector(':scope > ul li[data-state~="active"]');
+
+    // An open toggle is marked; `current` says it is on the current page's path, which colors the mark.
+    function markButton(listItem, button) {
+        setState(button, 'active');
+        if (holdsCurrent(listItem)) addState(button, 'current'); else removeState(button, 'current');
+    }
+
+    // A closed toggle keeps its mark while its <li> is the current page, or holds it.
     function clearButton(listItem, button) {
-        if (hasState(listItem, 'active')) setState(button, 'active');
+        if (holdsCurrent(listItem)) markButton(listItem, button);
         else clearState(button);
     }
 
@@ -117,7 +126,7 @@
         setState(submenu, 'opening');
         setState(listItem, 'opening');
         NDS.aria.expanded(button, true);
-        setState(button, 'active');
+        markButton(listItem, button);
         const height = submenu.scrollHeight;
         const fallbackMs = getEndFallback(submenu);
         submenu.style.height = height + 'px';
@@ -162,7 +171,7 @@
         }
         if (button) {
             NDS.aria.expanded(button, open);
-            if (open) setState(button, 'active'); else clearButton(listItem, button);
+            if (open) markButton(listItem, button); else clearButton(listItem, button);
         }
     }
 
@@ -265,7 +274,13 @@
         if (watchingActive) return;
         watchingActive = true;
         NDS.onAttributeChange('.nds-drawer[data-nds-drawer-initialized] li', ['data-state'], items => items.forEach(item => {
-            markCurrent(item.closest('.nds-drawer'), item, hasState(item, 'active'));
+            const drawer = item.closest('.nds-drawer');
+            markCurrent(drawer, item, hasState(item, 'active'));
+            // The groups above follow the mark: a closed one keeps its mark only while it holds it.
+            for (let parent = item.parentElement.closest('li'); parent && drawer.contains(parent); parent = parent.parentElement.closest('li')) {
+                const parentBtn = parent.querySelector(':scope > .nds-btn');
+                if (parentBtn) isOpen(parent) ? markButton(parent, parentBtn) : clearButton(parent, parentBtn);
+            }
             const btn = item.querySelector(':scope > .nds-btn');
             if (!btn) return;
             if (hasState(item, 'active')) {
