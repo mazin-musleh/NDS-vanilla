@@ -45,25 +45,20 @@ main {
         }
     }
 
-    // Rail side menu: a folded column; below 960px it stays folded and the open menu covers the content.
+    // Rail side menu: a folded column from 960px; below, the slide-in menu's grid.
     &.nds-has-sidemenu.nds-rail {
-        @include tablet(max) {
-            grid-template-columns: var(--nds-sidemenu-rail-width) 1fr;
-            grid-template-rows: auto;
+        // The column eases with the menu's width. It lays the page out each frame: measured on the
+        // console demo, every frame still fits at 1x CPU, and the snap it replaced froze longer at 4x.
+        @include desktop(min) {
+            transition: grid-template-columns var(--nds-transition);
 
-            >.nds-content {
-                grid-row: auto;
+            &#{$rail-collapsed} {
+                grid-template-columns: var(--nds-sidemenu-rail-width) 1fr;
             }
         }
 
-        // The column snaps while the menu covers the content: wide at the end of an open
-        // (data-sidemenu-opening until then), narrow at the start of a fold. Easing it would
-        // lay the whole page out each frame.
-        @include desktop(min) {
-            &#{$rail-collapsed},
-            &[data-sidemenu-opening] {
-                grid-template-columns: var(--nds-sidemenu-rail-width) 1fr;
-            }
+        @include reduced-motion {
+            transition: none;
         }
     }
 

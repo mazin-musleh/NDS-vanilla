@@ -65,8 +65,8 @@
 
 @include tablet(max) {
 
-    /* Side Menu Toggle Button (rail mode styles its own) */
-    .nds-sidemenu-toggle:not(.nds-rail *) {
+    /* Side Menu Toggle Button */
+    .nds-sidemenu-toggle {
         --_btn-size-base: 40px;
         --_toggle-transform: translateX(calc(var(--nds-sidemenu-width) * -1));
         border: unset;
@@ -82,7 +82,7 @@
         visibility: visible;
     }
 
-    .nds-sidemenu-toggle:not(.nds-rail *) i {
+    .nds-sidemenu-toggle i {
         font-size: 1.5rem;
         color: var(--text-oncolor-primary);
         font-weight: var(--font-weight-semibold);
@@ -90,7 +90,7 @@
     }
 
     @include ltr {
-        .nds-sidemenu-toggle:not(.nds-rail *) {
+        .nds-sidemenu-toggle {
             --_toggle-transform: translateX(var(--nds-sidemenu-width));
             right: unset;
             left: 0;
@@ -101,7 +101,7 @@
     // ========================================
     // SLIDER MODE - Horizontal sliding (tablet/mobile)
     // ========================================
-    .nds-sidemenu:not(.nds-top, .nds-rail > *) {
+    .nds-sidemenu:not(.nds-top) {
         // Off the start edge: right in RTL, left in LTR.
         --_out: 100%;
         position: fixed;
@@ -273,107 +273,109 @@
 
 /* ========================================
    RAIL MODE - .nds-rail on the layout
-   The toggle folds the menu to its icons. Below 960px it is folded and opens over the page.
+   From 960px the toggle folds the menu to its icons. Below, it is the slide-in menu.
    ======================================== */
 
-.nds-content-layout.nds-rail > .nds-sidemenu {
-    position: relative;
-    transition: width var(--nds-transition);
+@include desktop(min) {
+    .nds-content-layout.nds-rail > .nds-sidemenu {
+        position: relative;
+        transition: width var(--nds-transition);
 
-    .nds-sidemenu-toggle:not([hidden]) {
-        // At the start, over the icon column, so it stays put as the menu folds; 40px fills the folded rail.
-        --_btn-size-base: 32px;
-        --btn-width: 40px;
-        --btn-height: 40px;
-        --btn-bg: var(--button-background-transparent-default);
-        --btn-bg-hover: var(--button-background-secondary-hovered);
-        --btn-bg-active: var(--button-background-secondary-pressed);
-        --btn-color: var(--text-default);
-        display: flex;
-        // The nav is a flex column: a full list would squeeze it.
-        flex-shrink: 0;
-        margin-block-end: var(--spacing-md);
-    }
-
-    // The list keeps the open width while it slides and the narrower nav clips it, so nothing
-    // reflows; once folded, it takes the rail's width, so a row's box and Show more fit.
-    > nav.nds-drawer {
-        overflow-x: clip;
-
-        > :not(.nds-sidemenu-toggle) {
-            width: var(--_rail-list-width, calc(var(--nds-sidemenu-width) - 2 * var(--spacing-md)));
-            max-width: none;
+        .nds-sidemenu-toggle:not([hidden]) {
+            // At the start, over the icon column, so it stays put as the menu folds; 40px fills the folded rail.
+            --_btn-size-base: 32px;
+            --btn-width: 40px;
+            --btn-height: 40px;
+            --btn-bg: var(--button-background-transparent-default);
+            --btn-bg-hover: var(--button-background-secondary-hovered);
+            --btn-bg-active: var(--button-background-secondary-pressed);
+            --btn-color: var(--text-default);
+            display: flex;
+            // The nav is a flex column: a full list would squeeze it.
+            flex-shrink: 0;
+            margin-block-end: var(--spacing-md);
         }
-    }
 
-    // Sliding: the parts below ease with it. Only then, or main CSS landing at load would animate them.
-    &:is([data-state~="closing"], [data-state~="open"]:not([data-state~="opened"])) {
-        --_rail-slide: var(--nds-transition);
-    }
+        // The list keeps the open width while it slides and the narrower nav clips it, so nothing
+        // reflows; once folded, it takes the rail's width, so a row's box and Show more fit.
+        > nav.nds-drawer {
+            overflow-x: clip;
 
-    // Folded rows read --_rail-folded and --_rail-settled (0 or 1) from the aside, so the layout's
-    // flag restyles the aside alone: a flag rule ending in a bare :not() restyled the whole page.
-    // The icon moves to the rail's center by translate, on the GPU.
-    .nds-drawer-list > li > .nds-btn,
-    .nds-drawer-search .nds-form-control {
-        overflow: clip;
-
-        > i {
-            translate: calc(var(--_rail-folded, 0) * var(--_rail-shift) * -1);
-            transition: translate var(--_rail-slide, 0s);
-
-            @include ltr {
-                translate: calc(var(--_rail-folded, 0) * var(--_rail-shift));
+            > :not(.nds-sidemenu-toggle) {
+                width: var(--_rail-list-width, calc(var(--nds-sidemenu-width) - 2 * var(--spacing-md)));
+                max-width: none;
             }
         }
-    }
 
-    .nds-drawer-search .nds-form-control {
-        > i {
-            --_rail-shift: calc((var(--nds-sidemenu-rail-width) - 2 * var(--spacing-md) - var(--_rail-search-icon, 20px)) / 2 - 1px - var(--spacing-md));
+        // Sliding: the parts below ease with it. Only then, or main CSS landing at load would animate them.
+        &:is([data-state~="closing"], [data-state~="open"]:not([data-state~="opened"])) {
+            --_rail-slide: var(--nds-transition);
         }
 
-        > :not(.nds-icon) {
-            opacity: calc(1 - var(--_rail-folded, 0));
-            transition: opacity var(--_rail-slide, 0s);
-        }
-    }
+        // Folded rows read --_rail-folded and --_rail-settled (0 or 1) from the aside, so the layout's
+        // flag restyles the aside alone: a flag rule ending in a bare :not() restyled the whole page.
+        // The icon moves to the rail's center by translate, on the GPU.
+        .nds-drawer-list > li > .nds-btn,
+        .nds-drawer-search .nds-form-control {
+            overflow: clip;
 
-    .nds-drawer-list > li > .nds-btn {
-        // A thinner mark fits the narrow rail. Width, not scale: a scale squashes the round ends.
-        --_rail-mark: var(--btn-indicator-size, var(--_btn-indicator-size-base, 3px));
-        --_btn-indicator-size: calc(var(--_rail-mark) + (3px - var(--_rail-mark)) * var(--_rail-folded, 0));
+            > i {
+                translate: calc(var(--_rail-folded, 0) * var(--_rail-shift) * -1);
+                transition: translate var(--_rail-slide, 0s);
 
-        > i {
-            --_rail-shift: calc((var(--nds-sidemenu-rail-width) - 2 * var(--spacing-md) - var(--_btn-icon-size)) / 2 - 1px - var(--_btn-padding));
-        }
-
-        // The slide's edge cuts the label, tag and arrow off; once folded, the 40px row would pull
-        // them in beside the icon, so they hide then, at once. Transparent, not hidden: the label
-        // stays the icon's name.
-        > :not(i, .nds-tooltip-balloon) {
-            opacity: calc(1 - var(--_rail-settled, 0));
+                @include ltr {
+                    translate: calc(var(--_rail-folded, 0) * var(--_rail-shift));
+                }
+            }
         }
 
-        &::after {
-            opacity: calc(var(--nds-icons-opacity) * (1 - var(--_rail-settled, 0)));
+        .nds-drawer-search .nds-form-control {
+            > i {
+                --_rail-shift: calc((var(--nds-sidemenu-rail-width) - 2 * var(--spacing-md) - var(--_rail-search-icon, 20px)) / 2 - 1px - var(--spacing-md));
+            }
+
+            > :not(.nds-icon) {
+                opacity: calc(1 - var(--_rail-folded, 0));
+                transition: opacity var(--_rail-slide, 0s);
+            }
         }
 
-        &::before {
-            transition: width var(--_rail-slide, 0s);
-        }
+        .nds-drawer-list > li > .nds-btn {
+            // A thinner mark fits the narrow rail. Width, not scale: a scale squashes the round ends.
+            --_rail-mark: var(--btn-indicator-size, var(--_btn-indicator-size-base, 3px));
+            --_btn-indicator-size: calc(var(--_rail-mark) + (3px - var(--_rail-mark)) * var(--_rail-folded, 0));
 
-        // Fades out of the folded primary look with the slide only, so a hover stays instant.
-        &[data-state~="active"] {
-            transition: background-color var(--_rail-slide, 0s), color var(--_rail-slide, 0s);
-        }
+            > i {
+                --_rail-shift: calc((var(--nds-sidemenu-rail-width) - 2 * var(--spacing-md) - var(--_btn-icon-size)) / 2 - 1px - var(--_btn-padding));
+            }
 
-        // One line, open or folded: a wrapped row would change height as it folds.
-        > .nds-label {
-            min-width: 0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            // The slide's edge cuts the label, tag and arrow off; once folded, the 40px row would pull
+            // them in beside the icon, so they hide then, at once. Transparent, not hidden: the label
+            // stays the icon's name.
+            > :not(i, .nds-tooltip-balloon) {
+                opacity: calc(1 - var(--_rail-settled, 0));
+            }
+
+            &::after {
+                opacity: calc(var(--nds-icons-opacity) * (1 - var(--_rail-settled, 0)));
+            }
+
+            &::before {
+                transition: width var(--_rail-slide, 0s);
+            }
+
+            // Fades out of the folded primary look with the slide only, so a hover stays instant.
+            &[data-state~="active"] {
+                transition: background-color var(--_rail-slide, 0s), color var(--_rail-slide, 0s);
+            }
+
+            // One line, open or folded: a wrapped row would change height as it folds.
+            > .nds-label {
+                min-width: 0;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
         }
     }
 }
@@ -426,16 +428,6 @@
     }
 
     .nds-rail#{$rail-collapsed} > .nds-sidemenu:not([data-state~="closing"]) {
-        @include rail-settled;
-    }
-}
-
-@include tablet(max) {
-    .nds-rail:not([data-sidemenu-open]) > .nds-sidemenu {
-        @include rail-folded;
-    }
-
-    .nds-rail:not([data-sidemenu-open]) > .nds-sidemenu:not([data-state~="closing"]) {
         @include rail-settled;
     }
 }

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.x"
-last_edit: "19/11/2026 - 01:15 PM"
+last_edit: "19/11/2026 - 11:48 PM"
 ---
 
 <section id="sidemenu-overview" class="nds-content-section nds-doc-overview">
@@ -210,10 +210,10 @@ The main links of the site belong in the [Main Navigation](../ui-shell/main-nav)
 </div>
 </script>
 <script type="text/html" id="sidemenu-rail" data-canon>
-<div class="nds-content-layout nds-has-sidemenu nds-rail">
+<div class="nds-content-layout nds-has-sidemenu nds-rail nds-full-width">
   <aside class="nds-sidemenu" aria-label="Sidebar" data-i18n-aria-label="sidemenu.sidebar">
     <nav class="nds-drawer nds-divided">
-      <button class="nds-sidemenu-toggle nds-btn" aria-label="Sidebar Menu" data-i18n-aria-label="sidemenu.sidebar_menu" hidden>
+      <button class="nds-sidemenu-toggle nds-btn nds-peek" aria-label="Sidebar Menu" data-i18n-aria-label="sidemenu.sidebar_menu" hidden>
         <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
         <span class="nds-label nds-truncate">Side menu</span>
       </button>
