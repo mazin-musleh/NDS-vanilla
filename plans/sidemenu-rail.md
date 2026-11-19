@@ -4,7 +4,7 @@ Status: **WIP, parked** (2026-11-18). The first build works, but it needs the fu
 
 ## Goal
 
-A side menu mode that folds to its icons. `nds-rail` on the `.nds-content-layout`. On a desktop, the menu button folds and opens it, and the browser keeps the choice. Below 960px it is always folded: no slide-in, no peek. The button opens the full menu over the page.
+A side menu mode that folds to its icons. `nds-rail` on the `.nds-content-layout`, with `nds-full-width` in the canon. On a desktop, the menu button folds and opens it, and the browser keeps the choice. Below 960px it is the slide-in menu, with Peek (owner call 2026-11-19: a rail always folded on a phone took the content's width).
 
 Owner calls already made:
 - A group pressed while folded opens the menu wide and opens that group (no flyout).
@@ -18,10 +18,10 @@ Owner calls already made:
 
 Files:
 - `_sass/tokens/_primitives.scss`: `--nds-sidemenu-rail-width`.
-- `_sass/layout/_content-layout.scss`: rail grid; below 960px the column stays at the rail width; the desktop column animates `grid-template-columns`.
-- `_sass/components/_sidemenu.scss`: the slide-in and peek rules skip rail (`:not(.nds-rail …)`); the rail block (toggle scrolls with the page, `nav` clips a list fixed at the open width with `max-width: none` over Scroll More's cap, `rail-folded` mixin).
-- `_js/nds-sidemenu.js`: `setupRail()`. Flags on the layout: `data-sidemenu-collapsed` (desktop), `data-sidemenu-open` (below 960px, over the page with the Backdrop). Hover `title` on folded top buttons. A stored fold at load lands with no slide (inline `transition: none` for two frames). Banner Hooks and Gotchas updated.
-- `ui-shell/sidemenu.md`: Rail structure canon `#sidemenu-rail`, Parts row, Variants rows with `:not(.nds-rail …)` on Slide-in, Top bar, Peek and Many links, Behavior "Rail Mode", two Best Practices, API rows. `check-docs.py` passed.
+- `_sass/layout/_content-layout.scss`: rail grid from 960px; the column eases `grid-template-columns` with the menu (measured on the console demo: every frame fits at 1x CPU, `tmp/rail-colanim-perf.mjs`). Below 960px, the slide-in grid.
+- `_sass/components/_sidemenu.scss`: the slide-in and peek rules cover rail too; the rail block is desktop only (toggle at the top inside the `nav`, `nav` clips a list fixed at the open width with `max-width: none` over Scroll More's cap, `rail-folded` / `rail-settled` mixins; the folded current icon is a primary button that fades in once).
+- `_js/nds-sidemenu.js`: `setupRail()`. Flag on the layout: `data-sidemenu-collapsed` (desktop). Below 960px the toggle runs `openMenu` / `closeMenu`, and a width change across 960px closes whichever is open. A stored fold at load lands with no slide (inline `transition: none` for two frames). Banner Hooks and Gotchas updated.
+- `ui-shell/sidemenu.md`: Rail structure canon `#sidemenu-rail`, Parts rows, Variants rows (`:not(.nds-rail …)` on Top bar and Many links only), Behavior "Rail Mode", Best Practices (Rail, icons, `nds-full-width`), API rows.
 - `CHANGELOG.md`: one Added line.
 
 ## Next: what it needs before it ships
@@ -34,6 +34,11 @@ Done 2026-11-19 (items 1–3 of the first list):
 - **Labels** (owner call 2026-11-19): top-level labels are one line with an ellipsis in rail mode, open or folded, so no row changes height as it folds (Ant Design Menu, Material drawer). Folded rows and cut-off names show the full name in a Tooltip, made on hover or focus and dropped at each slide; its `aria-describedby` is removed (the label already names the row). Tooltip gained `data-position="start|end"` (writes `data-position-horizontal`) for this.
 - **Stored fold at first paint**: the head inline script copies `nds-sidemenu-collapsed` to `data-nds-sidemenu-fold` on `<html>`; `$rail-collapsed` (`_mixins.scss`) treats it as the layout attribute (it wins over the markup) in main CSS and the skeleton; init removes it. The skeleton reserving 260px was the main cause: main's column transition slid from it. Throttled check (`tmp/rail-cls.mjs`, JS delayed past CSS): content 924→1128 (CLS 0.081) before, 1128 from the first frame after. `head.md` capture synced.
 - Harness: `tmp/rail-check.mjs` (scratch; LTR + RTL behavior, all ok). `doc-check.mjs ui-shell/sidemenu.md`: no findings.
+
+Done later 2026-11-19 (owner calls):
+- The folded current icon is a primary button, as Main Navigation's current link (c335d67a).
+- A fold keeps a group's mark only when the current page is in it (98523361).
+- Rail on a desktop only, the column eases with the menu, `nds-full-width` in the canon (90b9cf70). Tried and rejected: the slide-in's edge thumb as the desktop toggle; a rail on the console examples (it did not fit a phone).
 
 Open items from the first build:
    - RTL: behavior and the folded look checked.

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.x"
-last_edit: "19/11/2026 - 11:48 PM"
+last_edit: "19/11/2026 - 11:54 PM"
 ---
 
 <section id="sidemenu-overview" class="nds-content-section nds-doc-overview">
@@ -484,7 +484,7 @@ The main links of the site belong in the [Main Navigation](../ui-shell/main-nav)
 |---|---|---|
 | `.nds-content-layout.nds-has-sidemenu` | The side menu, then `.nds-content`. Without `nds-has-sidemenu`, the layout hides the side menu. See [Page Layout](../layout/page-layout) | Yes |
 | `aside.nds-sidemenu` | The menu button and the drawer. Give it an `aria-label`. One per page | Yes |
-| `button.nds-sidemenu-toggle` | The button that opens the menu below 960px, and folds it in rail mode: an icon and a `.nds-label`. Write it with `hidden` and an `aria-label` | Yes |
+| `button.nds-sidemenu-toggle` | The button that opens the menu below 960px, and folds it on a desktop in rail mode: an icon and a `.nds-label`. Write it with `hidden` and an `aria-label`. In rail mode it is the first child of `nav.nds-drawer` | Yes |
 | `nav.nds-drawer` | The list: a `.nds-scroll-more` with the `ul.nds-drawer-list` and the show more button. See [Drawer](../components/drawer) | Yes |
 | `li` with an `a.nds-btn` | One link | Yes |
 | `i` in a top-level link or group button | The link's icon, before its `.nds-label`. In rail mode the folded menu shows only this icon | In rail mode |
@@ -504,17 +504,17 @@ The main links of the site belong in the [Main Navigation](../ui-shell/main-nav)
     </div>
     <div class="nds-section-body" markdown="1">
 
-The Small screens options change the menu below 960px only. The Rail structure has its own small-screen mode, so these options and Peek button are off with it.
+The Small screens options change the menu below 960px only. A rail is the slide-in menu there, so Top bar is off with it.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
 | Structure | Two levels (default) | — | — | Links and groups of links. Fits most sites |
 | Structure | Three levels | canon `#sidemenu-grouped` | — | Groups inside a group. Use it only when one group holds many pages |
-| Structure | Rail (hint: The menu folds to its icons) | canon `#sidemenu-rail` | — | `nds-rail` on the layout. The menu button folds the menu to its icons. Below 960px, the menu stays folded, and the button opens it over the page. Give every top-level link an icon. Fits an app or admin console |
-| Small screens | Slide-in (default) (hint: Below 960px, the menu slides in from the side) | — | `.nds-sidemenu:not(.nds-rail > .nds-sidemenu)` | Below 960px, the menu slides in from the side over the page. Fits a long list |
+| Structure | Rail (hint: The menu folds to its icons) | canon `#sidemenu-rail` | — | `nds-rail` and `nds-full-width` on the layout. On a desktop, the menu button folds the menu to its icons. Below 960px, it is the slide-in menu. Give every top-level link an icon. Fits an app or admin console |
+| Small screens | Slide-in (default) (hint: Below 960px, the menu slides in from the side) | — | — | Below 960px, the menu slides in from the side over the page. Fits a long list |
 | Small screens | Top bar (hint: Below 960px, a bar above the content opens the menu) | `.nds-top` | `.nds-sidemenu:not(.nds-rail > .nds-sidemenu)` | Below 960px, a bar above the content shows the current page, and the menu drops down from it. Fits a short list |
-| Peek button | Peek (default) (hint: The button hides at the screen edge until the mouse comes near) | `.nds-peek` | `.nds-sidemenu-toggle:not(.nds-top .nds-sidemenu-toggle, .nds-rail .nds-sidemenu-toggle)` | In slide-in mode, the button stays mostly hidden at the screen edge. Not in top bar mode |
-| Peek button | Full button (hint: The button stays in full view) | — | `.nds-sidemenu-toggle:not(.nds-top .nds-sidemenu-toggle, .nds-rail .nds-sidemenu-toggle)` | The button stays in full view at the screen edge |
+| Peek button | Peek (default) (hint: The button hides at the screen edge until the mouse comes near) | `.nds-peek` | `.nds-sidemenu-toggle:not(.nds-top .nds-sidemenu-toggle)` | In slide-in mode, the button stays mostly hidden at the screen edge. Not in top bar mode |
+| Peek button | Full button (hint: The button stays in full view) | — | `.nds-sidemenu-toggle:not(.nds-top .nds-sidemenu-toggle)` | The button stays in full view at the screen edge |
 | Lined | Lined (hint: A line beside each open group) | `.nds-lined` | `.nds-drawer` | A line beside each open group, so the levels are easy to see |
 | Search | Search (hint: A search box above the links) | `[data-search]` | `.nds-drawer` | A search box that filters the links and opens each group with a match. For a long menu. See [Drawer](../components/drawer) for its options |
 | Many links | Many links (hint: The list does not fit, so the show more arrow appears) | canon `#sidemenu-more` | `.nds-drawer-list:not(.nds-rail .nds-drawer-list)` | 24 more links. Shows how the list scrolls when it is taller than the screen. Not with Rail: its list is long already, and these links have no icons |
@@ -549,9 +549,9 @@ In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the sc
 ### Rail Mode
 {: .nds-block-title}
 
-`nds-rail` on the `.nds-content-layout` puts the menu button at the top of the menu. On a desktop, a press folds the menu to its icons, and the content column grows. A second press opens it again. The browser keeps the choice for the next page. A top-level name stays on one line, and a long one ends in an ellipsis. A folded icon, or a cut-off name, shows the full name in a tooltip on hover or keyboard focus. A press on a group's icon opens the menu, then that group. A fold closes an open group first, and its icon stays marked. When the menu opens again, that group opens after it. A press while the menu slides waits until the slide ends.
+On a desktop, `nds-rail` on the `.nds-content-layout` puts the menu button at the top of the menu. A press folds the menu to its icons, and the content column grows with it. A second press opens it again. The browser keeps the choice for the next page. A top-level name stays on one line, and a long one ends in an ellipsis. A folded icon, or a cut-off name, shows the full name in a tooltip on hover or keyboard focus. The current page's icon shows as a primary button while the menu is folded. A press on a group's icon opens the menu, then that group. A fold closes an open group first. Its icon stays marked only when the current page is in the group. When the menu opens again, that group opens after it. A press while the menu slides waits until the slide ends.
 
-Below 960px, the menu is always folded beside the content. The button opens the full menu over the page. Escape, a click outside the menu, or a change of the screen width closes it.
+Below 960px, a rail is the slide-in menu, with its menu button at the screen edge. Peek works as it does in slide-in mode.
 
 ### Search
 {: .nds-block-title}
@@ -691,6 +691,7 @@ Below 960px, the menu is always folded beside the content. The button opens the 
 - Use two levels for most sites. A third level hides pages two clicks deep.
 - Pick Top bar for a short list, and Slide-in for a long one that people scroll.
 - Pick Rail for an app or a console that people use for a long time, where the content needs the width.
+- Write `nds-full-width` on a rail's layout. On a wide screen, a layout with a max width turns the space the fold frees into empty margin.
 - In rail mode, give every top-level link and group an icon. A folded link with no icon is an empty button.
 - Add Search to a menu of about 20 links or more, as this site's menu has.
 - Do not write color classes on the menu button. Each mode styles it.
@@ -713,14 +714,13 @@ Below 960px, the menu is always folded beside the content. The button opens the 
 | Attribute | Element | Effect |
 |---|---|---|
 | `data-sidemenu-collapsed` | `.nds-content-layout.nds-rail` | Write it to start the menu folded on a desktop. The script sets it when the user folds the menu, and removes it when the user opens it. The user's last choice, kept in `localStorage` as `nds-sidemenu-collapsed`, wins over the markup |
-| `data-sidemenu-open` | `.nds-content-layout.nds-rail` | Below 960px, the script sets it when the menu opens over the page, and removes it when the menu closes |
-| `nds-tooltip`, `data-tooltip-message`, `data-tooltip-hover` | A top-level link or group button in rail mode | On hover or focus, when the menu is folded or the name is cut off, the script makes the button a [Tooltip](../components/tooltip) that shows the full name. It removes them when the menu slides, and when the name fits again |
-| `data-state` | `aside.nds-sidemenu` in rail mode | The script sets `open opening` when the menu starts to open, removes `opening` as it slides, and adds `opened` at the end. A fold adds `closing`, and removes every token at the end. A folded menu has none |
-| `data-state` | `aside.nds-sidemenu` in slide-in mode | The script sets `open` when the menu opens, adds `closing` when it closes, and removes both after the close |
+| `nds-tooltip`, `data-tooltip-message`, `data-tooltip-hover` | A top-level link or group button in rail mode on a desktop | On hover or focus, when the menu is folded or the name is cut off, the script makes the button a [Tooltip](../components/tooltip) that shows the full name. It removes them when the menu slides, and when the name fits again |
+| `data-state` | `aside.nds-sidemenu` in rail mode on a desktop | The script sets `open opening` when the menu starts to open, removes `opening` as it slides, and adds `opened` at the end. A fold adds `closing`, and removes every token at the end. A folded menu has none |
+| `data-state` | `aside.nds-sidemenu` in slide-in mode, and in rail mode below 960px | The script sets `open` when the menu opens, adds `closing` when it closes, and removes both after the close |
 | `hidden` | `button.nds-sidemenu-toggle` | Write it in the markup. The script removes it when it starts |
-| `aria-expanded` | `button.nds-sidemenu-toggle` | The script writes `false` when it starts and the attribute is missing. It sets `true` when the menu opens, and `false` after the close. In rail mode, it is `true` while the menu is not folded |
-| `data-state="open"` | `button.nds-sidemenu-toggle` | The script sets it when the menu opens, and removes it after the close |
-| `hidden` | The menu button's `.nds-label` | The script sets it in slide-in mode, and removes it in top bar mode. Leave the label's text to the script: it writes the current page's name in it |
+| `aria-expanded` | `button.nds-sidemenu-toggle` | The script writes `false` when it starts and the attribute is missing. It sets `true` when the menu opens, and `false` after the close. In rail mode on a desktop, it is `true` while the menu is not folded |
+| `data-state="open"` | `button.nds-sidemenu-toggle` | The script sets it when the slide-in or top bar menu opens, and removes it after the close |
+| `hidden` | The menu button's `.nds-label` | The script sets it in slide-in and rail modes, and removes it in top bar mode. Leave the label's text to the script: it writes the current page's name in it |
 | `data-state` | `nav.nds-drawer` in top bar mode | The script sets `open` when the menu opens, adds `closing` when it closes, and removes both after the close |
 | `data-state="active"` | The current page's `li` | Set it yourself. The drawer opens every group above it, and follows the mark when it moves. It writes `aria-current="page"` on the `li`'s link and moves it with the mark. It keeps an `aria-current` you wrote |
 | `aria-expanded` | A group's `button` | Write `false` in the markup. The drawer sets `true` when the group opens, and `false` when it closes. See [Drawer](../components/drawer) |
@@ -732,7 +732,7 @@ Below 960px, the menu is always folded beside the content. The button opens the 
 | Property | Default | Controls |
 |---|---|---|
 | `--nds-sidemenu-width` | `260px` | The width of the side menu and of its layout column. Set it on `:root` |
-| `--nds-sidemenu-rail-width` | `56px` | The width of the folded menu and of its layout column in rail mode. Set it on `:root` |
+| `--nds-sidemenu-rail-width` | `56px` | The width of the folded menu and of its layout column in rail mode on a desktop. Set it on `:root` |
 | `--nds-sidemenu-toggle-height` | `56px` | The height of the top bar. Set it on `:root` |
 | `--toggle-pos` | `40svh` | How far below the main navigation the slide-in menu button sits. Set it on `button.nds-sidemenu-toggle` |
 | `--drawer-max-height` | The screen height less the main navigation and `--spacing-3xl`, or `--spacing-xl` with `nds-compact` or card view on a desktop. `60svh` in top bar mode | The height of the list before it scrolls. Set it on `aside.nds-sidemenu`. The open slide-in menu fits the list to the screen and ignores it |
@@ -753,7 +753,7 @@ Below 960px, the menu is always folded beside the content. The button opens the 
 | `nds:sidemenu:collapsed` | `.nds-sidemenu` in rail mode, after the menu folds, and it bubbles | — |
 {: .nds-table .nds-responsive}
 
-The events fire when a person opens or folds the menu. They do not fire at load or when the screen width crosses 960px. Below 960px, `expanded` fires when the menu opens over the page, and a width change that closes it fires `collapsed`. The slide-in and top bar modes fire no events. The drawer fires `nds:drawer:shown` after a group opens, and `nds:drawer:hidden` after it closes: see [Drawer](../components/drawer).
+The events fire on a desktop, when a person opens or folds the menu. They do not fire at load or when the screen width crosses 960px. The slide-in and top bar modes fire no events, and neither does a rail below 960px. The drawer fires `nds:drawer:shown` after a group opens, and `nds:drawer:hidden` after it closes: see [Drawer](../components/drawer).
 
 <script type="text/html" id="sidemenu-js" data-canon data-lang="js" data-preview="none">
 // A framework rendered a new side menu after the NDS script ran:
