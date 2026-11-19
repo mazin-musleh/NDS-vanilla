@@ -379,7 +379,8 @@
             const groupBtn = openItem?.querySelector(':scope > .nds-btn');
             if (!groupBtn) return slide(false);
             isBusy = true;
-            afterGroupSlide('hidden', openItem, () => slide(false));
+            // Runs fold() again: a group a script opened in the meantime closes too.
+            afterGroupSlide('hidden', openItem, fold);
             NDS.Drawer.toggle(groupBtn);
             // The folded icon keeps the mark. The drawer's watcher clears it in a microtask
             // queued during toggle(); this one runs after it, before the paint.
