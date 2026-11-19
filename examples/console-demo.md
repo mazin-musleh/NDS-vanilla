@@ -1,6 +1,7 @@
 ---
 layout: console
 layout_class: nds-full-width
+sidemenu_mode: rail
 title: Admin Console Demo
 hero_title: Admin Console
 hero_description: A management console showcasing statistics, transaction records, team directory, and system notifications.
@@ -10,7 +11,7 @@ lang: en
 direction: ltr
 hide_share_page: true
 hideFeedback: true
-last_edit: "02/11/2026 - 04:22 PM"
+last_edit: "20/11/2026 - 12:15 AM"
 ---
 
 

@@ -8,6 +8,7 @@ direction: rtl              # ltr | rtl
 # === Data Overrides ===
 # mainnav: mainnav            # loads _data/mainnav/{value}.yml (default: mainnav)
 # sidemenu: sidemenu          # loads _data/sidemenu/{value}.yml (default: sidemenu)
+# sidemenu_icons: true        # shows the top-level icons (icon: in the data file)
 # footer: footer              # loads _data/footer/{value}.yml (default: footer)
 # footerlogos: footerlogos    # loads _data/footerlogos/{value}.yml (default: footerlogos)
 # heroaction: heroaction      # loads _data/hero/{value}.yml (default: heroaction)

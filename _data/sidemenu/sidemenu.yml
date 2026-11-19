@@ -1,8 +1,10 @@
 - label: "Home"
+  icon: "home-01"
   url: "/"
   href: "/"
 
 - label: "Guides"
+  icon: "book-open-01"
   has_sub: true
   children:
     - label: "Get Started"
@@ -16,6 +18,7 @@
       href: "/guides/migration.html"
 
 - label: "DGA Templates"
+  icon: "layout-01"
   has_sub: true
   children:
     - label: "Life Journeys Template"
@@ -62,6 +65,7 @@
       href: "/templates/404-template.html"
 
 - label: "Examples"
+  icon: "dashboard-square-01"
   has_sub: true
   children:
     - label: "Student Portal"
@@ -111,6 +115,7 @@
       href: "/examples/support-inbox.html"
 
 - label: "Events"
+  icon: "party"
   has_sub: true
   children:
     - label: "National Day 96"
@@ -124,6 +129,7 @@
       href: "/events/hajj.html"
 
 - label: "Foundations"
+  icon: "paint-board"
   has_sub: true
   children:
     - label: "Themes"
@@ -137,6 +143,7 @@
       href: "/foundations/icons.html"
 
 - label: "Layout"
+  icon: "layout-03"
   has_sub: true
   children:
     - label: "Page Layout"
@@ -162,6 +169,7 @@
       href: "/layout/prose.html"
 
 - label: "UI Shell"
+  icon: "browser"
   has_sub: true
   children:
     - label: "Header"
@@ -202,6 +210,7 @@
       href: "/ui-shell/session-timeout.html"
 
 - label: "Components"
+  icon: "puzzle"
   has_sub: true
   children:
     - label: "Actions"
@@ -446,6 +455,7 @@
           href: "/components/toolbar.html"
 
 - label: "Utilities"
+  icon: "wrench-01"
   has_sub: true
   children:
     - label: "Copy"
@@ -471,6 +481,7 @@
       href: "/utilities/truncate-text.html"
 
 - label: "Core"
+  icon: "source-code"
   has_sub: true
   children:
     - label: "Audit"

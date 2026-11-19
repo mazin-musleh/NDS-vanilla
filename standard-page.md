@@ -19,13 +19,14 @@ hero_description: Brief description of this page
 breadcrumb: [["Components", "/components"]]     # or mix linked + label: [["Parent", "/url"], "Child"]
 # breadcrumb_root: Home        # override root label (default: Home / الرئيسية)
 # breadcrumb_root_url: /       # override root URL
-# sidemenu_mode:               # omit = default slider | top = top dropdown | false = hidden
+# sidemenu_mode:               # omit = default slider | top = top dropdown | rail = folds to icons on a desktop (use with nds-full-width) | false = hidden
 # hideFeedback: false          # hide user feedback section (page layout only)
 # last_edit: "04/12/2020 - 04:13 PM"  # DGA last-modified line at the end of the content (page layout)
 
 # === Data Overrides ===
 # mainnav: mainnav            # loads _data/mainnav/{value}.yml (default: mainnav)
 # sidemenu: sidemenu          # loads _data/sidemenu/{value}.yml (default: sidemenu)
+# sidemenu_icons: true        # shows the top-level icons (icon: in the data file)
 # footer: footer              # loads _data/footer/{value}.yml (default: footer)
 # footerlogos: footerlogos    # loads _data/footerlogos/{value}.yml (default: footerlogos)
 

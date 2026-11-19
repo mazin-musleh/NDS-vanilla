@@ -1,9 +1,18 @@
 <aside class="nds-sidemenu{%- if page.sidemenu_mode == 'top' %} nds-top{%- endif %}" aria-label="Sidebar" data-i18n-aria-label="sidemenu.sidebar">
+    {%- comment %} Rail: the toggle is the nav's first child. A rail shows the top-level icons. {%- endcomment %}
+    {%- assign sidemenu_rail = false %}
+    {%- assign sidemenu_show_icons = page.sidemenu_icons %}
+    {%- if page.sidemenu_mode == 'rail' %}{% assign sidemenu_rail = true %}{% assign sidemenu_show_icons = true %}{% endif %}
+    {%- if sidemenu_rail %}
+    <nav class="nds-drawer nds-divided nds-lined" data-search>
+    {%- endif %}
     <button class="nds-sidemenu-toggle nds-btn nds-peek" aria-label="Sidebar Menu" data-i18n-aria-label="sidemenu.sidebar_menu" hidden>
         <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
         <span class="nds-label nds-truncate">Side menu</span>
     </button>
+    {%- unless sidemenu_rail %}
     <nav class="nds-drawer nds-divided nds-lined" data-search>
+    {%- endunless %}
         {%- assign sidemenu_data_file = page.sidemenu | default: site.sidemenu | default: "sidemenu" %}
         {%- assign sidemenu_items = site.data.sidemenu[sidemenu_data_file] %}
         <div class="nds-scroll-more nds-divided">
@@ -20,6 +29,9 @@
                 {%- endfor %}
                 <li>
                     <button class="nds-btn nds-subtle nds-indicator" aria-expanded="false">
+                        {%- if sidemenu_show_icons and item.icon %}
+                        <i class="hgi hgi-stroke hgi-{{ item.icon }}" aria-hidden="true"></i>
+                        {%- endif %}
                         <span class="nds-label">{{ item.label }}</span>
                         <span class="nds-tag nds-gray nds-xs nds-rounded"><span class="nds-label">{{ item_count }}</span></span>
                     </button>
@@ -54,6 +66,9 @@
                 {%- else %}
                 <li{%- if page.url == item.href %} data-state="active"{%- endif %}>
                     <a class="nds-btn nds-subtle nds-indicator" href="{{ item.href | relative_url }}">
+                        {%- if sidemenu_show_icons and item.icon %}
+                        <i class="hgi hgi-stroke hgi-{{ item.icon }}" aria-hidden="true"></i>
+                        {%- endif %}
                         <span class="nds-label">{{ item.label }}</span>
                     </a>
                 </li>

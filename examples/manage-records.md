@@ -1,6 +1,7 @@
 ---
 layout: console
 layout_class: nds-full-width
+sidemenu_mode: rail
 title: Manage Records
 hero_title: Service Requests
 hero_description: A records screen with create, edit and delete, expandable detail rows, filtering, sorting, pagination and export. Filtering, sorting, pagination, export, column visibility and per-page are client-side only, so they port as they are. Create, edit, delete and the expandable rows read and write data, so they follow the project's own data layer. The demo needs no server.
@@ -10,7 +11,7 @@ lang: en
 direction: ltr
 hide_share_page: true
 hideFeedback: true
-last_edit: "18/11/2026 - 10:58 AM"
+last_edit: "20/11/2026 - 12:15 AM"
 ---
 
 <section id="requests" class="nds-content-section">
