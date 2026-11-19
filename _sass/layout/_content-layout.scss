@@ -57,7 +57,7 @@ main {
         }
 
         @include desktop(min) {
-            &[data-sidemenu-collapsed] {
+            &#{$rail-collapsed} {
                 grid-template-columns: var(--nds-sidemenu-rail-width) 1fr;
             }
         }

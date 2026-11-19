@@ -9,6 +9,11 @@
         }
     })();
     (function () {
+        // The side menu rail's stored fold, so the first paint is already folded.
+        var fold; try { fold = localStorage.getItem('nds-sidemenu-collapsed'); } catch (e) {}
+        if (fold) document.documentElement.setAttribute('data-nds-sidemenu-fold', fold);
+    })();
+    (function () {
         document.querySelectorAll('link[rel="preload"][data-nds-defer]').forEach(function (preload) {
             preload.rel = 'stylesheet';
         });

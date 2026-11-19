@@ -98,6 +98,11 @@ html {
             &:where(.nds-has-sidemenu) {
                 grid-template-columns: var(--nds-sidemenu-width) 1fr;
             }
+
+            // A folded rail: main's column transition would slide from the open width.
+            &:where(.nds-has-sidemenu.nds-rail#{$rail-collapsed}) {
+                grid-template-columns: var(--nds-sidemenu-rail-width) 1fr;
+            }
         }
     }
 

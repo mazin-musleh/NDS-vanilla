@@ -7,8 +7,8 @@ breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en
 direction: ltr
 since: "1.1.0"
-updated: "2.0.0"
-last_edit: "09/11/2026 - 01:28 PM"
+updated: "2.0.x"
+last_edit: "19/11/2026 - 10:42 AM"
 ---
 
 <section id="head-overview" class="nds-content-section nds-doc-overview">
@@ -88,6 +88,11 @@ Copy the head as one block. The JS Library tab holds the main script: put it jus
           .filter(function (theme, i, all) { return theme && all.indexOf(theme) === i; });
         root.setAttribute('data-theme', themes.join(' '));
       }
+    })();
+    (function () {
+      // The side menu rail's stored fold, so the first paint is already folded.
+      var fold; try { fold = localStorage.getItem('nds-sidemenu-collapsed'); } catch (e) {}
+      if (fold) document.documentElement.setAttribute('data-nds-sidemenu-fold', fold);
     })();
     (function () {
       document.querySelectorAll('link[rel="preload"][data-nds-defer]').forEach(function (preload) {
@@ -303,6 +308,7 @@ The inline script runs once, at page load. The stylesheets it turns on and the `
 | `data-theme` | `<html>` | The inline script adds the theme saved under `nds-theme` in `localStorage` to it, before the first paint. The theme switcher writes that key |
 | `data-timezone` | `<html>` | Write it yourself: the site's timezone, as an IANA name such as `Asia/Riyadh`. Without it, NDS uses the visitor's timezone. See [Date](../components/date) |
 | `data-date-format` | `<html>` | Write it yourself: the site's date format, such as `DD/MM/YYYY`. Any element can carry its own for the content inside it. See [Date](../components/date) |
+| `data-nds-sidemenu-fold` | `<html>` | The inline script copies the side menu rail's fold, saved under `nds-sidemenu-collapsed` in `localStorage`, to it, so the first paint is already folded or open. The side menu removes it when it starts. Do not set it yourself. See [Side Menu](sidemenu) |
 | `data-nds-loaded` | `<html>` | The loader sets it once the main CSS has applied, and the page shows. Do not set it yourself |
 {: .nds-table .nds-responsive}
 

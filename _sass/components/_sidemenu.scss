@@ -273,7 +273,7 @@
    ======================================== */
 
 .nds-content-layout.nds-rail > .nds-sidemenu {
-    // The sticky toggle sits above the list: 40px and its gap.
+    // The sticky toggle sits above the nav: 40px and its gap. The search is inside the nav, in its height.
     --drawer-max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-3xl) - 48px - var(--_sidemenu-top-offset, 0px));
     position: relative;
     transition: width var(--nds-transition);
@@ -307,17 +307,27 @@
         }
     }
 
+    // Sliding: the parts below ease with it. Only then, or main CSS landing at load would animate them.
+    &:is([data-state~="closing"], [data-state~="open"]:not([data-state~="opened"])) {
+        --_rail-slide: var(--nds-transition);
+    }
+
     // The icon eases to the rail's center as it folds; the rest fades.
     > .nds-sidemenu-toggle,
-    .nds-drawer-list > li > .nds-btn {
+    .nds-drawer-list > li > .nds-btn,
+    .nds-drawer-search .nds-form-control {
         overflow: clip;
-        transition: padding-inline-start var(--nds-transition);
+        transition: padding-inline-start var(--_rail-slide, 0s);
+    }
+
+    .nds-drawer-search .nds-form-control > :not(.nds-icon) {
+        transition: opacity var(--_rail-slide, 0s);
     }
 
     .nds-drawer-list > li > .nds-btn {
         > :not(i, .nds-tooltip-balloon),
         &::after {
-            transition: opacity var(--nds-transition);
+            transition: opacity var(--_rail-slide, 0s);
         }
 
         // One line, open or folded: a wrapped row would change height as it folds.
@@ -333,15 +343,32 @@
 @mixin rail-folded {
     width: var(--nds-sidemenu-rail-width);
 
-    // Groups and search come back when the menu opens.
+    // Groups come back when the menu opens. Search stays, as its icon, so no row moves.
     .nds-drawer-list ul,
-    .nds-drawer > :is(.nds-drawer-search, .nds-empty-placeholder) {
+    .nds-drawer > .nds-empty-placeholder {
         display: none;
     }
 
     > .nds-sidemenu-toggle,
     .nds-drawer-list > li > .nds-btn {
         padding-inline-start: calc((var(--nds-sidemenu-rail-width) - 2 * var(--spacing-md) - var(--_btn-icon-size)) / 2 - 1px);
+    }
+
+    .nds-drawer-search .nds-form-control {
+        padding-inline-start: calc((var(--nds-sidemenu-rail-width) - 2 * var(--spacing-md) - var(--_rail-search-icon, 20px)) / 2 - 1px);
+
+        > :not(.nds-icon) {
+            opacity: 0;
+        }
+    }
+
+    // Primary while folded: it stands out, and covers the icons scrolling under it.
+    // :not([hidden]) as the rail's own toggle rule, or that one wins below 960px.
+    > .nds-sidemenu-toggle:not([hidden]) {
+        --btn-bg: var(--button-background-primary-default);
+        --btn-bg-hover: var(--button-background-primary-hovered);
+        --btn-bg-active: var(--button-background-primary-pressed);
+        --btn-color: var(--text-oncolor-primary);
     }
 
     // Faded, not hidden: the label stays the icon's name.
@@ -363,11 +390,11 @@
         transition: grid-template-columns var(--nds-transition);
     }
 
-    .nds-rail[data-sidemenu-collapsed] > .nds-sidemenu {
+    .nds-rail#{$rail-collapsed} > .nds-sidemenu {
         @include rail-folded;
     }
 
-    .nds-rail[data-sidemenu-collapsed] > .nds-sidemenu:not([data-state~="closing"]) {
+    .nds-rail#{$rail-collapsed} > .nds-sidemenu:not([data-state~="closing"]) {
         @include rail-settled;
     }
 }

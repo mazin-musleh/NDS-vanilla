@@ -119,6 +119,10 @@ $breakpoints-range: (
 // everything inside it, at the same specificity as page dark mode.
 $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root) *)';
 
+// A folded rail layout. Until the side menu starts, the head script's copy of the stored
+// fold on <html> wins over the markup, so the first paint is already folded.
+$rail-collapsed: ':is([data-sidemenu-collapsed]:not(html[data-nds-sidemenu-fold="0"] *), html[data-nds-sidemenu-fold="1"] *)';
+
 @mixin dark {
   @at-root {
     @each $selector in & {

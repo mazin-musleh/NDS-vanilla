@@ -32,8 +32,8 @@ Done 2026-11-19 (items 1–3 of the first list):
 - **Events**: `nds:sidemenu:expanded` / `collapsed` on the aside, rail only, not at load or on a width change. Banner and doc API updated.
 - **Folded rows** (CSS): once the fold ends (no `closing`), the aside sets `--_rail-list-width` and the list takes the rail width, so a row's box and the Show more arrow fit. As it folds, the row's start padding eases to center the icon (18px each side at 56px) and the label, tag and arrow fade to 0 (kept in the accessibility tree). The rail canon has 9 more links so Scroll More shows.
 - **Labels** (owner call 2026-11-19): top-level labels are one line with an ellipsis in rail mode, open or folded, so no row changes height as it folds (Ant Design Menu, Material drawer). Folded rows and cut-off names show the full name in a Tooltip, made on hover or focus and dropped at each slide; its `aria-describedby` is removed (the label already names the row). Tooltip gained `data-position="start|end"` (writes `data-position-horizontal`) for this.
+- **Stored fold at first paint**: the head inline script copies `nds-sidemenu-collapsed` to `data-nds-sidemenu-fold` on `<html>`; `$rail-collapsed` (`_mixins.scss`) treats it as the layout attribute (it wins over the markup) in main CSS and the skeleton; init removes it. The skeleton reserving 260px was the main cause: main's column transition slid from it. Throttled check (`tmp/rail-cls.mjs`, JS delayed past CSS): content 924→1128 (CLS 0.081) before, 1128 from the first frame after. `head.md` capture synced.
 - Harness: `tmp/rail-check.mjs` (scratch; LTR + RTL behavior, all ok). `doc-check.mjs ui-shell/sidemenu.md`: no findings.
 
 Open items from the first build:
-   - The skeleton (`_sass/_skeleton.scss`) reserves the open width: a page stored folded jumps at the reveal. Check it with the throttled perf harness.
    - RTL: behavior and the folded look checked.

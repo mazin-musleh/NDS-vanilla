@@ -273,6 +273,7 @@
             pending = null;
             layout.removeAttribute('data-sidemenu-open');
             sidemenu.style.removeProperty('z-index');
+            drawer?.style.removeProperty('--drawer-max-height');
             hideBackdrop();
         };
         // A press during a slide waits for its end; the last one wins.
@@ -296,6 +297,8 @@
             NDS.aria.expanded(toggleBtn, expand);
             if (expand) {
                 if (smallQuery.matches) {
+                    // The page is locked while it is open, so the list fits below where it stands now.
+                    drawer?.style.setProperty('--drawer-max-height', Math.max(window.innerHeight - drawer.getBoundingClientRect().top - 16, 100) + 'px');
                     layout.setAttribute('data-sidemenu-open', '');
                     sidemenu.style.zIndex = 999;
                     backdropShown = true;
@@ -332,6 +335,7 @@
                     removeState(sidemenu, 'open', 'closing');
                     // Kept above the backdrop until it has faded.
                     sidemenu.style.removeProperty('z-index');
+                    drawer?.style.removeProperty('--drawer-max-height');
                     dispatchRailEvent('collapsed');
                     finish();
                 });
@@ -341,6 +345,10 @@
         // An open group closes first, then the menu folds.
         function fold() {
             if (isFolded()) return;
+            // A query left in the box would fold to its matches only. Escape is the drawer's
+            // clear that restores the open groups at once, not after its input debounce.
+            const searchInput = drawer?.querySelector('.nds-drawer-search .nds-search-input');
+            if (searchInput?.value) searchInput.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
             const openItem = sidemenu.querySelector('.nds-drawer-list > li:is([data-state~="open"], [data-state~="opening"])');
             const groupBtn = openItem?.querySelector(':scope > .nds-btn');
             if (!groupBtn) return slide(false);
@@ -394,6 +402,8 @@
                 requestAnimationFrame(() => requestAnimationFrame(() => sliding.forEach(el => el.style.removeProperty('transition'))));
             }
         } catch {}
+        // The layout holds the fold now; the head script's copy would outlive the next press.
+        document.documentElement.removeAttribute('data-nds-sidemenu-fold');
 
         toggleBtn.addEventListener('click', () => request(() => (isFolded() ? expand() : fold())), { signal });
         // A group pressed while folded, or during a slide, waits for the menu; the drawer never sees it.
@@ -409,7 +419,13 @@
             const btn = e.target.closest('.nds-drawer-list > li > .nds-btn');
             if (btn) syncTooltip(btn);
         }, { signal });
+        // Folded, the box is all icon: a click there focuses the input, which opens the menu.
+        drawer?.addEventListener('click', (e) => {
+            if (isFolded()) e.target.closest('.nds-drawer-search')?.querySelector('.nds-search-input')?.focus();
+        }, { signal });
         drawer?.addEventListener('focusin', (e) => {
+            // The folded search icon: focus opens the menu, and the box keeps the focus.
+            if (isFolded() && e.target.closest('.nds-drawer-search')) return request(() => { if (isFolded()) expand(); });
             const btn = e.target.closest('.nds-drawer-list > li > .nds-btn');
             // A new tooltip missed this focus: open it as its own focus listener would.
             if (btn && syncTooltip(btn) && btn.matches(':focus-visible')) btn.ndsTooltip?.open();
