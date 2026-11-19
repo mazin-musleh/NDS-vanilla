@@ -277,8 +277,6 @@
    ======================================== */
 
 .nds-content-layout.nds-rail > .nds-sidemenu {
-    // The menu button sits in the sticky nav, above the list: 40px and its gap.
-    --drawer-max-height: calc(100svh - var(--nds-nav-height) - var(--spacing-3xl) - 48px - var(--_sidemenu-top-offset, 0px));
     position: relative;
     transition: width var(--nds-transition);
 
@@ -292,6 +290,8 @@
         --btn-bg-active: var(--button-background-secondary-pressed);
         --btn-color: var(--text-default);
         display: flex;
+        // The nav is a flex column: a full list would squeeze it.
+        flex-shrink: 0;
         margin-block-end: var(--spacing-md);
     }
 
