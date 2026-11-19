@@ -363,6 +363,11 @@
             transition: width var(--_rail-slide, 0s);
         }
 
+        // Fades out of the folded primary look with the slide only, so a hover stays instant.
+        &[data-state~="active"] {
+            transition: background-color var(--_rail-slide, 0s), color var(--_rail-slide, 0s);
+        }
+
         // One line, open or folded: a wrapped row would change height as it folds.
         > .nds-label {
             min-width: 0;
@@ -388,6 +393,31 @@
 @mixin rail-settled {
     --_rail-settled: 1;
     --_rail-list-width: calc(var(--nds-sidemenu-rail-width) - 2 * var(--spacing-md));
+
+    // The active icon is the primary button, as Main Nav's current link: a mark alone is faint on a lone icon.
+    .nds-drawer-list > li > .nds-btn[data-state~="active"] {
+        --btn-bg: var(--button-background-primary-default);
+        --btn-bg-hover: var(--button-background-primary-hovered);
+        --btn-bg-active: var(--button-background-primary-pressed);
+        --btn-bg-selected: var(--button-background-primary-default);
+        --btn-color: var(--text-oncolor-primary);
+        --btn-indicator-color: var(--button-indicator-primary);
+        --btn-indicator-active: var(--button-indicator-primary);
+        --btn-indicator-selected: var(--button-indicator-primary);
+        // Fades in once, as the slide ends: an animation, not a transition, so a hover does not replay it.
+        animation: rail-active-fill var(--nds-transition);
+
+        @include reduced-motion {
+            animation: none;
+        }
+    }
+}
+
+@keyframes rail-active-fill {
+    from {
+        background-color: var(--button-background-transparent-default);
+        color: var(--text-default);
+    }
 }
 
 @include desktop(min) {
