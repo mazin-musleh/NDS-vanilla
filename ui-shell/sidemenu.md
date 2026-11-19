@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.x"
-last_edit: "19/11/2026 - 08:26 AM"
+last_edit: "19/11/2026 - 01:15 PM"
 ---
 
 <section id="sidemenu-overview" class="nds-content-section nds-doc-overview">
@@ -753,7 +753,7 @@ Below 960px, the menu is always folded beside the content. The button opens the 
 | `nds:sidemenu:collapsed` | `.nds-sidemenu` in rail mode, after the menu folds, and it bubbles | — |
 {: .nds-table .nds-responsive}
 
-The events fire when a person opens or folds the menu. They do not fire at load or on a change of the screen width. Below 960px, `expanded` fires when the menu opens over the page. The slide-in and top bar modes fire no events. The drawer fires `nds:drawer:shown` after a group opens, and `nds:drawer:hidden` after it closes: see [Drawer](../components/drawer).
+The events fire when a person opens or folds the menu. They do not fire at load or when the screen width crosses 960px. Below 960px, `expanded` fires when the menu opens over the page, and a width change that closes it fires `collapsed`. The slide-in and top bar modes fire no events. The drawer fires `nds:drawer:shown` after a group opens, and `nds:drawer:hidden` after it closes: see [Drawer](../components/drawer).
 
 <script type="text/html" id="sidemenu-js" data-canon data-lang="js" data-preview="none">
 // A framework rendered a new side menu after the NDS script ran:

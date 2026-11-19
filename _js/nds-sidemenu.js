@@ -370,7 +370,8 @@
 
         // An open group closes first, then the menu folds.
         function fold() {
-            if (isFolded()) return;
+            // A host folded it during the group slide: end the busy wait it set.
+            if (isFolded()) return finish();
             // A query left in the box would fold to its matches only. Escape is the drawer's
             // clear that restores the open groups at once, not after its input debounce.
             const searchInput = drawer?.querySelector('.nds-drawer-search .nds-search-input');
@@ -385,7 +386,8 @@
             // The folded icon keeps the mark. The drawer's watcher clears it in a microtask
             // queued during toggle(); this one runs after it, before the paint.
             queueMicrotask(() => { if (foldedItem === openItem) addState(groupBtn, 'active'); });
-            foldedItem = openItem;
+            // The first group keeps the mark; an always-open drawer's others lose theirs.
+            foldedItem ??= openItem;
         }
         // Drops the kept mark, unless the drawer would keep it (an active <li>) or KEEP is that button.
         const releaseFoldedItem = (keep) => {
@@ -518,11 +520,12 @@
         if (menuState.ownExpanded) NDS.aria.expanded(toggleBtn, false);
         setupTopOffset(sidemenu, abortController.signal);
         const layout = sidemenu.closest('.nds-content-layout');
-        if (layout?.classList.contains('nds-rail')) {
+        const isRail = layout?.classList.contains('nds-rail');
+        menuState.wasHidden = toggleBtn.hidden;
+        toggleBtn.removeAttribute('hidden');
+        syncToggleLabel(sidemenu, toggleBtn, isTopMode && !isRail);
+        if (isRail) {
             menuState.layout = layout;
-            menuState.wasHidden = toggleBtn.hidden;
-            toggleBtn.removeAttribute('hidden');
-            syncToggleLabel(sidemenu, toggleBtn, false);
             setupRail(menuState);
             return;
         }
@@ -530,9 +533,6 @@
         toggleBtn.addEventListener("click", () => {
             hasState(animationTarget, 'open') ? closeMenu(menuState) : openMenu(menuState);
         }, { signal: abortController.signal });
-        menuState.wasHidden = toggleBtn.hidden;
-        toggleBtn.removeAttribute('hidden');
-        syncToggleLabel(sidemenu, toggleBtn, isTopMode);
         // The label follows an active mark a client-side route moves.
         const offLabel = NDS.onAttributeChange('.nds-sidemenu li', ['data-state'], () => syncToggleLabel(sidemenu, toggleBtn, isTopMode));
         abortController.signal.addEventListener('abort', offLabel);
@@ -547,9 +547,7 @@
                 if (hasState(animationTarget, 'open')) closeMenu(menuState);
             }
         };
-        // Pooled handle takes no signal — bridge it onto the same teardown, or each
-        // setupSideMenu() call leaks a new subscriber on top of the previous one
-        // (the stale handler keeps mutating state via the ctx closure).
+        // Pooled handle takes no signal — bridge it onto the same teardown.
         const offResize = NDS.onResize(handleResize);
         abortController.signal.addEventListener('abort', offResize);
     }
