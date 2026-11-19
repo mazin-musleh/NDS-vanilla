@@ -56,8 +56,12 @@ main {
             }
         }
 
+        // The column snaps while the menu covers the content: wide at the end of an open
+        // (data-sidemenu-opening until then), narrow at the start of a fold. Easing it would
+        // lay the whole page out each frame.
         @include desktop(min) {
-            &#{$rail-collapsed} {
+            &#{$rail-collapsed},
+            &[data-sidemenu-opening] {
                 grid-template-columns: var(--nds-sidemenu-rail-width) 1fr;
             }
         }

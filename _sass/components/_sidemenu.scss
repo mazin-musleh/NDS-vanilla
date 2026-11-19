@@ -311,21 +311,52 @@
         --_rail-slide: var(--nds-transition);
     }
 
-    // The icon eases to the rail's center as it folds; the rest fades.
+    // Folded rows read --_rail-folded and --_rail-settled (0 or 1) from the aside, so the layout's
+    // flag restyles the aside alone: a flag rule ending in a bare :not() restyled the whole page.
+    // The icon moves to the rail's center by translate, on the GPU.
     .nds-drawer-list > li > .nds-btn,
     .nds-drawer-search .nds-form-control {
         overflow: clip;
-        transition: padding-inline-start var(--_rail-slide, 0s);
+
+        > i {
+            translate: calc(var(--_rail-folded, 0) * var(--_rail-shift) * -1);
+            transition: translate var(--_rail-slide, 0s);
+
+            @include ltr {
+                translate: calc(var(--_rail-folded, 0) * var(--_rail-shift));
+            }
+        }
     }
 
-    .nds-drawer-search .nds-form-control > :not(.nds-icon) {
-        transition: opacity var(--_rail-slide, 0s);
+    .nds-drawer-search .nds-form-control {
+        > i {
+            --_rail-shift: calc((var(--nds-sidemenu-rail-width) - 2 * var(--spacing-md) - var(--_rail-search-icon, 20px)) / 2 - 1px - var(--spacing-md));
+        }
+
+        > :not(.nds-icon) {
+            opacity: calc(1 - var(--_rail-folded, 0));
+            transition: opacity var(--_rail-slide, 0s);
+        }
     }
 
     .nds-drawer-list > li > .nds-btn {
-        > :not(i, .nds-tooltip-balloon),
+        // A thinner mark fits the narrow rail. Width, not scale: a scale squashes the round ends.
+        --_rail-mark: var(--btn-indicator-size, var(--_btn-indicator-size-base, 3px));
+        --_btn-indicator-size: calc(var(--_rail-mark) + (3px - var(--_rail-mark)) * var(--_rail-folded, 0));
+
+        > i {
+            --_rail-shift: calc((var(--nds-sidemenu-rail-width) - 2 * var(--spacing-md) - var(--_btn-icon-size)) / 2 - 1px - var(--_btn-padding));
+        }
+
+        // The slide's edge cuts the label, tag and arrow off; once folded, the 40px row would pull
+        // them in beside the icon, so they hide then, at once. Transparent, not hidden: the label
+        // stays the icon's name.
+        > :not(i, .nds-tooltip-balloon) {
+            opacity: calc(1 - var(--_rail-settled, 0));
+        }
+
         &::after {
-            transition: opacity var(--_rail-slide, 0s);
+            opacity: calc(var(--nds-icons-opacity) * (1 - var(--_rail-settled, 0)));
         }
 
         &::before {
@@ -343,6 +374,7 @@
 }
 
 @mixin rail-folded {
+    --_rail-folded: 1;
     width: var(--nds-sidemenu-rail-width);
 
     // Groups come back when the menu opens. Search stays, as its icon, so no row moves.
@@ -350,40 +382,15 @@
     .nds-drawer > .nds-empty-placeholder {
         display: none;
     }
-
-    .nds-drawer-list > li > .nds-btn {
-        padding-inline-start: calc((var(--nds-sidemenu-rail-width) - 2 * var(--spacing-md) - var(--_btn-icon-size)) / 2 - 1px);
-    }
-
-    .nds-drawer-search .nds-form-control {
-        padding-inline-start: calc((var(--nds-sidemenu-rail-width) - 2 * var(--spacing-md) - var(--_rail-search-icon, 20px)) / 2 - 1px);
-
-        > :not(.nds-icon) {
-            opacity: 0;
-        }
-    }
-
-    // Faded, not hidden: the label stays the icon's name. A thinner mark fits the narrow rail.
-    .nds-drawer-list > li > .nds-btn {
-        --_btn-indicator-size: 3px;
-
-        > :not(i, .nds-tooltip-balloon),
-        &::after {
-            opacity: 0;
-        }
-    }
 }
 
 // Folded and done sliding: the list takes the rail's width.
 @mixin rail-settled {
+    --_rail-settled: 1;
     --_rail-list-width: calc(var(--nds-sidemenu-rail-width) - 2 * var(--spacing-md));
 }
 
 @include desktop(min) {
-    .nds-content-layout.nds-has-sidemenu.nds-rail {
-        transition: grid-template-columns var(--nds-transition);
-    }
-
     .nds-rail#{$rail-collapsed} > .nds-sidemenu {
         @include rail-folded;
     }

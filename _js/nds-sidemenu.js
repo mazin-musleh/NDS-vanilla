@@ -272,6 +272,13 @@
             backdropShown = false;
             NDS.Backdrop.hide();
         };
+        // As the slide-in menu: the backdrop fades after the slide, and the menu stays above
+        // it until then. A reopen in that time keeps its own z-index.
+        const releaseOverlay = (fadeMs) => {
+            if (!backdropShown) return sidemenu.style.removeProperty('z-index');
+            hideBackdrop();
+            setTimeout(() => { if (isFolded()) sidemenu.style.removeProperty('z-index'); }, fadeMs);
+        };
         // Drops a slide in flight and anything queued behind it.
         const cancelSlide = () => {
             epoch++;
@@ -279,6 +286,7 @@
             isBusy = false;
             pending = null;
             layout.removeAttribute('data-sidemenu-open');
+            layout.removeAttribute('data-sidemenu-opening');
             sidemenu.style.removeProperty('z-index');
             drawer?.style.removeProperty('--drawer-max-height');
             hideBackdrop();
@@ -331,10 +339,13 @@
                     // Escape and a click outside reach onClick.
                     NDS.Backdrop.show({ zIndex: 998, preventScroll: true, onClick: () => request(fold) });
                 } else {
+                    // The column stays narrow until the menu has opened over the content.
+                    if (duration > 0) layout.setAttribute('data-sidemenu-opening', '');
                     layout.removeAttribute('data-sidemenu-collapsed');
                     try { localStorage.setItem(RAIL_KEY, '0'); } catch {}
                 }
                 const end = () => {
+                    layout.removeAttribute('data-sidemenu-opening');
                     addState(sidemenu, 'opened');
                     dispatchRailEvent('expanded');
                     finish(onDone);
@@ -352,15 +363,13 @@
                 addState(sidemenu, 'closing');
                 if (smallQuery.matches) {
                     layout.removeAttribute('data-sidemenu-open');
-                    hideBackdrop();
                 } else {
                     layout.setAttribute('data-sidemenu-collapsed', '');
                     try { localStorage.setItem(RAIL_KEY, '1'); } catch {}
                 }
                 runLater(() => {
                     removeState(sidemenu, 'open', 'closing');
-                    // Kept above the backdrop until it has faded.
-                    sidemenu.style.removeProperty('z-index');
+                    releaseOverlay(duration);
                     drawer?.style.removeProperty('--drawer-max-height');
                     dispatchRailEvent('collapsed');
                     finish();
