@@ -171,6 +171,31 @@
       border-inline-start: 0;
       border-inline-end: inherit;
     }
+
+    &[data-position-horizontal="left"]::before {
+      border-left: 0;
+      border-right: inherit;
+    }
+  }
+
+  // Beside the trigger (data-position="start|end"): the arrow points at it from the near
+  // edge. JS writes the physical side, so physical borders.
+  &[data-position-horizontal]::before {
+    top: var(--_arrow-block-start, 12px);
+    border: inherit;
+  }
+
+  &[data-position-horizontal="right"]::before {
+    left: calc(var(--_tooltip-arrow-size) / -2 - 1px);
+    border-top: 0;
+    border-right: 0;
+  }
+
+  &[data-position-horizontal="left"]::before {
+    left: auto;
+    right: calc(var(--_tooltip-arrow-size) / -2 - 1px);
+    border-bottom: 0;
+    border-left: 0;
   }
 
   // ============================================================

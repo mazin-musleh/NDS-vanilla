@@ -16,13 +16,16 @@
  *                                               is absent; stripped at init, balloon built
  *                                               on first open
  *   data-tooltip-status                         chip status; none = the help look (CSS)
+ *   data-position="start|end"                   the balloon beside the trigger, on that
+ *                                               inline side; the other side when it does not fit
  *   data-tooltip-hover                          opt in to hover; the value is the open
  *                                               delay in ms (bare attribute = 120). A tap
  *                                               toggles a text term only; on a link/button
  *                                               it runs the action and closes the balloon.
  *                                               A click during the delay cancels the open
  *   written by the component: data-position-vertical="top" on the root and the balloon
- *                             when the balloon flips above the trigger
+ *                             when the balloon flips above the trigger;
+ *                             data-position-horizontal="left|right" with data-position
  * Gotchas:
  *   - Two ways to author it: write .nds-tooltip-trigger + .nds-tooltip-balloon yourself,
  *     or give the root data-tooltip-title / data-tooltip-message and let the component
@@ -380,8 +383,10 @@
 
             if (!this._rootIsControl) removeState(this._root, 'open');
             this.balloon.hidden = true;
-            this._root.removeAttribute('data-position-vertical');
-            this.balloon.removeAttribute('data-position-vertical');
+            for (const el of [this._root, this.balloon]) {
+                el.removeAttribute('data-position-vertical');
+                el.removeAttribute('data-position-horizontal');
+            }
 
             this.openAbortController?.abort();
             this.openAbortController = null;
@@ -411,6 +416,7 @@
             const placement = NDS.popup.getSpace(this._trigger, this.balloon);
             const topEdge = Math.max(placement.box.top + pad, placement.topEdge);
             const bW = placement.popupRect.width, bH = placement.popupRect.height;
+            if (/^(start|end)$/.test(this._root.dataset.position)) return this._syncSidePosition(placement, gap, pad, edge, topEdge);
             const spaceBelow = placement.spaceBelow - gap - pad;
             const spaceAbove = placement.triggerRect.top - gap - topEdge;
             const flipUp = spaceBelow < bH && spaceAbove > spaceBelow;
@@ -439,6 +445,29 @@
                 Math.min(triggerCenterX - left - arrowHalf, bW - 12 - arrowHalf * 2)
             );
             this.balloon.style.setProperty('--_arrow-inline-start', `${arrowInlineStart}px`);
+        }
+
+        // Beside the trigger, vertically centred on it.
+        _syncSidePosition(placement, gap, pad, edge, topEdge) {
+            const { triggerRect: rect, box } = placement;
+            const { width: bW, height: bH } = placement.popupRect;
+            const spaceRight = box.right - edge - rect.right - gap;
+            const spaceLeft = rect.left - gap - box.left - edge;
+            const isRtl = getComputedStyle(this._trigger).direction === 'rtl';
+            let isRight = (this._root.dataset.position === 'end') !== isRtl;
+            const [want, other] = isRight ? [spaceRight, spaceLeft] : [spaceLeft, spaceRight];
+            if (want < bW && other > want) isRight = !isRight;
+            for (const el of [this._root, this.balloon]) el.setAttribute('data-position-horizontal', isRight ? 'right' : 'left');
+
+            let left = isRight ? rect.right + gap : rect.left - gap - bW;
+            left = Math.max(box.left + edge, Math.min(left, box.right - bW - edge));
+            let top = rect.top + rect.height / 2 - bH / 2;
+            top = Math.max(topEdge, Math.min(top, box.bottom - bH - pad));
+            this._anchored = NDS.popup.setPosition(this.balloon, top, left, this._trigger);
+
+            const arrowHalf = 5;
+            const arrowBlockStart = Math.max(8, Math.min(rect.top + rect.height / 2 - top - arrowHalf, bH - 8 - arrowHalf * 2));
+            this.balloon.style.setProperty('--_arrow-block-start', `${arrowBlockStart}px`);
         }
 
         _dispatchEvent(name) {

@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "2.0.0"
-last_edit: "05/11/2026 - 12:02 PM"
+updated: "2.0.x"
+last_edit: "19/11/2026 - 10:40 AM"
 ---
 
 <section id="tooltip-overview" class="nds-content-section nds-doc-overview">
@@ -90,6 +90,8 @@ Pick another component when:
 | Open on | Click (default) | — | `.nds-tooltip:not(.nds-btn)` | A click, a tap, or Enter on the trigger opens and closes the balloon |
 | Open on | Hover | `[data-tooltip-hover]` | `.nds-tooltip` | The balloon opens 120ms after the mouse enters, and on keyboard focus. Use it on a link or a button |
 | Open on | Hover after 500ms (id: hover-500) | `[data-tooltip-hover="500"]` | `.nds-tooltip` | The same, with a longer wait. Use it in a row of icon buttons, so a passing mouse opens nothing |
+| Position | Below (default) (hint: The balloon opens below the trigger) | — | — | The balloon opens below the trigger, or above it when there is no room below |
+| Position | Beside (hint: The balloon opens beside the trigger) | `[data-position="end"]` | `.nds-tooltip` | The balloon opens at the end side of the trigger, or at the start side when there is no room. Use it in a column of icons, so the balloon does not cover the next icon. `start` opens it at the start side first |
 | Status | Info | `[data-tooltip-status="info"]` | `.nds-tooltip[data-tooltip-title]` | The help icon uses the info status. Auto structure only |
 | Status | Success | `[data-tooltip-status="success"]` | `.nds-tooltip[data-tooltip-title]` | The help icon uses the success status. Auto structure only |
 | Status | Warning | `[data-tooltip-status="warning"]` | `.nds-tooltip[data-tooltip-title]` | The help icon uses the warning status. Auto structure only |
@@ -265,6 +267,8 @@ With no `data-tooltip-message`, the root's `title` is the message. Until the scr
 | `hidden` | `.nds-tooltip-balloon` | Keeps the balloon closed at load. The script removes it on open |
 | `data-state` | `.nds-tooltip` | The script writes `open` while the balloon shows. It skips a root that is a link or a button, which has its own `open` look |
 | `data-position-vertical` | `.nds-tooltip`, `.nds-tooltip-balloon` | The script writes `top` when the balloon opens above the trigger. The arrow then points down |
+| `data-position` | `.nds-tooltip` | `end` or `start`. The balloon opens beside the trigger, on that side first |
+| `data-position-horizontal` | `.nds-tooltip`, `.nds-tooltip-balloon` | With `data-position`, the script writes `left` or `right`: the side the balloon opened on. The arrow points back at the trigger |
 {: .nds-table .nds-responsive}
 
 ### Keyboard
