@@ -356,6 +356,11 @@
             background-color: var(--_divider);
         }
 
+        // The indicator straddles the line, half outside the row: the row's clip would cut it.
+        >li {
+            overflow: visible;
+        }
+
         >li .nds-btn::before {
             inset-inline-start: calc((var(--_indicator-width)/2) * -1);
         }

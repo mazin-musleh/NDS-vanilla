@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Scroll More** — `--scroll-max-width` caps the width the way a max width does: on a screen narrower than the value, the row stays inside its container.
 - **File Upload** — With no upload address, a file that passes the checks shows the success check, as attached; its status stays `ready`. On a right-to-left page, a Latin file name keeps its extension last (`report-file.pdf`, not `pdf.report-file`).
 - **Swiper** — In Safari before 16.4 and Firefox before 128, a Swiper inside another no longer takes the outer one's slides per view and peek.
+- **Drawer** — With the side line (`nds-lined`), a sub-item's indicator shows whole. It was cut in half.
 - **Audit** — Reports the removed Side Info size classes `nds-sm`, `nds-md` and `nds-lg`. A missing icon style sheet gives one finding, not one per icon.
 
 ## [2.0.0] - 2026-11-12
