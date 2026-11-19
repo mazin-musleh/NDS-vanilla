@@ -8,17 +8,10 @@ bundles, or prior NDS files anywhere — first setup, not a conformance split.
 
 | Page | Route | Legacy libraries | NDS target | Status |
 |---|---|---|---|---|
-| Shell (topbar + nav + footer + side menu) — chrome, built once | `#/nds` (`src/nds/Shell.js`, `src/nds/NdsApp.js`) | `src/styles.css` (global entry injection in `src/main.js` — see hazard below) | Console shape: `nds-content-layout nds-has-sidemenu` + `nds-full-width` on `body`, from `_source/layout/page-shell.md` / `_site/examples/console-demo.html`. Chrome content trimmed to canonical structure (`ui-shell/{topbar,mainnav,sidemenu,footer}.md`) — docs-site-only nav-actions (search/notifications/login/language) omitted, nothing to back them | Awaiting Verification |
-| Records list | `#/nds/records` (`src/nds/records/RecordsList.js`); legacy `#/records` (`src/pages/Records.js`) stays as the reference | same | Example match: "Manage Records" (`_source/examples/manage-records.md`), ported wholesale (toolbar, filter, sort, export, pagination, sub-rows, create/edit/delete modals), content renamed request→record. Requester autocomplete backed by `public/data/requesters.json` (no backend; matches the rest of the app's client-only data) | Awaiting Verification |
-| Reports | `#/nds/reports` | same | later gate | Planned |
+| Shell (topbar + nav + footer) — chrome, built once | `/nds` (`src/nds/Shell.js`) | `src/styles.css` (global entry injection in `src/main.js` — see hazard below) | Console shape, rail side menu: `nds-content-layout nds-has-sidemenu nds-rail nds-full-width` (`nds-full-width` is on the layout, not `body`), from `_source/layout/page-layout.md` + `_source/ui-shell/sidemenu.md`; own entry `nds/index.html` | Awaiting Verification |
+| Records list | `/nds/#/records` (`src/nds/records/RecordsList.js`; `python -m http.server` cannot rewrite a path, so the NDS target is its own entry `nds/index.html` and the route is a hash, as the legacy app's); legacy `#/records` (`src/pages/Records.js`) stays as the reference | same | Example match: "Manage Records" (`_source/examples/manage-records.md`), console/`nds-full-width` chrome shape | Awaiting Verification |
+| Reports | `/nds/reports` | same | later gate | Planned |
 | Home / About / Contact / Settings | later gates | same | later gates | Planned |
-
-**Routing note.** The plan's route column originally read `/nds`, `/nds/records` — implemented as hash routes (`#/nds`, `#/nds/records`) instead, since `npm run dev` is a plain `python -m http.server` with no SPA fallback; path-based routes would 404 on direct load/refresh. `src/main.js` now reactively mounts `App` (legacy, styles.css injected) or `NdsApp` (NDS world, no legacy stylesheet) based on the hash prefix, keeping "ported routes render outside `<App>`'s shell chain" intact.
-
-**Runtime wiring notes (for the next gate's session):**
-- `index.html` must carry the `nds-main.min.js` runtime `<script defer>` — easy to drop when hand-assembling a head from `_site/index.html`'s reference, since that file already has its own copy and the omission fails silently (`window.NDS` just stays undefined until something calls it).
-- `Shell.js` calls `NDS.Init.initialize()` on mount, not `NDS.Init.refresh()`. Confirmed via `NDS.Init.audit()`: Filter and Pagination don't cold-init new instances through `refresh()` for markup that didn't exist during `nds-main.min.js`'s own page-load scan (their own JS API docs route new instances through `NDS.Filter.init()` / `NDS.Pagination.init()` — `initialize()` is the "whole page body replaced" sweep that covers both, and fits since this SPA's first NDS paint replaces `#root` from empty to the full console page in one shot). Page-level updates after that (create/edit/delete) correctly use `NDS.Init.refresh()` per the docs.
-- `NdsApp.js`'s unmatched-route redirect only fires when the hash still starts with `#/nds` — guard against it firing on a hash that left the nds world entirely (e.g. browser back/forward to a legacy route), or it fights `main.js`'s world switch and traps navigation back into the nds world.
 
 **Global stylesheet hazard.** `src/styles.css` sets `body`, `h1`, `h2`, and `a` at element
 level and loads through the one shared entry (`src/main.js`), so its rules reach every
@@ -29,7 +22,7 @@ Re-run this sweep if a hosting layer adds one.
 
 ## Install log
 
-- Template extracted by the dev at `.nds/` (bundle banner `1.8.x-dev`, dev-confirmed as
+- Template extracted by the dev at `.nds/` (bundle banner `2.0.x-dev`, dev-confirmed as
   the reference and runtime to use); `_source/` present on disk; `.nds/_site/assets/`
   copied whole into `NDS_ASSETS` (`public/assets/`); JS and CSS bundle banners agree.
 
@@ -49,8 +42,56 @@ Re-run this sweep if a hosting layer adds one.
 
 - [x] Plan review — decisions above recorded (2026-08-17).
 - [ ] Real brand logo file (text wordmark stands in; dev said proceed without it).
-- [x] Gate: chrome + Records list built (dev's go 2026-08-17); self-verified below, `Awaiting Verification` until dev confirmation.
-- [x] Self-verification (headless Chrome, `localhost:5183` static serve): `NDS.Init.audit()` clean (zero warnings) after fixing the two issues in the routing note above; exercised create/edit-open/delete/empty-submit-validation/dark-mode-toggle/cross-world-nav-both-ways — all correct; desktop (1440) and mobile (390) screenshots checked against the built `console-demo`/`manage-records` twins for spacing, icons, and coherence — matches. Icon names spot-checked against `icons.yml` (inline) and `_hgiRoundedStroke.scss` (font) — all present.
-- [ ] Accessibility panel (`ui-shell` a11y aside + `nds-accessibility.min.js`) not included this gate — not part of page-shell.md's canonical tree, add if the dev wants it.
-- [ ] Sidemenu carries only Records today; grow it as Reports/Home/About/Contact/Settings land — never link to a route that doesn't exist yet.
-- [ ] Next gate: propose after dev reviews Records list (pacing is page-by-page).
+- [ ] Next gate: chrome + Records list (dev's go given 2026-08-17) — built, see the build record below.
+
+## Records list + chrome — build record
+
+**Work mode:** Port (existing non-NDS UI), parallel files, page-by-page. **Archetype:** example Manage Records
+(`_source/examples/manage-records.md`) inside the Console shape with the Rail side menu (`_source/layout/page-layout.md`
+`#layout-console`, `_source/ui-shell/sidemenu.md` `#sidemenu-rail`). Catalog read unfiltered; no template fits (Services List,
+KPIs and Student Portal ruled out by their own fit lines). **Doc sources:** head.md, page-layout.md, header.md, topbar.md,
+main-nav.md, sidemenu.md, hero.md, footer.md, table.md (Records canon + Records Parts), toolbar.md, filter.md, pagination.md,
+export.md, init.md (framework views). Component markup comes from each component's doc, not from the example.
+
+**Parts list** (`part → component`; limits = doc lines that restrict use):
+- Document head → Head: copy as one block; hero preloads only for a hero photo (none here).
+- Skip link → Page Layout: hash router, so handle its click and give `#main-content` `tabindex="-1"`.
+- Date, clock, dark-mode button → Top Bar (+ Date, Clock): at most two items; Gregorian for an English site; stamp NOT shipped (see checkbox).
+- Brand + Home / About / Contact links → Main Navigation: mark the current page with `data-state="current"` + `aria-current`; no dropdown or search (nothing behind them).
+- Records / Reports / Settings links → Side Menu (rail): every top-level link has an icon; `nds-full-width` on the layout; no colour classes on the menu button.
+- Page title + breadcrumb → Hero (sub) + Breadcrumb: no Share (console).
+- "All records" region → Section: actions only for that section's content; no section inside a section.
+- Count line, per-page, Columns, Export, search, Filter, applied chips → Toolbar: applied chips in their own row; no toolbar in a toolbar; records line carries the page's own noun.
+- Per-page menu → Pagination + Dropmenu: no nav for a single page (the script hides it at one page).
+- Column menu → Table (Column Menu): table needs an `id`; lock the identifier column.
+- Export → Export: never reads `data-sort-value`.
+- Search box → Filter (search box): `data-filter-items` only on a container with a filter.
+- Owner facet → Filter (checkbox); Updated facet → Filter (Date group) + Date Picker (the picker's "no dropmenu inside a dropmenu" line is met by the Filter group the Date Picker page itself prescribes).
+- Records table + sort buttons → Table + Sort: identifier first; sort only columns users compare; ISO dates sort as dates with no `data-sort-value`.
+- Owner cell → Tag (neutral): read-only label, no icon.
+- Pages → Pagination: `nds-paged-content` on the body, `nds-page-item` on rows.
+- Footer → Footer: never repeat the main navigation; only the legal bar.
+- States: default (all five records); search or filter with no match → Filter's built-in no-results alert. Loading, failed, signed-out, denied and an empty dataset cannot be reached: the data is a constant in the bundle, there is no request or session.
+
+**Domain-required removals, named to the dev:** New request / create, edit, delete modals, bulk delete, row menu, expandable
+detail rows and the actions column (the project has no write path and the legacy page had none); selection (Table doc: only with a
+bulk action, none exists); the example's Status radio and Fee slider facets (the records have no status or fee; the Owner and Updated
+facets replace them); Share, page feedback, Session Timeout (no public link, no store, no sign-in).
+
+## Open items — Records list + chrome
+
+- [ ] Digital stamp: ships only if the site holds the Digital Government Authority verification. Not shipped; say if it does.
+- [ ] Brand logo: text wordmark stands in (dev's earlier call). Footer carries no logos.
+- [ ] Removed chrome with no real target: main-nav Services dropdown and search, language switcher (English only, no Arabic content), footer columns, social, app and policy links, Vision 2030 logo. Re-add when the project backs them. Kept: the footer Cookie settings button (the runtime builds the consent panel on every page; it auto-opens after 6 s). Add `data-cookies-no-auto-open` on `<html>` if the site sets no cookies.
+- [ ] Footer copyright reads "Records Portal"; confirm the legal owner.
+- [ ] Links to Home, About, Contact, Reports and Settings leave `nds/` for the legacy routes (`../#/…`) until those pages port.
+- [ ] Write path for create / edit / delete: needs a data layer first.
+
+## Evidence — Records list + chrome (2026-11-20)
+
+- **Build exit:** canonical sources as listed above; every part matched through the catalog; facets: example 3 (Service checkbox, Status radio, Fee slider) vs page 2 (Owner checkbox, Updated date range), difference named under the removals; columns: example 8 vs page 4 (ID, Title, Owner, Updated), checkbox/Status/Fee/Actions dropped as named. Edits to copied canon are only the allowed kinds (asset URLs, content, options: Gregorian date, per-page labels). Icons: every inline `nds-hgi-*` name is in `_data/content/icons.yml`; font icons `hgi-folder-01`, `hgi-chart-histogram`, `hgi-settings-01` exist in the HGI stylesheet; no icon names in JS strings. No CSP.
+- **Files:** `nds/index.html` (own head and entry), `src/nds/main.js`, `src/nds/Shell.js`, `src/nds/records/RecordsList.js`. Legacy files untouched; `#/records` still renders 5 rows with no NDS runtime.
+- **Verify:** `nds-verify.mjs` is not in this template's `.nds/` root, so both passes ran by hand (own headless Chrome, viewport set per context; scripts in `tmp/`). Reference page: `_site/examples/manage-records.html`. `window.innerWidth` 1440 = target 1440 and 390 = target 390. `NDS.init.audit()` returned no findings on default, dark, no-match, date-filtered, mobile menu-open and mobile no-match states; console clean (the only 404 is the legacy page's `/favicon.ico`, not an NDS view).
+- **Behavior exercised:** search match and no match (built-in No results alert), Owner filter + chip, Updated date range (typed in the picker, 2 of 5 rows) combined with Owner, Reset, sort (ISO dates sort as dates, both directions), per-page, Columns menu (hide Owner), CSV export (4 columns, 5 rows), rail fold, mobile side menu and nav menu, dark mode, skip link (focuses `#main-content`, URL hash unchanged), footer Cookie settings opens the panel. No request or form exists, so there is no failure path or empty-required-field submit to run.
+- **States:** default, no match, filtered, dark. Not reachable: loading, failed, empty dataset, signed-out, denied (constant data, no session). On mobile the no-match alert is as wide as the table and scrolls with it; the reference page does the same (alert 957 px in a 343 px box).
+- **Screenshots:** `tmp/shots/` (`mine-*` against `ref-desktop.png`, `ref-mobile.png`). Differences from the reference are content swaps (no stamp, search, language, accessibility widget, nav dropdowns, write controls).

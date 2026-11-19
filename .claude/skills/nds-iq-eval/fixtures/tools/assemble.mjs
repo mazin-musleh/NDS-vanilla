@@ -45,6 +45,11 @@ if (rootMode === 'mini') {
   fs.cpSync(path.join(FIX, 'mini-root'), nds, { recursive: true })
 } else {
   fs.cpSync(path.join(REPO, '_site'), path.join(nds, '_site'), { recursive: true })
+  // Same post-build passes as mkrelease.py, so the copy is relative like the zip's (both work on cwd/_site).
+  fs.cpSync(path.join(REPO, '_config.yml'), path.join(nds, '_config.yml'))
+  for (const p of ['baseurl_cleaner', 'html_compressor'])
+    execSync(`ruby "${path.join(REPO, '_plugins', p + '.rb')}"`, { cwd: nds, stdio: 'ignore' })
+  fs.rmSync(path.join(nds, '_config.yml'))
   for (const f of ['_js', '_sass', 'foundations', 'components', 'utilities', 'layout', 'ui-shell', 'core', 'guides', 'templates', 'examples'])
     fs.cpSync(path.join(REPO, f), path.join(nds, '_source', f), { recursive: true })
   fs.cpSync(path.join(REPO, '_data', 'content'), path.join(nds, '_source', '_data', 'content'), { recursive: true })
@@ -52,6 +57,8 @@ if (rootMode === 'mini') {
   fs.cpSync(path.join(REPO, 'CHANGELOG.md'), path.join(nds, 'CHANGELOG.md'))
   // v4 rules key on the index: without it a runner takes the IQv3.2 redirect.
   fs.cpSync(path.join(REPO, 'NDS-INDEX.md'), path.join(nds, 'NDS-INDEX.md'))
+  // The index routes verification to the zip root's script.
+  fs.cpSync(path.join(REPO, 'scripts', 'release-template', 'nds-verify.mjs'), path.join(nds, 'nds-verify.mjs'))
 }
 
 // 4. runtime into NDS_ASSETS
