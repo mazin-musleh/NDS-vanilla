@@ -21,7 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Scroll More** — The edge fade is 16px, not 48px, so less of a small area fades. Tabs and the side menu keep 48px; `--scroll-fade` still sets it.
 - **Modal** — Content beyond the title and description goes in a Scroll More: its edge fades while more is below, and the header and the actions stay in view.
 - **Status Section, Card** — A status colors the icon and the card number, not the title.
-- **Docs** — Filter, Forms and Main Navigation say which group a yes-or-no or a number field takes, when a form ends with a review step, and when to leave out the language action. The Student Portal catalog entry names its profile head: the avatar and the name.
+- **Docs** — Filter, Forms and Main Navigation say which group a yes-or-no or a number field takes, when a form ends with a review step, and when to leave out the language action. The Student Portal catalog entry names its profile head: the avatar and the name. Each full page shape in Page Layout points to the accessibility FAB after the footer.
 
 ### Fixed
 - **Drawer, Side Menu** — A closed group that holds the current page keeps its mark when another group opens. In dark mode, the current page's mark takes the primary color too.

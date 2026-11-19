@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.8.0"
 updated: "2.0.x"
-last_edit: "17/11/2026 - 01:00 PM"
+last_edit: "20/11/2026 - 02:37 AM"
 ---
 
 <section id="page-layout-overview" class="nds-content-section nds-doc-overview">
@@ -109,6 +109,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
   <footer class="nds-footer nds-content-wrapper nds-brand" role="contentinfo" aria-label="Site Footer" data-i18n-aria-label="footer.site_footer">
     <!-- The footer: copy it from ../ui-shell/footer -->
   </footer>
+  <!-- After the footer: the accessibility FAB, see ../ui-shell/accessibility -->
   <!-- Last in body: the nds-main.min.js script tag, see ../ui-shell/head -->
 </body>
 </script>
@@ -178,6 +179,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
   <footer class="nds-footer nds-content-wrapper nds-brand" role="contentinfo" aria-label="Site Footer" data-i18n-aria-label="footer.site_footer">
     <!-- The footer: copy it from ../ui-shell/footer -->
   </footer>
+  <!-- After the footer: the accessibility FAB, see ../ui-shell/accessibility -->
   <!-- Last in body: the nds-main.min.js script tag, see ../ui-shell/head -->
 </body>
 </script>
@@ -242,6 +244,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
   <footer class="nds-footer nds-content-wrapper nds-brand" role="contentinfo" aria-label="Site Footer" data-i18n-aria-label="footer.site_footer">
     <!-- The footer: copy it from ../ui-shell/footer -->
   </footer>
+  <!-- After the footer: the accessibility FAB, see ../ui-shell/accessibility -->
   <!-- Last in body: the nds-main.min.js script tag, see ../ui-shell/head -->
 </body>
 </script>
@@ -270,6 +273,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
       </div>
     </div>
   </main>
+  <!-- After the footer: the accessibility FAB, see ../ui-shell/accessibility -->
   <!-- Last in body: the nds-main.min.js script tag, see ../ui-shell/head -->
 </body>
 </script>
@@ -349,6 +353,7 @@ The `<head>` and the markup of the header, hero, side menu and footer are on the
   <footer class="nds-footer nds-content-wrapper nds-brand" role="contentinfo" aria-label="Site Footer" data-i18n-aria-label="footer.site_footer">
     <!-- The footer: copy it from ../ui-shell/footer -->
   </footer>
+  <!-- After the footer: the accessibility FAB, see ../ui-shell/accessibility -->
   <!-- Last in body: the nds-main.min.js script tag, see ../ui-shell/head -->
 </body>
 </script>
