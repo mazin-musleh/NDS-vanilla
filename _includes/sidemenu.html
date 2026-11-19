@@ -6,7 +6,7 @@
     {%- if sidemenu_rail %}
     <nav class="nds-drawer nds-divided nds-lined" data-search>
     {%- endif %}
-    <button class="nds-sidemenu-toggle nds-btn nds-peek" aria-label="Sidebar Menu" data-i18n-aria-label="sidemenu.sidebar_menu" hidden>
+    <button class="nds-sidemenu-toggle nds-btn{%- unless page.sidemenu_mode == 'top' %} nds-peek{%- endunless %}" aria-label="Sidebar Menu" data-i18n-aria-label="sidemenu.sidebar_menu" hidden>
         <i class="nds-icon nds-hgi-menu-02" aria-hidden="true"></i>
         <span class="nds-label nds-truncate">Side menu</span>
     </button>
