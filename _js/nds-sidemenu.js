@@ -392,9 +392,10 @@
             // Runs fold() again: a group a script opened in the meantime closes too.
             afterGroupSlide('hidden', openItem, fold);
             NDS.Drawer.toggle(groupBtn);
-            // The folded icon keeps the mark. The drawer's watcher clears it in a microtask
-            // queued during toggle(); this one runs after it, before the paint.
-            queueMicrotask(() => { if (foldedItem === openItem) addState(groupBtn, 'active'); });
+            // The folded icon keeps the mark when the current page is in the group. The drawer's
+            // watcher clears it in a microtask queued during toggle(); this one runs after it, before the paint.
+            const holdsCurrent = !!openItem.querySelector(':scope > ul li[data-state~="active"]');
+            queueMicrotask(() => { if (holdsCurrent && foldedItem === openItem) addState(groupBtn, 'active'); });
             // The first group keeps the mark; an always-open drawer's others lose theirs.
             foldedItem ??= openItem;
         }
