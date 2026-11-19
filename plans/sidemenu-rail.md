@@ -1,6 +1,6 @@
 # Side Menu Rail
 
-Status: **WIP, parked** (2026-11-18). The first build works, but it needs the full state cycle and a queue before it ships.
+Status: **Built, merged to main** (2026-11-20). Rail folds on a desktop only; below 960px it is the slide-in menu.
 
 ## Goal
 
