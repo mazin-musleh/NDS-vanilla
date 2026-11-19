@@ -23,6 +23,8 @@
  *   - --mask-fade-distance on the content sets the edge fade the step allows for.
  *   - Content that scrolls with nothing focusable inside gets tabindex="0", so the keyboard
  *     can scroll it; an authored tabindex is left alone.
+ *   - A size transition ending inside the content measures again; content that grows with
+ *     no transition in a wrapper that keeps its size needs refresh().
  */
 /**
  * NDS Scroll More Component
@@ -51,6 +53,8 @@
     };
 
     const { add: addState, remove: removeState, has: hasState } = NDS.state;
+    // Transitions that resize the content.
+    const sizeProps = new Set(['height', 'max-height', 'block-size', 'grid-template-rows', 'width', 'max-width', 'inline-size']);
 
     // Per wrapper, set by setupElement and dropped by destroy: { content, builtDivider, abortController, offResize }.
     const wrapperSetups = new WeakMap();
@@ -203,6 +207,9 @@
         const { signal } = setup.abortController;
 
         content.addEventListener('scroll', NDS.throttleToFrame(() => checkScrollPosition(wrapper)), { passive: true, signal });
+        // A slide inside (a drawer group, an accordion) can grow the content after the wrapper hit its cap,
+        // which the observer never sees: measure again when it ends.
+        content.addEventListener('transitionend', (e) => { if (sizeProps.has(e.propertyName)) checkOverflow(wrapper); }, { signal });
 
         if (btn) {
             btn.addEventListener('click', () => scrollStep(wrapper), { signal });
