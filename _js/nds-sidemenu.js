@@ -202,32 +202,27 @@
 
     const RAIL_KEY = 'nds-sidemenu-collapsed';
 
-    // Rail: the toggle folds the menu to its icons, kept per browser. Below 960px the
-    // menu is always folded, and the toggle opens it over the page.
-    // data-state on the aside: open opening → open → open opened; open closing → none.
-    function setupRail(menuState) {
-        const { accMenu: sidemenu, layout, toggleBtn, drawer, abortController: { signal } } = menuState;
-        const smallQuery = window.matchMedia(NDS.breakpoints['tablet-max']);
-        const ownTooltips = new Set();
-        const releaseTooltip = (btn) => {
-            if (!ownTooltips.delete(btn)) return;
+    // Rail: a folded or cut-off top-level name shows in a Tooltip the menu makes and drops.
+    function railTooltips(isFolded) {
+        const owned = new Set();
+        const release = (btn) => {
+            if (!owned.delete(btn)) return;
             NDS.Tooltip.destroy(btn);
             btn.classList.remove('nds-tooltip');
             delete btn.dataset.tooltipMessage;
             delete btn.dataset.tooltipHover;
             delete btn.dataset.position;
         };
-        const releaseTooltips = () => ownTooltips.forEach(releaseTooltip);
         // True when it made a new one.
-        const syncTooltip = (btn) => {
+        const sync = (btn) => {
             const label = btn.querySelector(':scope > .nds-label');
             if (!label) return false;
             const text = label.textContent.trim();
             const isNeeded = isFolded() || label.scrollWidth > label.clientWidth;
             if (btn.dataset.tooltipMessage === (isNeeded ? text : undefined)) return false;
-            releaseTooltip(btn);
+            release(btn);
             if (!isNeeded || btn.classList.contains('nds-tooltip')) return false;
-            ownTooltips.add(btn);
+            owned.add(btn);
             btn.classList.add('nds-tooltip');
             btn.dataset.tooltipMessage = text;
             btn.dataset.tooltipHover = '500';
@@ -241,9 +236,21 @@
             }
             return true;
         };
+        return { sync, releaseAll: () => owned.forEach(release) };
+    }
+
+    // Rail: the toggle folds the menu to its icons, kept per browser. Below 960px the
+    // menu is always folded, and the toggle opens it over the page.
+    // data-state on the aside: open opening → open → open opened; open closing → none.
+    function setupRail(menuState) {
+        const { accMenu: sidemenu, layout, toggleBtn, drawer, abortController: { signal } } = menuState;
+        const smallQuery = window.matchMedia(NDS.breakpoints['tablet-max']);
         const isFolded = () => smallQuery.matches
             ? !layout.hasAttribute('data-sidemenu-open')
             : layout.hasAttribute('data-sidemenu-collapsed');
+        const tooltips = railTooltips(isFolded);
+
+        // ── Slide queue ──
         let isBusy = false;
         let pending = null;
         let epoch = 0;
@@ -309,7 +316,7 @@
 
         const slide = (expand, onDone) => {
             isBusy = true;
-            releaseTooltips();
+            tooltips.releaseAll();
             const slideEpoch = epoch;
             const duration = NDS.prefersReducedMotion ? 0 : NDS.transitionSpeed();
             const runLater = (fn) => { if (duration === 0) fn(); else timer = setTimeout(fn, duration); };
@@ -396,6 +403,7 @@
         };
         const expand = (groupBtn) => slide(true, () => reopenGroup(groupBtn));
 
+        // ── Stored fold ──
         // The author's start state, then the user's last choice.
         menuState.wasCollapsed = layout.hasAttribute('data-sidemenu-collapsed');
         try {
@@ -411,6 +419,7 @@
         // The layout holds the fold now; the head script's copy would outlive the next press.
         document.documentElement.removeAttribute('data-nds-sidemenu-fold');
 
+        // ── Listeners ──
         toggleBtn.addEventListener('click', () => request(() => (isFolded() ? expand() : fold())), { signal });
         // A group pressed while folded, or during a slide, waits for the menu; the drawer never sees it.
         drawer?.addEventListener('click', (e) => {
@@ -423,7 +432,7 @@
         // language or width change needs nothing.
         drawer?.addEventListener('pointerover', (e) => {
             const btn = e.target.closest('.nds-drawer-list > li > .nds-btn');
-            if (btn) syncTooltip(btn);
+            if (btn) tooltips.sync(btn);
         }, { signal });
         // Folded, the box is all icon: a click there focuses the input, which opens the menu.
         drawer?.addEventListener('click', (e) => {
@@ -434,7 +443,7 @@
             if (isFolded() && e.target.closest('.nds-drawer-search')) return request(() => { if (isFolded()) expand(); });
             const btn = e.target.closest('.nds-drawer-list > li > .nds-btn');
             // A new tooltip missed this focus: open it as its own focus listener would.
-            if (btn && syncTooltip(btn) && btn.matches(':focus-visible')) btn.ndsTooltip?.open();
+            if (btn && tooltips.sync(btn) && btn.matches(':focus-visible')) btn.ndsTooltip?.open();
         }, { signal });
         smallQuery.addEventListener('change', () => {
             cancelSlide();
@@ -454,7 +463,7 @@
             releaseFoldedItem(null);
             clearState(sidemenu);
             layout.toggleAttribute('data-sidemenu-collapsed', menuState.wasCollapsed);
-            releaseTooltips();
+            tooltips.releaseAll();
         });
         syncRail();
     }
