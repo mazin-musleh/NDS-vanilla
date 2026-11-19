@@ -26,12 +26,14 @@ Files:
 
 ## Next: what it needs before it ships
 
-1. **The full state cycle, like the other menus.** Today the fold is a flag flip. Write `data-state` on the aside through `opening` → `open`/`opened` → `closing` → closed, as Main Navigation's `animate.run()` does (`_js/nds-main-nav.js`, ANIMATION SYSTEM): `opening` drops on the next paint (`NDS.onNextPaint`), `opened` lands after the duration, reduced motion skips straight to the end state. Keep CSS tails off `[data-state]` (sass.md): descendants read a custom property or a mirrored class.
-2. **A queue.** A press during a slide waits and runs after it (main nav's `pendingAction` + `processPending()`). Fold with a group open: close the open group first, then fold. Open from a group press: open the menu, then the group.
-3. **Events**, once the cycle exists: past tense on the end state (PERSONA entry 8), e.g. `nds:sidemenu:collapsed` / `expanded`. Today the side menu fires none.
-4. Open items from the first build:
+Done 2026-11-19 (items 1–3 of the first list):
+- **State cycle** on the aside: `open opening` → `open` → `open opened`; `open closing` → none. Reduced motion lands on the end state. The layout flags still drive the CSS; no new `[data-state]` rule.
+- **Queue**: a press during a slide waits, last one wins. A fold closes an open group first (waits for `nds:drawer:hidden`); a group press while folded opens the menu, then the group. The group a fold closed keeps its button's `active` mark while folded (put back in a microtask after the drawer's `watchActive` clears it) and reopens after the menu opens; the queue waits for that `nds:drawer:shown` too. A press on another group drops the kept mark. Below 960px the aside keeps its z-index until the close ends.
+- **Events**: `nds:sidemenu:expanded` / `collapsed` on the aside, rail only, not at load or on a width change. Banner and doc API updated.
+- Harness: `tmp/rail-check.mjs` (scratch; LTR + RTL behavior, all ok). `doc-check.mjs ui-shell/sidemenu.md`: no findings.
+
+Open items from the first build:
    - Folded, the Scroll More "show more" arrow sits in the middle of the full-width list and is clipped away. Move it to the icon side while folded.
    - At 56px the icon is off center (21px start, 15px end).
    - The skeleton (`_sass/_skeleton.scss`) reserves the open width: a page stored folded jumps at the reveal. Check it with the throttled perf harness.
-   - Only tested LTR. Check RTL (logical properties throughout).
-   - A browser doc check (`node scripts/doc-check.mjs ui-shell/sidemenu.md`) has not run.
+   - RTL: behavior checked; the look (icon side, clip edge) has not been checked.

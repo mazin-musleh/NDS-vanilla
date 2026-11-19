@@ -9,8 +9,9 @@
  *   NDS.Sidemenu.init()      wire the one sidemenu on the page (destroys the previous
  *                            instance first, so calling it again re-wires)
  *   NDS.Sidemenu.destroy()   close it and release every listener
- * Events:
- *   (none)
+ * Events (bubble from the .nds-sidemenu; rail only):
+ *   nds:sidemenu:expanded    after the menu has opened wide (or over the page below 960px)
+ *   nds:sidemenu:collapsed   after it has folded to its icons
  * Hooks:
  *   (none — class-driven markup: .nds-sidemenu holding a .nds-sidemenu-toggle button and
  *    a .nds-drawer. Add .nds-top for the top-sheet mode, and .nds-peek on the toggle to
@@ -20,6 +21,8 @@
  *   data-sidemenu-collapsed    on a rail layout: start folded (the user's last choice wins)
  * Gotchas:
  *   - Rail: the fold is kept in localStorage `nds-sidemenu-collapsed`; .nds-peek and .nds-top do nothing.
+ *   - Rail: a press during a slide runs after it. A fold closes an open group first, and its
+ *     button keeps data-state="active"; the menu reopens it after it opens again.
  *   - One sidemenu per page: init() takes the FIRST .nds-sidemenu it finds.
  *   - init() does not start the drawer: new markup needs NDS.init.refresh().
  *   - .nds-top scrolls its bar to the top and locks the page before it opens.
@@ -30,7 +33,7 @@
 (() => {
     'use strict';
 
-    const { add: addState, has: hasState, clear: clearState } = NDS.state;
+    const { add: addState, remove: removeState, has: hasState, clear: clearState } = NDS.state;
 
     // Track current instance for cleanup on re-init
     let currentInstance = null;
@@ -182,44 +185,162 @@
 
     // Rail: the toggle folds the menu to its icons, kept per browser. Below 960px the
     // menu is always folded, and the toggle opens it over the page.
+    // data-state on the aside: open opening → open → open opened; open closing → none.
     function setupRail(menuState) {
-        const { accMenu: sidemenu, layout, toggleBtn, abortController: { signal } } = menuState;
+        const { accMenu: sidemenu, layout, toggleBtn, drawer, abortController: { signal } } = menuState;
         const smallQuery = window.matchMedia(NDS.breakpoints['tablet-max']);
         const topButtons = sidemenu.querySelectorAll('.nds-drawer-list > li > .nds-btn');
         const isFolded = () => smallQuery.matches
             ? !layout.hasAttribute('data-sidemenu-open')
             : layout.hasAttribute('data-sidemenu-collapsed');
+        let isBusy = false;
+        let pending = null;
+        let epoch = 0;
+        let timer = 0;
+        let backdropShown = false;
+        // The group a fold closed: its button keeps the active mark, and it reopens with the menu.
+        let foldedItem = null;
 
+        const dispatchRailEvent = (name) => sidemenu.dispatchEvent(new CustomEvent(`nds:sidemenu:${name}`, { bubbles: true }));
         // A folded button shows its name on hover.
-        const syncRail = () => {
+        const syncTitles = () => {
             const folded = isFolded();
-            NDS.aria.expanded(toggleBtn, !folded);
             topButtons.forEach(btn => {
                 const label = btn.querySelector('.nds-label')?.textContent.trim();
                 if (folded && label) btn.title = label;
                 else btn.removeAttribute('title');
             });
         };
-        const closeOverlay = () => {
-            if (!layout.hasAttribute('data-sidemenu-open')) return;
+        // The settled state with no slide: at start, and on a width change across 960px.
+        const syncRail = () => {
+            const folded = isFolded();
+            clearState(sidemenu);
+            if (!folded) addState(sidemenu, 'open', 'opened');
+            NDS.aria.expanded(toggleBtn, !folded);
+            syncTitles();
+        };
+        const hideBackdrop = () => {
+            if (!backdropShown) return;
+            backdropShown = false;
+            NDS.Backdrop.hide();
+        };
+        // Drops a slide in flight and anything queued behind it.
+        const cancelSlide = () => {
+            epoch++;
+            clearTimeout(timer);
+            isBusy = false;
+            pending = null;
             layout.removeAttribute('data-sidemenu-open');
             sidemenu.style.removeProperty('z-index');
-            NDS.Backdrop.hide();
-            syncRail();
+            hideBackdrop();
         };
-        const setFolded = (folded) => {
-            if (!smallQuery.matches) {
-                layout.toggleAttribute('data-sidemenu-collapsed', folded);
-                try { localStorage.setItem(RAIL_KEY, folded ? '1' : '0'); } catch {}
-                return syncRail();
+        // A press during a slide waits for its end; the last one wins.
+        const request = (action) => { if (isBusy) pending = action; else action(); };
+        const finish = (callback) => {
+            isBusy = false;
+            callback?.();
+            // The callback started a group slide: the queue waits for that too.
+            if (isBusy) return;
+            const next = pending;
+            pending = null;
+            next?.();
+        };
+
+        const slide = (expand, onDone) => {
+            isBusy = true;
+            const slideEpoch = epoch;
+            const duration = NDS.prefersReducedMotion ? 0 : NDS.transitionSpeed();
+            const runLater = (fn) => { if (duration === 0) fn(); else timer = setTimeout(fn, duration); };
+            NDS.aria.expanded(toggleBtn, expand);
+            if (expand) {
+                if (smallQuery.matches) {
+                    layout.setAttribute('data-sidemenu-open', '');
+                    sidemenu.style.zIndex = 999;
+                    backdropShown = true;
+                    // Escape and a click outside reach onClick.
+                    NDS.Backdrop.show({ zIndex: 998, preventScroll: true, onClick: () => request(fold) });
+                } else {
+                    layout.removeAttribute('data-sidemenu-collapsed');
+                    try { localStorage.setItem(RAIL_KEY, '0'); } catch {}
+                }
+                syncTitles();
+                const end = () => {
+                    addState(sidemenu, 'opened');
+                    dispatchRailEvent('expanded');
+                    finish(onDone);
+                };
+                if (duration === 0) { addState(sidemenu, 'open'); return end(); }
+                addState(sidemenu, 'open', 'opening');
+                // Timed from the paint that starts the slide, as Main Navigation's.
+                NDS.onNextPaint(() => {
+                    if (slideEpoch !== epoch) return;
+                    removeState(sidemenu, 'opening');
+                    runLater(end);
+                });
+            } else {
+                removeState(sidemenu, 'opened');
+                addState(sidemenu, 'closing');
+                if (smallQuery.matches) {
+                    layout.removeAttribute('data-sidemenu-open');
+                    hideBackdrop();
+                } else {
+                    layout.setAttribute('data-sidemenu-collapsed', '');
+                    try { localStorage.setItem(RAIL_KEY, '1'); } catch {}
+                }
+                runLater(() => {
+                    removeState(sidemenu, 'open', 'closing');
+                    // Kept above the backdrop until it has faded.
+                    sidemenu.style.removeProperty('z-index');
+                    syncTitles();
+                    dispatchRailEvent('collapsed');
+                    finish();
+                });
             }
-            if (folded) return closeOverlay();
-            layout.setAttribute('data-sidemenu-open', '');
-            sidemenu.style.zIndex = 999;
-            // Escape and a click outside reach onClick.
-            NDS.Backdrop.show({ zIndex: 998, preventScroll: true, onClick: closeOverlay });
-            syncRail();
         };
+
+        // An open group closes first, then the menu folds.
+        function fold() {
+            if (isFolded()) return;
+            const openItem = sidemenu.querySelector('.nds-drawer-list > li:is([data-state~="open"], [data-state~="opening"])');
+            const groupBtn = openItem?.querySelector(':scope > .nds-btn');
+            if (!groupBtn) return slide(false);
+            isBusy = true;
+            const foldEpoch = epoch;
+            const handleHidden = (e) => {
+                if (e.detail.item !== openItem) return;
+                drawer.removeEventListener('nds:drawer:hidden', handleHidden);
+                if (foldEpoch === epoch) slide(false);
+            };
+            drawer.addEventListener('nds:drawer:hidden', handleHidden, { signal });
+            NDS.Drawer.toggle(groupBtn);
+            // The folded icon keeps the mark. The drawer's watcher clears it in a microtask
+            // queued during toggle(); this one runs after it, before the paint.
+            queueMicrotask(() => { if (foldedItem === openItem) addState(groupBtn, 'active'); });
+            foldedItem = openItem;
+        }
+        // Drops the kept mark, unless the drawer would keep it (an active <li>) or KEEP is that button.
+        const releaseFoldedItem = (keep) => {
+            const btn = foldedItem?.querySelector(':scope > .nds-btn');
+            if (btn && btn !== keep && !hasState(foldedItem, 'active')) removeState(btn, 'active');
+            foldedItem = null;
+        };
+        // After the menu opens: the pressed group, or the one the fold closed.
+        const reopenGroup = (groupBtn) => {
+            const target = groupBtn || foldedItem?.querySelector(':scope > .nds-btn');
+            releaseFoldedItem(target);
+            if (!target || target.getAttribute('aria-expanded') === 'true') return;
+            const item = target.closest('li');
+            const reopenEpoch = epoch;
+            isBusy = true;
+            const handleShown = (e) => {
+                if (e.detail.item !== item) return;
+                drawer.removeEventListener('nds:drawer:shown', handleShown);
+                if (reopenEpoch === epoch) finish();
+            };
+            drawer.addEventListener('nds:drawer:shown', handleShown, { signal });
+            NDS.Drawer.toggle(target);
+        };
+        const expand = (groupBtn) => slide(true, () => reopenGroup(groupBtn));
 
         // The author's start state, then the user's last choice.
         menuState.wasCollapsed = layout.hasAttribute('data-sidemenu-collapsed');
@@ -234,17 +355,23 @@
             }
         } catch {}
 
-        toggleBtn.addEventListener('click', () => setFolded(!isFolded()), { signal });
-        // A group pressed while folded opens the menu; capture keeps an open group open.
-        menuState.drawer?.addEventListener('click', (e) => {
+        toggleBtn.addEventListener('click', () => request(() => (isFolded() ? expand() : fold())), { signal });
+        // A group pressed while folded, or during a slide, waits for the menu; the drawer never sees it.
+        drawer?.addEventListener('click', (e) => {
             const btn = e.target.closest('.nds-drawer-list > li > button.nds-btn');
-            if (!btn || !isFolded()) return;
-            if (btn.getAttribute('aria-expanded') === 'true') e.stopPropagation();
-            setFolded(false);
+            if (!btn || (!isBusy && !isFolded())) return;
+            e.stopPropagation();
+            request(() => (isFolded() ? expand(btn) : NDS.Drawer.toggle(btn)));
         }, { capture: true, signal });
-        smallQuery.addEventListener('change', () => { closeOverlay(); syncRail(); }, { signal });
+        smallQuery.addEventListener('change', () => {
+            cancelSlide();
+            syncRail();
+            if (!isFolded()) reopenGroup();
+        }, { signal });
         signal.addEventListener('abort', () => {
-            closeOverlay();
+            cancelSlide();
+            releaseFoldedItem(null);
+            clearState(sidemenu);
             layout.toggleAttribute('data-sidemenu-collapsed', menuState.wasCollapsed);
             topButtons.forEach(btn => btn.removeAttribute('title'));
         });
@@ -256,7 +383,8 @@
             const { abortController, accMenu: sidemenu, animTarget: animationTarget, toggleBtn } = currentInstance;
 
             currentInstance.cancelClose?.();
-            if (hasState(animationTarget, 'open')) {
+            // A rail undoes its own state on abort.
+            if (!currentInstance.layout && hasState(animationTarget, 'open')) {
                 reset(currentInstance);
                 sidemenu.style.removeProperty('z-index');
             }

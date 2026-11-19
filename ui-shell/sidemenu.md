@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.x"
-last_edit: "18/11/2026 - 10:55 PM"
+last_edit: "19/11/2026 - 08:26 AM"
 ---
 
 <section id="sidemenu-overview" class="nds-content-section nds-doc-overview">
@@ -495,7 +495,7 @@ In slide-in mode, `nds-peek` on the menu button keeps it mostly hidden at the sc
 ### Rail Mode
 {: .nds-block-title}
 
-`nds-rail` on the `.nds-content-layout` puts the menu button at the top of the menu. On a desktop, a press folds the menu to its icons, and the content column grows. A second press opens it again. The browser keeps the choice for the next page. A folded icon shows its link's name on hover. A press on a group's icon opens the menu and that group.
+`nds-rail` on the `.nds-content-layout` puts the menu button at the top of the menu. On a desktop, a press folds the menu to its icons, and the content column grows. A second press opens it again. The browser keeps the choice for the next page. A folded icon shows its link's name on hover. A press on a group's icon opens the menu, then that group. A fold closes an open group first, and its icon stays marked. When the menu opens again, that group opens after it. A press while the menu slides waits until the slide ends.
 
 Below 960px, the menu is always folded beside the content. The button opens the full menu over the page. Escape, a click outside the menu, or a change of the screen width closes it.
 
@@ -661,6 +661,7 @@ Below 960px, the menu is always folded beside the content. The button opens the 
 | `data-sidemenu-collapsed` | `.nds-content-layout.nds-rail` | Write it to start the menu folded on a desktop. The script sets it when the user folds the menu, and removes it when the user opens it. The user's last choice, kept in `localStorage` as `nds-sidemenu-collapsed`, wins over the markup |
 | `data-sidemenu-open` | `.nds-content-layout.nds-rail` | Below 960px, the script sets it when the menu opens over the page, and removes it when the menu closes |
 | `title` | A top-level link or group button in rail mode | The script writes the link's name while the menu is folded, and removes it when the menu opens |
+| `data-state` | `aside.nds-sidemenu` in rail mode | The script sets `open opening` when the menu starts to open, removes `opening` as it slides, and adds `opened` at the end. A fold adds `closing`, and removes every token at the end. A folded menu has none |
 | `data-state` | `aside.nds-sidemenu` in slide-in mode | The script sets `open` when the menu opens, adds `closing` when it closes, and removes both after the close |
 | `hidden` | `button.nds-sidemenu-toggle` | Write it in the markup. The script removes it when it starts |
 | `aria-expanded` | `button.nds-sidemenu-toggle` | The script writes `false` when it starts and the attribute is missing. It sets `true` when the menu opens, and `false` after the close. In rail mode, it is `true` while the menu is not folded |
@@ -692,7 +693,13 @@ Below 960px, the menu is always folded beside the content. The button opens the 
 | `NDS.Sidemenu.destroy()` | Closes the menu, removes every listener, and hides the toggle button again. The markup stays, and `init()` starts it again |
 {: .nds-table .nds-responsive}
 
-The side menu fires no events. The drawer fires `nds:drawer:shown` after a group opens, and `nds:drawer:hidden` after it closes: see [Drawer](../components/drawer).
+| Event | Fired on | Detail |
+|---|---|---|
+| `nds:sidemenu:expanded` | `.nds-sidemenu` in rail mode, after the menu opens, and it bubbles | — |
+| `nds:sidemenu:collapsed` | `.nds-sidemenu` in rail mode, after the menu folds, and it bubbles | — |
+{: .nds-table .nds-responsive}
+
+The events fire when a person opens or folds the menu. They do not fire at load or on a change of the screen width. Below 960px, `expanded` fires when the menu opens over the page. The slide-in and top bar modes fire no events. The drawer fires `nds:drawer:shown` after a group opens, and `nds:drawer:hidden` after it closes: see [Drawer](../components/drawer).
 
 <script type="text/html" id="sidemenu-js" data-canon data-lang="js" data-preview="none">
 // A framework rendered a new side menu after the NDS script ran:
