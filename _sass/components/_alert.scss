@@ -178,7 +178,7 @@
   // STATUS VARIANTS (alert-exclusive)
   // Cards set --card-title-color unconditionally for status (correct for cards).
   // Alerts reset it for base (no fill) alerts; .nds-color re-inherits from
-  // cards, .nds-inline re-sets it explicitly below.
+  // cards, .nds-inline's title takes its description's status color.
   // Alert overrides --card-bg to lighter *-25 shades (card uses *-light).
   // --card-border-color stays in card's &.nds-color block; inherited automatically.
   // --alert-stripe / --alert-icon-bg come from the status block after this rule.
@@ -199,10 +199,6 @@
   }
 
   &.nds-inline {
-    &:is(.nds-green, [data-status="success"])                        { --_card-title-color-base: var(--text-success); }
-    &:is(.nds-blue,  [data-status="info"])                           { --_card-title-color-base: var(--text-info); }
-    &:is(.nds-yellow,[data-status="warning"])                        { --_card-title-color-base: var(--text-warning); }
-    &:is(.nds-red,   [data-status="error"], [data-status="critical"]){ --_card-title-color-base: var(--text-error); }
     &:is(.nds-neutral,.nds-gray,[data-status="neutral"]) {
       --_card-bg-base: var(--background-neutral-light);
       @include dark { --_card-bg-base: var(--colors-alpha-white-10); }
@@ -259,6 +255,11 @@
 
     .nds-alert-description {
       color: var(--_inline-desc, var(--_card-title-color));
+    }
+
+    // The status color, not the card title's: an on-color card turns that white.
+    .nds-alert-title {
+      color: var(--card-title-color, var(--_inline-desc, var(--_card-title-color)));
     }
 
     :where(.nds-alert-icon) {
