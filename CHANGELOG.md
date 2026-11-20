@@ -7,13 +7,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ## [Unreleased]
 
 ### Added
-- **Audit** — Flags a calendar with no empty message, and a modal whose content holds more than its title and description with no Scroll More.
+- **Audit** — Flags a calendar with no empty message, a modal whose content holds more than its title and description with no Scroll More, and `data-theme="oncolor"` without `dark`.
 - **Cookies** — After a choice, the panel closes itself in 5 seconds, with a countdown ring on its close button. Keyboard focus pauses it; a click in the panel keeps it open.
 - **Side Menu** — Rail mode: on a desktop, `nds-rail` on the layout folds the menu to its icons, and the browser keeps the choice. Below 960px it is the slide-in menu.
-- **Side Menu** — Primary, Gradient and Neutral colors, as on a section: the class with `data-theme="dark"`. `--sidemenu-bg` sets any background.
+- **Themes** — On-color areas: `data-theme="dark oncolor"` on a deep primary surface, so the parts inside take their on-color looks. Primary buttons turn white, fields show the surface through them, checked controls are white with a primary mark, and status colors step to their 200 shade. A menu, tooltip or dialog that opens inside keeps the dark area's colors.
+- **Side Menu** — Primary, Gradient and Neutral colors, as on a section: the class with `data-theme`, `dark oncolor` on Primary and Gradient, `dark` on Neutral. `--sidemenu-bg` sets any background.
 - **Autocomplete** — `nds:autocomplete:error` fires when a `data-url` request fails, with `{ query, error }`. `preventDefault()` stops the built-in message, for a page that shows its own.
 
 ### Changed
+- **Section** — Primary and Gradient write `data-theme="dark oncolor"`, so the components inside take their on-color looks. A section that still writes `data-theme="dark"` keeps its dark-mode look.
 - **Verify** — The browser check shoots dark mode once per page, at desktop width, so a run is faster. It names text below WCAG AA contrast, a part cut off past the screen edge, a control another part lies over, a part still loading after the page settled, and a dialog open at load that hides the page. `--text` runs every check with no shots or sheets; the index names when an edit can take it: a behavior-only edit, and every page a shared file reaches, with the full run on one page per shape. It finds a Chrome installed for one user, and Chromium.
 - **Page layout** — On a desktop, the side menu has its shadow and side padding again on a side menu page. The sections stay flat; `nds-compact` still raises them.
 - **Cookies** — On a desktop the buttons share one row; a phone still stacks them. The Notice view's third button reads "Manage". A page's own panel keeps its stack until its footers take `nds-col-sm` for `nds-col`.
@@ -22,7 +24,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Scroll More** — The edge fade is 16px, not 48px, so less of a small area fades. Tabs and the side menu keep 48px; `--scroll-fade` still sets it.
 - **Modal** — Content beyond the title and description goes in a Scroll More: its edge fades while more is below, and the header and the actions stay in view.
 - **Status Section, Card** — A status colors the icon and the card number, not the title.
-- **Docs** — Filter, Forms and Main Navigation say which group a yes-or-no or a number field takes, when a form ends with a review step, and when to leave out the language action. The Student Portal catalog entry names its profile head: the avatar and the name. Each full page shape in Page Layout points to the accessibility FAB after the footer.
+- **Docs** — Filter, Forms and Main Navigation say which group a yes-or-no or a number field takes, when a form ends with a review step, and when to leave out the language action. The Student Portal catalog entry names its profile head: the avatar and the name. Each full page shape in Page Layout points to the accessibility FAB after the footer. Every preview card has an On color toggle beside Dark mode.
 
 ### Fixed
 - **Forms** — A readonly or disabled Lighter or Darker field keeps its fill, so the box still shows.

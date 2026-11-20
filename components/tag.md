@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.0"
-last_edit: "05/11/2026 - 12:02 PM"
+last_edit: "20/11/2026 - 04:28 PM"
 ---
 
 <section id="tag-overview" class="nds-content-section nds-doc-overview">
@@ -87,7 +87,7 @@ A row on `.nds-tag:not([data-status])` applies to a standard tag only, and a row
 | Color | Blue | `.nds-blue` | `.nds-tag:not([data-status])` | Pick the color by meaning |
 | Color | Yellow | `.nds-yellow` | `.nds-tag:not([data-status])` | Pick the color by meaning |
 | Color | Red | `.nds-red` | `.nds-tag:not([data-status])` | Pick the color by meaning |
-| Color | On color (hint: For a deep primary or dark background) | `.nds-oncolor` | `.nds-tag:not([data-status])` | The DGA white look for a standard tag on a deep primary or dark background. It replaces the color classes. A status tag keeps its colors: give the dark surface `data-theme="dark"` instead |
+| Color | On color (hint: For a deep primary or dark background) | `.nds-oncolor` | `.nds-tag:not([data-status])` | The DGA white look for a standard tag on a deep primary or dark background. It replaces the color classes. A status tag keeps its colors: give the dark surface `data-theme="dark"` instead. Inside an on-color area (`data-theme="dark oncolor"`), the tag already takes this look: skip the class |
 | Status | Neutral (default) | — | — | A state with no meaning of its own, such as submitted or draft |
 | Status | Success | `[data-status="success"]` | `.nds-tag[data-status]` | A good result, such as approved or complete |
 | Status | Info | `[data-status="info"]` | `.nds-tag[data-status]` | A state to note, such as in review |
@@ -194,7 +194,7 @@ A row on `.nds-tag:not([data-status])` applies to a standard tag only, and a row
 - Put related tags in one `nds-tags` group, so they share the gap and wrap together.
 - In a [List](../components/list), leave the size class off. The list makes a tag SM, a small list (`nds-sm`) XS, and a large list (`nds-lg`) MD. To keep one tag at 32px there, give it `nds-md`.
 - Keep the label of an icon-only tag, and give its icon `aria-hidden="true"`. Screen readers read the label.
-- On a deep primary or dark surface, give the surface `data-theme="dark"`: every tag inside takes its dark-mode colors, status tags included. See [Dark Areas](../foundations/themes#dark-areas). For the DGA white look on a standard tag, add `nds-oncolor` instead.
+- On a deep primary surface, give the surface `data-theme="dark oncolor"`: a standard tag takes the DGA white look, and a status tag its dark-mode colors. See [On-color Areas](../foundations/themes#oncolor-areas). On a neutral or other dark surface, give it `data-theme="dark"`: every tag takes its dark-mode colors. For one standard tag, add `nds-oncolor`.
 
 </div>
   </div>

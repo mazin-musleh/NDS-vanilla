@@ -348,7 +348,7 @@ module DocsCanon
   def self.label(option) = option.gsub(/\s*\((default|limit:[^)]*|demo:\s*\+[^)]*|hint:[^)]*|id:[^)]*|not:[^)]*)\)/, '')
   def self.hint(option) = option[/\(hint:\s*([^)]*)\)/, 1]
 
-  # Every preview card carries its own Dark mode and Grid lines toggles, in its top corner, and
+  # Every preview card carries its own Dark mode, On color and Grid lines toggles, in its top corner, and
   # Desktop, Tablet and Phone: nds-docs.js shows the preview in a device screen that size, so a breakpoint
   # class (`nds-vertical-sm`) shows on a desktop too. A Run card's screen runs Run and Clear in the frame (nds-docs.js).
   def self.view(screens = false)
@@ -356,7 +356,7 @@ module DocsCanon
     btn = lambda do |attr, label, icon, on|
       %(<button type="button" class="nds-btn nds-secondary-outline nds-icon-only nds-md nds-tooltip" #{attr} aria-pressed="#{on}"#{' data-state="selected"' if on} aria-label="#{label}" data-tooltip-message="#{label}" data-tooltip-hover="500"><i class="#{icon}" aria-hidden="true"></i></button>)
     end
-    view = btn['data-preview-dark', 'Dark mode', 'nds-icon nds-hgi-moon-02', false] + btn['data-preview-grid', 'Grid lines', 'hgi hgi-stroke hgi-grid-off', true]
+    view = btn['data-preview-dark', 'Dark mode', 'nds-icon nds-hgi-moon-02', false] + btn['data-preview-oncolor', 'On color', 'hgi hgi-stroke hgi-paint-board', false] + btn['data-preview-grid', 'Grid lines', 'hgi hgi-stroke hgi-grid-off', true]
     sizes = [['', 'Desktop', 'computer'], ['768x720', 'Tablet', 'tablet-01'], ['390x720', 'Phone', 'smart-phone-01']].map { |w, label, icon| btn[%(data-preview-screen="#{w}"), label, "hgi hgi-stroke hgi-#{icon}", w.empty?] }.join
     %(<div class="nds-doc-view">#{%(<div class="nds-btn-group">#{sizes}</div>) if screens}<div class="nds-btn-group">#{view}</div></div>)
   end

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.0"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "20/11/2026 - 04:28 PM"
 ---
 
 <section id="divider-overview" class="nds-content-section nds-doc-overview">
@@ -102,7 +102,7 @@ A Spacing class sets the space above and below a line, or before and after a ver
 | Label position | Custom | `--divider-line-start: 24px` | `div.nds-divider:not(.nds-vertical)` | The line before the label is at most 24px long, and the other line takes the rest. Set any length or percentage in the `style` attribute. `--divider-line-end` does the same from the end |
 | Color | Default (default) | — | — | A faint gray line. Dark mode makes it a faint white line |
 | Color | Primary | `.nds-primary` | `.nds-divider` | A brand primary line |
-| On color | On color (hint: For a deep primary or dark background) | `.nds-oncolor` | `.nds-divider` | For a divider on a deep primary or dark background: a faint white line and a white label. With Primary, the line is the same white as the label |
+| On color | On color (hint: For a deep primary or dark background) | `.nds-oncolor` | `.nds-divider` | For a divider on a deep primary or dark background: a faint white line and a white label. With Primary, the line is the same white as the label. Inside an on-color area (`data-theme="dark oncolor"`), the divider already takes this look: skip the class |
 | Thick | Thick | `--divider-size: 2px` | `.nds-divider` | A 2px line instead of 1px. Set it in the `style` attribute: there is no class for it |
 {: #divider-variants-table .nds-table .nds-responsive}
 
@@ -189,7 +189,7 @@ A Spacing class sets the space above and below a line, or before and after a ver
 - Pick the smallest spacing that gives enough room. Keep `nds-3xl` and `nds-4xl` for major breaks.
 - Put a vertical divider only in a flex row. Outside one it has no height to stretch to.
 - Use the default color for most dividers. Use `nds-primary` only where the line is an accent.
-- On a deep primary or dark surface, add `nds-oncolor`, or give the surface `data-theme="dark"`. See [Dark Areas](../foundations/themes#dark-areas).
+- On a deep primary surface, give the surface `data-theme="dark oncolor"`: every divider inside takes the `nds-oncolor` look. See [On-color Areas](../foundations/themes#oncolor-areas). For one divider, add `nds-oncolor`. On a dark surface, add `nds-oncolor`, or give the surface `data-theme="dark"`.
 - To change the line color on a tinted surface, set `--divider-color` on that surface, not on `:root`.
 
 </div>

@@ -114,7 +114,8 @@ mark {
 
     &.nds-primary { --_divider-color: var(--border-primary); }
 
-    &.nds-oncolor {
+    &.nds-oncolor,
+    &#{$oncolor-area} {
         --_divider-color: var(--border-oncolor);
         color: var(--text-oncolor-secondary);
 

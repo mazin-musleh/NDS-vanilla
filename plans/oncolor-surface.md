@@ -1,6 +1,6 @@
 # On-color surfaces — plan
 
-Status: **design pass done, Phase 1 next** (2026-11-20; owner picks in the Mapping table). Opened by the side menu colors work, a test parked until this lands.
+Status: **Phase 1 and 2 built** (2026-11-20; owner picks in the Mapping table). Opened by the side menu colors work, a test parked until this lands.
 
 ## Goal
 
@@ -176,6 +176,20 @@ secondary or disabled text. Today's dark tokens on primary-700 fail 26 text / 31
   colors the side menu. Shots: `tmp/oncolor/*.png`.
 - Open: the drawer's search field uses the `darker` field fill, which is a dark wash on color; high contrast,
   docs, audit rules, sections / footer move to Phase 2.
+
+## Phase 2 build notes (2026-11-20)
+
+- **Docs:** `foundations/themes.md` On-color Areas (canon `theme-oncolor-area`, API row, Best Practices, Related);
+  `layout/section.md` and `ui-shell/sidemenu.md` Primary / Gradient rows write `dark oncolor`, Neutral `dark`;
+  chips, divider, link, tag Best Practices point to the area. Divider joined the area (Rule 1).
+- **High contrast:** the area already flattens as a dark area; the primary marks (checkbox, radio, switch) read
+  `--background-primary`, which HC turns white, so the a11y overlay sets them to `--_hc-bg` inside an area.
+  Radio moved to private mark / surface variables like the checkbox and switch.
+- **Audit:** `oncolor-no-dark` (structure, warn).
+- **Doc toggle:** On color beside Dark on every preview card (`docs_canon.rb`, `nds-docs.js`); hidden on page
+  previews, which bring their own surfaces. Dark and On color switch each other off.
+- **Not done, needs a major:** the footer brand. Retiring its hand copy means `data-theme="dark oncolor"` in the
+  footer markup, a consumer markup change (markup is a contract). Hero and Side Info have no primary fill.
 
 ## Phases
 

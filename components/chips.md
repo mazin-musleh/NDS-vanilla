@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.0"
-last_edit: "05/11/2026 - 12:02 PM"
+last_edit: "20/11/2026 - 04:28 PM"
 ---
 
 <section id="chip-overview" class="nds-content-section nds-doc-overview">
@@ -95,7 +95,7 @@ A row on `.nds-chip` changes every chip. Selected goes on one chip: the builder 
 | Selected | Selected | `[aria-pressed="true"]` | `.nds-chip:first-child` | The same. It tells screen readers the chip is on. Give the other chips of a choice `aria-pressed="false"` |
 | Disabled | Disabled | `[disabled]` | `.nds-chip` | The user cannot pick these chips now. Put it on one chip to disable one |
 | Rounded | Rounded | `.nds-rounded` | `.nds-chip` | Fully round ends |
-| On color | On color (hint: For a deep primary or dark background) | `.nds-oncolor` | `.nds-chip` | For chips on a deep primary or dark background |
+| On color | On color (hint: For a deep primary or dark background) | `.nds-oncolor` | `.nds-chip` | For chips on a deep primary or dark background. Inside an on-color area (`data-theme="dark oncolor"`), the chips already take this look: skip the class |
 | Center | Center (hint: Group only) | `.nds-center` | `.nds-chips` | Centers the chips in their row |
 {: #chip-variants-table .nds-table .nds-responsive}
 
@@ -181,7 +181,7 @@ A row on `.nds-chip` changes every chip. Selected goes on one chip: the builder 
 - Keep labels to one or two words. A label longer than 160px is cut with an ellipsis.
 - Add an icon only when it helps the user recognize the choice.
 - Give each chip `type="button"`, so a chip inside a form does not send the form.
-- On a deep primary or dark surface, add `nds-oncolor` for the DGA white look, or give the surface `data-theme="dark"` for the dark-mode chips. See [Dark Areas](../foundations/themes#dark-areas).
+- On a deep primary surface, give the surface `data-theme="dark oncolor"`: every chip inside takes the DGA white look. See [On-color Areas](../foundations/themes#oncolor-areas). For one chip, add `nds-oncolor` instead. On a neutral or other dark surface, give it `data-theme="dark"` for the dark-mode chips.
 
 </div>
   </div>

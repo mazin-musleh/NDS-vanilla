@@ -1094,6 +1094,11 @@
         'a switch at the end of a line without nds-reverse: its label pushes it along as the text changes', 'Add nds-reverse, so the label goes first and the switch stays in place.');
     addPractice('dark-nested', 'foundations/themes.html', '[data-theme~="dark"]:not(html) [data-theme~="dark"]',
         'data-theme="dark" inside a dark area, which is already dark', 'Write data-theme="dark" once, on the surface.');
+    // The on-color rules key on both words, so oncolor alone changes nothing.
+    addRule({ id: 'oncolor-no-dark', docs: 'foundations/themes.html', check(context) {
+        const elements = context.find('[data-theme~="oncolor"]:not([data-theme~="dark"])');
+        if (elements.length) context.report(elements[0], `data-theme="oncolor" without dark, which changes nothing${elements.length > 1 ? ` (${elements.length} elements; the first is shown)` : ''}.`, 'Write data-theme="dark oncolor".', undefined, elements.length);
+    } });
     addPractice('prose-nested', 'layout/prose.html', '.nds-prose .nds-prose',
         '.nds-prose inside .nds-prose', 'Put nds-prose once, on the element the text renders into.');
     addPractice('loading-field', 'components/loading.html', ':is(.nds-form-control, .nds-input).nds-loading',

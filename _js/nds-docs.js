@@ -326,7 +326,7 @@
         });
         // A group with no chip on starts on its default (None has no chip).
         order.forEach(function (group) { if (!active[group] && defaults[group]) active[group] = defaults[group]; });
-        var pristine = document.createElement('div'), source = pristine, call = null, html = false, dark = false, darkWins = false, wasOncolor = false;
+        var pristine = document.createElement('div'), source = pristine, call = null, html = false, dark = false, darkWins = false, wasOncolor = false, oncolorArea = false;
         var page = script.getAttribute('data-preview') === 'page';
 
         // A choice is enabled only when the element it changes is in the current markup ("Row" needs a group).
@@ -436,8 +436,9 @@
             showApplicable();
             // A page canon without <body> is a part of a page (the top bar): its code is the part alone.
             var whole = page && /<body[\s>]/i.test(srcEl.textContent);
-            // Dark: data-theme="dark" on the markup's outer element, so the copied code carries it.
-            if (dark) Array.prototype.forEach.call(whole ? [pristine.body] : page ? pristine.body.children : pristine.children, function (el) { el.setAttribute('data-theme', 'dark'); });
+            // Dark or On color: data-theme on the markup's outer element, so the copied code carries it.
+            var theme = oncolorArea ? 'dark oncolor' : dark ? 'dark' : '';
+            if (theme) Array.prototype.forEach.call(whole ? [pristine.body] : page ? pristine.body.children : pristine.children, function (el) { el.setAttribute('data-theme', mergeThemeWords(el.getAttribute('data-theme'), theme)); });
 
             var out = whole ? serialize(pristine.documentElement).replace(/^<head><\/head>/, '') : page ? serialize(pristine.body) : html ? serialize(pristine) : '', js = call ? printCall(call) : '';
             var css = codeCss ? dedent(document.getElementById(srcEl.getAttribute('data-js')).textContent) : '';
@@ -453,7 +454,7 @@
             }
 
             // The frame goes dark too, so a dark component is not shown on a light card.
-            dark ? preview.setAttribute('data-theme', 'dark') : preview.removeAttribute('data-theme');
+            theme ? preview.setAttribute('data-theme', theme) : preview.removeAttribute('data-theme');
             if (page) { preview.ndsOut = out; return renderFrame(preview); }
             // A run card keeps its Run and Clear buttons: the next Run adds the code shown.
             // A choice also rebuilds the last copy added, so it changes on the spot.
@@ -474,6 +475,7 @@
             var width = srcEl.getAttribute('data-demo-width') || script.getAttribute('data-demo-width');
             if (slot !== preview) slot.style.width = width || '';
             preview.style.removeProperty('--card-bg');
+            if (oncolorArea) preview.style.setProperty('--card-bg', 'var(--background-primary-strong)');
             // A JS-only structure (a toast) shows a Run button, on the page and in a screen.
             if (!html) {
                 slot.innerHTML = preview.ndsOut = RUN;
@@ -488,7 +490,7 @@
             var oncolor = !page && !!slot.querySelector('.nds-oncolor');
             if (oncolor && !wasOncolor) darkWins = false;
             wasOncolor = oncolor;
-            if (oncolor && !darkWins) {
+            if (oncolor && !darkWins && !oncolorArea) {
                 preview.style.setProperty('--card-bg', 'var(--background-primary-strong)');
                 preview.setAttribute('data-theme', 'dark');
             }
@@ -594,6 +596,11 @@
                 dark = darkWins = !dark;
                 setPressed(btn, dark);
                 btn.querySelector('.nds-icon').className = 'nds-icon ' + (dark ? 'nds-hgi-sun-03' : 'nds-hgi-moon-02');
+                render();
+            },
+            oncolor: function (btn) {
+                oncolorArea = !oncolorArea;
+                setPressed(btn, oncolorArea);
                 render();
             }
         };
@@ -719,6 +726,13 @@
     });
 
     // A view toggle's on state: pressed for screen readers, the selected look for the eye.
+    // data-theme is a word list: add the toggle's words and keep the rest (a theme name).
+    function mergeThemeWords(value, words) {
+        var list = (value || '').split(/\s+/).filter(Boolean);
+        words.split(' ').forEach(function (word) { if (list.indexOf(word) < 0) list.push(word); });
+        return list.join(' ');
+    }
+
     function setPressed(btn, on) {
         btn.setAttribute('aria-pressed', String(on));
         NDS.state[on ? 'add' : 'remove'](btn, 'selected');
@@ -728,8 +742,10 @@
     // code carries it; on a plain card it darkens the card only. Grid lines is a class on the card,
     // which a re-render keeps (only the slot is replaced).
     document.querySelectorAll('.nds-doc-view').forEach(function (view) {
-        var card = view.parentElement, dark = view.querySelector('[data-preview-dark]'), grid = view.querySelector('[data-preview-grid]');
+        var card = view.parentElement, dark = view.querySelector('[data-preview-dark]'), grid = view.querySelector('[data-preview-grid]'), oncolorButton = view.querySelector('[data-preview-oncolor]');
         dark.addEventListener('click', function () {
+            // Dark and On color are one choice: turning one on turns the other off.
+            if (oncolorButton.getAttribute('aria-pressed') === 'true') oncolorButton.click();
             var id = card.getAttribute('data-builder-card');
             if (id) return builders[id]().dark(dark);
             // Read the button, not the card: an on-color card is dark from the start.
@@ -738,6 +754,19 @@
             renderFrame(card);
             setPressed(dark, on);
             dark.querySelector('.nds-icon').className = 'nds-icon ' + (on ? 'nds-hgi-sun-03' : 'nds-hgi-moon-02');
+        });
+        // On color: a deep primary card whose markup is an on-color area. A page preview brings its own surfaces, so it has none.
+        if (card.hasAttribute('data-preview-page')) oncolorButton.hidden = true;
+        oncolorButton.addEventListener('click', function () {
+            if (dark.getAttribute('aria-pressed') === 'true') dark.click();
+            var id = card.getAttribute('data-builder-card');
+            if (id) return builders[id]().oncolor(oncolorButton);
+            var on = oncolorButton.getAttribute('aria-pressed') !== 'true';
+            if (on) card.setAttribute('data-theme', 'dark oncolor');
+            else card.querySelector('.nds-oncolor') ? card.setAttribute('data-theme', 'dark') : card.removeAttribute('data-theme');
+            on ? card.style.setProperty('--card-bg', 'var(--background-primary-strong)') : card.style.removeProperty('--card-bg');
+            renderFrame(card);
+            setPressed(oncolorButton, on);
         });
         grid.addEventListener('click', function () {
             var on = card.classList.toggle('nds-doc-grid');
@@ -811,7 +840,12 @@
         var screenSize = card.getAttribute('data-screen'), device = card.querySelector('.nds-doc-device'), iframe = device && device.firstChild;
         if (!screenSize) { if (device) device.remove(); return; }
         // The card's dark goes on the frame's body, so the harness around the markup goes dark too.
-        var setTheme = function (frameDocument) { var cardTheme = card.getAttribute('data-theme'); cardTheme ? frameDocument.body.setAttribute('data-theme', cardTheme) : frameDocument.body.removeAttribute('data-theme'); };
+        var setTheme = function (frameDocument) {
+            var cardTheme = card.getAttribute('data-theme');
+            cardTheme ? frameDocument.body.setAttribute('data-theme', cardTheme) : frameDocument.body.removeAttribute('data-theme');
+            // On color: the screen takes the card's deep primary too.
+            frameDocument.body.style.background = /(^|\s)oncolor(\s|$)/.test(cardTheme || '') ? 'var(--background-primary-strong)' : '';
+        };
         var runWindow = iframe && iframe.ndsSize === screenSize && iframe.contentWindow, slot = runWindow && runWindow.NDS && iframe.contentDocument.querySelector('[data-demo-slot]');
         // The screen is up: re-render its slot in place, with no reload.
         if (slot) {
@@ -918,7 +952,7 @@
         iframe.className = 'nds-doc-screen';
         iframe.title = 'Preview';
         iframe.style.visibility = 'hidden';
-        var dark = card.getAttribute('data-theme') === 'dark' || !!pageDocument.querySelector('body > [data-theme~="dark"]');
+        var dark = /(^|\s)dark(\s|$)/.test(card.getAttribute('data-theme') || '') || !!pageDocument.querySelector('body > [data-theme~="dark"]');
         var canon = document.getElementById(card.getAttribute('data-preview-of'));
         iframe.onload = function () {
             // data-preview-light: drop the site's dark (the copied head script restores it), so a dark area shows on a light page.

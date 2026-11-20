@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.x"
-last_edit: "19/11/2026 - 11:54 PM"
+last_edit: "20/11/2026 - 04:28 PM"
 ---
 
 <section id="sidemenu-overview" class="nds-content-section nds-doc-overview">
@@ -520,9 +520,9 @@ The Small screens options change the menu below 960px only. A rail is the slide-
 | Many links | Many links (hint: The list does not fit, so the show more arrow appears) | canon `#sidemenu-more` | `.nds-drawer-list:not(.nds-rail .nds-drawer-list)` | 24 more links. Shows how the list scrolls when it is taller than the screen. Not with Rail: its list is long already, and these links have no icons |
 | Color | None (default) | — | — | The menu background |
 | Color | Primary | `.nds-primary` | `.nds-sidemenu` | A deep primary background |
-| Color | Primary | `[data-theme="dark"]` | `.nds-sidemenu` | The links and buttons inside take their dark-mode colors |
+| Color | Primary | `[data-theme="dark oncolor"]` | `.nds-sidemenu` | The links, marks and fields inside take their on-color looks. See [On-color Areas](../foundations/themes#oncolor-areas) |
 | Color | Gradient | `.nds-gradient-primary` | `.nds-sidemenu` | A gradient from deep primary to primary |
-| Color | Gradient | `[data-theme="dark"]` | `.nds-sidemenu` | The links and buttons inside take their dark-mode colors |
+| Color | Gradient | `[data-theme="dark oncolor"]` | `.nds-sidemenu` | The links, marks and fields inside take their on-color looks |
 | Color | Neutral | `.nds-neutral` | `.nds-sidemenu` | A dark neutral background |
 | Color | Neutral | `[data-theme="dark"]` | `.nds-sidemenu` | The links and buttons inside take their dark-mode colors |
 {: #sidemenu-variants-table .nds-table .nds-responsive}

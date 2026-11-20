@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "2.0.0"
 updated: "2.0.x"
-last_edit: "18/11/2026 - 09:22 AM"
+last_edit: "20/11/2026 - 04:28 PM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -303,6 +303,7 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `unknown-class` | structure | warn | An `nds-` class that no NDS style sheet, doc or script has, so it gets no NDS style or behavior. An old name is left to `migration-markup` |
 | `required-part` | structure | error | A part or attribute that a component's script needs to work, missing with no console warning, such as a tab with no panel or a date field outside its `.nds-form-control`. Each component lists these in the `Requires` lines of its script's banner |
 | `part-outside` | structure | warn | A component part outside its component, such as `.nds-card-title` with no `.nds-card` around it. It skips a part that NDS also styles on its own |
+| `oncolor-no-dark` | structure | warn | `data-theme="oncolor"` without `dark`. The on-color looks need both words: `data-theme="dark oncolor"` |
 | `card-link-nested` | practice | info | A link or a button inside a clickable card (`a.nds-card`, `button.nds-card`) |
 | `section-nested` | practice | info | A section inside a section. Divide a section body with `.nds-block` |
 | `card-actions-place` | practice | info | `.nds-card-actions` inside `.nds-card-content`, not after it, or a form's `.nds-form-actions` inside a modal's `.nds-card-content`, where the buttons scroll with the content |

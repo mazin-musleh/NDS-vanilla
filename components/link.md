@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.0"
-last_edit: "10/10/2026 - 05:28 PM"
+last_edit: "20/11/2026 - 04:28 PM"
 ---
 
 <section id="link-overview" class="nds-content-section nds-doc-overview">
@@ -56,7 +56,7 @@ Every row goes on the link. Inside a content section, a link is also underlined.
 |---|---|---|---|---|
 | Color | Primary (default) | — | — | The brand color, for links in running text |
 | Color | Neutral | `.nds-neutral` | `.nds-link` | A quiet link that does not draw the eye, such as a secondary link in a list |
-| Color | On color (hint: For a deep primary or dark background) | `.nds-oncolor` | `.nds-link` | For a link on a deep primary or dark background |
+| Color | On color (hint: For a deep primary or dark background) | `.nds-oncolor` | `.nds-link` | For a link on a deep primary or dark background. Inside an on-color area (`data-theme="dark oncolor"`), the link already takes this look: skip the class |
 | Icon | None (default) | — | — | Text only. A link to another website gets the external icon from the script |
 | Icon | Link icon (hint: A chain-link icon after the text) | `.nds-icon` | `.nds-link` | A link icon after the text, for an internal link that needs a visual cue |
 | Icon | External icon | `.nds-external` | `.nds-link` | The external icon after the text. The script adds it to links to other websites, so add it yourself only to force it |
@@ -180,7 +180,7 @@ Every row goes on the link. Inside a content section, a link is also underlined.
 - Keep the primary default for links in running text, so readers find them.
 - Add `nds-neutral` to a link that should stay quiet, such as a secondary link in a list or in metadata.
 - Add `nds-underline` in dense text outside a content section, where color alone does not mark the link.
-- On a deep primary or dark surface, primary and neutral links lack contrast. Add `nds-oncolor` for the white look, or give the surface `data-theme="dark"`. See [Dark Areas](../foundations/themes#dark-areas).
+- On a deep primary or dark surface, primary and neutral links lack contrast. On a deep primary surface, give it `data-theme="dark oncolor"`: a primary link takes the white look. See [On-color Areas](../foundations/themes#oncolor-areas). On a dark surface, give it `data-theme="dark"`. For one link, add `nds-oncolor`.
 - Write link text that names the destination, such as "official guidelines". Avoid "click here".
 - Do not add `target="_blank"` to a link to another website: the script adds it. Add `rel="noreferrer"` yourself when the link must not send the page address.
 - Add `data-no-external` to a link or a container for a trusted partner site or an embedded widget that must open in the same tab.

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.x"
-last_edit: "17/11/2026 - 08:17 PM"
+last_edit: "20/11/2026 - 04:28 PM"
 ---
 
 <section id="section-overview" class="nds-content-section nds-doc-overview">
@@ -223,7 +223,7 @@ Pick another component when:
     </div>
     <div class="nds-section-body" markdown="1">
 
-The standard action goes right after the head. The float action goes first in the head: `.nds-section-action:first-child` is the float action. Primary, Gradient and Neutral write two changes on the section: the color class and `data-theme="dark"`.
+The standard action goes right after the head. The float action goes first in the head: `.nds-section-action:first-child` is the float action. Primary, Gradient and Neutral write two changes on the section: the color class and `data-theme`, `dark oncolor` on Primary and Gradient, `dark` on Neutral.
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
@@ -244,9 +244,9 @@ The standard action goes right after the head. The float action goes first in th
 | Layout | Center | `.nds-center` | `.nds-content-section:not(.nds-horizontal)` | Centers the head, the action and the body |
 | Color | None (default) | — | — | The page background |
 | Color | Primary | `.nds-primary` | `.nds-content-section` | A deep primary background, for one section that must stand out |
-| Color | Primary | `[data-theme="dark"]` | `.nds-content-section` | The components inside take their dark-mode colors |
+| Color | Primary | `[data-theme="dark oncolor"]` | `.nds-content-section` | The components inside take their on-color looks |
 | Color | Gradient | `.nds-gradient-primary` | `.nds-content-section` | A gradient from deep primary to primary |
-| Color | Gradient | `[data-theme="dark"]` | `.nds-content-section` | The components inside take their dark-mode colors |
+| Color | Gradient | `[data-theme="dark oncolor"]` | `.nds-content-section` | The components inside take their on-color looks |
 | Color | Neutral | `.nds-neutral` | `.nds-content-section` | A dark neutral background |
 | Color | Neutral | `[data-theme="dark"]` | `.nds-content-section` | The components inside take their dark-mode colors |
 | Color | Brand | `.nds-brand` | `.nds-content-section` | A light brand tint with an inset shadow |
@@ -305,7 +305,7 @@ A `nds-section-image` before the head holds a small image, a logo, an illustrati
 
 ### Background Colors
 
-`nds-primary`, `nds-gradient-primary` and `nds-neutral` paint a dark background, and the section text takes the on-color text colors. Write `data-theme="dark"` on the same section, so the buttons, tags and other components inside take their dark-mode colors: see [Dark Areas](../foundations/themes). `nds-brand` paints a light tint and needs no dark area. The gradient runs at `-45deg`, and at `45deg` on an LTR page. A section with a background color is never striped: see [Page Layout](../layout/page-layout).
+`nds-primary`, `nds-gradient-primary` and `nds-neutral` paint a dark background, and the section text takes the on-color text colors. On `nds-primary` and `nds-gradient-primary`, write `data-theme="dark oncolor"` on the same section: the buttons, fields and other components inside take their on-color looks. See [On-color Areas](../foundations/themes#oncolor-areas). On `nds-neutral`, write `data-theme="dark"`: the components take their dark-mode colors. See [Dark Areas](../foundations/themes#dark-areas). `nds-brand` paints a light tint and needs no dark area. The gradient runs at `-45deg`, and at `45deg` on an LTR page. A section with a background color is never striped: see [Page Layout](../layout/page-layout).
 
 </div>
   </div>
