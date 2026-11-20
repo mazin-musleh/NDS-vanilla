@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "2.0.0"
 updated: "2.0.x"
-last_edit: "20/11/2026 - 07:56 PM"
+last_edit: "20/11/2026 - 08:55 PM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -297,13 +297,13 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `nds-restyle` | page | warn | A rule in the site's own CSS that restyles NDS classes with no project class, id or `data-*` attribute in its selector. One finding per sheet. It skips a rule that sets only custom properties |
 | `global-element-css` | page | warn | A rule in the site's own CSS on bare elements, such as `body`, `h1` or `a`: it reaches every NDS element on the page. One finding per sheet. It skips a rule that sets only custom properties |
 | `token-dark` | page | warn | A token override in the site's own CSS that has no dark value where NDS has one, sets only some states of a family, or misses the dark-area selector on a page with dark areas. See [Tokens](../foundations/tokens) |
-| `migration-markup` | migration | error, warn, info | A renamed or removed name (error) or a deprecated one (warn) in the markup, or an old window setting |
-| `migration-css` | migration | error, warn, info | The same names in the site's own CSS. Setting a custom property that NDS never read is info |
+| `migration-markup` | migration | error, info | A renamed or removed name (error) in the markup, or an old window setting. A deprecated name is info: it still works, and the message names its replacement |
+| `migration-css` | migration | error, info | The same names in the site's own CSS. A deprecated name, or a custom property that NDS never read, is info |
 | `badge-text` | migration | warn | A badge count written as text, not in `data-count`. The text joins the button's visible label, so an accessibility checker reports the button's name |
 | `unknown-class` | structure | warn | An `nds-` class that no NDS style sheet, doc or script has, so it gets no NDS style or behavior. An old name is left to `migration-markup` |
 | `required-part` | structure | error | A part or attribute that a component's script needs to work, missing with no console warning, such as a tab with no panel or a date field outside its `.nds-form-control`. Each component lists these in the `Requires` lines of its script's banner |
 | `part-outside` | structure | warn | A component part outside its component, such as `.nds-card-title` with no `.nds-card` around it. It skips a part that NDS also styles on its own |
-| `area-no-dark` | structure | warn | An area word (`oncolor`, `primary`, `neutral` or `gradient`) in `data-theme` without `dark`. The area needs both: `data-theme="dark oncolor primary"` |
+| `area-no-dark` | structure | warn | An area word (`oncolor`, `neutral` or `gradient`) in `data-theme` without `dark`, which changes nothing: `data-theme="dark neutral"`. `primary` alone is fine: it paints the light tint |
 | `area-gradient-no-fill` | structure | warn | `gradient` in `data-theme` without `primary`. There is no neutral gradient, so the word does nothing |
 | `area-two-fills` | structure | warn | Two fill words (`primary` and `neutral`) in one `data-theme`. Keep one |
 | `area-primary-no-oncolor` | structure | warn | `data-theme="dark primary"` without `oncolor`. The parts keep their dark looks on a primary fill: write `data-theme="dark oncolor primary"` |

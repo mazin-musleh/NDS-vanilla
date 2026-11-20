@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.1.0"
 updated: "2.0.x"
-last_edit: "20/11/2026 - 07:56 PM"
+last_edit: "20/11/2026 - 08:48 PM"
 ---
 
 <section id="themes-overview" class="nds-content-section nds-doc-overview">
@@ -243,13 +243,14 @@ Words in `data-theme` make any element a colored area: a section, a hero, a side
 
 - **Mode:** `dark` gives the area dark tokens.
 - **Look:** `oncolor` makes the parts take their on-color look. A primary button turns white, a field shows the surface through it, and a checked box is white with a primary mark.
-- **Fill:** `primary` paints a deep primary surface and `neutral` paints a dark gray one. Add `gradient` to `primary` for a gradient from deep primary to primary. `gradient` does nothing on `neutral`.
+- **Fill:** `primary` paints a deep primary surface and `neutral` paints a dark gray one. Add `gradient` to `primary` for a gradient from deep primary to primary. `gradient` does nothing on `neutral`. Without `dark`, `primary` paints a light primary tint instead, and the parts keep their colors.
 
 | Markup | Result |
 |---|---|
 | `data-theme="dark oncolor primary"` | Deep primary fill, on-color look |
 | `data-theme="dark oncolor primary gradient"` | Primary gradient, on-color look |
 | `data-theme="dark neutral"` | Dark gray fill, dark look |
+| `data-theme="primary"` | Light primary tint, the parts keep their colors |
 | `data-theme="dark oncolor"` | Your own fill, on-color look |
 {: .nds-table .nds-responsive}
 
@@ -293,7 +294,7 @@ A fill word only paints. It does not set the look, so write `oncolor` yourself o
 </section>
 </script>
 
-Every area word needs `dark`: without it the word does nothing. Print drops `dark`, so an area prints light. A menu, a tooltip or a dialog that opens in the area keeps the dark area's colors, on its own panel. In a neutral area, a darker field takes the neutral-700 fill. `--gradient-angle` sets the gradient direction. The [audit](../core/audit) flags a missing `dark`, a `gradient` without `primary`, two fill words on one element, and a dark primary area without `oncolor`. High contrast flattens every fill.
+Every area word needs `dark`, except `primary`, which paints its light tint without it. Without `dark`, the other words do nothing. Print drops `dark`, so an area prints light: a primary area prints as the tint. A menu, a tooltip or a dialog that opens in the area keeps the dark area's colors, on its own panel. In a neutral area, a darker field takes the neutral-700 fill. `--gradient-angle` sets the gradient direction. The [audit](../core/audit) flags a missing `dark`, a `gradient` without `primary`, two fill words on one element, and a dark primary area without `oncolor`. High contrast flattens every fill.
 
 On a section, `.nds-primary`, `.nds-gradient-primary` and `.nds-neutral` still work but are deprecated and go in v3. Use the words.
 
@@ -425,7 +426,7 @@ On a section, `.nds-primary`, `.nds-gradient-primary` and `.nds-neutral` still w
 | `data-palette` | `<html>` | Builds the palette from the `--brand-*` seeds. The script sets it when the user picks an option with `data-seed-primary`, and removes it when the user picks another option |
 | `data-theme="dark"` | any element except `<html>` | Renders the element and everything inside it in dark mode. A theme name does nothing here |
 | `data-theme="dark oncolor"` | any element except `<html>` | Makes a dark area whose parts take their on-color look, on a fill you paint yourself. `oncolor` without `dark` does nothing |
-| `data-theme="dark oncolor primary"`, `"dark oncolor primary gradient"`, `"dark neutral"` | any element except `<html>` | The fill words paint the surface: deep primary, a primary gradient, or dark gray. They need `dark`, and they do not set the look. `gradient` needs `primary` |
+| `data-theme="dark oncolor primary"`, `"dark oncolor primary gradient"`, `"dark neutral"` | any element except `<html>` | The fill words paint the surface: deep primary, a primary gradient, or dark gray. They need `dark`, and they do not set the look. `gradient` needs `primary`. `data-theme="primary"` without `dark` paints a light primary tint |
 | `data-theme-toggle` | a button, or a `.nds-switch` | Makes it a dark mode toggle |
 | `aria-pressed` | a dark mode toggle | Write `false` in the markup. The script sets `true` in dark mode and `false` in light mode. It also swaps the moon and sun icons, and checks the switch in dark mode |
 | `data-theme-value` | a theme option: a button, or a `.nds-switch` | The theme name the option applies. Leave it empty for the DGA default |

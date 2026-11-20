@@ -24,7 +24,7 @@
     z-index: 1;
 
     // Area fill (data-theme="dark oncolor primary"), gradient included.
-    &:where(#{$fill-host}) {
+    &:where(#{$fill-any-host}) {
         --_sidemenu-bg-base: var(--nds-area-image) var(--nds-area-color);
     }
 }

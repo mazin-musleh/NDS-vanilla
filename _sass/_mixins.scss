@@ -128,22 +128,34 @@ $oncolor-host: '[data-theme~="dark"][data-theme~="oncolor"]:not(:root)';
 $oncolor-area: ':is(#{$oncolor-host}, #{$oncolor-host} *, .nds-oncolor *):not([popover], [popover] *)';
 
 // Area fills: data-theme words that paint the surface (data-theme="dark neutral"). Fill only: dark and
-// oncolor stay the look. Each needs dark, so a print drops it too. A new color is one entry here,
-// plus AREA_FILLS in nds-audit.js.
+// oncolor stay the look. With dark, the deep shade; without, the light one (`light`, a tint whose
+// parts keep their colors), or nothing when the fill has none. A new color is one entry here, plus
+// AREA_FILLS in nds-audit.js.
 $area-fills: (
-  primary: (start: var(--background-primary-strong), end: var(--background-primary), gradient: true),
+  primary: (start: var(--background-primary-strong), end: var(--background-primary), gradient: true, light: var(--background-primary-light)),
   neutral: (start: var(--colors-neutral-900), end: var(--colors-neutral-700), gradient: false),
 );
 $_fill-attrs: ();
+$_light-attrs: ();
 @each $word, $fill in $area-fills {
   $_fill-attrs: list.append($_fill-attrs, '[data-theme~="#{$word}"]', $separator: comma);
+  @if map.get($fill, light) {
+    $_light-attrs: list.append($_light-attrs, '[data-theme~="#{$word}"]', $separator: comma);
+  }
 }
 // For :not() lists: a section that paints its own fill is not striped and keeps its gutter.
 $fill-words: '#{$_fill-attrs}';
 $fill-host: '[data-theme~="dark"]:is(#{$fill-words}):not(:root)';
+$fill-light-host: ':is(#{$_light-attrs}):not([data-theme~="dark"], :root)';
+// Either shade: what a surface maps when it reads --nds-area-color / --nds-area-image.
+$fill-any-host: ':is(#{$fill-host}, #{$fill-light-host})';
 
 @function fill-host($word) {
   @return '[data-theme~="dark"][data-theme~="#{$word}"]:not(:root)';
+}
+
+@function fill-light-host($word) {
+  @return '[data-theme~="#{$word}"]:not([data-theme~="dark"], :root)';
 }
 
 // Popups inside an area keep the dark area's values: the tier files re-list both blocks on them.

@@ -650,11 +650,12 @@
         ({ kind, name, scope: scope || null, status, use: use || null, since, fix: fix || (use ? `Use ${use}.` : ''), inert: !!inert }));
     const byKind = {};
     rows.forEach(row => ((byKind[row.kind] ||= new Map()).get(row.name) || byKind[row.kind].set(row.name, []).get(row.name)).push(row));
-    const severityByKind = { renamed: 'error', removed: 'error', deprecated: 'warn' };
+    // A deprecated name still works: a note to move on, not a break.
+    const severityByKind = { renamed: 'error', removed: 'error', deprecated: 'info' };
     const label = { class: 'class', attribute: 'attribute', property: 'property', id: 'id', global: 'window setting' };
     const say = (row, inCss) => {
         const what = `${label[row.kind]} "${row.name}"`;
-        if (row.status === 'deprecated') return `${what} is deprecated since ${row.since}: it still works, until the next major release.`;
+        if (row.status === 'deprecated') return `${what} is deprecated since ${row.since}: it still works until the next major release${row.use ? `. Replace it with ${row.use}` : ''}.`;
         if (inCss) return `${what} was ${row.status} in ${row.since}.`;
         const effect = row.kind === 'global' ? 'NDS no longer reads it' : 'this part gets no NDS style or behavior';
         return `${what} was ${row.status} in ${row.since}, so ${effect}.`;
@@ -1095,17 +1096,20 @@
     // ponytail: mirrors $area-fills in _mixins.scss by hand; a new fill color is an entry in both.
     const AREA_FILLS = Object.freeze(['primary', 'neutral']);
     const GRADIENT_FILLS = Object.freeze(['primary']);
+    // Without dark, these paint their light tint; the rest need dark.
+    const LIGHT_FILLS = Object.freeze(['primary']);
     const themeWord = (word) => `[data-theme~="${word}"]`;
     const areaWords = ['oncolor', ...AREA_FILLS, 'gradient'].map(themeWord).join(', ');
+    const darkOnlyWords = ['oncolor', ...AREA_FILLS.filter(word => !LIGHT_FILLS.includes(word)), 'gradient'].map(themeWord).join(', ');
     // An inner area writes dark again with its own look or fill: only a bare repeat is a slip.
     addPractice('dark-nested', 'foundations/themes.html', `[data-theme~="dark"]:not(html) [data-theme~="dark"]:not(${areaWords})`,
         'data-theme="dark" inside a dark area, which is already dark', 'Write data-theme="dark" once, on the surface.');
     const reportAll = (context, elements, message, fix) => {
         if (elements.length) context.report(elements[0], `${message}${elements.length > 1 ? ` (${elements.length} elements; the first is shown)` : ''}.`, fix, undefined, elements.length);
     };
-    // Every area rule keys on dark, so a print, which drops it, drops the area too.
+    // The look and the deep fills key on dark; a light fill (primary alone) is a tint and needs none.
     addRule({ id: 'area-no-dark', docs: 'foundations/themes.html', check(context) {
-        const elements = context.find(`:is(${areaWords}):not([data-theme~="dark"])`);
+        const elements = context.find(`:is(${darkOnlyWords}):not([data-theme~="dark"])`);
         const theme = elements[0]?.getAttribute('data-theme').trim();
         reportAll(context, elements, `data-theme="${theme}" without dark, which changes nothing`, `Write data-theme="dark ${theme}".`);
     } });

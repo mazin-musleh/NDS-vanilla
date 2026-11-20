@@ -144,7 +144,8 @@
   }
 }
 
-.nds-content-section.nds-brand::after {
+.nds-content-section.nds-brand::after,
+.nds-content-section#{$fill-light-host}::after {
   filter: brightness(0) invert(1);
   opacity: 0.6;
 }

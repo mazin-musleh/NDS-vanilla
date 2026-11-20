@@ -27,7 +27,7 @@
     }
 
     // Area fill (data-theme="dark oncolor primary"): the parts take their on-color looks from the area.
-    &:where(#{$fill-host}) {
+    &:where(#{$fill-any-host}) {
         background-color: var(--nds-area-color);
         background-image: var(--nds-area-image);
     }

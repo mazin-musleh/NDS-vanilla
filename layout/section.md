@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.x"
-last_edit: "20/11/2026 - 07:56 PM"
+last_edit: "20/11/2026 - 08:48 PM"
 ---
 
 <section id="section-overview" class="nds-content-section nds-doc-overview">
@@ -246,7 +246,7 @@ The standard action goes right after the head. The float action goes first in th
 | Color | Primary | `[data-theme="dark oncolor primary"]` | `.nds-content-section` | A deep primary background, for one section that must stand out. The components inside take their on-color looks |
 | Color | Gradient | `[data-theme="dark oncolor primary gradient"]` | `.nds-content-section` | A gradient from deep primary to primary. The components inside take their on-color looks |
 | Color | Neutral | `[data-theme="dark neutral"]` | `.nds-content-section` | A dark neutral background. The components inside take their dark-mode colors |
-| Color | Brand | `.nds-brand` | `.nds-content-section` | A light brand tint with an inset shadow |
+| Color | Brand | `[data-theme="primary"]` | `.nds-content-section` | A light brand tint with an inset shadow. `primary` without `dark` is the tint, in light and dark mode |
 | Color | Ghost (hint: No background, border or shadow) | `.nds-ghost` | `.nds-content-section` | No background, border or shadow, in every layout |
 {: #section-variants-table .nds-table .nds-responsive}
 
@@ -302,7 +302,7 @@ A `nds-section-image` before the head holds a small image, a logo, an illustrati
 
 ### Background Colors
 
-The fill words in `data-theme` paint a dark background, and the section text takes the on-color text colors. `dark oncolor primary` paints deep primary and `dark oncolor primary gradient` paints the gradient: the buttons, fields and other components inside take their on-color looks. See [Color Areas](../foundations/themes#oncolor-areas). `dark neutral` paints dark neutral: the components take their dark-mode colors. See [Dark Areas](../foundations/themes#dark-areas). The classes `nds-primary`, `nds-gradient-primary` and `nds-neutral` still paint the same backgrounds but are deprecated and go in v3. `nds-brand` paints a light tint and needs no dark area. The gradient runs at `-45deg`, and at `45deg` on an LTR page. A section with a background color is never striped: see [Page Layout](../layout/page-layout).
+The fill words in `data-theme` paint a dark background, and the section text takes the on-color text colors. `dark oncolor primary` paints deep primary and `dark oncolor primary gradient` paints the gradient: the buttons, fields and other components inside take their on-color looks. See [Color Areas](../foundations/themes#oncolor-areas). `dark neutral` paints dark neutral: the components take their dark-mode colors. See [Dark Areas](../foundations/themes#dark-areas). `primary` without `dark` paints the light brand tint with an inset shadow, and the components keep their colors. The classes `nds-primary`, `nds-gradient-primary`, `nds-neutral` and `nds-brand` still paint the same backgrounds but are deprecated and go in v3. The gradient runs at `-45deg`, and at `45deg` on an LTR page. A section with a background color is never striped: see [Page Layout](../layout/page-layout).
 
 </div>
   </div>

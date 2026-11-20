@@ -251,7 +251,7 @@ $a11y-filters: (
 }
 
 // An area fill flattens at the source, so every part that reads it follows.
-:root[data-a11y~="high-contrast"] #{$fill-host} {
+:root[data-a11y~="high-contrast"] #{$fill-any-host} {
     --nds-area-color: var(--_hc-bg);
     --nds-area-image: none;
 }

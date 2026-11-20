@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.8.0"
 updated: "2.0.x"
-last_edit: "20/11/2026 - 08:39 PM"
+last_edit: "20/11/2026 - 08:48 PM"
 ---
 
 <section id="page-layout-overview" class="nds-content-section nds-doc-overview">
@@ -502,7 +502,7 @@ Each shape is the markup of a live page, listed in the Overview. Side menu and S
 
 `nds-has-sidemenu` on the content layout makes two columns at 960px and wider: the side menu, then the content. The menu column is `--nds-sidemenu-width` wide. Below 960px the layout has one column, and the side menu shows as a compact control. `nds-top` on the `aside` shows the menu as a bar above the content: see [Side Menu](../ui-shell/sidemenu). Without `nds-has-sidemenu` or `nds-has-sideinfo`, the layout hides an `aside` that is its direct child.
 
-On a desktop, a side menu page is one surface: the content layout has the `--background-default` color, and only the side menu has a `--shadow-md` shadow. The menu keeps its side padding. A `--nds-viewport-padding` gap splits the menu from the content, so the sections have no side padding. A section with its own fill keeps its side padding: a `primary` or `neutral` word in `data-theme`, the deprecated classes `nds-primary`, `nds-gradient-primary` and `nds-neutral`, and `nds-brand`. Every section of a striped `nds-content` keeps it too. A full-width page has no page gutter, so its sections keep their side padding and the layout has no gap.
+On a desktop, a side menu page is one surface: the content layout has the `--background-default` color, and only the side menu has a `--shadow-md` shadow. The menu keeps its side padding. A `--nds-viewport-padding` gap splits the menu from the content, so the sections have no side padding. A section with its own fill keeps its side padding: a `primary` or `neutral` word in `data-theme`, the deprecated classes `nds-primary`, `nds-gradient-primary`, `nds-neutral` and `nds-brand`. Every section of a striped `nds-content` keeps it too. A full-width page has no page gutter, so its sections keep their side padding and the layout has no gap.
 
 ### Side Info
 
@@ -524,7 +524,7 @@ An article is one side info section that holds the whole text. The `aside` holds
 
 `nds-stripe` on `nds-content` gives every second section the `--background-stripe` color, from the second section. Add `nds-odd` too, and the stripe starts on the first section instead, for a first section that must stand apart from the hero. The stripes work at every screen width, with or without a side menu. The count includes every `section` in `nds-content`, so a section that is added or removed flips the color of every section below it. On a console, the hero is the first section in the count.
 
-A section that paints its own background is never striped, but it still counts: a `primary` or `neutral` word in `data-theme`, the deprecated classes `nds-primary`, `nds-gradient-primary` and `nds-neutral`, `nds-brand` and `nds-user-feedback-section`. The last modified section always takes the color of the section above it.
+A section that paints its own background is never striped, but it still counts: a `primary` or `neutral` word in `data-theme`, the deprecated classes `nds-primary`, `nds-gradient-primary`, `nds-neutral` and `nds-brand`, and `nds-user-feedback-section`. The last modified section always takes the color of the section above it.
 
 ### Console
 

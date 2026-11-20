@@ -154,7 +154,7 @@
         }
 
         // An area fill replaces the sub-hero tint; the section block maps the gradient.
-        &:where(#{$fill-host}) {
+        &:where(#{$fill-any-host}) {
             background-color: var(--nds-area-color);
         }
     }

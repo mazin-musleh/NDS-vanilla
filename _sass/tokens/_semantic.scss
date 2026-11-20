@@ -316,7 +316,7 @@
 // Area fill (data-theme="dark neutral"): any element paints it. A part with its own background reads
 // --nds-area-color / --nds-area-image instead. Every host resets the image, so a solid area inside
 // a gradient one stays solid.
-#{$fill-host} {
+#{$fill-any-host} {
     --_area-angle: var(--gradient-angle, -45deg);
     --nds-area-image: none;
 }
@@ -335,9 +335,15 @@
             }
         }
     }
+
+    @if map.get($fill, light) {
+        #{fill-light-host($word)} {
+            --nds-area-color: #{map.get($fill, light)};
+        }
+    }
 }
 
-:where(#{$fill-host}) {
+:where(#{$fill-any-host}) {
     background-color: var(--nds-area-color);
     background-image: var(--nds-area-image);
 }

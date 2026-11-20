@@ -83,6 +83,14 @@
         --_section-text-color-base: var(--text-default);
     }
 
+    // Light fill (data-theme="primary", no dark): the brand tint, which follows the page mode.
+    &:where(#{$fill-light-host}) {
+        --_section-shadow-base: var(--shadow-inset);
+        --_section-bg-base: var(--nds-area-color);
+        --_section-subtitle-color-base: var(--text-default);
+        --_section-text-color-base: var(--text-default);
+    }
+
     &.nds-ghost {
         @include reset-section-style( !important);
     }

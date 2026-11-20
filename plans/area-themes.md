@@ -17,6 +17,9 @@ parts inside follow. Adding a fill color later is one registry entry; every sele
 - So `$oncolor-host` is unchanged, the registry has no `oncolor` key, and review fix 10 is dropped.
   The audit adds a hint: `primary` without `oncolor` (parts take the dark look on a primary fill).
 
+- **`primary` without `dark` is the light brand tint** (2026-11-20, replaces section `.nds-brand`, deprecated): registry
+  key `light`; `$fill-light-host`, `$fill-any-host`. `neutral` has no light shade, so alone it still does nothing.
+
 ## Vocabulary (words in `data-theme`, on any element but `<html>`)
 
 | Kind | Words | Job |
