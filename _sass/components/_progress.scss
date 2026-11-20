@@ -181,6 +181,12 @@
     --progress-color: var(--background-error);
   }
 
+  // The status icon matches the ring: on color the feedback disc is a pale tint.
+  &:is([data-status="success"], [data-status="error"]) {
+    --feedback-icon-color: var(--_progress-color);
+    --feedback-symbol-color: var(--text-oncolor-primary);
+  }
+
 
   // Status swaps the percentage for the feedback icon. Everything reads the
   // --_progress-status-* hooks the [data-status] rule sets (PERF-06: no tails).
@@ -333,6 +339,12 @@
   &[data-status="error"] {
     --progress-color: var(--background-error);
     --_progress-label: var(--text-oncolor-primary);
+  }
+
+  // The status icon matches the bar, as the circle's.
+  &:is([data-status="success"], [data-status="error"]) {
+    --feedback-icon-color: var(--_progress-color);
+    --feedback-symbol-color: var(--text-oncolor-primary);
   }
 
 
