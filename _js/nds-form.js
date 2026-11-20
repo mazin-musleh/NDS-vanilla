@@ -99,7 +99,6 @@
     // STATE PROPAGATION HOOKS
     // ==============================================
 
-    var FORM_SCOPE = '.nds-form-container, .nds-form-group';
     // Where a status lives: the nearest of these.
     var STATUS_HOST = '.nds-form-container, .nds-form-group, .nds-feedback';
     var loadingRefs = new WeakMap();
@@ -179,7 +178,8 @@
     }
 
     // nds-loading is the canon on every container, so the class spells loading too.
-    NDS.state.onToggle('loading', FORM_SCOPE, setLoading, { className: 'nds-loading' });
+    // A slider's loading is its skeleton, so it takes no spinner.
+    NDS.state.onToggle('loading', '.nds-form-container:not(.nds-slider-container), .nds-form-group', setLoading, { className: 'nds-loading' });
 
     // ==============================================
     // UTILITY FUNCTIONS
