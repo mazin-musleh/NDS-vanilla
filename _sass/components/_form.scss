@@ -593,10 +593,6 @@ fieldset {
 
     &.nds-darker:is([data-state~="readonly"], [data-state~="disabled"]) {
         --_control-bg-forced: var(--form-field-background-darker);
-
-        @include oncolor {
-            --_control-bg-forced: var(--colors-alpha-black-10);
-        }
     }
 
     // Without this, the [data-state~="active"] rule above swaps the bg to

@@ -506,7 +506,7 @@
     --form-field-text-readonly: var(--text-oncolor-primary);
     --form-field-background-default: var(--colors-alpha-white-10);
     --form-field-background-lighter: var(--colors-alpha-white-20);
-    --form-field-background-darker: var(--colors-alpha-black-20);
+    --form-field-background-darker: var(--colors-alpha-white-10); // a dark wash muddies the fill; no border tells it from default
     --form-field-border-default: var(--border-oncolor);
     --form-field-border-hovered: var(--colors-alpha-white-60);
     --form-field-border-pressed: var(--colors-base-white);

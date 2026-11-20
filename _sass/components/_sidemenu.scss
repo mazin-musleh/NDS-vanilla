@@ -30,6 +30,11 @@
 
     &.nds-neutral {
         --_sidemenu-bg-base: var(--colors-neutral-900);
+
+        // The darker field fill is this menu's fill: the search takes the lighter one.
+        .nds-drawer-search.nds-darker .nds-form-control {
+            --_form-control-bg: var(--_control-bg-forced, var(--form-field-background-lighter));
+        }
     }
 
     &.nds-gradient-primary {
@@ -207,6 +212,15 @@
         --nds-sidemenu-width: 100%;
         --drawer-max-height: 60svh;
         background: none;
+
+        // The bar's fill, a layer over the sliding drawer and under the clear toggle; a gradient fills it too.
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: var(--_sidemenu-bg);
+        }
         padding: 0;
         border-radius: 0;
         z-index: 900;
@@ -217,11 +231,17 @@
 
         .nds-sidemenu-toggle {
             --btn-width: 100%;
-            --btn-bg: var(--background-nav);
+            --btn-bg: transparent;
             --btn-bg-hover: var(--button-background-secondary-hovered);
             --btn-bg-active: var(--button-background-secondary-pressed);
             --btn-bg-selected: var(--button-background-secondary-selected);
             --_btn-indicator-size-base: 3px;
+
+            @include oncolor {
+                --btn-bg-hover: var(--button-background-transparent-hovered);
+                --btn-bg-active: var(--button-background-transparent-pressed);
+                --btn-bg-selected: var(--button-background-transparent-selected);
+            }
             --btn-height: var(--nds-sidemenu-toggle-height);
             max-width: var(--nds-content-max-width);
             margin: 0 auto;
@@ -231,7 +251,7 @@
             box-shadow: none;
             position: relative;
             top: unset;
-            z-index: 1;
+            z-index: 2;
             @include btn-indicator;
 
             &:hover::before {
@@ -264,6 +284,10 @@
 
             i {
                 color: var(--icon-primary);
+
+                @include oncolor {
+                    color: var(--icon-oncolor);
+                }
             }
         }
 
