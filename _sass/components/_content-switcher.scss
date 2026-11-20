@@ -94,6 +94,13 @@
     --btn-color: var(--text-oncolor-primary);
   }
 
+  // The area rule above outranks the dark-surface current-segment rule below: restate it.
+  &#{$oncolor-area} > .nds-tab-list .nds-tab[aria-selected="true"] {
+    --btn-bg: var(--button-background-primary-default);
+    --btn-bg-hover: var(--button-background-primary-default);
+    --btn-bg-active: var(--button-background-primary-default);
+  }
+
   // The fill already separates the current segment from its neighbour, so the
   // seam is dropped on both edges touching it.
   > .nds-tab-list .nds-tab:is([aria-selected="true"], [aria-selected="true"] + .nds-tab) {
