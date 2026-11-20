@@ -83,7 +83,7 @@
   transform: translateY(50%);
 }
 
-.nds-content-layout:not(.nds-has-sidemenu, .nds-card-view) .nds-content .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-gradient-primary, .nds-neutral, .nds-brand, .nds-last-edit):nth-of-type(even) {
+.nds-content-layout:not(.nds-has-sidemenu, .nds-card-view) .nds-content .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-gradient-primary, .nds-neutral, .nds-brand, #{$fill-words}, .nds-last-edit):nth-of-type(even) {
  &::before{
   content: "";
   position: absolute;

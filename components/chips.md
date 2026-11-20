@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.0"
-last_edit: "20/11/2026 - 04:28 PM"
+last_edit: "20/11/2026 - 07:56 PM"
 ---
 
 <section id="chip-overview" class="nds-content-section nds-doc-overview">
@@ -181,7 +181,7 @@ A row on `.nds-chip` changes every chip. Selected goes on one chip: the builder 
 - Keep labels to one or two words. A label longer than 160px is cut with an ellipsis.
 - Add an icon only when it helps the user recognize the choice.
 - Give each chip `type="button"`, so a chip inside a form does not send the form.
-- On a deep primary surface, give the surface `data-theme="dark oncolor"`: every chip inside takes the DGA white look. See [On-color Areas](../foundations/themes#oncolor-areas). For one chip, add `nds-oncolor` instead. On a neutral or other dark surface, give it `data-theme="dark"` for the dark-mode chips.
+- On a deep primary surface, give the surface `data-theme="dark oncolor primary"`: every chip inside takes the DGA white look. See [Color Areas](../foundations/themes#oncolor-areas). For one chip, add `nds-oncolor` instead. On a neutral or other dark surface, give it `data-theme="dark"` for the dark-mode chips.
 
 </div>
   </div>

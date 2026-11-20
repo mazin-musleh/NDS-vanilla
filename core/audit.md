@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "2.0.0"
 updated: "2.0.x"
-last_edit: "20/11/2026 - 04:28 PM"
+last_edit: "20/11/2026 - 07:56 PM"
 ---
 
 <section id="audit-overview" class="nds-content-section nds-doc-overview">
@@ -303,14 +303,17 @@ The audit reads the page, not the scripts. An old method name or an event listen
 | `unknown-class` | structure | warn | An `nds-` class that no NDS style sheet, doc or script has, so it gets no NDS style or behavior. An old name is left to `migration-markup` |
 | `required-part` | structure | error | A part or attribute that a component's script needs to work, missing with no console warning, such as a tab with no panel or a date field outside its `.nds-form-control`. Each component lists these in the `Requires` lines of its script's banner |
 | `part-outside` | structure | warn | A component part outside its component, such as `.nds-card-title` with no `.nds-card` around it. It skips a part that NDS also styles on its own |
-| `oncolor-no-dark` | structure | warn | `data-theme="oncolor"` without `dark`. The on-color looks need both words: `data-theme="dark oncolor"` |
+| `area-no-dark` | structure | warn | An area word (`oncolor`, `primary`, `neutral` or `gradient`) in `data-theme` without `dark`. The area needs both: `data-theme="dark oncolor primary"` |
+| `area-gradient-no-fill` | structure | warn | `gradient` in `data-theme` without `primary`. There is no neutral gradient, so the word does nothing |
+| `area-two-fills` | structure | warn | Two fill words (`primary` and `neutral`) in one `data-theme`. Keep one |
+| `area-primary-no-oncolor` | structure | warn | `data-theme="dark primary"` without `oncolor`. The parts keep their dark looks on a primary fill: write `data-theme="dark oncolor primary"` |
 | `card-link-nested` | practice | info | A link or a button inside a clickable card (`a.nds-card`, `button.nds-card`) |
 | `section-nested` | practice | info | A section inside a section. Divide a section body with `.nds-block` |
 | `card-actions-place` | practice | info | `.nds-card-actions` inside `.nds-card-content`, not after it, or a form's `.nds-form-actions` inside a modal's `.nds-card-content`, where the buttons scroll with the content |
 | `modal-scroll-more` | practice | info | A modal whose `.nds-card-content` holds anything besides a `.nds-card-text`, with no `.nds-scroll-more` on it or as its child. It checks the markup, not the overflow, since content can grow after the run |
 | `switch-reverse-end` | practice | info | A switch at the end of a line, in a section action or a toolbar end, without `nds-reverse`. It skips a stacked switch |
 | `tag-kind-mix` | practice | info | A table column whose one-tag cells mix status tags (`data-status`) and standard tags. A state takes a status tag on every row |
-| `dark-nested` | practice | info | `data-theme="dark"` inside a dark area, which is already dark |
+| `dark-nested` | practice | info | `data-theme="dark"` inside a dark area, which is already dark. It skips an inner element that carries an area word |
 | `prose-nested` | practice | info | `.nds-prose` inside `.nds-prose` |
 | `loading-field` | practice | info | `nds-loading` on a form field, which has a loading look of its own |
 | `voice-secret` | practice | info | Voice input on a password, OTP or read-only field, or on a select |

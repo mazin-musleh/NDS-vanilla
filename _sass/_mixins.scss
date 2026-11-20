@@ -4,6 +4,7 @@
  */
 
 @use "sass:math";
+@use "sass:list";
 @use "sass:map";
 @use "sass:selector";
 
@@ -124,8 +125,29 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 // every NDS menu, tooltip and dialog panel carries [popover] from init.
 // A part inside an .nds-oncolor part (a card on a photo) takes its on-color look too.
 $oncolor-host: '[data-theme~="dark"][data-theme~="oncolor"]:not(:root)';
-$oncolor-popup: '#{$oncolor-host} [popover]';
 $oncolor-area: ':is(#{$oncolor-host}, #{$oncolor-host} *, .nds-oncolor *):not([popover], [popover] *)';
+
+// Area fills: data-theme words that paint the surface (data-theme="dark neutral"). Fill only: dark and
+// oncolor stay the look. Each needs dark, so a print drops it too. A new color is one entry here,
+// plus AREA_FILLS in nds-audit.js.
+$area-fills: (
+  primary: (start: var(--background-primary-strong), end: var(--background-primary), gradient: true),
+  neutral: (start: var(--colors-neutral-900), end: var(--colors-neutral-700), gradient: false),
+);
+$_fill-attrs: ();
+@each $word, $fill in $area-fills {
+  $_fill-attrs: list.append($_fill-attrs, '[data-theme~="#{$word}"]', $separator: comma);
+}
+// For :not() lists: a section that paints its own fill is not striped and keeps its gutter.
+$fill-words: '#{$_fill-attrs}';
+$fill-host: '[data-theme~="dark"]:is(#{$fill-words}):not(:root)';
+
+@function fill-host($word) {
+  @return '[data-theme~="dark"][data-theme~="#{$word}"]:not(:root)';
+}
+
+// Popups inside an area keep the dark area's values: the tier files re-list both blocks on them.
+$area-popup: ':is(#{$oncolor-host}, #{$fill-host}) [popover]';
 
 // A folded rail layout. Until the side menu starts, the head script's copy of the stored
 // fold on <html> wins over the markup, so the first paint is already folded.

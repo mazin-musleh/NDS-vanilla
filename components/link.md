@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.0"
-last_edit: "20/11/2026 - 04:28 PM"
+last_edit: "20/11/2026 - 07:56 PM"
 ---
 
 <section id="link-overview" class="nds-content-section nds-doc-overview">
@@ -180,7 +180,7 @@ Every row goes on the link. Inside a content section, a link is also underlined.
 - Keep the primary default for links in running text, so readers find them.
 - Add `nds-neutral` to a link that should stay quiet, such as a secondary link in a list or in metadata.
 - Add `nds-underline` in dense text outside a content section, where color alone does not mark the link.
-- On a deep primary or dark surface, primary and neutral links lack contrast. On a deep primary surface, give it `data-theme="dark oncolor"`: a primary link takes the white look. See [On-color Areas](../foundations/themes#oncolor-areas). On a dark surface, give it `data-theme="dark"`. For one link, add `nds-oncolor`.
+- On a deep primary or dark surface, primary and neutral links lack contrast. On a deep primary surface, give it `data-theme="dark oncolor primary"`: a primary link takes the white look. See [Color Areas](../foundations/themes#oncolor-areas). On a dark surface, give it `data-theme="dark"`. For one link, add `nds-oncolor`.
 - Write link text that names the destination, such as "official guidelines". Avoid "click here".
 - Do not add `target="_blank"` to a link to another website: the script adds it. Add `rel="noreferrer"` yourself when the link must not send the page address.
 - Add `data-no-external` to a link or a container for a trusted partner site or an embedded widget that must open in the same tab.

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.0"
-last_edit: "20/11/2026 - 04:28 PM"
+last_edit: "20/11/2026 - 07:56 PM"
 ---
 
 <section id="divider-overview" class="nds-content-section nds-doc-overview">
@@ -189,7 +189,7 @@ A Spacing class sets the space above and below a line, or before and after a ver
 - Pick the smallest spacing that gives enough room. Keep `nds-3xl` and `nds-4xl` for major breaks.
 - Put a vertical divider only in a flex row. Outside one it has no height to stretch to.
 - Use the default color for most dividers. Use `nds-primary` only where the line is an accent.
-- On a deep primary surface, give the surface `data-theme="dark oncolor"`: every divider inside takes the `nds-oncolor` look. See [On-color Areas](../foundations/themes#oncolor-areas). For one divider, add `nds-oncolor`. On a dark surface, add `nds-oncolor`, or give the surface `data-theme="dark"`.
+- On a deep primary surface, give the surface `data-theme="dark oncolor primary"`: every divider inside takes the `nds-oncolor` look. See [Color Areas](../foundations/themes#oncolor-areas). For one divider, add `nds-oncolor`. On a dark surface, add `nds-oncolor`, or give the surface `data-theme="dark"`.
 - To change the line color on a tinted surface, set `--divider-color` on that surface, not on `:root`.
 
 </div>

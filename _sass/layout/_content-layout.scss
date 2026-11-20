@@ -217,7 +217,7 @@ main {
             --_layout-gap: var(--layout-gap, var(--nds-viewport-padding));
 
             // A filled section keeps its gutter, so its text clears the fill.
-            .nds-content:not(.nds-stripe) .nds-content-section:not(.nds-primary, .nds-gradient-primary, .nds-neutral, .nds-brand) {
+            .nds-content:not(.nds-stripe) .nds-content-section:not(.nds-primary, .nds-gradient-primary, .nds-neutral, .nds-brand, #{$fill-words}) {
                 --_wrapper-padding: 0px;
             }
         }
@@ -256,7 +256,7 @@ main {
     // takes the INVERSE parity: its predecessor always has the other parity, so
     // inverse-strip + excluded-from-the-list = always matching the section above.
     @mixin _section-striping($sections, $last-edit) {
-        .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-gradient-primary, .nds-neutral, .nds-brand, .nds-last-edit):nth-of-type(#{$sections}) {
+        .nds-content-section:not(.nds-user-feedback-section, .nds-primary, .nds-gradient-primary, .nds-neutral, .nds-brand, #{$fill-words}, .nds-last-edit):nth-of-type(#{$sections}) {
             --_section-bg-base: var(--background-stripe);
         }
 

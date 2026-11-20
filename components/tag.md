@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.0"
-last_edit: "20/11/2026 - 04:28 PM"
+last_edit: "20/11/2026 - 07:56 PM"
 ---
 
 <section id="tag-overview" class="nds-content-section nds-doc-overview">
@@ -194,7 +194,7 @@ A row on `.nds-tag:not([data-status])` applies to a standard tag only, and a row
 - Put related tags in one `nds-tags` group, so they share the gap and wrap together.
 - In a [List](../components/list), leave the size class off. The list makes a tag SM, a small list (`nds-sm`) XS, and a large list (`nds-lg`) MD. To keep one tag at 32px there, give it `nds-md`.
 - Keep the label of an icon-only tag, and give its icon `aria-hidden="true"`. Screen readers read the label.
-- On a deep primary surface, give the surface `data-theme="dark oncolor"`: a standard tag takes the DGA white look, and a status tag its dark-mode colors. See [On-color Areas](../foundations/themes#oncolor-areas). On a neutral or other dark surface, give it `data-theme="dark"`: every tag takes its dark-mode colors. For one standard tag, add `nds-oncolor`.
+- On a deep primary surface, give the surface `data-theme="dark oncolor primary"`: a standard tag takes the DGA white look, and a status tag its dark-mode colors. See [Color Areas](../foundations/themes#oncolor-areas). On a neutral or other dark surface, give it `data-theme="dark"`: every tag takes its dark-mode colors. For one standard tag, add `nds-oncolor`.
 
 </div>
   </div>

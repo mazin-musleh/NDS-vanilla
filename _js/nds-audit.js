@@ -1092,12 +1092,34 @@
         'a modal whose content holds more than its title and description, with no Scroll More: when the content grows past the screen, nothing shows more is below', 'Use the modal\'s Header title structure: the title in the header, and .nds-card-content a .nds-scroll-more with a .nds-scroll-more-content and a Show more button.');
     addPractice('switch-reverse-end', 'components/switch.html', ':is(.nds-section-action, .nds-toolbar-end) > .nds-switch:not(.nds-reverse, .nds-stacked)',
         'a switch at the end of a line without nds-reverse: its label pushes it along as the text changes', 'Add nds-reverse, so the label goes first and the switch stays in place.');
-    addPractice('dark-nested', 'foundations/themes.html', '[data-theme~="dark"]:not(html) [data-theme~="dark"]',
+    // ponytail: mirrors $area-fills in _mixins.scss by hand; a new fill color is an entry in both.
+    const AREA_FILLS = Object.freeze(['primary', 'neutral']);
+    const GRADIENT_FILLS = Object.freeze(['primary']);
+    const themeWord = (word) => `[data-theme~="${word}"]`;
+    const areaWords = ['oncolor', ...AREA_FILLS, 'gradient'].map(themeWord).join(', ');
+    // An inner area writes dark again with its own look or fill: only a bare repeat is a slip.
+    addPractice('dark-nested', 'foundations/themes.html', `[data-theme~="dark"]:not(html) [data-theme~="dark"]:not(${areaWords})`,
         'data-theme="dark" inside a dark area, which is already dark', 'Write data-theme="dark" once, on the surface.');
-    // The on-color rules key on both words, so oncolor alone changes nothing.
-    addRule({ id: 'oncolor-no-dark', docs: 'foundations/themes.html', check(context) {
-        const elements = context.find('[data-theme~="oncolor"]:not([data-theme~="dark"])');
-        if (elements.length) context.report(elements[0], `data-theme="oncolor" without dark, which changes nothing${elements.length > 1 ? ` (${elements.length} elements; the first is shown)` : ''}.`, 'Write data-theme="dark oncolor".', undefined, elements.length);
+    const reportAll = (context, elements, message, fix) => {
+        if (elements.length) context.report(elements[0], `${message}${elements.length > 1 ? ` (${elements.length} elements; the first is shown)` : ''}.`, fix, undefined, elements.length);
+    };
+    // Every area rule keys on dark, so a print, which drops it, drops the area too.
+    addRule({ id: 'area-no-dark', docs: 'foundations/themes.html', check(context) {
+        const elements = context.find(`:is(${areaWords}):not([data-theme~="dark"])`);
+        const theme = elements[0]?.getAttribute('data-theme').trim();
+        reportAll(context, elements, `data-theme="${theme}" without dark, which changes nothing`, `Write data-theme="dark ${theme}".`);
+    } });
+    addRule({ id: 'area-gradient-no-fill', docs: 'foundations/themes.html', check(context) {
+        reportAll(context, context.find(`[data-theme~="gradient"]:not(${GRADIENT_FILLS.map(themeWord).join(', ')})`),
+            'data-theme with gradient but no fill that has one, which changes nothing', `Write it with ${GRADIENT_FILLS.join(' or ')}: data-theme="dark oncolor primary gradient".`);
+    } });
+    addRule({ id: 'area-two-fills', docs: 'foundations/themes.html', check(context) {
+        reportAll(context, context.find('[data-theme]').filter(el => AREA_FILLS.filter(word => el.matches(themeWord(word))).length > 1),
+            'data-theme with two fill words: one wins and the other changes nothing', 'Keep one fill word.');
+    } });
+    addRule({ id: 'area-primary-no-oncolor', docs: 'foundations/themes.html', check(context) {
+        reportAll(context, context.find('[data-theme~="dark"][data-theme~="primary"]:not([data-theme~="oncolor"])'),
+            'data-theme="dark primary" without oncolor: the parts inside keep their dark looks on a primary fill', 'Write data-theme="dark oncolor primary".');
     } });
     addPractice('prose-nested', 'layout/prose.html', '.nds-prose .nds-prose',
         '.nds-prose inside .nds-prose', 'Put nds-prose once, on the element the text renders into.');

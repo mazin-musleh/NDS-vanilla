@@ -9,11 +9,12 @@
 // data-theme="dark" on any element makes a dark area: both blocks re-list it, because
 // an alias token resolves where it is declared and would keep its light value.
 // ════════════════════════════════════════════════════════════════════════════
+@use 'sass:map';
 @use '../mixins' as *;
 
 :root,
 [data-theme~="dark"]:not(:root),
-#{$oncolor-popup} {
+#{$area-popup} {
     // ── Shadows ──
     --shadow-xs: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
     --shadow-sm: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
@@ -183,7 +184,7 @@
 
 :root[data-theme~="dark"],
 [data-theme~="dark"]:not(:root),
-#{$oncolor-popup} {
+#{$area-popup} {
     // ── Shadows (~2x light opacity for dark surfaces) ──
     --shadow-xs: 0px 1px 2px 0px rgba(0, 0, 0, .10);
     --shadow-sm: 0px 1px 2px 0px rgba(0, 0, 0, .12), 0px 1px 3px 0px rgba(0, 0, 0, .2);
@@ -310,6 +311,35 @@
 :where([data-theme~="dark"]:not(:root)) {
     color: var(--text-default);
     color-scheme: dark;
+}
+
+// Area fill (data-theme="dark neutral"): any element paints it. A part with its own background reads
+// --nds-area-color / --nds-area-image instead. Every host resets the image, so a solid area inside
+// a gradient one stays solid.
+#{$fill-host} {
+    --_area-angle: var(--gradient-angle, -45deg);
+    --nds-area-image: none;
+}
+
+:is(html[dir="ltr"], .ltr) #{$fill-host} {
+    --_area-angle: var(--gradient-angle, 45deg);
+}
+
+@each $word, $fill in $area-fills {
+    #{fill-host($word)} {
+        --nds-area-color: #{map.get($fill, start)};
+
+        @if map.get($fill, gradient) {
+            &[data-theme~="gradient"] {
+                --nds-area-image: linear-gradient(var(--_area-angle), #{map.get($fill, start)}, #{map.get($fill, end)});
+            }
+        }
+    }
+}
+
+:where(#{$fill-host}) {
+    background-color: var(--nds-area-color);
+    background-image: var(--nds-area-image);
 }
 
 // On-color area (data-theme="dark oncolor"): the dark values, but a primary mark or ink on a primary

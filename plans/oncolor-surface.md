@@ -1,6 +1,6 @@
 # On-color surfaces — plan
 
-Status: **Phase 1 and 2 built** (2026-11-20; owner picks in the Mapping table). Opened by the side menu colors work, a test parked until this lands.
+Status: **Phases 1-3 built** (2026-11-20; owner picks in the Mapping table). The area vocabulary (fill words in `data-theme`) moved to `plans/area-themes.md`. Opened by the side menu colors work, a test parked until this lands.
 
 ## Goal
 
@@ -225,6 +225,8 @@ secondary or disabled text. Today's dark tokens on primary-700 fail 26 text / 31
 8. Docs: `foundations/themes.md` (a sibling of Dark Areas), each surface's Variants rows, CHANGELOG, audit rules.
 
 ## Parked side menu work
+
+**Done (2026-11-20):** merged to main. The side menu uses the `data-theme` words (`dark oncolor primary`, `dark neutral`); the three color classes are gone. See `plans/area-themes.md`. The text below is history.
 
 A test, built 2026-11-18 on the branch `wip/sidemenu-colors` (also on origin); rebased on main 2026-11-20.
 Rebase again before resuming. Files: `_sass/components/_sidemenu.scss`

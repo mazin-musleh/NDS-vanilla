@@ -7,8 +7,8 @@ breadcrumb: [["Foundations", "/components/?shelf=Foundations"]]
 lang: en
 direction: ltr
 since: "1.1.0"
-updated: "2.0.0"
-last_edit: "20/11/2026 - 04:28 PM"
+updated: "2.0.x"
+last_edit: "20/11/2026 - 07:56 PM"
 ---
 
 <section id="themes-overview" class="nds-content-section nds-doc-overview">
@@ -236,13 +236,27 @@ A stylesheet theme can also place your brand art, such as a pattern, a divider o
 </div>
 </script>
 
-### On-color Areas
+### Color Areas
 {: .nds-block-title #oncolor-areas}
 
-`data-theme="dark oncolor"` on a deep primary surface makes an on-color area: a Primary or Gradient section, or a side menu with a Primary or Gradient color. It is a dark area whose parts take their on-color look. A primary button turns white, a field shows the surface through it, and a checked box is white with a primary mark. In the preview, the section carries it.
+Words in `data-theme` make any element a colored area: a section, a hero, a side menu, a card or a plain `div`. Three kinds of word combine:
+
+- **Mode:** `dark` gives the area dark tokens.
+- **Look:** `oncolor` makes the parts take their on-color look. A primary button turns white, a field shows the surface through it, and a checked box is white with a primary mark.
+- **Fill:** `primary` paints a deep primary surface and `neutral` paints a dark gray one. Add `gradient` to `primary` for a gradient from deep primary to primary. `gradient` does nothing on `neutral`.
+
+| Markup | Result |
+|---|---|
+| `data-theme="dark oncolor primary"` | Deep primary fill, on-color look |
+| `data-theme="dark oncolor primary gradient"` | Primary gradient, on-color look |
+| `data-theme="dark neutral"` | Dark gray fill, dark look |
+| `data-theme="dark oncolor"` | Your own fill, on-color look |
+{: .nds-table .nds-responsive}
+
+A fill word only paints. It does not set the look, so write `oncolor` yourself on a primary fill. Use `dark oncolor` alone on a fill NDS does not paint, such as your own color or a photo. In the preview, the section carries it.
 
 <script type="text/html" id="theme-oncolor-area" data-canon data-preview="page" data-preview-light data-preview-height="320" data-preview-flush>
-<section class="nds-content-section nds-primary" data-theme="dark oncolor">
+<section class="nds-content-section" data-theme="dark oncolor primary">
   <div class="nds-section-wrapper">
     <div class="nds-section-head">
       <h2 class="nds-section-title">Track a request</h2>
@@ -279,7 +293,9 @@ A stylesheet theme can also place your brand art, such as a pattern, a divider o
 </section>
 </script>
 
-Write both words: `oncolor` alone does nothing. A menu, a tooltip or a dialog that opens in the area keeps the dark area's colors. On a neutral or other dark surface, write `data-theme="dark"`: its parts already read right there.
+Every area word needs `dark`: without it the word does nothing. Print drops `dark`, so an area prints light. A menu, a tooltip or a dialog that opens in the area keeps the dark area's colors, on its own panel. In a neutral area, a darker field takes the neutral-700 fill. `--gradient-angle` sets the gradient direction. The [audit](../core/audit) flags a missing `dark`, a `gradient` without `primary`, two fill words on one element, and a dark primary area without `oncolor`. High contrast flattens every fill.
+
+On a section, `.nds-primary`, `.nds-gradient-primary` and `.nds-neutral` still work but are deprecated and go in v3. Use the words.
 
 </div>
   </div>
@@ -387,7 +403,7 @@ Write both words: `oncolor` alone does nothing. A menu, a tooltip or a dialog th
 - Change the mode with `NDS.Theme.set()` or `toggle()`, not by writing `data-theme`. They keep the theme name, save the choice and update the toggles.
 - Use semantic tokens in your own CSS, such as `--background-card`. A hard-coded color follows neither dark mode nor the theme.
 - Write your own dark rules with `[data-theme~="dark"]`, never `[data-theme="dark"]`. The attribute can hold a theme name too.
-- Put `data-theme="dark"` on the dark surface, not on each component inside it. On a deep primary surface, write `data-theme="dark oncolor"`.
+- Put `data-theme="dark"` on the dark surface, not on each component inside it. For a deep primary surface, write `data-theme="dark oncolor primary"`: the fill words paint, and `oncolor` sets the look.
 
 </div>
   </div>
@@ -408,7 +424,8 @@ Write both words: `oncolor` alone does nothing. A menu, a tooltip or a dialog th
 | `data-theme` | `<html>` | The mode and the theme, as words: `dark`, a theme name, or both. Light mode has no word. The script writes it on each pick, and the head script writes the saved value before first paint |
 | `data-palette` | `<html>` | Builds the palette from the `--brand-*` seeds. The script sets it when the user picks an option with `data-seed-primary`, and removes it when the user picks another option |
 | `data-theme="dark"` | any element except `<html>` | Renders the element and everything inside it in dark mode. A theme name does nothing here |
-| `data-theme="dark oncolor"` | a deep primary surface, not `<html>` | Makes a dark area whose parts take their on-color look. `oncolor` without `dark` does nothing |
+| `data-theme="dark oncolor"` | any element except `<html>` | Makes a dark area whose parts take their on-color look, on a fill you paint yourself. `oncolor` without `dark` does nothing |
+| `data-theme="dark oncolor primary"`, `"dark oncolor primary gradient"`, `"dark neutral"` | any element except `<html>` | The fill words paint the surface: deep primary, a primary gradient, or dark gray. They need `dark`, and they do not set the look. `gradient` needs `primary` |
 | `data-theme-toggle` | a button, or a `.nds-switch` | Makes it a dark mode toggle |
 | `aria-pressed` | a dark mode toggle | Write `false` in the markup. The script sets `true` in dark mode and `false` in light mode. It also swaps the moon and sun icons, and checks the switch in dark mode |
 | `data-theme-value` | a theme option: a button, or a `.nds-switch` | The theme name the option applies. Leave it empty for the DGA default |
@@ -485,8 +502,8 @@ The full API is in the banner of `_js/nds-theme.js`.
     <div class="nds-section-body nds-prose" markdown="1">
 
 - [Top Bar](../ui-shell/topbar): the dark mode button, on every page.
-- [Section](../layout/section): the Primary and Gradient colors write `data-theme="dark oncolor"`, and Neutral writes `data-theme="dark"`.
-- [Side Menu](../ui-shell/sidemenu): the Primary and Gradient colors write `data-theme="dark oncolor"`.
+- [Section](../layout/section): the Primary, Gradient and Neutral colors write the fill words.
+- [Side Menu](../ui-shell/sidemenu): the Primary, Gradient and Neutral colors write the fill words.
 - [Head](../ui-shell/head): the script that writes the saved theme before first paint.
 - [Event themes](../events/): stylesheet themes for national days and seasons.
 

@@ -23,6 +23,9 @@ with `status: deprecated`, so the audit warns about it until the next major remo
 
 | Class | Replacement | Deprecated in | Declared at |
 |---|---|---|---|
+| `.nds-primary` on `.nds-content-section` / `.nds-hero-section` | `data-theme="dark oncolor primary"` | 2.0.x (next release) | `_sass/layout/_section.scss` (`&.nds-primary`, the text `:is()`), `_content-layout.scss` gutter + striping `:not()`, the three event packs' striping |
+| `.nds-gradient-primary` on the same | `data-theme="dark oncolor primary gradient"` | 2.0.x (next release) | `_section.scss` (`&.nds-gradient-primary`), `_variables-a11y.scss` HC gradient rule, same `:not()` lists |
+| `.nds-neutral` on the same | `data-theme="dark neutral"` | 2.0.x (next release) | `_section.scss` (`&.nds-neutral`), same `:not()` lists |
 
 ## Needs an owner call — two live names for one thing
 

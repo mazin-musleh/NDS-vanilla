@@ -62,6 +62,16 @@
         --_section-bg-base: var(--colors-neutral-900);
     }
 
+    // Area fill (data-theme="dark oncolor primary"): the --section-bg knob still wins on a solid fill.
+    &:where(#{$fill-host}) {
+        --_section-bg-base: var(--nds-area-color);
+        --_section-title-color-base: var(--text-oncolor-primary);
+        --_section-subtitle-color-base: var(--text-oncolor-secondary);
+        --_section-description-color-base: var(--text-oncolor-secondary);
+        --_section-text-color-base: var(--text-oncolor-secondary);
+        background-image: var(--nds-area-image);
+    }
+
     &.nds-brand {
         --_section-shadow-base: var(--shadow-inset);
         // --background-primary-light carries both modes (light: primary-25/50; dark:

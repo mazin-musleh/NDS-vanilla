@@ -23,27 +23,9 @@
     min-height: fit-content;
     z-index: 1;
 
-    // The dark colors come with data-theme="dark" in the markup, which darkens the parts inside.
-    &.nds-primary {
-        --_sidemenu-bg-base: var(--background-primary-strong);
-    }
-
-    &.nds-neutral {
-        --_sidemenu-bg-base: var(--colors-neutral-900);
-
-        // The darker field fill is this menu's fill: the search takes the lighter one.
-        .nds-drawer-search.nds-darker .nds-form-control {
-            --_form-control-bg: var(--_control-bg-forced, var(--form-field-background-lighter));
-        }
-    }
-
-    &.nds-gradient-primary {
-        --_gradient-angle: var(--gradient-angle, -45deg);
-        --_sidemenu-bg-base: linear-gradient(var(--_gradient-angle), var(--background-primary-strong), var(--background-primary));
-
-        @include ltr {
-            --_gradient-angle: var(--gradient-angle, 45deg);
-        }
+    // Area fill (data-theme="dark oncolor primary"), gradient included.
+    &:where(#{$fill-host}) {
+        --_sidemenu-bg-base: var(--nds-area-image) var(--nds-area-color);
     }
 }
 

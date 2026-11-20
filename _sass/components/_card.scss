@@ -768,6 +768,14 @@
   --_card-rating-color-base: var(--colors-alpha-white-80);
 }
 
+// A card that is an area paints its fill. :not([popover]) matches the on-color block's weight, which
+// reaches the host too, so this later rule wins.
+.nds-card:is(#{$fill-host}):not([popover]) {
+  --_card-bg-base: var(--nds-area-color);
+  --_card-bg-hover-base: color-mix(in srgb, var(--nds-area-color) 90%, var(--colors-base-white));
+  background-image: var(--nds-area-image);
+}
+
 
 // ==============================================
 // INTERACTIVE STATES

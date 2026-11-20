@@ -166,7 +166,7 @@
 
 // Sections that paint their own surface (brand, status, gradient) take neither
 // decoration — the bar and the vector are for the plain page ground only.
-$plain: ':not(.nds-user-feedback-section, .nds-primary, .nds-gradient-primary, .nds-neutral, .nds-brand, .nds-last-edit)';
+$plain: ':not(.nds-user-feedback-section, .nds-primary, .nds-gradient-primary, .nds-neutral, .nds-brand, #{$fill-words}, .nds-last-edit)';
 
 // ── Section bar — a thin identity strip along the bottom of every plain content
 //    section, rotating through the three artworks so a long page doesn't repeat

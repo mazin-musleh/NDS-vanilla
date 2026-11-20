@@ -26,6 +26,8 @@
 // The `colorblind` BUNDLE in the modes accordion still exists as the
 // umbrella switch — it now activates `cvd-deutan` and will gain protan/
 // tritan primitives as more CVD types ship.
+@use 'mixins' as *;
+
 $_cvd-deutan: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='cvd-deutan' color-interpolation-filters='sRGB'%3E%3CfeColorMatrix type='matrix' values='0.367 0.861 -0.228 0 0  0.280 0.673 0.047 0 0  -0.012 0.043 0.969 0 0  0 0 0 1 0'/%3E%3C/filter%3E%3C/svg%3E#cvd-deutan");
 
 $a11y-filters: (
@@ -246,6 +248,12 @@ $a11y-filters: (
 }
 :root[data-a11y~="high-contrast"] .nds-content-section.nds-gradient-primary {
     background: var(--_hc-bg);
+}
+
+// An area fill flattens at the source, so every part that reads it follows.
+:root[data-a11y~="high-contrast"] #{$fill-host} {
+    --nds-area-color: var(--_hc-bg);
+    --nds-area-image: none;
 }
 
 // On color, a checked control and a filled icon are white with a primary mark. HC turns the primary fill white, so the mark goes black.

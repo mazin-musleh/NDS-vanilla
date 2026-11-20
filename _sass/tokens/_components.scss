@@ -9,7 +9,7 @@
 
 :root,
 [data-theme~="dark"]:not(:root),
-#{$oncolor-popup} {
+#{$area-popup} {
 
     // ── autocomplete ──
     --autocomplete-highlight: var(--background-mark);
@@ -339,7 +339,7 @@
 
 :root[data-theme~="dark"],
 [data-theme~="dark"]:not(:root),
-#{$oncolor-popup} {
+#{$area-popup} {
 
     // ── avatar ──
     --avatar-background: var(--colors-neutral-700);
@@ -483,6 +483,11 @@
     // ── upload (drop zone dip — matches --background-stripe depth) ──
     --upload-background-dropbox-default: var(--colors-neutral-850);
     --upload-background-file-item: var(--colors-neutral-850);
+}
+
+// Neutral area: the darker field fill is the area's own fill, so it takes the lighter one.
+#{fill-host(neutral)} {
+    --form-field-background-darker: var(--colors-neutral-700);
 }
 
 // On-color area (data-theme="dark oncolor"): see _semantic.scss. Fields go see-through; checked
