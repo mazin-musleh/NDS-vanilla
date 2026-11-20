@@ -158,7 +158,8 @@
   }
 
   // Normal tags only: a status tag keeps its colors (data-theme="dark" on a dark surface).
-  &.nds-oncolor:not([data-status]) {
+  &.nds-oncolor:not([data-status]),
+  &:not([data-status])#{$oncolor-area} {
     --_tag-bg-base: var(--tag-background-oncolor);
     --_tag-text-base: var(--text-oncolor-primary);
     --_tag-border-base: transparent;

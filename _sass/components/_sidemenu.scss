@@ -312,6 +312,11 @@
             --btn-bg-active: var(--button-background-secondary-pressed);
             --btn-color: var(--text-default);
             display: flex;
+
+            @include oncolor {
+                --btn-bg-hover: var(--button-background-transparent-hovered);
+                --btn-bg-active: var(--button-background-transparent-pressed);
+            }
             // The nav is a flex column: a full list would squeeze it.
             flex-shrink: 0;
             margin-block-end: var(--spacing-md);
@@ -429,6 +434,13 @@
         --btn-indicator-selected: var(--button-indicator-primary);
         // Fades in once, as the slide ends: an animation, not a transition, so a hover does not replay it.
         animation: rail-active-fill var(--nds-transition);
+
+        // On color: the primary button's on-color look.
+        @include oncolor {
+            @include btn-oncolor-fill;
+            // Active reads the default fill, as the primary look above does.
+            --btn-bg-selected: var(--button-background-oncolor-default);
+        }
 
         @include reduced-motion {
             animation: none;

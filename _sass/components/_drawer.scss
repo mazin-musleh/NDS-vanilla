@@ -150,6 +150,10 @@
         // An open group's mark is neutral; the primary color marks the current page's path only.
         &[data-state~="current"] {
             --btn-indicator-selected: var(--background-primary);
+
+            @include oncolor {
+                --btn-indicator-selected: var(--button-indicator-primary);
+            }
         }
 
         .nds-label{
@@ -166,6 +170,12 @@
 
         :where(:root:not([data-theme~="dark"])) & {
             --btn-color: var(--text-primary-strong);
+        }
+
+        // On color the mark takes the primary button's indicator, so it shows on a primary fill.
+        @include oncolor {
+            --btn-indicator-color: var(--button-indicator-primary);
+            --btn-indicator-selected: var(--button-indicator-primary);
         }
     }
 }

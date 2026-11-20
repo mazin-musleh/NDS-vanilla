@@ -10,6 +10,35 @@
 
 @use '../mixins' as *;
 
+// The on-color look: .nds-oncolor on either color, and every chip in an on-color area.
+@mixin chip-oncolor {
+  --chip-bg: var(--chip-background-oncolor-default);
+  --chip-text: var(--chip-text-oncolor-default);
+
+  &:is(:hover, [data-state~="hover"]) {
+    --chip-bg: var(--chip-background-oncolor-hovered);
+  }
+
+  &:is(:active, .pressed, [data-state~="pressed"]) {
+    --chip-bg: var(--chip-background-oncolor-pressed);
+  }
+
+  &[data-state~="selected"] {
+    --chip-bg: var(--chip-background-oncolor-selected);
+  }
+
+  &:is(:focus-visible, [data-state~="focused"]) {
+    --chip-bg: var(--chip-background-oncolor-focused);
+    @include btn-focus-oncolor;
+  }
+
+  &:is(:disabled, [data-state~="disabled"]) {
+    background-color: var(--chip-background-oncolor-disabled);
+    color: var(--chip-text-oncolor-disabled);
+    --_chip-icon: currentColor;
+  }
+}
+
 // ==============================================
 // BASE CHIP STYLES
 // ==============================================
@@ -131,31 +160,7 @@
     }
 
     &.nds-oncolor {
-      --chip-bg: var(--chip-background-oncolor-default);
-      --chip-text: var(--chip-text-oncolor-default);
-
-      &:is(:hover, [data-state~="hover"]) {
-        --chip-bg: var(--chip-background-oncolor-hovered);
-      }
-
-      &:is(:active, .pressed, [data-state~="pressed"]) {
-        --chip-bg: var(--chip-background-oncolor-pressed);
-      }
-
-      &[data-state~="selected"] {
-        --chip-bg: var(--chip-background-oncolor-selected);
-      }
-
-      &:is(:focus-visible, [data-state~="focused"]) {
-        --chip-bg: var(--chip-background-oncolor-focused);
-        @include btn-focus-oncolor;
-      }
-
-      &:is(:disabled, [data-state~="disabled"]) {
-        background-color: var(--chip-background-oncolor-disabled);
-        color: var(--chip-text-oncolor-disabled);
-        --_chip-icon: currentColor;
-      }
+      @include chip-oncolor;
     }
   }
 
@@ -181,31 +186,7 @@
     }
 
     &.nds-oncolor {
-      --chip-bg: var(--chip-background-oncolor-default);
-      --chip-text: var(--chip-text-oncolor-default);
-
-      &:is(:hover, [data-state~="hover"]) {
-        --chip-bg: var(--chip-background-oncolor-hovered);
-      }
-
-      &:is(:active, .pressed, [data-state~="pressed"]) {
-        --chip-bg: var(--chip-background-oncolor-pressed);
-      }
-
-      &[data-state~="selected"] {
-        --chip-bg: var(--chip-background-oncolor-selected);
-      }
-
-      &:is(:focus-visible, [data-state~="focused"]) {
-        --chip-bg: var(--chip-background-oncolor-focused);
-        @include btn-focus-oncolor;
-      }
-
-      &:is(:disabled, [data-state~="disabled"]) {
-        background-color: var(--chip-background-oncolor-disabled);
-        color: var(--chip-text-oncolor-disabled);
-        --_chip-icon: currentColor;
-      }
+      @include chip-oncolor;
     }
   }
 
@@ -215,6 +196,10 @@
 
   :is(.nds-icon, i) {
     color: var(--_chip-icon);
+  }
+
+  &#{$oncolor-area} {
+    @include chip-oncolor;
   }
 
   &.nds-lead-icon {

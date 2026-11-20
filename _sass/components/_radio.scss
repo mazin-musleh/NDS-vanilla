@@ -58,6 +58,16 @@
         border: 3px solid var(--background-default);
     }
 
+    // On color: the fill shows through an empty disc; a checked one is white with a primary dot, neutral a black one.
+    @include oncolor {
+        &::after { background-color: var(--radio-tile-bg, transparent); }
+        &:checked:not(:disabled)::after {
+            background-color: var(--background-primary);
+            border-color: var(--_radio-tile-bg);
+        }
+        &.nds-neutral:checked:not(:disabled)::after { background-color: var(--colors-base-black); }
+    }
+
     .nds-md &:checked::after { border-width: 4px; }
     .nds-lg &:checked::after { border-width: 5px; }
 

@@ -9,9 +9,11 @@
 // data-theme="dark" on any element makes a dark area: both blocks re-list it, because
 // an alias token resolves where it is declared and would keep its light value.
 // ════════════════════════════════════════════════════════════════════════════
+@use '../mixins' as *;
 
 :root,
-[data-theme~="dark"]:not(:root) {
+[data-theme~="dark"]:not(:root),
+#{$oncolor-popup} {
     // ── Shadows ──
     --shadow-xs: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
     --shadow-sm: 0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10);
@@ -180,7 +182,8 @@
    ── */
 
 :root[data-theme~="dark"],
-[data-theme~="dark"]:not(:root) {
+[data-theme~="dark"]:not(:root),
+#{$oncolor-popup} {
     // ── Shadows (~2x light opacity for dark surfaces) ──
     --shadow-xs: 0px 1px 2px 0px rgba(0, 0, 0, .10);
     --shadow-sm: 0px 1px 2px 0px rgba(0, 0, 0, .12), 0px 1px 3px 0px rgba(0, 0, 0, .2);
@@ -306,4 +309,46 @@
 :where([data-theme~="dark"]:not(:root)) {
     color: var(--text-default);
     color-scheme: dark;
+}
+
+// On-color area (data-theme="dark oncolor"): the dark values, but a primary mark or ink on a primary
+// fill turns white, as the on-color button does. Status colors step to their 200 shade, as the
+// on-color danger button's red does.
+#{$oncolor-host} {
+    --text-default: var(--text-oncolor-primary);
+    --text-display: var(--text-oncolor-primary);
+    --text-primary-paragraph: var(--text-oncolor-secondary);
+    --text-secondary-paragraph: var(--text-oncolor-tertiary);
+    --text-primary-strong: var(--text-oncolor-primary);
+    --text-primary: var(--text-oncolor-primary);
+    --text-default-disabled: var(--text-default-oncolor-disabled);
+    --background-disabled: var(--colors-alpha-white-20);
+    --border-disabled: var(--colors-alpha-white-20);
+    --border-neutral-primary: var(--colors-alpha-white-30);
+    --border-neutral-secondary: var(--colors-alpha-white-20);
+    --border-neutral-tertiary: var(--colors-alpha-white-10);
+    --icon-default-disabled: var(--icon-default-oncolor-disabled);
+    --text-success: var(--colors-green-200);
+    --text-info: var(--colors-blue-200);
+    --text-warning: var(--colors-yellow-200);
+    --text-error: var(--colors-red-200);
+    --border-success: var(--colors-green-200);
+    --border-info: var(--colors-blue-200);
+    --border-warning: var(--colors-yellow-200);
+    --border-error: var(--colors-red-200);
+    --border-error-light: var(--colors-red-200);
+    --icon-error: var(--colors-red-200);
+    --icon-success: var(--colors-green-200);
+    --icon-info: var(--colors-blue-200);
+    --icon-warning: var(--colors-yellow-200);
+    --controls-primary-checked: var(--colors-base-white);
+    --controls-primary-hovered: var(--colors-alpha-white-80);
+    --controls-primary-pressed: var(--colors-alpha-white-70);
+    --controls-neutral-checked: var(--colors-base-white);
+    --controls-neutral-hovered: var(--colors-alpha-white-80);
+    --controls-neutral-pressed: var(--colors-alpha-white-70);
+    --controls-ripple-effect: var(--colors-alpha-white-10);
+    --controls-border: var(--border-oncolor);
+    --controls-disabled: var(--colors-alpha-white-20);
+    --controls-icon-disabled: var(--icon-default-oncolor-disabled);
 }

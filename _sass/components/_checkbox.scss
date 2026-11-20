@@ -41,14 +41,14 @@
 
     // TILE — reads public token; state rules override it on the same element.
     &::before {
-        background-color: var(--checkbox-tile-bg, var(--background-default));
+        background-color: var(--checkbox-tile-bg, var(--_checkbox-surface, var(--background-default)));
         box-shadow: 0 0 0 1px var(--checkbox-tile-border, var(--controls-border));
         z-index: 1;
     }
 
     // GLYPH — masked icon. Paints through the mask alpha.
     &::after {
-        background: var(--checkbox-glyph-bg, var(--background-default));
+        background: var(--checkbox-glyph-bg, var(--_checkbox-surface, var(--background-default)));
         mask: center / 80% no-repeat;
         z-index: 2;
     }
@@ -65,7 +65,7 @@
             --checkbox-tile-border: var(--_checkbox-ro-tile-border, var(--checkbox-tile-bg));
         }
         &::after {
-            --checkbox-glyph-bg: var(--_checkbox-ro-glyph, var(--icon-oncolor));
+            --checkbox-glyph-bg: var(--_checkbox-ro-glyph, var(--_checkbox-mark, var(--icon-oncolor)));
             mask-image: var(--nds-icon-checkmark);
         }
 
@@ -86,7 +86,7 @@
     // Neutral variant
     &.nds-neutral:is(:checked, :indeterminate) {
         &::before { --checkbox-tile-bg: var(--_checkbox-ro-tile-bg, var(--checkbox-neutral-checked)); }
-        &::after  { --checkbox-glyph-bg: var(--_checkbox-ro-glyph-neutral, var(--icon-oncolor)); }
+        &::after  { --checkbox-glyph-bg: var(--_checkbox-ro-glyph-neutral, var(--_checkbox-mark-neutral, var(--icon-oncolor))); }
 
         &:not(:disabled) {
             &:hover::before  { --checkbox-tile-bg: var(--checkbox-neutral-hovered); }
@@ -108,6 +108,13 @@
             --checkbox-tile-border: var(--checkbox-tile-bg);
         }
         &::after { --checkbox-glyph-bg: var(--controls-icon-disabled); }
+    }
+
+    // On color: the fill shows through an empty tile; a checked tile is white with a primary mark, neutral a black one.
+    @include oncolor {
+        --_checkbox-surface: transparent;
+        --_checkbox-mark: var(--background-primary);
+        --_checkbox-mark-neutral: var(--colors-base-black);
     }
 }
 

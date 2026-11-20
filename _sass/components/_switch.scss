@@ -97,20 +97,31 @@
     height: var(--_switch-height);
     user-select: none;
 
+    // On color: the fill shows through the empty track; the checked track is white, with a primary thumb, neutral a black one.
+    @include oncolor {
+        --_switch-surface: transparent;
+        --_switch-mark: var(--background-primary);
+
+        &.nds-neutral {
+            --_switch-mark: var(--colors-base-black);
+        }
+    }
+
     // Ripple — a halo that grows on hover, as a shadow so it never counts as overflow (a Modal would scroll).
     &::before {
         content: '';
         position: absolute;
         inset: 0;
         border-radius: var(--radius-full);
-        background-color: var(--controls-ripple-effect);
         box-shadow: 0 0 0 0 var(--controls-ripple-effect);
         transition: var(--nds-transition);
         z-index: 1;
         pointer-events: none;
     }
 
+    // Filled on hover only: on color the empty track is see-through and would show it.
     &:hover::before {
+        background-color: var(--controls-ripple-effect);
         box-shadow: 0 0 0 calc(var(--spacing-lg) / 2) var(--controls-ripple-effect);
     }
 
@@ -133,7 +144,7 @@
     }
 
     .nds-switch-track {
-        --_switch-track-bg:     var(--switch-track-bg,     var(--background-default));
+        --_switch-track-bg:     var(--switch-track-bg,     var(--_switch-surface, var(--background-default)));
         --_switch-track-border: var(--switch-track-border, var(--switch-neutral-default));
 
         position: absolute;
@@ -178,7 +189,7 @@
     .nds-switch-input:checked + .nds-switch-track {
         --switch-track-bg:     var(--switch-primary-checked);
         --switch-track-border: var(--switch-track-bg);
-        --switch-thumb-bg:     var(--background-surface-oncolor);
+        --switch-thumb-bg:     var(--_switch-mark, var(--background-surface-oncolor));
 
         .nds-switch-thumb {
             inset-inline-start: unset;
@@ -186,6 +197,7 @@
         }
     }
     .nds-switch-input:not(:disabled):checked + .nds-switch-track:hover  { --switch-track-bg: var(--switch-primary-hovered); }
+
     .nds-switch-input:not(:disabled):checked + .nds-switch-track:active { --switch-track-bg: var(--switch-primary-pressed); }
 
     // Neutral variant

@@ -179,6 +179,11 @@
         --_feedback-ring: var(--feedback-ring, var(--colors-neutral-900));
     }
 
+    // The on-color discs are light: a dark symbol.
+    @include oncolor {
+        --_feedback-symbol-color: var(--feedback-symbol-color, var(--colors-base-black));
+    }
+
     display: inline-flex;
     align-items: center;
     justify-content: center;

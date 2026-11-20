@@ -581,6 +581,24 @@ fieldset {
         --_form-control-bg: var(--_control-bg-forced, var(--form-field-background-darker));
     }
 
+    // Readonly and disabled drop the fill, and these have no border: they keep their fill so the box stays.
+    // On color, a fainter wash.
+    &.nds-lighter:is([data-state~="readonly"], [data-state~="disabled"]) {
+        --_control-bg-forced: var(--form-field-background-lighter);
+
+        @include oncolor {
+            --_control-bg-forced: var(--colors-alpha-white-10);
+        }
+    }
+
+    &.nds-darker:is([data-state~="readonly"], [data-state~="disabled"]) {
+        --_control-bg-forced: var(--form-field-background-darker);
+
+        @include oncolor {
+            --_control-bg-forced: var(--colors-alpha-black-10);
+        }
+    }
+
     // Without this, the [data-state~="active"] rule above swaps the bg to
     // --form-field-background-darker the moment the user types into a lighter field.
     &.nds-lighter[data-state~="active"]:not([data-state~="readonly"]) {
@@ -727,14 +745,15 @@ fieldset {
             position: absolute;
             inset: 0;
             border-radius: 50%;
-            background-color: var(--controls-ripple-effect);
             box-shadow: 0 0 0 0 var(--controls-ripple-effect);
             transition: box-shadow var(--nds-transition);
             z-index: 0;
             pointer-events: none;
         }
 
+        // Filled on hover only: on color the empty tile is see-through and would show it.
         &:has(input:not(:disabled):hover)::after {
+            background-color: var(--controls-ripple-effect);
             box-shadow: 0 0 0 calc(var(--nds-input-size, 16px) / 2) var(--controls-ripple-effect);
         }
     }

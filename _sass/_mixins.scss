@@ -119,6 +119,13 @@ $breakpoints-range: (
 // everything inside it, at the same specificity as page dark mode.
 $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root) *)';
 
+// An on-color area: data-theme="dark oncolor", a dark area whose parts take their on-color looks.
+// Keyed on both tokens so a print, which drops dark, drops it too. Its popups keep the dark area's values:
+// every NDS menu, tooltip and dialog panel carries [popover] from init.
+$oncolor-host: '[data-theme~="dark"][data-theme~="oncolor"]:not(:root)';
+$oncolor-popup: '#{$oncolor-host} [popover]';
+$oncolor-area: ':is(#{$oncolor-host}, #{$oncolor-host} *):not([popover], [popover] *)';
+
 // A folded rail layout. Until the side menu starts, the head script's copy of the stored
 // fold on <html> wins over the markup, so the first paint is already folded.
 $rail-collapsed: ':is([data-sidemenu-collapsed]:not(html[data-nds-sidemenu-fold="0"] *), html[data-nds-sidemenu-fold="1"] *)';
@@ -129,6 +136,17 @@ $rail-collapsed: ':is([data-sidemenu-collapsed]:not(html[data-nds-sidemenu-fold=
 
       :root[data-theme~="dark"] #{$selector},
       #{selector.unify($selector, $dark-area)} {
+        @content;
+      }
+    }
+  }
+}
+
+// The part's on-color look, inside an on-color area.
+@mixin oncolor {
+  @at-root {
+    @each $selector in & {
+      #{selector.unify($selector, $oncolor-area)} {
         @content;
       }
     }
@@ -234,6 +252,25 @@ $rail-collapsed: ':is([data-sidemenu-collapsed]:not(html[data-nds-sidemenu-fold=
   outline: 2px solid var(--colors-base-white) !important;
   outline-offset: -1px !important;
   box-shadow: inset 0 0 0 3px var(--colors-base-black) !important;
+}
+
+// White fill, black label: on-color primary/neutral, and neutral in dark.
+@mixin btn-oncolor-fill {
+  --btn-bg: var(--button-background-oncolor-default);
+  --btn-bg-hover: var(--button-background-oncolor-hovered);
+  --btn-bg-active: var(--button-background-oncolor-pressed);
+  --btn-bg-selected: var(--button-background-oncolor-selected);
+  --btn-bg-disabled: var(--button-background-oncolor-disabled);
+  --btn-color-disabled: var(--text-default-oncolor-disabled);
+  --btn-color: var(--colors-base-black);
+  --btn-loading-color: var(--colors-base-black);
+  --btn-loading-track: var(--colors-alpha-black-10);
+  // The hover wash is white on white here, so a group seam would vanish.
+  --_btn-seam: color-mix(in srgb, var(--_btn-color) 20%, transparent);
+
+  &:is(.focus, :focus-visible, [data-state~="focused"]) {
+    @include btn-focus-oncolor;
+  }
 }
 
 // The first and last SHOWN button: a hidden one still counts for :first-child, and data-hidden

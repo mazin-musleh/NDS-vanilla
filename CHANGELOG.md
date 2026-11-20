@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Docs** — Filter, Forms and Main Navigation say which group a yes-or-no or a number field takes, when a form ends with a review step, and when to leave out the language action. The Student Portal catalog entry names its profile head: the avatar and the name. Each full page shape in Page Layout points to the accessibility FAB after the footer.
 
 ### Fixed
+- **Forms** — A readonly or disabled Lighter or Darker field keeps its fill, so the box still shows.
 - **Drawer, Side Menu** — A closed group that holds the current page keeps its mark when another group opens. In dark mode, the current page's mark takes the primary color too.
 - **Verify** — The browser check names the element of each audit finding, with its fix. A page that stops answering, or opens an alert, no longer holds the run forever: the run stops after 60 s with a report (`NDS_CALL_MS` raises the limit). The whole-plan reminder fires only when the plan's Pacing value is `whole plan`, not when a page-by-page plan mentions an earlier whole-plan batch. Run from inside the template folder, the check writes its shots to the project's `tmp/`, not into the template.
 - **Cards** — While a card loads, a row card with an image stays a row, a drawer in the card shows its own skeleton rows, a status card's icon turns grey, and a progress ring shows only its empty track. When the card content is a Scroll More, Show more sits right under the content, not a card gap below it; the parts inside keep the card gap.

@@ -5,9 +5,11 @@
 // foundation tokens (+ their dark) live in tokens/_semantic.scss.
 // A dark area (data-theme="dark" on any element) re-lists both blocks, as there.
 // ════════════════════════════════════════════════════════════════════════════
+@use '../mixins' as *;
 
 :root,
-[data-theme~="dark"]:not(:root) {
+[data-theme~="dark"]:not(:root),
+#{$oncolor-popup} {
 
     // ── autocomplete ──
     --autocomplete-highlight: var(--background-mark);
@@ -329,7 +331,8 @@
    ── */
 
 :root[data-theme~="dark"],
-[data-theme~="dark"]:not(:root) {
+[data-theme~="dark"]:not(:root),
+#{$oncolor-popup} {
 
     // ── avatar ──
     --avatar-background: var(--colors-neutral-700);
@@ -471,3 +474,61 @@
     --upload-background-file-item: var(--colors-neutral-850);
 }
 
+// On-color area (data-theme="dark oncolor"): see _semantic.scss. Fields go see-through; checked
+// controls take the white fill (their dark rebinds go back to the semantic controls set).
+#{$oncolor-host} {
+    // ── checkbox ──
+    --checkbox-primary-hovered: var(--controls-primary-hovered);
+    --checkbox-primary-pressed: var(--controls-primary-pressed);
+
+    // ── feedback: light status discs, dark symbol ──
+    --feedback-icon-fill-success: var(--colors-green-200);
+    --feedback-icon-fill-error: var(--colors-red-200);
+    --feedback-icon-fill-warning: var(--colors-yellow-200);
+    --feedback-icon-fill-info: var(--colors-blue-200);
+    --feedback-icon-fill-neutral: var(--colors-base-white);
+
+    // ── form field ──
+    --form-field-text-label: var(--text-oncolor-primary);
+    --form-field-text-placeholder: var(--text-oncolor-tertiary);
+    --form-field-text-hovered: var(--text-oncolor-primary);
+    --form-field-text-focused: var(--text-oncolor-primary);
+    --form-field-text-pressed: var(--text-oncolor-primary);
+    --form-field-text-readonly: var(--text-oncolor-primary);
+    --form-field-background-default: var(--colors-alpha-white-10);
+    --form-field-background-lighter: var(--colors-alpha-white-20);
+    --form-field-background-darker: var(--colors-alpha-black-20);
+    --form-field-border-default: var(--border-oncolor);
+    --form-field-border-hovered: var(--colors-alpha-white-60);
+    --form-field-border-pressed: var(--colors-base-white);
+    --form-field-border-error: var(--colors-red-200);
+
+    // ── link: the primary link is the on-color link ──
+    --link-primary: var(--link-oncolor);
+    --link-primary-hovered: var(--link-oncolor-hovered);
+    --link-primary-pressed: var(--link-oncolor-pressed);
+    --link-primary-focused: var(--link-oncolor-focused);
+    --link-primary-visited: var(--link-oncolor-visited);
+
+    // ── radio ──
+    --radio-neutral-checked: var(--controls-neutral-checked);
+    --radio-neutral-hovered: var(--controls-neutral-hovered);
+    --radio-neutral-pressed: var(--controls-neutral-pressed);
+
+    // ── rating (brand) ──
+    --rating-star-brand-default: var(--colors-alpha-white-30);
+    --rating-star-brand-selected: var(--colors-base-white);
+    --rating-star-brand-pressed: var(--colors-alpha-white-70);
+    --rating-star-brand-hovered: var(--colors-alpha-white-80);
+
+    // ── slider ──
+    --slider-track-bg: var(--colors-alpha-white-20);
+    --slider-track-fill: var(--colors-base-white);
+    --slider-thumb-bg: var(--colors-base-white);
+    --slider-thumb-bg-hovered: var(--colors-alpha-white-80);
+
+    // ── switch ──
+    --switch-primary-hovered: var(--controls-primary-hovered);
+    --switch-primary-pressed: var(--controls-primary-pressed);
+    --switch-neutral-default: var(--colors-alpha-white-60);
+}
