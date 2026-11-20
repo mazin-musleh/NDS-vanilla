@@ -262,7 +262,8 @@
         const closeSlideIn = () => {
             menuState.cancelClose?.();
             menuState.cancelClose = null;
-            if (!hasState(sidemenu, 'open')) return;
+            // The toggle, not the aside: the rail writes open on the aside too.
+            if (!hasState(toggleBtn, 'open')) return;
             reset(menuState);
             sidemenu.style.removeProperty('z-index');
         };
@@ -425,7 +426,8 @@
             cancelSlide();
             closeSlideIn();
             syncRail();
-            if (!isFolded()) reopenGroup();
+            // Only on the open desktop rail: a group opened below 960px would stay open in the fold.
+            if (!smallQuery.matches && !isFolded()) reopenGroup();
         }, { signal });
         // Below 960px a width change closes the slide-in, as the plain side menu's.
         let prevWidth = window.innerWidth;
@@ -478,7 +480,10 @@
 
         const toggleBtn = sidemenu.querySelector(".nds-sidemenu-toggle");
         if (!toggleBtn) return;
-        const isTopMode = sidemenu.classList.contains('nds-top');
+        const layout = sidemenu.closest('.nds-content-layout');
+        const isRail = layout?.classList.contains('nds-rail');
+        // A rail ignores .nds-top.
+        const isTopMode = !isRail && sidemenu.classList.contains('nds-top');
         const animationTarget = isTopMode ? sidemenu.querySelector('.nds-drawer') : sidemenu;
         const drawer = sidemenu.querySelector('.nds-drawer');
 
@@ -494,11 +499,9 @@
         menuState.ownExpanded = !toggleBtn.hasAttribute('aria-expanded');
         if (menuState.ownExpanded) NDS.aria.expanded(toggleBtn, false);
         setupTopOffset(sidemenu, abortController.signal);
-        const layout = sidemenu.closest('.nds-content-layout');
-        const isRail = layout?.classList.contains('nds-rail');
         menuState.wasHidden = toggleBtn.hidden;
         toggleBtn.removeAttribute('hidden');
-        syncToggleLabel(sidemenu, toggleBtn, isTopMode && !isRail);
+        syncToggleLabel(sidemenu, toggleBtn, isTopMode);
         setupScrollPeek(toggleBtn, abortController);
         if (isRail) {
             menuState.layout = layout;

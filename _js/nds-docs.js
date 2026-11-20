@@ -843,8 +843,6 @@
         var setTheme = function (frameDocument) {
             var cardTheme = card.getAttribute('data-theme');
             cardTheme ? frameDocument.body.setAttribute('data-theme', cardTheme) : frameDocument.body.removeAttribute('data-theme');
-            // On color: the screen takes the card's deep primary too.
-            frameDocument.body.style.background = /(^|\s)oncolor(\s|$)/.test(cardTheme || '') ? 'var(--background-primary-strong)' : '';
         };
         var runWindow = iframe && iframe.ndsSize === screenSize && iframe.contentWindow, slot = runWindow && runWindow.NDS && iframe.contentDocument.querySelector('[data-demo-slot]');
         // The screen is up: re-render its slot in place, with no reload.
