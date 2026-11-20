@@ -145,7 +145,9 @@ Docs (one pass at the end)
 - `plans/oncolor-surface.md` — status, point here.
 
 Not in scope
-- Footer brand: site chrome goes live from main, and the live v2 has no areas. After the release.
+- Footer: **component built** (2026-11-20): `data-theme="dark oncolor primary"` on `.nds-footer`, deep primary in both
+  modes (owner pick), `.nds-brand` deprecated. **At the release:** switch `_includes/footer.html` (site chrome: the
+  live v2 has no areas, so not before) and add the `.nds-brand` row to `_data/migrations.yml`.
 - More fill colors: the registry is ready; none added now.
 
 ## Checks

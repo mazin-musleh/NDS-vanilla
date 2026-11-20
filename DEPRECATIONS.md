@@ -26,6 +26,7 @@ with `status: deprecated`, so the audit warns about it until the next major remo
 | `.nds-primary` on `.nds-content-section` / `.nds-hero-section` | `data-theme="dark oncolor primary"` | 2.0.x (next release) | `_sass/layout/_section.scss` (`&.nds-primary`, the text `:is()`), `_content-layout.scss` gutter + striping `:not()`, the three event packs' striping |
 | `.nds-gradient-primary` on the same | `data-theme="dark oncolor primary gradient"` | 2.0.x (next release) | `_section.scss` (`&.nds-gradient-primary`), `_variables-a11y.scss` HC gradient rule, same `:not()` lists |
 | `.nds-neutral` on the same | `data-theme="dark neutral"` | 2.0.x (next release) | `_section.scss` (`&.nds-neutral`), same `:not()` lists |
+| `.nds-brand` on `.nds-footer` | `data-theme="dark oncolor primary"` | 2.0.x (next release) | `_footer.scss` (`.nds-footer:is(.nds-brand)` with its hand-copied on-color knobs, DUPE-02; `&:not(.nds-brand, …)`), `--background-footer`. Its `_data/migrations.yml` row lands at the release, with the site footer's markup: until then the site's own footer still writes the class, and the audit would warn on every page |
 
 ## Needs an owner call — two live names for one thing
 

@@ -7,8 +7,8 @@ breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "2.0.0"
-last_edit: "13/10/2026 - 11:23 AM"
+updated: "2.0.x"
+last_edit: "20/11/2026 - 08:11 PM"
 ---
 
 <section id="footer-overview" class="nds-content-section nds-doc-overview">
@@ -35,7 +35,7 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
     </div>
     <div class="nds-section-body">
 <script type="text/html" id="footer-canon" data-canon data-preview="page" data-preview-height="320" data-preview-style="body{display:flex;flex-direction:column;min-height:100vh}.nds-footer{margin-block-start:auto}" data-variants="footer-variants-table">
-<footer class="nds-footer nds-content-wrapper nds-brand" role="contentinfo" aria-label="Site Footer" data-i18n-aria-label="footer.site_footer">
+<footer class="nds-footer nds-content-wrapper" data-theme="dark oncolor primary" role="contentinfo" aria-label="Site Footer" data-i18n-aria-label="footer.site_footer">
   <nav class="nds-footer-content" aria-label="Footer navigation" data-i18n-aria-label="footer.footer_navigation">
     <div class="nds-footer-column">
       <span class="nds-footer-heading" id="footer-col-1">Services</span>
@@ -183,8 +183,8 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
 
 | Group | Option | Markup | On element | Use |
 |---|---|---|---|---|
-| Surface | Brand (default) | `.nds-brand` | `.nds-footer` | The deep primary surface with white text |
-| Surface | Light | — | — | Leave out `.nds-brand`: a light neutral surface, dark in dark mode |
+| Surface | Brand (default) | `[data-theme="dark oncolor primary"]` | `.nds-footer` | The deep primary surface with white text, in light and dark mode. The parts inside take their on-color looks. See [Color Areas](../foundations/themes#oncolor-areas). `.nds-brand` still works but is deprecated and goes in v3 |
+| Surface | Light | — | — | Leave out the `data-theme` words: a light neutral surface, dark in dark mode |
 | Logo | On color | — | — | Add `.nds-oncolor` to a one-color logo `<img>` so it turns white on the brand footer and in dark mode. It is a choice per logo: leave it off a logo whose colors must stay |
 {: #footer-variants-table .nds-table .nds-responsive}
 
@@ -247,7 +247,7 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Brand Surface</span>
-              <p class="nds-card-description">On the brand footer, the text, the headings, the dividers, the links and the <code class="nds-inline-code lang-html">nds-secondary-outline</code> buttons switch to their on-color versions. No extra class is needed on them.</p>
+              <p class="nds-card-description">On the brand footer, every part inside takes its on-color look: the text, the headings, the dividers, the links and the buttons. No extra class is needed on them.</p>
             </div>
           </div>
         </li>
@@ -309,7 +309,7 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
 - Always include privacy, terms and accessibility links in `.nds-footer-policy`. Government sites must have them. Until a page exists, leave its link out and record it for the dev: a link to `#` goes nowhere.
 - Give every icon-only button an `aria-label`, and the same text in `title` for its tooltip.
 - Open social profiles, app stores and other external sites in a new tab, with `target="_blank"`.
-- Keep `nds-brand` unless the design asks for the light footer.
+- Keep the brand surface, `data-theme="dark oncolor primary"`, unless the design asks for the light footer.
 - Add `nds-oncolor` only to one-color logos that should turn white. A logo with brand colors stays as it is.
 
 </div>
@@ -328,7 +328,7 @@ The main navigation belongs in the [Header](../ui-shell/header), and the navigat
 
 | Property | Default | Controls |
 |---|---|---|
-| `--background-footer` | Theme token | The brand footer's background: the deep primary surface in light mode, a primary wash in dark mode |
+| `--background-footer` | Theme token | The deprecated `.nds-brand` footer's background: the deep primary surface in light mode, a primary wash in dark mode |
 | `--divider-color` | Theme token | The heading underline and the divider line. The brand footer sets `--colors-alpha-white-10` |
 {: .nds-table .nds-responsive}
 

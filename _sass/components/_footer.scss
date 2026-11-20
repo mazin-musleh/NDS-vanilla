@@ -20,10 +20,20 @@
         color: var(--text-default);
     }
 
-    &:not(.nds-brand) {
+    &:not(.nds-brand, #{$fill-words}) {
         @include dark {
             background: var(--colors-neutral-700);
         }
+    }
+
+    // Area fill (data-theme="dark oncolor primary"): the parts take their on-color looks from the area.
+    &:where(#{$fill-host}) {
+        background-color: var(--nds-area-color);
+        background-image: var(--nds-area-image);
+    }
+
+    @include oncolor {
+        @include link-colors(oncolor);
     }
 }
 
