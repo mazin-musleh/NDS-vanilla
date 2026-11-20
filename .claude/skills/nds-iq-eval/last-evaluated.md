@@ -1,4 +1,4 @@
-# NDS IQ — building UI with the National Design System (instructions v4.0)
+# NDS IQ — building UI with the National Design System (instructions v4.1)
 
 ## Start here
 
@@ -58,7 +58,7 @@ The project's agent file (`CLAUDE.md` / `AGENTS.md`) holds the anchor: the value
 ## Checks before claims
 
 Read the source before you ask or answer an NDS question or wire page JS. A claim needs its check first:
-- "NDS has no X" (yours, or the dev's "just use native X") → read every `use_when` line in the catalog (the index names it), as §Composition cascade says.
+- "NDS has no X" (yours, or the dev's "just use native X") → read every entry's fit line in the catalog (the index names the catalog and its field), as §Composition cascade says.
 - "I cannot see the page" → a failed headless attempt (§Verify).
 - "The page is done" → both browser passes and a clean audit (§Verify). The audit checks markup, never how the page looks.
 
@@ -89,7 +89,7 @@ If the dev says a found runtime is legacy, treat setup as new, with the latest r
 
 1. Read the opening `Version:` banners of the main NDS script and stylesheet in `NDS_ASSETS`. They must agree; otherwise stop and ask.
 2. Download that exact release's template zip from the release page and extract its contents flat into `NDS_ROOT`.
-3. Follow the Install section of `NDS_ROOT/NDS-INDEX.md`: it names the sources to add and what to copy into `NDS_ASSETS`. No `NDS-INDEX.md` in the extracted release → it predates this file: switch to `IQv3.2` as §Start here says.
+3. Follow the Install section of `NDS_ROOT/NDS-INDEX.md`: it names the sources to add and what to copy into `NDS_ASSETS`. No `NDS-INDEX.md` in the extracted release → §Start here.
 
 - An empty `NDS_ASSETS` proves nothing: search the project for NDS runtime files and the layouts that load them. Found → stop and ask. None → install the latest release and report it.
 - At session start, compare the runtime banner in `NDS_ROOT` with `NDS_ASSETS`. Older reference → download the runtime's release again; newer reference → stop and ask.
@@ -111,7 +111,7 @@ NDS is a UI layer; the host project (frontend and backend) serves it. NDS IQ nev
 
 **Plan entry gate.** Choose the work mode first. When a plan applies, list routes, layouts, shared partials, pages and views (one row per client-side view), and legacy UI libraries; map every page through the §Build cascade and record its page shape. Greenfield lists only the pages the dev named. No-plan work inspects only the named page, its shared layout, its global files, and the project contracts.
 
-Check response headers and middleware for a Content Security Policy once, project-wide. None → record `no CSP` and skip this file's CSP rules: ask the dev nothing about CSP. Found → read the docs' CSP guidance and record what the head needs. Recommend its grants in its order: a nonce, else a hash, and the blocking stylesheet last, since it slows the first paint.
+Check response headers and middleware for a Content Security Policy once, project-wide. None → record `no CSP` and skip this file's CSP rules: ask the dev nothing about CSP. Found → read the docs' CSP guidance and record what the head needs. Recommend its grants in the order it gives.
 
 - **Repeated families:** map one archetype; sibling rows read `same as <archetype>`.
 - **Prior NDS:** assess each page against current canon: conformant → `Awaiting Verification`; non-conformant → rebuild. Never silently resume an inherited plan.
@@ -142,18 +142,17 @@ Do all NDS work yourself: never hand a page, a row or a check to a helper agent 
 
 **Chrome first.** Build each required page shape once, then its pages. The index names where the head, the page shapes, and the chrome parts are documented.
 
-1. **Head:** copy the head canon as a unit. Rewrite asset URLs only; never remove or reorder entries. Keep the page title and hero preloads page-specific. Replace the favicon. Under a CSP, apply the docs' CSP guidance to the head.
+1. **Head:** copy the head canon as a unit. Rewrite asset URLs only; never remove or reorder entries. Under a CSP, apply the docs' CSP guidance to the head.
 2. **Page shape:** copy the shape's canon and swap the content; never recreate it from prose.
-   - Layout state (the shape's classes) is in the first HTML the browser paints. One app serving two shapes (public pages and a console admin) sets each route's classes for that route only, before the framework mounts; never in a mount effect, never on every route.
-   - A client-rendered app follows the page layout doc's framework rules for its mount element.
-   - Set both `<html lang>` and `dir`: `rtl` for a right-to-left language (Arabic `ar`, Urdu `ur`, Persian `fa`), `ltr` for the rest. A single-language site ships without the language switcher; a site in two languages keeps it.
+   - Layout state (the shape's classes) is in the first HTML the browser paints. A client-rendered app follows the page layout doc's framework rules for its layout classes and mount element.
+   - Set both `<html lang>` and `dir`: `rtl` for a right-to-left language (Arabic `ar`, Urdu `ur`, Persian `fa`), `ltr` for the rest.
 3. **Brand:** the project logo replaces the template's; drop the brand text when the logo already carries the name.
 
-**Copied chrome ships as-is:** the top bar, main navigation, footer, accessibility panel and its button, cookie notice, digital stamp, and dark-mode switch. Record removable items as plan checkboxes only the dev ticks; never infer affiliation. The one exception is the digital stamp: it claims a government verification, so the plan review asks whether the site holds it, and it ships only if so. Before page #2, wire project-backed controls to real session, API, or route data; remove what the project cannot back. Never ship an invented identity or a dead widget: a copied link or control with no real target, such as a footer link with no page behind it, is removed even from chrome, with a plan checkbox naming it.
+**Copied chrome ships as-is:** every chrome part the page shape's canon carries. Record each part as a plan checkbox only the dev ticks to remove it; never infer affiliation. The one exception is the digital stamp: it claims a government verification, so the plan review asks whether the site holds it, and it ships only if so. Before page #2, wire project-backed controls to real session, API, or route data; remove what the project cannot back. Never ship an invented identity or a dead widget: a copied link or control with no real target, such as a footer link with no page behind it, is removed even from chrome, with a plan checkbox naming it.
 
 ### Composition cascade
 
-Match by `use_when` across the catalog's templates, examples, and components, never by title. Read every `use_when` line, unfiltered: a keyword search may confirm a match, never pick the candidates. Then:
+Match by each entry's fit line (the index names the field) across the catalog's templates, examples, and components, never by title. Read every fit line, unfiltered: a keyword search may confirm a match, never pick the candidates. Then:
 
 1. A matching template → copy it.
 2. No template → the closest example: its parts are a floor, its markup is not copied as is.
@@ -180,9 +179,9 @@ A conflict between the existing UI and a backend contract is the dev's decision:
 
 **NDS UI outranks the legacy UI.** The existing UI sets the content, fields, order, and outcomes a page carries, never how they are presented, and never a component's feature set: a legacy page that lacked a control is missing a default, not drawing a scope boundary. Search, sorting, filtering, export, counts, validation chrome (how a check shows, never which fields it requires), and responsive behavior are NDS defaults, not questions; they never change business rules or backend contracts.
 
-Map every part a matched source ships to the project's data: a two-state field is a single-choice facet, a numeric field a range. Legacy filtering by one thing is no reason to ship one facet.
+Map every part a matched source ships to the project's data, each in the type its doc picks. Legacy filtering by one thing is no reason to ship one facet.
 
-- An existing page without a hero gets the sub hero; a heavy-text page gets its flat variant. The hero slider stays on home and hub pages.
+- An existing page without a hero still gets the hero its page shape names.
 - A different required presentation picks a documented NDS variant first; it never changes a component's canonical anatomy.
 - A form that needs a confirmation before it submits, such as an application, a booking or a payment, ends with a review step; add input steps only when the flow needs them. A simple form, such as a contact form, stays one screen and shows a status or redirects after it sends. A terminal confirmation is not an input step: keep the success step the source ships.
 - Greenfield only: remove a template section the brief does not cover; never invent content to fill one.
@@ -217,7 +216,7 @@ Never verify from code inspection. A page needs both browser passes:
 - **Behavioral:** load it, run the template's audit, and fix or name every finding. Exercise the wired behavior, including one request failure path. Submit every required field type empty, one by one: each type validates through its own code, so one passing proves nothing about the next.
 - **Visual:** compare your page with the built reference page at desktop and mobile widths, both served over HTTP (never `file://`, which floods the console with false errors). **The built page is the visual spec:** a difference you chose is a content swap; one you didn't is a bug. Inspect spacing, icons, width and sticky behavior, dark mode, and overall coherence. Measurements alone are not visual verification.
 - **Every state:** run both passes, the audit included, on each state in the parts list, not only the default one. Set each state up (session, data, failure) and name that setup beside its screenshots. A state with no built reference page is judged against its matched component's doc.
-- **After an edit:** both passes and the audit run on each changed page, in the states the change touches. A change to a shared file (a layout, partial, stylesheet, or script) reopens every page that loads it.
+- **After an edit:** both passes and the audit run on each changed page, in the states the change touches, unless the index names a lighter re-check for that kind of edit. A change to a shared file (a layout, partial, stylesheet, or script) reopens every page that loads it.
 
 **Drive both passes headlessly** with a browser your own tool loop controls. Keep scratch files (a verify config, a probe script, temporary tooling) in `tmp/` at the project root, listed in `.gitignore` and kept out of the build; never add them to the project's own `package.json` or lockfile. Behavioral proof is the console plus the audit; visual proof is screenshots you inspect at both widths.
 
@@ -231,7 +230,7 @@ Claim "cannot see the page" only after the headless attempt fails, and report th
 
    [VERIFICATION CHECKLIST FOR DEV]
    - [ ] Check the console for NDS warnings and the audit's findings.
-   - [ ] Test responsiveness below 768px.
+   - [ ] Test responsiveness at mobile width.
    - [ ] Check expected spacing.
    - [ ] Check every icon renders as a glyph.
    - [ ] Check dark mode on page content.
@@ -242,6 +241,7 @@ Claim "cannot see the page" only after the headless attempt fails, and report th
 - the built reference page and the inspected desktop screenshot;
 - the mobile target width, the equal `window.innerWidth`, and the inspected mobile screenshot;
 - each state from the parts list, its setup, and its inspected screenshots at both widths;
+- for a page re-checked without screenshots (a lighter re-check the index names): that result, with the screenshots inspected before the edit standing for the three items above;
 - the icon, dark-mode, and strict-CSP results that apply;
 - every unmet item, with what blocks it. A check you can run is never unmet: run it.
 
@@ -256,7 +256,7 @@ An unmet item keeps the row `In Progress`; no-plan work reports the page unverif
 
 1. **Compare versions:** the runtime banners in `NDS_ROOT` and `NDS_ASSETS`.
 2. **Replace the runtime:** replace `NDS_ROOT` with the latest release as in §Setup, then refresh `NDS_ASSETS` as its index says. Keep the project's favicon and every project-added file; deletions need dev approval. Work done under earlier rules passes §Plan's conformance check first.
-3. **Sweep the pages:** follow the Upgrade section of the new `NDS-INDEX.md`: read the migration notes between the two versions and run the audit's migration check on every page, not only the ones you touched. Add the affected work to `NDS-PLAN.md`, map it to pages, execute, and report. Also report useful new and changed features for the dev to choose.
+3. **Sweep the pages:** follow the Upgrade section of the new `NDS-INDEX.md` on every page, not only the ones you touched. Add the affected work to `NDS-PLAN.md`, map it to pages, execute, and report. Also report useful new and changed features for the dev to choose.
 4. **Update this file** (below).
 
 ## This file

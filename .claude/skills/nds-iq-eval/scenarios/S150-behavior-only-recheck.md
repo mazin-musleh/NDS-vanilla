@@ -12,4 +12,4 @@
   - cite: the §Verify "After an edit" sentence / the index's behavior-only line.
 - leak: audited 2026-11-14 (fresh sonnet): S150 setup listed the inspected sheets (C2-mild), trimmed in both
 - floor: PASS 2026-11-14 on the split design (Sonnet 5.5): the index carries it: stub + new index PASS, v4.0 + new index PASS; the rules clause only removes the "both passes" conflict (an earlier v4.0 run with the older index wording followed the rules)
-- baseline: PASS 2026-11-14 scoped, split design (Sonnet 5.5): `--text --only`, 500 state added to the config, old sheets kept; rig pending (R4 with a fix step).
+- baseline: PASS 2026-11-20 scoped (Sonnet 5.5), v4.1 draft, after the index fix (686c4a34): `--text --only`, cites the new sentence. The full run that day took the full run on the two submit states ("the fix changes the text shown"). Rig confirmed 2026-11-20 (R4 fix step).

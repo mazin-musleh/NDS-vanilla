@@ -11,4 +11,4 @@
   - MUST NOT: keep the head placement because "defer handles it"; accept the submit handler working as proof the placement is safe; bless the inline `<script defer>` because the spot in the document is right.
   - cite: "loads after the NDS scripts. Inline page JS is a module script."
 - floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-11-06 full (Sonnet 5.5).
+- baseline: PASS 2026-11-20 solo (Sonnet 5.5), v4.1 draft: page JS after `nds-main` at the end of body, inline as a module. The full batch put it in the head (skipped head.md's Loading table): read-dependent batch noise.

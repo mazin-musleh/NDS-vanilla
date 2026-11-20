@@ -11,4 +11,4 @@
   - MUST NOT: drop StrictMode because NDS might start twice, with no failing check; if a check really fails, keep StrictMode and file an `NDS-REPORT.md` finding, never remove a host setting to dodge it.
   - cite: Port row: "keep requirements and project contracts"; Init doc Mount and Destroy
 - floor: not run
-- baseline: PASS 2026-11-06 full (Sonnet 5.5): names no browser check of the double run.
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft: keeps StrictMode; names no browser check of the double run.

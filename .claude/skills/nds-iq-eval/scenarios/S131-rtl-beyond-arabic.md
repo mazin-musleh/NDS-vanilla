@@ -11,4 +11,4 @@
   - MUST NOT: `dir="ltr"` for Urdu; treat Arabic as the only right-to-left language.
   - cite: "`rtl` for a right-to-left language (Arabic `ar`, Urdu `ur`, Persian `fa`)"
 - floor: not run (corrects a wrong sentence; no new behavior)
-- baseline: PASS 2026-11-06 full (Sonnet 5.5).
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft, soft: does not mention keeping the language switcher.

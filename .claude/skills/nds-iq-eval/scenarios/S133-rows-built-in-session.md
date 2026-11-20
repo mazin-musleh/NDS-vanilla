@@ -11,4 +11,4 @@
   - MUST NOT: start helper agents for rows, in parallel or one by one; split one row's work across helpers; hand the browser checks to a helper.
   - cite: "never hand a page, a row or a check to a helper agent unless the dev asks for one"
 - floor: field FAIL (rig 5 runs 12 and 13, v4.0 without the sentence)
-- baseline: PASS 2026-11-06 full (Sonnet 5.5).
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft.

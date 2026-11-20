@@ -12,4 +12,4 @@
   - cite: "If the dev waived a required plan, note once that cross-session memory is lost." / "Never mix NDS and legacy UI on one page" / "An NDS spike is ONE parallel page"
 - grading note: setup (a) re-set 2026-10-17 to match the provenance (a plan waived outright): the old "mid-adoption with an approved plan" world left no plan to waive, so runners kept the live plan and the cost note never fired. Under (a) the built page is a parallel page, which the waiver permits.
 - floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-11-06 full (Sonnet 5.5).
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft.

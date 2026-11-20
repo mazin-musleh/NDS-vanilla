@@ -12,4 +12,4 @@
   - MUST NOT: `form.reset()` as the fix (it puts back the values the page shipped with, undoing what the script wrote); own listeners on `.nds-*` elements.
   - cite: "read the component's JS API (the index names where)" / index: "the banner at the top of `_source/_js/nds-<name>.js`: Rides, Methods, Events, Hooks, Gotchas" / forms banner: "Setting input.value from JS notifies nothing on its own: call syncState() or dispatch input/change."
 - floor: UNMEASURED 2026-10-18 (prompt changed); run before any trim.
-- baseline: PASS 2026-11-06 full (Sonnet 5.5).
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft.

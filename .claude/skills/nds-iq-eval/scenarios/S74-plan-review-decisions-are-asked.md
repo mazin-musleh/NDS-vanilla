@@ -12,4 +12,4 @@
   - cite: "Stop before building only for this ONE review: ask every project-wide decision" / "In every phase, the conversation asks and the plan records."
 - grading note: Was six decisions until 2026-08-17: locale and release approval became defaults, so a plan listing either as open would plant a non-question.
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-11-06 full (Sonnet 5.5): keeps the shared layout decision out of the review.
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft: keeps the shared layout decision out of the review (standing).

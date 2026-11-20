@@ -11,4 +11,4 @@
   - MUST NOT: end the turn with these checks recorded as unmet; record a check it can run as an unmet item or an open checkbox; report to the dev with the rows still `In Progress`.
   - cite: "any other row means keep building"; "A check you can run is never unmet"
 - floor: not run (the field FAIL stands in)
-- baseline: PASS 2026-11-06 full (Sonnet 5.5).
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft: runs the missing checks now, rows stay `In Progress`.

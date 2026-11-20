@@ -11,4 +11,4 @@
   - MUST NOT: write the hash with `history.replaceState` on a tab click; let Back leave the account area.
   - cite: Port row: "keep requirements and project contracts"
 - floor: not run
-- baseline: PASS 2026-11-06 full (Sonnet 5.5). WATCH field ×2 (rig 5 runs 20 and 21); the Tabs doc names it since run 21.
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft. WATCH field ×2 (rig 5 runs 20 and 21); the Tabs doc names it since run 21.

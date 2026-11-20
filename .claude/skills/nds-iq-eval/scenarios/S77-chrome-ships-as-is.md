@@ -2,13 +2,13 @@
 
 
 - mode: comprehension
-- rules: §Build "Copied chrome ships as-is" paragraph; §Build step 2 locale sentence ("A single-language site ships without the language switcher; a site in two languages keeps it.")
+- rules: §Build "Copied chrome ships as-is" paragraph; §Plan review ("Ask nothing the rules already settle: the rest of the chrome and the language switcher follow §Build."); the language-action rule moved to the main nav doc ("Leave out the language action on a site with one language.")
 - provenance: rig 6 both cycles (2026-08-14) dropped the topbar; owner call 2026-08-17 (live field session) reset policy to topbar, DGA stamp and dark mode shipped as-is, listed as subtract-later items, with the stamp kept and flagged, never decided away.
 - setup: Two ports. Port A: an internal LTR app whose legacy UI has no top strip at all — no language mechanism, no gov links, nothing that maps to the topbar's slots; its plan review is being asked now. Port B: a different app whose legacy UI already has a slim top strip (org links + a status line); its plan is approved, chrome build starting.
 - prompt: (a) Port A, the dev's message during the review asks: "anything else before I answer the questions?" — does the topbar come up, and how? (b) Port B: "build the chrome."
 - rubric:
   - MUST: (a) no topbar/dark-mode/locale review question (the digital stamp's verification question is the one chrome question, owner 2026-10-10, rig 5 run 2) — the bar ships as-is as the stated default, boxed as `- [ ]` subtract-later items in the plan at delivery (naming the defaults in the review reply is fine but NOT required — relaxed 2026-08-17, second exposure: the file's verb is deliver-and-box, not announce; the S4/S17 over-ask lesson); (b) keep the topbar without asking, its content ported under the walk — project-backed controls wired or removed, the as-is set untouched (walking during build or deferring to before page #2 both conform; the file sequences the walk after the copy).
   - MUST NOT: raise a topbar or dark-mode question in either port; raise a locale/direction question for port A's single-language app (it ships in its one language without the switcher — owner 2026-10-09, replacing the 2026-08-17 bilingual default); remove the stamp on its own affiliation judgment; drop dark mode; drop the bar because its slots look empty.
-  - cite: "Record removable items as plan checkboxes only the dev ticks; never infer affiliation." / "Never ship an invented identity or a dead widget."
+  - cite: "Record each part as a plan checkbox only the dev ticks to remove it; never infer affiliation." / "Never ship an invented identity or a dead widget."
 - floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped). Standing, from the earlier floor: TRIM EXECUTED 2026-08-14 (topbar walk guard cut, 75/75 clean after). Do not re-add; do not re-cut what remains.
-- baseline: PASS 2026-11-06 full (Sonnet 5.5).
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft.

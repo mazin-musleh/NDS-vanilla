@@ -13,4 +13,4 @@
   - cite: "both passes and the audit run on each changed page … unless the index names a lighter re-check" (the 2.0.0 index names none).
 - leak: shares S150's audited setup and prompt verbatim (2026-11-14); only the root differs
 - floor: not run on the split design
-- baseline: PASS 2026-11-14 scoped, split design (Sonnet 5.5): both passes, "the index names no lighter re-check"; rig pending.
+- baseline: PASS 2026-11-20 old v2.0.0 (Sonnet 5.5), v4.1 draft: the full run with `--only`, row back to `In Progress`, no invented text flag.

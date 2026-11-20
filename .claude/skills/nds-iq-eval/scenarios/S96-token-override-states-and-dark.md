@@ -12,4 +12,4 @@
   - cite: "the way the tokens doc shows" / index: "`_source/foundations/tokens.md` (Override Scope)"
 - grading note: read-dependent; scoped or solo runs only.
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-11-06 full (Sonnet 5.5).
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft: one rule over both light selectors, no dark rule; valid for this ask (the button primary tokens have no dark value, same teal both modes).

@@ -11,4 +11,4 @@
   - MUST NOT: tell the dev Filter writes `search` and ask whether that is acceptable; describe `search` as a fixed NDS limit; answer without quoting the doc line.
   - cite: Filter doc: "`name=\"q\"` keeps a `q` key that links already use"
 - floor: PASS 2026-10-24 (draft without the sentence, after the doc fix): the doc carries it
-- baseline: PASS 2026-11-06 full (Sonnet 5.5). WATCH field recurrence ×1 (2026-11-02, rig 5 run 20, at build time: S142).
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft. WATCH field recurrence ×1 (2026-11-02, rig 5 run 20, at build time: S142).

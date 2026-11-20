@@ -11,4 +11,4 @@
   - MUST NOT: refuse the helpers or build every row itself; hand any row beyond the two the dev named to a helper.
   - cite: "unless the dev asks for one"
 - floor: not run (twin of S133)
-- baseline: PASS 2026-11-06 full (Sonnet 5.5).
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft.

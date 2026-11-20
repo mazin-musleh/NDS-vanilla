@@ -12,4 +12,4 @@
   - cite: "A change to a shared file (a layout, partial, stylesheet, or script) reopens every page that loads it." / the index's shared-file line.
 - leak: the shape line (2026-11-14) states world facts the agent would read from the project; C2-mild at most
 - floor: PASS 2026-11-14 on the split design (Sonnet 5.5): the index carries it: stub + new index PASS, v4.0 + new index PASS; the rules clause only removes the "both passes" conflict (an earlier v4.0 run with the older index wording followed the rules)
-- baseline: PASS 2026-11-14 scoped, split design (Sonnet 5.5): `--text` on all six, the full run on Home and one standard page.
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft: `--text` on all six, the full run on Home and one standard page. Rig confirmed 2026-11-20 for the tiers (R4 fix step: behavior-only bug → `--text`, sheets untouched).

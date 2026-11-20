@@ -12,4 +12,4 @@
   - cite: the index's behavior-only definition ("changes no markup, class…") / "Any other edit: the full run".
 - leak: audited 2026-11-14 (fresh sonnet): S150 setup listed the inspected sheets (C2-mild), trimmed in both
 - floor: PASS 2026-11-14 (Sonnet 5.5): the guard; a class change reads as a look change with no rule
-- baseline: PASS 2026-11-14 scoped, split design (Sonnet 5.5): "a class … changes what the page shows": full run; rig pending.
+- baseline: PASS 2026-11-20 scoped (Sonnet 5.5), v4.1 draft, after the index fix: still the full run with `--states` (a class change).

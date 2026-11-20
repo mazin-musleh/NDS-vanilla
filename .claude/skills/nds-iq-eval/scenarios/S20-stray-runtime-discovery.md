@@ -12,4 +12,4 @@
   - cite: "An empty `NDS_ASSETS` proves nothing" / "runtime outside `NDS_ASSETS`" / "Never adopt a candidate path yourself"
 - floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
 - leak: C2 (audit 2026-08-17) — the setup names the stray runtime's location, so the floor PASS partly measured that assist.
-- baseline: PASS 2026-11-06 full (Sonnet 5.5): stops right, but names no release pick, page split or 2.5.0 delta.
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft: stops right, but names no release pick, page split or 2.5.0 delta.

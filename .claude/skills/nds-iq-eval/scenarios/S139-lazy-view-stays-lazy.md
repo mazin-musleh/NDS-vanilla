@@ -11,4 +11,4 @@
   - MUST NOT: import the crew board eagerly; rely on the page-level mount at load to start a view that mounts later.
   - cite: Port row: "keep requirements and project contracts"; Init doc: "Call `window.NDS?.init.mount(view)` after a view mounts"
 - floor: not run
-- baseline: PASS 2026-11-06 full (Sonnet 5.5). WATCH field ×3 (rig 8 runs 5, 6 and 7); the Init doc names a late view since run 6, and run 7 still loaded it eagerly.
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft. WATCH field ×3 (rig 8 runs 5, 6 and 7); the Init doc names a late view since run 6, and run 7 still loaded it eagerly.

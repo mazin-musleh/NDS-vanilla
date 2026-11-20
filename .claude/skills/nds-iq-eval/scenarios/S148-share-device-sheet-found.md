@@ -12,4 +12,4 @@
   - cite: the catalog Share `use_when` / the Share doc's Device Share
 - leak: outside check 2026-11-05 CLEAN (the setup quotes the brief's words).
 - floor: not run
-- baseline: PASS 2026-11-06 full (Sonnet 5.5). Rig pending: rig 10.
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft. Rig pending: rig 10.

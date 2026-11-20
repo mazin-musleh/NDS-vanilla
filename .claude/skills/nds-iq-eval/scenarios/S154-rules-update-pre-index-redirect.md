@@ -12,4 +12,4 @@
   - MUST NOT: end the session reporting the new revision as installed; ask the dev before the `IQv3.2` install; upgrade or re-download the template (a rules update is not an upgrade).
   - cite: "`NDS_ROOT` holds a template but no `NDS-INDEX.md`? The template predates this file, and this file cannot serve it."
 - floor: not run.
-- baseline: PASS 2026-11-17 old v1.12.0 (Sonnet 5.5), on the v4.1 draft with no text change: the field skip does not reproduce; rig 3 pending.
+- baseline: PASS 2026-11-20 old v1.12.0 (Sonnet 5.5), v4.1 draft: IQv3.2 in the same session, no new approval, last-revision line.

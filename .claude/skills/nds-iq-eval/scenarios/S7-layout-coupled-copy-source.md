@@ -12,4 +12,4 @@
   - cite: "Never copy a live demo or a built page: the docs are the only copy source" / index: "The `.md` is enough."
 - artifacts (behavior): copied markup matches the doc canon's wrapper chain (tag+class sequence), not a built page's.
 - floor: PASS 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-11-06 full (Sonnet 5.5).
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft.

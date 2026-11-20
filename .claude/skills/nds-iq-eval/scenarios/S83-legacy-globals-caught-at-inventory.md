@@ -12,4 +12,4 @@
   - cite: "fix or name every finding" / "exclude inherited legacy CSS"
 - grading note: the artifact is the change to the sheet or its import, plus the plan entry; "isolate the CSS" as prose is not a pass. Behavior form: `assemble.mjs --fixture mini-spa --state spa-post-build` with the sheet seeded.
 - floor: not run (reframed 2026-10-10).
-- baseline: PASS 2026-11-06 full (Sonnet 5.5).
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft.

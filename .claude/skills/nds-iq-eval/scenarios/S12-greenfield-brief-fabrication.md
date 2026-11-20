@@ -12,4 +12,4 @@
   - cite: "remove a template section the brief does not cover; never invent content to fill one" / "A form that needs a confirmation before it submits … ends with a review step" / "A simple form, such as a contact form, stays one screen"
 - leak: outside check 2026-11-06 found two cues, both fixed before the run: the sentence naming the cards the brief omits, and "one screen" in the Contact brief.
 - floor: FAIL 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-11-06 solo (Sonnet 5.5), soft, on the reset brief: copies the template, keeps two cards, invents nothing; Contact one screen, Apply input plus review; does not note the dropped cards.
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft: copies the template, keeps the two brief cards, names the removal; Contact one screen, Apply input plus review.

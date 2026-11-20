@@ -13,4 +13,4 @@
 - grading note: read-dependent, so grade it from a solo or scoped run. The Open Data example writes a bare `nds-sideinfo`; a bare tag passes only with a reason from the Side Info doc.
 - leak: outside check 2026-11-06 found two cues, both fixed before the first run: "exact file" pointed at one right source, and the no-template sentence framed the example as the floor.
 - floor: not run
-- baseline: PASS 2026-11-06 scoped (Sonnet 5.5), soft: names each part's own doc, keeps every part, cites the sentence; writes `nds-sideinfo nds-top`, a form the Variants allow. Rig pending: any rig that starts from an example.
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft, soft: plain `nds-sideinfo` (the example's own form), no reason given. Rig pending: any rig that starts from an example.

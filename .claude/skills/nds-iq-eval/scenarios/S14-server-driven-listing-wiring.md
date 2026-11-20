@@ -12,4 +12,4 @@
   - MUST NOT: read filter inputs directly; raw `fetch`; rebuild the nav; add an own `submit` listener; `form.reset()` on the filter form (Filter keeps its own criteria: a native reset restores only the inputs); per-field clear + `NDS.Form.refresh` as the filter-reset mechanism (repaints only, dispatches nothing); `setPage()` as the page-click hook (fires no event).
   - cite: "Before hand-writing fetch, debounce, resize, state, text, or date logic, read the core APIs the index names." / "an endpoint that pages, sorts, or filters on the server → wire the NDS controls to its parameters" / filter banner: "Resetting is markup, not JS" / pagination banner: "setPage() moves the nav but fires no event"
 - floor: SOFT 2026-10-09 v4 (Claude Sonnet 5.5; stub = paths + index pointer, index and docs mapped).
-- baseline: PASS 2026-11-06 full (Sonnet 5.5).
+- baseline: PASS 2026-11-20 full (Sonnet 5.5), v4.1 draft.
