@@ -9,9 +9,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 - **Audit** — Flags a calendar with no empty message, a modal whose content holds more than its title and description with no Scroll More, and an area word in `data-theme` without `dark`, `gradient` without `primary`, two fill words, or a dark primary area without `oncolor`. A deprecated name is a soft note that names its replacement.
 - **Cookies** — After a choice, the panel closes itself in 5 seconds, with a countdown ring on its close button. Keyboard focus pauses it; a click in the panel keeps it open.
-- **Side Menu** — Rail mode: on a desktop, `nds-rail` on the layout folds the menu to its icons, and the browser keeps the choice. Below 960px it is the slide-in menu.
+- **Side Menu** — Rail mode: on a desktop, `nds-rail` on the layout folds the menu to its icons, and the browser keeps the choice. Below 960px it is the slide-in menu. Primary, Gradient and Neutral colors, from the `data-theme` fill words. `--sidemenu-bg` sets any background.
+- **Tooltip** — `data-position="start"` or `"end"` opens the balloon beside the trigger.
 - **Themes** — Color areas: words in `data-theme` paint any element. `primary`, `neutral` and `primary gradient` are fills, as in `dark oncolor primary` and `dark neutral`; `primary` without `dark` is the light brand tint. `dark oncolor` alone works on a fill you paint yourself. With `oncolor`, the parts inside take their on-color looks: primary buttons turn white, button indicators turn white, fields show the surface through them, checked controls are white with a primary mark, and status colors step to their 200 shade. Cards, tables, steppers, timelines, content switchers, spinners, swipers and drawers take their `nds-oncolor` look with no class. A part inside an `nds-oncolor` part (a card on a photo) takes its on-color look too: buttons, tags, avatars, progress rings, filled icons and status icons. A menu, tooltip or dialog that opens inside keeps the dark area's colors.
-- **Side Menu** — Primary, Gradient and Neutral colors, from the `data-theme` fill words. `--sidemenu-bg` sets any background.
 - **Autocomplete** — `nds:autocomplete:error` fires when a `data-url` request fails, with `{ query, error }`. `preventDefault()` stops the built-in message, for a page that shows its own.
 
 ### Changed
@@ -19,10 +19,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Section** — Primary, Gradient and Neutral write the `data-theme` fill words, so the components inside take their on-color or dark looks. A section that still writes `data-theme="dark"` keeps its dark-mode look.
 - **Section, Hero** — The color classes `nds-primary`, `nds-gradient-primary`, `nds-neutral` and `nds-brand` are deprecated and go in v3. Use the `data-theme` words.
 - **Footer** — The brand surface is `data-theme="dark oncolor primary"`, deep primary in light and dark mode, and every part inside takes its on-color look. `nds-brand` is deprecated and goes in v3.
-- **Verify** — The browser check shoots dark mode once per page, at desktop width, so a run is faster. It names text below WCAG AA contrast, a part cut off past the screen edge, a control another part lies over, a part still loading after the page settled, and a dialog open at load that hides the page. `--text` runs every check with no shots or sheets; the index names when an edit can take it: a behavior-only edit, and every page a shared file reaches, with the full run on one page per shape. It finds a Chrome installed for one user, and Chromium.
+- **Verify** — The browser check shoots dark mode once per page, at desktop width, so a run is faster. It names text below WCAG AA contrast, a part cut off past the screen edge, a control another part lies over, a part still loading after the page settled, and a dialog open at load that hides the page. `--text` runs every check with no shots or sheets; the index names when an edit can take it: a behavior-only edit, and every page a shared file reaches, with the full run on one page per shape. `--states` re-checks only the states an edit touches. The shots and `report.txt` name the page's NDS version and the run date. It finds a Chrome installed for one user, and Chromium.
 - **Page layout** — On a desktop, the side menu has its shadow and side padding again on a side menu page. The sections stay flat; `nds-compact` still raises them.
 - **Cookies** — On a desktop the buttons share one row; a phone still stacks them. The Notice view's third button reads "Manage". A page's own panel keeps its stack until its footers take `nds-col-sm` for `nds-col`.
 - **Calendar** — In Rows, a line separates the days from the events.
+- **Slider** — In dark mode, the bar's fill and the thumb take a lighter primary.
 - **Drawer, Side Menu** — An open group's mark is neutral. Only the groups that hold the current page take the primary color. In dark mode the marks take the lighter primary, as on color.
 - **Scroll More** — The edge fade is 16px, not 48px, so less of a small area fades. Tabs and the side menu keep 48px; `--scroll-fade` still sets it.
 - **Modal** — Content beyond the title and description goes in a Scroll More: its edge fades while more is below, and the header and the actions stay in view.
@@ -30,7 +31,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Docs** — Filter, Forms and Main Navigation say which group a yes-or-no or a number field takes, when a form ends with a review step, and when to leave out the language action. The Student Portal catalog entry names its profile head: the avatar and the name. Each full page shape in Page Layout points to the accessibility FAB after the footer. Every preview card has an On color toggle beside Dark mode.
 
 ### Fixed
-- **Forms** — A readonly or disabled Lighter or Darker field keeps its fill, so the box still shows.
+- **Forms** — A readonly or disabled Lighter or Darker field keeps its fill, so the box still shows. Fields in a Scroll More inside a form keep their 16px gap.
+- **Side Menu** — The list fits the screen while part of the top bar still shows. The top bar's toggle no longer takes `nds-peek`.
 - **Drawer, Side Menu** — A closed group that holds the current page keeps its mark when another group opens. In dark mode, the current page's mark takes the primary color too.
 - **Verify** — The browser check names the element of each audit finding, with its fix. A page that stops answering, or opens an alert, no longer holds the run forever: the run stops after 60 s with a report (`NDS_CALL_MS` raises the limit). The whole-plan reminder fires only when the plan's Pacing value is `whole plan`, not when a page-by-page plan mentions an earlier whole-plan batch. Run from inside the template folder, the check writes its shots to the project's `tmp/`, not into the template.
 - **Cards** — While a card loads, a row card with an image stays a row, a drawer in the card shows its own skeleton rows, a status card's icon turns grey, and a progress ring shows only its empty track. When the card content is a Scroll More, Show more sits right under the content, not a card gap below it; the parts inside keep the card gap.
@@ -40,10 +42,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Filter** — A group that builds its options from the items, and finds none, hides with its divider, so the menu no longer shows bare lines. A menu with no group left says "No options to filter by". A list with no items gives no console warning.
 - **Images** — The placeholder image fits dark mode: its box is see-through grey, not light grey.
 - **Calendar** — A switch from Month to Grid or Rows and back keeps the same month. It no longer moves back a month, and the address no longer gets a new date.
-- **Scroll More** — When the screen grows and the content fits again, Show more goes away. It had stayed when the content fit only without the button, as in a modal after a phone-to-desktop resize.
-- **Scroll More** — `--scroll-max-width` caps the width the way a max width does: on a screen narrower than the value, the row stays inside its container.
+- **Scroll More** — When the screen grows and the content fits again, Show more goes away. It had stayed when the content fit only without the button, as in a modal after a phone-to-desktop resize. Show more appears when a slide inside, such as a drawer group, makes the content taller. `--scroll-max-width` caps the width the way a max width does: on a screen narrower than the value, the row stays inside its container. Your own `--scroll-fade` wins over the fade the side menu, Tabs and Accessibility set.
 - **File Upload** — With no upload address, a file that passes the checks shows the success check, as attached; its status stays `ready`. On a right-to-left page, a Latin file name keeps its extension last (`report-file.pdf`, not `pdf.report-file`).
 - **Swiper** — In Safari before 16.4 and Firefox before 128, a Swiper inside another no longer takes the outer one's slides per view and peek.
+- **Slider** — While it loads, a slider shows only its skeleton, not a spinner too.
 - **Drawer** — With the side line (`nds-lined`), a sub-item's indicator shows whole. It was cut in half.
 - **Audit** — Reports the removed Side Info size classes `nds-sm`, `nds-md` and `nds-lg`. A missing icon style sheet gives one finding, not one per icon.
 

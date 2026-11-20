@@ -422,8 +422,10 @@
     --radio-neutral-hovered: var(--colors-neutral-300);
     --radio-neutral-pressed: var(--colors-neutral-300);
 
-    // ── slider (fill stays primary, hover lightens) ──
-    --slider-thumb-bg-hovered: var(--colors-primary-400);   // dark: hover lightens to 400 for contrast on a dark bg
+    // ── slider (one tier lighter on a dark bg, hover lightens again) ──
+    --slider-track-fill: var(--colors-primary-500);
+    --slider-thumb-bg: var(--colors-primary-500);
+    --slider-thumb-bg-hovered: var(--colors-primary-400);
 
     // ── stepper ──
     --stepper-button-completed: var(--colors-primary-500);
@@ -539,7 +541,7 @@
     --slider-track-bg: var(--colors-alpha-white-20);
     --slider-track-fill: var(--colors-base-white);
     --slider-thumb-bg: var(--colors-base-white);
-    --slider-thumb-bg-hovered: var(--colors-alpha-white-80);
+    --slider-thumb-bg-hovered: var(--colors-neutral-200); // solid: the bar sits under the thumb
 
     // ── switch ──
     --switch-primary-hovered: var(--controls-primary-hovered);
