@@ -394,6 +394,13 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
     @include btn-oncolor-fill;
   }
 
+  // The area gets these from its token rebind; the class alone rebinds nothing.
+  &.nds-oncolor:not(.nds-primary, .nds-neutral) {
+    --btn-indicator-color: var(--button-indicator-oncolor-default);
+    --btn-indicator-active: var(--button-indicator-oncolor-pressed);
+    --btn-indicator-selected: var(--button-indicator-oncolor-selected);
+  }
+
   &:is(.nds-primary, .nds-neutral):not(.nds-destructive) {
     @include oncolor {
       @include btn-oncolor-fill;
@@ -430,7 +437,6 @@ $btn-disabled: ':is(:disabled, [data-state~="disabled"], [aria-disabled="true"])
         --btn-bg-active: var(--button-background-transparent-pressed);
         --btn-bg-selected: var(--button-background-transparent-selected);
         --btn-bg-disabled: var(--button-background-oncolor-disabled);
-        --btn-indicator-active: var(--button-background-oncolor-disabled);
         --btn-color: var(--text-oncolor-primary);
         --btn-loading-color: var(--text-oncolor-primary);
         --btn-loading-track: var(--colors-alpha-white-20);

@@ -78,6 +78,9 @@
     --button-indicator-pressed: var(--colors-neutral-800);
     --button-indicator-selected: var(--colors-neutral-800);
     --button-indicator-primary: var(--colors-primary-400); // brand-solid buttons; state-invariant by design
+    --button-indicator-oncolor-default: var(--colors-alpha-white-40);
+    --button-indicator-oncolor-pressed: var(--colors-base-white);
+    --button-indicator-oncolor-selected: var(--colors-base-white);
 
     --button-status-success-bg: var(--background-success-light);
     --button-status-success-text: var(--text-success);
@@ -485,6 +488,11 @@
 // On-color area (data-theme="dark oncolor"): see _semantic.scss. Fields go see-through; checked
 // controls take the white fill (their dark rebinds go back to the semantic controls set).
 #{$oncolor-host} {
+    // ── button indicator ──
+    --button-indicator-default: var(--button-indicator-oncolor-default);
+    --button-indicator-pressed: var(--button-indicator-oncolor-pressed);
+    --button-indicator-selected: var(--button-indicator-oncolor-selected);
+
     // ── checkbox ──
     --checkbox-primary-hovered: var(--controls-primary-hovered);
     --checkbox-primary-pressed: var(--controls-primary-pressed);
