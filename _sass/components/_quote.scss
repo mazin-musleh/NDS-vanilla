@@ -113,6 +113,11 @@
     }
 }
 
+// On a colored fill the card color is a dark slab; take the on-color card's wash. :where() so .nds-transparent still wins.
+.nds-quote:where(.nds-oncolor, #{$oncolor-area}) {
+    --_quote-bg: var(--quote-background-default, var(--colors-alpha-white-10));
+}
+
 // Phones: only the default steps down, one step to MD; a size the author wrote stays.
 // The screen is the ruler, not a container: the step changes the root's own padding.
 @include mobile {
