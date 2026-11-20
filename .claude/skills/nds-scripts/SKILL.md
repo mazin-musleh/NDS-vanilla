@@ -6,6 +6,7 @@ description: Use when running or writing NDS check, audit, perf or asset scripts
 # NDS scripts
 
 ```bash
+node scripts/check-area-contrast.mjs            # contrast of every part's canon inside each area fill (text 4.5, UI 3, rest/hover/pressed/selected); DARK=1, ONLY=<fill>, END=<color> tries another gradient end. Known fails are owner-accepted (plans/area-themes.md → Contrast)
 node scripts/check-part-sizes.mjs               # part sizes: a knob beats the size class, the class a List's step; nested lists; a button's knob stays on the button; the Library's XS tags; ENGINE=webkit, CSS=<old main css> must fail
 node scripts/encode-webp.mjs <master>           # WebP at set widths, lowest quality above a PSNR floor — always from the master
 node scripts/run-audit.mjs [page.html]          # print a built page's NDS.init.audit() warnings

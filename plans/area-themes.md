@@ -150,6 +150,13 @@ Not in scope
   live v2 has no areas, so not before) and add the `.nds-brand` row to `_data/migrations.yml`.
 - More fill colors: the registry is ready; none added now.
 
+## Contrast (2026-11-20, `scripts/check-area-contrast.mjs`)
+
+Neutral: all pass. Deep primary: 8 fails, all on-color button states (pressed white wash 3.5; destructive
+secondary 3.4-4.46; transparent destructive pressed 3.88). Gradient light end (primary-600): 48 fails, plain text
+included (3.64); ending at 700 leaves 40, at 800 leaves 25. **Owner call: keep both as they are** — the button colors
+stay, the gradient stays 900 → 600; some parts are not meant for the gradient. Don't reopen.
+
 ## Checks
 
 - `python scripts/check-css.py`, `python scripts/check-data-state-tails.py --report` (new `[data-theme]` rules are not
