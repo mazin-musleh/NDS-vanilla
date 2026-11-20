@@ -112,6 +112,17 @@
     @include dark {
       --_featuredicon-dark-bg: var(--featuredicon-dark-bg-forced, var(--featuredicon-dark-bg, var(--colors-primary-700)));
     }
+
+    // On color a filled icon turns white, with its fill color as the ink: the completed step's look.
+    &#{$oncolor-area} {
+      --_featuredicon-dark-ink: var(--featuredicon-dark-bg, var(--background-primary));
+      --_featuredicon-dark-bg: var(--featuredicon-dark-bg-forced, var(--background-surface-oncolor));
+      color: var(--_featuredicon-dark-ink);
+
+      :is(.nds-icon, i, svg) {
+        color: var(--_featuredicon-dark-ink);
+      }
+    }
   }
 }
 

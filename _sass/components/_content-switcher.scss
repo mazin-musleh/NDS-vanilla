@@ -83,7 +83,8 @@
   // Scoped to the segments, not the root: an inherited colour would reach panel
   // content too, and anything there with its own surface (a card) would end up
   // with oncolor text on a light fill.
-  &.nds-oncolor > .nds-tab-list .nds-tab {
+  &.nds-oncolor > .nds-tab-list .nds-tab,
+  &#{$oncolor-area} > .nds-tab-list .nds-tab {
     --btn-bg: var(--button-background-transparent-hovered);
     --btn-bg-hover: var(--button-background-transparent-hovered);
     --btn-bg-active: var(--button-background-transparent-pressed);
@@ -112,7 +113,7 @@
 // Default text colour for an oncolor strip: the whole thing sits on a dark or
 // brand fill, so panel copy needs the oncolor ink too. Wrapped in :where() for
 // zero specificity, so a consumer overrides it with any selector at all.
-:where(.nds-content-switcher.nds-oncolor) {
+:where(.nds-content-switcher.nds-oncolor, .nds-content-switcher#{$oncolor-area}) {
   color: var(--text-oncolor-primary);
 }
 

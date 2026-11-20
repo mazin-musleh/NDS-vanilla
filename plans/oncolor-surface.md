@@ -191,6 +191,18 @@ secondary or disabled text. Today's dark tokens on primary-700 fail 26 text / 31
 - **Not done, needs a major:** the footer brand. Retiring its hand copy means `data-theme="dark oncolor"` in the
   footer markup, a consumer markup change (markup is a contract). Hero and Side Info have no primary fill.
 
+## Phase 3 build notes (2026-11-20)
+
+- Card (and Countdown), Stepper (and Timeline), Content Switcher, Loading, Swiper, Drawer: each `.nds-oncolor` rule also
+  matches `#{$oncolor-area}`. A guard that skips on-color (`.nds-card:not(.nds-oncolor, …)`, the stepper's dark
+  current icon) adds `:not(:where(#{$oncolor-area}))`: zero specificity, so the cascade outside the area is unchanged.
+- Size: main +17 KB raw, +0.6 KB gzip (the stepper block repeats the area selector).
+- `$oncolor-area` also matches `.nds-oncolor *`: a part inside an on-color part takes its look (owner ask: the
+  card's avatar, progress, status icons broke on `.nds-card.nds-oncolor` too). Avatar, status rings and feedback
+  discs re-bind in a `.nds-oncolor, #{$oncolor-host}` token block; progress, filled featured icons, feedback
+  symbol and the shared button looks follow the area selector. Card / Countdown / Drawer / Swiper docs updated.
+- Open: a card that must stay solid inside an area has no opt-out yet (`data-theme` has no light word); design it if asked.
+
 ## Phases
 
 - **Phase 1:** the area, forms, controls, buttons, focus ring, popup reset, on a test page that shows every

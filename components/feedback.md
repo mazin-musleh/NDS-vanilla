@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.0"
-last_edit: "05/11/2026 - 12:02 PM"
+last_edit: "20/11/2026 - 05:40 PM"
 ---
 
 <section id="feedback-overview" class="nds-content-section nds-doc-overview">
@@ -96,7 +96,7 @@ NDS.Feedback.create({
 | Size | LG | `.nds-lg` | `.nds-feedback` | A 32px icon and large text, for the main status of a page or a panel |
 | Size | LG | `size: 'lg'` | `create()` | The same, in JavaScript |
 | Style | Outline (default) | `.nds-outline` | `.nds-feedback` | The icon drawn as a line in the status color |
-| Style | Solid | — | — | A filled disc in the status color, with a white symbol. It is the look with no style class, and it is stronger than outline |
+| Style | Solid | — | — | A filled disc in the status color, with a white symbol. On color, a light disc with a dark symbol, and in dark mode the neutral one too. It is the look with no style class, and it is stronger than outline |
 | Style | Solid | `style: ''` | `create()` | The same, in JavaScript |
 | Style | Ring (hint: A light halo around the disc) | `.nds-ring` | `.nds-feedback` | A solid disc with a light halo around it, for a status that must stand out |
 | Style | Ring (hint: A light halo around the disc) | `style: 'ring'` | `create()` | The same, in JavaScript |
@@ -229,9 +229,9 @@ Set these on the `.nds-feedback-icon`, on the `.nds-feedback`, or on a parent. E
 |---|---|---|
 | `--feedback-size` | `16px`, `24px` with `nds-md`, `32px` with `nds-lg` | Size of the icon. It wins over a size class wherever you set it. A message with no size class takes its parent's size, such as 20px in a tooltip |
 | `--feedback-color` | `var(--icon-neutral)` | Color of the outline icon. It changes in dark mode |
-| `--feedback-icon-color` | `var(--feedback-icon-fill-neutral)` | Fill of the solid disc. It stays the same in dark mode, so the white symbol keeps its contrast |
+| `--feedback-icon-color` | `var(--feedback-icon-fill-neutral)` | Fill of the solid disc. On color it takes the light status shade. In dark mode it stays, except neutral, which turns white |
 | `--feedback-ring` | `var(--icon-neutral-ring)` | Color of the ring halo |
-| `--feedback-symbol-color` | `var(--icon-oncolor)` | Color of the symbol on the solid disc |
+| `--feedback-symbol-color` | The status's `--feedback-icon-symbol-*` token: white, black on a light disc | Color of the symbol on the solid disc |
 | `--feedback-icon-symbol` | the "i" in a `.nds-feedback`, none elsewhere | Shape of the symbol, as an icon mask |
 | `--feedback-icon-stroke` | `var(--nds-icon-information-circle)` | Shape of the outline icon, as an icon mask |
 | `--feedback-icon-disc` | `var(--nds-icon-disc)` | Shape of the solid disc, as an icon mask |

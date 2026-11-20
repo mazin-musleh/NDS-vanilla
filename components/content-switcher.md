@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.6.0"
 updated: "2.0.0"
-last_edit: "05/11/2026 - 12:02 PM"
+last_edit: "20/11/2026 - 04:53 PM"
 ---
 
 <section id="switcher-overview" class="nds-content-section nds-doc-overview">
@@ -86,7 +86,7 @@ The first button is open in the markup: its `aria-selected` is `true`, and every
 | Size | SM | `.nds-sm` | `.nds-content-switcher` | 32px buttons with a small label, for cards and toolbars |
 | Size | MD (default) | — | — | 40px buttons, for page content. It needs no class |
 | Size | LG | `.nds-lg` | `.nds-content-switcher` | 48px buttons, for a larger touch target |
-| On color | On color | `.nds-oncolor` | `.nds-content-switcher` | For a switcher on a deep primary or dark background. The open button turns brand primary, as in dark mode. The panel text turns white |
+| On color | On color | `.nds-oncolor` | `.nds-content-switcher` | For a switcher on a deep primary or dark background. The open button turns brand primary, as in dark mode. The panel text turns white. Inside an on-color area (`data-theme="dark oncolor"`), the switcher already takes this look: skip the class |
 | Center | Center | `.nds-center` | `.nds-tab-list` | Centers the row of buttons above the panels |
 | Loading | Loading | `.nds-loading` | `.nds-content-switcher` | Gray bars in place of the labels and the panel content while the data loads. On `.nds-tab-list` it bars the labels only |
 {: #switcher-variants-table .nds-table .nds-responsive}

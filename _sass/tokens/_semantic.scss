@@ -288,7 +288,8 @@
     --icon-warning: var(--colors-yellow-400);
     --icon-error: var(--colors-red-400);
     --icon-separator: var(--colors-neutral-500);
-    --icon-neutral-ring: var(--colors-neutral-800);
+    // The neutral ring is a white wash, as on color.
+    --icon-neutral-ring: var(--colors-alpha-white-20);
     --icon-success-ring: var(--colors-green-900);
     --icon-info-ring: var(--colors-blue-900);
     --icon-warning-ring: var(--colors-yellow-900);
@@ -351,4 +352,15 @@
     --controls-border: var(--border-oncolor);
     --controls-disabled: var(--colors-alpha-white-20);
     --controls-icon-disabled: var(--icon-default-oncolor-disabled);
+}
+
+// Parts inside an on-color part (.nds-oncolor) or area: a status ring is a wash of its light disc
+// shade (the palette's status alphas are the dark 600s, muddy on a primary fill), neutral a white one.
+.nds-oncolor,
+#{$oncolor-host} {
+    --icon-neutral-ring: var(--colors-alpha-white-20);
+    --icon-success-ring: color-mix(in srgb, var(--colors-green-200) 30%, transparent);
+    --icon-info-ring: color-mix(in srgb, var(--colors-blue-200) 30%, transparent);
+    --icon-warning-ring: color-mix(in srgb, var(--colors-yellow-200) 30%, transparent);
+    --icon-error-ring: color-mix(in srgb, var(--colors-red-200) 30%, transparent);
 }

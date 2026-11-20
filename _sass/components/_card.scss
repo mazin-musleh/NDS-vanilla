@@ -118,7 +118,8 @@
     &:not(.nds-stroke, :where(.nds-list.nds-stroke) > *) {
       border: 1px solid var(--border-neutral-tertiary);
 
-      &.nds-oncolor {
+      &.nds-oncolor,
+      &#{$oncolor-area} {
         border-color: var(--colors-alpha-white-10);
       }
     }
@@ -628,7 +629,8 @@
 // The featured-icon fill/glyph colors come from the featured-icon core, whose
 // status cascade keys on these same aliases — so only card-specific deltas live
 // here: neutral's softer --featuredicon-color, the .nds-color alpha tints, oncolor/disabled.
-.nds-card:not(.nds-oncolor, [disabled]) {
+// :where() keeps the on-color area out at no specificity cost.
+.nds-card:not(.nds-oncolor, [disabled]):not(:where(#{$oncolor-area})) {
   &:is(.nds-neutral, .nds-gray, [data-status="neutral"]) {
     --_card-border-color-hover-base: var(--colors-neutral-500);
     --_card-border-color-active-base: var(--colors-neutral-300);
@@ -750,7 +752,8 @@
 // ONCOLOR VARIANT (for dark backgrounds)
 // ==============================================
 
-.nds-card.nds-oncolor {
+.nds-card.nds-oncolor,
+.nds-card#{$oncolor-area} {
   --_card-bg-base: var(--colors-alpha-white-10);
   --_card-bg-hover-base: var(--colors-alpha-white-20);
   --_card-border-color-base: var(--colors-alpha-white-20);

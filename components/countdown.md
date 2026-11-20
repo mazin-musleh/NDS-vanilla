@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "2.0.0"
 updated: "2.0.0"
-last_edit: "09/11/2026 - 05:59 PM"
+last_edit: "20/11/2026 - 05:15 PM"
 ---
 
 <section id="countdown-overview" class="nds-content-section nds-doc-overview">
@@ -171,8 +171,8 @@ Pick another component when:
 | Color | Yellow | `.nds-yellow` | `.nds-card` | Tints the numbers |
 | Color | Red | `.nds-red` | `.nds-card` | Tints the numbers |
 | Color | Blue | `.nds-blue` | `.nds-card` | Tints the numbers |
-| Color | On color (hint: For a dark or photo background) | `.nds-oncolor` | `.nds-card` | For cards on a dark or photo background. It replaces the color classes, which do nothing on an on-color card |
-| Color | On color (hint: For a dark or photo background) | `.nds-oncolor` | `.nds-card-actions .nds-btn` | The button does not follow the card. Give it `.nds-oncolor` too |
+| Color | On color (hint: For a dark or photo background) | `.nds-oncolor` | `.nds-card` | For cards on a dark or photo background. It replaces the color classes, which do nothing on an on-color card. Inside an on-color area (`data-theme="dark oncolor"`), the cards already take this look: skip the class |
+| Color | On color (hint: For a dark or photo background) | `.nds-oncolor` | `.nds-card-actions .nds-btn` | The button inside takes the on-color look from the card. The class on it is optional |
 | Tinted | Tinted (hint: A light tint of the card color) | `.nds-color` | `.nds-card:not(.nds-oncolor)` | Fills each card with a light tint of its color. With no color class, the tint is the brand primary |
 | Layout | Row (default) | `.nds-horizontal` | `.nds-card` | One row, which wraps as the Banner row says |
 | Layout | Center (hint: Every part stacked and centered) (not: cards) | `.nds-center` | `.nds-card` | Stacks the icon, the text, the countdown and the button, each centered. Use it for a banner that stands alone, such as the top of a page |

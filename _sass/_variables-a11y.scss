@@ -248,11 +248,12 @@ $a11y-filters: (
     background: var(--_hc-bg);
 }
 
-// On color, a checked control is a white fill: its primary mark is the primary fill, which HC turns white.
-:root[data-a11y~="high-contrast"] [data-theme~="oncolor"] :is(.nds-checkbox-input, .nds-radio-input, .nds-switch-toggle) {
-    --_checkbox-mark: var(--_hc-bg) !important;
-    --_radio-mark: var(--_hc-bg) !important;
-    --_switch-mark: var(--_hc-bg) !important;
+// On color, a checked control and a filled icon are white with a primary mark. HC turns the primary fill white, so the mark goes black.
+:root[data-a11y~="high-contrast"] :is([data-theme~="oncolor"], .nds-oncolor) :is(.nds-checkbox-input, .nds-radio-input, .nds-switch-toggle, .nds-featured-icon) {
+    --_checkbox-mark: var(--colors-base-black) !important;
+    --_radio-mark: var(--colors-base-black) !important;
+    --_switch-mark: var(--colors-base-black) !important;
+    --_featuredicon-dark-ink: var(--colors-base-black) !important;
 }
 
 // Side menu colors and an author's --sidemenu-bg collapse to the mono palette, as sections do.

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.x"
-last_edit: "17/11/2026 - 08:17 PM"
+last_edit: "20/11/2026 - 05:15 PM"
 ---
 
 <section id="card-overview" class="nds-content-section nds-doc-overview">
@@ -369,9 +369,9 @@ Pick another component when:
 | Color | Yellow | `.nds-yellow` | `.nds-card` | Tints the title, the icon and the hover border |
 | Color | Red | `.nds-red` | `.nds-card` | Tints the title, the icon and the hover border |
 | Color | Blue | `.nds-blue` | `.nds-card` | Tints the title, the icon and the hover border |
-| Color | On color (hint: For a dark or photo background) | `.nds-oncolor` | `.nds-card` | For cards on a dark or photo background. It replaces the color classes, which do nothing on an on-color card |
-| Color | On color (hint: For a dark or photo background) | `.nds-oncolor` | `.nds-card-actions .nds-btn` | Buttons do not follow the card. Give each action button `.nds-oncolor` too |
-| Color | On color (hint: For a dark or photo background) | `.nds-oncolor` | `.nds-tag:not([data-status])` | Tags do not follow the card either. Give each standard tag `.nds-oncolor`. A status tag keeps its colors |
+| Color | On color (hint: For a dark or photo background) | `.nds-oncolor` | `.nds-card` | For cards on a dark or photo background. It replaces the color classes, which do nothing on an on-color card. Inside an on-color area (`data-theme="dark oncolor"`), the card and its buttons and tags already take this look: skip the class |
+| Color | On color (hint: For a dark or photo background) | `.nds-oncolor` | `.nds-card-actions .nds-btn` | The buttons inside take the on-color look from the card. The class on each button is optional |
+| Color | On color (hint: For a dark or photo background) | `.nds-oncolor` | `.nds-tag:not([data-status])` | Standard tags inside take the on-color look from the card. The class on each tag is optional. A status tag keeps its colors |
 | Tinted | Tinted (hint: A light tint of the card color) | `.nds-color` | `.nds-card:not(.nds-oncolor)` | Fills the card with a light tint of its color. With no color class, the tint is the brand primary |
 | Size (any) | SM (limit: 1 size) (hint: Every part one size smaller) | `.nds-sm` | `.nds-card` | Every part one size smaller: the icon, avatar, date tile, tags, rating, buttons, chips, price, number, text and gap. A part with its own size class keeps it. For a card in a side column or a dense grid |
 | Size (any) | MD (default) (limit: 1 size) | `.nds-md` | `.nds-card` | The card's own sizes, with no class: a 48px icon, a 64px avatar, an 80px progress ring, 24px tags and stars, an 18px title, and a 24px gap (16px on phones). In a sized [List](../components/list), `.nds-md` on one card brings it back to these sizes |

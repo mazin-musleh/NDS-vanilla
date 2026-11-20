@@ -98,6 +98,14 @@
   @include progress-circle-base(var(--_progress-size), -90deg);
   @include progress-circle-text(var(--_progress-size));
 
+  // On color the primary fill is lost: a white ring on a white-wash track, as the radial stepper's.
+  &#{$oncolor-area} {
+    --_progress-track-color: var(--progress-track-color, var(--colors-alpha-white-20));
+    --_progress-color: var(--progress-color, var(--background-surface-oncolor));
+
+    .nds-progress-info { color: var(--text-oncolor-primary); }
+  }
+
   // CSS counter for automatic number display (clamped to 100)
   counter-reset: progress-counter min(var(--_progress-value), 100);
 
@@ -217,6 +225,10 @@
   --_progress-height: var(--progress-height, 8px);
   --_progress-value: var(--progress-value, 0);
   --_progress-color: var(--progress-color, var(--background-primary));
+
+  &#{$oncolor-area} {
+    --_progress-color: var(--progress-color, var(--background-surface-oncolor));
+  }
 
   counter-reset: progress-counter min(var(--_progress-value), 100);
   display: flex;

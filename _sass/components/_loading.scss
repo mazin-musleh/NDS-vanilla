@@ -122,7 +122,8 @@
   }
 
   // On dark backgrounds (explicit override for forced-dark containers)
-  &.nds-oncolor {
+  &.nds-oncolor,
+  &#{$oncolor-area} {
     --_loading-color: var(--loading-color, var(--icon-oncolor));
     --_loading-track: var(--loading-track, var(--colors-alpha-white-20));
   }

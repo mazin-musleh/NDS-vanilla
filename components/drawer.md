@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.x"
-last_edit: "19/11/2026 - 11:59 PM"
+last_edit: "20/11/2026 - 05:15 PM"
 ---
 
 <section id="drawer-overview" class="nds-content-section nds-doc-overview">
@@ -558,7 +558,7 @@ A [Scroll More](../components/scroll-more) wrapper around the list holds the dra
 |---|---|---|
 | `nds-grid` | `.nds-drawer-list` | Lays the rows out in columns, with the [Grid](../layout/grid) knobs. The rows keep `--drawer-gap`, and the columns take the grid's gap. On a divided drawer, the Grid script marks the last row, which draws no line |
 | `nds-fit` | `.nds-drawer` inside `.nds-grid` | The drawer fills the height of its grid row, and the items share the height. Use it with `nds-card` to match the cards next to it. It has no effect outside `.nds-grid` |
-| `nds-oncolor` | `.nds-drawer` | Lighter divider lines, for a drawer on a colored surface. Put `nds-oncolor` on each button too, so the text reads on the surface |
+| `nds-oncolor` | `.nds-drawer` | Lighter divider lines, for a drawer on a colored surface. Its buttons take the on-color look too. Inside an on-color area (`data-theme="dark oncolor"`), the drawer already takes this look: skip the class |
 | `nds-divided` | a submenu `<ul>` | A line between the items of that submenu |
 | `nds-empty` | `.nds-drawer-list` | Shows a placeholder while the list holds no items. Set the text and the icon with `data-empty-message` and `data-empty-icon`. See [Empty](../components/empty) |
 | `nds-truncate` | `.nds-label` | Cuts the label to the number of lines in `--drawer-truncate`, with an ellipsis |

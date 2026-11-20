@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.0"
-last_edit: "05/11/2026 - 12:02 PM"
+last_edit: "20/11/2026 - 04:53 PM"
 ---
 
 <section id="loading-overview" class="nds-content-section nds-doc-overview">
@@ -71,7 +71,7 @@ The size and color classes go on the element that carries `nds-loading`.
 | Size | 2XL | `.nds-2xl` | `.nds-loading` | 44px spinner, 4px stroke. A whole page or panel |
 | Color | Primary (default) | — | `.nds-loading` | The primary color on a light surface. White in dark mode |
 | Color | Neutral | `.nds-neutral` | `.nds-loading` | Black on a light surface, white in dark mode. Use it where the primary color clashes with the content |
-| Color | On color (hint: White spinner for a dark or colored surface) | `.nds-oncolor` | `.nds-loading` | White in every mode. Use it on a surface that is always dark or colored, such as a primary banner. On a white surface the spinner does not show |
+| Color | On color (hint: White spinner for a dark or colored surface) | `.nds-oncolor` | `.nds-loading` | White in every mode. Use it on a surface that is always dark or colored, such as a primary banner. On a white surface the spinner does not show. Inside an on-color area (`data-theme="dark oncolor"`), the spinner already takes this look: skip the class |
 {: #loading-variants-table .nds-table .nds-responsive}
 
 </div>

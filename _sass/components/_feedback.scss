@@ -42,18 +42,6 @@
     &[data-status="warning"]  { color: var(--text-warning); }
     &[data-status="info"]     { color: var(--text-info); }
 
-    // Neutral/help dark-mode tweaks depend on .nds-outline modifier, so
-    // they stay scoped inside .nds-feedback rather than on the generic
-    // [data-status="..."] rule below.
-    &:is([data-status="neutral"], [data-status="help"]),
-    :is([data-status="neutral"], [data-status="help"]) & {
-        &:not(.nds-outline) .nds-feedback-icon {
-            @include dark {
-                --feedback-ring: var(--colors-neutral-900);
-            }
-        }
-    }
-
     // ==============================================
     // SIZE VARIANTS
     // ==============================================
@@ -84,7 +72,7 @@
 //
 //   --feedback-color        outline glyph color (re-tints in dark)
 //   --feedback-ring         ring-accent halo color
-//   --feedback-icon-color   solid disc fill — frozen light color (see tokens)
+//   --feedback-icon-color   solid disc fill (see tokens)
 //   --feedback-icon-stroke  outline glyph (.nds-outline)
 //   --feedback-icon-symbol  white symbol painted on the solid disc
 // ==============================================
@@ -94,6 +82,7 @@
     --feedback-color: var(--icon-error);
     --feedback-ring: var(--icon-error-ring);
     --feedback-icon-color: var(--feedback-icon-fill-error);
+    --feedback-symbol-color: var(--feedback-icon-symbol-error);
     --feedback-icon-stroke: var(--nds-icon-cancel-circle);
     --feedback-icon-symbol: var(--nds-icon-cancel);
 }
@@ -104,6 +93,7 @@
     --feedback-color: var(--icon-error);
     --feedback-ring: var(--icon-error-ring);
     --feedback-icon-color: var(--feedback-icon-fill-error);
+    --feedback-symbol-color: var(--feedback-icon-symbol-error);
     --feedback-icon-stroke: var(--nds-icon-alert-circle);
     --feedback-icon-symbol: var(--nds-icon-alert);
 }
@@ -113,6 +103,7 @@
     --feedback-color: var(--icon-success);
     --feedback-ring: var(--icon-success-ring);
     --feedback-icon-color: var(--feedback-icon-fill-success);
+    --feedback-symbol-color: var(--feedback-icon-symbol-success);
     --feedback-icon-stroke: var(--nds-icon-checkmark-circle-02);
     --feedback-icon-symbol: var(--nds-icon-checkmark-solid);
 }
@@ -122,6 +113,7 @@
     --feedback-color: var(--icon-warning);
     --feedback-ring: var(--icon-warning-ring);
     --feedback-icon-color: var(--feedback-icon-fill-warning);
+    --feedback-symbol-color: var(--feedback-icon-symbol-warning);
     --feedback-icon-stroke: var(--nds-icon-alert-circle);
     --feedback-icon-symbol: var(--nds-icon-alert);
 }
@@ -133,6 +125,7 @@
     --feedback-color: var(--icon-info);
     --feedback-ring: var(--icon-info-ring);
     --feedback-icon-color: var(--feedback-icon-fill-info);
+    --feedback-symbol-color: var(--feedback-icon-symbol-info);
     --feedback-icon-symbol: var(--nds-icon-info);
 }
 
@@ -159,11 +152,11 @@
     //   --feedback-size          chip diameter
     //   --feedback-color         outline glyph color (re-tints in dark)
     //   --feedback-ring          ring-accent halo color
-    //   --feedback-icon-color    solid disc fill (frozen status color)
+    //   --feedback-icon-color    solid disc fill (the status color)
     //   --feedback-icon-disc     ::before disc shape
     //   --feedback-icon-stroke   outline glyph shape
     //   --feedback-icon-symbol   ::after symbol shape (inert when unset)
-    //   --feedback-symbol-color  ::after symbol paint (white by default)
+    //   --feedback-symbol-color  ::after symbol paint (the status's --feedback-icon-symbol-* token)
     //   --feedback-ring-inset    inset bridging the disc↔ring gap
     --_feedback-size: var(--feedback-size, var(--_feedback-size-base, 16px));
     --_feedback-color: var(--feedback-color, var(--icon-neutral));
@@ -173,16 +166,7 @@
     --_feedback-icon-disc: var(--feedback-icon-disc, var(--nds-icon-disc));
     --_feedback-icon-stroke: var(--feedback-icon-stroke, var(--nds-icon-information-circle));
     --_feedback-icon-symbol: var(--feedback-icon-symbol, linear-gradient(#0000 0 0));
-    --_feedback-symbol-color: var(--feedback-symbol-color, var(--icon-oncolor));
-
-    @include dark {
-        --_feedback-ring: var(--feedback-ring, var(--colors-neutral-900));
-    }
-
-    // The on-color discs are light: a dark symbol.
-    @include oncolor {
-        --_feedback-symbol-color: var(--feedback-symbol-color, var(--colors-base-black));
-    }
+    --_feedback-symbol-color: var(--feedback-symbol-color, var(--feedback-icon-symbol-neutral));
 
     display: inline-flex;
     align-items: center;
@@ -209,7 +193,7 @@
     // falls through to the neutral default: gray disc + white "i".
     // ==============================================
 
-    // Solid (default): disc glyph filled in the frozen status color.
+    // Solid (default): disc glyph filled in the status color.
     & > i {
         color: var(--_feedback-icon-color);
     }
@@ -219,8 +203,8 @@
         --nds-icon: var(--_feedback-icon-disc);
     }
 
-    // ::after symbol — painted white over the disc so it never inverts in dark
-    // mode. Inert unless a status sets --feedback-icon-symbol: the private's
+    // ::after symbol — painted over the disc in --_feedback-symbol-color.
+    // Inert unless a status sets --feedback-icon-symbol: the private's
     // default is a fully-transparent mask (NOT `none`, which would unmask the
     // whole box and paint a solid square — e.g. on alert's `critical`, an outline
     // chip with no symbol). Shared by alert/tooltip/progress, so it must stay

@@ -395,7 +395,7 @@
             color: var(--stepper-button-current-hovered);
         }
 
-        :not(.nds-oncolor)>& {
+        :not(.nds-oncolor)>&:not(:where(#{$oncolor-area})) {
             @include dark {
                 &::before {
                     color: var(--stepper-button-current);
@@ -836,7 +836,8 @@
 // ON COLOR STEPPER LAYOUT MODIFIER
 // ==============================================
 
-.nds-stepper.nds-oncolor {
+.nds-stepper.nds-oncolor,
+.nds-stepper#{$oncolor-area} {
     // A card on the stepper, a step or a step's content takes the translucent surface and the
     // on-color ink through the card's own knobs, so it needs no nds-oncolor of its own.
     &.nds-card,
@@ -950,7 +951,8 @@
 }
 
 // Static on color: no step state, so every step takes the current step's on-color look.
-.nds-stepper.nds-oncolor.nds-static {
+.nds-stepper.nds-oncolor.nds-static,
+.nds-stepper.nds-static#{$oncolor-area} {
     .nds-stepper-title { color: var(--text-oncolor-primary); }
     .nds-stepper-description { color: var(--text-oncolor-secondary); }
 
@@ -980,7 +982,8 @@
 
 // Radial on color: after the block above, so it outranks the step-state colors there.
 @include stepper-layout(radial) {
-    &.nds-oncolor {
+    &.nds-oncolor,
+    &#{$oncolor-area} {
         .nds-progress-circle {
             --progress-track-color: var(--colors-alpha-white-30);
             --progress-color: var(--background-surface-oncolor);

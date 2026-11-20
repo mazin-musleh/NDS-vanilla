@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.0"
-last_edit: "05/11/2026 - 12:02 PM"
+last_edit: "20/11/2026 - 04:53 PM"
 ---
 
 <section id="stepper-overview" class="nds-content-section nds-doc-overview">
@@ -180,7 +180,7 @@ Most classes go on `.nds-stepper`. The Card rows put `nds-card` on the stepper, 
 | Type | Progress (default) (hint: Steps done, current and to come) | `[data-current="2"]` | `.nds-stepper` | The script marks each step completed, current or upcoming from `data-current`. For a flow the user moves through |
 | Type | Static (hint: Every step looks the same, with no progress. Not radial) (demo: + icon-circle) (demo: + icon-outline) | `.nds-static` | `.nds-stepper:not(.nds-radial):not(.nds-radial-sm):not(.nds-radial-md)` | Every step looks the same, and the line is neutral. For an order with no progress, such as a how-it-works row. Not radial, which needs a current step. See Static under Behavior |
 | Type | Static (hint: Every step looks the same, with no progress. Not radial) (demo: + icon-circle) (demo: + icon-outline) | `.nds-featured-icon` | `.nds-stepper:not(.nds-dot) .nds-stepper-circle` | Every circle is a [Featured Icon](../components/featured-icon). Write `nds-circle nds-outline` too, and change them in the Icon rows. A dot takes no featured icon classes |
-| On color | On color (hint: For a dark or brand background) | `.nds-oncolor` | `.nds-stepper` | Light circles, lines and text, for a dark or brand background |
+| On color | On color (hint: For a dark or brand background) | `.nds-oncolor` | `.nds-stepper` | Light circles, lines and text, for a dark or brand background. Inside an on-color area (`data-theme="dark oncolor"`), the stepper already takes this look: skip the class |
 | Icon shape | Rounded (default) (hint: A rounded square) | — | `.nds-stepper-circle.nds-featured-icon` | A rounded square |
 | Icon shape | Circle (hint: A round icon) (id: icon-circle) | `.nds-circle` | `.nds-stepper-circle.nds-featured-icon` | A round icon |
 | Icon style | Light (default) (hint: A light fill in the icon color) | — | `.nds-stepper-circle.nds-featured-icon` | A light fill in the icon color |

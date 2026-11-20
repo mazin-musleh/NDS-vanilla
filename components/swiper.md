@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.0"
-last_edit: "07/11/2026 - 06:56 PM"
+last_edit: "20/11/2026 - 05:15 PM"
 ---
 
 <section id="swiper-overview" class="nds-content-section nds-doc-overview">
@@ -469,7 +469,7 @@ A Per view choice has one row for each knob it changes: write them all in the sw
 
 | Class | Element | Effect |
 |---|---|---|
-| `nds-oncolor` | `.nds-swiper` | Light bullets, arrows and section text, for a dark or image background. The Hero structure has it. It reaches subtle arrows only: add `nds-oncolor` to a primary or neutral arrow yourself |
+| `nds-oncolor` | `.nds-swiper` | Light bullets, arrows and section text, for a dark or image background. The Hero structure has it. Every part inside takes its on-color look, the arrows included. Inside an on-color area (`data-theme="dark oncolor"`), the swiper already takes this look: skip the class |
 | `nds-swiper-buttons` | `div` in `.nds-swiper-navigation` | Holds the previous and next buttons |
 | `nds-pause` | `.nds-btn` | Makes the button pause and play an autoplay row. Write the pause icon in it: it turns to play while paused. Add `nds-progress` and the ring for the countdown. Style it as any button. It can sit anywhere in the swiper. The script hides it when the row has no autoplay |
 | `nds-prev`, `nds-next` | `.nds-btn` | Makes the button move one page, and gives it its arrow icon. Style it as any button. The buttons can sit anywhere in the swiper |

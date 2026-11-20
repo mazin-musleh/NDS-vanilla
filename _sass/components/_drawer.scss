@@ -38,7 +38,8 @@
         -ms-overflow-style: none;
     }
 
-    &.nds-oncolor {
+    &.nds-oncolor,
+    &#{$oncolor-area} {
         --drawer-divider: var(--colors-alpha-white-10);
     }
 

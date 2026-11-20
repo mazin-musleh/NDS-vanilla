@@ -315,7 +315,8 @@ $section-breakout: ':where(.nds-content-wrapper, .nds-hero-section, .nds-content
 // ==============================================
 
 .nds-swiper.nds-oncolor,
-.nds-oncolor {
+.nds-oncolor,
+.nds-swiper#{$oncolor-area} {
     :is(.nds-section-title, .nds-section-description) {
         color: var(--text-oncolor-primary);
     }

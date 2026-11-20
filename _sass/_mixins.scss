@@ -122,9 +122,10 @@ $dark-area: ':is([data-theme~="dark"]:not(:root), [data-theme~="dark"]:not(:root
 // An on-color area: data-theme="dark oncolor", a dark area whose parts take their on-color looks.
 // Keyed on both tokens so a print, which drops dark, drops it too. Its popups keep the dark area's values:
 // every NDS menu, tooltip and dialog panel carries [popover] from init.
+// A part inside an .nds-oncolor part (a card on a photo) takes its on-color look too.
 $oncolor-host: '[data-theme~="dark"][data-theme~="oncolor"]:not(:root)';
 $oncolor-popup: '#{$oncolor-host} [popover]';
-$oncolor-area: ':is(#{$oncolor-host}, #{$oncolor-host} *):not([popover], [popover] *)';
+$oncolor-area: ':is(#{$oncolor-host}, #{$oncolor-host} *, .nds-oncolor *):not([popover], [popover] *)';
 
 // A folded rail layout. Until the side menu starts, the head script's copy of the stored
 // fold on <html> wins over the markup, so the first paint is already folded.

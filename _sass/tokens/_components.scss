@@ -157,14 +157,18 @@
     --featuredicons-icon-warning: var(--icon-warning);
 
     // ── feedback ──
-    // Solid badge disc fill — frozen at the light status color so the white
-    // symbol reads on it in both themes. NOT dark-rebound (unlike --icon-*,
-    // which lighten to -400 for on-page contrast).
+    // Solid badge disc fill and its symbol. A fill stays in dark mode, so the white symbol reads,
+    // except neutral; on color every fill takes its 200 shade and a dark symbol.
     --feedback-icon-fill-success: var(--colors-green-700);
     --feedback-icon-fill-error: var(--colors-red-700);
     --feedback-icon-fill-warning: var(--colors-yellow-700);
     --feedback-icon-fill-info: var(--colors-blue-700);
     --feedback-icon-fill-neutral: var(--colors-neutral-700);
+    --feedback-icon-symbol-success: var(--colors-base-white);
+    --feedback-icon-symbol-error: var(--colors-base-white);
+    --feedback-icon-symbol-warning: var(--colors-base-white);
+    --feedback-icon-symbol-info: var(--colors-base-white);
+    --feedback-icon-symbol-neutral: var(--colors-base-white);
 
     // ── forms ──
     --form-field-text-label: var(--text-default);
@@ -381,6 +385,10 @@
     --form-datecell-background-in-range: var(--colors-alpha-black-10);
     --form-datecell-background-in-range-hovered: var(--colors-primary-400);
 
+    // ── feedback: the neutral disc is white with a dark symbol, as on color ──
+    --feedback-icon-fill-neutral: var(--colors-base-white);
+    --feedback-icon-symbol-neutral: var(--colors-base-black);
+
     // ── featured-icons ──
     --featuredicons-background-default-light: var(--colors-alpha-white-10);
 
@@ -481,13 +489,6 @@
     --checkbox-primary-hovered: var(--controls-primary-hovered);
     --checkbox-primary-pressed: var(--controls-primary-pressed);
 
-    // ── feedback: light status discs, dark symbol ──
-    --feedback-icon-fill-success: var(--colors-green-200);
-    --feedback-icon-fill-error: var(--colors-red-200);
-    --feedback-icon-fill-warning: var(--colors-yellow-200);
-    --feedback-icon-fill-info: var(--colors-blue-200);
-    --feedback-icon-fill-neutral: var(--colors-base-white);
-
     // ── form field ──
     --form-field-text-label: var(--text-oncolor-primary);
     --form-field-text-placeholder: var(--text-oncolor-tertiary);
@@ -531,4 +532,25 @@
     --switch-primary-hovered: var(--controls-primary-hovered);
     --switch-primary-pressed: var(--controls-primary-pressed);
     --switch-neutral-default: var(--colors-alpha-white-60);
+}
+
+// Parts inside an on-color part (.nds-oncolor, such as a card on a photo) or an on-color area.
+.nds-oncolor,
+#{$oncolor-host} {
+    // ── avatar ──
+    --avatar-background: var(--colors-alpha-white-20);
+    --avatar-color: var(--icon-oncolor);
+    --avatar-border: var(--colors-alpha-white-20);
+
+    // ── feedback: light status discs, dark symbol ──
+    --feedback-icon-fill-success: var(--colors-green-200);
+    --feedback-icon-fill-error: var(--colors-red-200);
+    --feedback-icon-fill-warning: var(--colors-yellow-200);
+    --feedback-icon-fill-info: var(--colors-blue-200);
+    --feedback-icon-fill-neutral: var(--colors-base-white);
+    --feedback-icon-symbol-success: var(--colors-base-black);
+    --feedback-icon-symbol-error: var(--colors-base-black);
+    --feedback-icon-symbol-warning: var(--colors-base-black);
+    --feedback-icon-symbol-info: var(--colors-base-black);
+    --feedback-icon-symbol-neutral: var(--colors-base-black);
 }

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "2.0.0"
 updated: "2.0.0"
-last_edit: "04/11/2026 - 11:00 PM"
+last_edit: "20/11/2026 - 04:53 PM"
 ---
 
 <section id="timeline-overview" class="nds-content-section nds-doc-overview">
@@ -465,7 +465,7 @@ Each Structure is one use of the timeline, with its order and its labels written
 | Card (any) | Stroke (hint: A border in the card's own color) (id: stroke) | `.nds-stroke` | `.nds-stepper.nds-card` | A border around the timeline card |
 | Card (any) | Stroke (hint: A border in the card's own color) (id: stroke) | `.nds-stroke` | `.nds-stepper-content.nds-card` | On every content card: the card's own border color in place of the event's state color |
 | Card (any) | Shadow (hint: A shadow under each card) | `.nds-shadow` | `.nds-card` | An elevation shadow under each card. It combines with the border |
-| On color | On color (hint: For a dark or brand background. Not with Meta) | `.nds-oncolor` | `.nds-stepper:not(:has(.nds-meta))` | Light dots, lines and text, for a dark or brand background. Write `nds-oncolor` on every label divider too. Not with a [Meta](../components/meta) line, which has no on-color look |
+| On color | On color (hint: For a dark or brand background. Not with Meta) | `.nds-oncolor` | `.nds-stepper:not(:has(.nds-meta))` | Light dots, lines and text, for a dark or brand background. Write `nds-oncolor` on every label divider too. Not with a [Meta](../components/meta) line, which has no on-color look. Inside an on-color area (`data-theme="dark oncolor"`), the timeline already takes this look: skip the class |
 | On color | On color (hint: For a dark or brand background. Not with Meta) | `.nds-oncolor` | `.nds-stepper:not(:has(.nds-meta)) .nds-divider` | The same class on every label divider |
 | Middle | Middle (default) (hint: The text on the middle of the Date Tile) | `.nds-middle` | `.nds-stepper-content.nds-row` | Lines the text up on the middle of the tile. Off, the text starts at the top of the tile. See [Flex](../layout/flex) |
 | Loading | Loading (hint: Skeleton placeholders while the data loads) | `.nds-loading` | `.nds-stepper` | Every event shows as a skeleton while its data loads. Keep steps in the markup for the skeleton to cover, and remove the class when the data is in |
