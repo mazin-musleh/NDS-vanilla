@@ -314,7 +314,7 @@
 
 // A Date Tile in a step follows the step state, as the circle does.
 .nds-stepper-step {
-    &[data-state~="current"] { --date-tile-bg: var(--background-primary); --date-tile-color: var(--text-oncolor-primary); }
+    &[data-state~="current"] { --date-tile-bg: var(--stepper-button-current); --date-tile-color: var(--text-oncolor-primary); }
     &[data-state~="upcoming"] { --date-tile-bg: var(--background-neutral-light); --date-tile-color: var(--stepper-text-tertiary); }
 }
 
