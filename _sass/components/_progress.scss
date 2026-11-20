@@ -8,7 +8,7 @@
 
 @mixin progress-circle-base($size: 24px, $rotate: -90deg) {
   --_progress-track-color: var(--progress-track-color, var(--background-neutral-light));
-  --_progress-color: var(--progress-color, var(--background-primary));
+  --_progress-color: var(--progress-color, var(--progress-background-primary));
 
   position: relative;
   width: var(--progress-size, #{$size}) !important;
@@ -224,7 +224,7 @@
 .nds-progress-bar {
   --_progress-height: var(--progress-height, 8px);
   --_progress-value: var(--progress-value, 0);
-  --_progress-color: var(--progress-color, var(--background-primary));
+  --_progress-color: var(--progress-color, var(--progress-background-primary));
 
   &#{$oncolor-area} {
     --_progress-color: var(--progress-color, var(--background-surface-oncolor));
@@ -267,7 +267,7 @@
     align-items: center;
     justify-content: flex-end;
     padding-inline-end: var(--spacing-xs);
-    color: var(--text-oncolor-primary);
+    color: var(--_progress-label, var(--progress-text-primary));
     font-size: var(--typo-text-xs-FS);
     font-weight: var(--font-weight-semibold);
     white-space: nowrap;
@@ -323,13 +323,16 @@
   }
 
   // ─── Status variants (data-status overrides color) ───
+  // Status fills stay 600 in every mode: the % stays white.
   &[data-status="success"] {
     --progress-color: var(--background-success);
     --progress-value: 100 !important;
+    --_progress-label: var(--text-oncolor-primary);
   }
 
   &[data-status="error"] {
     --progress-color: var(--background-error);
+    --_progress-label: var(--text-oncolor-primary);
   }
 
 

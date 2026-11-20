@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Cookies** — On a desktop the buttons share one row; a phone still stacks them. The Notice view's third button reads "Manage". A page's own panel keeps its stack until its footers take `nds-col-sm` for `nds-col`.
 - **Calendar** — In Rows, a line separates the days from the events.
 - **Slider** — In dark mode, the bar's fill and the thumb take a lighter primary.
+- **Progress** — In dark mode, the ring and the bar take a lighter primary.
 - **Drawer, Side Menu** — An open group's mark is neutral. Only the groups that hold the current page take the primary color. In dark mode the marks take the lighter primary, as on color, and so do a table of contents and the selected tab.
 - **Scroll More** — The edge fade is 16px, not 48px, so less of a small area fades. Tabs and the side menu keep 48px; `--scroll-fade` still sets it.
 - **Modal** — Content beyond the title and description goes in a Scroll More: its edge fades while more is below, and the header and the actions stay in view.

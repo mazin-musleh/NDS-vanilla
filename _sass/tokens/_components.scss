@@ -206,7 +206,9 @@
     --link-oncolor-visited: var(--colors-alpha-white-90);
 
     // ── progress (the neutral fill; the stepper's neutral ring reads it too) ──
+    --progress-background-primary: var(--background-primary);
     --progress-background-neutral: var(--colors-neutral-700);
+    --progress-text-primary: var(--text-oncolor-primary); // the bar's % on the primary fill
 
     // ── radio ──
     --radio-primary-checked: var(--controls-primary-checked);
@@ -414,7 +416,8 @@
     --link-neutral-focused: var(--colors-neutral-200);
     --link-neutral-visited: var(--colors-neutral-300);
 
-    // ── progress ──
+    // ── progress (the 600 fill is lost on a dark bg, as the drawer's mark) ──
+    --progress-background-primary: var(--colors-primary-500);
     --progress-background-neutral: var(--colors-neutral-200);
 
     // ── radio (brighter for dot-with-border style) ──
@@ -577,6 +580,9 @@
     --table-background-header: var(--colors-alpha-black-20);
     --table-background-row-selected: var(--colors-alpha-white-20);
     --table-background-hover-selected: var(--colors-alpha-white-30);
+
+    // ── progress: the bar's % on the white fill ──
+    --progress-text-primary: var(--colors-primary-900);
 
     // ── upload: the field wash ──
     --upload-background-dropbox-default: var(--colors-alpha-white-10);
