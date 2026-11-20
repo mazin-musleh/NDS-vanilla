@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Slider** — In dark mode, the bar's fill and the thumb take a lighter primary.
 - **Progress** — In dark mode, the ring and the bar take a lighter primary.
 - **Stepper** — In dark mode, a completed step's line and a current step's Date Tile take the circle's lighter primary.
+- **Radio** — In dark mode, a checked radio takes a lighter primary.
 - **Drawer, Side Menu** — An open group's mark is neutral. Only the groups that hold the current page take the primary color. In dark mode the marks take the lighter primary, as on color, and so do a table of contents, the selected tab and Pagination's current page.
 - **Scroll More** — The edge fade is 16px, not 48px, so less of a small area fades. Tabs and the side menu keep 48px; `--scroll-fade` still sets it.
 - **Modal** — Content beyond the title and description goes in a Scroll More: its edge fades while more is below, and the header and the actions stay in view.

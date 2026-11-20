@@ -425,6 +425,10 @@
     --radio-neutral-checked: var(--colors-neutral-400);
     --radio-neutral-hovered: var(--colors-neutral-300);
     --radio-neutral-pressed: var(--colors-neutral-300);
+    // A thin ring and dot: one tier lighter than the filled controls.
+    --radio-primary-checked: var(--colors-primary-500);
+    --radio-primary-hovered: var(--colors-primary-400);
+    --radio-primary-pressed: var(--colors-primary-600);
 
     // ── button mark: 600 is lost on a dark bg, 400 glares ──
     --button-indicator-mark: var(--colors-primary-500);
@@ -536,6 +540,9 @@
     --link-primary-visited: var(--link-oncolor-visited);
 
     // ── radio ──
+    --radio-primary-checked: var(--controls-primary-checked);
+    --radio-primary-hovered: var(--controls-primary-hovered);
+    --radio-primary-pressed: var(--controls-primary-pressed);
     --radio-neutral-checked: var(--controls-neutral-checked);
     --radio-neutral-hovered: var(--controls-neutral-hovered);
     --radio-neutral-pressed: var(--controls-neutral-pressed);
