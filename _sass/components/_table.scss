@@ -301,6 +301,16 @@
     }
 }
 
+// On color the cells are washes: the border-colored table background would show through them,
+// and that background drew the frame, so an outline draws it over the cells.
+.nds-table:where(.nds-oncolor, #{$oncolor-area}),
+:where(table):where(.nds-oncolor, #{$oncolor-area}) {
+    --_sub-background: var(--table-sub-background, var(--colors-alpha-black-10));
+    background-color: transparent;
+    outline: 1px solid var(--table-cell-border);
+    outline-offset: -1px;
+}
+
 // ==============================================
 // COMPACT TABLE VARIANT
 // ==============================================
