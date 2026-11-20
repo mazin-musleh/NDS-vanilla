@@ -146,8 +146,8 @@ Docs (one pass at the end)
 
 Not in scope
 - Footer: **component built** (2026-11-20): `data-theme="dark oncolor primary"` on `.nds-footer`, deep primary in both
-  modes (owner pick), `.nds-brand` deprecated. **At the release:** switch `_includes/footer.html` (site chrome: the
-  live v2 has no areas, so not before) and add the `.nds-brand` row to `_data/migrations.yml`.
+  modes (owner pick), `.nds-brand` deprecated. The site footer and the page-layout skeletons switched too (2026-11-20),
+  with the `_data/migrations.yml` row: push `main` only with the release tag.
 - More fill colors: the registry is ready; none added now.
 
 ## Contrast (2026-11-20, `scripts/check-area-contrast.mjs`)

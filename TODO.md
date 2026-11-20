@@ -6,7 +6,7 @@ Cleaned 2026-11-12 at v2.0.0: shipped items left (all in `CHANGELOG.md` 2.0.0); 
 
 ## Open
 
-- **At the next release (area themes, `plans/area-themes.md`):** switch `_includes/footer.html` from `nds-brand` to `data-theme="dark oncolor primary"`, and add the footer `.nds-brand` deprecated row to `_data/migrations.yml`. Not before: the footer is site chrome and the live v2 has no areas. Check the `since: "2.0.x"` migration rows get the real version.
+- **At the next release (area themes):** the site footer already writes `data-theme="dark oncolor primary"`, so push `main` only together with the release tag (pushed alone, the live v2 footer turns gray). Check the `since: "2.0.x"` migration rows get the real version.
 - **Chrome: `nds-cq` by hand on a Side Info section**, as the only section, with content that grows, keeps a stale height (the same in 1.12). `min-height: stretch` is no fix: Safari sticks tall.
 - **NDS IQ: optional S101 behavior run** (owner go).
 
