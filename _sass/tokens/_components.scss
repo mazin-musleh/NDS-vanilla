@@ -78,6 +78,7 @@
     --button-indicator-pressed: var(--colors-neutral-800);
     --button-indicator-selected: var(--colors-neutral-800);
     --button-indicator-primary: var(--colors-primary-400); // brand-solid buttons; state-invariant by design
+    --button-indicator-mark: var(--background-primary); // a subtle button's primary mark: drawer, tabs, pagination
     --button-indicator-oncolor-default: var(--colors-alpha-white-40);
     --button-indicator-oncolor-pressed: var(--colors-base-white);
     --button-indicator-oncolor-selected: var(--colors-base-white);
@@ -425,6 +426,9 @@
     --radio-neutral-hovered: var(--colors-neutral-300);
     --radio-neutral-pressed: var(--colors-neutral-300);
 
+    // ── button mark: 600 is lost on a dark bg, 400 glares ──
+    --button-indicator-mark: var(--colors-primary-500);
+
     // ── slider (one tier lighter on a dark bg, hover lightens again) ──
     --slider-track-fill: var(--colors-primary-500);
     --slider-thumb-bg: var(--colors-primary-500);
@@ -500,6 +504,7 @@
 // controls take the white fill (their dark rebinds go back to the semantic controls set).
 #{$oncolor-host} {
     // ── button indicator ──
+    --button-indicator-mark: var(--colors-primary-400);
     --button-indicator-default: var(--button-indicator-oncolor-default);
     --button-indicator-pressed: var(--button-indicator-oncolor-pressed);
     --button-indicator-selected: var(--button-indicator-oncolor-selected);

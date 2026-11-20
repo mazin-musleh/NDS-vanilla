@@ -261,11 +261,7 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
   }
 
   &[aria-selected="true"]::before {
-    background-color: var(--border-primary);
-
-    // As the drawer's: the 600 mark is lost on a dark or on-color fill.
-    @include dark { background-color: var(--button-indicator-primary); }
-    @include oncolor { background-color: var(--button-indicator-primary); }
+    background-color: var(--button-indicator-mark);
   }
 
   &.nds-show-more {

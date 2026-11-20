@@ -150,15 +150,7 @@
 
         // An open group's mark is neutral; the primary color marks the current page's path only.
         &[data-state~="current"] {
-            --btn-indicator-selected: var(--background-primary);
-
-            @include dark {
-                --btn-indicator-selected: var(--button-indicator-primary);
-            }
-
-            @include oncolor {
-                --btn-indicator-selected: var(--button-indicator-primary);
-            }
+            --btn-indicator-selected: var(--button-indicator-mark);
         }
 
         .nds-label{
@@ -170,22 +162,11 @@
     // variant overrides (e.g. .nds-toc .nds-drawer) can win without needing
     // to replicate the whole :not/:is chain.
     &:where(:not(.nds-menu-btn, :active, .nds-oncolor)):where([data-state~="active"], [data-state~="selected"]) {
-        --btn-indicator-color: var(--background-primary);
-        --btn-indicator-selected: var(--background-primary);
+        --btn-indicator-color: var(--button-indicator-mark);
+        --btn-indicator-selected: var(--button-indicator-mark);
 
         :where(:root:not([data-theme~="dark"])) & {
             --btn-color: var(--text-primary-strong);
-        }
-
-        // Dark and on color take the primary button's lighter indicator: the 600 mark is lost on the selected fill.
-        @include dark {
-            --btn-indicator-color: var(--button-indicator-primary);
-            --btn-indicator-selected: var(--button-indicator-primary);
-        }
-
-        @include oncolor {
-            --btn-indicator-color: var(--button-indicator-primary);
-            --btn-indicator-selected: var(--button-indicator-primary);
         }
     }
 }

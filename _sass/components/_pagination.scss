@@ -104,15 +104,10 @@
         background-color: var(--button-background-primary-hovered);
         color: var(--button-background-primary-hovered);
 
-        // As the drawer's: the 600 mark is lost on a dark or on-color fill.
+        // Light keeps its 700; dark and on color take the shared mark.
         @include dark {
-          background-color: var(--button-indicator-primary);
-          color: var(--button-indicator-primary);
-        }
-
-        @include oncolor {
-          background-color: var(--button-indicator-primary);
-          color: var(--button-indicator-primary);
+          background-color: var(--button-indicator-mark);
+          color: var(--button-indicator-mark);
         }
       }
 
@@ -141,7 +136,7 @@
     min-width: 40px;
     min-height: 40px;
 
-    @include dark { --btn-indicator-selected: var(--button-indicator-primary); }
+    @include dark { --btn-indicator-selected: var(--button-indicator-mark); }
 
     &:is([aria-current="page"], [data-state~="active"]):not(.nds-dropmenu-trigger:hover) {
       background-color: unset;

@@ -65,19 +65,8 @@
         --btn-bg: transparent;
         --btn-bg-selected: transparent;
         --btn-color: var(--text-display);
-        --btn-indicator-color: var(--background-primary);
-        --btn-indicator-selected: var(--background-primary);
-
-        // As the drawer's: the 600 mark is lost on a dark or on-color fill.
-        @include dark {
-            --btn-indicator-color: var(--button-indicator-primary);
-            --btn-indicator-selected: var(--button-indicator-primary);
-        }
-
-        @include oncolor {
-            --btn-indicator-color: var(--button-indicator-primary);
-            --btn-indicator-selected: var(--button-indicator-primary);
-        }
+        --btn-indicator-color: var(--button-indicator-mark);
+        --btn-indicator-selected: var(--button-indicator-mark);
 
         // Set on the button, read by the label: no `.nds-label` tail after [data-state] (PERF-06).
         &[data-state~="active"] { --_toc-label-weight: var(--font-weight-semibold); }
