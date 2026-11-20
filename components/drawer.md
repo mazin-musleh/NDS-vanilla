@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.0.x"
-last_edit: "20/11/2026 - 05:15 PM"
+last_edit: "21/11/2026 - 12:03 AM"
 ---
 
 <section id="drawer-overview" class="nds-content-section nds-doc-overview">
@@ -576,7 +576,7 @@ A [Scroll More](../components/scroll-more) wrapper around the list holds the dra
 | `data-search-style` | `.nds-drawer` | The search box's field style: `darker` (the default), `lighter` or `outline`, as the Forms field styles |
 | `data-state="active"` | `<li>` | Marks the current page. Its line shows, and every submenu above it opens at load. A closed submenu above it keeps its button marked. The script writes `aria-current="page"` on the `<li>`'s link and moves it with the mark. It keeps an `aria-current` you wrote |
 | `data-state="open"` | `<li>` and its submenu `<ul>` | Opens the submenu at load, before the script runs. Set it on both, with `aria-expanded="true"` on the toggle button. The script keeps it in step: `opening` and `closing` during the slide, `open` while the submenu is open |
-| `data-state="active current"` | A submenu's toggle button | The script sets `active` while the submenu is open, or while it holds the current page. It adds `current` while it holds the current page, which gives the mark the primary color. Leave both to the script |
+| `data-state="active current"` | A submenu's toggle button | The script sets `active` while the submenu is open, or while it holds the current page. It adds `current` while it holds the current page, which gives the mark the primary color, a lighter primary in dark mode and on color. Leave both to the script |
 | `data-status` | `<li>` | `success`, `info`, `warning`, `error` or `neutral`. Colors the featured icon in the row |
 | `data-search-value` | `<li>` | More words the item is found by, such as its name in another language |
 {: .nds-table .nds-responsive}

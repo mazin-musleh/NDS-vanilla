@@ -152,6 +152,10 @@
         &[data-state~="current"] {
             --btn-indicator-selected: var(--background-primary);
 
+            @include dark {
+                --btn-indicator-selected: var(--button-indicator-primary);
+            }
+
             @include oncolor {
                 --btn-indicator-selected: var(--button-indicator-primary);
             }
@@ -173,7 +177,12 @@
             --btn-color: var(--text-primary-strong);
         }
 
-        // On color the mark takes the primary button's indicator, so it shows on a primary fill.
+        // Dark and on color take the primary button's lighter indicator: the 600 mark is lost on the selected fill.
+        @include dark {
+            --btn-indicator-color: var(--button-indicator-primary);
+            --btn-indicator-selected: var(--button-indicator-primary);
+        }
+
         @include oncolor {
             --btn-indicator-color: var(--button-indicator-primary);
             --btn-indicator-selected: var(--button-indicator-primary);
