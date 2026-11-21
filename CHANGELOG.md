@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Fixed
+- **Calendar** — In an on-color area, the Grid event cards take the on-color look and the event dot takes a lighter primary.
+- **Date Tile** — The default fill is clearer in dark mode and in an on-color area.
+
 ## [2.1.0] - 2026-11-21
 
 ### Added

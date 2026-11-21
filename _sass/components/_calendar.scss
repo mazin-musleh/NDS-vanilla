@@ -71,6 +71,11 @@
     height: 6px;
     border-radius: 50%;
     background-color: var(--background-primary);
+
+    // A primary dot vanishes on a primary fill.
+    @include oncolor {
+        background-color: var(--colors-primary-400);
+    }
 }
 
 .nds-calendar-day-name,
@@ -173,6 +178,11 @@
 // The picked day's fill: the dot takes the button's own color.
 .nds-btn.nds-calendar-day[data-state~="selected"] .nds-calendar-day-dot {
     background-color: currentColor;
+
+    // Over the dot's on-color rule.
+    @include oncolor {
+        background-color: currentColor;
+    }
 }
 
 // A day of the month before or after: quieter, in the weekday names' gray. Not the Date Picker's
@@ -332,6 +342,12 @@
     // A divided drawer drops its last row's divider; here it is the card's bottom edge.
     &:last-child {
         border-block-end: 1px solid var(--border-neutral-primary);
+    }
+
+    // On color: the on-color card's wash, not the dark card surface.
+    @include oncolor {
+        border-color: var(--colors-alpha-white-20);
+        background-color: var(--colors-alpha-white-10);
     }
 
     // The day's column or row names it on screen; a screen reader still reads the tile.

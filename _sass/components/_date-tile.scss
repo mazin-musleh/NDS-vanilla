@@ -51,6 +51,17 @@
         @include date-tile-lg;
     }
 
+    // The light wash fades on a dark page and vanishes on a primary fill.
+    &:not(.nds-dark) {
+        @include dark {
+            --_date-tile-bg: var(--date-tile-bg, var(--colors-primary-alpha-20));
+        }
+
+        @include oncolor {
+            --_date-tile-bg: var(--date-tile-bg, var(--colors-alpha-white-10));
+        }
+    }
+
     // A solid fill and white text, for a primary-light surface such as a nds-brand section.
     // The same fills as Featured Icon's nds-dark, so a row's tile and icon match.
     &.nds-dark {
