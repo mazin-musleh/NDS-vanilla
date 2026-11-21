@@ -9,11 +9,11 @@
 #   since    the release that changed it
 #   inert    a property NDS never read: setting it never had an effect
 #   markup   checked in markup only: the site CSS check cannot judge its scope (a status tag vs a normal tag)
-- { kind: class, name: nds-primary, scope: "&:is(.nds-content-section, .nds-hero-section)", status: deprecated, use: "data-theme=\"dark oncolor primary\"", since: "2.0.x", fix: "Write data-theme=\"dark oncolor primary\" on the section instead: the fill is a data-theme word now." }
-- { kind: class, name: nds-gradient-primary, scope: "&:is(.nds-content-section, .nds-hero-section)", status: deprecated, use: "data-theme=\"dark oncolor primary gradient\"", since: "2.0.x", fix: "Write data-theme=\"dark oncolor primary gradient\" on the section instead." }
-- { kind: class, name: nds-neutral, scope: "&:is(.nds-content-section, .nds-hero-section)", status: deprecated, use: "data-theme=\"dark neutral\"", since: "2.0.x", fix: "Write data-theme=\"dark neutral\" on the section instead." }
-- { kind: class, name: nds-brand, scope: "&.nds-footer", status: deprecated, use: "data-theme=\"dark oncolor primary\"", since: "2.0.x", fix: "Write data-theme=\"dark oncolor primary\" on the footer instead: deep primary in light and dark mode." }
-- { kind: class, name: nds-brand, scope: "&:is(.nds-content-section, .nds-hero-section)", status: deprecated, use: "data-theme=\"primary\"", since: "2.0.x", fix: "Write data-theme=\"primary\" on the section instead: primary without dark is the light brand tint." }
+- { kind: class, name: nds-primary, scope: "&:is(.nds-content-section, .nds-hero-section)", status: deprecated, use: "data-theme=\"dark oncolor primary\"", since: "2.1.0", fix: "Write data-theme=\"dark oncolor primary\" on the section instead: the fill is a data-theme word now." }
+- { kind: class, name: nds-gradient-primary, scope: "&:is(.nds-content-section, .nds-hero-section)", status: deprecated, use: "data-theme=\"dark oncolor primary gradient\"", since: "2.1.0", fix: "Write data-theme=\"dark oncolor primary gradient\" on the section instead." }
+- { kind: class, name: nds-neutral, scope: "&:is(.nds-content-section, .nds-hero-section)", status: deprecated, use: "data-theme=\"dark neutral\"", since: "2.1.0", fix: "Write data-theme=\"dark neutral\" on the section instead." }
+- { kind: class, name: nds-brand, scope: "&.nds-footer", status: deprecated, use: "data-theme=\"dark oncolor primary\"", since: "2.1.0", fix: "Write data-theme=\"dark oncolor primary\" on the footer instead: deep primary in light and dark mode." }
+- { kind: class, name: nds-brand, scope: "&:is(.nds-content-section, .nds-hero-section)", status: deprecated, use: "data-theme=\"primary\"", since: "2.1.0", fix: "Write data-theme=\"primary\" on the section instead: primary without dark is the light brand tint." }
 - { kind: class, name: date-picker-toggle, scope: .nds-date-picker, status: renamed, use: nds-date-picker-toggle, since: "2.0.0", fix: "Use nds-date-picker-toggle." }
 - { kind: class, name: nds-browse-btn, status: renamed, use: nds-upload-browse, since: "2.0.0", fix: "Use nds-upload-browse." }
 - { kind: class, name: nds-drop-hint, status: renamed, use: nds-upload-drop-hint, since: "2.0.0", fix: "Use nds-upload-drop-hint." }

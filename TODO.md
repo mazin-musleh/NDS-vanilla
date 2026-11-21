@@ -2,11 +2,10 @@
 
 Standing file: it always exists. At every release commit, remove the items that release shipped and carry the open ones forward. Never delete the file itself. This is the one open list.
 
-Cleaned 2026-11-12 at v2.0.0: shipped items left (all in `CHANGELOG.md` 2.0.0); git history holds the investigation notes.
+Cleaned 2026-11-21 at v2.1.0: shipped items left (all in `CHANGELOG.md` 2.1.0); git history holds the investigation notes.
 
 ## Open
 
-- **At the next release (area themes):** the site footer already writes `data-theme="dark oncolor primary"`, so push `main` only together with the release tag (pushed alone, the live v2 footer turns gray). Check the `since: "2.0.x"` migration rows get the real version.
 - **Chrome: `nds-cq` by hand on a Side Info section**, as the only section, with content that grows, keeps a stale height (the same in 1.12). `min-height: stretch` is no fix: Safari sticks tall.
 - **NDS IQ: optional S101 behavior run** (owner go).
 

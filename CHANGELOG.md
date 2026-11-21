@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-11-21
+
 ### Added
 - **Audit** — Flags a calendar with no empty message, a modal whose content holds more than its title and description with no Scroll More, and an area word in `data-theme` without `dark`, `gradient` without `primary`, two fill words, or a dark primary area without `oncolor`. A deprecated name is a soft note that names its replacement.
 - **Cookies** — After a choice, the panel closes itself in 5 seconds, with a countdown ring on its close button. Keyboard focus pauses it; a click in the panel keeps it open.
@@ -263,5 +265,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 The 1.x releases (1.0.0 to 1.12.0) are in [CHANGELOG-v1.md](https://github.com/mazin-musleh/NDS-vanilla/blob/main/CHANGELOG-v1.md).
 
-[Unreleased]: https://github.com/mazin-musleh/NDS-vanilla/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/mazin-musleh/NDS-vanilla/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.12.0...v2.0.0
