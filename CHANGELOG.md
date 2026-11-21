@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Autocomplete** — `nds:autocomplete:error` fires when a `data-url` request fails, with `{ query, error }`. `preventDefault()` stops the built-in message, for a page that shows its own.
 
 ### Changed
-- **Feedback** — In dark mode, the neutral and help icon is a white disc with a dark symbol, and its ring is a white wash, as on color.
+- **Feedback** — In dark mode, the neutral and help icon is a mid grey disc, and its ring is a white wash, as on color.
 - **Section** — Primary, Gradient and Neutral write the `data-theme` fill words, so the components inside take their on-color or dark looks. A section that still writes `data-theme="dark"` keeps its dark-mode look.
 - **Section, Hero** — The color classes `nds-primary`, `nds-gradient-primary`, `nds-neutral` and `nds-brand` are deprecated and go in v3. Use the `data-theme` words.
 - **Footer** — The brand surface is `data-theme="dark oncolor primary"`, deep primary in light and dark mode, and every part inside takes its on-color look. `nds-brand` is deprecated and goes in v3.

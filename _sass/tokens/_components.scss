@@ -319,6 +319,7 @@
     --tooltip-background-default: var(--colors-base-white);
     --tooltip-text-heading-default: var(--text-display);
     --tooltip-text-paragraph-default: var(--text-primary-paragraph);
+    --tooltip-help-idle: var(--colors-neutral-500); // the closed help trigger's disc: quieter than the open one
 
     // ── upload ──
     --upload-background-dropbox-default: var(--colors-neutral-100);
@@ -391,9 +392,8 @@
     --form-datecell-background-in-range: var(--colors-alpha-black-10);
     --form-datecell-background-in-range-hovered: var(--colors-primary-400);
 
-    // ── feedback: the neutral disc is white with a dark symbol, as on color ──
-    --feedback-icon-fill-neutral: var(--colors-base-white);
-    --feedback-icon-symbol-neutral: var(--colors-base-black);
+    // ── feedback: the neutral disc is mid grey with a white symbol ──
+    --feedback-icon-fill-neutral: var(--colors-neutral-500);
 
     // ── featured-icons ──
     --featuredicons-background-default-light: var(--colors-alpha-white-10);
@@ -493,6 +493,7 @@
     --tooltip-background-default: var(--colors-neutral-800);
     --tooltip-text-heading-default: var(--colors-neutral-50);
     --tooltip-text-paragraph-default: var(--colors-neutral-100);
+    --tooltip-help-idle: var(--colors-neutral-600);
 
     // ── upload (drop zone dip — matches --background-stripe depth) ──
     --upload-background-dropbox-default: var(--colors-neutral-850);
@@ -593,6 +594,9 @@
     --table-background-header: var(--colors-alpha-black-20);
     --table-background-row-selected: var(--colors-alpha-white-20);
     --table-background-hover-selected: var(--colors-alpha-white-30);
+
+    // ── tooltip: the closed help disc, a step under the open white one ──
+    --tooltip-help-idle: var(--colors-alpha-white-70);
 
     // ── progress: the bar's % on the white fill ──
     --progress-text-primary: var(--colors-primary-900);

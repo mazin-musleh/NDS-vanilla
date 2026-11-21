@@ -66,7 +66,7 @@
   // the icon's knob goes invalid and its own neutral fill applies — no
   // `.nds-feedback-icon` tail after [data-state] (PERF-06).
   &:not([data-state~="open"]) {
-    --_tooltip-help-color: var(--colors-neutral-500);
+    --_tooltip-help-color: var(--tooltip-help-idle);
   }
 
   // On the help wrapper itself, inherited by its icon; an outline icon has no disc
