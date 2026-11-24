@@ -162,6 +162,8 @@
         width: var(--card-image-width, var(--_card-image-width-base, 160px));
         min-width: 100%;
         max-width: 100%;
+        height: auto; // keeps its ratio: 100% would stretch it to the text's height
+
       }
     }
 
