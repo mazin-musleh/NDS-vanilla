@@ -130,14 +130,11 @@
         if (modalPanels.has(panel)) {
             NDS.dialog.show(panel, signal);
             if (!isStatic) NDS.dialog.onOutside(panel, () => close(panel), signal);
+        } else if (noFocusPanels.has(panel)) {
+            // show() moves focus even when handed back: the field the user types in gets blur and change.
+            panel.setAttribute('open', '');
         } else {
-            // show() moves focus into the dialog; a panel opened with { focus: false } gives it back.
-            const prev = document.activeElement;
             panel.show();
-            if (noFocusPanels.has(panel) && document.activeElement !== prev) {
-                if (prev && prev !== document.body) prev.focus({ preventScroll: true });
-                else document.activeElement?.blur();
-            }
         }
 
         // Track the sticky-header bottom for EVERY side: inline panels + top
