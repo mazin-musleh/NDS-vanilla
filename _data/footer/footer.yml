@@ -41,8 +41,8 @@ columns:
       - label: "Contact Us"
         url: "#"
         icon: "nds-hgi-headphones"
-      - label: "design@nds.gov.sa"
-        url: "mailto:design@nds.gov.sa"
+      - label: "email@example.com"
+        url: "mailto:email@example.com"
         icon: "nds-hgi-mail-01"
 
   - heading: "Follow Us"

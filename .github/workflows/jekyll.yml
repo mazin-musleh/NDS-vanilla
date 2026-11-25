@@ -72,6 +72,8 @@ jobs:
       # index.md: its lists come from the release's _data; only its bundle_sizes go live early.
       SITE_FILES: >-
         _includes/footer.html
+        _data/footer/docs.yml
+        _includes/topbar.html
         _includes/google-analytics.html
         _includes/seo-meta.html
         _includes/website-jsonld.html

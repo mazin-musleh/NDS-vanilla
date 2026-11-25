@@ -1,5 +1,9 @@
 <footer class="nds-footer nds-content-wrapper" data-theme="dark oncolor primary" role="contentinfo" aria-label="Site Footer" data-i18n-aria-label="footer.site_footer">
     {%- assign footer_data_file = page.footer | default: site.footer | default: "footer" %}
+    {%- comment %} Docs pages get real links; pages consumers start from keep the placeholder footer {%- endcomment %}
+    {%- unless page.footer or page.path contains 'templates/' or page.path contains 'examples/' %}
+    {%- assign footer_data_file = "docs" %}
+    {%- endunless %}
     {%- assign footer_data = site.data.footer[footer_data_file] %}
     {%- if footer_data.columns and footer_data.columns.size > 0 %}
     <nav class="nds-footer-content" aria-label="Footer navigation" data-i18n-aria-label="footer.footer_navigation">

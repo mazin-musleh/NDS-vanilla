@@ -1,6 +1,6 @@
 items:
   - label: "Sub Item 3.1"
-    url: "/about"
+    url: "#"
   - label: "Sub Item 3.2"
     url: "#"
   - label: "Sub Item 3.3"

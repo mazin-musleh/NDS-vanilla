@@ -2,8 +2,14 @@
     <button type="button" class="nds-btn nds-menu-btn nds-digital-stamp-tab" aria-expanded="false" aria-controls="nds-digital-stamp" data-topbar-toggle>
         <img class="nds-flag" src="{{ 'assets/icon/SAflag.min.svg' | relative_url }}" width="20" height="14"
             loading="lazy" alt="Saudi Arabia flag" data-i18n-alt="digital-stamp.flag">
+        {%- comment %} Docs pages only: the docs site is not a government website; pages consumers start from keep the real stamp {%- endcomment %}
+        {%- if page.path contains 'templates/' or page.path contains 'examples/' %}
         <span class="nds-digital-stamp-lg-text nds-truncate" data-i18n="digital-stamp.tab">A government website registered with the Digital Government Authority.</span>
         <span class="nds-digital-stamp-sm-text nds-truncate" data-i18n="digital-stamp.tab_short">Government website registered with DGA</span>
+        {%- else %}
+        <span class="nds-digital-stamp-lg-text nds-truncate">Demo of the stamp a government website registered with the DGA shows.</span>
+        <span class="nds-digital-stamp-sm-text nds-truncate">Demo: government website stamp</span>
+        {%- endif %}
         <span id="nds-digital-stamp-verify-text" class="nds-link nds-primary" data-i18n="digital-stamp.verify">How you know?</span>
     </button>
     <div class="nds-topbar-info">
@@ -73,7 +79,11 @@
             <div class="nds-digital-stamp-register">
                 <img src="{{ 'assets/img/dga-logo-icon.svg' | relative_url }}" width="21" height="31" alt="Digital Government Authority" data-i18n-alt="digital-stamp.dga" loading="lazy">
                 <div>
+                    {%- if page.path contains 'templates/' or page.path contains 'examples/' %}
                     <span class="nds-digital-stamp-register-text" data-i18n="digital-stamp.register">Registered on Digital Government Authority:</span>
+                    {%- else %}
+                    <span class="nds-digital-stamp-register-text">Demo registration number:</span>
+                    {%- endif %}
                     <a class="nds-digital-stamp-registration nds-primary nds-underline"
                         href="{{ page.dga_registration_url | default: site.dga_registration_url }}"
                         target="_blank">{{ page.dga_registration_number | default: site.dga_registration_number }}</a>

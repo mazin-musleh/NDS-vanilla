@@ -1,0 +1,82 @@
+# Docs site footer (footer.html picks it on docs pages); templates and examples keep footer.yml.
+columns:
+  - heading: "Start"
+    links:
+      - label: "Home"
+        url: "/"
+      - label: "Get Started"
+        url: "/guides/get-started.html"
+      - label: "Components"
+        url: "/components/"
+      - label: "Templates"
+        url: "/templates/"
+      - label: "Examples"
+        url: "/examples/"
+      - label: "Events"
+        url: "/events/"
+
+  - heading: "Guides"
+    links:
+      - label: "NDS IQ"
+        url: "/guides/integration-quality.html"
+      - label: "Migration"
+        url: "/guides/migration.html"
+      - label: "Changelog"
+        url: "https://github.com/mazin-musleh/NDS-vanilla/blob/main/CHANGELOG.md"
+        class: "nds-external"
+        target: "_blank"
+      - label: "Download"
+        url: "https://github.com/mazin-musleh/NDS-vanilla/releases/latest"
+        class: "nds-external"
+        target: "_blank"
+
+  - heading: "Project"
+    links:
+      - label: "GitHub"
+        url: "https://github.com/mazin-musleh/NDS-vanilla"
+        class: "nds-external"
+        target: "_blank"
+      - label: "Report an Issue"
+        url: "https://github.com/mazin-musleh/NDS-vanilla/issues/new/choose"
+        class: "nds-external"
+        target: "_blank"
+
+  - heading: "DGA"
+    links:
+      - label: "Digital Government Authority"
+        url: "https://dga.gov.sa/"
+        class: "nds-external"
+        target: "_blank"
+      - label: "Figma"
+        url: "https://www.figma.com/@sdga"
+        class: "nds-external"
+        target: "_blank"
+
+  # Demo icons: only LinkedIn is real
+  - heading: "Follow Us"
+    social_icons:
+      - url: "https://www.linkedin.com/in/mazin-musleh/"
+        icon: "nds-hgi-linkedin-02"
+        label: "Follow Us on LinkedIn"
+      - url: "#"
+        icon: "nds-hgi-new-twitter"
+        label: "Follow Us on Twitter"
+      - url: "#"
+        icon: "nds-hgi-facebook-02"
+        label: "Follow Us on Facebook"
+      - url: "#"
+        icon: "nds-hgi-youtube"
+        label: "Follow Us on YouTube"
+
+  - heading: "Mobile App"
+    mobile_apps:
+      apps:
+        - url: "#"
+          icon: "nds-icon-apple"
+          label: "Apple App Store"
+        - url: "#"
+          icon: "nds-icon-google-play"
+          label: "Google Play Store"
+        - url: "#"
+          icon: "nds-icon-huawei"
+          label: "Huawei AppGallery"

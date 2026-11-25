@@ -64,13 +64,13 @@ primary_nav:
     content_source: "nav-item3"
 
   - label: "Item 4"
-    url: "/services"
+    url: "#"
 
   - label: "Item 5"
-    url: "/contact"
+    url: "#"
 
   - label: "Item 6"
-    url: "/contact"
+    url: "#"
 
 # ──────────────────────────────────────────────────────────────
 # Actions Navigation
