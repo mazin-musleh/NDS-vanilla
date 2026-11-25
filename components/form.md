@@ -5,8 +5,8 @@ hero_title: Text Fields - National Design System
 hero_description: Form fields the user types in, with the label, messages and submit validation that every NDS field shares
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"
-updated: "2.0.0"
-last_edit: "16/11/2026 - 07:52 PM"
+updated: "2.1.x"
+last_edit: "25/11/2026 - 08:40 PM"
 lang: en
 direction: ltr
 ---
@@ -415,7 +415,7 @@ The eye button switches the field between hidden and plain text, and its label b
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Left-to-Right Values</span>
-              <p class="nds-card-description">An e-mail, phone or URL field, and a <a href="../components/formatted-input"><code class="nds-inline-code lang-html">nds-formatted</code></a> field, reads left to right on every page, so a phone number keeps its digit groups in order on an Arabic page. The value stays on the page side, as in the other fields.</p>
+              <p class="nds-card-description">An e-mail, phone or URL field, a <a href="../components/formatted-input"><code class="nds-inline-code lang-html">nds-formatted</code></a> field and a <a href="../components/date-picker">Date Picker</a> field read left to right on every page, so a phone number keeps its digit groups in order on an Arabic page. The value stays on the page side, as in the other fields.</p>
             </div>
           </div>
         </li>

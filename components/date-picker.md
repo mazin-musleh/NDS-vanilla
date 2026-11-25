@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.1.x"
-last_edit: "25/11/2026 - 07:31 PM"
+last_edit: "25/11/2026 - 08:40 PM"
 ---
 
 <section id="date-picker-overview" class="nds-content-section nds-doc-overview">
@@ -255,6 +255,19 @@ The picker checks the field at each `change`, typed text included. A date that d
             <div class="nds-card-text">
               <span class="nds-card-title">Bilingual Support</span>
               <p class="nds-card-description">Month names, weekdays, buttons and error messages show in Arabic or English from the page language. They change when the page language changes.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-text-align-left" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Left-to-Right Values</span>
+              <p class="nds-card-description">The field reads left to right on every page, so a date keeps its order on an Arabic page: a typed 4 shows as <code class="nds-inline-code lang-html">04/</code>, and a range shows its start first. The value stays on the page side, as in the other fields.</p>
             </div>
           </div>
         </li>
