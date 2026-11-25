@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [2.1.1] - 2026-11-26
+
 ### Added
 - **Date Picker** — `data-disabled-dates` takes ranges, written as the range field's value: `01/10/2026 - 05/10/2026`.
 
@@ -14,7 +16,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Cards** — In a row card, the image keeps its ratio beside long text, and `--image-ratio` works there.
 - **Date Picker** — The field reads left to right on an Arabic page: a typed 4 showed as `/04`, and a range showed its end first.
 - **Date Tile** — The default fill is clearer in dark mode and in an on-color area.
-- **Panel** — A panel the page opens on its own, such as the cookie notice, no longer takes focus for a moment. A date typed as it appeared showed a false error.
+- **Panel** — A panel the page opens on its own, such as the cookie notice, no longer takes focus for a moment, so a date typed while it opens no longer shows a false error.
+
+### Migrating from v2.1.0
+- Replace the runtime: copy `_site/assets/` over your assets folder. Nothing else changes.
 
 ## [2.1.0] - 2026-11-21
 
@@ -64,6 +69,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Link** — In light mode, a link turns darker on hover and press, not lighter, so it stays readable. In dark mode, a visited link stays readable too.
 - **Drawer** — With the side line (`nds-lined`), a sub-item's indicator shows whole. It was cut in half.
 - **Audit** — Reports the removed Side Info size classes `nds-sm`, `nds-md` and `nds-lg`. A missing icon style sheet gives one finding, not one per icon.
+
+### Migrating from v2.0.0
+- Replace the runtime: copy `_site/assets/` over your assets folder.
+- Nothing breaks. The color classes below still work, but they are deprecated and go in v3. `NDS.init.audit()` names each one on a page, with its replacement:
+  - **Section, Hero** — `nds-primary` → `data-theme="dark oncolor primary"`; `nds-gradient-primary` → `data-theme="dark oncolor primary gradient"`; `nds-neutral` → `data-theme="dark neutral"`; `nds-brand` → `data-theme="primary"`.
+  - **Footer** — `nds-brand` → `data-theme="dark oncolor primary"`.
 
 ## [2.0.0] - 2026-11-12
 
@@ -275,6 +286,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 The 1.x releases (1.0.0 to 1.12.0) are in [CHANGELOG-v1.md](https://github.com/mazin-musleh/NDS-vanilla/blob/main/CHANGELOG-v1.md).
 
-[Unreleased]: https://github.com/mazin-musleh/NDS-vanilla/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/mazin-musleh/NDS-vanilla/compare/v2.1.1...HEAD
+[2.1.1]: https://github.com/mazin-musleh/NDS-vanilla/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.12.0...v2.0.0
