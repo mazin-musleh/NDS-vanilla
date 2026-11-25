@@ -46,8 +46,8 @@
  *                                with d, m or y, counted in the field's calendar; a change
  *                                applies at once) · data-lang
  *                                data-disabled-weekdays (sun … sat) · data-disabled-dates (dates in the
- *                                picker's format or YYYY-MM-DD, comma-separated): days that can't be
- *                                picked; a change applies at once
+ *                                picker's format or YYYY-MM-DD, or "start - end" ranges, comma-separated):
+ *                                days that can't be picked; a change applies at once
  *                                data-year-before · data-year-after
  *   written by the picker:       data-picker-mode (container) · data-converted-date (input)
  * Gotchas:
@@ -79,6 +79,9 @@
         if (parts && parts.day) hijriParts.set(copy, { day: parts.day, month: parts.month, year: parts.year });
         return copy;
     }
+
+    // Between the two dates of a range: " - " (or an en/em dash), "to" or "إلى".
+    var RANGE_SEPARATOR = /\s+[-–—]\s+|\s+(?:to|إلى)\s+/;
 
     // One number per day, the same for every Date of that day (a Hijri stamp too).
     function getDayKey(date) {
@@ -414,7 +417,7 @@
         // with keepCalendar, it stays in its own.
         _readDates: function (text, keepCalendar) {
             var format = this._state.format, into = keepCalendar ? null : this._state.calendarType === 'hijri' ? 'hijri' : 'gregory';
-            var dates = this._isRangeMode() ? text.split(/\s+[-–—]\s+|\s+(?:to|إلى)\s+/) : [text];
+            var dates = this._isRangeMode() ? text.split(RANGE_SEPARATOR) : [text];
             if (!text.trim() || dates.length > 2) return null;
             dates = dates.map(function (date) { return readLoose(date, format, into); });
             return dates.indexOf(null) >= 0 ? null : dates.join(' - ');
@@ -646,8 +649,9 @@
             this._state.minDate = readBound(this._elements.input.getAttribute('data-min-date'));
             this._state.maxDate = readBound(this._elements.input.getAttribute('data-max-date'));
             // Days that can't be picked: weekdays (sun … sat), and dates in the picker's format or
-            // YYYY-MM-DD, comma-separated, so code can write a server's dates as they come. A part that
-            // is no date but holds spaces is split again: "2026-10-01 2026-10-02", as weekdays take.
+            // YYYY-MM-DD, comma-separated, so code can write a server's dates as they come. "start - end",
+            // as the range field's value, is every day between. A part that is no date but holds spaces
+            // is split again: "2026-10-01 2026-10-02", as weekdays take.
             this._state.disabledWeekdays = NDS.Date.readWeekdays(this._elements.input.getAttribute('data-disabled-weekdays'));
             this._state.disabledDates = new Set();
             var readDate = (text) => calendar.parseDate(text, format) || NDS.Date.readDay(text);
@@ -655,7 +659,16 @@
                 text = text.trim();
                 if (!text) return;
                 var whole = readDate(text);
-                var days = whole ? [whole] : NDS.splitList(text).map(readDate);
+                var ends = whole ? [] : text.split(RANGE_SEPARATOR);
+                var days = whole ? [whole] : ends.length === 2 ? ends.map(readDate) : NDS.splitList(text).map(readDate);
+                if (ends.length === 2 && days[0] && days[1]) {
+                    // A range that ends before it starts is refused, as in the field.
+                    if (days[0] > days[1]) return console.warn('NDS DatePicker: data-disabled-dates: "' + text + '" ends before it starts');
+                    // Walks by day key, so a DST midnight cannot drop the last day.
+                    for (var day = new Date(days[0]); getDayKey(day) <= getDayKey(days[1]); day.setDate(day.getDate() + 1)) {
+                        this._state.disabledDates.add(getDayKey(day));
+                    }
+                }
                 days.forEach((day) => { if (day) this._state.disabledDates.add(getDayKey(day)); });
                 if (!days.length || days.some((day) => !day)) console.warn('NDS DatePicker: data-disabled-dates: "' + text + '" is not a date in ' + format + ' or YYYY-MM-DD');
             });

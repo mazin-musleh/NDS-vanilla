@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "2.0.0"
-last_edit: "05/11/2026 - 12:02 PM"
+updated: "2.1.x"
+last_edit: "25/11/2026 - 07:31 PM"
 ---
 
 <section id="date-picker-overview" class="nds-content-section nds-doc-overview">
@@ -135,7 +135,7 @@ The class `nds-date-range` on `.nds-date-picker` makes the user pick two days. T
 ### Date Format
 {: .nds-block-title}
 
-`data-format` on `.nds-date-picker` sets how the field writes and reads a date. The default is the nearest `data-date-format`, on the picker or an element around it such as `<html>`, or `DD/MM/YYYY` without one. Write the same format as the placeholder: with `data-format="YYYY-MM-DD"` and `placeholder="YYYY-MM-DD"`, the field holds `2026-03-15`. The tokens are `YYYY`, `YY`, `MM`, `M`, `DD` and `D`, and any other character stays as written. `YY` reads as a year from 2000 to 2099. One format applies to both calendars and to both days of a range.
+`data-format` on `.nds-date-picker` sets how the field writes and reads a date. The default is the nearest `data-date-format`, on the picker or an element around it such as `<html>`, or `DD/MM/YYYY` without one. Write the same format as the placeholder: with `data-format="YYYY-MM-DD"` and `placeholder="YYYY-MM-DD"`, the field holds `2026-03-15`. The tokens are `YYYY`, `YY`, `MM`, `M`, `DD` and `D`, and any other character stays as written. `YY` reads as a year from 2000 to 2099. One format applies to both calendars and to both days of a range. The picker reads the format when it starts. To change it later, write the new `data-format` and placeholder, then call `NDS.DatePicker.destroy(input)` and `NDS.DatePicker.create(input)`: the date in the field takes the new format. Write the bounds in the new format too. Unavailable days take the new format or `YYYY-MM-DD`.
 
 A format with no day token shows a grid of months, and a format with only year tokens shows a grid of years. The picker then takes the first day of the month, or the first month of the year, as the date.
 
@@ -158,7 +158,7 @@ To filter a list by date, put the picker in a [Filter](../components/filter) gro
 ### Unavailable Days
 {: .nds-block-title}
 
-`data-disabled-weekdays` on `.nds-date-input` turns off weekdays: `sun`, `mon`, `tue`, `wed`, `thu`, `fri` or `sat`, with spaces or commas between them. `data-disabled-dates` turns off single days, with commas between them. Write each date in the field's format and calendar, or as `YYYY-MM-DD`, so code can write the dates a server sends as they come. An office closed at the weekend and on two holidays takes `data-disabled-weekdays="fri sat" data-disabled-dates="23/09/2026, 2026-12-02"`.
+`data-disabled-weekdays` on `.nds-date-input` turns off weekdays: `sun`, `mon`, `tue`, `wed`, `thu`, `fri` or `sat`, with spaces or commas between them. `data-disabled-dates` turns off days, with commas between them. Write each date in the field's format and calendar, or as `YYYY-MM-DD`, so code can write the dates a server sends as they come. A range is written as the range field's value, `start - end`, and turns off every day from the start to the end. An office closed at the weekend, on one holiday and for a week of Eid takes `data-disabled-weekdays="fri sat" data-disabled-dates="23/09/2026, 2027-03-08 - 2027-03-14"`.
 
 The calendar shows these days off, the arrow keys skip them, and Tab never lands on one. When today is one of them, the Today button is off. An empty field whose month has no day left to pick opens on the next month that has one. A typed or pasted date on one of them shows an error under the field, such as "18/09/2026 is not available. Pick another day". In a range, the start and the end cannot be such a day, but the days between them can. Code can change either attribute at any time, such as after a request for the fully booked days, and the calendar and the value's check follow at once. A word that is not a weekday, or a date the picker cannot read, is skipped with a warning in the console.
 
@@ -322,7 +322,7 @@ The picker checks the field at each `change`, typed text included. A date that d
 | `data-picker-mode` | `.nds-date-picker` | The script writes `day`, `month` or `year` from `data-format` when the field starts. The CSS reads it to show the month or the year grid |
 | `data-min-date`, `data-max-date` | `.nds-date-input` | The first and the last day the user can pick, in the field's format and calendar, `today`, or `today±N` with an optional `m` or `y`. See Date Bounds |
 | `data-disabled-weekdays` | `.nds-date-input` | Weekdays the user cannot pick, `sun` to `sat`, with spaces or commas between them, such as `fri sat`. See Unavailable Days |
-| `data-disabled-dates` | `.nds-date-input` | Single days the user cannot pick, in the field's format and calendar or as `YYYY-MM-DD`, with commas between them. A part with spaces that is not one date splits again on spaces. A change applies at once. See Unavailable Days |
+| `data-disabled-dates` | `.nds-date-input` | Days the user cannot pick, in the field's format and calendar or as `YYYY-MM-DD`, with commas between them. `start - end` turns off every day from the start to the end. A part with spaces that is not one date or one range splits again on spaces. A change applies at once. See Unavailable Days |
 | `data-year-before`, `data-year-after` | `.nds-date-input` | How many years before and after this year the year menu lists. The defaults are `5` and `0`. See Year List |
 | `data-lang` | `.nds-date-input` | The language of the calendar text, such as `ar` or `en`. Without it, the picker reads the nearest `lang`, the input's own included. See [Internationalization](../core/i18n) |
 | `data-converted-date` | `.nds-date-input` | The script writes the date in the other calendar, in the field's format, when the user presses Save, and when the calendar opens on a field that holds a date. Clear, and Save with no date, remove it. A typed date does not update it |

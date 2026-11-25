@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+- **Date Picker** — `data-disabled-dates` takes ranges, written as the range field's value: `01/10/2026 - 05/10/2026`.
+
 ### Fixed
 - **Calendar** — In an on-color area, the Grid event cards take the on-color look and the event dot takes a lighter primary.
 - **Cards** — In a row card, the image keeps its ratio beside long text, and `--image-ratio` works there.
