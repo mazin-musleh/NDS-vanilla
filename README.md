@@ -6,11 +6,11 @@
 [![Issues](https://img.shields.io/github/issues/mazin-musleh/NDS-vanilla)](https://github.com/mazin-musleh/NDS-vanilla/issues)
 [![Release](https://img.shields.io/github/v/release/mazin-musleh/NDS-vanilla?display_name=tag&sort=semver)](https://github.com/mazin-musleh/NDS-vanilla/releases/latest)
 
-<p dir="rtl"><strong>كود المنصات | نظام التصميم الموحد</strong>: تطبيق مفتوح المصدر لنظام التصميم الوطني السعودي بلغة HTML وCSS وJavaScript فقط، بدون إطار عمل وبدون مكتبات إضافية.</p>
+<p dir="rtl"><strong>قالب كود المنصات</strong>: تطبيق مفتوح المصدر لنظام التصميم الوطني السعودي (كود المنصات | نظام التصميم الموحد) بلغة HTML وCSS وJavaScript فقط، بدون إطار عمل وبدون مكتبات إضافية.</p>
 
 The Saudi [Digital Government Authority (DGA)](https://dga.gov.sa/) publishes its design specifications as [Figma files](https://www.figma.com/@sdga). Its own code is a React and Storybook component library.
 
-NDS-vanilla is an independent build of the same design system in plain HTML, CSS, and JavaScript. Plain web code works in any stack: static sites, server-rendered pages, or apps built with React or another framework. It brings no framework or dependencies of its own.
+NDS-vanilla is an independent build of the DGA design system in plain HTML, CSS, and JavaScript. Plain web code works in any stack: static sites, server-rendered pages, or apps built with React or another framework. It brings no framework or dependencies of its own.
 
 **Highlights:**
 - **Framework-free.** Plain HTML, CSS, and JavaScript, with zero runtime dependencies.

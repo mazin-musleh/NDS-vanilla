@@ -23,8 +23,8 @@ bundle_sizes:
         </div>
         <div class="nds-section-body">
             <div class="nds-block nds-prose">
-                <p>The Digital Government Authority (DGA) sets one design language for Saudi Arabia's government websites and services. It publishes the specifications on <a href="https://www.figma.com/@sdga" target="_blank">Figma</a>, and its official code is a React and Storybook library of the core UI components.</p>
-                <p>This project builds the same design system in plain HTML, CSS, and JavaScript. Plain web code works in any stack: static sites, server-rendered pages, or apps built with React or another framework. It brings no framework or dependencies of its own.</p>
+                <p>The Digital Government Authority (DGA) sets one design system for Saudi Arabia's government websites and services. It publishes the specifications on <a href="https://www.figma.com/@sdga" target="_blank">Figma</a>, and its official code is a React and Storybook library of the core UI components.</p>
+                <p>This project builds the DGA design system in plain HTML, CSS, and JavaScript. Plain web code works in any stack: static sites, server-rendered pages, or apps built with React or another framework. It brings no framework or dependencies of its own.</p>
                 <p>It goes beyond the components, with a layout system, DGA page templates, documentation, and a development environment. A team can build complete pages, not just single parts.</p>
                 <p>It is also built for AI-assisted development. <a href="{{ '/guides/integration-quality.html' | relative_url }}">NDS IQ</a>, a versioned instruction system, gives AI coding agents a consistent way to build with NDS.</p>
             </div>
