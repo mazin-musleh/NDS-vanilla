@@ -43,8 +43,8 @@ body:
     id: repro-url
     attributes:
       label: Reproduction URL
-      description: A live demo page on https://platformscode.dev/ that shows the problem, if possible.
-      placeholder: https://platformscode.dev/components/dropmenu.html
+      description: A live demo page on https://ndsvanilla.dev/ that shows the problem, if possible.
+      placeholder: https://ndsvanilla.dev/components/dropmenu.html
     validations:
       required: false
 

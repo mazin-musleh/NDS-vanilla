@@ -149,7 +149,7 @@ Delete the two lines when the event ends. That is the whole decommissioning.
 The script resolves its CSS and images relative to its own `src`, so this folder
 works at any path as long as the contents stay together.
 
-Full documentation: https://platformscode.dev/events/{theme}.html
+Full documentation: https://ndsvanilla.dev/events/{theme}.html
 """
 
 

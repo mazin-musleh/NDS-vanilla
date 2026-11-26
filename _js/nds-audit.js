@@ -36,7 +36,7 @@
 (() => {
     'use strict';
 
-    const DOCUMENTATION_URL = 'https://platformscode.dev/';
+    const DOCUMENTATION_URL = 'https://ndsvanilla.dev/';
     const rules = [];
 
     function addRule(definition) {

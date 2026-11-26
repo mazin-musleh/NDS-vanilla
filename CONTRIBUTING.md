@@ -18,7 +18,7 @@ The faster a maintainer can reproduce the problem, the faster it gets fixed. Eve
 - **Component**: the affected component name (e.g. `Dropmenu`, `Date Picker`, `Main Navigation`).
 - **Direction**: RTL / LTR / Both. This is critical; many bugs are direction-specific.
 - **Browser + version**: e.g. Chrome 124, Firefox 125, Safari 17.4 on iOS 17.
-- **Reproduction URL**: a live demo page on https://platformscode.dev/ that shows the problem, if possible.
+- **Reproduction URL**: a live demo page on https://ndsvanilla.dev/ that shows the problem, if possible.
 - **Steps**: what you did, step by step.
 - **Expected vs. actual**: what you thought would happen vs. what did happen.
 
