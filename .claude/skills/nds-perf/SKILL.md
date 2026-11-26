@@ -41,7 +41,7 @@ Three traps this harness avoids — all have produced wrong answers before:
    node .claude/skills/nds-perf/measure-lcp.mjs --no-throttle
 
    # remote page (full URL, measured as-is — no build or local server needed)
-   node .claude/skills/nds-perf/measure-lcp.mjs https://mazin-musleh.github.io/NDS-vanilla/
+   node .claude/skills/nds-perf/measure-lcp.mjs https://platformscode.dev/
    ```
    > **Home page = pass no path.** Don't pass a bare `/` — Git Bash rewrites it to a Windows path (the script guards against it, but just omit it).
    > **Remote runs**: the emulated throttle stacks on the real network (real TTFB, slightly slower numbers than local) — compare remote medians to remote, local to local.

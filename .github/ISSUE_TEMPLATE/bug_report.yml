@@ -43,8 +43,8 @@ body:
     id: repro-url
     attributes:
       label: Reproduction URL
-      description: A live demo page on https://mazin-musleh.github.io/NDS-vanilla/ that shows the problem, if possible.
-      placeholder: https://mazin-musleh.github.io/NDS-vanilla/components/dropmenu.html
+      description: A live demo page on https://platformscode.dev/ that shows the problem, if possible.
+      placeholder: https://platformscode.dev/components/dropmenu.html
     validations:
       required: false
 

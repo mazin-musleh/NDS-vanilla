@@ -1,7 +1,7 @@
 # NDS: National Design System (Vanilla)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Pages](https://img.shields.io/github/deployments/mazin-musleh/NDS-vanilla/github-pages?label=pages)](https://mazin-musleh.github.io/NDS-vanilla/)
+[![Pages](https://img.shields.io/github/deployments/mazin-musleh/NDS-vanilla/github-pages?label=pages)](https://platformscode.dev/)
 [![Last commit](https://img.shields.io/github/last-commit/mazin-musleh/NDS-vanilla)](https://github.com/mazin-musleh/NDS-vanilla/commits/main)
 [![Issues](https://img.shields.io/github/issues/mazin-musleh/NDS-vanilla)](https://github.com/mazin-musleh/NDS-vanilla/issues)
 [![Release](https://img.shields.io/github/v/release/mazin-musleh/NDS-vanilla?display_name=tag&sort=semver)](https://github.com/mazin-musleh/NDS-vanilla/releases/latest)
@@ -21,15 +21,15 @@ NDS-vanilla is an independent build of the DGA design system in plain HTML, CSS,
 
 > **Accessibility:** Components are tested by hand against WCAG 2.1 AA. An automated audit with axe-core and screen readers is planned. Known gaps are tracked in issues labeled `accessibility`.
 
-### → [**Live demo & full documentation**](https://mazin-musleh.github.io/NDS-vanilla/)
+### → [**Live demo & full documentation**](https://platformscode.dev/)
 
 Quick links:
-[Get Started](https://mazin-musleh.github.io/NDS-vanilla/guides/get-started.html) ·
-[Components](https://mazin-musleh.github.io/NDS-vanilla/#components) ·
-[Templates](https://mazin-musleh.github.io/NDS-vanilla/#compliance) ·
-[Examples](https://mazin-musleh.github.io/NDS-vanilla/#examples) ·
-[Architecture](https://mazin-musleh.github.io/NDS-vanilla/#architecture) ·
-[llms.txt](https://mazin-musleh.github.io/NDS-vanilla/llms.txt) ·
+[Get Started](https://platformscode.dev/guides/get-started.html) ·
+[Components](https://platformscode.dev/#components) ·
+[Templates](https://platformscode.dev/#compliance) ·
+[Examples](https://platformscode.dev/#examples) ·
+[Architecture](https://platformscode.dev/#architecture) ·
+[llms.txt](https://platformscode.dev/llms.txt) ·
 [Download](https://github.com/mazin-musleh/NDS-vanilla/releases/latest) ·
 [Report issue](https://github.com/mazin-musleh/NDS-vanilla/issues/new/choose)
 
@@ -63,14 +63,14 @@ Every page is Arabic (RTL) first, with English (LTR) support. The docs show a li
 
 | Your goal | What to do |
 |---|---|
-| **Try the demo** | Open the [live site](https://mazin-musleh.github.io/NDS-vanilla/). No setup needed. |
-| **Build a site with NDS** | Follow the [Get Started guide](https://mazin-musleh.github.io/NDS-vanilla/guides/get-started.html). |
+| **Try the demo** | Open the [live site](https://platformscode.dev/). No setup needed. |
+| **Build a site with NDS** | Follow the [Get Started guide](https://platformscode.dev/guides/get-started.html). |
 | **Change or extend NDS itself** | Fork the repository, clone your fork, and follow the Quick start below. Pull upstream changes with `git pull upstream main`. |
 | **Report a bug or ask for a feature** | [Open an issue](https://github.com/mazin-musleh/NDS-vanilla/issues/new/choose). |
 
 ## Using with AI agents
 
-[NDS IQ](https://mazin-musleh.github.io/NDS-vanilla/guides/integration-quality.html) is a versioned instruction system that gives AI coding agents a consistent way to build with NDS. It lives in this repository, not in the release zip. The Get Started setup prompt downloads it to your project root and points your `AGENTS.md` or `CLAUDE.md` at it. Claude Code, Cursor, Codex, and other agents then read the same file. The [Get Started guide](https://mazin-musleh.github.io/NDS-vanilla/guides/get-started.html) covers setup, the workflow, and upgrades.
+[NDS IQ](https://platformscode.dev/guides/integration-quality.html) is a versioned instruction system that gives AI coding agents a consistent way to build with NDS. It lives in this repository, not in the release zip. The Get Started setup prompt downloads it to your project root and points your `AGENTS.md` or `CLAUDE.md` at it. Claude Code, Cursor, Codex, and other agents then read the same file. The [Get Started guide](https://platformscode.dev/guides/get-started.html) covers setup, the workflow, and upgrades.
 
 **Working on NDS itself?** The project rules live in [AGENTS.md](AGENTS.md), which Cursor, Codex, Aider, and other agents read. [CLAUDE.md](CLAUDE.md) imports it for Claude Code. Claude Code also gets project skills in [.claude/skills/](.claude/skills/): docs, JS and CSS audits, performance measurement, icons, font updates, event packs, releases, and NDS IQ evaluation. No setup is needed.
 
