@@ -98,10 +98,14 @@ jobs:
             git diff --quiet "$t" HEAD -- _includes/NDS-IQ.md && { echo "tag=$t" >> "$GITHUB_OUTPUT"; exit 0; }
           done
           echo "No IQv tag matches _includes/NDS-IQ.md on main." >&2; exit 1
+      - name: Setup Pages
+        # Before the key: the saved site holds absolute URLs, so a domain change must miss it.
+        id: pages
+        uses: actions/configure-pages@v5
       - name: Name the saved release site
         # One saved build per release + NDS IQ tag + SITE_FILES content; any of them changing, or a forced rebuild, misses it.
         id: key
-        run: echo "prefix=release-site-${{ steps.release.outputs.tag }}-${{ steps.iq.outputs.tag }}-$(cat $SITE_FILES | sha256sum | cut -c1-12)-" >> "$GITHUB_OUTPUT"
+        run: echo "prefix=release-site-${{ steps.release.outputs.tag }}-${{ steps.iq.outputs.tag }}-$(echo "${{ steps.pages.outputs.origin }}" | cat - $SITE_FILES | sha256sum | cut -c1-12)-" >> "$GITHUB_OUTPUT"
       - name: Restore the saved release site
         id: saved
         if: ${{ !inputs.rebuild_release }}
@@ -117,9 +121,6 @@ jobs:
           ruby-version: '3.3' # Bundler 2.7+ requires Ruby >= 3.2
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
           cache-version: 0 # Increment this number if you need to re-download cached gems
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v5
 
       # Release site: only when nothing was restored.
       - name: Checkout the latest release
@@ -149,7 +150,10 @@ jobs:
       - name: Build the release at the root
         if: ${{ !steps.saved.outputs.cache-matched-key }}
         working-directory: _release
-        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}" -d ../_site
+        # The tag's _config.yml holds the url it shipped with; the live origin comes from Pages.
+        run: |
+          echo 'url: "${{ steps.pages.outputs.origin }}"' > "$RUNNER_TEMP/origin.yml"
+          bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}" --config "_config.yml,$RUNNER_TEMP/origin.yml" -d ../_site
         env:
           JEKYLL_ENV: production
       - name: Save the release site
@@ -167,6 +171,7 @@ jobs:
         # preview: true marks every page noindex (_includes/seo-meta.html).
         run: |
           echo 'preview: true' > "$RUNNER_TEMP/next.yml"
+          echo 'url: "${{ steps.pages.outputs.origin }}"' >> "$RUNNER_TEMP/next.yml"
           bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}/next" --config "_config.yml,$RUNNER_TEMP/next.yml" -d _site/next
         env:
           JEKYLL_ENV: production

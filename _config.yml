@@ -31,7 +31,7 @@ nds_iq:
   description: "Integration Quality: the instruction system that governs AI agents building with NDS."
 
 baseurl: "/NDS-vanilla"
-url: "https://mazin-musleh.github.io"  # production origin (no trailing slash); used by sitemap.xml / robots.txt
+url: "https://platformscode.dev"  # production origin (no trailing slash); used by sitemap.xml / robots.txt
 
 # Set to true to show the dark/light theme toggle button in the topbar.
 theme_switcher: true

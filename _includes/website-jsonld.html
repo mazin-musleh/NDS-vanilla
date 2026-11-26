@@ -18,7 +18,7 @@
       "@id": {{ home_url | append: '#website' | jsonify }},
       "url": {{ home_url | jsonify }},
       "name": {{ site.title | jsonify }},
-      "alternateName": ["قالب كود المنصات","كود المنصات", "نظام التصميم الموحد"],
+      "alternateName": ["Platforms Code", "قالب كود المنصات","كود المنصات", "نظام التصميم الموحد"],
       "description": {{ site.description | strip_html | jsonify }},
       "inLanguage": {{ page.lang | default: site.lang | default: 'en' | jsonify }},
       "publisher": { "@id": {{ home_url | append: '#organization' | jsonify }} }
