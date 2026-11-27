@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Fixed
 - **Editor** — Enter that confirms a word in a Chinese, Japanese or Korean keyboard no longer inserts the link or image early, or moves the caret out of a component.
+- **Filter** — Enter that confirms a word in a Chinese, Japanese or Korean keyboard no longer runs the search or submits the form early.
 - **Switch** — Screen readers announce it as a switch, not a checkbox.
 - **Windows contrast themes** — The switch thumb, the open tab's line and the selected mark in the side menu, main navigation and drawer stay visible.
 
