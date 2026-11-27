@@ -13,6 +13,7 @@ The guides assume a greenfield app. NDS is a shipped design system with measured
 | Change the markup (`<details name>`, `<progress>`, `command=`, `switch` attr, single OTP input) | Keeps the markup | Consumer markup is a production contract | A major release: file it for the major |
 | Fluid `clamp()` type | Fluid only where scoped | No blanket clamp | — |
 | `structuredClone()` | `JSON.parse(JSON.stringify())` | Older browsers, on purpose | — |
+| Swap working code for a newer JS feature (`Promise.withResolvers`, `toReversed`, `AbortSignal.timeout`) | Keeps the code | No browser floor, no measured gain | Baseline widely + a real gain |
 | `el.replaceChildren()` over `innerHTML = ''` | Keeps innerHTML | Marginal; NDS writes innerHTML templates, so Trusted Types is not a goal | NDS adopts Trusted Types |
 | Load a polyfill from a CDN (esm.sh) | Never | CSP posture and no third-party runtime fetch | — |
 

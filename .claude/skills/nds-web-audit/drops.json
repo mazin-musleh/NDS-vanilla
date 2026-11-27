@@ -1,5 +1,8 @@
 [
   { "rule": "js/structured-clone", "why": "JSON.parse(JSON.stringify()) copies are deliberate, for older browsers." },
   { "rule": "js/replace-children-innerhtml", "why": "Marginal: no measured gain, and NDS writes innerHTML templates, so Trusted Types is not a goal." },
+  { "rule": "js/promise-with-resolvers", "why": "Newer-feature swap of working code: no browser floor, no gain." },
+  { "rule": "js/copying-array-methods", "why": "Newer-feature swap of working code: no browser floor, no gain." },
+  { "rule": "js/abort-signal-timeout", "why": "Newer-feature swap of working code: no browser floor, no gain." },
   { "rule": "ime-safe-enter-submit", "file": "_js/nds-modal.js", "why": "Fires only when the modal box itself has focus, never inside a text field." }
 ]
