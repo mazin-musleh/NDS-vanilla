@@ -3,13 +3,13 @@ layout: page
 title: Bachelor of Science in Artificial Intelligence
 hero_title: Bachelor of Science in Artificial Intelligence
 hero_description: Preparing future leaders in AI, machine learning, and data science through rigorous academics and hands-on research
-breadcrumb: ["College of Computer Science","Artificial Intelligence"]
+breadcrumb: [["Examples", "/examples"]]
 lang: en
 direction: ltr
 # layout + layout_class name the page shape: the Front Matter table in layout/page-layout.md maps each key to its markup. This file's body is only the inner content.
 layout_class: nds-card-view
 sidemenu_mode: top
-last_edit: "03/11/2026 - 04:15 PM"
+last_edit: "27/11/2026 - 02:00 PM"
 ---
 
 <!--Section 1: About the Program - Expandable Content -->

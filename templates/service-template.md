@@ -10,9 +10,6 @@ hero_description: A comprehensive digital service platform showcasing National D
 breadcrumb:
 - ["DGA Templates", "/templates"]
 - ["Services List", "/examples/services-list"]
-- ["Services List", "/examples/services-list"]
-- ["Services List", "/examples/services-list"]
-- ["Services List", "/examples/services-list"]
 lang: en
 direction: ltr
 rating: true
@@ -30,7 +27,7 @@ hero_float_actions:
       style: "nds-primary"
     - share
 sidemenu_mode: false
-last_edit: "04/11/2026 - 11:01 AM"
+last_edit: "27/11/2026 - 02:00 PM"
 ---
 <section id="service-tabs" class="nds-content-section nds-sideinfo-section">
     <div class="nds-section-body">

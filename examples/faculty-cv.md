@@ -3,7 +3,7 @@ layout: page
 title: "Dr. Noura Al-Otaibi"
 lang: en
 direction: ltr
-breadcrumb: ["Faculty Members"]
+breadcrumb: [["Examples", "/examples"]]
 hero_title: "Dr. Noura Al-Otaibi"
 hero_description: "Associate Professor, Department of Industrial Engineering"
 hero_avatar: docs-assets/img/avatar2.webp
@@ -15,7 +15,7 @@ hero_float_actions: []
 # layout + layout_class name the page shape: the Front Matter table in layout/page-layout.md maps each key to its markup. This file's body is only the inner content.
 layout_class: nds-has-sideinfo
 sidemenu_mode: false
-last_edit: "07/11/2026 - 09:01 PM"
+last_edit: "27/11/2026 - 02:00 PM"
 ---
 
 <section id="faculty-profile" class="nds-content-section nds-sideinfo-section">
