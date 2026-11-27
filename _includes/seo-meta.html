@@ -1,17 +1,26 @@
 {%- comment -%} Canonical + Open Graph + Twitter Card meta. Title/description/image computed once and reused. Per-page overrides: og_image, og_type, noindex. site.preview (the /next/ build) noindexes every page. Production-only: URLs point at the hosted origin, so a local dev build or the release-template build omits them entirely (JEKYLL_ENV=production is set by GitHub Pages, not by `jekyll serve` or by `scripts/mkrelease.py`). {%- endcomment -%}
 {%- if jekyll.environment == "production" -%}
-{%- assign seo_title = page.title | default: site.title %}
+{%- assign seo_title = page.title | default: page.siteTitle | default: site.title %}
 {%- comment -%} Per-page description from the curated catalog (matched by url in _data/catalog.yml) so doc pages get unique copy without per-file front matter. {%- endcomment -%}
 {%- assign _entry = site.data.catalog | where: 'url', page.url | first %}
 {%- assign seo_desc = page.description | default: _entry.description | default: page.hero_description | default: page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 200 %}
 {%- assign seo_image = page.og_image | default: site.og_image | default: site.hero_image | absolute_url %}
 <meta name="description" content="{{ seo_desc | escape }}">
 <link rel="canonical" href="{{ page.url | absolute_url }}">
+{%- comment -%} Same twin lookup as the mainnav lang button; kept inline because this file ships to the live build on its own (SITE_FILES). {%- endcomment -%}
+{%- if page.path contains '-ar.md' %}{%- assign _twin_path = page.path | replace: '-ar.md', '.md' %}{%- else %}{%- assign _twin_path = page.path | replace: '.md', '-ar.md' %}{%- endif %}
+{%- assign _twin = site.pages | where: 'path', _twin_path | first %}
+{%- if _twin %}
+{%- if page.lang == 'ar' %}{%- assign _en_url = _twin.url %}{%- else %}{%- assign _en_url = page.url %}{%- endif %}
+<link rel="alternate" hreflang="{{ page.lang }}" href="{{ page.url | absolute_url }}">
+<link rel="alternate" hreflang="{{ _twin.lang }}" href="{{ _twin.url | absolute_url }}">
+<link rel="alternate" hreflang="x-default" href="{{ _en_url | absolute_url }}">
+{%- endif %}
 {%- if page.noindex or site.preview %}
 <meta name="robots" content="noindex, follow">
 {%- endif %}
 <meta property="og:type" content="{{ page.og_type | default: 'website' }}">
-<meta property="og:site_name" content="{{ site.title | escape }}">
+<meta property="og:site_name" content="{{ page.siteTitle | default: site.title | escape }}">
 <meta property="og:title" content="{{ seo_title | escape }}">
 <meta property="og:description" content="{{ seo_desc | escape }}">
 <meta property="og:url" content="{{ page.url | absolute_url }}">

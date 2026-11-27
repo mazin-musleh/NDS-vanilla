@@ -1,0 +1,26 @@
+# Arabic home slider. Fields: see herosliders.yml.
+
+- src: assets/img/diriyah-twilight.webp
+  src_small: assets/img/diriyah-twilight_sm.webp
+  src_mid: assets/img/diriyah-twilight_md.webp
+  overlay: 0.6
+  position: 75% 50%
+  content: |
+    <h1 class="nds-section-title">قالب كود المنصات</h1>
+    <p class="nds-section-description" style="max-width:550px;">مشروع مفتوح المصدر لتطبيق نظام التصميم الموحد في المملكة العربية السعودية، مبني بلغة HTML وCSS وJavaScript دون أي اعتماديات خارجية، وجاهز للاستخدام في المشاريع الفعلية.</p>
+    <div class="nds-section-action">
+      <a href="{relative_url}/ar/guides/get-started/" class="nds-btn nds-primary nds-oncolor nds-md"><i class="hgi hgi-stroke hgi-artificial-intelligence-04"></i><span class="nds-label">ابدأ الآن</span></a>
+      <a href="https://github.com/mazin-musleh/NDS-vanilla" target="_blank" class="nds-btn nds-secondary-outline nds-oncolor nds-md nds-external"><i class="hgi hgi-stroke hgi-github"></i><span class="nds-label">المشروع على GitHub</span></a>
+    </div>
+
+- src: assets/img/riyadhcenter_IQ.webp
+  src_small: assets/img/riyadhcenter_IQ_sm.webp
+  src_mid: assets/img/riyadhcenter_IQ_md.webp
+  overlay: 0.6
+  position: 20% 50%
+  content: |
+    <h2 class="nds-section-title">NDS IQ</h2>
+    <p class="nds-section-description" style="max-width:550px;">نظام التعليمات الذي تستخدمه أدوات البرمجة بالذكاء الاصطناعي للبناء بقالب كود المنصات. يشمل إعداد بيئة التشغيل، وبناء الصفحات، والتحقق في المتصفح، ونقل المشاريع، والترقية.</p>
+    <div class="nds-section-action">
+      <a href="{relative_url}/guides/integration-quality.html" class="nds-btn nds-primary nds-oncolor nds-md"><i class="hgi hgi-stroke hgi-artificial-intelligence-04"></i><span class="nds-label">عن NDS IQ</span></a>
+    </div>

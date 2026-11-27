@@ -2,7 +2,7 @@
 layout: page
 title: Get Started
 since: "1.6.0"
-last_edit: "11/11/2026 - 11:30 PM"
+last_edit: "27/11/2026 - 05:42 PM"
 lang: en
 direction: ltr
 hero_title: Get Started with NDS
@@ -60,7 +60,6 @@ sidemenu_mode: false
                             <span class="nds-alert-title">Prerequisites</span>
                             <ul class="nds-alert-description">
                                 <li><strong>A local AI coding agent</strong> that can read and edit your files, such as Claude Code, Cursor, or Codex. A chat assistant in the browser cannot reach your project.</li>
-                                <li><strong>An application that already serves at least one page.</strong> NDS adds the UI layer; it does not create the app.</li>
                             </ul>
                         </div>
                     </div>

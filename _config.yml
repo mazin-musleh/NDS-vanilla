@@ -18,8 +18,8 @@
 # Full docs: README.md → "Customizing _config.yml without merge conflicts"
 # ============================================================================
 
-title: "NDS - Vanilla National Design System"
-description: "An open-source, vanilla implementation of Saudi Arabia's National Design System. Production-ready HTML, CSS, and JavaScript built from scratch with zero dependencies."
+title: "NDS-vanilla - Platformscode Template"
+description: "An open-source, vanilla implementation of Platformscode, Saudi Arabia's National Design System. Production-ready HTML, CSS, and JavaScript built from scratch with zero dependencies."
 
 version: 2.1.x-dev     # build stamp: released line + .x-dev during development (never the guessed next number); finalized in the release commit, which also sweeps the X.Y.x since/updated doc stamps to the real number
 latest_release: 2.1.1  # last published release (tag + GitHub Release artifact)
@@ -75,9 +75,9 @@ headerBrandW: 40
 headerBrandH: 40
 
 # Brand Name
-brandName: "NDS" #comment this to remove text from brand
+brandName: "NDS-vanilla" #comment this to remove text from brand
 # brandNameColor: "#0a3d62" # optional; the CSS default is --text-display
-brandSlogan: Vanilla Design System
+brandSlogan: Platformscode Template
 # brandSloganColor: "#6c727e" # optional; the CSS default is --text-secondary-paragraph
 
 hero_image: assets/img/riyadhcenter_ai.webp
@@ -88,7 +88,7 @@ hero_image_pos: 50% 80%
 # Social share card (Open Graph / Twitter), 1200x627. Per-page override: `og_image` in front matter.
 og_image: docs-assets/img/nds-cover.webp
 hero_title: National Design System
-hero_description: The National Design System provides comprehensive design guidelines, components, and resources for creating consistent and accessible digital experiences across government services in Saudi Arabia.
+hero_description: Platformscode Template provides components, page templates, and guidance for building consistent, accessible digital services for government in Saudi Arabia.
 
 # Build settings
 markdown: kramdown

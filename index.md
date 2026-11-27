@@ -53,7 +53,7 @@ bundle_sizes:
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">Who It's For</h2>
-            <p class="nds-section-description">For teams and people who build, adapt, or learn government web development.</p>
+            <p class="nds-section-description">Made for teams and people who build, adapt, or learn government web development.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
@@ -67,7 +67,7 @@ bundle_sizes:
                         <div class="nds-card-content">
                             <div class="nds-card-text">
                                 <span class="nds-card-title">Government teams &amp; agencies</span>
-                                <p class="nds-card-description">Deliver DGA-aligned digital services on the stack you already run.</p>
+                                <p class="nds-card-description">Gives agencies a way to deliver DGA-aligned digital services on the stack they already run.</p>
                             </div>
                         </div>
                     </li>
@@ -80,7 +80,7 @@ bundle_sizes:
                         <div class="nds-card-content">
                             <div class="nds-card-text">
                                 <span class="nds-card-title">Freelancers</span>
-                                <p class="nds-card-description">Build client sites with a reusable component library and ready page templates.</p>
+                                <p class="nds-card-description">Gives freelancers a reusable component library and ready page templates that speed up client sites.</p>
                             </div>
                         </div>
                     </li>
@@ -93,7 +93,7 @@ bundle_sizes:
                         <div class="nds-card-content">
                             <div class="nds-card-text">
                                 <span class="nds-card-title">Students &amp; fresh graduates</span>
-                                <p class="nds-card-description">Learn core HTML, CSS, and plain JavaScript from a readable, production-grade codebase.</p>
+                                <p class="nds-card-description">Gives students hands-on practice in core HTML, CSS, and plain JavaScript through a readable, production-grade codebase.</p>
                             </div>
                         </div>
                     </li>
@@ -106,7 +106,7 @@ bundle_sizes:
                         <div class="nds-card-content">
                             <div class="nds-card-text">
                                 <span class="nds-card-title">Teachers &amp; trainers</span>
-                                <p class="nds-card-description">Teach with real components, page templates, and patterns in web development courses, bootcamps, and workshops.</p>
+                                <p class="nds-card-description">Gives teachers real components, page templates, and patterns to use in web development courses, bootcamps, and workshops.</p>
                             </div>
                         </div>
                     </li>
@@ -556,7 +556,7 @@ bundle_sizes:
                         <div class="nds-card-content">
                             <div class="nds-card-text">
                                 <span class="nds-card-title">Mount and Destroy</span>
-                                <p class="nds-card-description">Call <code>NDS.init.mount()</code> when a framework renders a view, and <code>NDS.init.destroy()</code> before it removes one. Destroy clears the view's listeners, open menus and modal backdrops.</p>
+                                <p class="nds-card-description">Call <code class="nds-inline-code lang-js">NDS.init.mount()</code> when a framework renders a view, and <code class="nds-inline-code lang-js">NDS.init.destroy()</code> before it removes one. Destroy clears the view's listeners, open menus and modal backdrops.</p>
                             </div>
                         </div>
                     </li>
@@ -569,7 +569,7 @@ bundle_sizes:
                         <div class="nds-card-content">
                             <div class="nds-card-text">
                                 <span class="nds-card-title">HTML Swaps</span>
-                                <p class="nds-card-description">Turbo, htmx and Livewire swaps use the same two calls: destroy the old content before the swap, and mount the new content after it.</p>
+                                <p class="nds-card-description">Turbo, htmx and Livewire swap part of the page without a reload. To keep components working, call <code class="nds-inline-code lang-js">NDS.init.destroy()</code> on the old part before the swap, then <code class="nds-inline-code lang-js">NDS.init.mount()</code> on the new part after it.</p>
                             </div>
                         </div>
                     </li>
@@ -582,7 +582,7 @@ bundle_sizes:
                         <div class="nds-card-content">
                             <div class="nds-card-text">
                                 <span class="nds-card-title">Server Rendering and Hydration</span>
-                                <p class="nds-card-description">NDS works with server-rendered apps in Next.js and Nuxt. Set <code>data-no-auto-init</code> on <code>&lt;html&gt;</code> so NDS waits until hydration ends.</p>
+                                <p class="nds-card-description">NDS works with server-rendered apps in Next.js and Nuxt. Set <code class="nds-inline-code lang-html">data-no-auto-init</code> on <code class="nds-inline-code lang-html">&lt;html&gt;</code> so NDS waits until hydration ends.</p>
                             </div>
                         </div>
                     </li>
@@ -595,7 +595,7 @@ bundle_sizes:
                         <div class="nds-card-content">
                             <div class="nds-card-text">
                                 <span class="nds-card-title">Two-Way Binding</span>
-                                <p class="nds-card-description">NDS fields fire native <code>input</code> and <code>change</code> events when their value changes, so React <code>onChange</code>, Vue <code>v-model</code>, Angular <code>ngModel</code> and Svelte <code>bind:value</code> stay in sync.</p>
+                                <p class="nds-card-description">NDS fields fire native <code class="nds-inline-code lang-js">input</code> and <code class="nds-inline-code lang-js">change</code> events when their value changes, so React <code class="nds-inline-code lang-js">onChange</code>, Vue <code class="nds-inline-code lang-html">v-model</code>, Angular <code class="nds-inline-code lang-html">ngModel</code> and Svelte <code class="nds-inline-code lang-html">bind:value</code> stay in sync.</p>
                             </div>
                         </div>
                     </li>
@@ -608,7 +608,7 @@ bundle_sizes:
                         <div class="nds-card-content">
                             <div class="nds-card-text">
                                 <span class="nds-card-title">Framework-Native Translations</span>
-                                <p class="nds-card-description">NDS changes only the text inside existing text nodes, so the framework's DOM stays as it rendered it. <code>data-i18n</code> markers in JSX, Vue and Angular templates keep working after the framework renders again.</p>
+                                <p class="nds-card-description">NDS changes only the text inside existing text nodes, so the framework's DOM stays as it rendered it. <code class="nds-inline-code lang-html">data-i18n</code> markers in JSX, Vue and Angular templates keep working after the framework renders again.</p>
                             </div>
                         </div>
                     </li>

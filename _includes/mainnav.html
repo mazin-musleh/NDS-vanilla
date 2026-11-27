@@ -7,7 +7,7 @@
         {%- assign brand_height = nav_data.headerBrandH | default: site.headerBrandH %}
         {%- assign brand_name = nav_data.brandName | default: site.brandName %}
         {%- assign brand_name_color = nav_data.brandNameColor | default: site.brandNameColor %}
-        {%- assign brand_slogan = nav_data.brandSlogan | default: site.brandSlogan %}
+        {%- assign brand_slogan = page.brandSlogan | default: nav_data.brandSlogan | default: site.brandSlogan %}
         {%- assign brand_slogan_color = nav_data.brandSloganColor | default: site.brandSloganColor %}
         {%- assign site_title = page.siteTitle | default: site.title %}
 
@@ -104,6 +104,17 @@
                             {%- if item.id %} id="{{ item.id }}"{%- endif %}
                             {%- if item.data_attr %} {{ item.data_attr }}{%- endif %}>{{ action_inner }}</a>
                         {%- else %}
+                        {%- assign lang_twin = nil %}
+                        {%- if item.data_attr == 'data-lang-toggle' %}
+                            {%- comment %} A page with an Arabic twin (foo.md ↔ foo-ar.md) links to it instead of flipping in place. {%- endcomment %}
+                            {%- if page.path contains '-ar.md' %}{%- assign twin_path = page.path | replace: '-ar.md', '.md' %}{%- else %}{%- assign twin_path = page.path | replace: '.md', '-ar.md' %}{%- endif %}
+                            {%- assign lang_twin = site.pages | where: 'path', twin_path | first %}
+                        {%- endif %}
+                        {%- if lang_twin %}
+                        {%- if lang_twin.lang == 'ar' %}{%- assign twin_label = 'العربية' %}{%- else %}{%- assign twin_label = 'English' %}{%- endif %}
+                        <a href="{{ lang_twin.url | relative_url }}" class="{{ action_class }}"{{ action_tip }} title="{{ twin_label }}" hreflang="{{ lang_twin.lang }}" lang="{{ lang_twin.lang }}">
+                            <i class="nds-icon {{ item.icon }}" aria-hidden="true"></i><span class="nds-label" data-hidden="sm md sr">{{ twin_label }}</span></a>
+                        {%- else %}
                         <button type="button" class="{{ action_class }}"{{ action_tip }}
                             {%- if item.type == 'modal' %} data-modal-target="{{ modal_target }}"{%- endif %}
                             title="{{ item.label }}"
@@ -112,6 +123,7 @@
                         {%- if item.data_attr == 'data-lang-toggle' %}
                         {%- comment %} Demo-only direction preview. Flips <html lang/dir> in place — does NOT translate content. Remove the data_attr above (or this whole nav item) to disable. {%- endcomment %}
                         <script>(function(){var b=document.currentScript.previousElementSibling,h=document.documentElement;b.addEventListener('click',function(){var ar=h.lang!=='ar';h.lang=ar?'ar':'en';h.dir=ar?'rtl':'ltr';var l=b.querySelector('.nds-label');if(l)l.textContent=ar?'العربية':'English';});})();</script>
+                        {%- endif %}
                         {%- endif %}
                         {%- endif %}
                         {%- if item.type == 'dropdown' %}
