@@ -8,13 +8,13 @@ primary_nav:
 
     template: "mainnav-column-view.html"
     type: "dropdown"
-    content_source: "nav-item2-ar"
+    content_source: "nav-item2"
 
   - label: "عنصر 3"
 
     template: "mainnav-row-list.html"
     type: "dropdown"
-    content_source: "nav-item3-ar"
+    content_source: "nav-item3"
 
   - label: "عنصر 4"
     url: "#"
@@ -37,7 +37,7 @@ actions_nav:
     icon: "nds-hgi-notification-02"
     custom_class: "nds-icon-only nds-pinned"
     button_style: "nds-nav-link nds-btn nds-subtle nds-indicator"
-    content_source: "notifications-ar"
+    content_source: "notifications"
     template: "mainnav-notifications.html"
     type: "dropdown"
     content_class: "nds-fit"

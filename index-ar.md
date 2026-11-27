@@ -31,7 +31,7 @@ bundle_sizes:
         </div>
         <div class="nds-section-body">
             <div class="nds-block nds-prose">
-                <p>تعتمد هيئة الحكومة الرقمية (DGA) كود المنصات (نظام التصميم الموحد، ويُعرف أيضاً بنظام التصميم الوطني) للمواقع والخدمات الحكومية في المملكة العربية السعودية. وتنشر الهيئة مواصفات النظام عبر منصة <a href="https://www.figma.com/@sdga" target="_blank">Figma</a>، وتوفر نسخته البرمجية الرسمية مكتبة مكونات مبنية باستخدام React وStorybook.</p>
+                <p>تعتمد هيئة الحكومة الرقمية (DGA) كود المنصات (نظام التصميم الموحد، ويعرف أيضاً بنظام التصميم الوطني) للمواقع والخدمات الحكومية في المملكة العربية السعودية. وتنشر الهيئة مواصفات النظام عبر منصة <a href="https://www.figma.com/@sdga" target="_blank">Figma</a>، وتوفر نسخته البرمجية الرسمية مكتبة مكونات مبنية باستخدام React وStorybook.</p>
                 <p>يقدم هذا المشروع تطبيقاً عملياً لكود المنصات باستخدام HTML وCSS وJavaScript، دون أطر عمل أو مكتبات خارجية، ولذلك يعمل في أي مشروع: موقع ثابت، أو صفحات يولّدها الخادم، أو تطبيق مبني باستخدام React أو غيره من أطر العمل.</p>
                 <p>ولا يقتصر المشروع على المكونات، بل يشمل نظاماً لتخطيط الصفحات، وقوالب صفحات جاهزة متوافقة مع كود المنصات، ووثائق استخدام، وبيئة تطوير؛ لتبني فرق العمل صفحات وخدمات كاملة، لا مكونات متفرقة فقط.</p>
                 <p>كما يدعم المشروع البناء بمساعدة وكلاء البرمجة الذكية عبر <a href="{{ '/ar/guides/integration-quality/' | relative_url }}">NDS IQ</a>، وهو دليل قواعد تتبعه هذه الأدوات لتبني صفحات متوافقة مع قالب كود المنصات وتفحصها بالطريقة نفسها في كل مرة.</p>
@@ -60,7 +60,7 @@ bundle_sizes:
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
             <h2 class="nds-section-title">الفئات المستفيدة</h2>
-            <p class="nds-section-description">صُمّم القالب للفرق والأفراد الذين يطوّرون المواقع والخدمات الحكومية أو يهيئونها أو يتعلمون تقنياتها.</p>
+            <p class="nds-section-description">صمّم القالب للفرق والأفراد الذين يطوّرون المواقع والخدمات الحكومية أو يهيئونها أو يتعلمون تقنياتها.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
@@ -158,7 +158,7 @@ bundle_sizes:
         <div class="nds-block">
             <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:0px">
                 <div class="nds-swiper-wrapper">
-                    {% for tpl in templates %}
+                    {% for tpl in templates %}{%- assign _arc = site.data.ar.catalog | where: 'url', tpl.url | first %}
                     <div class="nds-swiper-slide">
                         <div class="nds-card nds-stroke nds-shadow">
                             <div class="nds-card-header">
@@ -177,8 +177,8 @@ bundle_sizes:
                                         </span>
                                     </div>
                                     {%- endif %}
-                                    <span class="nds-card-title">{{ tpl.title }}</span>
-                                    <p class="nds-card-description">{{ tpl.description }}</p>
+                                    <span class="nds-card-title">{{ _arc.title | default: tpl.title }}</span>
+                                    <p class="nds-card-description">{{ _arc.description | default: tpl.description }}</p>
                                 </div>
                             </div>
                             {% if tpl.url %}
@@ -217,7 +217,7 @@ bundle_sizes:
         <div class="nds-block">
             <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:40px">
                 <div class="nds-swiper-wrapper">
-                    {% for ex in examples %}
+                    {% for ex in examples %}{%- assign _arc = site.data.ar.catalog | where: 'url', ex.url | first %}
                     <div class="nds-swiper-slide">
                         <div class="nds-card nds-stroke nds-shadow">
                             <div class="nds-card-header">
@@ -236,12 +236,12 @@ bundle_sizes:
                                         </span>
                                     </div>
                                     {%- endif %}
-                                    <span class="nds-card-title">{{ ex.title }}</span>
-                                    <p class="nds-card-description nds-truncate" style="--truncate: 2;">{{ ex.description }}</p>
+                                    <span class="nds-card-title">{{ _arc.title | default: ex.title }}</span>
+                                    <p class="nds-card-description nds-truncate" style="--truncate: 2;">{{ _arc.description | default: ex.description }}</p>
                                 </div>
                                 <div class="nds-card-tags">
                                     <span class="nds-tag nds-blue">
-                                        <span class="nds-label">{{ ex.category }}</span>
+                                        <span class="nds-label">{{ site.data.ar.labels[ex.category] | default: ex.category }}</span>
                                     </span>
                                     {% for tag in ex.tags %}
                                     <span class="nds-tag nds-gray">
@@ -286,14 +286,14 @@ bundle_sizes:
         <div class="nds-block">
             <div class="nds-swiper" style="--max-slides:3; --mid-slides:2; --min-slides:1; --peek:20px">
                 <div class="nds-swiper-wrapper">
-                    {% for ev in events %}
+                    {% for ev in events %}{%- assign _arc = site.data.ar.catalog | where: 'url', ev.url | first %}
                     <div class="nds-swiper-slide">
                         <div class="nds-card nds-stroke nds-shadow">
                             <div class="nds-card-header">
                                 {% if ev.thumbnail %}
                                 <div class="nds-card-image">
                                     <img data-src="{{ ev.thumbnail | relative_url }}" width="400" height="200"
-                                        alt="{{ ev.title }} theme preview" decoding="async">
+                                        alt="معاينة سمة {{ _arc.title | default: ev.title }}" decoding="async">
                                 </div>
                                 {% else %}
                                 <div class="nds-card-featured-icon">
@@ -305,12 +305,12 @@ bundle_sizes:
                             </div>
                             <div class="nds-card-content">
                                 <div class="nds-card-text">
-                                    <span class="nds-card-title">{{ ev.title }}</span>
-                                    <p class="nds-card-description">{{ ev.description }}</p>
+                                    <span class="nds-card-title">{{ _arc.title | default: ev.title }}</span>
+                                    <p class="nds-card-description">{{ _arc.description | default: ev.description }}</p>
                                 </div>
                                 <div class="nds-card-tags">
                                     <span class="nds-tag nds-blue">
-                                        <span class="nds-label">{{ ev.category }}</span>
+                                        <span class="nds-label">{{ site.data.ar.labels[ev.category] | default: ev.category }}</span>
                                     </span>
                                     {% for tag in ev.tags %}
                                     <span class="nds-tag nds-gray">
@@ -386,7 +386,7 @@ bundle_sizes:
                 </div>
             </div>
             <h2 class="nds-section-title">البنية التقنية والأداء</h2>
-            <p class="nds-section-description">أداء عالٍ وتوافق واسع مع المتصفحات.</p>
+            <p class="nds-section-description">أداء عال وتوافق واسع مع المتصفحات.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-block">
@@ -724,8 +724,8 @@ bundle_sizes:
 <section id="support" class="nds-content-section nds-brand">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">الدعم والتطوير الاحترافي</h2>
-            <p class="nds-section-description">تتوفر خدمات الدعم الفني والتطوير للمساعدة في استخدام قالب كود المنصات، أو بناء مكونات خاصة بالمشروع، أو تنفيذ موقع أو بوابة إلكترونية كاملة، وذلك حسب احتياج كل مشروع.</p>
+            <h2 class="nds-section-title">الاستشارات والتطوير</h2>
+            <p class="nds-section-description">تتوفر خدمات الاستشارات والتطوير لتطبيق كود المنصات في المواقع والخدمات الحكومية: من مراجعة الواجهات الحالية ومواءمتها مع معايير هيئة الحكومة الرقمية، إلى بناء مكونات خاصة، أو تنفيذ موقع أو بوابة إلكترونية كاملة.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-persona">
@@ -733,8 +733,8 @@ bundle_sizes:
                     <img src="{{ '/docs-assets/img/mazin-musleh.webp' | relative_url }}" alt="" width="240" height="240" loading="lazy">
                 </div>
                 <div class="nds-persona-info">
-                    <span class="nds-persona-name">مازن مصلح</span>
-                    <span class="nds-persona-role nds-truncate">مطور واجهات أمامية</span>
+                    <span class="nds-persona-name">مازن مصلح الحجيلي</span>
+                    <span class="nds-persona-role nds-truncate">مستشار تطوير الواجهات الأمامية</span>
                 </div>
             </div>
             <div class="nds-section-action">

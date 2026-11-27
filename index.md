@@ -717,8 +717,8 @@ bundle_sizes:
 <section id="support" class="nds-content-section nds-brand">
     <div class="nds-section-wrapper">
         <div class="nds-section-head">
-            <h2 class="nds-section-title">Professional Support</h2>
-            <p class="nds-section-description">Need help with NDS implementation, custom components, or a complete website or portal? Professional support and development services are available on request.</p>
+            <h2 class="nds-section-title">Consulting &amp; Development</h2>
+            <p class="nds-section-description">Consulting and development services for applying Platformscode to government websites and services: reviewing existing interfaces against DGA standards, building custom components, or delivering a complete website or portal.</p>
         </div>
         <div class="nds-section-body">
             <div class="nds-persona">
@@ -727,7 +727,7 @@ bundle_sizes:
                 </div>
                 <div class="nds-persona-info">
                     <span class="nds-persona-name">{{ site.author }}</span>
-                    <span class="nds-persona-role nds-truncate">Frontend Developer</span>
+                    <span class="nds-persona-role nds-truncate">Senior Frontend Consultant</span>
                 </div>
             </div>
             <div class="nds-section-action">

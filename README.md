@@ -188,4 +188,4 @@ A non-government site that keeps these defaults can look like an official Saudi 
 
 ## Author
 
-**Mazin Musleh** · Frontend Developer · [LinkedIn](https://www.linkedin.com/in/mazin-musleh/)
+**Mazin Musleh** · Senior Frontend Consultant · [LinkedIn](https://www.linkedin.com/in/mazin-musleh/)

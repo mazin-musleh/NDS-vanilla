@@ -8,7 +8,7 @@ The NDS IQ rules name no files. This index maps each need to this release's file
 - **Runtime:** copy `_site/assets/` into `NDS_ASSETS` whole, every subfolder included. Never copy `_site/docs-assets/`: it serves the docs site. The one exception is an event skin the dev wants, with its script.
 - **Images:** a template's photos are in `_site/docs-assets/`, which serves the docs site, so they are not in `NDS_ASSETS`. A hero the project has no image for keeps the hero canon's `img/riyadhcenter_IQ.webp` and its `_md` and `_sm` sizes, which ship in `NDS_ASSETS`. Any other photo slot the project has no image for takes `img/placeholder.svg` from `NDS_ASSETS`, with a plan checkbox for the dev's photo. A signed-in person's avatar with no photo takes initials, never the placeholder: the avatar icon marks the guest. A project with no logo keeps the Main Navigation and Footer canons' `img/palm_swords.svg`, with the project's name in `.nds-brand-name` and a plan checkbox for the dev's logo. Never use the photo placeholder as a logo, and never draw one.
 - **Demo data:** a `docs-assets/data/` URL in a canon or template is demo data for the docs site. Point it at the project's endpoint, with a plan checkbox when the project has none yet.
-- **Sources:** from this release tag's source zip, copy these into `_source/`: the folders `_js`, `_sass`, `foundations`, `components`, `utilities`, `layout`, `ui-shell`, `core`, `guides`, `templates`, `examples`, `_data/content`, and the files `_data/catalog.yml` and `_data/migrations.yml`.
+- **Sources:** from this release tag's source zip, copy these into `_source/`: the folders `_js`, `_sass`, `foundations`, `components`, `utilities`, `layout`, `ui-shell`, `core`, `templates`, `examples`, `_data/content`, and the files `_data/catalog.yml` and `_data/migrations.yml`.
 - **Release notes:** `CHANGELOG.md`.
 
 ## Read a doc page
@@ -38,7 +38,7 @@ Foundation, component, layout, shell, utility and core docs live in `_source/<fo
 | Page code that waits for components at load, content that changes after load, framework views | `_source/core/init.md` |
 | Requests, dates, text and languages | `_source/core/request.md`, `_source/components/date.md`, `_source/core/i18n.md`, and the banners of `_source/_js/nds-core.js` and `_source/_js/nds-date.js` |
 | Shared helpers: `data-state` and ARIA writes, observers, timers, scroll, focus, text, validation rules | `_source/core/helpers.md` |
-| Renamed, removed and deprecated names | `_source/_data/migrations.yml`: one row per name, with its fix. `_source/guides/migration.md` explains the columns |
+| Renamed, removed and deprecated names | `_source/_data/migrations.yml`: one row per name, with its fix. The file's header explains the columns |
 
 ## Page shapes
 

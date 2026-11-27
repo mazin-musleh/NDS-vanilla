@@ -8,7 +8,7 @@
             <div class="nds-toolbar">
                 <div class="nds-toolbar-row">
                     <div class="nds-toolbar-start">
-                        <span class="nds-toolbar-text" data-paged-target="components_list">Showing <b data-paged-from>1</b>&ndash;<b data-paged-to>6</b> of <b data-paged-count>{{ library | size }}</b> result(s)</span>
+                        <span class="nds-toolbar-text" data-paged-target="components_list">{% if page.lang == 'ar' %}عرض <b data-paged-from>1</b>&ndash;<b data-paged-to>6</b> من <b data-paged-count>{{ library | size }}</b> نتيجة{% else %}Showing <b data-paged-from>1</b>&ndash;<b data-paged-to>6</b> of <b data-paged-count>{{ library | size }}</b> result(s){% endif %}</span>
                     </div>
                 </div>
                 <div class="nds-form-container nds-search-box" data-filter-target="components_list">
@@ -16,7 +16,7 @@
                         <div class="nds-form-control">
                             <i class="nds-icon nds-hgi-search-01" aria-hidden="true"></i>
                             <input id="component-search" type="text" class="nds-search-input" name="search" autocomplete="off"
-                                placeholder="Search the library...">
+                                placeholder="{% if page.lang == 'ar' %}ابحث في المكتبة...{% else %}Search the library...{% endif %}">
                             <div class="nds-form-action">
                                 <button class="nds-btn nds-subtle nds-clear nds-icon-only" hidden aria-label="Clear search" data-i18n-aria-label="form.clear_search"><i
                                         class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i></button>
@@ -67,7 +67,9 @@
             <ul id="components_list" class="nds-list nds-paged-content nds-grid nds-stroke"
                 style="--per-page: 6; --max-col: 3; --mid-col: 2; --min-col: 1;">
 
+                {%- if page.lang == 'ar' %}{%- assign _L = site.data.ar.labels %}{%- else %}{%- assign _L = nil %}{%- endif %}
                 {% for comp in library %}
+                {%- if _L %}{%- assign _arc = site.data.ar.catalog | where: 'url', comp.url | first %}{%- else %}{%- assign _arc = nil %}{%- endif %}
                 {%- assign _shelf = comp.url | split: "/" %}
                 {%- assign _shelf = _shelf[1] %}
                 {%- if _shelf == "ui-shell" %}{% assign _shelf = "UI Shell" %}{% else %}{% assign _shelf = _shelf | capitalize %}{% endif %}
@@ -75,15 +77,15 @@
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <span class="nds-card-title">{{ comp.title }}</span>
-                            <p class="nds-card-description">{{ comp.description }}</p>
+                            <p class="nds-card-description">{{ _arc.description | default: comp.description }}</p>
                         </div>
                         <div class="nds-card-tags">
                             <span class="nds-tag nds-blue">
-                                <span class="nds-label" data-filter="shelf">{{ _shelf }}</span>
+                                <span class="nds-label" data-filter="shelf">{{ _L[_shelf] | default: _shelf }}</span>
                             </span>
                             {%- if comp.category != _shelf %}
                             <span class="nds-tag">
-                                <span class="nds-label">{{ comp.category }}</span>
+                                <span class="nds-label">{{ _L[comp.category] | default: comp.category }}</span>
                             </span>
                             {%- endif %}
                             {% for tag in comp.tags %}
@@ -100,7 +102,7 @@
                             {%- assign _dev_target = site.version | remove: "-dev" %}
                             {%- if comp_page.since == _dev_target and site.version != site.latest_release %}
                             <span class="nds-tag nds-blue">
-                                <span class="nds-label" data-filter="since">Next release</span>
+                                <span class="nds-label" data-filter="since">{{ _L['Next release'] | default: 'Next release' }}</span>
                             </span>
                             {%- else %}
                             <span class="nds-tag nds-green">
@@ -113,7 +115,7 @@
                     {% if comp.url %}
                     <div class="nds-card-actions">
                         <a href="{{ comp.url | relative_url }}" class="nds-btn nds-primary">
-                            <span class="nds-label">View Docs</span>
+                            <span class="nds-label">{{ _L['View Docs'] | default: 'View Docs' }}</span>
                         </a>
                     </div>
                     {% endif %}

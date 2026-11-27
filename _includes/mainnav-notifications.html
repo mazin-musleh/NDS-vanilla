@@ -3,7 +3,8 @@
         <div class="nds-scroll-more nds-divided">
             <ul class="nds-drawer-list nds-scroll-more-content">
                 {%- assign nf_source = item.content_source | default: 'notifications' %}
-                {%- assign notifications = site.data.content[nf_source] | sort: "timestamp" | reverse %}
+                {%- assign notifications = site.data.content[nf_source] %}{%- if page.lang == 'ar' and site.data.ar[nf_source] %}{%- assign notifications = site.data.ar[nf_source] %}{%- endif %}
+                {%- assign notifications = notifications | sort: "timestamp" | reverse %}
                 {%- for entry in notifications %}
                 <li>
                     {%- if forloop.first %}

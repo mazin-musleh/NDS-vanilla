@@ -34,7 +34,7 @@ permalink: /ar/guides/
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <span class="nds-card-title">البدء</span>
-                            <p class="nds-card-description">ثبّت القالب، وأعدّ NDS IQ، وابنِ صفحة صفحة مع التحقق في المتصفح، وحدّث النظام عند صدور إصدار جديد.</p>
+                            <p class="nds-card-description">ثبّت القالب، وأعدّ NDS IQ، وابن صفحة صفحة مع التحقق في المتصفح، وحدّث النظام عند صدور إصدار جديد.</p>
                         </div>
                         <div class="nds-card-tags">
                             <span class="nds-tag nds-blue"><span class="nds-label">سير العمل</span></span>
@@ -60,7 +60,7 @@ permalink: /ar/guides/
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <span class="nds-card-title">NDS IQ</span>
-                            <p class="nds-card-description">نظام التعليمات الذي يتبعه وكلاء الذكاء الاصطناعي للبناء بنظام NDS: كيف يُصنع، وكيف يُختبر، وكيف تُدار إصداراته، وكيف يُحدَّث.</p>
+                            <p class="nds-card-description">نظام التعليمات الذي يتبعه وكلاء الذكاء الاصطناعي للبناء بنظام NDS: كيف يصنع، وكيف يختبر، وكيف تدار إصداراته، وكيف يحدّث.</p>
                         </div>
                         <div class="nds-card-tags">
                             <span class="nds-tag nds-blue"><span class="nds-label">النظام</span></span>
@@ -86,7 +86,7 @@ permalink: /ar/guides/
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <span class="nds-card-title">الترحيل</span>
-                            <p class="nds-card-description">ارتقِ بموقعك إلى إصدار أحدث: ما الذي تغيّر في كل إصدار بعد إصدارك، وما الذي تكتبه بدلًا منه.</p>
+                            <p class="nds-card-description">ارتق بموقعك إلى إصدار أحدث: ما الذي تغيّر في كل إصدار بعد إصدارك، وما الذي تكتبه بدلًا منه.</p>
                         </div>
                         <div class="nds-card-tags">
                             <span class="nds-tag nds-blue"><span class="nds-label">مرجع</span></span>
@@ -111,7 +111,7 @@ permalink: /ar/guides/
                     <div class="nds-card-content">
                         <div class="nds-card-text">
                             <span class="nds-card-title">سياسة أمان المحتوى</span>
-                            <p class="nds-card-description">شغّل NDS تحت سياسة صارمة: ما يحتاجه كل جزء مضمَّن، وسياسة تغطي ذلك كله، وكيف تنقل المقابض المضمَّنة إلى فئات.</p>
+                            <p class="nds-card-description">شغّل NDS تحت سياسة صارمة: ما يحتاجه كل جزء مضمّن، وسياسة تغطي ذلك كله، وكيف تنقل المقابض المضمّنة إلى فئات.</p>
                         </div>
                         <div class="nds-card-tags">
                             <span class="nds-tag nds-blue"><span class="nds-label">مرجع</span></span>

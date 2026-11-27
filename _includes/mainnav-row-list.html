@@ -1,4 +1,4 @@
-{%- assign data = site.data.content[include.item.content_source] %}
+{%- assign data = site.data.content[include.item.content_source] %}{%- if page.lang == 'ar' and site.data.ar[include.item.content_source] %}{%- assign data = site.data.ar[include.item.content_source] %}{%- endif %}
 <div class="nds-nav-row">
     <div class="nds-nav-list">
         {%- for subitem in data.items %}

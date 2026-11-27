@@ -1,0 +1,467 @@
+# Arabic titles/descriptions for _data/catalog.yml, matched by url. Library entries keep their English title.
+- url: "/foundations/icons.html"
+  description: "أيقونات خطية من مكتبة HugeIcons، بخط يضم المكتبة كاملة لمحتوى الصفحة، ومجموعة مدمجة أصغر لعناصر الواجهة"
+
+- url: "/foundations/themes.html"
+  description: "الوضعان الفاتح والداكن، وتخصيص الهوية البصرية: توليد لوحة ألوان كاملة من ألوان أساسية بنظام OKLCH، أو تعديل رموز التصميم بملف أنماط"
+
+- url: "/foundations/tokens.html"
+  description: "خصائص CSS المخصصة التي يقوم عليها القالب: لوحة الألوان، ومقاييس الأحجام، والدلالات، ورموز المكونات، مع معاينة لكل منها"
+
+- url: "/layout/block.html"
+  description: "وحدة تباعد للمحتوى والمكونات، مع عنوان اختياري"
+
+- url: "/layout/flex.html"
+  description: "محاذاة واتجاه والتفاف سريع، مع إمكانية التعديل عبر الخصائص المخصصة"
+
+- url: "/layout/grid.html"
+  description: "نظام أعمدة متجاوب بنقاط توقف مرنة"
+
+- url: "/layout/page-layout.html"
+  description: "بنية الصفحة التي تتشاركها كل الصفحات، مع الأصناف التي تبدّل شكل الهيكل"
+
+- url: "/layout/prose.html"
+  description: "تنسيق افتراضي للمحتوى المتدفق الخالي من الأصناف الصادر عن المحررات وأنظمة إدارة المحتوى"
+
+- url: "/layout/section.html"
+  description: "أقسام محتوى الصفحة بمناطق للرأس والمحتوى والإجراءات"
+
+- url: "/layout/status-section.html"
+  description: "رسالة نتيجة لصفحة كاملة أو ضمن الصفحة، بأيقونة حالة وعنوان وإجراء واحد"
+
+- url: "/ui-shell/accessibility.html"
+  description: "لوحة على مستوى الموقع لإعدادات إمكانية الوصول المسبقة، وضبط الخطوط، والمرشحات البصرية"
+
+- url: "/ui-shell/cookies.html"
+  description: "لوحة موافقة تحفظ اختيار الزائر لملفات تعريف الارتباط حسب الفئة"
+
+- url: "/ui-shell/digital-stamp.html"
+  description: "لوحة التحقق من الجهة الحكومية"
+
+- url: "/ui-shell/head.html"
+  description: "CSS الحرج، وحزم الكود المؤجلة، وبوابة الإظهار المضمنة التي تحمّلها كل صفحة في رأسها"
+
+- url: "/ui-shell/footer.html"
+  description: "تذييل متعدد الأعمدة على سطح الهوية أو فاتح"
+
+- url: "/ui-shell/header.html"
+  description: "المنطقة في أعلى الصفحة التي يجتمع فيها الشريط العلوي ولوحة الختم الرقمي والتنقل الرئيسي"
+
+- url: "/ui-shell/hero.html"
+  description: "لافتات بعرض الصفحة كاملة، مع شرائح ودعوة لاتخاذ إجراء"
+
+- url: "/ui-shell/main-nav.html"
+  description: "شريط التنقل الرئيسي بالشعار والقوائم المنسدلة الكبيرة وإجراءات البحث واللغة، مع درج للجوال"
+
+- url: "/ui-shell/session-timeout.html"
+  description: "تنبيه قبل انتهاء الجلسة الخاملة، مع عدّاد تنازلي وطريقة لإبقاء المستخدم مسجلاً للدخول"
+
+- url: "/ui-shell/sideinfo.html"
+  description: "عمود مرافق لتفاصيل الخدمة والتقدم والتنقل داخل الصفحة"
+
+- url: "/ui-shell/sidemenu.html"
+  description: "قائمة جانبية قابلة للطي ومتداخلة للتنقل"
+
+- url: "/ui-shell/topbar.html"
+  description: "الشريط الذي يعلو الرأس: الختم الرقمي، وشرائط تنزلق أسفله، وتاريخ اليوم، والوقت أو الطقس، وزر الوضع الداكن"
+
+- url: "/components/button.html"
+  description: "إجراءات تفاعلية بأنماط وأحجام وحالات متعددة"
+
+- url: "/components/chips.html"
+  description: "وسوم مدمجة للتصنيفات والمرشحات والاختيارات"
+
+- url: "/components/cooldown.html"
+  description: "زر يتعطل بعد النقر ويعدّ تنازلياً، لإعادة الإرسال وإعادة المحاولة والإجراءات المقيدة بعدد المرات"
+
+- url: "/components/dropmenu.html"
+  description: "طبقة تفتح بزر للإجراءات والتنقل"
+
+- url: "/components/fab.html"
+  description: "زر عائم يثبت عند حافة الشاشة ويتراص مع أمثاله"
+
+- url: "/components/link.html"
+  description: "رابط ضمن النص بأنماط ألوان، مع اكتشاف الروابط الخارجية تلقائياً"
+
+- url: "/components/share.html"
+  description: "أزرار المشاركة عبر X وLinkedIn وWhatsApp ومواقع أخرى وقائمة المشاركة في الجهاز ونسخ الرابط، في قائمة أو في صف"
+
+- url: "/components/breadcrumb.html"
+  description: "مسار هرمي يبين موقع الصفحة الحالية"
+
+- url: "/components/content-switcher.html"
+  description: "التبديل بين أقسام المحتوى في المساحة نفسها من الشاشة"
+
+- url: "/components/drawer.html"
+  description: "قوائم تنقل قابلة للطي بمجموعات أكورديون"
+
+- url: "/components/pagination.html"
+  description: "تنقل بين الصفحات لمجموعات البيانات الكبيرة"
+
+- url: "/components/stepper.html"
+  description: "مؤشرات خطوات متسلسلة لسير العمل متعدد المراحل"
+
+- url: "/components/tabs.html"
+  description: "لوحات محتوى قابلة للتبديل بتنقل أفقي بين التبويبات"
+
+- url: "/components/toc.html"
+  description: "فهرس محتويات داخل الصفحة يملأ تلقائياً ويتتبع القسم النشط"
+
+- url: "/components/ipv.html"
+  description: "يفتح الصورة المصغرة بملء الشاشة، مع التكبير والتحريك والتنقل بين الصور"
+
+- url: "/components/modal.html"
+  description: "نوافذ حوار مركّزة للتأكيدات والنماذج"
+
+- url: "/components/panel.html"
+  description: "سطح غير مرتبط بمحتوى معين ينزلق من أي حافة من حواف الشاشة"
+
+- url: "/components/tooltip.html"
+  description: "بالون مساعدة سياقية بجانب مصطلح أو حقل أو زر، يفتح بالنقر أو بالتمرير"
+
+- url: "/components/alert.html"
+  description: "رسائل سياقية للحالة والتحذيرات والإشعارات، ضمن الصفحة أو كإشعار منبثق"
+
+- url: "/components/countdown.html"
+  description: "عدّ حي للوقت المتبقي حتى موعد نهائي أو نهاية مدة، بصيغة نص أو بطاقات"
+
+- url: "/components/empty.html"
+  description: "عنصر نائب يتكيف مع الحاوية الأم عند خلوها من المحتوى"
+
+- url: "/components/feedback.html"
+  description: "أيقونات حالة دلالية للنجاح والخطأ والمعلومة"
+
+- url: "/components/loading.html"
+  description: "مؤشرات دوّارة وعناصر هيكلية نائبة لحالات التحميل"
+
+- url: "/components/progress.html"
+  description: "دائرة أو شريط يبين مقدار ما أنجز من مهمة"
+
+- url: "/components/accordion.html"
+  description: "لوحات محتوى قابلة للتوسيع، مع دعم المجموعات المتداخلة"
+
+- url: "/components/avatar.html"
+  description: "صور الملفات الشخصية والأحرف الأولى ومجموعات الصور المتراصة"
+
+- url: "/components/calendar.html"
+  description: "فعاليات أسبوع واحد بسبعة أعمدة للأيام أو بقائمة صفوف، أو فعاليات شهر واحد أسفل أيامه"
+
+- url: "/components/card.html"
+  description: "حاويات محتوى متعددة الاستخدامات للمقالات والملفات الشخصية والإجراءات"
+
+- url: "/components/code.html"
+  description: "كتل كود منسقة مع تلوين الصيغة والنسخ"
+
+- url: "/components/content-placeholder.html"
+  description: "عنصر نائب منقط يشير إلى منطقة سيحل محلها مكون فعلي"
+
+- url: "/components/clock.html"
+  description: "الوقت الحالي بحسب المنطقة الزمنية للموقع، ويتغير كل دقيقة"
+
+- url: "/components/date.html"
+  description: "عرض التواريخ وتحليلها وطباعتها وتحويلها بين الميلادي والهجري (أم القرى)، بحسب المنطقة الزمنية وصيغة التاريخ في الموقع"
+
+- url: "/components/date-tile.html"
+  description: "تاريخ واحد في مربع صغير، مع اليوم من الأسبوع ورقم اليوم والشهر"
+
+- url: "/components/weather.html"
+  description: "الطقس الحالي لمكان واحد أو أكثر، بحسب إحداثياتها"
+
+- url: "/components/definition-list.html"
+  description: "أزواج مفتاح وقيمة منظمة بتخطيط شبكة أو قائمة"
+
+- url: "/components/divider.html"
+  description: "خط أفقي أو عمودي، مع تسمية مركزية اختيارية"
+
+- url: "/components/featured-icon.html"
+  description: "حاويات أيقونات زخرفية بخيارات الشكل واللون"
+
+- url: "/components/image.html"
+  description: "صورة تقص لتملأ شكلاً محدداً، مع نقطة تركيز وطبقة تعتيم اختيارية"
+
+- url: "/components/list.html"
+  description: "مجموعة عناصر متشابهة في شبكة أو في صفوف تمتلئ، كل عنصر بطاقة تشارك القائمة مظهرها"
+
+- url: "/components/meta.html"
+  description: "سطر من حقائق قصيرة، لكل منها أيقونة، مثل الوقت والمكان والشخص"
+
+- url: "/components/persona.html"
+  description: "كتلة هوية بصورة واسم ودور وصف إجراءات اختياري"
+
+- url: "/components/quote.html"
+  description: "كتلة اقتباس دلالية، مع عنوان اختياري ونسبة إلى المؤلف"
+
+- url: "/components/rating.html"
+  description: "عرض وإدخال تقييمات المستخدمين بالنجوم"
+
+- url: "/components/scroll-more.html"
+  description: "غلاف للمحتوى الزائد عن حاويته، بحواف متلاشية وزر عرض المزيد ثابت"
+
+- url: "/components/swiper.html"
+  description: "شريط عرض يدعم اللمس للصور وشرائح المحتوى"
+
+- url: "/components/tag.html"
+  description: "وسوم صغيرة للقراءة فقط للتصنيفات والحالات والبيانات الوصفية"
+
+- url: "/components/timeline.html"
+  description: "أحداث مؤرخة بالترتيب، مثل سجل طلب، مع الأحداث المنجزة والحدث الحالي والقادمة"
+
+- url: "/components/autocomplete.html"
+  description: "بحث بالكتابة مع اقتراحات مصفّاة"
+
+- url: "/components/checkbox.html"
+  description: "مفاتيح متعددة الاختيار للخيارات والتفضيلات"
+
+- url: "/components/custom-select.html"
+  description: "قائمة منسدلة منسقة لاختيار واحد، بمحتوى خيارات مخصص وواجهة JS، مبنية على dropmenu"
+
+- url: "/components/date-picker.html"
+  description: "تقويم هجري وميلادي مع تحويل مزدوج بين التاريخين"
+
+- url: "/components/editor.html"
+  description: "حقل نص منسق يرسل كود القالب نظيفاً، ويحوّل ما يلصق من Word وGoogle Docs وصفحات الويب، ويحافظ على مكونات القالب الملصوقة"
+
+- url: "/components/upload.html"
+  description: "حقل ملفات بمنطقة إفلات وفحوصات للملفات وحالة الرفع"
+
+- url: "/components/formatted-input.html"
+  description: "حقول رقم الهاتف والهوية الوطنية وIBAN ولوحة المركبة السعودية والرقم الضريبي وصيغ مخصصة، تحافظ على شكل القيمة"
+
+- url: "/components/multiselect.html"
+  description: "قائمة اختيار متعدد فوق مجموعة خانات اختيار أصلية: وسوم قابلة للإزالة، وخيارات تملأ من JSON، واعتماد مرحلي أو فوري"
+
+- url: "/components/form.html#number-input"
+  description: "حقل رقمي بأزرار زيادة ونقصان، مع حد أدنى وأقصى وخطوة"
+
+- url: "/components/otp.html"
+  description: "حقول مجزأة لكلمة المرور لمرة واحدة مع انتقال تلقائي"
+
+- url: "/components/password.html"
+  description: "حقل كلمة مرور بقواعد قوة حية وفحص تطابق التأكيد"
+
+- url: "/components/radio.html"
+  description: "اختيار واحد ضمن مجموعة"
+
+- url: "/components/form.html#select"
+  description: "قوائم منسدلة أصلية للاختيار من قائمة"
+
+- url: "/components/slider.html"
+  description: "مدخل نطاق رقمي بمقبض واحد أو بمقبضين لاختيار قيمة أو مدى بين حدين أدنى وأقصى"
+
+- url: "/components/switch.html"
+  description: "مفاتيح ثنائية للتشغيل والإيقاف للإعدادات والتفضيلات"
+
+- url: "/components/taginput.html"
+  description: "وسوم نصية حرة تعتمد كوسوم قابلة للإزالة أثناء الكتابة، وترسل بصيغة مصفوفة أصلية"
+
+- url: "/components/form.html"
+  description: "حقول أحادية السطر بتسميات وأيقونات وتحقق"
+
+- url: "/components/form.html#textarea"
+  description: "حقول نص متعددة الأسطر قابلة لتغيير الحجم"
+
+- url: "/components/time-picker.html"
+  description: "حقل وقت بمنتقيات للساعة والدقيقة والثانية في لوحة منسدلة"
+
+- url: "/components/user-feedback.html"
+  description: "استبيانات رضا ونماذج تقييم ضمن الصفحة"
+
+- url: "/components/voice-input.html"
+  description: "زر ميكروفون يكتب ما يقوله المستخدم في حقل نص، بلغة الصفحة"
+
+- url: "/components/chart.html"
+  description: "مخططات SVG خفيفة: أعمدة وخطوط ودائرية وحلقية"
+
+- url: "/components/export.html"
+  description: "تنزيلات CSV وExcel وPDF تصريحية من أي جدول أو قائمة بطاقات أو حاوية موسومة"
+
+- url: "/components/filter.html"
+  description: "مرشحات مطبّقة مع بحث ومزامنة مع الرابط وبيانات بعيدة"
+
+- url: "/components/metric.html"
+  description: "بطاقة للوحات المعلومات تجمع إحصائية رئيسية مع خط بياني مصغر مضمّن"
+
+- url: "/components/selection.html"
+  description: "يتيح للمستخدمين اختيار عناصر في أي قائمة، ليطبّق إجراء واحد عليها جميعاً"
+
+- url: "/components/sort.html"
+  description: "محرك إعادة ترتيب DOM للقوائم والشبكات والجداول، مع اكتشاف النوع تلقائياً ومزامنة مع الرابط"
+
+- url: "/components/table.html"
+  description: "شبكات بيانات مع الفرز والترقيم وصفوف قابلة للتوسيع"
+
+- url: "/components/toolbar.html"
+  description: "شريط تحكم أعلى جدول أو قائمة أو شبكة: تتصدره أعداد النتائج والمرشحات المطبّقة، وتلحقها أزرار التصدير والإجراءات"
+
+- url: "/utilities/copy.html"
+  description: "نسخ إلى الحافظة بنقرة واحدة مع علامة تأكيد وإعلان لقارئ الشاشة"
+
+- url: "/utilities/numbers.html#counter"
+  description: "عدّادات متحركة تشغّل بالتمرير وتعدّ تصاعدياً حتى قيمة مستهدفة"
+
+- url: "/utilities/numbers.html#sar"
+  description: "رموز الريال السعودي والعملات الدولية تضاف تلقائياً عبر سمة data"
+
+- url: "/utilities/expandable.html"
+  description: "زر عرض المزيد وعرض أقل للكتل الطويلة من المحتوى"
+
+- url: "/utilities/helpers.html"
+  description: "أصناف لغرض واحد لكودك: التوسيط، وإعادة ضبط التباعد، وعزل الاتجاه، ولون نص الهوية، والملاحظات"
+
+- url: "/utilities/hidden.html"
+  description: "أدوات CSS تخفي عنصراً دائماً، أو عند عروض شاشة محددة، أو على الشاشة فقط مع بقائه مقروءاً لقارئات الشاشة"
+
+- url: "/utilities/numbers.html"
+  description: "فواصل آلاف بحسب اللغة لأي رقم في الصفحة"
+
+- url: "/utilities/print.html"
+  description: "كيف تطبع الصفحة، وزر يطبع جزءاً واحداً منها وحده"
+
+- url: "/utilities/truncate-text.html"
+  description: "يقصّ النص الطويل عند عدد محدد من الأسطر"
+
+- url: "/core/audit.html"
+  description: "فحص تجريه على صفحة مبنية، يسرد كود القالب وCSS الذي يفشل دون أي خطأ، وكل اسم غيّره إصدار من القالب"
+
+- url: "/core/helpers.html"
+  description: "الدوال المشتركة التي يمكن لكود الصفحة استدعاؤها: الحالات وARIA والمراقبات والمؤقتات والتمرير والتركيز والنصوص وقواعد التحقق"
+
+- url: "/core/init.html"
+  description: "يشغّل كل مكون عند التحميل، والاستدعاءات التي تعلمها بتغيّر حاوية"
+
+- url: "/core/i18n.html"
+  description: "النصوص التي تكتبها مكونات القالب، في ملف لكل لغة تحمّله الصفحة، ويمكن للموقع تغييرها أو توسيعها"
+
+- url: "/core/request.html"
+  description: "غلاف لـ fetch بمهلة وحد لحجم الاستجابة وأخطاء يمكن التفريع بحسبها"
+
+- url: "/guides/migration.html"
+  description: "كل صنف وسمة ومعرّف وخاصية مخصصة وإعداد نافذة وحدث ومعامل رابط أعاد إصدار من القالب تسميته أو أزاله، مع ما تكتبه بدلاً منه"
+
+- url: "/templates/life-journey-template.html"
+  title: "قالب رحلات الحياة"
+  description: "مركز رحلات الحياة: نافذة تعريفية عند أول زيارة وتنبيه عن طريقة العمل، وتبويبات للرحلات الحالية والمتاحة والمكتملة مع حلقات التقدم."
+
+- url: "/templates/home-template.html"
+  title: "قالب الصفحة الرئيسية"
+  description: "الصفحة الرئيسية لجهة، بشريحة رئيسية في الواجهة، وأرقام بارزة، وبطاقات خدمات، وصف أخبار، وشريط شعارات الشركاء."
+
+- url: "/templates/form-template.html"
+  title: "قالب النموذج"
+  description: "تخطيط نموذج متعدد الخطوات بحقول إدخال نصية مجمّعة، ومؤشر خطوات جانبي (عمودي على سطح المكتب ودائري على الجوال)، وواجهة فرعية مسطحة."
+
+- url: "/templates/service-template.html"
+  title: "قالب صفحة الخدمة"
+  description: "خدمة حكومية رقمية بمعلومات جانبية وفتات تنقل وتخطيط محتوى منظم."
+
+- url: "/templates/contact-us-template.html"
+  title: "قالب اتصل بنا"
+  description: "صفحة تواصل بنموذج من عمودين، وبادئة رمز الدولة، وقائمة اختيار، ومنطقة نص، ورفع ملفات، وبطاقة معلومات جانبية بجهات الاتصال في الطوارئ."
+
+- url: "/templates/content-template.html"
+  title: "قالب المحتوى"
+  description: "تخطيط تحريري للمحتوى الطويل بأقسام على نمط المقالات وأقسام فرعية مرقّمة وفهرس محتويات ثابت داخل الصفحة للتنقل فيها."
+
+- url: "/templates/help-support-template.html"
+  title: "قالب المساعدة والدعم"
+  description: "مركز مساعدة بواجهة فرعية مسطحة وشبكة متجاوبة من بطاقات قنوات الدعم، لكل منها أيقونة مميزة ووصف وأوقات التوفر ومدة الاستجابة."
+
+- url: "/templates/about-entity-template.html"
+  title: "قالب عن الجهة"
+  description: "مركز صفحات الجهة بواجهة فرعية مسطحة وشبكة متجاوبة من بطاقات المواضيع، لكل منها أيقونة مميزة وعنوان وسهم تنقل."
+
+- url: "/templates/faq-template.html"
+  title: "قالب الأسئلة الشائعة"
+  description: "تخطيط للأسئلة الشائعة بواجهة فرعية مسطحة وقائمة أكورديون كبيرة وبطاقة دعوة لإبداء الرأي توجّه الاستفسارات غير المحلولة إلى الدعم."
+
+- url: "/templates/e-participation-template.html"
+  title: "قالب المشاركة الإلكترونية"
+  description: "مركز مواضيع المشاركة بواجهة فرعية وشبكة متجاوبة من أربعة أعمدة من بطاقات تنقل نصية فقط لنقاط دخول مشاركة المواطنين."
+
+- url: "/templates/social-media-template.html"
+  title: "قالب وسائل التواصل الاجتماعي"
+  description: "مركز قنوات التواصل الاجتماعي بواجهة فرعية مسطحة وشبكة متجاوبة من بطاقات المنصات، لكل منها أيقونة مميزة واسم وسهم تنقل."
+
+- url: "/templates/kpis-template.html"
+  title: "قالب مؤشرات الأداء"
+  description: "لوحة أداء تجمع بين بطاقات عدّادات المؤشرات ومخططات دائرية وحلقية وخطية وأعمدة، وجداول بيانات متجاوبة لإحصاءات البوابة والخدمات."
+
+- url: "/templates/search-template.html"
+  title: "قالب البحث"
+  description: "تخطيط نتائج البحث باستعلام في العنوان، وقوائم منسدلة للتصفية والفرز، وقائمة بطاقات مرقّمة الصفحات."
+
+- url: "/templates/404-template.html"
+  title: "قالب صفحة 404"
+  description: "صفحة خطأ مخصصة برسم توضيحي وإجراء للعودة إلى الصفحة الرئيسية."
+
+- url: "/examples/student-portal.html"
+  title: "بوابة الطالب"
+  description: "الصفحة الرئيسية للطالب بالدرجات وحصص اليوم والطلبات والاختبارات والخدمات."
+
+- url: "/examples/services-list.html"
+  title: "قائمة الخدمات"
+  description: "دليل خدمات حكومية قابل للتصفية، مع بحث ومرشحات حسب الفئة."
+
+- url: "/examples/sign-in.html"
+  title: "تسجيل الدخول"
+  description: "تسجيل دخول وطني موحد مع بديل بالبيانات، ورمز لمرة واحدة، وإعدادات الحساب."
+
+- url: "/examples/faculty-cv.html"
+  title: "السيرة الذاتية لعضو هيئة التدريس"
+  description: "ملف أكاديمي طويل بفهرس محتويات، وخط زمني للمسيرة المهنية، والمؤهلات، والمنشورات مرقّمة الصفحات."
+
+- url: "/examples/program.html"
+  title: "البرنامج الأكاديمي"
+  description: "صفحة برنامج دراسي بمحتوى قابل للتوسيع، والخطة الدراسية، ومعلومات القبول."
+
+- url: "/examples/manage-records.html"
+  title: "إدارة السجلات"
+  description: "شاشة سجلات بالإنشاء والتعديل والحذف، ومرشحات، وصفوف تفاصيل قابلة للتوسيع، وتصدير CSV."
+
+- url: "/examples/console-demo.html"
+  title: "لوحة التحكم"
+  description: "لوحة تحكم إدارية بمخططات ومعاملات ودليل للفريق وإشعارات."
+
+- url: "/examples/job-apply.html"
+  title: "التقديم على وظيفة"
+  description: "إعلان وظيفة مع طلب التقديم في الصفحة نفسها: الدور الوظيفي ثم نموذج طويل في مجموعات، يختار لكل حقل نوعه بحسب نوع الإجابة."
+
+- url: "/examples/track-request.html"
+  title: "متابعة طلبي"
+  description: "طلب واحد أرسله المستخدم: سجله، وما يلزمه الآن، والرد النهائي، في أربع حالات."
+
+- url: "/examples/events.html"
+  title: "تقويم الفعاليات"
+  description: "صفحة فعاليات وزارة: فعالية مميزة بعدّاد تنازلي، والفعاليات في Calendar بالأسبوع أو الشهر، والحجز في لوحة واحدة مشتركة."
+
+- url: "/examples/book-appointment.html"
+  title: "حجز موعد"
+  description: "حجز زيارة في صفحة واحدة، تظهر أقسامها بالترتيب المعتاد في مواقع الحجز: الخدمة والفرع، ثم اليوم وبجانبه الأوقات المتاحة، ثم بياناتك، مع ملخص حي يتحكم في زر الحجز."
+
+- url: "/examples/open-data.html"
+  title: "البيانات المفتوحة"
+  description: "صفحة مجموعة بيانات واحدة بترتيب بوابات البيانات المفتوحة: ما هي البيانات، والسجلات في جدول أو مخطط، وقاموس البيانات، والملفات، وواجهة API، وطريقة الاستشهاد، مع الحقائق ومجموعات البيانات ذات الصلة بجانبها."
+
+- url: "/examples/news-article.html"
+  title: "الخبر الصحفي"
+  description: "خبر واحد بالترتيب المعتاد في المواقع الإخبارية: سطر المؤلف تحت العنوان، ونص مع اقتباس ومعرض صور، ثم Share والكاتب، وبجانبه الأخبار ذات الصلة والأكثر قراءة، ثم مزيد من الأخبار."
+
+- url: "/examples/account-settings.html"
+  title: "إعدادات الحساب"
+  description: "حساب مستخدم مسجل الدخول في تبويبات من صفوف هادئة: لكل إعداد صف بقيمته وزر تغيير، وكل تغيير في Modal صغيرة، ويؤكّد البريد الإلكتروني أو الجوال الجديد برمز."
+
+- url: "/examples/support-inbox.html"
+  title: "صندوق رسائل الدعم"
+  description: "رسائل مستخدم مسجل الدخول تقرأ كالخطابات: تبويبا الوارد والمرسل، وصفوف غير مقروءة، ولوحة واحدة للقراءة والرد، ولوحة لكتابة رسالة جديدة."
+
+- url: "/events/national-day-96.html"
+  title: "اليوم الوطني 96"
+  description: "غيّر مظهر الموقع كاملاً لليوم الوطني السعودي بوسم script واحد: الواجهة الرسمية للحملة بست شرائح، وأشرطة الهوية أسفل كل قسم، وتذييل بسمة المناسبة، في الوضعين الفاتح والداكن."
+
+- url: "/events/foundation-day.html"
+  title: "يوم التأسيس"
+  description: "غيّر مظهر الموقع كاملاً ليوم التأسيس السعودي بوسم script واحد: لوحة ألوان بنية تراثية وشريحة واجهة ثنائية اللغة قابلة للضبط، في الوضعين الفاتح والداكن."
+
+- url: "/events/hajj.html"
+  title: "الحج"
+  description: "غيّر مظهر الموقع كاملاً لموسم الحج بوسم script واحد: واجهة بخط سعودي، وخلفية تتبع اتجاه الصفحة، وإبرازات موسمية للأقسام، في الوضعين الفاتح والداكن."
