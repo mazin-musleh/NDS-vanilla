@@ -38,6 +38,9 @@
 (function () {
     'use strict';
 
+    // checkVisibility sees content-visibility: hidden (until-found); a box count does not.
+    const isShown = (el) => el.checkVisibility?.() ?? el.getClientRects().length > 0;
+
     class NdsToc {
         constructor(toc) {
             this._toc = toc;
@@ -204,8 +207,8 @@
             const threshold = this._getNavOffset() + 1;
             let active = null;
             for (const e of this._entries) {
-                // A hidden heading (an inactive tab) has no box and reads top 0.
-                if (!e.target.getClientRects().length) continue;
+                // A heading in a closed tab reads a false top: hidden has no box, until-found a 0-height one.
+                if (!isShown(e.target)) continue;
                 if (e.target.getBoundingClientRect().top <= threshold) {
                     active = e;
                 } else {
@@ -240,7 +243,8 @@
         _handleClick(e) {
             const link = e.currentTarget;
             const entry = this._entries.find(x => x.link === link);
-            if (!entry || !entry.target.getClientRects().length) return;
+            // Closed tab: the default jump opens an until-found panel (beforematch).
+            if (!entry || !isShown(entry.target)) return;
 
             e.preventDefault();
             this._setActive(entry);

@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.0.0"
 updated: "2.1.x"
-last_edit: "27/11/2026 - 03:44 AM"
+last_edit: "27/11/2026 - 02:33 PM"
 ---
 
 <section id="tabs-overview" class="nds-content-section nds-doc-overview">
@@ -372,7 +372,7 @@ The first tab is open in the markup: its `aria-selected` is `true`, and every ot
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Find in Page</span>
-              <p class="nds-card-description">Ctrl+F finds text in a closed panel and opens its tab. A browser without this feature leaves closed panels out of the search.</p>
+              <p class="nds-card-description">Ctrl+F finds text in a closed panel and opens its tab. A browser without this feature leaves closed panels out of the search. Closed panels use <code class="nds-inline-code lang-html">hidden="until-found"</code>: see <a href="../utilities/hidden">Hidden</a> for what it changes.</p>
             </div>
           </div>
         </li>

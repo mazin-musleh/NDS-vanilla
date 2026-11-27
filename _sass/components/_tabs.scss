@@ -324,15 +324,6 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
   &:focus {
     outline: none;
   }
-  // until-found hides only the content: the box would still paint as an empty strip.
-  &[hidden="until-found"] {
-    padding: 0;
-    margin: 0;
-    border: 0;
-    background: none;
-    box-shadow: none;
-    min-height: 0;
-  }
 }
 
 // ==============================================

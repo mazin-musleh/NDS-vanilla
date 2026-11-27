@@ -207,6 +207,18 @@
   [data-hidden~="lg"][data-hidden~="sr"] { @include label-hidden(true); }
 }
 
+// until-found hides only the content and keeps the box for find-in-page: zero it so no
+// skin, size or spacing on the element paints an empty strip. A gap on its parent still counts.
+[hidden="until-found"] {
+  block-size: 0 !important;
+  min-block-size: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  margin: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
 // ==============================================
 // PRINT
 // ==============================================

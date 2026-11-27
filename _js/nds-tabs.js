@@ -24,6 +24,8 @@
  *   - .nds-vertical on the root switches the arrow keys and turns off drag scrolling.
  *   - The instance lives on the root as el.ndsTabs.
  *   - A closed panel is hidden="until-found" where supported: find-in-page opens its tab.
+ *     panel.hidden then reads "until-found", not true (test with checkVisibility()), and a
+ *     gap on .nds-tab-content adds space for each closed panel.
  */
 /**
  * NDS Tabs Component
