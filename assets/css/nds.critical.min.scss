@@ -42,14 +42,3 @@
 
 // Skeleton - pre-init layout reservations (html:not([data-nds-loaded]) scope)
 @use 'skeleton';
-
-// Universal hide primitive. !important so author display rules can't
-// override the hidden semantic. Removes the need for :not([hidden])
-// guards across component CSS. [data-filtered] is filter's own hide hook
-// (set in nds-filter.js, also read by nds-pagination.js) — it lives here so
-// URL-active filters, which mark items in the critical init pass, hide at
-// first paint instead of flashing then collapsing when the main bundle loads.
-// hidden="until-found" keeps its box so find-in-page can reveal it; the browser hides its content.
-:is(.nds-hidden, [hidden]:not([hidden="until-found"]), [data-state~=hidden], [data-filtered]) {
-    display: none !important;
-}

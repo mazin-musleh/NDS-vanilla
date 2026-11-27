@@ -8,7 +8,7 @@ lang: en
 direction: ltr
 since: "1.4.0"
 updated: "2.1.x"
-last_edit: "27/11/2026 - 02:33 PM"
+last_edit: "27/11/2026 - 03:01 PM"
 ---
 
 <section id="hidden-overview" class="nds-content-section nds-doc-overview">
@@ -98,7 +98,7 @@ The canon is a Share button, and every option goes on its label. The label start
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Hidden but Searchable</span>
-              <p class="nds-card-description">Ctrl+F finds text in an element with <code class="nds-inline-code lang-html">hidden="until-found"</code>, and the browser shows the element. NDS takes away the element's size, padding, border, margin and shadow, so it leaves no empty strip. Safari treats it as plain <code class="nds-inline-code lang-html">hidden</code>.</p>
+              <p class="nds-card-description">Ctrl+F finds text in an element with <code class="nds-inline-code lang-html">hidden="until-found"</code>, and the browser shows the element. NDS takes away the element's size, padding, border, margin and shadow, so it leaves no empty strip. Tabs and Accordion use it for their closed panels.</p>
             </div>
           </div>
         </li>
@@ -169,6 +169,8 @@ The canon is a Share button, and every option goes on its label. The label start
 - Use `hidden` for state: a panel, a menu or a step that your script shows and hides. Use `data-hidden` for an element that has no place at some screen widths, such as a topbar widget or secondary details.
 - One element can carry `hidden` and `data-hidden`. Either one hides it.
 - Use `hidden="until-found"` for closed content that a reader may search for, such as a collapsed section. Listen for its `beforematch` event to update your own open state when the browser shows it.
+- Put `hidden="until-found"` on a block element, such as a `div` or a `section`. On an inline element, such as a `span` or a link, the content stays visible.
+- Set `hidden="until-found"` from your script, only where `'onbeforematch' in HTMLElement.prototype` is true. Elsewhere, set plain `hidden`. A browser without the feature does not hide the content of an element that has a `display` value.
 - Do not put a `gap` on the parent of a `hidden="until-found"` element. The element keeps a box with no size, and the gap still adds space for it.
 - In a script, use `el.checkVisibility()` to test if an element shows. `el.hidden` reads `"until-found"`, not `true`, and the content inside still has a size.
 - Use `data-hidden` instead of your own media query. Its ranges match the NDS breakpoints.
@@ -205,7 +207,7 @@ The canon is a Share button, and every option goes on its label. The label start
 | Attribute | Element | Effect |
 |---|---|---|
 | `hidden` | Any element | Hides the element at every width and from screen readers, over any `display` value. Set it yourself, or let a component's script set it |
-| `hidden="until-found"` | Any element | Hides the element's content, but find-in-page still finds it and the browser then shows it, firing `beforematch`. Plain `hidden` where the browser does not support it |
+| `hidden="until-found"` | Block element | Hides the element's content, but find-in-page still finds it and the browser then shows it, firing `beforematch`. Set it from a script only where the browser supports it |
 | `data-hidden` | Any element | Hides the element inside each width range it names: `sm` (narrower than 600px), `md` (600px to 959px), `lg` (960px and wider), or `print` (on paper only, see [Print](../utilities/print)). Separate tokens with spaces. Add `sr` to hide it on screen only |
 | `data-state` | Any element | The `hidden` token hides the element, the same as `hidden`. Component scripts write it through `NDS.state` |
 {: .nds-table .nds-responsive}

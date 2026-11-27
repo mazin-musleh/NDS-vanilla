@@ -127,6 +127,10 @@ html:not([data-nds-loaded]) main { overflow-x: clip; }
    lands in the same style pass as the icon tokens. */
 :root { --nds-icons-opacity: 0; }
 
+/* ── Universal hide ── !important so no author display beats it. [data-filtered] is here so
+   URL-active filters hide at first paint. until-found keeps its box for find-in-page. */
+:is(.nds-hidden, [hidden]:not([hidden="until-found"]), [data-state~=hidden], [data-filtered]) { display: none !important; }
+
 @if $inline {
     /* ════ Inline-only (no critical-file counterpart) ════
        Pre-crit bootstraps + the chrome/hero FCP skeleton. In the critical
@@ -158,8 +162,6 @@ html:not([data-nds-loaded]) main { overflow-x: clip; }
 
     /* ── Bootstraps ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    /* until-found keeps its box for find-in-page; the browser hides its content */
-    :is(.nds-hidden, [hidden]:not([hidden="until-found"]), [data-state~=hidden], [data-filtered]) { display: none !important; }
 
     /* ── Hero box stand-in (structure; the real hero component owns these in crit) ── */
     :where(.nds-hero-section) { position: relative; height: 550px; }

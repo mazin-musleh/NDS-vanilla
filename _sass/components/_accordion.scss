@@ -79,7 +79,6 @@
         display: grid;
         grid-template-rows: 0fr;
         overflow: clip;
-        transition: grid-template-rows var(--nds-transition);
 
         .nds-accordion-content {
             grid-row: 1 / span 2;
@@ -91,7 +90,14 @@
             grid-template-rows: 1fr;
         }
 
-        &:not([data-state]) .nds-accordion-content {
+        // Only the moving states slide: a find-in-page open goes straight to open, so the match is already in place to scroll to.
+        &[data-state~="opening"],
+        &[data-state~="closing"] {
+            transition: grid-template-rows var(--nds-transition);
+        }
+
+        // until-found keeps the content in the box, or find-in-page could not reach it.
+        &:not([data-state], [hidden="until-found"]) .nds-accordion-content {
             display: none;
         }
 
@@ -209,6 +215,7 @@
         .nds-accordion-collapse {
             display: block !important;
             height: auto !important;
+            content-visibility: visible !important;
         }
 
         .nds-accordion-content {

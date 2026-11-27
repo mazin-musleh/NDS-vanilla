@@ -10,7 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Tabs** — Ctrl+F finds text in a closed panel and opens its tab.
 - **Editor** — The toolbar is one Tab stop: the arrow keys, Home and End move between its buttons, and screen readers announce it as a toolbar.
 - **Helpers** — `NDS.isComposing(e)` tells a key that an input method still owns, Safari included.
-- **Hidden** — `hidden="until-found"` works on any element: Ctrl+F finds its text, and it leaves no empty strip.
+- **Accordion** — Ctrl+F finds text in a closed item and opens it.
+- **Hidden** — `hidden="until-found"` works on any block element: Ctrl+F finds its text, and it leaves no empty strip.
 
 ### Fixed
 - **Chinese, Japanese and Korean typing** — Enter that confirms a word no longer acts early: in the Editor, Filter search, menu search, Tag Input on Safari and the page-number box.

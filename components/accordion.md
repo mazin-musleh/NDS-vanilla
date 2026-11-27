@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "2.0.0"
-last_edit: "05/11/2026 - 12:02 PM"
+updated: "2.1.x"
+last_edit: "27/11/2026 - 03:01 PM"
 ---
 
 <section id="accordion-overview" class="nds-content-section nds-doc-overview">
@@ -229,6 +229,19 @@ When a long item above closes, the page moves up. If the heading of the item tha
             <div class="nds-card-text">
               <span class="nds-card-title">Keyboard Navigation</span>
               <p class="nds-card-description">The up and down arrows move between the headings and wrap at the ends. Home and End jump to the first and the last heading. Enter or Space opens or closes the focused item.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-search-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Find in Page</span>
+              <p class="nds-card-description">Ctrl+F finds text in a closed item and opens it. A browser without this feature leaves closed items out of the search. Closed items use <code class="nds-inline-code lang-html">hidden="until-found"</code>: see <a href="../utilities/hidden">Hidden</a> for what it changes.</p>
             </div>
           </div>
         </li>

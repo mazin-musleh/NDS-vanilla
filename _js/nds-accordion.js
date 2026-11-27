@@ -27,6 +27,8 @@
  *   - The instance lives on the root as el.ndsAccordion.
  *   - An opened item whose heading ends above the sticky nav scrolls back below it
  *     (--accordion-scroll-offset on the root, 120px default).
+ *   - A closed collapse is hidden="until-found" where supported: find-in-page opens its item,
+ *     with no slide. collapse.hidden then reads "until-found", not true.
  */
 
 (function() {
@@ -41,6 +43,15 @@
     // collapse → cancel of its running transition end. Module-wide: a controller
     // rebuilt on the same root mid-slide must cancel the destroyed one's end.
     const pendingEnds = new WeakMap();
+
+    // A closed collapse is hidden="until-found" so find-in-page opens it. Without support it gets
+    // nothing: data-state already closes it, and plain hidden would cut the opening slide.
+    const FINDABLE = 'onbeforematch' in HTMLElement.prototype;
+    const setFindable = (collapse, closed) => {
+        if (!FINDABLE) return;
+        if (closed) collapse.setAttribute('hidden', 'until-found');
+        else if (collapse.getAttribute('hidden') === 'until-found') collapse.removeAttribute('hidden');
+    };
 
     class NdsAccordion {
         constructor(accordionContainer) {
@@ -89,10 +100,12 @@
             if (button.ariaExpanded === 'true') {
                 NDS.state.set(collapse, 'open');
                 NDS.state.set(button, 'open');
+                setFindable(collapse, false);
             } else {
                 NDS.state.clear(collapse);
                 NDS.state.clear(button);
                 NDS.aria.expanded(button, false);
+                setFindable(collapse, true);
             }
         }
 
@@ -134,6 +147,12 @@
             this._accordionContainer.addEventListener('keydown', (e) => {
                 this._handleKeyDown(e);
             }, { signal: this.abortController.signal });
+            // Find-in-page matched text in a closed item. Capture: one listener sees every collapse,
+            // a nested accordion's included, and the index is read now so refresh() needs nothing.
+            this._accordionContainer.addEventListener('beforematch', (e) => {
+                const index = this._collapses.indexOf(e.target);
+                if (index !== -1 && this._buttons[index]?.ariaExpanded !== 'true') this._show(index, false, true);
+            }, { capture: true, signal: this.abortController.signal });
         }
 
         _handleKeyDown(e) {
@@ -200,55 +219,58 @@
             }
         }
 
-        _show(index, keepOthers = false) {
+        // instant: a find-in-page open. No slide and no scroll, so the page stays on the match.
+        _show(index, keepOthers = false, instant = false) {
             const button = this._buttons[index];
             const collapse = this._collapses[index];
 
             if (!button || !collapse) return;
 
             if (!keepOthers && !this._isAlwaysOpen) {
-                this._hideAll(index);
+                this._hideAll(index, instant);
             }
 
-            this._lock();
+            if (!instant) this._lock();
 
             // Update button state immediately
             NDS.aria.expanded(button, true);
             NDS.state.set(button, 'open');
+            setFindable(collapse, false);
 
             // Set collapse to opening, then open after animation
-            NDS.state.set(collapse, 'opening');
+            NDS.state.set(collapse, instant ? 'open' : 'opening');
 
             this._animate(collapse, () => {
                 NDS.state.set(collapse, 'open');
                 // A long item closing above this one pulls its heading up past the nav.
-                NDS.scrollBelowNav(button, {
+                if (!instant) NDS.scrollBelowNav(button, {
                     offsetVar: '--accordion-scroll-offset',
                     offsetEl: this._accordionContainer,
                 });
                 this._dispatchToggleEvent(index, button, collapse, true);
-            });
+            }, instant);
         }
 
-        _hide(index) {
+        _hide(index, instant = false) {
             const button = this._buttons[index];
             const collapse = this._collapses[index];
 
             if (!button || !collapse) return;
 
-            this._lock();
+            if (!instant) this._lock();
 
             // Update button state immediately
             NDS.aria.expanded(button, false);
             NDS.state.clear(button);
 
             // Set collapse to closing, then remove after animation
-            NDS.state.set(collapse, 'closing');
+            if (!instant) NDS.state.set(collapse, 'closing');
 
             this._animate(collapse, () => {
                 NDS.state.clear(collapse);
+                setFindable(collapse, true);
                 this._dispatchToggleEvent(index, button, collapse, false);
-            });
+            }, instant);
         }
 
         // Clicks wait out the slide. One timer: a script's openItem()/closeItem() mid-slide re-arms it, so an older one can't free the lock early.
@@ -258,18 +280,18 @@
             if (this._isAnimating) this._lockTimer = setTimeout(() => { this._isAnimating = false; }, NDS.transitionSpeed() + 50);
         }
 
-        _hideAll(excludeIndex = -1) {
+        _hideAll(excludeIndex = -1, instant = false) {
             this._buttons.forEach((button, index) => {
                 if (index !== excludeIndex && button.ariaExpanded === 'true') {
-                    this._hide(index);
+                    this._hide(index, instant);
                 }
             });
         }
 
-        _animate(collapse, callback) {
+        _animate(collapse, callback, instant = false) {
             // openItem() then closeItem() mid-transition: only the last one's end runs.
             pendingEnds.get(collapse)?.();
-            if (NDS.prefersReducedMotion) { callback(); return; }
+            if (instant || NDS.prefersReducedMotion) { callback(); return; }
             pendingEnds.set(collapse, NDS.onTransitionEnd(collapse, callback));
         }
 
@@ -330,6 +352,8 @@
 
         destroy() {
             if (this.abortController) this.abortController.abort();
+            // With no beforematch listener, find-in-page would open an item without its button state.
+            this._collapses.forEach(collapse => setFindable(collapse, false));
             // Release the backref so create()/init() can rebuild — without this, create()
             // returns the dead controller and init() calls refresh() on it. Identity-guard
             // the delete: a later controller may already own the root. The init stamp

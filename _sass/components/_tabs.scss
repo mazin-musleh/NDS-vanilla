@@ -404,6 +404,8 @@ $strip: ':is(.nds-tab-list-container, .nds-tab-list)';
 }
 
 .nds-tab-content.nds-card {
+  // A closed panel keeps an empty box (until-found): the card gap would add space for each one.
+  gap: 0;
   padding-inline: var(--_card-padding-inline);
   padding-block: var(--spacing-2xl);
 
