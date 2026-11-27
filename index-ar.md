@@ -3,6 +3,7 @@ layout: home
 
 lang: ar
 direction: rtl
+breadcrumb_root_url: /ar/
 mainnav: mainnav-ar
 footer: docs-ar
 og_image: docs-assets/img/nds-cover-ar.webp

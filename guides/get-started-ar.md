@@ -5,6 +5,7 @@ since: "1.6.0"
 last_edit: "27/11/2026 - 04:09 PM"
 lang: ar
 direction: rtl
+breadcrumb_root_url: /ar/
 mainnav: mainnav-ar
 footer: docs-ar
 og_image: docs-assets/img/nds-cover-ar.webp

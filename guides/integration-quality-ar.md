@@ -5,6 +5,7 @@ since: "1.7.0"
 last_edit: "27/11/2026 - 07:07 PM"
 lang: ar
 direction: rtl
+breadcrumb_root_url: /ar/
 siteTitle: "NDS-vanilla - قالب كود المنصات"
 brandSlogan: قالب كود المنصات
 mainnav: mainnav-ar
