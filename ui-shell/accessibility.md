@@ -7,8 +7,8 @@ breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en
 direction: ltr
 since: "1.0.5"
-updated: "2.0.0"
-last_edit: "31/10/2026 - 10:30 PM"
+updated: "2.1.2"
+last_edit: "27/11/2026 - 08:09 PM"
 ---
 
 <section id="accessibility-overview" class="nds-content-section nds-doc-overview">
@@ -174,7 +174,7 @@ To change the panel, put your own copy in a `<template class="nds-panel-template
                     </div>
                     <div class="nds-form-control">
                       <div class="nds-switch-toggle">
-                        <input type="checkbox" id="a11y-mode-epilepsy-safe" class="nds-switch-input" data-a11y-mode="epilepsy-safe">
+                        <input type="checkbox" role="switch" id="a11y-mode-epilepsy-safe" class="nds-switch-input" data-a11y-mode="epilepsy-safe">
                         <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                       </div>
                     </div>
@@ -189,7 +189,7 @@ To change the panel, put your own copy in a `<template class="nds-panel-template
                     </div>
                     <div class="nds-form-control">
                       <div class="nds-switch-toggle">
-                        <input type="checkbox" id="a11y-mode-visually-impaired" class="nds-switch-input" data-a11y-mode="visually-impaired">
+                        <input type="checkbox" role="switch" id="a11y-mode-visually-impaired" class="nds-switch-input" data-a11y-mode="visually-impaired">
                         <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                       </div>
                     </div>
@@ -204,7 +204,7 @@ To change the panel, put your own copy in a `<template class="nds-panel-template
                     </div>
                     <div class="nds-form-control">
                       <div class="nds-switch-toggle">
-                        <input type="checkbox" id="a11y-mode-cognitive-disability" class="nds-switch-input" data-a11y-mode="cognitive-disability">
+                        <input type="checkbox" role="switch" id="a11y-mode-cognitive-disability" class="nds-switch-input" data-a11y-mode="cognitive-disability">
                         <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                       </div>
                     </div>
@@ -219,7 +219,7 @@ To change the panel, put your own copy in a `<template class="nds-panel-template
                     </div>
                     <div class="nds-form-control">
                       <div class="nds-switch-toggle">
-                        <input type="checkbox" id="a11y-mode-motor-impaired" class="nds-switch-input" data-a11y-mode="motor-impaired">
+                        <input type="checkbox" role="switch" id="a11y-mode-motor-impaired" class="nds-switch-input" data-a11y-mode="motor-impaired">
                         <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                       </div>
                     </div>
@@ -234,7 +234,7 @@ To change the panel, put your own copy in a `<template class="nds-panel-template
                     </div>
                     <div class="nds-form-control">
                       <div class="nds-switch-toggle">
-                        <input type="checkbox" id="a11y-mode-colorblind" class="nds-switch-input" data-a11y-mode="colorblind">
+                        <input type="checkbox" role="switch" id="a11y-mode-colorblind" class="nds-switch-input" data-a11y-mode="colorblind">
                         <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                       </div>
                     </div>
@@ -249,7 +249,7 @@ To change the panel, put your own copy in a `<template class="nds-panel-template
                     </div>
                     <div class="nds-form-control">
                       <div class="nds-switch-toggle">
-                        <input type="checkbox" id="a11y-mode-dyslexia-friendly" class="nds-switch-input" data-a11y-mode="dyslexia-friendly">
+                        <input type="checkbox" role="switch" id="a11y-mode-dyslexia-friendly" class="nds-switch-input" data-a11y-mode="dyslexia-friendly">
                         <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                       </div>
                     </div>
@@ -264,7 +264,7 @@ To change the panel, put your own copy in a `<template class="nds-panel-template
                     </div>
                     <div class="nds-form-control">
                       <div class="nds-switch-toggle">
-                        <input type="checkbox" id="a11y-mode-adhd-friendly" class="nds-switch-input" data-a11y-mode="adhd-friendly">
+                        <input type="checkbox" role="switch" id="a11y-mode-adhd-friendly" class="nds-switch-input" data-a11y-mode="adhd-friendly">
                         <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                       </div>
                     </div>
