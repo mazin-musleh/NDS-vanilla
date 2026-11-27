@@ -1,0 +1,69 @@
+- title: "تمت الموافقة على المستند"
+  message: "تمت مراجعة طلب رخصتك التجارية والموافقة عليه من جهة الترخيص."
+  type: "success"
+  status_label: "تمت الموافقة"
+  icon: '<i class="nds-icon nds-hgi-checkmark-circle-01" aria-hidden="true"></i>'
+  timestamp: "2026-03-18T09:15:00"
+
+- title: "صيانة النظام"
+  message: "ستُجرى صيانة مجدولة يوم الجمعة من الساعة 2:00 صباحًا حتى 4:00 صباحًا. قد تتعذر بعض الخدمات خلال هذه الفترة."
+  type: "info"
+  status_label: "مجدولة"
+  icon: '<i class="nds-icon nds-hgi-notification-02" aria-hidden="true"></i>'
+  timestamp: "2026-03-17T16:30:00"
+
+- title: "دفعة متأخرة"
+  message: "رسوم التسجيل التجاري السنوية البالغة 1,200 ريال متأخرة السداد. يُرجى إتمام الدفع لتجنب إيقاف الخدمة."
+  type: "warning"
+  status_label: "متأخرة"
+  icon: '<i class="hgi hgi-stroke hgi-alert-02"></i>'
+  timestamp: "2026-03-17T11:00:00"
+
+- title: "حظر محاولة تسجيل دخول"
+  message: "رُصدت محاولة تسجيل دخول غير مصرح بها من جهاز غير معروف. تم قفل حسابك مؤقتًا."
+  type: "error"
+  status_label: "محظورة"
+  icon: '<i class="hgi hgi-stroke hgi-shield-01"></i>'
+  timestamp: "2026-03-17T08:45:00"
+
+- title: "رسالة جديدة"
+  message: "وصلتك رسالة جديدة من وزارة التجارة بخصوص تجديد رخصتك التجارية."
+  type: "info"
+  status_label: "جديدة"
+  icon: '<i class="nds-icon nds-hgi-mail-01" aria-hidden="true"></i>'
+  timestamp: "2026-03-16T14:20:00"
+
+- title: "تم تحديث الملف الشخصي"
+  message: "تم تحديث بيانات التواصل والعنوان البريدي الخاصة بك في النظام بنجاح."
+  type: "success"
+  status_label: "تم التحديث"
+  icon: '<i class="hgi hgi-stroke hgi-user-check-01"></i>'
+  timestamp: "2026-03-16T10:05:00"
+
+- title: "شهادة قاربت على الانتهاء"
+  message: "ستنتهي صلاحية شهادتك المهنية في الهندسة بعد 30 يومًا. يُرجى تقديم مستندات التجديد قبل الموعد النهائي."
+  type: "warning"
+  status_label: "تنتهي قريبًا"
+  icon: '<i class="nds-icon nds-hgi-calendar-03" aria-hidden="true"></i>'
+  timestamp: "2026-03-15T17:00:00"
+
+- title: "فشل طلب الخدمة"
+  message: "تعذرت معالجة طلب تجديد جواز السفر بسبب نقص في المستندات. يُرجى إعادة تقديم الطلب مع الملفات المطلوبة."
+  type: "error"
+  status_label: "فشل"
+  icon: '<i class="hgi hgi-stroke hgi-file-02"></i>'
+  timestamp: "2026-03-15T13:30:00"
+
+- title: "تم توثيق الحساب"
+  message: "تم التحقق من هويتك الوطنية بنجاح. يمكنك الآن الوصول الكامل إلى جميع الخدمات الحكومية الرقمية."
+  type: "success"
+  status_label: "تم التوثيق"
+  icon: '<i class="hgi hgi-stroke hgi-user-id-verification"></i>'
+  timestamp: "2026-03-14T09:00:00"
+
+- title: "ميزة جديدة متاحة"
+  message: "أصبح توقيع المستندات رقميًا متاحًا لجميع المستخدمين المسجلين. يمكنك الوصول إليه من إعدادات لوحة التحكم."
+  type: "info"
+  status_label: "ميزة جديدة"
+  icon: '<i class="hgi hgi-stroke hgi-star-circle"></i>'
+  timestamp: "2026-03-13T12:00:00"

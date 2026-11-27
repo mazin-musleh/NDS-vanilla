@@ -5,6 +5,8 @@ since: "1.6.0"
 last_edit: "27/11/2026 - 04:09 PM"
 lang: ar
 direction: rtl
+mainnav: mainnav-ar
+footer: docs-ar
 og_image: docs-assets/img/nds-cover-ar.webp
 siteTitle: "NDS-vanilla - قالب كود المنصات"
 brandSlogan: قالب كود المنصات
@@ -37,7 +39,7 @@ sidemenu_mode: false
             <article class="nds-prose">
 
                 <h2 id="overview">نظرة عامة</h2>
-                <p>يقدم هذا الدليل طريقة سهلة للحصول على صفحات متوافقة مع كود المنصات، مبنية وفق خطة واضحة ومفحوصة في المتصفح. يكفي لصق أمر واحد ليتولى وكيل البرمجة الذكي بقية العمل، مستنداً إلى <a class="nds-color" href="{{ 'guides/integration-quality' | relative_url }}">NDS IQ</a>، دليل القواعد الذي ينظم بناء الصفحات الجديدة، ونقل الصفحات القائمة، ومراجعتها.</p>
+                <p>يقدم هذا الدليل طريقة سهلة للحصول على صفحات متوافقة مع كود المنصات، مبنية وفق خطة واضحة ومفحوصة في المتصفح. يكفي لصق أمر واحد ليتولى وكيل البرمجة الذكي بقية العمل، مستنداً إلى <a class="nds-color" href="{{ 'ar/guides/integration-quality/' | relative_url }}">NDS IQ</a>، دليل القواعد الذي ينظم بناء الصفحات الجديدة، ونقل الصفحات القائمة، ومراجعتها.</p>
 
                 <div class="nds-alert nds-card nds-color" data-status="info" role="alert">
                     <span class="nds-feedback nds-alert-icon nds-outline">

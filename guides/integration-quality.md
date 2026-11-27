@@ -2,7 +2,7 @@
 layout: page
 title: NDS IQ
 since: "1.7.0"
-last_edit: "20/11/2026 - 03:02 AM"
+last_edit: "27/11/2026 - 07:18 PM"
 lang: en
 direction: ltr
 hero_title: NDS IQ
@@ -35,7 +35,7 @@ sidemenu_mode: false
             <article class="nds-prose">
 
                 <h2 id="overview">Overview</h2>
-                <p><strong>NDS IQ (Integration Quality)</strong> is the instruction system that AI coding agents use to build with NDS. It covers runtime setup, page builds, browser verification, porting, and upgrades.</p>
+                <p><strong>NDS IQ</strong>, short for Integration Quality, is an instruction system built for AI coding agents working with NDS. It covers the whole workflow: runtime setup, page builds, browser verification, applying NDS to existing interfaces, and updates.</p>
                 <p>It installs as two pieces: <code class="nds-inline-code lang-html">NDS-IQ.md</code> at the project root and a short <strong>anchor</strong> in <code class="nds-inline-code lang-html">CLAUDE.md</code> or <code class="nds-inline-code lang-html">AGENTS.md</code>. The anchor holds the project paths and tells the agent to read the rules before NDS work. The agent reads the rules once per session, when NDS work starts.</p>
                 <p>The rules file is the same in every project. Project values, such as paths, live only in the anchor. The <a class="nds-color" href="{{ 'guides/get-started' | relative_url }}">Get Started guide</a> covers installation and use.</p>
 
@@ -44,9 +44,9 @@ sidemenu_mode: false
                 <p>The NDS source defines what an agent must not guess: component markup, APIs, events, state, lifecycles, and attribute contracts. The rules name none of these files. Each template release ships <code class="nds-inline-code lang-html">NDS-INDEX.md</code>, which maps each need to that release's files, and the agent reads it first. The agent works out the rest.</p>
                 <p>When an agent gets something wrong, the fix goes into the source first: a doc page, an example, or a catalog entry. A new rule is added only when the source cannot carry the fix.</p>
                 <h3 id="hardened">Field Evidence</h3>
-                <p>Each rule starts from a <strong>real failure</strong>: a mistake an agent made on a real project. The failure becomes a rule candidate only after it is checked against the NDS source.</p>
+                <p>The system is built on real results from actual migrations: each rule starts from a <strong>real failure</strong>, a mistake an agent made on a real project. The failure becomes a rule candidate only after it is checked against the NDS source.</p>
                 <h3 id="tested">Scenario Tests</h3>
-                <p>Each real failure becomes a test scenario. A new rule must follow a <strong>fail, fix, pass</strong> loop: the scenario fails without the rule and passes with it. Passed scenarios stay in the suite, so a later edit cannot quietly break an older rule. Each revision is tested on the validated baseline model.</p>
+                <p>Each real failure becomes a test scenario that simulates a real-world case. When a scenario fails, the cause is analyzed, the rules are revised, and the test runs again until it passes. So a new rule follows a <strong>fail, fix, pass</strong> loop: the scenario fails without the rule and passes with it. Passed scenarios stay in the suite, so a later edit cannot quietly break an older rule. Each revision is tested on the validated baseline model.</p>
 
                 <div class="nds-alert nds-card nds-color" data-status="success" role="alert">
                     <span class="nds-feedback nds-alert-icon nds-outline">
@@ -55,7 +55,7 @@ sidemenu_mode: false
                     <div class="nds-alert-content">
                         <div class="nds-alert-text">
                             <span class="nds-alert-title">Validated baseline</span>
-                            <p class="nds-alert-description"><strong>Claude Sonnet</strong> is the validated baseline for NDS IQ. The rules are designed to produce consistent results across capable AI models.</p>
+                            <p class="nds-alert-description"><strong>Claude Sonnet</strong> is the validated baseline for testing NDS IQ, for two reasons: output quality and cost efficiency. If Sonnet completes the scenarios under the rules, more capable models can build on the same base with greater accuracy, and a project does not need a costlier model to get the results it wants.</p>
                         </div>
                     </div>
                 </div>
@@ -65,13 +65,13 @@ sidemenu_mode: false
                 <ol>
                     <li><strong>Read-only template</strong>: never edit the NDS template folder.</li>
                     <li><strong>No minified reads</strong>: read the source files the index names, never the minified bundles or a path from memory.</li>
-                    <li><strong>Canonical markup</strong>: copy component markup from the NDS docs; never invent it.</li>
+                    <li><strong>Canonical markup</strong>: the NDS docs are the reference for component markup; copy it, never invent it.</li>
                     <li><strong>Sections and primitives</strong>: build every page from NDS sections and layout primitives.</li>
-                    <li><strong>Knobs and tokens first</strong>: style with NDS custom properties before any CSS override.</li>
+                    <li><strong>Knobs and tokens first</strong>: style with NDS custom properties before any CSS override, instead of building custom solutions without need.</li>
                     <li><strong>No legacy libraries</strong>: NDS and plain JavaScript replace libraries such as jQuery, Bootstrap, and Select2.</li>
                     <li><strong>Approved porting strategy</strong>: agree how to replace existing UI before the first file changes.</li>
                 </ol>
-                <p>The agent applies these rules through one workflow: <strong>inventory → plan → build → verify</strong>. <code class="nds-inline-code lang-html">NDS-PLAN.md</code> records decisions and page status, so the next session can continue the work.</p>
+                <p>The agent applies these rules through one workflow: <strong>inventory → plan → build → verify</strong>. Planning before building keeps the work easy to follow, and <code class="nds-inline-code lang-html">NDS-PLAN.md</code> records decisions and page status, so the next session can continue the work.</p>
 
                 <h2 id="revisions">Revision History</h2>
                 <p>NDS IQ is versioned independently from the template. The revision number in the rulebook heading changes once per published revision. The table lists published revisions only, so some numbers are skipped.</p>

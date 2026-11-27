@@ -1,0 +1,82 @@
+# Arabic copy of docs.yml. Keep keys in sync.
+columns:
+  - heading: "البداية"
+    links:
+      - label: "الرئيسية"
+        url: "/ar/"
+      - label: "ابدأ الآن"
+        url: "/ar/guides/get-started/"
+      - label: "المكونات"
+        url: "/components/"
+      - label: "القوالب"
+        url: "/templates/"
+      - label: "الأمثلة"
+        url: "/examples/"
+      - label: "الفعاليات"
+        url: "/events/"
+
+  - heading: "الأدلة"
+    links:
+      - label: "NDS IQ"
+        url: "/ar/guides/integration-quality/"
+      - label: "الترحيل"
+        url: "/guides/migration.html"
+      - label: "سجل التغييرات"
+        url: "https://github.com/mazin-musleh/NDS-vanilla/blob/main/CHANGELOG.md"
+        class: "nds-external"
+        target: "_blank"
+      - label: "التنزيل"
+        url: "https://github.com/mazin-musleh/NDS-vanilla/releases/latest"
+        class: "nds-external"
+        target: "_blank"
+
+  - heading: "المشروع"
+    links:
+      - label: "GitHub"
+        url: "https://github.com/mazin-musleh/NDS-vanilla"
+        class: "nds-external"
+        target: "_blank"
+      - label: "الإبلاغ عن مشكلة"
+        url: "https://github.com/mazin-musleh/NDS-vanilla/issues/new/choose"
+        class: "nds-external"
+        target: "_blank"
+
+  - heading: "هيئة الحكومة الرقمية"
+    links:
+      - label: "هيئة الحكومة الرقمية"
+        url: "https://dga.gov.sa/"
+        class: "nds-external"
+        target: "_blank"
+      - label: "Figma"
+        url: "https://www.figma.com/@sdga"
+        class: "nds-external"
+        target: "_blank"
+
+  # Demo icons: only LinkedIn is real
+  - heading: "تابعنا"
+    social_icons:
+      - url: "https://www.linkedin.com/in/mazin-musleh/"
+        icon: "nds-hgi-linkedin-02"
+        label: "تابعنا على LinkedIn"
+      - url: "#"
+        icon: "nds-hgi-new-twitter"
+        label: "تابعنا على Twitter"
+      - url: "#"
+        icon: "nds-hgi-facebook-02"
+        label: "تابعنا على Facebook"
+      - url: "#"
+        icon: "nds-hgi-youtube"
+        label: "تابعنا على YouTube"
+
+  - heading: "تطبيق الجوال"
+    mobile_apps:
+      apps:
+        - url: "#"
+          icon: "nds-icon-apple"
+          label: "Apple App Store"
+        - url: "#"
+          icon: "nds-icon-google-play"
+          label: "Google Play Store"
+        - url: "#"
+          icon: "nds-icon-huawei"
+          label: "Huawei AppGallery"

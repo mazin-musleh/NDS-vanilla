@@ -1,0 +1,66 @@
+# Arabic copy of mainnav.yml. Keep keys in sync.
+
+primary_nav:
+  - label: "عنصر 1"
+    url: "#"
+
+  - label: "عنصر 2"
+
+    template: "mainnav-column-view.html"
+    type: "dropdown"
+    content_source: "nav-item2-ar"
+
+  - label: "عنصر 3"
+
+    template: "mainnav-row-list.html"
+    type: "dropdown"
+    content_source: "nav-item3-ar"
+
+  - label: "عنصر 4"
+    url: "#"
+
+  - label: "عنصر 5"
+    url: "#"
+
+  - label: "عنصر 6"
+    url: "#"
+
+actions_nav:
+  - label: "بحث"
+    icon: "nds-hgi-search-01"
+    button_style: "nds-nav-link nds-btn nds-subtle nds-indicator"
+    custom_class: "nds-icon-only nds-search nds-pinned"
+    template: "mainnav-search.html"
+    type: "dropdown"
+
+  - label: "الإشعارات"
+    icon: "nds-hgi-notification-02"
+    custom_class: "nds-icon-only nds-pinned"
+    button_style: "nds-nav-link nds-btn nds-subtle nds-indicator"
+    content_source: "notifications-ar"
+    template: "mainnav-notifications.html"
+    type: "dropdown"
+    content_class: "nds-fit"
+
+  - label: "تسجيل الدخول"
+    icon: "nds-icon-avatar"
+    custom_class: "nds-icon-only nds-guest"
+    template: "mainnav-login.html"
+    type: "modal"
+    content_class: "nds-sm"
+
+  - label: "أحمد"
+    icon: "nds-icon-avatar"
+    avatar: true
+    img_icon: "docs-assets/img/avatar3.webp"
+    custom_class: "nds-login nds-icon-only nds-auth"
+    button_style: "nds-nav-link nds-btn nds-subtle nds-lg nds-indicator"
+
+    template: "mainnav-user.html"
+    type: "dropdown"
+    content_class: "nds-fit"
+
+  - label: "English"
+    icon: "nds-hgi-translation"
+    custom_class: "nds-icon-only lang"
+    data_attr: "data-lang-toggle"

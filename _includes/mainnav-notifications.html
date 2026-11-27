@@ -26,15 +26,15 @@
                             <div class="nds-flex nds-row">
                                 <a href="#" class="nds-btn nds-subtle nds-sm">
                                     <i class="nds-icon nds-hgi-checkmark-circle-01" aria-hidden="true"></i>
-                                    <span class="nds-label">Mark as read</span>
+                                    <span class="nds-label">{% if page.lang == 'ar' %}تعليم كمقروء{% else %}Mark as read{% endif %}</span>
                                 </a>
                                 <a href="#" class="nds-btn nds-subtle nds-sm">
                                     <i class="nds-icon nds-hgi-eye" aria-hidden="true"></i>
-                                    <span class="nds-label">View</span>
+                                    <span class="nds-label">{% if page.lang == 'ar' %}عرض{% else %}View{% endif %}</span>
                                 </a>
                                 <a href="#" class="nds-btn nds-destructive nds-sm">
                                     <i class="nds-icon nds-hgi-cancel-01" aria-hidden="true"></i>
-                                    <span class="nds-label">Dismiss</span>
+                                    <span class="nds-label">{% if page.lang == 'ar' %}تجاهل{% else %}Dismiss{% endif %}</span>
                                 </a>
                             </div>
                         </li>
@@ -63,6 +63,6 @@
     <hr class="nds-divider">
     <a href="#" class="nds-btn nds-subtle nds-full">
         <i class="nds-icon nds-hgi-notification-02" aria-hidden="true"></i>
-        <span class="nds-label">View all notifications</span>
+        <span class="nds-label">{% if page.lang == 'ar' %}عرض جميع الإشعارات{% else %}View all notifications{% endif %}</span>
     </a>
 </div>

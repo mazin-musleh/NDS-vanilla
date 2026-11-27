@@ -5,6 +5,8 @@ hero_title: الأدلة
 hero_description: "أدلة عملية لبناء المواقع والخدمات الحكومية باستخدام قالب كود المنصات، ودمجه في المشاريع الفعلية."
 lang: ar
 direction: rtl
+mainnav: mainnav-ar
+footer: docs-ar
 og_image: docs-assets/img/nds-cover-ar.webp
 siteTitle: "NDS-vanilla - قالب كود المنصات"
 brandSlogan: قالب كود المنصات
@@ -67,7 +69,7 @@ permalink: /ar/guides/
                         </div>
                     </div>
                     <div class="nds-card-actions">
-                        <a href="{{ 'guides/integration-quality' | relative_url }}" class="nds-btn nds-primary">
+                        <a href="{{ 'ar/guides/integration-quality/' | relative_url }}" class="nds-btn nds-primary">
                             <span class="nds-label">اقرأ الدليل</span>
                         </a>
                     </div>

@@ -22,5 +22,5 @@
     <h2 class="nds-section-title">NDS IQ</h2>
     <p class="nds-section-description" style="max-width:550px;">نظام التعليمات الذي تستخدمه أدوات البرمجة بالذكاء الاصطناعي للبناء بقالب كود المنصات. يشمل إعداد بيئة التشغيل، وبناء الصفحات، والتحقق في المتصفح، ونقل المشاريع، والترقية.</p>
     <div class="nds-section-action">
-      <a href="{relative_url}/guides/integration-quality.html" class="nds-btn nds-primary nds-oncolor nds-md"><i class="hgi hgi-stroke hgi-artificial-intelligence-04"></i><span class="nds-label">عن NDS IQ</span></a>
+      <a href="{relative_url}/ar/guides/integration-quality/" class="nds-btn nds-primary nds-oncolor nds-md"><i class="hgi hgi-stroke hgi-artificial-intelligence-04"></i><span class="nds-label">عن NDS IQ</span></a>
     </div>
