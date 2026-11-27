@@ -8,8 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 - **Tabs** — Ctrl+F finds text in a closed panel and opens its tab.
+- **Editor** — The toolbar is one Tab stop: the arrow keys, Home and End move between its buttons, and screen readers announce it as a toolbar.
 
 ### Fixed
+- **Editor** — Enter that confirms a word in a Chinese, Japanese or Korean keyboard no longer inserts the link or image early, or moves the caret out of a component.
 - **Switch** — Screen readers announce it as a switch, not a checkbox.
 - **Windows contrast themes** — The switch thumb, the open tab's line and the selected mark in the side menu, main navigation and drawer stay visible.
 

@@ -730,6 +730,7 @@
         'dir-ltr': 'Left to right',
         'dir-rtl': 'Right to left',
         source: 'View HTML source',
+        formatting: 'Formatting',
         url: 'URL',
         text: 'Text',
         external: 'Open in new tab',
@@ -757,6 +758,8 @@
     const getLabelHtml = (key) => NDS.escapeHtml(strings.text(key));
     // Each word carries its marker: core writes it again when the pack lands or the language changes.
     const getLabelSpan = (key) => `<span class="nds-label" data-i18n="editor.${key}">${getLabelHtml(key)}</span>`;
+    // 229: Safari fires compositionend before the confirming Enter, so isComposing is already false.
+    const isComposing = (e) => e.isComposing || e.keyCode === 229;
     // A command's name and its tooltip: title is the tooltip's marked message source.
     const getCommandName = (key) => {
         const label = getLabelHtml(key);
@@ -885,7 +888,8 @@
             flush();
         }
         if (!start && !end) return '';
-        return `<div class="nds-toolbar">${start ? `<div class="nds-toolbar-start">${start}</div>` : ''}${end ? `<div class="nds-toolbar-end">${end}</div>` : ''}</div>`;
+        const label = getLabelHtml('formatting');
+        return `<div class="nds-toolbar" role="toolbar" aria-label="${label}" data-i18n-aria-label="editor.formatting">${start ? `<div class="nds-toolbar-start">${start}</div>` : ''}${end ? `<div class="nds-toolbar-end">${end}</div>` : ''}</div>`;
     }
 
     // ---------- Editor ----------
@@ -1005,6 +1009,11 @@
             });
 
             this._toolbar.addEventListener('click', this._handleToolbarClick.bind(this), { signal });
+            this._toolbar.addEventListener('keydown', this._handleToolbarKeyDown.bind(this), { signal });
+            // Tab back in returns to the last button used.
+            this._toolbar.addEventListener('focusin', (e) => {
+                if (this._toolbarItems.includes(e.target)) this._setTabStop(e.target);
+            }, { signal });
         }
 
         _addEditableListeners(signal) {
@@ -1120,7 +1129,7 @@
             // Enter in either text field confirms.
             linkMenu.querySelectorAll('[data-editor-link-text], [data-editor-link-url]').forEach(input => {
                 input.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') { e.preventDefault(); this._confirmLink(); }
+                    if (e.key === 'Enter' && !isComposing(e)) { e.preventDefault(); this._confirmLink(); }
                 }, { signal });
             });
         }
@@ -1179,7 +1188,7 @@
             }
             imageMenu.querySelectorAll('[data-editor-image-url], [data-editor-image-alt], [data-editor-image-width], [data-editor-image-height]').forEach(input => {
                 input.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') { e.preventDefault(); this._confirmImage(); }
+                    if (e.key === 'Enter' && !isComposing(e)) { e.preventDefault(); this._confirmImage(); }
                 }, { signal });
             });
         }
@@ -1212,6 +1221,7 @@
                 const srcBtn = this._toolbar.querySelector('[data-source-toggle]');
                 if (srcBtn) srcBtn.disabled = disabled; // readonly may still view source
                 this._syncRemoveState(); // remove stays caret-gated, not blanket-enabled
+                this._syncTabStop();
             }
         }
 
@@ -1228,6 +1238,7 @@
             this._toolbar?.querySelectorAll('.nds-upload').forEach(el => el.ndsUpload?.destroy?.());
             this._toolbar?.remove();
             this._toolbar = null;
+            this._toolbarItems = null;
             this._editable.remove();
             this.source.classList.remove('nds-editor-source');
             this.source.removeAttribute('tabindex');
@@ -1285,7 +1296,40 @@
             // stub, so create() lands once it arrives.
             toolbar.querySelectorAll('.nds-dropmenu').forEach(el => NDS.Dropmenu.create(el));
             toolbar.querySelectorAll('.nds-tooltip').forEach(el => NDS.Tooltip.create(el));
+            // One Tab stop; arrows move inside (toolbar pattern). Menu contents are not items.
+            this._toolbarItems = Array.from(toolbar.querySelectorAll('button')).filter(btn => !btn.closest('.nds-dropmenu-menu'));
+            this._toolbarItems.forEach((btn, i) => btn.setAttribute('tabindex', i ? '-1' : '0'));
             return toolbar;
+        }
+
+        // A disabled button can't take focus: move the Tab stop off it, or Tab skips the toolbar.
+        _syncTabStop() {
+            const items = this._toolbarItems;
+            if (!items) return;
+            const stop = items.find(btn => btn.tabIndex === 0);
+            if (stop && !stop.disabled) return;
+            const next = items.find(btn => !btn.disabled);
+            if (next) this._setTabStop(next);
+        }
+
+        _setTabStop(btn) {
+            for (const item of this._toolbarItems) item.setAttribute('tabindex', item === btn ? '0' : '-1');
+        }
+
+        _handleToolbarKeyDown(e) {
+            const index = this._toolbarItems.indexOf(e.target);
+            if (index < 0 || e.altKey || e.ctrlKey || e.metaKey) return;
+            const enabled = this._toolbarItems.filter(btn => !btn.disabled);
+            const at = enabled.indexOf(e.target);
+            const step = { ArrowRight: 1, ArrowLeft: -1 }[e.key] * (NDS.isRtl ? -1 : 1);
+            let target;
+            if (step) target = enabled[(at + step + enabled.length) % enabled.length];
+            else if (e.key === 'Home') target = enabled[0];
+            else if (e.key === 'End') target = enabled[enabled.length - 1];
+            if (!target) return;
+            e.preventDefault();
+            this._setTabStop(target);
+            target.focus();
         }
 
         _handleToolbarClick(e) {
@@ -1464,6 +1508,7 @@
         }
 
         _handleKeyDown(e) {
+            if (isComposing(e)) return; // the IME owns Enter and Backspace until it commits
             // NDS component shells are atomic to boundary deletes — a
             // Backspace/Delete that would cross a shell edge must not merge
             // content through it.
@@ -2750,6 +2795,7 @@
                 // selected-component marker.
                 this._syncRemoveState();
                 this._syncSelectedMark();
+                this._syncTabStop();
                 if (!selection.rangeCount) return;
                 if (!this._editable.contains(selection.anchorNode)) return;
                 this._syncToolbarState();
@@ -2797,6 +2843,7 @@
             for (const btn of this._buttons) {
                 if (atomLockedCommands.has(btn.dataset.cmd)) btn.disabled = locked;
             }
+            this._syncTabStop();
 
             for (const btn of this._buttons) {
                 // Only toggle commands carry aria-pressed in markup; action

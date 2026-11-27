@@ -1141,6 +1141,12 @@
  },
  {
   "section": "editor",
+  "key": "formatting",
+  "en": "Formatting",
+  "ar": "التنسيق"
+ },
+ {
+  "section": "editor",
   "key": "url",
   "en": "URL",
   "ar": "الرابط"

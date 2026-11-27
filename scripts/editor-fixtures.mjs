@@ -2448,6 +2448,65 @@ try {
         console.log('PASS image-markup-config-e2e');
     }
 
+    // E2E: the toolbar is one Tab stop with arrow keys inside, the stop leaves a
+    // disabled button, and an IME-confirming Enter is left to the IME.
+    const keyboardOut = await page.evaluate(async () => {
+        const raf = () => new Promise(requestAnimationFrame);
+        const host = document.createElement('div');
+        const field = (id, extra = '') => `
+          <div class="nds-form-container nds-textarea nds-editor">
+            <div class="nds-form-header"><label for="${id}"><span class="nds-label">حقل</span></label></div>
+            <div class="nds-form-control"><textarea class="nds-textarea" id="${id}"${extra}><p>نص</p></textarea></div>
+          </div>`;
+        host.innerHTML = field('kbd') + field('kbdro', ' readonly');
+        document.body.appendChild(host);
+        const [root, roRoot] = host.querySelectorAll('.nds-editor');
+        NDS.Editor.create(root);
+        NDS.Editor.create(roRoot);
+        const toolbar = root.querySelector('.nds-toolbar');
+        const items = [...toolbar.querySelectorAll('button')].filter(b => !b.closest('.nds-dropmenu-menu'));
+        const stops = () => items.filter(b => b.tabIndex === 0);
+        const isToolbar = toolbar.getAttribute('role') === 'toolbar' && !!toolbar.getAttribute('aria-label');
+        const oneStop = stops().length === 1;
+        const key = (k) => document.activeElement.dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true }));
+        const enabled = items.filter(b => !b.disabled);
+        enabled[0].focus();
+        key(NDS.isRtl ? 'ArrowLeft' : 'ArrowRight');
+        const arrowMoves = document.activeElement === enabled[1] && stops()[0] === enabled[1];
+        key('End');
+        const endMoves = document.activeElement === enabled[enabled.length - 1];
+        key('Home');
+        const homeMoves = document.activeElement === enabled[0];
+        // Readonly: every command is disabled, so the stop must sit on the source toggle.
+        const roStops = [...roRoot.querySelectorAll('.nds-toolbar button')].filter(b => b.tabIndex === 0 && !b.closest('.nds-dropmenu-menu'));
+        const readonlyStop = roStops.length === 1 && roStops[0].matches('[data-source-toggle]:not(:disabled)');
+        // IME: Enter inside a chip escapes it normally, but not while composing.
+        const editable = root.querySelector('.nds-editor-editable');
+        editable.innerHTML = '<p>قبل <span class="nds-chip"><span class="nds-label">مكتمل</span></span> بعد</p>';
+        const range = document.createRange();
+        range.setStart(editable.querySelector('.nds-chip .nds-label').firstChild, 2);
+        range.collapse(true);
+        getSelection().removeAllRanges();
+        getSelection().addRange(range);
+        editable.focus();
+        await raf();
+        const composingEnterLeft = editable.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', isComposing: true, bubbles: true, cancelable: true }));
+        const linkText = root.querySelector('[data-editor-link-text]');
+        const linkEnterLeft = linkText.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', isComposing: true, bubbles: true, cancelable: true }));
+        NDS.Editor.destroy(root);
+        NDS.Editor.destroy(roRoot);
+        host.remove();
+        return { isToolbar, oneStop, arrowMoves, endMoves, homeMoves, readonlyStop, composingEnterLeft, linkEnterLeft };
+    });
+    const keyboardProblems = Object.entries(keyboardOut).filter(([, v]) => !v).map(([k]) => `FAILED: ${k}`);
+    if (keyboardProblems.length) {
+        failures++;
+        console.log('FAIL toolbar-keyboard+ime-e2e');
+        keyboardProblems.forEach(pr => console.log(`  ${pr}`));
+    } else {
+        console.log('PASS toolbar-keyboard+ime-e2e');
+    }
+
     console.log(failures ? `\n${failures} fixture(s) failed` : '\nAll fixtures passed');
     process.exitCode = failures ? 1 : 0;
 } finally {

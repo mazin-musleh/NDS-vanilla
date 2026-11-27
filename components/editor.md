@@ -10,8 +10,8 @@ breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.4.0"
-updated: "2.0.0"
-last_edit: "05/11/2026 - 12:02 PM"
+updated: "2.1.x"
+last_edit: "27/11/2026 - 04:13 AM"
 ---
 
 <section id="editor-overview" class="nds-content-section nds-doc-overview">
@@ -363,6 +363,8 @@ The full set is `undo redo | bold italic underline strike clear | link image | h
 | Tab, Shift + Tab | In a list item: nests the item, or moves it out one level. Elsewhere, Tab moves the focus out of the field |
 | Tab, Shift + Tab in the source view | Indents or outdents the line or the selected lines |
 | Escape, then Tab in the source view | Moves the focus out of the field |
+| Tab into the toolbar | Focuses one toolbar button: the last one used, or the first |
+| Left and Right arrows, Home, End in the toolbar | Move between the toolbar buttons |
 {: .nds-table .nds-responsive}
 
 ### CSS Custom Properties

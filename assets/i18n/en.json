@@ -240,6 +240,7 @@
   "dir-ltr": "Left to right",
   "dir-rtl": "Right to left",
   "source": "View HTML source",
+  "formatting": "Formatting",
   "url": "URL",
   "text": "Text",
   "external": "Open in new tab",
