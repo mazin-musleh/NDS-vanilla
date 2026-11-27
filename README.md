@@ -1,4 +1,4 @@
-# NDS: National Design System (Vanilla)
+# NDS-vanilla: Platformscode Template
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Pages](https://img.shields.io/github/deployments/mazin-musleh/NDS-vanilla/github-pages?label=pages)](https://ndsvanilla.dev/)
@@ -6,11 +6,11 @@
 [![Issues](https://img.shields.io/github/issues/mazin-musleh/NDS-vanilla)](https://github.com/mazin-musleh/NDS-vanilla/issues)
 [![Release](https://img.shields.io/github/v/release/mazin-musleh/NDS-vanilla?display_name=tag&sort=semver)](https://github.com/mazin-musleh/NDS-vanilla/releases/latest)
 
-<p dir="rtl"><strong>قالب كود المنصات</strong>: تطبيق مفتوح المصدر لنظام التصميم الوطني السعودي (كود المنصات | نظام التصميم الموحد) بلغة HTML وCSS وJavaScript فقط، بدون إطار عمل وبدون مكتبات إضافية.</p>
+<p dir="rtl"><strong>قالب كود المنصات</strong>: مشروع مفتوح المصدر لتطبيق نظام التصميم الموحد (كود المنصات) في المملكة العربية السعودية، بلغة HTML وCSS وJavaScript فقط، دون إطار عمل أو مكتبات إضافية. <a href="https://ndsvanilla.dev/ar/">الموقع بالعربية</a></p>
 
-The Saudi [Digital Government Authority (DGA)](https://dga.gov.sa/) publishes its design specifications as [Figma files](https://www.figma.com/@sdga). Its own code is a React and Storybook component library.
+The Saudi [Digital Government Authority (DGA)](https://dga.gov.sa/) publishes Platformscode (كود المنصات), the National Design System, as [Figma files](https://www.figma.com/@sdga). Its own code is a React and Storybook component library.
 
-NDS-vanilla is an independent build of the DGA design system in plain HTML, CSS, and JavaScript. Plain web code works in any stack: static sites, server-rendered pages, or apps built with React or another framework. It brings no framework or dependencies of its own.
+NDS-vanilla is an independent, open-source implementation of Platformscode in plain HTML, CSS, and JavaScript. Plain web code works in any stack: static sites, server-rendered pages, or apps built with React or another framework. It brings no framework or dependencies of its own.
 
 **Highlights:**
 - **Framework-free.** Plain HTML, CSS, and JavaScript, with zero runtime dependencies.
@@ -25,6 +25,7 @@ NDS-vanilla is an independent build of the DGA design system in plain HTML, CSS,
 
 Quick links:
 [Get Started](https://ndsvanilla.dev/guides/get-started.html) ·
+[Arabic site](https://ndsvanilla.dev/ar/) ·
 [Components](https://ndsvanilla.dev/#components) ·
 [Templates](https://ndsvanilla.dev/#compliance) ·
 [Examples](https://ndsvanilla.dev/#examples) ·
@@ -48,7 +49,7 @@ Quick links:
 | **Theming** | Light and dark mode, OKLCH-seed palettes, and predefined or stylesheet themes. |
 | **Event themes** | Seasonal skins for Foundation Day, Hajj, and National Day. One script tag applies each one. |
 
-Every page is Arabic (RTL) first, with English (LTR) support. The docs show a live demo and copy-ready markup for each part.
+Every page is Arabic (RTL) first, with English (LTR) support. The docs show a live demo and copy-ready markup for each part. The docs site is in English, and its home page and guides are also in Arabic.
 
 ## Who is this for?
 
