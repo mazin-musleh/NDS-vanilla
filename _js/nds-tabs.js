@@ -23,6 +23,7 @@
  *   - The active tab at init is the one with aria-selected="true", else the first.
  *   - .nds-vertical on the root switches the arrow keys and turns off drag scrolling.
  *   - The instance lives on the root as el.ndsTabs.
+ *   - A closed panel is hidden="until-found" where supported: find-in-page opens its tab.
  */
 /**
  * NDS Tabs Component
@@ -57,6 +58,8 @@
     // tablist; nested panels sit INSIDE an outer panel), desynchronizing the
     // tabs[i] ↔ panels[i] pairing every method here depends on.
     const getOwnParts = (container, selector) => NDS.findOwnParts(container, selector, '.nds-tabs');
+    // Find-in-page reaches a closed panel where the browser supports it; elsewhere plain hidden.
+    const HIDDEN_VALUE = 'onbeforematch' in HTMLElement.prototype ? 'until-found' : '';
 
     class NdsTabs {
         constructor(tabsContainer) {
@@ -156,6 +159,10 @@
             });
 
             this._tabList.addEventListener('keydown', (e) => this._handleKeyDown(e), { signal: this.abortController.signal });
+            // Find-in-page matched text in a closed panel: open its tab.
+            this._panels.forEach((panel, index) => {
+                panel.addEventListener('beforematch', () => this._switchToTab(index), { signal: this.abortController.signal });
+            });
         }
 
         _handleKeyDown(e) {
@@ -255,7 +262,7 @@
             tab.setAttribute('tabindex', '-1');
 
             NDS.aria.hidden(panel, true);
-            panel.setAttribute('hidden', '');
+            panel.setAttribute('hidden', HIDDEN_VALUE);
             panel.setAttribute('tabindex', '-1');
         }
 
@@ -283,6 +290,8 @@
 
         destroy() {
             if (this.abortController) this.abortController.abort();
+            // With no beforematch listener, find-in-page would open a panel without its tab.
+            this._panels.forEach(panel => { if (panel.getAttribute('hidden') === 'until-found') panel.setAttribute('hidden', ''); });
             this._tabsContainer.removeAttribute('data-nds-tabs-initialized');
             delete this._tabsContainer.ndsTabs;
         }

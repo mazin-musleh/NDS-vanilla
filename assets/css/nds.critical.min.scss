@@ -49,6 +49,7 @@
 // (set in nds-filter.js, also read by nds-pagination.js) — it lives here so
 // URL-active filters, which mark items in the critical init pass, hide at
 // first paint instead of flashing then collapsing when the main bundle loads.
-:is(.nds-hidden, [hidden], [data-state~=hidden], [data-filtered]) {
+// hidden="until-found" keeps its box so find-in-page can reveal it; the browser hides its content.
+:is(.nds-hidden, [hidden]:not([hidden="until-found"]), [data-state~=hidden], [data-filtered]) {
     display: none !important;
 }

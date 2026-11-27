@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "2.0.0"
-last_edit: "05/11/2026 - 12:02 PM"
+updated: "2.1.x"
+last_edit: "27/11/2026 - 03:44 AM"
 ---
 
 <section id="tabs-overview" class="nds-content-section nds-doc-overview">
@@ -359,7 +359,20 @@ The first tab is open in the markup: its `aria-selected` is `true`, and every ot
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">High Contrast and Reduced Motion</span>
-              <p class="nds-card-description">The open tab gets a border in high-contrast mode, and the transitions stop when the user prefers reduced motion.</p>
+              <p class="nds-card-description">The open tab gets a border in high-contrast mode, and its line stays visible in Windows contrast themes. The transitions stop when the user prefers reduced motion.</p>
+            </div>
+          </div>
+        </li>
+        <li class="nds-card">
+          <div class="nds-card-header">
+            <div class="nds-card-featured-icon">
+              <span class="nds-featured-icon nds-subtle"><i class="hgi hgi-stroke hgi-search-01" aria-hidden="true"></i></span>
+            </div>
+          </div>
+          <div class="nds-card-content">
+            <div class="nds-card-text">
+              <span class="nds-card-title">Find in Page</span>
+              <p class="nds-card-description">Ctrl+F finds text in a closed panel and opens its tab. A browser without this feature leaves closed panels out of the search.</p>
             </div>
           </div>
         </li>

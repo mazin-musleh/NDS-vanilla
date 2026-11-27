@@ -65,7 +65,7 @@ Copy the head as one block. The JS Library tab holds the main script: put it jus
     html:not([data-nds-loaded]) main{overflow-x:clip}
     .nds-skip-link:not(:focus){position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0}
     :root{--nds-icons-opacity: 0}
-    :is(.nds-hidden,[hidden],[data-state~=hidden],[data-filtered]){display:none !important}
+    :is(.nds-hidden,[hidden]:not([hidden=until-found]),[data-state~=hidden],[data-filtered]){display:none !important}
     :where(.nds-hero-section){position:relative;height:550px}
     :where(.nds-hero-section.nds-sub){height:auto;min-height:220px}
     :where(.nds-hero-image-wrapper){position:absolute;inset:0}

@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+- **Tabs** — Ctrl+F finds text in a closed panel and opens its tab.
+
+### Fixed
+- **Switch** — Screen readers announce it as a switch, not a checkbox.
+- **Windows contrast themes** — The switch thumb, the open tab's line and the selected mark in the side menu, main navigation and drawer stay visible.
+
 ## [2.1.1] - 2026-11-26
 
 ### Added

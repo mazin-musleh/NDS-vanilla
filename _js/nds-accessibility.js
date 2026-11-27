@@ -1126,7 +1126,7 @@
                                     </div>
                                     <div class="nds-form-control">
                                         <div class="nds-switch-toggle">
-                                            <input type="checkbox" id="a11y-mode-epilepsy-safe" class="nds-switch-input" data-a11y-mode="epilepsy-safe">
+                                            <input type="checkbox" role="switch" id="a11y-mode-epilepsy-safe" class="nds-switch-input" data-a11y-mode="epilepsy-safe">
                                             <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                         </div>
                                     </div>
@@ -1141,7 +1141,7 @@
                                     </div>
                                     <div class="nds-form-control">
                                         <div class="nds-switch-toggle">
-                                            <input type="checkbox" id="a11y-mode-visually-impaired" class="nds-switch-input" data-a11y-mode="visually-impaired">
+                                            <input type="checkbox" role="switch" id="a11y-mode-visually-impaired" class="nds-switch-input" data-a11y-mode="visually-impaired">
                                             <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                         </div>
                                     </div>
@@ -1156,7 +1156,7 @@
                                     </div>
                                     <div class="nds-form-control">
                                         <div class="nds-switch-toggle">
-                                            <input type="checkbox" id="a11y-mode-cognitive-disability" class="nds-switch-input" data-a11y-mode="cognitive-disability">
+                                            <input type="checkbox" role="switch" id="a11y-mode-cognitive-disability" class="nds-switch-input" data-a11y-mode="cognitive-disability">
                                             <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                         </div>
                                     </div>
@@ -1171,7 +1171,7 @@
                                     </div>
                                     <div class="nds-form-control">
                                         <div class="nds-switch-toggle">
-                                            <input type="checkbox" id="a11y-mode-motor-impaired" class="nds-switch-input" data-a11y-mode="motor-impaired">
+                                            <input type="checkbox" role="switch" id="a11y-mode-motor-impaired" class="nds-switch-input" data-a11y-mode="motor-impaired">
                                             <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                         </div>
                                     </div>
@@ -1186,7 +1186,7 @@
                                     </div>
                                     <div class="nds-form-control">
                                         <div class="nds-switch-toggle">
-                                            <input type="checkbox" id="a11y-mode-colorblind" class="nds-switch-input" data-a11y-mode="colorblind">
+                                            <input type="checkbox" role="switch" id="a11y-mode-colorblind" class="nds-switch-input" data-a11y-mode="colorblind">
                                             <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                         </div>
                                     </div>
@@ -1201,7 +1201,7 @@
                                     </div>
                                     <div class="nds-form-control">
                                         <div class="nds-switch-toggle">
-                                            <input type="checkbox" id="a11y-mode-dyslexia-friendly" class="nds-switch-input" data-a11y-mode="dyslexia-friendly">
+                                            <input type="checkbox" role="switch" id="a11y-mode-dyslexia-friendly" class="nds-switch-input" data-a11y-mode="dyslexia-friendly">
                                             <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                         </div>
                                     </div>
@@ -1216,7 +1216,7 @@
                                     </div>
                                     <div class="nds-form-control">
                                         <div class="nds-switch-toggle">
-                                            <input type="checkbox" id="a11y-mode-adhd-friendly" class="nds-switch-input" data-a11y-mode="adhd-friendly">
+                                            <input type="checkbox" role="switch" id="a11y-mode-adhd-friendly" class="nds-switch-input" data-a11y-mode="adhd-friendly">
                                             <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
                                         </div>
                                     </div>

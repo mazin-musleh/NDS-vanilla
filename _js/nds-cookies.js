@@ -85,7 +85,7 @@
             </div>
             <div class="nds-form-control">
               <div class="nds-switch-toggle">
-                <input type="checkbox" id="nds-cookies-${name}" class="nds-switch-input" data-cookies-category="${name}"${locked ? ' checked disabled' : ''}>
+                <input type="checkbox" role="switch" id="nds-cookies-${name}" class="nds-switch-input" data-cookies-category="${name}"${locked ? ' checked disabled' : ''}>
                 <div class="nds-switch-track"><div class="nds-switch-thumb"></div></div>
               </div>
             </div>

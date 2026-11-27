@@ -385,6 +385,8 @@ $rail-collapsed: ':is([data-sidemenu-collapsed]:not(html[data-nds-sidemenu-fold=
     border-radius: var(--radius-full);
     display: block;
     /* transition: height var(--nds-transition); */
+    // Contrast themes drop background colors, which would erase the selected mark.
+    forced-color-adjust: none;
 
     @if $position =='b' {
       height: $size;

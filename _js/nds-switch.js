@@ -12,6 +12,7 @@
  *   (none — the structure is markup: .nds-switch-toggle holds .nds-switch-input and .nds-switch-track)
  * Gotchas:
  *   - A type part of the form field: no init() and no loader entry.
+ *   - The first-paint pass stamps role="switch" on the input.
  *   - Every change of the input checks the field again and fires nds:switch:change: the track, a key, a label
  *     (the field header's too), input.click() or NDS.setValue().
  */
@@ -51,7 +52,12 @@
         create: (el) => {
             const inputs = Array.from(el.querySelectorAll('.nds-form-control .nds-switch-input'));
             if (el.matches && el.matches('.nds-switch-input')) inputs.unshift(el);
-            inputs.forEach((input) => { if (!input.closest('code')) NDS.field.refresh(input); });
+            inputs.forEach((input) => {
+                if (input.closest('code')) return;
+                // A screen reader then says "switch, on", not "checkbox, checked".
+                input.setAttribute('role', 'switch');
+                NDS.field.refresh(input);
+            });
         },
         on: {
             // mouseleave does not bubble: a mouseout to outside the track stands in for it.

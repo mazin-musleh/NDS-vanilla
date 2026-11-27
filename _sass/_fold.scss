@@ -158,7 +158,8 @@ html:not([data-nds-loaded]) main { overflow-x: clip; }
 
     /* ── Bootstraps ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :is(.nds-hidden, [hidden], [data-state~=hidden], [data-filtered]) { display: none !important; }
+    /* until-found keeps its box for find-in-page; the browser hides its content */
+    :is(.nds-hidden, [hidden]:not([hidden="until-found"]), [data-state~=hidden], [data-filtered]) { display: none !important; }
 
     /* ── Hero box stand-in (structure; the real hero component owns these in crit) ── */
     :where(.nds-hero-section) { position: relative; height: 550px; }

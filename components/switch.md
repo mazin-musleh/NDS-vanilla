@@ -7,8 +7,8 @@ breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en
 direction: ltr
 since: "1.0.0"
-updated: "2.0.0"
-last_edit: "05/11/2026 - 12:02 PM"
+updated: "2.1.x"
+last_edit: "27/11/2026 - 03:44 AM"
 ---
 
 <section id="switch-overview" class="nds-content-section nds-doc-overview">
@@ -170,7 +170,7 @@ Checked goes on one switch: the builder uses `#switch-1` or `#switch1`, but on a
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Toggle Input</span>
-              <p class="nds-card-description">A click on the track, on a label inside the control or on the label in the field header toggles the switch. Space and Enter toggle it from the keyboard. Every change of the input, including <code class="nds-inline-code lang-js">NDS.setValue()</code>, checks the field again and fires <code class="nds-inline-code lang-js">nds:switch:change</code>.</p>
+              <p class="nds-card-description">A click on the track, on a label inside the control or on the label in the field header toggles the switch. Space and Enter toggle it from the keyboard, and screen readers announce it as a switch. Every change of the input, including <code class="nds-inline-code lang-js">NDS.setValue()</code>, checks the field again and fires <code class="nds-inline-code lang-js">nds:switch:change</code>.</p>
             </div>
           </div>
         </li>
@@ -196,7 +196,7 @@ Checked goes on one switch: the builder uses `#switch-1` or `#switch1`, but on a
           <div class="nds-card-content">
             <div class="nds-card-text">
               <span class="nds-card-title">Visual Feedback</span>
-              <p class="nds-card-description">A ripple grows around the track on hover. The thumb widens while the track is pressed, and slides to the other end when the switch toggles.</p>
+              <p class="nds-card-description">A ripple grows around the track on hover. The thumb widens while the track is pressed, and slides to the other end when the switch toggles. In Windows contrast themes the thumb and the on track take system colors, so on and off stay clear.</p>
             </div>
           </div>
         </li>

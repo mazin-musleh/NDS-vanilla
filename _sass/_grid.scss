@@ -32,7 +32,7 @@
   width: 100%;
 
   // The important display above outranks the global hide rule, so a hidden grid restates it.
-  &:is(.nds-hidden, [hidden], [data-state~=hidden], [data-filtered]) { display: none !important; }
+  &:is(.nds-hidden, [hidden]:not([hidden="until-found"]), [data-state~=hidden], [data-filtered]) { display: none !important; }
 
   > * {
     max-width: 100% !important;

@@ -211,4 +211,13 @@
     .nds-switch-track:active .nds-switch-thumb {
         width: calc(var(--_switch-thumb-size) + 6px);
     }
+
+    // Contrast themes drop background colors, which would erase the thumb: system colors instead.
+    @media (forced-colors: active) {
+        .nds-switch-thumb { forced-color-adjust: none; background-color: CanvasText; }
+        .nds-switch-input:checked + .nds-switch-track { forced-color-adjust: none; background-color: Highlight; border-color: Highlight; }
+        .nds-switch-input:checked + .nds-switch-track .nds-switch-thumb { background-color: HighlightText; }
+        .nds-switch-input:disabled + .nds-switch-track { forced-color-adjust: none; background-color: Canvas; border-color: GrayText; }
+        .nds-switch-input:disabled + .nds-switch-track .nds-switch-thumb { background-color: GrayText; }
+    }
 }
