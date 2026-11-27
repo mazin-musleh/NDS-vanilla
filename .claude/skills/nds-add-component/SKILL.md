@@ -17,12 +17,13 @@ description: Use when adding a new NDS component or creating a new page - build 
 2. Add `@use 'components/[name]';` to `assets/css/nds-main.min.scss`
 3. Add JS in `_js/nds-[name].js` if needed — follow the canonicals in `.claude/skills/nds-js-audit/PERSONA.md` (controller naming, `destroy()` teardown, lifecycle pair by concept, console prefix, init sentinel, `{ signal }` listeners) — then run `ruby _plugins/js_processor.rb`
 4. Test the component in `playground.md` until behavior is correct
+5. Run `/nds-web-audit [name]` for platform and accessibility gaps (add its `MAP.md` row first), and fix the real ones before the doc page
 
 **Phase 2: Document & register** — only after Phase 1 verifies behavior.
 
-5. Add documentation page in its shelf's folder — the placement rule heads `_data/catalog.yml` (most pages: `components/[name].md`) — following `.claude/skills/nds-doc/SKILL.md` (Claude Code invokes it as `/nds-doc [name]`)
-6. Add to `_data/sidemenu/sidemenu.yml` under its shelf (and group, for Components)
-7. Add its entry to `_data/catalog.yml`, in its shelf's block, so the page appears on the Library grid, in `llms.txt`, and in the agents' catalog. Match a neighbor entry's keys (title, description, use_when, category, tags, url, js, scss; templates, examples and events add icon) rather than guessing the schema. Templates, examples and event packs go in the same file, in their own blocks.
+6. Add documentation page in its shelf's folder — the placement rule heads `_data/catalog.yml` (most pages: `components/[name].md`) — following `.claude/skills/nds-doc/SKILL.md` (Claude Code invokes it as `/nds-doc [name]`)
+7. Add to `_data/sidemenu/sidemenu.yml` under its shelf (and group, for Components)
+8. Add its entry to `_data/catalog.yml`, in its shelf's block, so the page appears on the Library grid, in `llms.txt`, and in the agents' catalog. Match a neighbor entry's keys (title, description, use_when, category, tags, url, js, scss; templates, examples and events add icon) rather than guessing the schema. Templates, examples and event packs go in the same file, in their own blocks.
    **A page that moves keeps its file name** — the 404 page forwards an old URL by file name.
 
 ## Component Doc Front Matter

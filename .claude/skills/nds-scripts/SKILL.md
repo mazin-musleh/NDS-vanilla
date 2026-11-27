@@ -9,6 +9,7 @@ description: Use when running or writing NDS check, audit, perf or asset scripts
 node scripts/check-area-contrast.mjs            # contrast of every part's canon inside each area fill (text 4.5, UI 3, rest/hover/pressed/selected); DARK=1, ONLY=<fill>, END=<color> tries another gradient end. Known fails are owner-accepted (plans/area-themes.md → Contrast)
 node scripts/check-part-sizes.mjs               # part sizes: a knob beats the size class, the class a List's step; nested lists; a button's knob stays on the button; the Library's XS tags; ENGINE=webkit, CSS=<old main css> must fail
 node scripts/encode-webp.mjs <master>           # WebP at set widths, lowest quality above a PSNR floor — always from the master
+node scripts/web-guidance.mjs search|retrieve|scan|update|lock  # Google's modern-web-guidance at the pinned version, telemetry off → tmp/mwg/; the nds-web-audit skill drives it
 node scripts/run-audit.mjs [page.html]          # print a built page's NDS.init.audit() warnings
 node scripts/check-js-rules.mjs [file …]        # nds-js-audit's mechanical half: `finding` = decided, `verify` = left to read (rules in its header); --self-test; --names = the naming rules (PERSONA 1, 10, 12)
 node scripts/rename-bindings.mjs --underscore|--map <json> [--apply]  # rename bindings and their references by the AST (never a property); dry run without --apply
