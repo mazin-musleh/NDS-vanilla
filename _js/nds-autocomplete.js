@@ -277,7 +277,7 @@
             // Keyboard navigation — stopPropagation prevents dropmenu's trigger keydown
             this._input.addEventListener('keydown', (e) => {
                 // An IME's Enter or arrows pick its own candidate, not a suggestion.
-                if (e.isComposing || e.keyCode === 229) return;
+                if (NDS.isComposing(e)) return;
                 this._keyHeld = e.repeat;
                 this._handleKeyDown(e);
             }, { signal });

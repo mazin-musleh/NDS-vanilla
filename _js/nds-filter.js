@@ -166,8 +166,6 @@
     const filterAbortControllers = new WeakMap(); // filter element / range root → its listener controller
     const boundInputs = new WeakSet(); // inputs whose change listener was wired
     const itemCaches = new WeakMap(); // item → { values, searchText }, built by _buildItemCache
-    // 229: Safari fires compositionend before the confirming Enter, so isComposing is already false.
-    const isComposing = (e) => e.isComposing || e.keyCode === 229;
 
     // The page's query, with each `filter-{name}` a native submit before 2.0 sent (generated options)
     // also read as `{name}`, unless the page has that key too: old links still open.
@@ -1662,7 +1660,7 @@
             }, { signal });
 
             searchInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' && !isComposing(e)) {
+                if (e.key === 'Enter' && !NDS.isComposing(e)) {
                     e.preventDefault();
                     // Same flow as the Apply button: settle search state from the
                     // dropmenu surface, then submit (form mode) or apply.
@@ -1713,7 +1711,7 @@
             }, { signal });
 
             searchInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' && !isComposing(e)) {
+                if (e.key === 'Enter' && !NDS.isComposing(e)) {
                     e.preventDefault();
 
                     // Centralized logic: _runDirectSearch → syncFilters (handles both modes)

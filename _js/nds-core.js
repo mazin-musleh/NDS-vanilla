@@ -31,6 +31,7 @@
  *     NDS.getStickyHeaderBottom() · NDS.getViewportPadding(el) · NDS.getVisibleBox() · NDS.scrollBelowNav(el, opts) · NDS.scrollLock.lock/unlock
  *     NDS.dragScroll(el, { canScroll, signal })   wheel + mouse-drag sideways scroll; a drag swallows its click
  *     NDS.trapFocus(getEl) · NDS.focusableSel
+ *     NDS.isComposing(e)               the key belongs to an IME still typing a word (Chinese, Japanese, Korean): skip it
  *     NDS.setScrollStop(el, on)        give a scroller a tab stop so keys scroll it; an authored tabindex stays
  *     NDS.getCellText(cell)               a table cell's own text, the value sort and export read
  *     NDS.findOwnParts(root, sel, ownerSelector)   root's own matches, not a nested instance's
@@ -603,6 +604,8 @@
     NDS.splitList = (text) => String(text ?? '').split(/[\s,]+/).filter(Boolean);
     // One reader for every flag, so a template's printed false stays off everywhere.
     NDS.readFlag = (el, name) => el.hasAttribute(name) && !/^(false|0|no|off)$/i.test(el.getAttribute(name).trim());
+    // 229: Safari fires compositionend before the confirming Enter, so isComposing is already false.
+    NDS.isComposing = (e) => e.isComposing || e.keyCode === 229;
 
 
     // ── Run-When-Idle ────────────────────────────────────────────────

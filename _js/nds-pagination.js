@@ -1124,7 +1124,7 @@
         });
 
         input.addEventListener('keydown', (e) => {
-            if (e.key !== 'Enter') return;
+            if (e.key !== 'Enter' || NDS.isComposing(e)) return;
             const { from, to } = lazyRanges.get(scroll);
             const pageNumber = parseInt(input.value, 10);
             if (!(pageNumber > 0)) return;

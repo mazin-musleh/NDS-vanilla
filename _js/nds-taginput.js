@@ -129,7 +129,7 @@
                 && NDS.state.has(this._formControl, 'open');
 
             this._input.addEventListener('keydown', (e) => {
-                if (e.isComposing) return;
+                if (NDS.isComposing(e)) return;
                 if (e.key === 'Enter') {
                     if (isAutocompleteMenuOpen() && this._input.getAttribute('aria-activedescendant')) return;
                     // Empty Enter falls through — the form's normal submit.

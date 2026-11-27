@@ -758,8 +758,6 @@
     const getLabelHtml = (key) => NDS.escapeHtml(strings.text(key));
     // Each word carries its marker: core writes it again when the pack lands or the language changes.
     const getLabelSpan = (key) => `<span class="nds-label" data-i18n="editor.${key}">${getLabelHtml(key)}</span>`;
-    // 229: Safari fires compositionend before the confirming Enter, so isComposing is already false.
-    const isComposing = (e) => e.isComposing || e.keyCode === 229;
     // A command's name and its tooltip: title is the tooltip's marked message source.
     const getCommandName = (key) => {
         const label = getLabelHtml(key);
@@ -1129,7 +1127,7 @@
             // Enter in either text field confirms.
             linkMenu.querySelectorAll('[data-editor-link-text], [data-editor-link-url]').forEach(input => {
                 input.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' && !isComposing(e)) { e.preventDefault(); this._confirmLink(); }
+                    if (e.key === 'Enter' && !NDS.isComposing(e)) { e.preventDefault(); this._confirmLink(); }
                 }, { signal });
             });
         }
@@ -1188,7 +1186,7 @@
             }
             imageMenu.querySelectorAll('[data-editor-image-url], [data-editor-image-alt], [data-editor-image-width], [data-editor-image-height]').forEach(input => {
                 input.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' && !isComposing(e)) { e.preventDefault(); this._confirmImage(); }
+                    if (e.key === 'Enter' && !NDS.isComposing(e)) { e.preventDefault(); this._confirmImage(); }
                 }, { signal });
             });
         }
@@ -1508,7 +1506,7 @@
         }
 
         _handleKeyDown(e) {
-            if (isComposing(e)) return; // the IME owns Enter and Backspace until it commits
+            if (NDS.isComposing(e)) return; // the IME owns Enter and Backspace until it commits
             // NDS component shells are atomic to boundary deletes — a
             // Backspace/Delete that would cross a shell edge must not merge
             // content through it.

@@ -9,10 +9,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 - **Tabs** — Ctrl+F finds text in a closed panel and opens its tab.
 - **Editor** — The toolbar is one Tab stop: the arrow keys, Home and End move between its buttons, and screen readers announce it as a toolbar.
+- **Helpers** — `NDS.isComposing(e)` tells a key that an input method still owns, Safari included.
 
 ### Fixed
-- **Editor** — Enter that confirms a word in a Chinese, Japanese or Korean keyboard no longer inserts the link or image early, or moves the caret out of a component.
-- **Filter** — Enter that confirms a word in a Chinese, Japanese or Korean keyboard no longer runs the search or submits the form early.
+- **Chinese, Japanese and Korean typing** — Enter that confirms a word no longer acts early: in the Editor, Filter search, menu search, Tag Input on Safari and the page-number box.
 - **Switch** — Screen readers announce it as a switch, not a checkbox.
 - **Windows contrast themes** — The switch thumb, the open tab's line and the selected mark in the side menu, main navigation and drawer stay visible.
 

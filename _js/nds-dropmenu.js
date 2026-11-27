@@ -354,6 +354,7 @@
             this._searchInput.addEventListener('input', NDS.debounce(filter, 120), { signal });
 
             this._searchInput.addEventListener('keydown', (e) => {
+                if (NDS.isComposing(e)) return; // the IME owns Enter, Escape and arrows until it commits
                 // Two-stage Escape: first press clears the query, second closes
                 // the menu (falls through to the existing menu-scope handleEscape).
                 if (e.key === 'Escape') {

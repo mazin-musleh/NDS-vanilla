@@ -7,8 +7,8 @@ breadcrumb: [["Core", "/components/?shelf=Core"]]
 lang: en
 direction: ltr
 since: "2.0.0"
-updated: "2.0.0"
-last_edit: "31/10/2026 - 11:09 PM"
+updated: "2.1.x"
+last_edit: "27/11/2026 - 04:51 AM"
 ---
 
 <section id="helpers-overview" class="nds-content-section nds-doc-overview">
@@ -194,6 +194,7 @@ One observer of each kind serves the whole page. Each call returns an `off()` fu
 | `NDS.scrollLock.lock()`, `.unlock()` | Stops and restores the page scroll. The calls are counted: the last `unlock()` restores it |
 | `NDS.trapFocus(getEl)` | Returns a `keydown` handler for `document` that keeps Tab inside the element `getEl()` returns. When it returns `null`, Tab moves as usual |
 | `NDS.focusableSel` | A selector for the elements that can take focus |
+| `NDS.isComposing(e)` | `true` when a key belongs to an input method that is still typing a word (Chinese, Japanese, Korean). Skip Enter, Escape and the arrows then. It covers Safari, where `e.isComposing` is already `false` |
 {: .nds-table .nds-responsive}
 
 ### Text and Data
