@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [2.1.2] - 2026-11-27
+
 ### Added
 - **Tabs** — Ctrl+F finds text in a closed panel and opens its tab.
 - **Editor** — The toolbar is one Tab stop: the arrow keys, Home and End move between its buttons, and screen readers announce it as a toolbar.
@@ -14,10 +16,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Hidden** — `hidden="until-found"` works on any block element: Ctrl+F finds its text, and it leaves no empty strip.
 
 ### Fixed
+- **Link** — The external link icon stays with the last word, instead of wrapping to the next line alone.
 - **Code** — Inline code reads left to right on an Arabic page: `.nds/` no longer shows as `/.nds`.
 - **Chinese, Japanese and Korean typing** — Enter that confirms a word no longer acts early: in the Editor, Filter search, menu search, Tag Input on Safari and the page-number box.
 - **Switch** — Screen readers announce it as a switch, not a checkbox.
 - **Windows contrast themes** — The switch thumb, the open tab's line and the selected mark in the side menu, main navigation and drawer stay visible.
+
+### Documentation
+- **NDS-INDEX** — The source copy leaves out the guides folder: the migration list explains itself.
 
 ## [2.1.1] - 2026-11-26
 
@@ -299,7 +305,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 The 1.x releases (1.0.0 to 1.12.0) are in [CHANGELOG-v1.md](https://github.com/mazin-musleh/NDS-vanilla/blob/main/CHANGELOG-v1.md).
 
-[Unreleased]: https://github.com/mazin-musleh/NDS-vanilla/compare/v2.1.1...HEAD
+[Unreleased]: https://github.com/mazin-musleh/NDS-vanilla/compare/v2.1.2...HEAD
+[2.1.2]: https://github.com/mazin-musleh/NDS-vanilla/compare/v2.1.1...v2.1.2
 [2.1.1]: https://github.com/mazin-musleh/NDS-vanilla/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/mazin-musleh/NDS-vanilla/compare/v1.12.0...v2.0.0

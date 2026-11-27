@@ -7,7 +7,7 @@ breadcrumb: [["Core", "/components/?shelf=Core"]]
 lang: en
 direction: ltr
 since: "2.0.0"
-updated: "2.1.x"
+updated: "2.1.2"
 last_edit: "27/11/2026 - 04:51 AM"
 ---
 

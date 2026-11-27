@@ -2,7 +2,7 @@
 
 Standing file: it always exists. At every release commit, remove the items that release shipped and carry the open ones forward. Never delete the file itself. This is the one open list.
 
-Cleaned 2026-11-26 at v2.1.1: shipped items left (all in `CHANGELOG.md` 2.1.1); git history holds the investigation notes.
+Cleaned 2026-11-27 at v2.1.2: no open item shipped in it; all carried forward. Git history holds the investigation notes.
 
 ## Open
 
