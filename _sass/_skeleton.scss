@@ -148,11 +148,15 @@ html {
     :where(.nds-link, a):not(.nds-card, .nds-external-block):where(.nds-icon, .nds-external)::after,
     :where(.nds-external-badge)::after {
         content: "";
-        display: inline-block;
+        // Inline, not inline-block: an atomic box is a line-break chance, so the icon wrapped alone.
+        // Padding is its width inline; width/height take over where a flex link blockifies it.
+        display: inline;
+        box-sizing: border-box;
+        padding-inline-start: 1em;
         width: 1em;
         height: 1em;
         background: transparent;
-        vertical-align: text-bottom;
+        vertical-align: middle;
         margin-inline-start: var(--spacing-xs);
     }
 }

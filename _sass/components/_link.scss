@@ -64,11 +64,15 @@
     &:not(.nds-external-block)::after,
     .nds-external-badge::after {
         content: "";
-        display: inline-block;
+        // Inline, not inline-block: an atomic box is a line-break chance, so the icon wrapped alone.
+        // Padding is its width inline; width/height take over where a flex link blockifies it.
+        display: inline;
+        box-sizing: border-box;
+        padding-inline-start: 1em;
         width: 1em;
         height: 1em;
         background: currentColor;
-        vertical-align: sub;
+        vertical-align: middle;
         margin-inline-start: var(--spacing-xs);
         mask: var(--_link-icon) center / contain no-repeat;
         opacity: var(--nds-icons-opacity, 1);
