@@ -257,6 +257,9 @@ $prose-langs: '.lang-markdown, .lang-md, .language-markdown, .language-md, .lang
 
 .nds-inline-code {
   font-weight: var(--font-weight-semibold);
+  // Code reads LTR on an RTL page; isolate keeps the sentence order around it.
+  direction: ltr;
+  unicode-bidi: isolate;
   // Coloured straight from the authored lang class — no JS pass. Mirrors the
   // block mapping: JS reads as a keyword, everything else as an attribute name.
   color: var(--_syntax-attr);

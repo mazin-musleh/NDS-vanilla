@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Hidden** — `hidden="until-found"` works on any block element: Ctrl+F finds its text, and it leaves no empty strip.
 
 ### Fixed
+- **Code** — Inline code reads left to right on an Arabic page: `.nds/` no longer shows as `/.nds`.
 - **Chinese, Japanese and Korean typing** — Enter that confirms a word no longer acts early: in the Editor, Filter search, menu search, Tag Input on Safari and the page-number box.
 - **Switch** — Screen readers announce it as a switch, not a checkbox.
 - **Windows contrast themes** — The switch thumb, the open tab's line and the selected mark in the side menu, main navigation and drawer stay visible.
