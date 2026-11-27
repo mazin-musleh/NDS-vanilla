@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Init
-hero_title: Init - National Design System
+hero_title: Init - Platformscode Template
 hero_description: How NDS starts the components on a page, and the calls that tell them a container changed after load
 breadcrumb: [["Core", "/components/?shelf=Core"]]
 lang: en

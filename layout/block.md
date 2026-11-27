@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Block
-hero_title: Block Layout - National Design System
+hero_title: Block Layout - Platformscode Template
 hero_description: A block is a spacing unit for content and components, with an optional title
 breadcrumb: [["Layout", "/components/?shelf=Layout"]]
 lang: en

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Chips
-hero_title: Chips - National Design System
+hero_title: Chips - Platformscode Template
 hero_description: A chip is a small button for a choice, a filter or a value the user can remove
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Breadcrumb
-hero_title: Breadcrumb - National Design System
+hero_title: Breadcrumb - Platformscode Template
 hero_description: A trail of links that shows where the current page sits in the site.
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

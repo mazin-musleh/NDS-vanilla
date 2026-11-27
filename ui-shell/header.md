@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Header
-hero_title: Header - National Design System
+hero_title: Header - Platformscode Template
 hero_description: The top of every page, which holds the top bar, the digital stamp panel and the main navigation.
 breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en

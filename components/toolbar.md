@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Toolbar
-hero_title: Toolbar - National Design System
+hero_title: Toolbar - Platformscode Template
 hero_description: A controls bar above a table, list or grid, with result counts and filters at the start and actions at the end
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

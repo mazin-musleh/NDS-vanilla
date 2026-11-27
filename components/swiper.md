@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Swiper
-hero_title: Swiper - National Design System
+hero_title: Swiper - Platformscode Template
 hero_description: A swiper is a horizontal row of slides that the user swipes, scrolls or pages through with arrows and bullets.
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

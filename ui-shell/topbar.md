@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Top Bar
-hero_title: Top Bar - National Design System
+hero_title: Top Bar - Platformscode Template
 hero_description: A slim bar above the main navigation with the DGA digital stamp, expanders that slide open below it, today's date, the time or the weather, and the dark mode button.
 breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en

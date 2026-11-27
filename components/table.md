@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Tables
-hero_title: Tables - National Design System
+hero_title: Tables - Platformscode Template
 hero_description: A table shows records in rows and columns, with optional sorting, row selection, a column menu and expandable rows
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

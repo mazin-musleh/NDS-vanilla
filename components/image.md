@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Image
-hero_title: Image - National Design System
+hero_title: Image - Platformscode Template
 hero_description: A photo cropped to fill a set shape, with a focal point and an optional overlay
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

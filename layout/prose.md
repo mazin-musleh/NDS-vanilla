@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Prose
-hero_title: Prose Layout - National Design System
+hero_title: Prose Layout - Platformscode Template
 hero_description: Prose styles classless text, such as the output of a rich text editor or a CMS, inside one wrapper
 breadcrumb: [["Layout", "/components/?shelf=Layout"]]
 lang: en

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Radio Button
-hero_title: Radio Button - National Design System
+hero_title: Radio Button - Platformscode Template
 hero_description: A radio button picks one option from a set of choices
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

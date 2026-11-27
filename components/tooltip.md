@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Tooltip
-hero_title: Tooltip - National Design System
+hero_title: Tooltip - Platformscode Template
 hero_description: A tooltip is a small balloon of help text that opens beside a term, a field or a button
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

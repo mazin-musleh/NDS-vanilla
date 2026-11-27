@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Accordion
-hero_title: Accordion - National Design System
+hero_title: Accordion - Platformscode Template
 hero_description: A stack of headings that each open a panel of content in place
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

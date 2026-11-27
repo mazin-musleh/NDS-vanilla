@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Date Picker
-hero_title: Date Picker - National Design System
+hero_title: Date Picker - Platformscode Template
 hero_description: A date field with a calendar for one day or a range, in the Gregorian or the Hijri calendar
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

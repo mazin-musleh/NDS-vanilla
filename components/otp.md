@@ -1,7 +1,7 @@
 ---
 layout: page
 title: OTP Input
-hero_title: OTP Input - National Design System
+hero_title: OTP Input - Platformscode Template
 hero_description: A row of one-digit boxes for a one-time code, where focus moves to the next box as the user types
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

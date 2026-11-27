@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Featured Icons
-hero_title: Featured Icons - National Design System
+hero_title: Featured Icons - Platformscode Template
 hero_description: Colored icon containers that draw attention to features, statuses, and categories across cards, lists, and page sections
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

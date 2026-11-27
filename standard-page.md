@@ -6,7 +6,7 @@ lang: en                    # en | ar
 direction: ltr              # ltr | rtl
 
 # === Hero Section (Sub Hero) ===
-hero_title: Page Title - National Design System
+hero_title: Page Title - Platformscode Template
 hero_description: Brief description of this page
 # hero_brief: Short bold lead shown between title and description  # optional
 # hero_style: nds-flat          # nds-flat | nds-aside

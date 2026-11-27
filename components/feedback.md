@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Feedback Icons
-hero_title: Feedback Icons - National Design System
+hero_title: Feedback Icons - Platformscode Template
 hero_description: A feedback icon shows a status as a colored icon, alone or before a short message.
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

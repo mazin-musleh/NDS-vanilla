@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Request
-hero_title: Request - National Design System
+hero_title: Request - Platformscode Template
 hero_description: A fetch wrapper that adds a timeout, a response size cap and an error on a failed status, then returns the body as JSON or text
 breadcrumb: [["Core", "/components/?shelf=Core"]]
 lang: en

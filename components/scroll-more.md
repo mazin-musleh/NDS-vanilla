@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Scroll More
-hero_title: Scroll More - National Design System
+hero_title: Scroll More - Platformscode Template
 hero_description: A general-purpose overflow wrapper that auto-detects its scroll axis, fades the edges of clipped content, and shows a sticky button to paginate through the rest.
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

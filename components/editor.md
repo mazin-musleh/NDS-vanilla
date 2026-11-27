@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Editor
-hero_title: Editor - National Design System
+hero_title: Editor - Platformscode Template
 hero_description: A rich text field that turns a textarea into an editing surface with a toolbar, and submits clean NDS markup
 hero_tags:
   - label: Beta

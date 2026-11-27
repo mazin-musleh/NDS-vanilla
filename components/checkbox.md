@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Checkbox
-hero_title: Checkbox - National Design System
+hero_title: Checkbox - Platformscode Template
 hero_description: A checkbox turns one option on or off, alone or as one of several choices
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

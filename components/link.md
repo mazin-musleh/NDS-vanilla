@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Link
-hero_title: Link - National Design System
+hero_title: Link - Platformscode Template
 hero_description: Styled links for embedding references, calls to action, and external destinations within body text, alert messages, and content areas.
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

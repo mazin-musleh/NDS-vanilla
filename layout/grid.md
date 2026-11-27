@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Grid
-hero_title: Grid System - National Design System
+hero_title: Grid System - Platformscode Template
 hero_description: A grid lays out its children in columns that adapt to the screen width
 breadcrumb: [["Layout", "/components/?shelf=Layout"]]
 lang: en

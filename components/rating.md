@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Rating
-hero_title: Rating - National Design System
+hero_title: Rating - Platformscode Template
 hero_description: A row of stars that shows a score, or lets the user pick one
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

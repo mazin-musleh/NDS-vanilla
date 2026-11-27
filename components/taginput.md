@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Tag Input
-hero_title: Tag Input - National Design System
+hero_title: Tag Input - Platformscode Template
 hero_description: A form field that turns typed text into removable chips and submits them as an array
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

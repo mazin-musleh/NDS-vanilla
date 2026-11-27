@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Truncate Text
-hero_title: Truncate Text - National Design System
+hero_title: Truncate Text - Platformscode Template
 hero_description: A CSS class that clips long text to a set number of lines and ends it with an ellipsis
 breadcrumb: [["Utilities", "/components/?shelf=Utilities"]]
 lang: en

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Timeline
-hero_title: Timeline - National Design System
+hero_title: Timeline - Platformscode Template
 hero_description: A timeline lists dated events in order, such as the history of a request, with the events done, the current one and the ones to come.
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Floating Action Button
-hero_title: Floating Action Button - National Design System
+hero_title: Floating Action Button - Platformscode Template
 hero_description: A floating action button (FAB) stays at an edge of the screen while the page scrolls, for a main action that the user needs on every part of the page.
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.5.0"

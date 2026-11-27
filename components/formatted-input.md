@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Formatted Input
-hero_title: Formatted Input - National Design System
+hero_title: Formatted Input - Platformscode Template
 hero_description: Text fields that keep a phone number, a national ID, an IBAN, a Saudi plate or a value of your own shape in that shape as the user types
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

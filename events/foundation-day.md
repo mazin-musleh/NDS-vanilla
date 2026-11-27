@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Foundation Day Theme
-hero_title: Foundation Day Theme - National Design System
+hero_title: Foundation Day Theme - Platformscode Template
 hero_description: A ready-made event theme for Saudi Founding Day. One script tag re-skins the site with the heritage brown palette and adds a bilingual hero slide. Delete the tag to restore the default.
 breadcrumb: [["Events", "/events"]]
 lang: en

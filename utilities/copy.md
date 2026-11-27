@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Copy
-hero_title: Copy - National Design System
+hero_title: Copy - Platformscode Template
 hero_description: A script that copies text to the clipboard when the user clicks a button, then shows a checkmark
 breadcrumb: [["Utilities", "/components/?shelf=Utilities"]]
 lang: en

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Panels
-hero_title: Panels - National Design System
+hero_title: Panels - Platformscode Template
 hero_description: A panel is a surface that slides in from an edge of the screen, for settings, filters or details the user opens on demand.
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.5.0"

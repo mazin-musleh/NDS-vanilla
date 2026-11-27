@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Tags
-hero_title: Tags - National Design System
+hero_title: Tags - Platformscode Template
 hero_description: A tag is a small read-only label for a category, a status or metadata
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

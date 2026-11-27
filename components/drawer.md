@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Drawer
-hero_title: Drawer - National Design System
+hero_title: Drawer - Platformscode Template
 hero_description: A vertical list of links and buttons, with submenus that open in place
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

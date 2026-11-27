@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Dropmenu
-hero_title: Dropmenu - National Design System
+hero_title: Dropmenu - Platformscode Template
 hero_description: A dropmenu is a button that opens a small menu of actions, links, settings or values beside it.
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Definition List
-hero_title: Definition List - National Design System
+hero_title: Definition List - Platformscode Template
 hero_description: Pairs of a title and a value, with optional icons, in a stacked, table, row or grid layout
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

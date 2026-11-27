@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Switch
-hero_title: Switch - National Design System
+hero_title: Switch - Platformscode Template
 hero_description: A switch turns one setting on or off, and the change applies at once
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

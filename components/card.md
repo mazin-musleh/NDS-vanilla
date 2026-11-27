@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Cards
-hero_title: Cards - National Design System
+hero_title: Cards - Platformscode Template
 hero_description: A card groups one unit of content, such as a service, a product, an article, or a metric, into a single box
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Date
-hero_title: Date - National Design System
+hero_title: Date - Platformscode Template
 hero_description: Shows, reads and writes dates in the two calendars of Saudi Arabia, Gregorian and Hijri (Umm al-Qura)
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

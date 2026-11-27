@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Avatar
-hero_title: Avatar - National Design System
+hero_title: Avatar - Platformscode Template
 hero_description: A round picture of a person or an account, with a photo, initials or an icon.
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

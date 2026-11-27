@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Print
-hero_title: Print - National Design System
+hero_title: Print - Platformscode Template
 hero_description: How an NDS page prints, and a button that prints one part of the page alone
 breadcrumb: [["Utilities", "/components/?shelf=Utilities"]]
 lang: en

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Helpers
-hero_title: Helpers - National Design System
+hero_title: Helpers - Platformscode Template
 hero_description: The shared functions that NDS components use, and that your page code can call too
 breadcrumb: [["Core", "/components/?shelf=Core"]]
 lang: en

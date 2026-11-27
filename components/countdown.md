@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Countdown
-hero_title: Countdown - National Design System
+hero_title: Countdown - Platformscode Template
 hero_description: A live count of the time left until a deadline or the end of a duration, as text or as a row of cards
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

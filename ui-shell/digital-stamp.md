@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Digital Stamp
-hero_title: Digital Stamp - National Design System
+hero_title: Digital Stamp - Platformscode Template
 hero_description: The DGA digital stamp in the top bar. Its tab opens an expander that shows how to check the site and its DGA registration number.
 breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en

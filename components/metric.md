@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Metric
-hero_title: Metric - National Design System
+hero_title: Metric - Platformscode Template
 hero_description: A dashboard tile that pairs a key value with a small trend chart, so the value and its trend read at a glance
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

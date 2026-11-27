@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Share
-hero_title: Share - National Design System
+hero_title: Share - Platformscode Template
 hero_description: A set of buttons that share a page link to X, LinkedIn, WhatsApp and other sites, through the device's share sheet, or copy it to the clipboard
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

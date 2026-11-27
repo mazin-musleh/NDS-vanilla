@@ -108,7 +108,7 @@ New pages and targeted edits skip Phases 3 and 4.
 ### Front Matter
 
 - `lang: en`, `direction: ltr`. Copy `standard-page.md` for a new page.
-- `title`: the component name. `hero_title`: `{Name} - National Design System`.
+- `title`: the component name. `hero_title`: `{Name} - Platformscode Template`.
 - `hero_description`: one sentence on what it is. Not repeated in the Overview.
 - `since`: set once. `updated`: bump only when the COMPONENT changed (source, markup, API), to `version` in `_config.yml` without `-dev`. `last_edit`: bump on any content change, from the local `date` (`DD/MM/YYYY - HH:MM AM/PM`, Riyadh time).
 

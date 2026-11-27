@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Hajj Theme
-hero_title: Hajj Theme - National Design System
+hero_title: Hajj Theme - Platformscode Template
 hero_description: A welcome skin for the Hajj season. One script tag re-skins the site with a gold-brown brand palette and adds a hero slide with the Saudi-font title, a logo, and a direction-aware background, in light and dark mode. Delete the tag to restore the default.
 breadcrumb: [["Events", "/events"]]
 lang: en

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Cooldown Button
-hero_title: Cooldown Button - National Design System
+hero_title: Cooldown Button - Platformscode Template
 hero_description: A button that disables itself and counts down before it can be pressed again, for resend, retry and rate-limited actions
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

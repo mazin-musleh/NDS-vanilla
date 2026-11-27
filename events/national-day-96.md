@@ -1,7 +1,7 @@
 ---
 layout: page
 title: National Day 96 Theme
-hero_title: National Day 96 Theme - National Design System
+hero_title: National Day 96 Theme - Platformscode Template
 hero_description: An event skin for Saudi National Day. One script tag adds the official six-slide event hero and the identity decorations, in light and dark mode. Delete the tag to restore the default.
 breadcrumb: [["Events", "/events"]]
 lang: en

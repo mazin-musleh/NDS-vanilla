@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Accessibility
-hero_title: Accessibility - National Design System
+hero_title: Accessibility - Platformscode Template
 hero_description: A site-wide panel where visitors turn on accessibility modes, adjust text and pick a color filter, with every choice kept across pages
 breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en

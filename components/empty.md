@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Empty
-hero_title: Empty - National Design System
+hero_title: Empty - Platformscode Template
 hero_description: Empty shows an icon and a short message in a container that has no items
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

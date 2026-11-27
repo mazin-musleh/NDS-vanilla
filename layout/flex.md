@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Flex
-hero_title: Flex - National Design System
+hero_title: Flex - Platformscode Template
 hero_description: A flex container lays out its children in one row or one column, with the alignment and gap you set
 breadcrumb: [["Layout", "/components/?shelf=Layout"]]
 lang: en

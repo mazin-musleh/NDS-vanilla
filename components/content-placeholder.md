@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Content Placeholder
-hero_title: Content Placeholder - National Design System
+hero_title: Content Placeholder - Platformscode Template
 hero_description: A dashed box that marks where a real component goes, for templates, prototypes and demos
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

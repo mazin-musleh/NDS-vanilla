@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Text Fields
-hero_title: Text Fields - National Design System
+hero_title: Text Fields - Platformscode Template
 hero_description: Form fields the user types in, with the label, messages and submit validation that every NDS field shares
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 since: "1.0.0"

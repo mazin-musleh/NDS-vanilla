@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Divider
-hero_title: Divider - National Design System
+hero_title: Divider - Platformscode Template
 hero_description: A line that separates content, horizontal or vertical, with an optional label between two lines
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Side Menu
-hero_title: Side Menu - National Design System
+hero_title: Side Menu - Platformscode Template
 hero_description: The menu beside the content that links the pages of one part of the site, in groups that open and close.
 breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en

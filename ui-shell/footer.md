@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Footer
-hero_title: Footer - National Design System
+hero_title: Footer - Platformscode Template
 hero_description: The footer closes every page with secondary links, contact details, social and app links, legal notices and partner logos
 breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en

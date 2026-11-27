@@ -1,7 +1,7 @@
 ---
 layout: page
 title: List
-hero_title: List - National Design System
+hero_title: List - Platformscode Template
 hero_description: A set of like items in a grid or in rows that fill, each a card that shares the list's look
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

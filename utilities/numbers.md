@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Numbers
-hero_title: Numbers - National Design System
+hero_title: Numbers - Platformscode Template
 hero_description: A class that formats a number with separators, a currency symbol or a unit, and an attribute that counts up to a number when it scrolls into view
 breadcrumb: [["Utilities", "/components/?shelf=Utilities"]]
 lang: en

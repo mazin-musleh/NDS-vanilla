@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Stepper
-hero_title: Stepper - National Design System
+hero_title: Stepper - Platformscode Template
 hero_description: A stepper shows where the user is in a flow of steps, such as a service application, with the steps done, the current step and the steps to come.
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

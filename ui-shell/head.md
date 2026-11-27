@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Document Head
-hero_title: Document Head - National Design System
+hero_title: Document Head - Platformscode Template
 hero_description: The stylesheets and scripts every NDS page loads, so the page paints fast with no flash of unstyled content and no layout shift
 breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en

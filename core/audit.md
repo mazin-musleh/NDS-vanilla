@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Audit
-hero_title: Audit - National Design System
+hero_title: Audit - Platformscode Template
 hero_description: A check you run on a built page that lists NDS markup and CSS that fail with no error, and every name an NDS release changed
 breadcrumb: [["Core", "/components/?shelf=Core"]]
 lang: en

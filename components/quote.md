@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Quote
-hero_title: Quote - National Design System
+hero_title: Quote - Platformscode Template
 hero_description: A quote shows one quoted statement in a card, with an optional title and the name of the person who said it
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

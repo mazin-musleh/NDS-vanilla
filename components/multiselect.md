@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Multiselect
-hero_title: Multiselect - National Design System
+hero_title: Multiselect - Platformscode Template
 hero_description: A form field whose menu of checkboxes lets the user pick several options, shown in the field as removable chips
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

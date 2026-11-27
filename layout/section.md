@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Section
-hero_title: Section - National Design System
+hero_title: Section - Platformscode Template
 hero_description: A section is one titled block of page content, with an optional action, image and background color
 breadcrumb: [["Layout", "/components/?shelf=Layout"]]
 lang: en

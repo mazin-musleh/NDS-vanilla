@@ -1,7 +1,7 @@
 ---
 layout: page
 title: File Upload
-hero_title: File Upload - National Design System
+hero_title: File Upload - Platformscode Template
 hero_description: A file upload lets the user pick or drop files, checks each one, and sends them to your server or with a form
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

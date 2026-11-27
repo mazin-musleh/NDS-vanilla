@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Icons
-hero_title: Icons - National Design System
+hero_title: Icons - Platformscode Template
 hero_description: "Outline icons from the HugeIcons library, as a font with the full library for page content and a smaller built-in set for interface controls."
 breadcrumb: [["Foundations", "/components/?shelf=Foundations"]]
 lang: en

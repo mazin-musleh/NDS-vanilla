@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Clock
-hero_title: Clock - National Design System
+hero_title: Clock - Platformscode Template
 hero_description: The current time, in the site's timezone, that changes on the minute.
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

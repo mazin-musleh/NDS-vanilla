@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Cookies
-hero_title: Cookies - National Design System
+hero_title: Cookies - Platformscode Template
 hero_description: A consent panel that asks the visitor which cookies to allow, stores the choice by category and sends it to your analytics setup
 breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en

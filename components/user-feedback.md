@@ -1,7 +1,7 @@
 ---
 layout: page
 title: User Feedback
-hero_title: User Feedback - National Design System
+hero_title: User Feedback - Platformscode Template
 hero_description: A widget at the end of a page that asks the visitor what they think, then opens a short form and confirms the answer
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

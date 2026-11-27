@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Calendar
-hero_title: Calendar - National Design System
+hero_title: Calendar - Platformscode Template
 hero_description: "A calendar shows the events of one week or one month: as day columns, as a list, or beside a month of days"
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Tabs
-hero_title: Tabs - National Design System
+hero_title: Tabs - Platformscode Template
 hero_description: Group related content into a single surface where users switch between views without leaving the page
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

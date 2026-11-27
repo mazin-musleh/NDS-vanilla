@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Voice Input
-hero_title: Voice Input - National Design System
+hero_title: Voice Input - Platformscode Template
 hero_description: A voice input button types what the user says into a text field, in the page language
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

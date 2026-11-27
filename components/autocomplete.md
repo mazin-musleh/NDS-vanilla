@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Autocomplete
-hero_title: Autocomplete - National Design System
+hero_title: Autocomplete - Platformscode Template
 hero_description: A text field that shows matching results from a JSON source as the user types
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

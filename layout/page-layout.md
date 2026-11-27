@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Page Layout
-hero_title: Page Layout - National Design System
+hero_title: Page Layout - Platformscode Template
 hero_description: The body structure every NDS page is built on, from the header to the footer, and the classes that pick the page shape
 breadcrumb: [["Layout", "/components/?shelf=Layout"]]
 lang: en

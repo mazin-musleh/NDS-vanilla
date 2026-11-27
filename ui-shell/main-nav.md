@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Main Navigation
-hero_title: Main Navigation - National Design System
+hero_title: Main Navigation - Platformscode Template
 hero_description: The bar at the top of every page with the brand, the main links, dropdown menus and the action buttons.
 breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Button
-hero_title: Button - National Design System
+hero_title: Button - Platformscode Template
 hero_description: A button runs an action, such as save, submit or open a menu
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

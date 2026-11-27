@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Code
-hero_title: Code - National Design System
+hero_title: Code - Platformscode Template
 hero_description: A code block shows source code with syntax colors, line numbers and a copy button, and inline code marks a code reference in a sentence.
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

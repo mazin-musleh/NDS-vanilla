@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Tokens
-hero_title: Tokens - National Design System
+hero_title: Tokens - Platformscode Template
 hero_description: "The CSS custom properties behind NDS: the color palette, size scales, semantic meanings and component tokens that you read and override in your own CSS"
 breadcrumb: [["Foundations", "/components/?shelf=Foundations"]]
 lang: en

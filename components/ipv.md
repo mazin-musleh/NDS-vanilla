@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Image Popup Viewer
-hero_title: Image Popup Viewer - National Design System
+hero_title: Image Popup Viewer - Platformscode Template
 hero_description: The image popup viewer opens a thumbnail full screen, with zoom, pan and gallery navigation
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

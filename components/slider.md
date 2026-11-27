@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Slider
-hero_title: Slider - National Design System
+hero_title: Slider - Platformscode Template
 hero_description: A slider lets the user pick a number, or a range between two numbers, by dragging a thumb along a bar
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

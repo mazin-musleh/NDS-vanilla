@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Weather
-hero_title: Weather - National Design System
+hero_title: Weather - Platformscode Template
 hero_description: The current weather for one or more places, from their coordinates.
 breadcrumb: [["Components", "/components/?shelf=Components"]]
 lang: en

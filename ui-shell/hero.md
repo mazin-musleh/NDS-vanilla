@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Hero
-hero_title: Hero - National Design System
+hero_title: Hero - Platformscode Template
 hero_description: The banner at the top of a page, with the page title, or a slider of full-width images on the home page.
 breadcrumb: [["UI Shell", "/components/?shelf=UI%20Shell"]]
 lang: en

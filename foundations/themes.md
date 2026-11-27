@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Themes
-hero_title: Themes - National Design System
+hero_title: Themes - Platformscode Template
 hero_description: Dark mode, a theme menu, and your own brand colors, from a few seed colors or a stylesheet that overrides the color tokens.
 breadcrumb: [["Foundations", "/components/?shelf=Foundations"]]
 lang: en

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Helper Classes
-hero_title: Helper Classes - National Design System
+hero_title: Helper Classes - Platformscode Template
 hero_description: Single-purpose CSS classes for the markup you write around NDS components, covering centering, spacing resets, direction isolation, brand-colored text, and small notes
 breadcrumb: [["Utilities", "/components/?shelf=Utilities"]]
 lang: en

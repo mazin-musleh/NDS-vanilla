@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Status Section
-hero_title: Status Section - National Design System
+hero_title: Status Section - Platformscode Template
 hero_description: A status section reports one outcome, such as a page that was not found or a request that went through
 breadcrumb: [["Layout", "/components/?shelf=Layout"]]
 lang: en
